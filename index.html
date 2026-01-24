@@ -1,0 +1,1840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Modern Web Design – Affordable One‑Page Websites</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Affordable, professional one-page websites built by a passionate 14-year-old web designer. Modern design, advanced features, and unlimited revisions. Pay safely on Fiverr."
+  />
+  <style>
+    :root {
+      --bg: #020617;
+      --bg-soft: #020617;
+      --bg-card: #020617;
+      --accent: #22d3ee;
+      --accent-strong: #06b6d4;
+      --accent-alt: #6366f1;
+      --accent-soft: rgba(34, 211, 238, 0.16);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: #1f2937;
+      --danger: #f97373;
+      --shadow-soft: 0 26px 60px rgba(15, 23, 42, 0.9);
+      --radius-lg: 20px;
+      --radius-pill: 999px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      background: #020617;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", Roboto, sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.3), transparent 55%),
+        radial-gradient(circle at 100% 10%, rgba(34, 211, 238, 0.25), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(15, 23, 42, 0.7), transparent 60%),
+        var(--bg);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 24px 20px 72px;
+    }
+
+    @media (min-width: 960px) {
+      .page {
+        padding: 32px 24px 96px;
+      }
+    }
+
+    /* ANIMATIONS */
+    .hover-lift {
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        filter var(--transition-fast);
+      will-change: transform, box-shadow, filter;
+    }
+    .hover-lift:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 26px 70px rgba(15, 23, 42, 0.95);
+      filter: brightness(1.02);
+    }
+
+    .btn-pressable {
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        filter var(--transition-fast);
+      will-change: transform, box-shadow;
+    }
+    .btn-pressable:active {
+      transform: translateY(1px) scale(0.98);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+      filter: brightness(0.97);
+    }
+
+    .chip-pop {
+      transition: transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        border-color var(--transition-fast),
+        background var(--transition-fast);
+    }
+    .chip-pop:hover {
+      transform: translateY(-2px);
+      border-color: rgba(248, 250, 252, 0.85);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
+      background: rgba(15, 23, 42, 0.97);
+    }
+
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* NAV */
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 32px;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 34px;
+      height: 34px;
+      border-radius: 14px;
+      background: conic-gradient(
+        from 180deg,
+        #22d3ee,
+        #6366f1,
+        #22c55e,
+        #0ea5e9,
+        #22d3ee
+      );
+      padding: 2px;
+      box-shadow:
+        0 0 24px rgba(34, 211, 238, 0.7),
+        0 0 40px rgba(99, 102, 241, 0.4);
+    }
+
+    .brand-mark-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 11px;
+      background:
+        radial-gradient(circle at 15% 0%, #111827 0, #020617 55%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #e5f4ff;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .brand-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: none;
+      gap: 18px;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-alt));
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow:
+        0 18px 42px rgba(34, 211, 238, 0.7),
+        0 0 40px rgba(34, 211, 238, 0.6);
+      color: #020617;
+      font-weight: 700;
+      font-size: 13px;
+      border: 0;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-cta span.badge {
+      padding: 3px 9px;
+      border-radius: 999px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      background: rgba(15, 23, 42, 0.98);
+      color: #e0f2fe;
+    }
+
+    @media (min-width: 880px) {
+      .nav {
+        margin-bottom: 40px;
+      }
+      .nav-links {
+        display: flex;
+      }
+    }
+
+    /* HERO */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.05fr);
+      gap: 32px;
+      align-items: center;
+      margin-bottom: 56px;
+    }
+
+    @media (max-width: 880px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+        margin-bottom: 48px;
+      }
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 12px 5px 6px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.3);
+      margin-bottom: 14px;
+      font-size: 12px;
+    }
+
+    .hero-kicker-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      background: rgba(34, 211, 238, 0.16);
+      color: #e0f2fe;
+    }
+
+    .hero-kicker-text {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .hero-title {
+      font-size: clamp(2.6rem, 3.6vw, 3.1rem);
+      line-height: 1.05;
+      margin: 0 0 16px;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-title span.glow {
+      background: linear-gradient(130deg, var(--accent), var(--accent-alt));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 26px rgba(34, 211, 238, 0.9);
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 36rem;
+      margin-bottom: 18px;
+    }
+
+    .hero-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .hero-chip {
+      font-size: 0.82rem;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      background: rgba(15, 23, 42, 0.96);
+      color: #e5e7eb;
+    }
+
+    .hero-chip.accent {
+      border-color: rgba(34, 211, 238, 0.85);
+      background: rgba(15, 23, 42, 0.98);
+      color: #e0f2fe;
+    }
+
+    .hero-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 13px;
+      border-radius: 13px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: #e5e7eb;
+      font-size: 13px;
+      margin-bottom: 22px;
+    }
+
+    .hero-highlight-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.25);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: #020617;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow:
+        0 22px 55px rgba(34, 211, 238, 0.85),
+        0 0 45px rgba(34, 211, 238, 0.85);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.95);
+      color: var(--text-muted);
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .btn-secondary span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-note {
+      font-size: 12px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-note span.dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-right {
+      position: relative;
+      padding: 4px;
+      border-radius: 26px;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.5), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34, 211, 238, 0.4), transparent 55%);
+    }
+
+    .hero-card {
+      border-radius: 22px;
+      padding: 18px 18px 16px;
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.2), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.18), transparent 60%),
+        linear-gradient(150deg, #020617 0, #020617 35%, #020617 100%);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .hero-card-tag span.badge {
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.2);
+      color: #e0f2fe;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 10px;
+    }
+
+    .hero-card-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .hero-card-age {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .hero-card-age strong {
+      color: #e5e7eb;
+    }
+
+    .hero-card-text {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .hero-card-pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .pill {
+      font-size: 11px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+    }
+
+    .pill.accent {
+      border-color: rgba(34, 211, 238, 0.9);
+      background: rgba(15, 23, 42, 0.99);
+      color: #e0f2fe;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      padding-top: 10px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.6);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .hero-card-footer-left strong {
+      color: #e5e7eb;
+    }
+
+    .hero-card-footer-right {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.99);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      color: #bae6fd;
+      cursor: pointer;
+      font-size: 11px;
+    }
+
+    .hero-card-footer-right span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+    }
+
+    /* SECTIONS */
+    section {
+      margin-bottom: 60px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: flex-end;
+      margin-bottom: 16px;
+    }
+
+    .section-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 1.45rem;
+      margin: 0;
+      letter-spacing: -0.03em;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 26rem;
+    }
+
+    /* CARDS + LISTS */
+    .card {
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 60%),
+        linear-gradient(135deg, var(--bg-card) 0, var(--bg-card) 60%, var(--bg-card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 18px 18px 16px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
+    }
+
+    .card-muted {
+      background:
+        radial-gradient(circle at 100% 0, rgba(30, 64, 175, 0.25), transparent 60%),
+        linear-gradient(135deg, var(--bg-card) 0, var(--bg-card) 60%, var(--bg-card) 100%);
+    }
+
+    .card-header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .card-tagline {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #e5e7eb;
+    }
+
+    .list li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .list-bullet {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.18);
+      border: 1px solid rgba(34, 211, 238, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #bae6fd;
+      margin-top: 2px;
+    }
+
+    .list span.sub {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: var(--text-muted);
+      background: rgba(15, 23, 42, 0.96);
+    }
+
+    .tag.accent {
+      border-color: rgba(34, 211, 238, 0.9);
+      color: #e0f2fe;
+    }
+
+    /* OFFER GRID */
+    .offer-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.1fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 960px) {
+      .offer-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    /* AUDIENCE + COMPARISON */
+    .audience-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.1fr);
+      gap: 20px;
+    }
+
+    @media (max-width: 960px) {
+      .audience-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pill-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 10px;
+      font-size: 0.86rem;
+    }
+
+    .pill-card {
+      border-radius: 999px;
+      padding: 8px 12px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.22), transparent 70%),
+        rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pill-card-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(34, 211, 238, 0.9);
+    }
+
+    .comparison-card {
+      border-radius: 16px;
+      padding: 14px 12px 12px;
+      background:
+        radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.5), transparent 65%),
+        rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 1);
+      font-size: 0.86rem;
+    }
+
+    .comparison-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 5px;
+    }
+    .comparison-label.bad { color: #fecaca; }
+    .comparison-label.good { color: #bbf7d0; }
+
+    .comparison-title {
+      font-size: 0.98rem;
+      margin-bottom: 4px;
+    }
+
+    .comparison-sub {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .comparison-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 4px;
+      font-size: 0.82rem;
+    }
+
+    .comparison-list li {
+      display: flex;
+      gap: 5px;
+    }
+
+    .comparison-icon-bad {
+      font-size: 11px;
+      color: #fecaca;
+      margin-top: 1px;
+    }
+    .comparison-icon-good {
+      font-size: 11px;
+      color: #bbf7d0;
+      margin-top: 1px;
+    }
+
+    /* PRICING */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 12px;
+    }
+
+    @media (max-width: 1000px) {
+      .pricing-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .pricing-card {
+      border-radius: 18px;
+      padding: 16px 14px 14px;
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.2), transparent 60%),
+        linear-gradient(150deg, var(--bg-card) 0, var(--bg-card) 60%, var(--bg-card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 22px 60px rgba(15, 23, 42, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(34, 211, 238, 0.95);
+      box-shadow:
+        0 30px 80px rgba(34, 211, 238, 0.7),
+        0 0 70px rgba(34, 211, 238, 0.7);
+      transform: translateY(-4px);
+    }
+
+    @media (max-width: 1000px) {
+      .pricing-card.featured {
+        transform: none;
+      }
+    }
+
+    .pricing-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.2);
+      border: 1px solid rgba(34, 211, 238, 0.95);
+      color: #e0f2fe;
+    }
+
+    .pricing-name {
+      font-size: 0.88rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+      margin-bottom: 3px;
+    }
+
+    .pricing-title {
+      font-size: 1.08rem;
+      margin-bottom: 4px;
+    }
+
+    .pricing-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .pricing-price {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price-main {
+      font-size: 1.7rem;
+      font-weight: 800;
+    }
+
+    .pricing-price-currency {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-price-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-meta {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .pricing-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      font-size: 0.86rem;
+      color: #e5e7eb;
+      display: grid;
+      gap: 6px;
+    }
+
+    .pricing-list li {
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .pricing-check {
+      width: 14px;
+      height: 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(34, 211, 238, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: #bae6fd;
+      margin-top: 1px;
+    }
+
+    .pricing-revisions {
+      font-size: 0.8rem;
+      color: #e5e7eb;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+      margin-bottom: 8px;
+    }
+
+    .pricing-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      width: 100%;
+      padding: 8px 0;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.98);
+      color: #e5e7eb;
+      font-size: 0.86rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .pricing-card.featured .pricing-cta {
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      border-color: transparent;
+      color: #020617;
+    }
+
+    .pricing-note {
+      margin-top: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .pricing-note strong {
+      color: #e5e7eb;
+    }
+
+    /* CTA / FIVERR */
+    .cta-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.05fr);
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 960px) {
+      .cta-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .cta-panel {
+      border-radius: var(--radius-lg);
+      padding: 18px 18px 16px;
+      background:
+        radial-gradient(circle at 100% 0, rgba(34, 211, 238, 0.24), transparent 60%),
+        linear-gradient(140deg, var(--bg-card) 0, var(--bg-card) 55%, var(--bg-card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 26px 70px rgba(15, 23, 42, 1);
+      font-size: 0.9rem;
+      color: #e5e7eb;
+    }
+
+    .cta-panel-title {
+      font-size: 1.08rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .cta-panel-sub {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .cta-panel-steps {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 12px;
+      display: grid;
+      gap: 6px;
+      font-size: 0.88rem;
+    }
+
+    .cta-panel-steps li {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .cta-step-badge {
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 1);
+      border: 1px solid rgba(34, 211, 238, 0.9);
+      font-size: 11px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bae6fd;
+      margin-top: 2px;
+    }
+
+    .cta-side-card {
+      border-radius: var(--radius-lg);
+      padding: 18px 16px 16px;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.22), transparent 60%),
+        linear-gradient(140deg, var(--bg-card) 0, var(--bg-card) 55%, var(--bg-card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 26px 70px rgba(15, 23, 42, 1);
+      font-size: 0.86rem;
+      color: #e5e7eb;
+    }
+
+    .cta-side-highlight {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.99);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      color: var(--text-muted);
+    }
+
+    .cta-side-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 14px rgba(34, 211, 238, 0.9);
+    }
+
+    .cta-side-list {
+      list-style: none;
+      padding: 0;
+      margin: 8px 0 8px;
+      display: grid;
+      gap: 5px;
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    .cta-side-list li {
+      display: flex;
+      gap: 6px;
+    }
+
+    .cta-side-icon {
+      font-size: 11px;
+      color: #bae6fd;
+      margin-top: 1px;
+    }
+
+    .cta-side-footer {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding-top: 6px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    .cta-side-footer strong {
+      color: #e5e7eb;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid rgba(15, 23, 42, 1);
+      margin-top: auto;
+      background: radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 55%),
+        #020617;
+    }
+
+    .footer-inner {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 16px 20px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    @media (min-width: 960px) {
+      .footer-inner {
+        padding: 18px 24px 26px;
+      }
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .footer-links a:hover {
+      color: #e5e7eb;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="page">
+      <!-- NAV -->
+      <header class="nav fade-in-up">
+        <div class="nav-left">
+          <div class="brand-mark hover-lift">
+            <div class="brand-mark-inner">A</div>
+          </div>
+          <div class="brand-text">
+            <div class="brand-title">Armin Studio</div>
+            <div class="brand-sub">Modern, affordable web design</div>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="#offer">What I Offer</a>
+          <a href="#audience">Is This for You?</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#contact">How to Start</a>
+        </nav>
+        <button
+          class="nav-cta btn-pressable"
+          onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+        >
+          <span>Order on Fiverr</span>
+          <span class="badge">Secure & easy</span>
+        </button>
+      </header>
+
+      <!-- HERO -->
+      <section class="hero fade-in-up">
+        <div>
+          <div class="hero-kicker chip-pop">
+            <span class="hero-kicker-badge">One‑page websites</span>
+            <span class="hero-kicker-text">Built for small & new businesses, non‑profits and creators</span>
+          </div>
+
+          <h1 class="hero-title">
+            Beautiful, modern websites<br />
+            <span class="glow">without paying agency prices.</span>
+          </h1>
+
+          <p class="hero-subtitle">
+            Get the website your company needs to grow – not an overpriced template that doesn’t fit you.
+            I design focused one‑page sites that look professional, feel modern, and are easy for your visitors to use.
+          </p>
+
+          <div class="hero-badges">
+            <span class="hero-chip accent chip-pop">Small businesses & local shops</span>
+            <span class="hero-chip chip-pop">New businesses & side‑projects</span>
+            <span class="hero-chip chip-pop">Non‑profits & community projects</span>
+          </div>
+
+          <div class="hero-highlight hover-lift">
+            <span class="hero-highlight-dot"></span>
+            <span>
+              I’m a <strong>14‑year‑old web designer</strong> with a passion for creating beautiful, functional websites.
+              My age is my strength: fresh ideas, huge enthusiasm, and affordable pricing.
+            </span>
+          </div>
+
+          <div class="hero-actions">
+            <button
+              class="btn-primary btn-pressable"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              Order your one‑page site on Fiverr
+            </button>
+            <button
+              class="btn-secondary btn-pressable"
+              onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})"
+            >
+              <span class="dot"></span>
+              See packages & what you get
+            </button>
+          </div>
+
+          <div class="hero-note">
+            <span class="dot"></span>
+            <span>
+              <strong>Unlimited revisions</strong> on every package – I keep improving your site until it feels right.
+            </span>
+          </div>
+        </div>
+
+        <!-- HERO RIGHT: ABOUT -->
+        <aside class="hero-right fade-in-up">
+          <div class="hero-card hover-lift">
+            <div class="hero-card-tag chip-pop">
+              <span class="badge">About Me</span>
+              <span>Creative · Focused · Easy to work with</span>
+            </div>
+
+            <div class="hero-card-title">Hi, I’m Armin.</div>
+            <div class="hero-card-age">
+              I’m a <strong>14‑year‑old web designer</strong> who loves building websites that
+              feel modern and professional, without being complicated or expensive.
+            </div>
+
+            <p class="hero-card-text">
+              Some people think being young is a disadvantage. I see it as my edge:
+              I bring <strong>great ideas</strong>, <strong>unmatched enthusiasm</strong>,
+              and I put <strong>extra effort</strong> into every project.
+              Because I’m building my reputation and reviews, I charge less than many agencies and freelancers –
+              so you get high‑quality work at a very fair price.
+            </p>
+
+            <p class="hero-card-text">
+              With experience in <strong>marketing and conversion</strong>,
+              I don’t just think about colors and fonts. I design sites that connect with your audience and
+              help your business grow.
+            </p>
+
+            <div class="hero-card-pill-row">
+              <span class="pill accent chip-pop">High‑quality & affordable</span>
+              <span class="pill chip-pop">Business‑focused design</span>
+              <span class="pill chip-pop">Friendly communication</span>
+              <span class="pill chip-pop">Unlimited revisions</span>
+            </div>
+
+            <div class="hero-card-footer">
+              <div class="hero-card-footer-left">
+                <strong>Ready to start?</strong><br />
+                Order on Fiverr and send me your idea – I’ll guide you through every step.
+              </div>
+              <div
+                class="hero-card-footer-right btn-pressable chip-pop"
+                onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              >
+                <span class="dot"></span>
+                <span>Pay safely on Fiverr</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <!-- WHAT I OFFER -->
+      <section id="offer" class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">What I offer</div>
+            <h2 class="section-title">Everything a serious one‑page site needs.</h2>
+          </div>
+          <p class="section-sub">
+            Clean, modern, and focused on your goals – not stuffed with things you don’t need.
+          </p>
+        </div>
+
+        <div class="offer-grid">
+          <article class="card hover-lift" aria-label="Website features">
+            <div class="card-header-line">
+              <div class="card-title">Powerful features, organised simply</div>
+              <div class="card-tagline">Clear · Modern · Effective</div>
+            </div>
+
+            <ul class="list">
+              <li>
+                <div class="list-bullet">✓</div>
+                <div>
+                  Advanced forms that collect real insights
+                  <span class="sub">
+                    Custom questions, multi‑step flows, and smart layouts to learn what your customers really want
+                    and how to improve.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">✓</div>
+                <div>
+                  Embedded HTML & interactive elements
+                  <span class="sub">
+                    Complex, responsive components embedded directly into your page – for calculators,
+                    interactive sections, and more.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">✓</div>
+                <div>
+                  Analytics integration
+                  <span class="sub">
+                    Connect analytics so you can see where visitors come from, what they click,
+                    and what’s working.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">✓</div>
+                <div>
+                  Clear, organised layout
+                  <span class="sub">
+                    Non‑cluttered, straight‑to‑the‑point design that shows your offer clearly and guides people
+                    to take action.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">✓</div>
+                <div>
+                  Interactive tools
+                  <span class="sub">
+                    Referral logic, simple chatrooms, and tools like loan or interest calculators and graphs
+                    to keep visitors engaged.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">∞</div>
+                <div>
+                  Unlimited revisions
+                  <span class="sub">
+                    I don’t stop at “good enough” – we adjust wording, layout, and details until the site
+                    feels exactly right.
+                  </span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="tag-row">
+              <span class="tag accent chip-pop">One‑page business sites</span>
+              <span class="tag chip-pop">Landing pages</span>
+              <span class="tag chip-pop">Restaurants & local shops</span>
+              <span class="tag chip-pop">Service providers</span>
+              <span class="tag chip-pop">Non‑profits & organisations</span>
+            </div>
+          </article>
+
+          <aside class="card card-muted hover-lift" aria-label="Use cases">
+            <div class="card-header-line">
+              <div class="card-title">Perfect if you want to…</div>
+              <div class="card-tagline">Clear outcomes</div>
+            </div>
+
+            <ul class="list">
+              <li>
+                <div class="list-bullet">•</div>
+                <div>
+                  Collect information to grow
+                  <span class="sub">
+                    Use forms and surveys to discover how to grow, improve services, and find new opportunities
+                    for your business or organisation.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">•</div>
+                <div>
+                  Launch a clean, straight‑to‑the‑point site
+                  <span class="sub">
+                    No clutter or confusing menus – just a clear one‑page website that tells your story
+                    and drives action.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">•</div>
+                <div>
+                  Add a loan/interest calculator or other tools
+                  <span class="sub">
+                    Give visitors calculators or small apps that help them make decisions
+                    and trust your brand more.
+                  </span>
+                </div>
+              </li>
+            </ul>
+          </aside>
+        </div>
+      </section>
+
+      <!-- IS THIS FOR YOU + COMPARISON -->
+      <section id="audience" class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Is this for you?</div>
+            <h2 class="section-title">Designed for small & growing organisations.</h2>
+          </div>
+          <p class="section-sub">
+            If you’re a small or new business, non‑profit, freelancer, or local shop,
+            a clear one‑page site is often exactly what you need.
+          </p>
+        </div>
+
+        <div class="audience-grid">
+          <!-- WHO IT'S FOR -->
+          <article class="card hover-lift" aria-label="Who this site is for">
+            <div class="card-header-line">
+              <div class="card-title">You’ll get the most value if you are a…</div>
+              <div class="card-tagline">Quick to understand</div>
+            </div>
+
+            <ul class="list">
+              <li>
+                <div class="list-bullet">1</div>
+                <div>
+                  Small business or local shop
+                  <span class="sub">
+                    Restaurants, cafés, barbers, salons, gyms, repair services – anyone who wants a
+                    professional presence that’s easy for customers to understand.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">2</div>
+                <div>
+                  New business, startup, or side‑project
+                  <span class="sub">
+                    You just need a strong one‑page site to explain your idea, collect interest, and
+                    show you’re serious without spending a lot.
+                  </span>
+                </div>
+              </li>
+              <li>
+                <div class="list-bullet">3</div>
+                <div>
+                  Non‑profit, club, or community
+                  <span class="sub">
+                    Share your mission, show what you do, and explain how people can donate, join,
+                    or support your work – all in one place.
+                  </span>
+                </div>
+              </li>
+            </ul>
+
+            <div class="pill-grid">
+              <div class="pill-card chip-pop">
+                <span class="pill-card-dot"></span>
+                <span>You like things simple, clear, and not overloaded with pages.</span>
+              </div>
+              <div class="pill-card chip-pop">
+                <span class="pill-card-dot"></span>
+                <span>You want a site that looks premium, but stays within a small budget.</span>
+              </div>
+              <div class="pill-card chip-pop">
+                <span class="pill-card-dot"></span>
+                <span>You prefer working with someone who explains everything in easy language.</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- COMPARISON -->
+          <aside class="card card-muted hover-lift" aria-label="Comparison with others">
+            <div class="card-header-line">
+              <div class="card-title">How this compares to most options</div>
+              <div class="card-tagline">Simple overview</div>
+            </div>
+
+            <div class="comparison-card" style="margin-bottom:10px;">
+              <div class="comparison-label bad">Typical agencies / freelancers</div>
+              <div class="comparison-title">Often too much for small projects</div>
+              <div class="comparison-sub">
+                Great work, but not always friendly for small budgets or simple needs.
+              </div>
+              <ul class="comparison-list">
+                <li>
+                  <span class="comparison-icon-bad">✕</span>
+                  <span>High prices – often hundreds or thousands of dollars for a basic site.</span>
+                </li>
+                <li>
+                  <span class="comparison-icon-bad">✕</span>
+                  <span>Lots of extra pages and features you may never use.</span>
+                </li>
+                <li>
+                  <span class="comparison-icon-bad">✕</span>
+                  <span>Limited revisions or added costs when you want changes.</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="comparison-card">
+              <div class="comparison-label good">Working with me</div>
+              <div class="comparison-title">Focused, affordable, made for you</div>
+              <div class="comparison-sub">
+                Built specifically for small businesses, new ideas, and non‑profits.
+              </div>
+              <ul class="comparison-list">
+                <li>
+                  <span class="comparison-icon-good">✓</span>
+                  <span>Clear, low pricing starting at <strong>$5</strong> for a real, working site.</span>
+                </li>
+                <li>
+                  <span class="comparison-icon-good">✓</span>
+                  <span>Just one powerful page – everything important in one place.</span>
+                </li>
+                <li>
+                  <span class="comparison-icon-good">✓</span>
+                  <span><strong>Unlimited revisions</strong> – I keep improving it until you’re happy.</span>
+                </li>
+              </ul>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section id="pricing" class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Pricing</div>
+            <h2 class="section-title">Three simple packages for one‑page sites.</h2>
+          </div>
+          <p class="section-sub">
+            All packages include a working one‑page website, responsive design, content upload,
+            and <strong style="color:#e5e7eb;">unlimited revisions</strong>. Payment is handled safely on Fiverr.
+          </p>
+        </div>
+
+        <div class="pricing-grid" aria-label="Pricing packages">
+          <!-- BASIC -->
+          <article class="pricing-card hover-lift">
+            <div class="pricing-name">Basic</div>
+            <div class="pricing-title">Coming soon / landing page</div>
+            <div class="pricing-sub">Great for simple announcements or early interest.</div>
+
+            <div class="pricing-price">
+              <span class="pricing-price-currency">$</span>
+              <span class="pricing-price-main">5</span>
+              <span class="pricing-price-note">USD</span>
+            </div>
+
+            <div class="pricing-meta">
+              <strong>1 page</strong> · <strong>2 sections</strong><br />
+              (for example: hero + contact)
+            </div>
+
+            <ul class="pricing-list">
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Clean, modern layout tailored to your message.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Basic contact form or direct contact link.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Responsive design for phones, tablets, and desktops.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>I place your text and images for you.</span>
+              </li>
+            </ul>
+
+            <div class="pricing-revisions">
+              Unlimited revisions until your one‑page layout is ready to launch.
+            </div>
+
+            <button
+              class="pricing-cta btn-pressable"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              <span>Order Basic on Fiverr</span>
+            </button>
+          </article>
+
+          <!-- STANDARD -->
+          <article class="pricing-card featured hover-lift">
+            <div class="pricing-badge">Most popular</div>
+            <div class="pricing-name">Standard</div>
+            <div class="pricing-title">Small business / restaurant</div>
+            <div class="pricing-sub">Perfect for local businesses that want a strong presence.</div>
+
+            <div class="pricing-price">
+              <span class="pricing-price-currency">$</span>
+              <span class="pricing-price-main">10</span>
+              <span class="pricing-price-note">USD</span>
+            </div>
+
+            <div class="pricing-meta">
+              <strong>1 page</strong> · <strong>4 sections</strong><br />
+              (for example: hero, about, services/menu, contact)
+            </div>
+
+            <ul class="pricing-list">
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Custom design that matches your brand or vibe.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Advanced forms (booking, inquiries, or feedback).</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Basic analytics integration on request.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Plugins or simple extensions (maps, social feeds, etc.).</span>
+              </li>
+            </ul>
+
+            <div class="pricing-revisions">
+              Unlimited revisions – we refine text, layout, and structure until it feels right.
+            </div>
+
+            <button
+              class="pricing-cta btn-pressable"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              <span>Order Standard on Fiverr</span>
+            </button>
+          </article>
+
+          <!-- PREMIUM -->
+          <article class="pricing-card hover-lift">
+            <div class="pricing-name">Premium</div>
+            <div class="pricing-title">Multiple services / more sections</div>
+            <div class="pricing-sub">For businesses that need more detail on one page.</div>
+
+            <div class="pricing-price">
+              <span class="pricing-price-currency">$</span>
+              <span class="pricing-price-main">15</span>
+              <span class="pricing-price-note">USD</span>
+            </div>
+
+            <div class="pricing-meta">
+              <strong>1 page</strong> · <strong>6 sections</strong><br />
+              (for example: hero, about, services, pricing, FAQs, contact)
+            </div>
+
+            <ul class="pricing-list">
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Fully custom one‑page layout tailored to your business.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Advanced forms with referral logic or lead capture flows.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Embedded calculators, simple chatrooms, or other custom tools.</span>
+              </li>
+              <li>
+                <span class="pricing-check">✓</span>
+                <span>Plugins/extensions installation (on supported platforms).</span>
+              </li>
+            </ul>
+
+            <div class="pricing-revisions">
+              Unlimited revisions and priority attention until your page feels “just right”.
+            </div>
+
+            <button
+              class="pricing-cta btn-pressable"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              <span>Order Premium on Fiverr</span>
+            </button>
+          </article>
+        </div>
+
+        <p class="pricing-note">
+          <strong>Need a multi‑page website?</strong><br />
+          I also create more “luxury” multi‑page sites starting at
+          <strong>$50</strong> for a <strong>2‑page</strong> site with
+          <strong>4 sections per page</strong>. For multi‑page projects,
+          <strong>contact me on Fiverr</strong> and I’ll send you a custom offer.
+        </p>
+      </section>
+
+      <!-- HOW TO START -->
+      <section id="contact" class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">How to start</div>
+            <h2 class="section-title">Everything runs safely through Fiverr.</h2>
+          </div>
+          <p class="section-sub">
+            No separate payments or complicated forms. We use Fiverr for orders, messages, and delivery.
+          </p>
+        </div>
+
+        <div class="cta-grid">
+          <div class="cta-panel hover-lift">
+            <div class="cta-panel-title">3 quick steps to get your website</div>
+            <div class="cta-panel-sub">
+              It only takes a few minutes to start your project.
+            </div>
+
+            <ul class="cta-panel-steps">
+              <li>
+                <span class="cta-step-badge">1</span>
+                <span>
+                  <strong>Open my Fiverr gig.</strong><br />
+                  Click any “Order on Fiverr” button or go here directly:
+                  <a href="https://www.fiverr.com/s/bdX1vXm" target="_blank" rel="noopener noreferrer"
+                     style="color:#e0f2fe;text-decoration:underline;">Fiverr – Armin’s web design gig</a>.
+                </span>
+              </li>
+              <li>
+                <span class="cta-step-badge">2</span>
+                <span>
+                  <strong>Choose your package.</strong><br />
+                  Select Basic, Standard, or Premium for a one‑page site. For multi‑page sites,
+                  just message me on Fiverr and I’ll create a custom offer.
+                </span>
+              </li>
+              <li>
+                <span class="cta-step-badge">3</span>
+                <span>
+                  <strong>Send me your details.</strong><br />
+                  On Fiverr, tell me about your business, what you want the website to do,
+                  and any special features you need. I’ll reply with a clear plan and start designing.
+                </span>
+              </li>
+            </ul>
+
+            <button
+              class="btn-primary btn-pressable"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              Open my Fiverr gig & get started
+            </button>
+
+            <p style="font-size:0.78rem;color:var(--text-muted);margin-top:8px;">
+              <strong>All payments, messages, and deliveries happen on Fiverr.</strong>
+              That keeps everything organised, safe, and easy for both of us.
+            </p>
+          </div>
+
+          <aside class="cta-side-card hover-lift">
+            <div class="cta-side-highlight chip-pop">
+              <span class="cta-side-dot"></span>
+              <span>Why this works well for clients</span>
+            </div>
+
+            <p style="margin:0 0 8px;">
+              I keep the process <strong>simple, clear, and friendly</strong>. Even if you’re not “technical”,
+              you’ll always know what we’re doing.
+            </p>
+
+            <ul class="cta-side-list">
+              <li>
+                <span class="cta-side-icon">★</span>
+                <span><strong>Organised workflow</strong> – Fiverr keeps all files, messages, and versions in one place.</span>
+              </li>
+              <li>
+                <span class="cta-side-icon">★</span>
+                <span><strong>Unlimited revisions</strong> – I update your page until you’re happy with every detail.</span>
+              </li>
+              <li>
+                <span class="cta-side-icon">★</span>
+                <span><strong>High value, low price</strong> – I’m building my portfolio and reviews, so I give you a lot for what you pay.</span>
+              </li>
+              <li>
+                <span class="cta-side-icon">★</span>
+                <span><strong>Always improving</strong> – I’m constantly learning new design and marketing techniques to make my work better.</span>
+              </li>
+            </ul>
+
+            <div class="cta-side-footer">
+              <strong>Have an idea for a one‑page or multi‑page site?</strong><br />
+              Contact me on Fiverr, share your vision, and we’ll turn it into a clean, modern website.
+            </div>
+
+            <button
+              class="pricing-cta btn-pressable"
+              style="margin-top:8px;"
+              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+            >
+              Message me on Fiverr
+            </button>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Armin – Young Web Designer. One‑page orders via Fiverr.</div>
+      <div class="footer-links">
+        <a href="#offer">What I Offer</a>
+        <span>•</span>
+        <a href="#audience">Is This for You?</a>
+        <span>•</span>
+        <a href="#pricing">Pricing</a>
+        <span>•</span>
+        <a href="https://www.fiverr.com/s/bdX1vXm" target="_blank" rel="noopener noreferrer">Order on Fiverr</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // On-scroll animations: add .visible to .fade-in-up when they enter the viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+
+    document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
+  </script>
+</body>
+</html>
