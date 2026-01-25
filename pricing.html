@@ -6,8 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Simple, clear pricing for one-page and multi-page websites. All packages include unlimited revisions. Pay safely on Fiverr."
+    content="Simple, clear pricing for one-page and multi-page websites. Unlimited revisions. Pay safely via Zelle only after you're 100% satisfied."
   />
+  <!-- Same design language as index -->
   <style>
     :root{
       --bg:#020617;
@@ -17,9 +18,9 @@
       --text-main:#f9fafb;
       --text-muted:#9ca3af;
       --card:#020617;
-      --radius-lg:20px;
+      --radius-lg:22px;
       --radius-pill:999px;
-      --shadow-soft:0 26px 60px rgba(15,23,42,0.9);
+      --shadow-soft:0 26px 70px rgba(15,23,42,0.95);
       --transition-fast:0.18s ease-out;
     }
     *{box-sizing:border-box;}
@@ -36,207 +37,92 @@
     }
     a{color:inherit;text-decoration:none;}
     main{min-height:100vh;display:flex;flex-direction:column;}
-    .page{max-width:1120px;margin:0 auto;padding:24px 20px 72px;}
-    @media (min-width:960px){.page{padding:32px 24px 96px;}}
+    .page{max-width:1120px;margin:0 auto;padding:20px 16px 80px;}
+    @media (min-width:900px){.page{padding:32px 24px 110px;}}
 
-    /* ANIMATIONS */
-    .hover-lift{
-      transition:transform var(--transition-fast),box-shadow var(--transition-fast),
-        background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);
-      will-change:transform,box-shadow,filter;
-    }
-    .hover-lift:hover{
-      transform:translateY(-4px);
-      box-shadow:0 26px 70px rgba(15,23,42,0.95);
-      filter:brightness(1.02);
-    }
-    .btn-pressable{
-      transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);
-      will-change:transform,box-shadow;
-    }
-    .btn-pressable:active{
-      transform:translateY(1px) scale(0.98);
-      box-shadow:0 12px 30px rgba(15,23,42,0.9);
-      filter:brightness(0.97);
-    }
-    .fade-in-up{
-      opacity:0;
-      transform:translateY(18px);
-      transition:opacity 0.6s ease-out,transform 0.6s ease-out;
-    }
-    .fade-in-up.visible{
-      opacity:1;
-      transform:translateY(0);
-    }
+    .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow,filter;}
+    .hover-lift:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft);filter:brightness(1.02);}
+    .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow;}
+    .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 12px 30px rgba(15,23,42,0.9);filter:brightness(0.97);}
+    .fade-in-up{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .fade-in-up.visible{opacity:1;transform:translateY(0);}
 
-    /* NAV */
-    .nav{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:18px;
-      margin-bottom:32px;
-    }
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;}
     .nav-left{display:flex;align-items:center;gap:10px;}
-    .brand-mark{
-      width:34px;height:34px;border-radius:14px;
-      background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);
-      padding:2px;
-      box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);
-    }
-    .brand-mark-inner{
-      width:100%;height:100%;border-radius:11px;
-      background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);
-      display:flex;align-items:center;justify-content:center;
-      color:#e5f4ff;font-size:15px;font-weight:700;letter-spacing:0.06em;
-    }
+    .brand-mark{width:36px;height:36px;border-radius:16px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:13px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:16px;font-weight:700;letter-spacing:0.06em;}
     .brand-text{display:flex;flex-direction:column;gap:2px;}
-    .brand-title{font-size:17px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
-    .brand-sub{font-size:12px;color:var(--text-muted);}
-    .nav-links{
-      display:none;gap:18px;font-size:13px;
-      text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);
-    }
+    .brand-title{font-size:18px;font-weight:650;letter-spacing:0.08em;text-transform:uppercase;}
+    .brand-sub{font-size:13px;color:var(--text-muted);}
+    .nav-links{display:none;gap:16px;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
     .nav-links a{position:relative;padding-bottom:4px;}
-    .nav-links a::after{
-      content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;
-      background:linear-gradient(90deg,var(--accent),var(--accent-alt));
-      transition:width var(--transition-fast);
-    }
+    .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
     .nav-links a:hover::after{width:100%;}
-    .nav-cta{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:8px 18px;border-radius:var(--radius-pill);
-      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
-      box-shadow:0 18px 42px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);
-      color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;
-    }
-    .nav-cta span.badge{
-      padding:3px 9px;border-radius:999px;font-size:10px;
-      text-transform:uppercase;letter-spacing:0.18em;
-      background:rgba(15,23,42,0.98);color:#e0f2fe;
-    }
-    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 18px 40px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
+    .nav-cta span.badge{padding:3px 9px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:3px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:16px;height:2px;border-radius:999px;background:#e5e7eb;}
+    .nav-links-mobile{display:none;flex-direction:column;gap:8px;margin-top:10px;padding:10px 12px;border-radius:16px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links-mobile a{padding:4px 0;}
+    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
 
-    /* HEADER W/ TYPING */
-    .header-block{margin-bottom:40px;}
-    .section-label{
-      font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;
-    }
-    .page-title{font-size:1.8rem;margin:0 0 8px;letter-spacing:-0.04em;}
-    .typing-wrap{
-      display:inline-flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;
-      font-size:0.94rem;color:var(--text-muted);
-    }
+    section{margin-bottom:70px;}
+
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
+    .page-title{font-size:1.9rem;margin:0 0 10px;letter-spacing:-0.04em;}
+    .typing-wrap{display:inline-flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;font-size:0.98rem;color:var(--text-muted);}
     .typing-prefix{color:var(--text-muted);}
-    .typing-text{
-      color:#e5e7eb;min-height:1.3em;white-space:nowrap;
-      overflow:hidden;border-right:2px solid var(--accent);
-    }
-    @keyframes caret-blink{
-      0%,49%{border-color:var(--accent);}
-      50%,100%{border-color:transparent;}
-    }
+    .typing-text{color:#e5e7eb;min-height:1.4em;white-space:nowrap;overflow:hidden;border-right:2px solid var(--accent);}
+    @keyframes caret-blink{0%,49%{border-color:var(--accent);}50%,100%{border-color:transparent;}}
     .typing-text.typing-active{animation:caret-blink 0.9s step-end infinite;}
+    .header-sub{font-size:0.96rem;color:var(--text-muted);max-width:34rem;margin-bottom:18px;}
 
-    .header-sub{
-      font-size:0.9rem;color:var(--text-muted);max-width:32rem;margin-bottom:16px;
-    }
-
-    /* PRICING GRID */
-    section{margin-bottom:60px;}
-    .pricing-grid{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-      margin-top:12px;
-    }
+    .pricing-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:14px;}
     @media (max-width:1000px){.pricing-grid{grid-template-columns:minmax(0,1fr);}}
 
     .pricing-card{
       border-radius:18px;
-      padding:16px 14px 14px;
-      background:
-        radial-gradient(circle at 0 0,rgba(34,211,238,0.2),transparent 60%),
-        linear-gradient(150deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
+      padding:18px 16px 16px;
+      background:radial-gradient(circle at 0 0,rgba(34,211,238,0.2),transparent 60%),linear-gradient(150deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
       border:1px solid rgba(148,163,184,0.6);
-      box-shadow:0 22px 60px rgba(15,23,42,1);
+      box-shadow:var(--shadow-soft);
       position:relative;
       overflow:hidden;
+      font-size:0.95rem;
     }
     .pricing-card.featured{
       border-color:rgba(34,211,238,0.95);
       box-shadow:0 30px 80px rgba(34,211,238,0.7),0 0 70px rgba(34,211,238,0.7);
     }
-    .pricing-badge{
-      position:absolute;top:10px;right:10px;
-      font-size:10px;text-transform:uppercase;letter-spacing:0.18em;
-      padding:3px 8px;border-radius:999px;
-      background:rgba(34,211,238,0.2);border:1px solid rgba(34,211,238,0.95);
-      color:#e0f2fe;
-    }
-    .pricing-name{
-      font-size:0.88rem;text-transform:uppercase;letter-spacing:0.18em;
-      color:var(--text-muted);margin-bottom:3px;
-    }
-    .pricing-title{font-size:1.08rem;margin-bottom:4px;}
-    .pricing-sub{font-size:0.82rem;color:var(--text-muted);margin-bottom:10px;}
+    .pricing-badge{position:absolute;top:10px;right:10px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;padding:4px 8px;border-radius:999px;background:rgba(34,211,238,0.2);border:1px solid rgba(34,211,238,0.95);color:#e0f2fe;}
+    .pricing-name{font-size:0.9rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-bottom:4px;}
+    .pricing-title{font-size:1.12rem;margin-bottom:4px;}
+    .pricing-sub{font-size:0.86rem;color:var(--text-muted);margin-bottom:10px;}
     .pricing-price{display:flex;align-items:baseline;gap:4px;margin-bottom:8px;}
-    .pricing-price-main{font-size:1.7rem;font-weight:800;}
-    .pricing-price-currency{font-size:0.96rem;color:var(--text-muted);}
-    .pricing-price-note{font-size:0.8rem;color:var(--text-muted);}
-    .pricing-meta{font-size:0.78rem;color:var(--text-muted);margin-bottom:8px;}
-    .pricing-list{
-      list-style:none;padding:0;margin:0 0 12px;
-      font-size:0.86rem;color:#e5e7eb;display:grid;gap:6px;
-    }
+    .pricing-price-main{font-size:1.9rem;font-weight:800;}
+    .pricing-price-currency{font-size:1rem;color:var(--text-muted);}
+    .pricing-price-note{font-size:0.82rem;color:var(--text-muted);}
+    .pricing-meta{font-size:0.82rem;color:var(--text-muted);margin-bottom:8px;}
+    .pricing-list{list-style:none;padding:0;margin:0 0 12px;font-size:0.9rem;color:#e5e7eb;display:grid;gap:6px;}
     .pricing-list li{display:flex;gap:6px;align-items:flex-start;}
-    .pricing-check{
-      width:14px;height:14px;border-radius:999px;
-      border:1px solid rgba(34,211,238,0.95);
-      display:flex;align-items:center;justify-content:center;
-      font-size:10px;color:#bae6fd;margin-top:1px;
-    }
-    .pricing-revisions{
-      font-size:0.8rem;color:#e5e7eb;
-      padding-top:6px;border-top:1px dashed rgba(148,163,184,0.7);margin-bottom:8px;
-    }
-    .pricing-cta{
-      display:inline-flex;align-items:center;justify-content:center;
-      gap:7px;width:100%;padding:8px 0;border-radius:999px;
-      border:1px solid rgba(148,163,184,0.6);
-      background:rgba(15,23,42,0.98);
-      color:#e5e7eb;font-size:0.86rem;font-weight:600;cursor:pointer;
-    }
-    .pricing-card.featured .pricing-cta{
-      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
-      border-color:transparent;
-      color:#020617;
-    }
+    .pricing-check{width:14px;height:14px;border-radius:999px;border:1px solid rgba(34,211,238,0.95);display:flex;align-items:center;justify-content:center;font-size:10px;color:#bae6fd;margin-top:1px;}
+    .pricing-revisions{font-size:0.82rem;color:#e5e7eb;padding-top:6px;border-top:1px dashed rgba(148,163,184,0.7);margin-bottom:8px;}
+    .pricing-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:9px 0;border-radius:999px;border:1px solid rgba(148,163,184,0.6);background:rgba(15,23,42,0.98);color:#e5e7eb;font-size:0.9rem;font-weight:600;cursor:pointer;}
+    .pricing-card.featured .pricing-cta{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;color:#020617;}
 
-    .section-subnote{
-      margin-top:10px;font-size:0.8rem;color:var(--text-muted);
-    }
+    .section-subnote{margin-top:10px;font-size:0.82rem;color:var(--text-muted);}
     .section-subnote strong{color:#e5e7eb;}
 
-    /* 2-COLUMN CAPTION */
-    .two-col{
-      display:grid;
-      grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
-      gap:18px;
-      align-items:flex-start;
-    }
+    .two-col{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:20px;align-items:flex-start;}
     @media (max-width:900px){.two-col{grid-template-columns:minmax(0,1fr);}}
 
     .card-small{
       border-radius:var(--radius-lg);
-      padding:16px 16px 14px;
-      background:
-        radial-gradient(circle at 100% 0,rgba(34,211,238,0.24),transparent 60%),
-        linear-gradient(140deg,var(--card) 0,var(--card) 55%,var(--card) 100%);
+      padding:18px 16px 16px;
+      background:radial-gradient(circle at 100% 0,rgba(34,211,238,0.24),transparent 60%),linear-gradient(140deg,var(--card) 0,var(--card) 55%,var(--card) 100%);
       border:1px solid rgba(148,163,184,0.6);
-      box-shadow:0 22px 55px rgba(15,23,42,1);
-      font-size:0.86rem;
+      box-shadow:var(--shadow-soft);
+      font-size:0.92rem;
       color:#e5e7eb;
     }
 
@@ -248,21 +134,17 @@
       box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);
     }
 
-    /* FOOTER */
-    footer{
-      border-top:1px solid rgba(15,23,42,1);
-      margin-top:auto;
-      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 55%),#020617;
-    }
-    .footer-inner{
-      max-width:1120px;margin:0 auto;
-      padding:16px 20px 22px;
-      display:flex;justify-content:space-between;align-items:center;gap:10px;
-      font-size:0.8rem;color:var(--text-muted);
-    }
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 55%),#020617;}
+    .footer-inner{max-width:1120px;margin:0 auto;padding:16px 16px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.82rem;color:var(--text-muted);}
     @media (min-width:960px){.footer-inner{padding:18px 24px 26px;}}
     .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
     .footer-links a:hover{color:#e5e7eb;}
+
+    @media (max-width:600px){
+      .page-title{font-size:1.7rem;}
+      .pricing-card{padding:16px 14px;}
+      .card-small{padding:16px 14px;}
+    }
   </style>
 </head>
 <body>
@@ -271,7 +153,7 @@
       <!-- NAV -->
       <header class="nav fade-in-up">
         <div class="nav-left">
-          <a href="index.html" class="brand-mark hover-lift">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
             <div class="brand-mark-inner">A</div>
           </a>
           <div class="brand-text">
@@ -279,23 +161,33 @@
             <div class="brand-sub">Modern, affordable web design</div>
           </div>
         </div>
-        <nav class="nav-links">
+        <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
-          <a href="contact.html">Start</a>
+          <a href="contact.html">Contact</a>
         </nav>
         <button
           class="nav-cta btn-pressable"
-          onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+          onclick="window.location.href='contact.html'"
         >
-          <span>Order on Fiverr</span>
-          <span class="badge">Secure</span>
+          <span>Text to start</span>
+          <span class="badge">No upfront payment</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
         </button>
       </header>
 
-      <!-- HEADER + TYPING -->
-      <section class="header-block fade-in-up">
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- HEADER -->
+      <section class="fade-in-up">
         <div class="section-label">Pricing</div>
         <h1 class="page-title">Simple packages for one‑page and multi‑page sites.</h1>
 
@@ -307,20 +199,22 @@
         <p class="header-sub">
           All packages include responsive design, content upload, and
           <strong style="color:#e5e7eb;">unlimited revisions</strong>.
-          You pay safely through Fiverr, and we improve your site until it feels right.
+          You only pay via <strong>Zelle</strong> once you’re <strong>100% satisfied</strong> with the final result.
         </p>
       </section>
 
       <!-- ONE‑PAGE PRICING -->
       <section class="fade-in-up">
-        <div class="section-label">One‑page websites</div>
-        <h2 class="section-title" style="margin:0 0 6px;">One strong page, three simple options.</h2>
-        <p class="section-sub" style="margin-bottom:14px;">
-          Perfect for launches, small businesses, and non‑profits that want everything important on one clean page.
-        </p>
+        <div>
+          <div class="section-label">One‑page websites</div>
+          <h2 class="section-title" style="margin:0 0 6px;">One focused page, three simple options.</h2>
+          <p class="section-sub">
+            Perfect for launches, small businesses, and non‑profits that want everything important
+            on one clean, easy‑to‑read page.
+          </p>
+        </div>
 
         <div class="pricing-grid" aria-label="One-page pricing packages">
-          <!-- BASIC -->
           <article class="pricing-card hover-lift">
             <div class="pricing-name">Basic</div>
             <div class="pricing-title">Coming soon / landing page</div>
@@ -339,24 +233,23 @@
 
             <ul class="pricing-list">
               <li><span class="pricing-check">✓</span><span>Clean, modern layout tailored to your message.</span></li>
-              <li><span class="pricing-check">✓</span><span>Basic contact form or direct contact link.</span></li>
-              <li><span class="pricing-check">✓</span><span>Responsive design for phones, tablets and desktops.</span></li>
+              <li><span class="pricing-check">✓</span><span>Basic contact details or simple form.</span></li>
+              <li><span class="pricing-check">✓</span><span>Responsive design for phones, tablets, and desktops.</span></li>
               <li><span class="pricing-check">✓</span><span>I place your text and images for you.</span></li>
             </ul>
 
             <div class="pricing-revisions">
-              Unlimited revisions until your one‑page layout is ready to launch.
+              Unlimited revisions until your one‑page layout is ready to show to the world.
             </div>
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Order Basic on Fiverr
+              Start with Basic (text to begin)
             </button>
           </article>
 
-          <!-- STANDARD -->
           <article class="pricing-card featured hover-lift">
             <div class="pricing-badge">Most popular</div>
             <div class="pricing-name">Standard</div>
@@ -382,18 +275,17 @@
             </ul>
 
             <div class="pricing-revisions">
-              Unlimited revisions – we refine text, layout, and structure until it feels right.
+              Unlimited revisions – we refine text, layout, and structure together.
             </div>
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Order Standard on Fiverr
+              Choose Standard (text to begin)
             </button>
           </article>
 
-          <!-- PREMIUM -->
           <article class="pricing-card hover-lift">
             <div class="pricing-name">Premium</div>
             <div class="pricing-title">Multiple services / more sections</div>
@@ -423,9 +315,9 @@
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Order Premium on Fiverr
+              Go Premium (text to begin)
             </button>
           </article>
         </div>
@@ -433,18 +325,19 @@
 
       <!-- MULTI‑PAGE PRICING -->
       <section class="fade-in-up">
-        <div class="section-label">Multi‑page “luxury” sites</div>
-        <h2 class="section-title" style="margin:0 0 6px;">More pages, more space to tell your story.</h2>
-        <p class="section-sub" style="margin-bottom:14px;">
-          When one page isn’t enough, I design simple multi‑page sites that still feel clean and easy to use.
-        </p>
+        <div>
+          <div class="section-label">Multi‑page “luxury” sites</div>
+          <h2 class="section-title" style="margin:0 0 6px;">More pages, more space to tell your story.</h2>
+          <p class="section-sub">
+            When one page isn’t enough, I design simple multi‑page sites that still feel clean, modern, and easy to use.
+          </p>
+        </div>
 
         <div class="pricing-grid" aria-label="Multi-page pricing packages">
-          <!-- STARTER MULTI -->
           <article class="pricing-card hover-lift">
             <div class="pricing-name">Starter multi‑page</div>
             <div class="pricing-title">2‑page website</div>
-            <div class="pricing-sub">Great when you want a bit more space than one page.</div>
+            <div class="pricing-sub">Perfect when you want a bit more space than one page.</div>
 
             <div class="pricing-price">
               <span class="pricing-price-currency">$</span>
@@ -458,25 +351,24 @@
             </div>
 
             <ul class="pricing-list">
-              <li><span class="pricing-check">✓</span><span>Home page focused on first impression and key action.</span></li>
+              <li><span class="pricing-check">✓</span><span>Home page focused on first impression and main call‑to‑action.</span></li>
               <li><span class="pricing-check">✓</span><span>Second page for details like services, story, or menu.</span></li>
               <li><span class="pricing-check">✓</span><span>Consistent design and navigation across both pages.</span></li>
               <li><span class="pricing-check">✓</span><span>Responsive design and content upload included.</span></li>
             </ul>
 
             <div class="pricing-revisions">
-              Unlimited revisions across both pages until everything feels just right.
+              Unlimited revisions across both pages until everything feels right.
             </div>
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Request 2‑page quote on Fiverr
+              Start 2‑page project (text to begin)
             </button>
           </article>
 
-          <!-- GROWTH MULTI -->
           <article class="pricing-card featured hover-lift">
             <div class="pricing-badge">Great for growing teams</div>
             <div class="pricing-name">Growth site</div>
@@ -507,13 +399,12 @@
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Discuss a 3–4 page site on Fiverr
+              Plan a 3–4 page site (text to begin)
             </button>
           </article>
 
-          <!-- CUSTOM MULTI -->
           <article class="pricing-card hover-lift">
             <div class="pricing-name">Custom multi‑page</div>
             <div class="pricing-title">Bigger or more unique sites</div>
@@ -525,13 +416,13 @@
 
             <div class="pricing-meta">
               For larger structures (more pages, special flows, or custom tools),
-              I’ll create a project plan and quote directly on Fiverr.
+              I’ll create a project plan and quote directly after we talk.
             </div>
 
             <ul class="pricing-list">
               <li><span class="pricing-check">✓</span><span>Custom page count and structure for your goals.</span></li>
               <li><span class="pricing-check">✓</span><span>Space for case studies, blog, resources or documentation.</span></li>
-              <li><span class="pricing-check">✓</span><span>Advanced features planned around your audience.</span></li>
+              <li><span class="pricing-check">✓</span><span>Advanced features designed around your audience.</span></li>
               <li><span class="pricing-check">✓</span><span>We grow the site in stages so it never feels overwhelming.</span></li>
             </ul>
 
@@ -541,48 +432,45 @@
 
             <button
               class="pricing-cta btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              onclick="window.location.href='contact.html'"
             >
-              Message me for a custom quote
+              Ask for a custom quote (text to begin)
             </button>
           </article>
         </div>
 
         <p class="section-subnote">
-          <strong>How multi‑page pricing works:</strong>
-          final cost depends on the exact number of pages, features, and content.
-          The numbers above are starting points – I’ll always be clear about price before we begin.
+          <strong>How payments work:</strong> we agree on a price, I design and build your site,
+          we go through revisions together, and <strong>you only send Zelle once you confirm you’re happy</strong>.
         </p>
       </section>
 
-      <!-- HELP / CTA SECTION -->
+      <!-- HELP / CTA -->
       <section class="fade-in-up">
         <div class="two-col">
           <article class="card-small hover-lift">
-            <h3 style="margin:0 0 8px;font-size:1.05rem;">Not sure if you need one page or several?</h3>
-            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              You don’t have to decide everything alone. Tell me about your idea or organisation,
-              and I’ll suggest a one‑page or multi‑page setup that fits your goals and budget.
+            <h3 style="margin:0 0 8px;font-size:1.08rem;">Not sure which option to choose?</h3>
+            <p style="margin:0 0 10px;font-size:0.94rem;color:var(--text-muted);">
+              You don’t have to figure it out alone. Text me, tell me about your business or idea,
+              and I’ll recommend a one‑page or multi‑page setup that makes sense for your budget and goals.
             </p>
             <button
               class="btn-primary btn-pressable"
               onclick="window.location.href='contact.html'"
             >
-              Ask me for a recommendation
+              Ask for a recommendation
             </button>
           </article>
 
           <article class="card-small hover-lift">
-            <h3 style="margin:0 0 8px;font-size:1.05rem;">Where payments and work happen</h3>
-            <p style="margin:0 0 8px;font-size:0.86rem;color:var(--text-muted);">
-              All orders, messages, and deliveries go through Fiverr. That keeps everything safe,
-              organised, and easy to track.
+            <h3 style="margin:0 0 8px;font-size:1.08rem;">Zelle payments & trust</h3>
+            <p style="margin:0 0 8px;font-size:0.9rem;color:var(--text-muted);">
+              I use <strong>Zelle</strong> because it’s fast and convenient – but you don’t send anything
+              until we’ve completed the design and you’re satisfied.
             </p>
-            <p style="margin:0;font-size:0.8rem;color:var(--text-muted);">
-              Use any “Order on Fiverr” button or
-              <a href="https://www.fiverr.com/s/bdX1vXm" target="_blank" rel="noopener noreferrer"
-                 style="color:#e0f2fe;text-decoration:underline;">open my gig directly</a>
-              to start your project.
+            <p style="margin:0;font-size:0.86rem;color:var(--text-muted);">
+              We’ll agree on a price first, I’ll show you progress along the way, and we’ll only
+              move to payment when you say “yes, this is it”.
             </p>
           </article>
         </div>
@@ -600,14 +488,21 @@
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="contact.html">Start</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    navToggle.addEventListener("click", () => {
+      const open = navMobile.style.display === "flex";
+      navMobile.style.display = open ? "none" : "flex";
+    });
 
     // On-scroll animations
     const observer = new IntersectionObserver(
@@ -623,8 +518,8 @@
     );
     document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
 
-    // Typing effect for pricing header
-    const typingEl = document.getElementById("typing-text");
+    // Typing effect
+    const tEl = document.getElementById("typing-text");
     const phrases = [
       "clear, so you always know what you’re paying for.",
       "friendly for small businesses and non‑profits.",
@@ -639,18 +534,18 @@
       const current = phrases[pIndex];
       if(typing){
         if(cIndex <= current.length){
-          typingEl.textContent = current.slice(0,cIndex);
+          tEl.textContent = current.slice(0,cIndex);
           cIndex++;
-          setTimeout(typeLoop,40);
+          setTimeout(typeLoop,45);
         }else{
           typing = false;
           setTimeout(typeLoop,1600);
         }
       }else{
         if(cIndex > 0){
-          typingEl.textContent = current.slice(0,cIndex-1);
+          tEl.textContent = current.slice(0,cIndex-1);
           cIndex--;
-          setTimeout(typeLoop,24);
+          setTimeout(typeLoop,28);
         }else{
           typing = true;
           pIndex = (pIndex+1)%phrases.length;
@@ -659,7 +554,7 @@
       }
     }
 
-    window.addEventListener("load",()=>{ setTimeout(typeLoop,400); });
+    window.addEventListener("load",()=>{ setTimeout(typeLoop,450); });
   </script>
 </body>
 </html>
