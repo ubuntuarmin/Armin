@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Customization Options – Armin Studio </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Template page for customization options. Edit this page to list what can be customized for websites, logos, and more."
+  />
+  <style>
+    :root{
+      --bg:#020617;
+      --accent:#22d3ee;
+      --accent-strong:#0ea5e9;
+      --accent-alt:#6366f1;
+      --text-main:#f9fafb;
+      --text-muted:#9ca3af;
+      --card:#020617;
+      --radius-lg:28px;
+      --radius-pill:999px;
+      --shadow-soft:0 30px 80px rgba(15,23,42,0.95);
+      --transition-fast:0.18s ease-out;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;scroll-behavior:smooth;background:#020617;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(37,99,235,0.35),transparent 55%),
+        radial-gradient(circle at 100% 10%,rgba(34,211,238,0.28),transparent 55%),
+        radial-gradient(circle at 50% 100%,rgba(15,23,42,0.8),transparent 60%),
+        var(--bg);
+      color:var(--text-main);
+      -webkit-font-smoothing:antialiased;
+    }
+    a{color:inherit;text-decoration:none;}
+    main{min-height:100vh;display:flex;flex-direction:column;}
+    .page{max-width:1180px;margin:0 auto;padding:22px 16px 96px;}
+    @media (min-width:960px){.page{padding:32px 28px 140px;}}
+
+    /* ANIMATIONS & INTERACTIONS */
+    .hover-lift{
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        border-color var(--transition-fast),
+        filter var(--transition-fast);
+      will-change:transform,box-shadow,filter;
+    }
+    .hover-lift:hover{
+      transform:translateY(-6px) translateZ(0);
+      box-shadow:var(--shadow-soft);
+      filter:brightness(1.03);
+    }
+    .hover-glow{
+      transition:box-shadow var(--transition-fast),border-color var(--transition-fast),background var(--transition-fast),transform var(--transition-fast);
+    }
+    .hover-glow:hover{
+      box-shadow:0 0 32px rgba(34,211,238,0.65);
+      border-color:rgba(34,211,238,0.9);
+      transform:translateY(-4px);
+    }
+    .btn-pressable{
+      transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);
+      will-change:transform,box-shadow;
+    }
+    .btn-pressable:active{
+      transform:translateY(1px) scale(0.98);
+      box-shadow:0 14px 40px rgba(15,23,42,0.9);
+      filter:brightness(0.97);
+    }
+    .fade-in-up{
+      opacity:0;
+      transform:translateY(26px);
+      transition:opacity 0.7s ease-out,transform 0.7s ease-out;
+    }
+    .fade-in-up.visible{
+      opacity:1;
+      transform:translateY(0);
+    }
+
+    /* NAV */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
+    .nav-left{display:flex;align-items:center;gap:12px;}
+    .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.5);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:16px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:17px;font-weight:800;letter-spacing:0.06em;}
+    .brand-text{display:flex;flex-direction:column;gap:2px;}
+    .brand-title{font-size:19px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+    .brand-sub{font-size:13px;color:var(--text-muted);}
+    .nav-links{display:none;gap:20px;font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links a{position:relative;padding-bottom:4px;}
+    .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
+    .nav-links a:hover::after{width:100%;}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 20px 48px rgba(34,211,238,0.8),0 0 40px rgba(34,211,238,0.7);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
+    .nav-cta span.badge{padding:3px 10px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:4px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:18px;height:2px;border-radius:999px;background:#e5e7eb;}
+    .nav-links-mobile{display:none;flex-direction:column;gap:10px;margin-top:10px;padding:12px 14px;border-radius:18px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links-mobile a{padding:4px 0;}
+    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
+
+    section{margin-bottom:90px;}
+
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
+    .page-title{font-size:2rem;margin:0 0 10px;letter-spacing:-0.04em;}
+    .section-sub{font-size:1.02rem;color:var(--text-muted);max-width:40rem;margin-bottom:18px;}
+
+    .strip{
+      border-radius:var(--radius-lg);
+      padding:26px 22px 24px;
+      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.26),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
+      border:1px solid rgba(148,163,184,0.6);
+      box-shadow:var(--shadow-soft);
+      font-size:1.02rem;
+      color:#e5e7eb;
+    }
+
+    .strip-title{font-size:1.45rem;margin:0 0 10px;}
+    .strip-sub{font-size:1rem;color:var(--text-muted);margin:0 0 12px;}
+
+    .grid-3{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+      margin-top:14px;
+    }
+    @media (max-width:960px){.grid-3{grid-template-columns:minmax(0,1fr);}}
+
+    .tile{
+      border-radius:24px;
+      padding:22px 18px 18px;
+      background:radial-gradient(circle at 0 0,rgba(34,211,238,0.18),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
+      border:1px solid rgba(148,163,184,0.55);
+      box-shadow:var(--shadow-soft);
+      font-size:1rem;
+      color:#e5e7eb;
+    }
+
+    .tile-title{font-size:1.1rem;margin:0 0 6px;}
+    .tile-sub{font-size:0.96rem;color:var(--text-muted);margin:0;}
+
+    .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:0.96rem;}
+    .pill-tag{padding:7px 13px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.96);color:#e5e7eb;}
+    .pill-tag.accent{border-color:rgba(34,211,238,0.9);color:#e0f2fe;}
+
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:11px 24px;border-radius:var(--radius-pill);
+      border:0;cursor:pointer;font-weight:700;font-size:15px;
+      color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);
+    }
+
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.2),transparent 55%),#020617;}
+    .footer-inner{max-width:1180px;margin:0 auto;padding:18px 16px 26px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);}
+    @media (min-width:960px){.footer-inner{padding:20px 28px 30px;}}
+    .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
+    .footer-links a:hover{color:#e5e7eb;}
+
+    @media (max-width:720px){
+      .page-title{font-size:1.8rem;}
+      .strip{padding:22px 18px 20px;}
+      .tile{padding:18px 16px 16px;}
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="page">
+      <!-- NAV -->
+      <header class="nav fade-in-up">
+        <div class="nav-left">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
+            <div class="brand-mark-inner">A</div>
+          </a>
+          <div class="brand-text">
+            <div class="brand-title">Armin Studio</div>
+            <div class="brand-sub">Modern, affordable web design</div>
+          </div>
+        </div>
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <button
+          class="nav-cta btn-pressable"
+          onclick="window.location.href='contact.html'"
+        >
+          <span>Text to start</span>
+          <span class="badge">Customize everything</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </button>
+      </header>
+
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- INTRO EXPLANATION (TEMPLATE TEXT TO EDIT) -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <div class="section-label">Customization</div>
+          <h1 class="page-title">Everything you can customize (template).</h1>
+          <p class="section-sub">
+            This page is a <strong>template</strong>. You can edit the headings and text below to describe
+            exactly what your clients can customize. It’s already long, scrollable, and animated – so you
+            only have to fill in the details.
+          </p>
+          <p class="section-sub" style="margin-bottom:0;">
+            Use it to talk about colors, fonts, sections, forms, animations, layout styles, and anything else
+            you want people to know they can change.
+          </p>
+        </article>
+      </section>
+
+      <!-- SECTION 1 – LAYOUT & STRUCTURE -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">1. Page layout & structure</h2>
+          <p class="strip-sub">
+            (Template) Explain how clients can customize the layout of their pages:
+            number of sections, order of sections, one‑page vs multi‑page, etc.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Section order</h3>
+              <p class="tile-sub">
+                (Template) Describe how they can change the order of hero, about, services, pricing, FAQs, contact, etc.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Page structure</h3>
+              <p class="tile-sub">
+                (Template) Explain one‑page vs multi‑page layouts and what is customizable there.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Width & spacing</h3>
+              <p class="tile-sub">
+                (Template) Talk about big text, big spacing, and how close or spread out content can be.
+              </p>
+            </div>
+          </div>
+
+          <div class="pill-row">
+            <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
+              See how this affects pricing →
+            </span>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 2 – COLORS & BRANDING -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">2. Colors, fonts & branding</h2>
+          <p class="strip-sub">
+            (Template) Use this section to explain how colors, fonts, and overall brand style can be customized.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Color palette</h3>
+              <p class="tile-sub">
+                (Template) Explain how clients can choose brand colors for backgrounds, buttons, and highlights.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Typography</h3>
+              <p class="tile-sub">
+                (Template) Describe options for font style: clean/modern, bold, soft, etc.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Logo placement</h3>
+              <p class="tile-sub">
+                (Template) Talk about where logos can go: header, footer, center hero, etc.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 3 – CONTENT BLOCKS -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">3. Content sections & blocks</h2>
+          <p class="strip-sub">
+            (Template) Describe how specific sections can be turned on/off or edited to fit each project.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Hero section</h3>
+              <p class="tile-sub">
+                (Template) Options for main headline, background style, and first call‑to‑action.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">About / story</h3>
+              <p class="tile-sub">
+                (Template) How the “about you” section can change based on what you want to highlight.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Services / features</h3>
+              <p class="tile-sub">
+                (Template) Number of items, icons, and descriptions – all customizable.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 4 – FORMS & INTERACTIONS -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">4. Forms & interactive elements</h2>
+          <p class="strip-sub">
+            (Template) Use this area to show what parts of forms and interactive tools can be changed.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Contact forms</h3>
+              <p class="tile-sub">
+                (Template) Fields, questions, and confirmation messages can be fully customized.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Calculators & logic</h3>
+              <p class="tile-sub">
+                (Template) Explain what parts of calculators or logic flows can be edited.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Chat / feedback</h3>
+              <p class="tile-sub">
+                (Template) Describe how chat boxes or feedback widgets can be adapted.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 5 – ANIMATION & MOTION -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">5. On‑scroll animations & hover effects</h2>
+          <p class="strip-sub">
+            (Template) Explain how strong or how subtle the motion can be.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Scroll animations</h3>
+              <p class="tile-sub">
+                (Template) Talk about fade‑in, slide‑up, and other section‑level animations.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Hover effects</h3>
+              <p class="tile-sub">
+                (Template) Buttons, cards, and links can glow, lift, or highlight on hover.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Speed & intensity</h3>
+              <p class="tile-sub">
+                (Template) Explain how animation speed and amount can be tuned: calm, medium, or energetic.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 6 – LOGOS (TEMPLATE TEXT) -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">6. Logo customization</h2>
+          <p class="strip-sub">
+            (Template) Use this section to show exactly what logo parts are customizable: symbol, fonts, color, etc.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Icon style</h3>
+              <p class="tile-sub">
+                (Template) Simple icons, monograms, or minimal shapes that match your brand.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Text style</h3>
+              <p class="tile-sub">
+                (Template) Capitalisation, letter spacing, bold vs light – all adjustable.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Usage versions</h3>
+              <p class="tile-sub">
+                (Template) Light/dark versions for website, social media, and print.
+              </p>
+            </div>
+          </div>
+
+          <p class="section-sub" style="margin-top:18px;">
+            <strong>Note:</strong> For your real site, you can also remind people that logo work is most likely free
+            and they should text to confirm.
+          </p>
+        </article>
+      </section>
+
+      <!-- SECTION 7 – FLYERS (TEMPLATE TEXT) -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">7. Flyer & poster customization</h2>
+          <p class="strip-sub">
+            (Template) Explain how flyer size, layout, and content can be adjusted.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Size & format</h3>
+              <p class="tile-sub">
+                (Template) A4, Letter, social‑media sizes, etc., depending on where it will be used.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Information focus</h3>
+              <p class="tile-sub">
+                (Template) Emphasise date, price, location, or offer – based on what matters most.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Style & visuals</h3>
+              <p class="tile-sub">
+                (Template) Calm, minimal, loud, colourful – matching your overall branding.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 8 – MOBILE / DESKTOP BEHAVIOUR -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">8. Mobile, tablet & desktop behaviour</h2>
+          <p class="strip-sub">
+            (Template) Use this to explain responsive options and what changes per device.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Mobile layout</h3>
+              <p class="tile-sub">
+                (Template) Stacked sections, large tap‑targets, and big text for phones.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Tablet layout</h3>
+              <p class="tile-sub">
+                (Template) Two‑column layouts where they make sense, with comfortable spacing.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Desktop layout</h3>
+              <p class="tile-sub">
+                (Template) Wider content, optional side‑by‑side blocks, and more room for detail.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 9 – TEXT & LANGUAGE -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">9. Text, language & tone</h2>
+          <p class="strip-sub">
+            (Template) Explain how much of the writing you can help with and how “formal” or “casual” the tone can be.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Tone of voice</h3>
+              <p class="tile-sub">
+                (Template) Friendly, professional, playful, serious – tailored to the audience.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Headlines & buttons</h3>
+              <p class="tile-sub">
+                (Template) Strong calls‑to‑action and main messages can be refined together.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Multi‑language</h3>
+              <p class="tile-sub">
+                (Template) Mention if you support content in more than one language.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 10 – PROCESS & REVISIONS -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">10. Process & revision rounds</h2>
+          <p class="strip-sub">
+            (Template) This is where you explain how customization actually happens – steps and revision rules.
+          </p>
+
+          <div class="grid-3">
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Step‑by‑step phases</h3>
+              <p class="tile-sub">
+                (Template) Planning → First version → Revisions → Final check.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">Unlimited revisions</h3>
+              <p class="tile-sub">
+                (Template) Remind clients you’ll keep adjusting until things feel right.
+              </p>
+            </div>
+            <div class="tile hover-glow">
+              <h3 class="tile-title">What’s included</h3>
+              <p class="tile-sub">
+                (Template) Clarify what is free to change and what might cost extra, if anything.
+              </p>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <!-- FINAL CTA -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Ready to customize your own project?</h2>
+          <p class="strip-sub">
+            (Template) Invite people to text you if they want to know which of these customization options
+            you’ll include for them.
+          </p>
+
+          <p style="margin:0 0 10px;font-size:1.02rem;">
+            Text number:
+            <strong style="color:#e5e7eb;">+1‑EXAMPLE NUMBER</strong>
+          </p>
+
+          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+            <button
+              class="btn-primary btn-pressable"
+              onclick="window.location.href='tel:+1EXAMPLENUMBER'"
+            >
+              Tap to text on your phone
+            </button>
+            <span style="font-size:0.96rem;color:var(--text-muted);">
+              Or learn more on the
+              <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='pricing.html'">
+                Pricing
+              </span>
+              and
+              <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='services.html'">
+                Services
+              </span>
+              pages.
+            </span>
+          </div>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Armin – Young Web Designer.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <span>•</span>
+        <a href="services.html">Services</a>
+        <span>•</span>
+        <a href="pricing.html">Pricing</a>
+        <span>•</span>
+        <a href="contact.html">Contact</a>
+        <span>•</span>
+        <a href="customization.html">Customization</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    navToggle.addEventListener("click", () => {
+      const open = navMobile.style.display === "flex";
+      navMobile.style.display = open ? "none" : "flex";
+    });
+
+    // On-scroll animations
+    const observer = new IntersectionObserver(
+      (entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {threshold:0.12}
+    );
+    document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
+  </script>
+</body>
+</html>
