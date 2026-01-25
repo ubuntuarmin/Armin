@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Modern, affordable web design for small businesses, new brands and non-profits. Professional one-page and multi-page websites built by a 14-year-old web designer."
+    content="Modern, affordable web design for small businesses, new brands and non-profits. Professional websites built by a 14-year-old web designer."
   />
   <style>
     :root {
@@ -17,7 +17,6 @@
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --card: #020617;
-      --border-subtle: #1f2937;
       --radius-lg: 20px;
       --radius-pill: 999px;
       --shadow-soft: 0 26px 60px rgba(15, 23, 42, 0.9);
@@ -114,13 +113,13 @@
       transform: translateY(0);
     }
 
-    /* NAV (shared) */
+    /* NAV */
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 18px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
 
     .nav-left {
@@ -239,57 +238,36 @@
     }
 
     @media (min-width: 880px) {
-      .nav { margin-bottom: 40px; }
       .nav-links { display: flex; }
     }
 
-    /* HERO STYLES (index only) */
+    /* HERO – CLEAN INTRO WITH TYPING */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1.05fr);
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
       gap: 32px;
       align-items: center;
-      margin-bottom: 56px;
+      margin-bottom: 72px;
     }
 
     @media (max-width: 880px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
-        margin-bottom: 48px;
       }
     }
 
-    .hero-kicker {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 5px 12px 5px 6px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.96);
-      border: 1px solid rgba(148, 163, 184, 0.3);
-      margin-bottom: 14px;
+    .hero-label {
       font-size: 12px;
-    }
-
-    .hero-kicker-badge {
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 10px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
-      background: rgba(34, 211, 238, 0.16);
-      color: #e0f2fe;
-    }
-
-    .hero-kicker-text {
-      font-size: 12px;
-      color: var(--text-muted);
+      color: var(--accent);
+      margin-bottom: 8px;
     }
 
     .hero-title {
-      font-size: clamp(2.6rem, 3.6vw, 3.1rem);
+      font-size: clamp(2.4rem, 3.6vw, 3rem);
       line-height: 1.05;
-      margin: 0 0 16px;
+      margin: 0 0 12px;
       letter-spacing: -0.05em;
     }
 
@@ -301,11 +279,42 @@
       text-shadow: 0 0 26px rgba(34, 211, 238, 0.9);
     }
 
+    .typing-wrap {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .typing-label {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .typing-text {
+      font-size: 0.96rem;
+      color: #e5e7eb;
+      min-height: 1.4em;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 2px solid var(--accent);
+    }
+
+    @keyframes caret-blink {
+      0%, 49% { border-color: var(--accent); }
+      50%, 100% { border-color: transparent; }
+    }
+
+    .typing-text.typing-active {
+      animation: caret-blink 0.9s step-end infinite;
+    }
+
     .hero-subtitle {
       color: var(--text-muted);
-      font-size: 1rem;
+      font-size: 0.98rem;
       line-height: 1.8;
-      max-width: 36rem;
+      max-width: 32rem;
       margin-bottom: 18px;
     }
 
@@ -313,7 +322,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
     }
 
     .hero-chip {
@@ -331,32 +340,11 @@
       color: #e0f2fe;
     }
 
-    .hero-highlight {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 13px;
-      border-radius: 13px;
-      background: rgba(15, 23, 42, 0.98);
-      border: 1px solid rgba(148, 163, 184, 0.4);
-      color: #e5e7eb;
-      font-size: 13px;
-      margin-bottom: 22px;
-    }
-
-    .hero-highlight-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 0 6px rgba(34, 197, 94, 0.25);
-    }
-
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 18px;
     }
 
     .btn-primary {
@@ -532,7 +520,7 @@
       background: #22c55e;
     }
 
-    /* SHARED SECTION HEADER */
+    /* SECTION HEADER */
     section { margin-bottom: 60px; }
 
     .section-header {
@@ -564,7 +552,88 @@
       max-width: 26rem;
     }
 
-    /* FOOTER (shared) */
+    /* CARDS + LIST */
+    .card {
+      border-radius: var(--radius-lg);
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 60%),
+        linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      padding: 18px 18px 16px;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
+    }
+
+    .list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      font-size: 0.92rem;
+      color: #e5e7eb;
+    }
+
+    .list li {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 8px;
+      align-items: flex-start;
+    }
+
+    .list-bullet {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.18);
+      border: 1px solid rgba(34, 211, 238, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      color: #bae6fd;
+      margin-top: 2px;
+    }
+
+    .list span.sub {
+      display: block;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 0.82rem;
+    }
+
+    .pill-tag {
+      padding: 4px 9px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: rgba(15, 23, 42, 0.96);
+      color: #e5e7eb;
+    }
+
+    .pill-tag.accent {
+      border-color: rgba(34, 211, 238, 0.9);
+      color: #e0f2fe;
+    }
+
+    /* 3-STEP PREVIEW */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    @media (max-width: 900px) {
+      .preview-grid { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    /* FOOTER */
     footer {
       border-top: 1px solid rgba(15, 23, 42, 1);
       margin-top: auto;
@@ -628,36 +697,31 @@
         </button>
       </header>
 
-      <!-- HERO -->
+      <!-- HERO: VERY SIMPLE FIRST VIEW -->
       <section class="hero fade-in-up">
         <div>
-          <div class="hero-kicker chip-pop">
-            <span class="hero-kicker-badge">Websites that work</span>
-            <span class="hero-kicker-text">For small businesses, new brands & non‑profits</span>
-          </div>
+          <div class="hero-label">WELCOME</div>
 
           <h1 class="hero-title">
-            Beautiful, modern websites<br />
-            <span class="glow">without agency‑level prices.</span>
+            I build
+            <span class="glow">modern, affordable websites</span>
+            for real businesses.
           </h1>
 
+          <div class="typing-wrap">
+            <span class="typing-label">I’m Armin,</span>
+            <span id="typing-text" class="typing-text typing-active"></span>
+          </div>
+
           <p class="hero-subtitle">
-            I design and build focused websites that look professional, feel modern,
-            and are easy for your visitors to use – all at a budget friendly for small and growing teams.
+            I’m a 14‑year‑old web designer who creates clean, professional sites
+            for small businesses, new brands, and non‑profits – without agency‑level prices.
           </p>
 
           <div class="hero-badges">
-            <span class="hero-chip accent chip-pop">One‑page & multi‑page sites</span>
-            <span class="hero-chip chip-pop">Small businesses & local shops</span>
+            <span class="hero-chip accent chip-pop">Small & new businesses</span>
             <span class="hero-chip chip-pop">Non‑profits & community projects</span>
-          </div>
-
-          <div class="hero-highlight hover-lift">
-            <span class="hero-highlight-dot"></span>
-            <span>
-              I’m a <strong>14‑year‑old web designer</strong> with a passion for creating beautiful, functional websites.
-              My age is my strength: fresh ideas, big enthusiasm, and affordable pricing.
-            </span>
+            <span class="hero-chip chip-pop">One‑page & multi‑page sites</span>
           </div>
 
           <div class="hero-actions">
@@ -672,19 +736,17 @@
               onclick="window.location.href='pricing.html'"
             >
               <span class="dot"></span>
-              View packages & pricing
+              View pricing
             </button>
           </div>
 
           <div class="hero-note">
             <span class="dot"></span>
-            <span>
-              <strong>Unlimited revisions</strong> on every project – we keep improving your site until it feels right.
-            </span>
+            <span><strong>Unlimited revisions</strong> on every project – we keep going until it feels right.</span>
           </div>
         </div>
 
-        <!-- ABOUT CARD -->
+        <!-- ABOUT CARD (STILL SIMPLE) -->
         <aside class="hero-right fade-in-up">
           <div class="hero-card hover-lift">
             <div class="hero-card-tag chip-pop">
@@ -692,86 +754,135 @@
               <span>Creative · Focused · Easy to work with</span>
             </div>
 
-            <div class="hero-card-title">Hi, I’m Armin.</div>
+            <div class="hero-card-title">More than just “nice design”.</div>
             <div class="hero-card-age">
-              I’m a <strong>14‑year‑old web designer</strong> who loves building websites that
-              look modern and help real businesses grow.
+              I combine <strong>design</strong> and <strong>marketing</strong> so your site looks modern
+              and actually helps your business grow.
             </div>
 
             <p class="hero-card-text">
-              I combine design skills with marketing experience, so your website won’t just “look nice” –
-              it will explain what you do clearly and guide visitors to take action.
-            </p>
-
-            <p class="hero-card-text">
-              Because I’m building my reputation and reviews, I charge less than many agencies and freelancers,
-              while still giving each project a lot of time and attention.
+              I pay attention to how visitors read your page, what they click, and what they need to see first.
+              That way your site stays simple, but still feels professional and trustworthy.
             </p>
 
             <div class="hero-card-pill-row">
               <span class="pill accent chip-pop">High‑quality & affordable</span>
-              <span class="pill chip-pop">Business‑focused design</span>
               <span class="pill chip-pop">Friendly communication</span>
-              <span class="pill chip-pop">Unlimited revisions</span>
+              <span class="pill chip-pop">Built for real people</span>
             </div>
 
             <div class="hero-card-footer">
               <div class="hero-card-footer-left">
-                <strong>Ready to talk?</strong><br />
-                Start a project and I’ll suggest the best layout and package for your goals.
+                <strong>Want to go deeper?</strong><br />
+                Check the Services page to see the types of sites I build.
               </div>
               <div
                 class="hero-card-footer-right btn-pressable chip-pop"
-                onclick="window.location.href='contact.html'"
+                onclick="window.location.href='services.html'"
               >
                 <span class="dot"></span>
-                <span>Start a project</span>
+                <span>View services</span>
               </div>
             </div>
           </div>
         </aside>
       </section>
 
-      <!-- SHORT PREVIEW SECTIONS -->
+      <!-- SECTION 2: WHO I BUILD FOR -->
       <section class="fade-in-up">
         <div class="section-header">
           <div>
-            <div class="section-label">Quick overview</div>
-            <h2 class="section-title">A simple process from idea to live website.</h2>
+            <div class="section-label">Who I work with</div>
+            <h2 class="section-title">Made for small & growing organisations.</h2>
           </div>
           <p class="section-sub">
-            I keep everything clear and light – each page of this site focuses on one thing, so you never feel overloaded.
+            If you’re just starting or you’re running a small team, you don’t need a huge,
+            complicated website. You need something clear, modern and easy to use.
           </p>
         </div>
 
-        <div class="offer-grid" style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;">
+        <article class="card hover-lift">
+          <ul class="list">
+            <li>
+              <div class="list-bullet">1</div>
+              <div>
+                Small businesses & local shops
+                <span class="sub">
+                  Restaurants, cafés, salons, barbers, gyms, repair services and more – anyone who wants a site
+                  that makes a strong first impression.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">2</div>
+              <div>
+                New brands & side‑projects
+                <span class="sub">
+                  You’re launching something new and need a simple, focused site that explains your idea and
+                  makes it feel real.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">3</div>
+              <div>
+                Non‑profits & community projects
+                <span class="sub">
+                  Show your mission, what you do, and how people can donate, join, or support you – all in a
+                  clear, friendly layout.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="pill-row">
+            <span class="pill-tag accent">You like things simple and clear</span>
+            <span class="pill-tag">You want a modern look</span>
+            <span class="pill-tag">You don’t want to waste money</span>
+          </div>
+        </article>
+      </section>
+
+      <!-- SECTION 3: QUICK PREVIEW OF NEXT PAGES -->
+      <section class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Next steps</div>
+            <h2 class="section-title">Explore the rest of the site, one step at a time.</h2>
+          </div>
+          <p class="section-sub">
+            Each page focuses on one topic, so you never have to read too much at once.
+          </p>
+        </div>
+
+        <div class="preview-grid">
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='services.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">1. Choose what you need</h3>
-            <p style="margin:0 0 8px;font-size:0.9rem;color:var(--text-muted);">
-              See the website types I offer and pick what fits your business best.
+            <h3 style="margin:0 0 8px;font-size:1rem;">Services</h3>
+            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
+              See the different types of websites I build and what’s included.
             </p>
             <p style="margin:0;font-size:0.82rem;color:var(--accent);">
-              Go to Services →
+              View Services →
             </p>
           </article>
 
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='pricing.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">2. Find a package</h3>
-            <p style="margin:0 0 8px;font-size:0.9rem;color:var(--text-muted);">
+            <h3 style="margin:0 0 8px;font-size:1rem;">Pricing</h3>
+            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
               Clear pricing for one‑page and multi‑page websites, with unlimited revisions.
             </p>
             <p style="margin:0;font-size:0.82rem;color:var(--accent);">
-              Go to Pricing →
+              View Pricing →
             </p>
           </article>
 
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='contact.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">3. Start on Fiverr</h3>
-            <p style="margin:0 0 8px;font-size:0.9rem;color:var(--text-muted);">
-              Use Fiverr for secure payment and simple messaging while I build your site.
+            <h3 style="margin:0 0 8px;font-size:1rem;">Start a project</h3>
+            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
+              Learn how to start on Fiverr and how the process works from first message to final website.
             </p>
             <p style="margin:0;font-size:0.82rem;color:var(--accent);">
-              Go to Start a Project →
+              Go to Start →
             </p>
           </article>
         </div>
@@ -795,8 +906,10 @@
   </footer>
 
   <script>
+    // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
 
+    // On-scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -808,8 +921,48 @@
       },
       { threshold: 0.12 }
     );
-
     document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
+
+    // Typing effect
+    const typingElement = document.getElementById("typing-text");
+    const phrases = [
+      "a young designer who takes your website seriously.",
+      "14, with big ideas and real projects.",
+      "focused on small businesses and non‑profits.",
+      "here to give you agency‑level feel on a small budget."
+    ];
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let typing = true;
+
+    function typeLoop() {
+      const current = phrases[phraseIndex];
+      if (typing) {
+        if (charIndex <= current.length) {
+          typingElement.textContent = current.slice(0, charIndex);
+          charIndex++;
+          setTimeout(typeLoop, 40);
+        } else {
+          typing = false;
+          setTimeout(typeLoop, 1600); // pause when full phrase is shown
+        }
+      } else {
+        if (charIndex > 0) {
+          typingElement.textContent = current.slice(0, charIndex - 1);
+          charIndex--;
+          setTimeout(typeLoop, 24);
+        } else {
+          typing = true;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+          setTimeout(typeLoop, 260);
+        }
+      }
+    }
+
+    // Start typing after slight delay so hero can appear first
+    window.addEventListener("load", () => {
+      setTimeout(typeLoop, 400);
+    });
   </script>
 </body>
 </html>
