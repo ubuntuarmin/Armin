@@ -17,9 +17,9 @@
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --card: #020617;
-      --radius-lg: 22px;
+      --radius-lg: 28px;
       --radius-pill: 999px;
-      --shadow-soft: 0 26px 70px rgba(15, 23, 42, 0.95);
+      --shadow-soft: 0 30px 80px rgba(15, 23, 42, 0.95);
       --transition-fast: 0.18s ease-out;
     }
 
@@ -36,9 +36,9 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
         "Segoe UI", Roboto, sans-serif;
       background:
-        radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.3), transparent 55%),
-        radial-gradient(circle at 100% 10%, rgba(34, 211, 238, 0.25), transparent 55%),
-        radial-gradient(circle at 50% 100%, rgba(15, 23, 42, 0.7), transparent 60%),
+        radial-gradient(circle at 0% 0%, rgba(37, 99, 235, 0.35), transparent 55%),
+        radial-gradient(circle at 100% 10%, rgba(34, 211, 238, 0.28), transparent 55%),
+        radial-gradient(circle at 50% 100%, rgba(15, 23, 42, 0.8), transparent 60%),
         var(--bg);
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
@@ -53,13 +53,13 @@
     }
 
     .page {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 20px 16px 80px;
+      padding: 22px 16px 96px;
     }
 
-    @media (min-width: 900px) {
-      .page { padding: 32px 24px 110px; }
+    @media (min-width: 960px) {
+      .page { padding: 32px 28px 140px; }
     }
 
     /* UTILITIES & ANIMATIONS */
@@ -73,9 +73,9 @@
       will-change: transform, box-shadow, filter;
     }
     .hover-lift:hover {
-      transform: translateY(-4px);
+      transform: translateY(-6px);
       box-shadow: var(--shadow-soft);
-      filter: brightness(1.02);
+      filter: brightness(1.03);
     }
 
     .btn-pressable {
@@ -84,26 +84,13 @@
     }
     .btn-pressable:active {
       transform: translateY(1px) scale(0.98);
-      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.9);
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.9);
       filter: brightness(0.97);
-    }
-
-    .chip-pop {
-      transition: transform var(--transition-fast),
-        box-shadow var(--transition-fast),
-        border-color var(--transition-fast),
-        background var(--transition-fast);
-    }
-    .chip-pop:hover {
-      transform: translateY(-2px);
-      border-color: rgba(248, 250, 252, 0.85);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.95);
-      background: rgba(15, 23, 42, 0.97);
     }
 
     .fade-in-up {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(22px);
       transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     }
     .fade-in-up.visible {
@@ -117,19 +104,19 @@
       align-items: center;
       justify-content: space-between;
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
     .nav-left {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
     }
 
     .brand-mark {
-      width: 36px;
-      height: 36px;
-      border-radius: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 18px;
       background: conic-gradient(
         from 180deg,
         #22d3ee,
@@ -140,22 +127,22 @@
       );
       padding: 2px;
       box-shadow:
-        0 0 24px rgba(34, 211, 238, 0.7),
-        0 0 40px rgba(99, 102, 241, 0.4);
+        0 0 28px rgba(34, 211, 238, 0.75),
+        0 0 50px rgba(99, 102, 241, 0.5);
     }
 
     .brand-mark-inner {
       width: 100%;
       height: 100%;
-      border-radius: 13px;
+      border-radius: 16px;
       background:
         radial-gradient(circle at 15% 0%, #111827 0, #020617 55%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #e5f4ff;
-      font-size: 16px;
-      font-weight: 700;
+      font-size: 17px;
+      font-weight: 800;
       letter-spacing: 0.06em;
     }
 
@@ -166,9 +153,9 @@
     }
 
     .brand-title {
-      font-size: 18px;
-      font-weight: 650;
-      letter-spacing: 0.08em;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
@@ -179,8 +166,8 @@
 
     .nav-links {
       display: none;
-      gap: 16px;
-      font-size: 12px;
+      gap: 20px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.16em;
       color: var(--text-muted);
@@ -211,12 +198,12 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 8px 18px;
+      padding: 9px 20px;
       border-radius: var(--radius-pill);
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 18px 40px rgba(34, 211, 238, 0.7),
-        0 0 40px rgba(34, 211, 238, 0.6);
+        0 20px 48px rgba(34, 211, 238, 0.8),
+        0 0 40px rgba(34, 211, 238, 0.7);
       color: #020617;
       font-weight: 700;
       font-size: 13px;
@@ -226,7 +213,7 @@
     }
 
     .nav-cta span.badge {
-      padding: 3px 9px;
+      padding: 3px 10px;
       border-radius: 999px;
       font-size: 10px;
       text-transform: uppercase;
@@ -235,11 +222,10 @@
       color: #e0f2fe;
     }
 
-    /* Mobile nav toggle */
     .nav-toggle {
       display: inline-flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
       padding: 6px 8px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.5);
@@ -247,7 +233,7 @@
       cursor: pointer;
     }
     .nav-toggle span {
-      width: 16px;
+      width: 18px;
       height: 2px;
       border-radius: 999px;
       background: #e5e7eb;
@@ -256,10 +242,10 @@
     .nav-links-mobile {
       display: none;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
       margin-top: 10px;
-      padding: 10px 12px;
-      border-radius: 16px;
+      padding: 12px 14px;
+      border-radius: 18px;
       background: rgba(15, 23, 42, 0.98);
       border: 1px solid rgba(148, 163, 184, 0.5);
       font-size: 13px;
@@ -278,16 +264,16 @@
     /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 36px;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
+      gap: 40px;
       align-items: center;
-      margin-bottom: 72px;
+      margin-bottom: 90px;
     }
 
     @media (max-width: 880px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
-        margin-bottom: 56px;
+        margin-bottom: 70px;
       }
     }
 
@@ -296,13 +282,13 @@
       text-transform: uppercase;
       letter-spacing: 0.2em;
       color: var(--accent);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .hero-title {
-      font-size: clamp(2.5rem, 4.2vw, 3.2rem);
-      line-height: 1.05;
-      margin: 0 0 14px;
+      font-size: clamp(2.6rem, 4.4vw, 3.4rem);
+      line-height: 1.08;
+      margin: 0 0 16px;
       letter-spacing: -0.05em;
     }
 
@@ -311,14 +297,14 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 28px rgba(34, 211, 238, 0.9);
+      text-shadow: 0 0 30px rgba(34, 211, 238, 0.9);
     }
 
     .typing-wrap {
       display: inline-flex;
       flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
+      gap: 8px;
+      margin-bottom: 18px;
       font-size: 1rem;
       color: var(--text-muted);
     }
@@ -344,22 +330,22 @@
 
     .hero-subtitle {
       color: var(--text-muted);
-      font-size: 1.02rem;
-      line-height: 1.8;
-      max-width: 38rem;
-      margin-bottom: 22px;
+      font-size: 1.05rem;
+      line-height: 1.9;
+      max-width: 42rem;
+      margin-bottom: 26px;
     }
 
     .hero-badges {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
-      margin-bottom: 24px;
+      margin-bottom: 26px;
     }
 
     .hero-chip {
-      font-size: 0.9rem;
-      padding: 7px 12px;
+      font-size: 0.92rem;
+      padding: 8px 13px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.4);
       background: rgba(15, 23, 42, 0.96);
@@ -375,15 +361,15 @@
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 20px;
+      gap: 14px;
+      margin-bottom: 22px;
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 11px 24px;
+      padding: 11px 26px;
       border-radius: var(--radius-pill);
       border: 0;
       cursor: pointer;
@@ -392,7 +378,7 @@
       color: #020617;
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 22px 55px rgba(34, 211, 238, 0.9),
+        0 24px 60px rgba(34, 211, 238, 0.95),
         0 0 45px rgba(34, 211, 238, 0.9);
     }
 
@@ -400,7 +386,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 18px;
+      padding: 10px 20px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(148, 163, 184, 0.5);
       background: rgba(15, 23, 42, 0.95);
@@ -417,7 +403,7 @@
     }
 
     .hero-note {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -435,32 +421,32 @@
 
     .hero-right {
       position: relative;
-      padding: 4px;
-      border-radius: 26px;
+      padding: 5px;
+      border-radius: 30px;
       background:
-        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.5), transparent 55%),
-        radial-gradient(circle at 100% 100%, rgba(34, 211, 238, 0.4), transparent 55%);
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.55), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(34, 211, 238, 0.45), transparent 55%);
     }
 
     .hero-card {
-      border-radius: 24px;
-      padding: 20px 20px 18px;
+      border-radius: 26px;
+      padding: 22px 22px 18px;
       background:
-        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.2), transparent 55%),
-        radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.18), transparent 60%),
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.25), transparent 55%),
+        radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.2), transparent 60%),
         linear-gradient(150deg, #020617 0, #020617 35%, #020617 100%);
-      border: 1px solid rgba(148, 163, 184, 0.35);
+      border: 1px solid rgba(148, 163, 184, 0.4);
       box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
-      font-size: 0.95rem;
+      font-size: 0.98rem;
     }
 
     .hero-card-tag {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 5px 10px;
+      padding: 6px 12px;
       border-radius: 999px;
       background: rgba(15, 23, 42, 0.98);
       border: 1px solid rgba(148, 163, 184, 0.4);
@@ -470,7 +456,7 @@
     }
 
     .hero-card-tag span.badge {
-      padding: 3px 8px;
+      padding: 3px 9px;
       border-radius: 999px;
       background: rgba(34, 211, 238, 0.2);
       color: #e0f2fe;
@@ -480,13 +466,13 @@
     }
 
     .hero-card-title {
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 600;
       margin-bottom: 8px;
     }
 
     .hero-card-age {
-      font-size: 0.93rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin-bottom: 12px;
     }
@@ -494,9 +480,9 @@
     .hero-card-age strong { color: #e5e7eb; }
 
     .hero-card-text {
-      font-size: 0.93rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      line-height: 1.8;
+      line-height: 1.9;
       margin-bottom: 12px;
     }
 
@@ -504,12 +490,12 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
 
     .pill {
-      font-size: 0.78rem;
-      padding: 5px 10px;
+      font-size: 0.8rem;
+      padding: 6px 11px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.5);
       background: rgba(15, 23, 42, 0.98);
@@ -527,9 +513,9 @@
       justify-content: space-between;
       gap: 10px;
       align-items: center;
-      padding-top: 10px;
+      padding-top: 12px;
       border-top: 1px dashed rgba(148, 163, 184, 0.6);
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
@@ -539,13 +525,13 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 5px 9px;
+      padding: 6px 10px;
       border-radius: 999px;
       background: rgba(15, 23, 42, 0.99);
       border: 1px solid rgba(148, 163, 184, 0.5);
       color: #bae6fd;
       cursor: pointer;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
     }
 
     .hero-card-footer-right span.dot {
@@ -556,15 +542,15 @@
     }
 
     /* SHARED SECTIONS */
-    section { margin-bottom: 70px; }
+    section { margin-bottom: 80px; }
 
     .section-header {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 14px;
+      gap: 16px;
       align-items: flex-end;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .section-label {
@@ -576,26 +562,26 @@
     }
 
     .section-title {
-      font-size: 1.6rem;
+      font-size: 1.7rem;
       margin: 0;
       letter-spacing: -0.03em;
     }
 
     .section-sub {
-      font-size: 0.95rem;
+      font-size: 1rem;
       color: var(--text-muted);
-      max-width: 32rem;
+      max-width: 36rem;
     }
 
-    .card {
+    .card-full {
       border-radius: var(--radius-lg);
+      padding: 26px 22px 22px;
       background:
-        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 60%),
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.24), transparent 60%),
         linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
-      border: 1px solid rgba(148, 163, 184, 0.45);
-      padding: 20px 18px 18px;
-      box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
-      font-size: 0.95rem;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: var(--shadow-soft);
+      font-size: 1rem;
     }
 
     .list {
@@ -603,23 +589,23 @@
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 12px;
-      font-size: 0.96rem;
+      gap: 16px;
+      font-size: 1rem;
       color: #e5e7eb;
     }
 
     .list li {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
-      gap: 10px;
+      gap: 12px;
       align-items: flex-start;
     }
 
     .list-bullet {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
       border-radius: 999px;
-      background: rgba(34, 211, 238, 0.18);
+      background: rgba(34, 211, 238, 0.2);
       border: 1px solid rgba(34, 211, 238, 0.9);
       display: flex;
       align-items: center;
@@ -631,21 +617,21 @@
 
     .list span.sub {
       display: block;
-      font-size: 0.84rem;
+      font-size: 0.9rem;
       color: var(--text-muted);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    .pill-row {
+    .pill-row-wide {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 12px;
-      font-size: 0.85rem;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 0.9rem;
     }
 
     .pill-tag {
-      padding: 5px 10px;
+      padding: 7px 12px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.45);
       background: rgba(15, 23, 42, 0.96);
@@ -660,37 +646,46 @@
     .preview-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
+      gap: 20px;
     }
 
     @media (max-width: 900px) {
       .preview-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
+    .preview-card {
+      border-radius: 24px;
+      padding: 22px 20px 18px;
+      background:
+        radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.22), transparent 60%),
+        linear-gradient(135deg, #020617 0, #020617 60%, #020617 100%);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.98rem;
+    }
+
     /* FOOTER */
     footer {
       border-top: 1px solid rgba(15, 23, 42, 1);
       margin-top: auto;
-      background: radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 55%),
+      background: radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.2), transparent 55%),
         #020617;
     }
 
     .footer-inner {
-      max-width: 1120px;
+      max-width: 1180px;
       margin: 0 auto;
-      padding: 16px 16px 24px;
+      padding: 18px 16px 26px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      font-size: 0.82rem;
+      font-size: 0.86rem;
       color: var(--text-muted);
     }
 
     @media (min-width: 960px) {
-      .footer-inner {
-        padding: 18px 24px 26px;
-      }
+      .footer-inner { padding: 20px 28px 30px; }
     }
 
     .footer-links {
@@ -701,12 +696,23 @@
 
     .footer-links a:hover { color: #e5e7eb; }
 
-    /* MOBILE OPTIMISATIONS */
-    @media (max-width: 600px) {
-      .hero-title { font-size: 2.2rem; }
-      .hero-subtitle { font-size: 0.98rem; }
-      .hero-card { padding: 16px; }
-      .card { padding: 16px; }
+    /* RESPONSIVE TWEAKS */
+    @media (max-width: 720px) {
+      .hero {
+        gap: 28px;
+      }
+      .hero-title {
+        font-size: 2.3rem;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      .card-full {
+        padding: 20px 16px 18px;
+      }
+      .preview-card {
+        padding: 18px 16px 16px;
+      }
     }
   </style>
 </head>
@@ -724,14 +730,12 @@
             <div class="brand-sub">Modern, affordable web design</div>
           </div>
         </div>
-
         <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
           <a href="contact.html">Contact</a>
         </nav>
-
         <button
           class="nav-cta btn-pressable"
           onclick="window.location.href='contact.html'"
@@ -739,7 +743,6 @@
           <span>Text to start</span>
           <span class="badge">No payment yet</span>
         </button>
-
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
@@ -771,13 +774,14 @@
           <p class="hero-subtitle">
             I’m a 14‑year‑old web designer who creates clean, professional websites
             for small businesses, new brands, and non‑profits.
-            You only pay by <strong>Zelle</strong> when you’re <strong>100% satisfied</strong>.
+            You only pay by <strong>Zelle</strong> when you’re <strong>100% satisfied</strong>
+            with the final result.
           </p>
 
           <div class="hero-badges">
-            <span class="hero-chip accent chip-pop">Small & new businesses</span>
-            <span class="hero-chip chip-pop">Non‑profits & community projects</span>
-            <span class="hero-chip chip-pop">One‑page & multi‑page sites</span>
+            <span class="hero-chip accent">Small & new businesses</span>
+            <span class="hero-chip">Non‑profits & community projects</span>
+            <span class="hero-chip">One‑page & multi‑page sites</span>
           </div>
 
           <div class="hero-actions">
@@ -799,8 +803,8 @@
           <div class="hero-note">
             <span class="dot"></span>
             <span>
-              <strong>No upfront payment.</strong> We design, build, and revise your site first –
-              then you pay by Zelle once you’re happy.
+              <strong>Unlimited revisions.</strong> We design, build, and refine your site first –
+              then you pay via Zelle once you’re happy.
             </span>
           </div>
         </div>
@@ -808,19 +812,19 @@
         <!-- ABOUT CARD -->
         <aside class="hero-right fade-in-up">
           <div class="hero-card hover-lift">
-            <div class="hero-card-tag chip-pop">
+            <div class="hero-card-tag">
               <span class="badge">About me</span>
               <span>Creative · Focused · Easy to work with</span>
             </div>
 
-            <div class="hero-card-title">Hi, I’m Armin.</div>
+            <div class="hero-card-title">A young designer with big energy.</div>
             <div class="hero-card-age">
               I’m a <strong>14‑year‑old web designer</strong> who enjoys building websites that
-              look modern, feel professional, and are simple for visitors to use.
+              look modern, feel professional, and are simple for real people to use.
             </div>
 
             <p class="hero-card-text">
-              Because I’m young and building my portfolio, I bring fresh ideas and a lot of energy to every project.
+              Because I’m still building my portfolio, I bring fresh ideas and a lot of effort to every project.
               My prices stay friendly, but I treat each site like it’s my own brand.
             </p>
 
@@ -831,23 +835,23 @@
             </p>
 
             <div class="hero-card-pill-row">
-              <span class="pill accent chip-pop">High‑quality & affordable</span>
-              <span class="pill chip-pop">Business‑focused design</span>
-              <span class="pill chip-pop">Friendly communication</span>
-              <span class="pill chip-pop">Unlimited revisions</span>
+              <span class="pill accent">High‑quality & affordable</span>
+              <span class="pill">Business‑focused layout</span>
+              <span class="pill">Friendly communication</span>
+              <span class="pill">Unlimited revisions</span>
             </div>
 
             <div class="hero-card-footer">
               <div class="hero-card-footer-left">
                 <strong>Ready when you are.</strong><br />
-                Text me, tell me about your idea, and I’ll suggest a layout and price that make sense.
+                Text me your idea and I’ll suggest the best layout and price for your situation.
               </div>
               <div
-                class="hero-card-footer-right btn-pressable chip-pop"
+                class="hero-card-footer-right btn-pressable"
                 onclick="window.location.href='contact.html'"
               >
                 <span class="dot"></span>
-                <span>View contact details</span>
+                <span>See contact details</span>
               </div>
             </div>
           </div>
@@ -859,15 +863,15 @@
         <div class="section-header">
           <div>
             <div class="section-label">Who I work with</div>
-            <h2 class="section-title">Small & growing organisations, not giant agencies.</h2>
+            <h2 class="section-title">Built for small & growing organisations.</h2>
           </div>
           <p class="section-sub">
-            If you’re a small team, a new project, or a non‑profit, you don’t need a huge,
-            complicated website. You need something clear, modern, and easy to update.
+            If you’re a small team, a new project, or a non‑profit, you don’t need a huge, complicated website.
+            You need something clear, modern, and easy to update – that’s where I come in.
           </p>
         </div>
 
-        <article class="card hover-lift">
+        <article class="card-full hover-lift">
           <ul class="list">
             <li>
               <div class="list-bullet">1</div>
@@ -875,7 +879,7 @@
                 Small businesses & local shops
                 <span class="sub">
                   Restaurants, cafés, salons, gyms, repair services and more – anyone who wants a site
-                  that makes a strong first impression and is easy to navigate.
+                  that makes a strong first impression and is effortless for customers to navigate.
                 </span>
               </div>
             </li>
@@ -885,7 +889,7 @@
                 New brands & side‑projects
                 <span class="sub">
                   You’re launching something new and need a simple, focused site that explains your idea,
-                  collects interest, and looks serious – even on a small budget.
+                  collects interest, and shows you’re serious – even on a small budget.
                 </span>
               </div>
             </li>
@@ -901,53 +905,56 @@
             </li>
           </ul>
 
-          <div class="pill-row">
-            <span class="pill-tag accent">You like things simple and clear</span>
-            <span class="pill-tag">You want a modern look</span>
-            <span class="pill-tag">You don’t want to waste money</span>
+          <div class="pill-row-wide">
+            <span class="pill-tag accent">You like clear, no‑nonsense design</span>
+            <span class="pill-tag">You want a modern look across all devices</span>
+            <span class="pill-tag">You don’t want agency‑level pricing</span>
           </div>
         </article>
       </section>
 
-      <!-- NEXT STEPS -->
+      <!-- NEXT STEPS / NAV BETWEEN PAGES -->
       <section class="fade-in-up">
         <div class="section-header">
           <div>
             <div class="section-label">Next steps</div>
-            <h2 class="section-title">Explore the other pages, one step at a time.</h2>
+            <h2 class="section-title">Explore the rest of the site.</h2>
           </div>
           <p class="section-sub">
-            Each page focuses on one topic, so you never have to read too much at once.
+            Each page focuses on one topic, so you never have to read a giant wall of text all at once.
           </p>
         </div>
 
         <div class="preview-grid">
-          <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='services.html'">
-            <h3 style="margin:0 0 8px;font-size:1.05rem;">Services</h3>
-            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              See the types of websites I build and what each one is best for.
+          <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='services.html'">
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Services – what I can build</h3>
+            <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
+              See the different types of websites I offer – from one‑page landing pages
+              to multi‑page “luxury” sites – and which ones fit your situation best.
             </p>
-            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
-              View Services →
-            </p>
-          </article>
-
-          <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='pricing.html'">
-            <h3 style="margin:0 0 8px;font-size:1.05rem;">Pricing</h3>
-            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              Clear prices for one‑page and multi‑page websites, always with unlimited revisions.
-            </p>
-            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
-              View Pricing →
+            <p style="margin:0;font-size:0.9rem;color:var(--accent);">
+              Go to Services →
             </p>
           </article>
 
-          <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='contact.html'">
-            <h3 style="margin:0 0 8px;font-size:1.05rem;">Contact & payment</h3>
-            <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              Get my text number, learn how Zelle payments work, and see how we’ll collaborate.
+          <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='pricing.html'">
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Pricing – how much it costs</h3>
+            <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
+              Clear pricing for one‑page and multi‑page websites, always with unlimited revisions
+              and payment by Zelle only after you’re happy.
             </p>
-            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
+            <p style="margin:0;font-size:0.9rem;color:var(--accent);">
+              Go to Pricing →
+            </p>
+          </article>
+
+          <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='contact.html'">
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Contact – text & payments</h3>
+            <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
+              Get my text number, see how the Zelle payment process works, and find out exactly
+              what to send me in your first message.
+            </p>
+            <p style="margin:0;font-size:0.9rem;color:var(--accent);">
               Go to Contact →
             </p>
           </article>
@@ -1001,9 +1008,9 @@
     const typingElement = document.getElementById("typing-text");
     const phrases = [
       "a young designer who takes your website seriously.",
-      "14, with big ideas and real business projects.",
+      "14, with big ideas and real projects.",
       "focused on small businesses and non‑profits.",
-      "here to give you a pro site without a pro agency price."
+      "here to give you a pro site without a pro‑agency price."
     ];
     let phraseIndex = 0;
     let charIndex = 0;
