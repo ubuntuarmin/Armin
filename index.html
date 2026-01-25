@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Armin studio</title>
+  <title>Armin Studio – Modern, Affordable Web Design</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Modern, affordable web design for small businesses, new brands and non-profits. Professional websites built by a 14-year-old web designer."
+    content="Modern, affordable web design for small businesses, new brands and non-profits. Professional websites built by a passionate 14-year-old web designer."
   />
   <style>
     :root {
@@ -17,9 +17,9 @@
       --text-main: #f9fafb;
       --text-muted: #9ca3af;
       --card: #020617;
-      --radius-lg: 20px;
+      --radius-lg: 22px;
       --radius-pill: 999px;
-      --shadow-soft: 0 26px 60px rgba(15, 23, 42, 0.9);
+      --shadow-soft: 0 26px 70px rgba(15, 23, 42, 0.95);
       --transition-fast: 0.18s ease-out;
     }
 
@@ -55,14 +55,14 @@
     .page {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 24px 20px 72px;
+      padding: 20px 16px 80px;
     }
 
-    @media (min-width: 960px) {
-      .page { padding: 32px 24px 96px; }
+    @media (min-width: 900px) {
+      .page { padding: 32px 24px 110px; }
     }
 
-    /* ANIMATIONS */
+    /* UTILITIES & ANIMATIONS */
     .hover-lift {
       transition:
         transform var(--transition-fast),
@@ -74,14 +74,12 @@
     }
     .hover-lift:hover {
       transform: translateY(-4px);
-      box-shadow: 0 26px 70px rgba(15, 23, 42, 0.95);
+      box-shadow: var(--shadow-soft);
       filter: brightness(1.02);
     }
 
     .btn-pressable {
-      transition: transform var(--transition-fast),
-        box-shadow var(--transition-fast),
-        filter var(--transition-fast);
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), filter var(--transition-fast);
       will-change: transform, box-shadow;
     }
     .btn-pressable:active {
@@ -106,7 +104,7 @@
     .fade-in-up {
       opacity: 0;
       transform: translateY(18px);
-      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     }
     .fade-in-up.visible {
       opacity: 1;
@@ -118,8 +116,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 40px;
+      gap: 16px;
+      margin-bottom: 28px;
     }
 
     .nav-left {
@@ -129,9 +127,9 @@
     }
 
     .brand-mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 14px;
+      width: 36px;
+      height: 36px;
+      border-radius: 16px;
       background: conic-gradient(
         from 180deg,
         #22d3ee,
@@ -149,14 +147,14 @@
     .brand-mark-inner {
       width: 100%;
       height: 100%;
-      border-radius: 11px;
+      border-radius: 13px;
       background:
         radial-gradient(circle at 15% 0%, #111827 0, #020617 55%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: #e5f4ff;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 700;
       letter-spacing: 0.06em;
     }
@@ -168,23 +166,23 @@
     }
 
     .brand-title {
-      font-size: 17px;
-      font-weight: 600;
+      font-size: 18px;
+      font-weight: 650;
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .brand-sub {
-      font-size: 12px;
+      font-size: 13px;
       color: var(--text-muted);
     }
 
     .nav-links {
       display: none;
-      gap: 18px;
-      font-size: 13px;
+      gap: 16px;
+      font-size: 12px;
       text-transform: uppercase;
-      letter-spacing: 0.18em;
+      letter-spacing: 0.16em;
       color: var(--text-muted);
     }
 
@@ -217,7 +215,7 @@
       border-radius: var(--radius-pill);
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 18px 42px rgba(34, 211, 238, 0.7),
+        0 18px 40px rgba(34, 211, 238, 0.7),
         0 0 40px rgba(34, 211, 238, 0.6);
       color: #020617;
       font-weight: 700;
@@ -237,15 +235,51 @@
       color: #e0f2fe;
     }
 
-    @media (min-width: 880px) {
-      .nav-links { display: flex; }
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: inline-flex;
+      flex-direction: column;
+      gap: 3px;
+      padding: 6px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.95);
+      cursor: pointer;
+    }
+    .nav-toggle span {
+      width: 16px;
+      height: 2px;
+      border-radius: 999px;
+      background: #e5e7eb;
     }
 
-    /* HERO – CLEAN INTRO WITH TYPING */
+    .nav-links-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+    .nav-links-mobile a { padding: 4px 0; }
+
+    @media (min-width: 880px) {
+      .nav { margin-bottom: 40px; }
+      .nav-links { display: flex; }
+      .nav-toggle { display: none; }
+    }
+
+    /* HERO */
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-      gap: 32px;
+      gap: 36px;
       align-items: center;
       margin-bottom: 72px;
     }
@@ -253,21 +287,22 @@
     @media (max-width: 880px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
+        margin-bottom: 56px;
       }
     }
 
     .hero-label {
-      font-size: 12px;
+      font-size: 13px;
       text-transform: uppercase;
       letter-spacing: 0.2em;
       color: var(--accent);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .hero-title {
-      font-size: clamp(2.4rem, 3.6vw, 3rem);
+      font-size: clamp(2.5rem, 4.2vw, 3.2rem);
       line-height: 1.05;
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       letter-spacing: -0.05em;
     }
 
@@ -276,24 +311,21 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
-      text-shadow: 0 0 26px rgba(34, 211, 238, 0.9);
+      text-shadow: 0 0 28px rgba(34, 211, 238, 0.9);
     }
 
     .typing-wrap {
-      position: relative;
       display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 14px;
-    }
-
-    .typing-label {
-      font-size: 0.9rem;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+      font-size: 1rem;
       color: var(--text-muted);
     }
 
+    .typing-prefix { color: var(--text-muted); }
+
     .typing-text {
-      font-size: 0.96rem;
       color: #e5e7eb;
       min-height: 1.4em;
       white-space: nowrap;
@@ -312,22 +344,22 @@
 
     .hero-subtitle {
       color: var(--text-muted);
-      font-size: 0.98rem;
+      font-size: 1.02rem;
       line-height: 1.8;
-      max-width: 32rem;
-      margin-bottom: 18px;
+      max-width: 38rem;
+      margin-bottom: 22px;
     }
 
     .hero-badges {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 22px;
+      gap: 10px;
+      margin-bottom: 24px;
     }
 
     .hero-chip {
-      font-size: 0.82rem;
-      padding: 6px 11px;
+      font-size: 0.9rem;
+      padding: 7px 12px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.4);
       background: rgba(15, 23, 42, 0.96);
@@ -344,36 +376,36 @@
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 10px 22px;
+      padding: 11px 24px;
       border-radius: var(--radius-pill);
       border: 0;
       cursor: pointer;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 15px;
       color: #020617;
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 22px 55px rgba(34, 211, 238, 0.85),
-        0 0 45px rgba(34, 211, 238, 0.85);
+        0 22px 55px rgba(34, 211, 238, 0.9),
+        0 0 45px rgba(34, 211, 238, 0.9);
     }
 
     .btn-secondary {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 9px 18px;
+      padding: 10px 18px;
       border-radius: var(--radius-pill);
       border: 1px solid rgba(148, 163, 184, 0.5);
       background: rgba(15, 23, 42, 0.95);
       color: var(--text-muted);
-      font-size: 13px;
+      font-size: 14px;
       cursor: pointer;
     }
 
@@ -385,7 +417,7 @@
     }
 
     .hero-note {
-      font-size: 12px;
+      font-size: 0.85rem;
       color: var(--text-muted);
       display: flex;
       align-items: center;
@@ -399,6 +431,8 @@
       background: var(--accent);
     }
 
+    .hero-note strong { color: #e5e7eb; }
+
     .hero-right {
       position: relative;
       padding: 4px;
@@ -409,8 +443,8 @@
     }
 
     .hero-card {
-      border-radius: 22px;
-      padding: 18px 18px 16px;
+      border-radius: 24px;
+      padding: 20px 20px 18px;
       background:
         radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.2), transparent 55%),
         radial-gradient(circle at 100% 0, rgba(99, 102, 241, 0.18), transparent 60%),
@@ -419,6 +453,7 @@
       box-shadow: var(--shadow-soft);
       position: relative;
       overflow: hidden;
+      font-size: 0.95rem;
     }
 
     .hero-card-tag {
@@ -445,13 +480,13 @@
     }
 
     .hero-card-title {
-      font-size: 16px;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
 
     .hero-card-age {
-      font-size: 13px;
+      font-size: 0.93rem;
       color: var(--text-muted);
       margin-bottom: 12px;
     }
@@ -459,9 +494,9 @@
     .hero-card-age strong { color: #e5e7eb; }
 
     .hero-card-text {
-      font-size: 13px;
+      font-size: 0.93rem;
       color: var(--text-muted);
-      line-height: 1.7;
+      line-height: 1.8;
       margin-bottom: 12px;
     }
 
@@ -473,7 +508,7 @@
     }
 
     .pill {
-      font-size: 11px;
+      font-size: 0.78rem;
       padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.5);
@@ -494,7 +529,7 @@
       align-items: center;
       padding-top: 10px;
       border-top: 1px dashed rgba(148, 163, 184, 0.6);
-      font-size: 11px;
+      font-size: 0.8rem;
       color: var(--text-muted);
     }
 
@@ -510,7 +545,7 @@
       border: 1px solid rgba(148, 163, 184, 0.5);
       color: #bae6fd;
       cursor: pointer;
-      font-size: 11px;
+      font-size: 0.78rem;
     }
 
     .hero-card-footer-right span.dot {
@@ -520,16 +555,16 @@
       background: #22c55e;
     }
 
-    /* SECTION HEADER */
-    section { margin-bottom: 60px; }
+    /* SHARED SECTIONS */
+    section { margin-bottom: 70px; }
 
     .section-header {
       display: flex;
       justify-content: space-between;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-end;
-      margin-bottom: 16px;
+      margin-bottom: 18px;
     }
 
     .section-label {
@@ -541,26 +576,26 @@
     }
 
     .section-title {
-      font-size: 1.45rem;
+      font-size: 1.6rem;
       margin: 0;
       letter-spacing: -0.03em;
     }
 
     .section-sub {
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
-      max-width: 26rem;
+      max-width: 32rem;
     }
 
-    /* CARDS + LIST */
     .card {
       border-radius: var(--radius-lg);
       background:
         radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.18), transparent 60%),
         linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
       border: 1px solid rgba(148, 163, 184, 0.45);
-      padding: 18px 18px 16px;
+      padding: 20px 18px 18px;
       box-shadow: 0 22px 55px rgba(15, 23, 42, 1);
+      font-size: 0.95rem;
     }
 
     .list {
@@ -568,21 +603,21 @@
       padding: 0;
       margin: 0;
       display: grid;
-      gap: 10px;
-      font-size: 0.92rem;
+      gap: 12px;
+      font-size: 0.96rem;
       color: #e5e7eb;
     }
 
     .list li {
       display: grid;
       grid-template-columns: auto minmax(0, 1fr);
-      gap: 8px;
+      gap: 10px;
       align-items: flex-start;
     }
 
     .list-bullet {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
       border-radius: 999px;
       background: rgba(34, 211, 238, 0.18);
       border: 1px solid rgba(34, 211, 238, 0.9);
@@ -596,7 +631,7 @@
 
     .list span.sub {
       display: block;
-      font-size: 0.8rem;
+      font-size: 0.84rem;
       color: var(--text-muted);
       margin-top: 2px;
     }
@@ -605,12 +640,12 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 10px;
-      font-size: 0.82rem;
+      margin-top: 12px;
+      font-size: 0.85rem;
     }
 
     .pill-tag {
-      padding: 4px 9px;
+      padding: 5px 10px;
       border-radius: 999px;
       border: 1px solid rgba(148, 163, 184, 0.45);
       background: rgba(15, 23, 42, 0.96);
@@ -622,7 +657,6 @@
       color: #e0f2fe;
     }
 
-    /* 3-STEP PREVIEW */
     .preview-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -644,12 +678,12 @@
     .footer-inner {
       max-width: 1120px;
       margin: 0 auto;
-      padding: 16px 20px 22px;
+      padding: 16px 16px 24px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 10px;
-      font-size: 0.8rem;
+      font-size: 0.82rem;
       color: var(--text-muted);
     }
 
@@ -666,6 +700,14 @@
     }
 
     .footer-links a:hover { color: #e5e7eb; }
+
+    /* MOBILE OPTIMISATIONS */
+    @media (max-width: 600px) {
+      .hero-title { font-size: 2.2rem; }
+      .hero-subtitle { font-size: 0.98rem; }
+      .hero-card { padding: 16px; }
+      .card { padding: 16px; }
+    }
   </style>
 </head>
 <body>
@@ -674,7 +716,7 @@
       <!-- NAV -->
       <header class="nav fade-in-up">
         <div class="nav-left">
-          <a href="index.html" class="brand-mark hover-lift">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
             <div class="brand-mark-inner">A</div>
           </a>
           <div class="brand-text">
@@ -682,22 +724,35 @@
             <div class="brand-sub">Modern, affordable web design</div>
           </div>
         </div>
-        <nav class="nav-links">
+
+        <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
-          <a href="contact.html">Start</a>
+          <a href="contact.html">Contact</a>
         </nav>
+
         <button
           class="nav-cta btn-pressable"
-          onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+          onclick="window.location.href='contact.html'"
         >
-          <span>Order on Fiverr</span>
-          <span class="badge">Secure</span>
+          <span>Text to start</span>
+          <span class="badge">No payment yet</span>
+        </button>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
         </button>
       </header>
 
-      <!-- HERO: VERY SIMPLE FIRST VIEW -->
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
+      <!-- HERO -->
       <section class="hero fade-in-up">
         <div>
           <div class="hero-label">WELCOME</div>
@@ -709,13 +764,14 @@
           </h1>
 
           <div class="typing-wrap">
-            <span class="typing-label">I’m Armin,</span>
+            <span class="typing-prefix">I’m Armin,</span>
             <span id="typing-text" class="typing-text typing-active"></span>
           </div>
 
           <p class="hero-subtitle">
-            I’m a 14‑year‑old web designer who creates clean, professional sites
-            for small businesses, new brands, and non‑profits – without agency‑level prices.
+            I’m a 14‑year‑old web designer who creates clean, professional websites
+            for small businesses, new brands, and non‑profits.
+            You only pay by <strong>Zelle</strong> when you’re <strong>100% satisfied</strong>.
           </p>
 
           <div class="hero-badges">
@@ -733,20 +789,23 @@
             </button>
             <button
               class="btn-secondary btn-pressable"
-              onclick="window.location.href='pricing.html'"
+              onclick="window.location.href='contact.html'"
             >
               <span class="dot"></span>
-              View pricing
+              Text to start a project
             </button>
           </div>
 
           <div class="hero-note">
             <span class="dot"></span>
-            <span><strong>Unlimited revisions</strong> on every project – we keep going until it feels right.</span>
+            <span>
+              <strong>No upfront payment.</strong> We design, build, and revise your site first –
+              then you pay by Zelle once you’re happy.
+            </span>
           </div>
         </div>
 
-        <!-- ABOUT CARD (STILL SIMPLE) -->
+        <!-- ABOUT CARD -->
         <aside class="hero-right fade-in-up">
           <div class="hero-card hover-lift">
             <div class="hero-card-tag chip-pop">
@@ -754,50 +813,57 @@
               <span>Creative · Focused · Easy to work with</span>
             </div>
 
-            <div class="hero-card-title">More than just “nice design”.</div>
+            <div class="hero-card-title">Hi, I’m Armin.</div>
             <div class="hero-card-age">
-              I combine <strong>design</strong> and <strong>marketing</strong> so your site looks modern
-              and actually helps your business grow.
+              I’m a <strong>14‑year‑old web designer</strong> who enjoys building websites that
+              look modern, feel professional, and are simple for visitors to use.
             </div>
 
             <p class="hero-card-text">
-              I pay attention to how visitors read your page, what they click, and what they need to see first.
-              That way your site stays simple, but still feels professional and trustworthy.
+              Because I’m young and building my portfolio, I bring fresh ideas and a lot of energy to every project.
+              My prices stay friendly, but I treat each site like it’s my own brand.
+            </p>
+
+            <p class="hero-card-text">
+              I also pay attention to <strong>marketing and conversion</strong>,
+              so your website doesn’t just look nice – it clearly explains what you do
+              and helps your visitors take action.
             </p>
 
             <div class="hero-card-pill-row">
               <span class="pill accent chip-pop">High‑quality & affordable</span>
+              <span class="pill chip-pop">Business‑focused design</span>
               <span class="pill chip-pop">Friendly communication</span>
-              <span class="pill chip-pop">Built for real people</span>
+              <span class="pill chip-pop">Unlimited revisions</span>
             </div>
 
             <div class="hero-card-footer">
               <div class="hero-card-footer-left">
-                <strong>Want to go deeper?</strong><br />
-                Check the Services page to see the types of sites I build.
+                <strong>Ready when you are.</strong><br />
+                Text me, tell me about your idea, and I’ll suggest a layout and price that make sense.
               </div>
               <div
                 class="hero-card-footer-right btn-pressable chip-pop"
-                onclick="window.location.href='services.html'"
+                onclick="window.location.href='contact.html'"
               >
                 <span class="dot"></span>
-                <span>View services</span>
+                <span>View contact details</span>
               </div>
             </div>
           </div>
         </aside>
       </section>
 
-      <!-- SECTION 2: WHO I BUILD FOR -->
+      <!-- WHO I WORK WITH -->
       <section class="fade-in-up">
         <div class="section-header">
           <div>
             <div class="section-label">Who I work with</div>
-            <h2 class="section-title">Made for small & growing organisations.</h2>
+            <h2 class="section-title">Small & growing organisations, not giant agencies.</h2>
           </div>
           <p class="section-sub">
-            If you’re just starting or you’re running a small team, you don’t need a huge,
-            complicated website. You need something clear, modern and easy to use.
+            If you’re a small team, a new project, or a non‑profit, you don’t need a huge,
+            complicated website. You need something clear, modern, and easy to update.
           </p>
         </div>
 
@@ -808,8 +874,8 @@
               <div>
                 Small businesses & local shops
                 <span class="sub">
-                  Restaurants, cafés, salons, barbers, gyms, repair services and more – anyone who wants a site
-                  that makes a strong first impression.
+                  Restaurants, cafés, salons, gyms, repair services and more – anyone who wants a site
+                  that makes a strong first impression and is easy to navigate.
                 </span>
               </div>
             </li>
@@ -818,8 +884,8 @@
               <div>
                 New brands & side‑projects
                 <span class="sub">
-                  You’re launching something new and need a simple, focused site that explains your idea and
-                  makes it feel real.
+                  You’re launching something new and need a simple, focused site that explains your idea,
+                  collects interest, and looks serious – even on a small budget.
                 </span>
               </div>
             </li>
@@ -828,8 +894,8 @@
               <div>
                 Non‑profits & community projects
                 <span class="sub">
-                  Show your mission, what you do, and how people can donate, join, or support you – all in a
-                  clear, friendly layout.
+                  Share your mission, show what you do, and explain how people can donate, join, or support you –
+                  with a layout that feels welcoming, not overwhelming.
                 </span>
               </div>
             </li>
@@ -843,12 +909,12 @@
         </article>
       </section>
 
-      <!-- SECTION 3: QUICK PREVIEW OF NEXT PAGES -->
+      <!-- NEXT STEPS -->
       <section class="fade-in-up">
         <div class="section-header">
           <div>
             <div class="section-label">Next steps</div>
-            <h2 class="section-title">Explore the rest of the site, one step at a time.</h2>
+            <h2 class="section-title">Explore the other pages, one step at a time.</h2>
           </div>
           <p class="section-sub">
             Each page focuses on one topic, so you never have to read too much at once.
@@ -857,32 +923,32 @@
 
         <div class="preview-grid">
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='services.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">Services</h3>
+            <h3 style="margin:0 0 8px;font-size:1.05rem;">Services</h3>
             <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              See the different types of websites I build and what’s included.
+              See the types of websites I build and what each one is best for.
             </p>
-            <p style="margin:0;font-size:0.82rem;color:var(--accent);">
+            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
               View Services →
             </p>
           </article>
 
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='pricing.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">Pricing</h3>
+            <h3 style="margin:0 0 8px;font-size:1.05rem;">Pricing</h3>
             <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              Clear pricing for one‑page and multi‑page websites, with unlimited revisions.
+              Clear prices for one‑page and multi‑page websites, always with unlimited revisions.
             </p>
-            <p style="margin:0;font-size:0.82rem;color:var(--accent);">
+            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
               View Pricing →
             </p>
           </article>
 
           <article class="card hover-lift" style="cursor:pointer;" onclick="window.location.href='contact.html'">
-            <h3 style="margin:0 0 8px;font-size:1rem;">Start a project</h3>
+            <h3 style="margin:0 0 8px;font-size:1.05rem;">Contact & payment</h3>
             <p style="margin:0 0 10px;font-size:0.9rem;color:var(--text-muted);">
-              Learn how to start on Fiverr and how the process works from first message to final website.
+              Get my text number, learn how Zelle payments work, and see how we’ll collaborate.
             </p>
-            <p style="margin:0;font-size:0.82rem;color:var(--accent);">
-              Go to Start →
+            <p style="margin:0;font-size:0.86rem;color:var(--accent);">
+              Go to Contact →
             </p>
           </article>
         </div>
@@ -900,7 +966,7 @@
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="contact.html">Start</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
@@ -908,6 +974,14 @@
   <script>
     // Footer year
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    navToggle.addEventListener("click", () => {
+      const isOpen = navMobile.style.display === "flex";
+      navMobile.style.display = isOpen ? "none" : "flex";
+    });
 
     // On-scroll animations
     const observer = new IntersectionObserver(
@@ -923,13 +997,13 @@
     );
     document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
 
-    // Typing effect
+    // Typing effect (intro)
     const typingElement = document.getElementById("typing-text");
     const phrases = [
       "a young designer who takes your website seriously.",
-      "14, with big ideas and real projects.",
+      "14, with big ideas and real business projects.",
       "focused on small businesses and non‑profits.",
-      "here to give you agency‑level feel on a small budget."
+      "here to give you a pro site without a pro agency price."
     ];
     let phraseIndex = 0;
     let charIndex = 0;
@@ -941,27 +1015,26 @@
         if (charIndex <= current.length) {
           typingElement.textContent = current.slice(0, charIndex);
           charIndex++;
-          setTimeout(typeLoop, 40);
+          setTimeout(typeLoop, 45);
         } else {
           typing = false;
-          setTimeout(typeLoop, 1600); // pause when full phrase is shown
+          setTimeout(typeLoop, 1600);
         }
       } else {
         if (charIndex > 0) {
           typingElement.textContent = current.slice(0, charIndex - 1);
           charIndex--;
-          setTimeout(typeLoop, 24);
+          setTimeout(typeLoop, 28);
         } else {
           typing = true;
           phraseIndex = (phraseIndex + 1) % phrases.length;
-          setTimeout(typeLoop, 260);
+          setTimeout(typeLoop, 280);
         }
       }
     }
 
-    // Start typing after slight delay so hero can appear first
     window.addEventListener("load", () => {
-      setTimeout(typeLoop, 400);
+      setTimeout(typeLoop, 450);
     });
   </script>
 </body>
