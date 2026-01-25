@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Services – Armin Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Web design services for small businesses, new brands, and non-profits. One-page and multi-page websites focused on clarity and results."
+  />
+  <!-- Reuse the same base styles from index for consistent look -->
+  <link rel="stylesheet" href="index.html" disabled />
+  <style>
+    /* Minimal shared subset to avoid repeating everything */
+    body { margin:0; font-family: system-ui, -apple-system, BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif; background:#020617; color:#f9fafb; -webkit-font-smoothing:antialiased;}
+    main { min-height:100vh; display:flex; flex-direction:column;}
+    .page { max-width:1120px;margin:0 auto;padding:24px 20px 72px;}
+    @media (min-width:960px){.page{padding:32px 24px 96px;}}
+    a{color:inherit;text-decoration:none;}
+    :root{--accent:#22d3ee;--accent-strong:#0ea5e9;--accent-alt:#6366f1;--text-muted:#9ca3af;--card:#020617;--radius-lg:20px;--radius-pill:999px;--shadow-soft:0 26px 60px rgba(15,23,42,0.9);--transition-fast:0.18s ease-out;}
+    .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);}
+    .hover-lift:hover{transform:translateY(-4px);box-shadow:0 26px 70px rgba(15,23,42,0.95);filter:brightness(1.02);}
+    .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);}
+    .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 12px 30px rgba(15,23,42,0.9);filter:brightness(0.97);}
+    .chip-pop{transition:transform var(--transition-fast),box-shadow var(--transition-fast),border-color var(--transition-fast),background var(--transition-fast);}
+    .chip-pop:hover{transform:translateY(-2px);border-color:rgba(248,250,252,0.85);box-shadow:0 16px 40px rgba(15,23,42,0.95);background:rgba(15,23,42,0.97);}
+    .fade-in-up{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .fade-in-up.visible{opacity:1;transform:translateY(0);}
+    /* nav (short) */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:32px;}
+    .nav-left{display:flex;align-items:center;gap:10px;}
+    .brand-mark{width:34px;height:34px;border-radius:14px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:11px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:15px;font-weight:700;letter-spacing:0.06em;}
+    .brand-text{display:flex;flex-direction:column;gap:2px;}
+    .brand-title{font-size:17px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
+    .brand-sub{font-size:12px;color:var(--text-muted);}
+    .nav-links{display:none;gap:18px;font-size:13px;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
+    .nav-links a{position:relative;padding-bottom:4px;}
+    .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
+    .nav-links a:hover::after{width:100%;}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 18px 42px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
+    .nav-cta span.badge{padding:3px 9px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
+    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}}
+    section{margin-bottom:60px;}
+    .section-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:16px;}
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:4px;}
+    .section-title{font-size:1.45rem;margin:0;letter-spacing:-0.03em;}
+    .section-sub{font-size:0.9rem;color:var(--text-muted);max-width:26rem;}
+    .card{border-radius:var(--radius-lg);background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);border:1px solid rgba(148,163,184,0.45);padding:18px 18px 16px;box-shadow:0 22px 55px rgba(15,23,42,1);}
+    .card-muted{background:radial-gradient(circle at 100% 0,rgba(30,64,175,0.25),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);}
+    .list{list-style:none;padding:0;margin:0;display:grid;gap:10px;font-size:0.92rem;color:#e5e7eb;}
+    .list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:8px;align-items:flex-start;}
+    .list-bullet{width:16px;height:16px;border-radius:999px;background:rgba(34,211,238,0.18);border:1px solid rgba(34,211,238,0.9);display:flex;align-items:center;justify-content:center;font-size:11px;color:#bae6fd;margin-top:2px;}
+    .list span.sub{display:block;font-size:0.8rem;color:var(--text-muted);margin-top:2px;}
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 55%),#020617;}
+    .footer-inner{max-width:1120px;margin:0 auto;padding:16px 20px 22px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.8rem;color:var(--text-muted);}
+    @media (min-width:960px){.footer-inner{padding:18px 24px 26px;}}
+    .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
+    .footer-links a:hover{color:#e5e7eb;}
+    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-pill);border:0;cursor:pointer;font-weight:700;font-size:14px;color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);}
+  </style>
+</head>
+<body>
+  <main>
+    <div class="page">
+      <!-- NAV -->
+      <header class="nav fade-in-up">
+        <div class="nav-left">
+          <a href="index.html" class="brand-mark hover-lift">
+            <div class="brand-mark-inner">A</div>
+          </a>
+          <div class="brand-text">
+            <div class="brand-title">Armin Studio</div>
+            <div class="brand-sub">Modern, affordable web design</div>
+          </div>
+        </div>
+        <nav class="nav-links">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Start</a>
+        </nav>
+        <button
+          class="nav-cta btn-pressable"
+          onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+        >
+          <span>Order on Fiverr</span>
+          <span class="badge">Secure</span>
+        </button>
+      </header>
+
+      <!-- INTRO -->
+      <section class="fade-in-up">
+        <div class="section-header">
+          <div>
+            <div class="section-label">Services</div>
+            <h2 class="section-title">Websites built to be clear, modern and easy to use.</h2>
+          </div>
+          <p class="section-sub">
+            I design for small businesses, new brands, non‑profits, and anyone who wants a site that looks professional
+            without being confusing or overloaded.
+          </p>
+        </div>
+      </section>
+
+      <!-- ONE-PAGE SERVICES -->
+      <section class="fade-in-up">
+        <article class="card hover-lift">
+          <h3 style="margin:0 0 8px;font-size:1.1rem;">One‑page websites</h3>
+          <p style="margin:0 0 12px;font-size:0.92rem;color:var(--text-muted);">
+            A single, powerful page that explains who you are, what you do, and how people can take action.
+          </p>
+
+          <ul class="list">
+            <li>
+              <div class="list-bullet">1</div>
+              <div>
+                Clear story from top to bottom
+                <span class="sub">
+                  We use sections like hero, about, services, social proof, and contact,
+                  arranged so visitors can skim and still “get it”.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">2</div>
+              <div>
+                Focused call‑to‑action
+                <span class="sub">
+                  Buttons and forms guide people to do one main thing: book, contact, donate, or join.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">3</div>
+              <div>
+                Perfect for launches and small teams
+                <span class="sub">
+                  Ideal for restaurants, local services, new products, or non‑profits that just need one strong page
+                  to share their message.
+                </span>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- MULTI-PAGE SERVICES -->
+      <section class="fade-in-up">
+        <article class="card card-muted hover-lift">
+          <h3 style="margin:0 0 8px;font-size:1.1rem;">Multi‑page “luxury” sites</h3>
+          <p style="margin:0 0 12px;font-size:0.92rem;color:var(--text-muted);">
+            When you need more space – for example, separate pages for services, menu, blog, or projects.
+          </p>
+
+          <ul class="list">
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                2–5 page layouts to start
+                <span class="sub">
+                  Common structure: Home, About, Services, Pricing or Menu, Contact.
+                  We keep each page focused so visitors never feel lost.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                Consistent, premium feel
+                <span class="sub">
+                  Smooth transitions, consistent colors and type, and well‑spaced layouts that feel modern and high‑end.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                Grows with your organisation
+                <span class="sub">
+                  Easy to expand later with new pages or sections as your business or non‑profit grows.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <p style="margin:10px 0 0;font-size:0.82rem;color:var(--text-muted);">
+            Multi‑page sites start from <strong>$50</strong> for a 2‑page build with 4 sections per page.
+            For these projects, <strong>message me on Fiverr</strong> and I’ll send a custom offer.
+          </p>
+        </article>
+      </section>
+
+      <!-- INTERACTIVE / SPECIAL FEATURES -->
+      <section class="fade-in-up">
+        <article class="card hover-lift">
+          <h3 style="margin:0 0 8px;font-size:1.1rem;">Interactive & special features</h3>
+          <p style="margin:0 0 10px;font-size:0.92rem;color:var(--text-muted);">
+            Add elements that make your website more useful – not just prettier.
+          </p>
+
+          <ul class="list">
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                Advanced forms
+                <span class="sub">
+                  Booking requests, feedback, surveys, or lead capture – designed to be simple for visitors and
+                  helpful for you.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                Loan/interest calculators & small tools
+                <span class="sub">
+                  Helpful mini‑apps like calculators and simple chat boxes that keep visitors on your site longer.
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="list-bullet">✓</div>
+              <div>
+                Embedded HTML & integrations
+                <span class="sub">
+                  Embedding existing tools (maps, forms, scheduling, etc.) smoothly into your design so everything
+                  feels like one experience.
+                </span>
+              </div>
+            </li>
+          </ul>
+        </article>
+      </section>
+
+      <!-- CTA -->
+      <section class="fade-in-up">
+        <article class="card hover-lift">
+          <h3 style="margin:0 0 8px;font-size:1.1rem;">Not sure which option you need?</h3>
+          <p style="margin:0 0 12px;font-size:0.92rem;color:var(--text-muted);">
+            You don’t have to decide alone. Tell me about your idea, and I’ll recommend a one‑page or multi‑page
+            setup that fits your budget and goals.
+          </p>
+          <button
+            class="btn-primary btn-pressable"
+            onclick="window.location.href='contact.html'"
+          >
+            Tell me about your project
+          </button>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Armin – Young Web Designer.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <span>•</span>
+        <a href="services.html">Services</a>
+        <span>•</span>
+        <a href="pricing.html">Pricing</a>
+        <span>•</span>
+        <a href="contact.html">Start</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+    const observer = new IntersectionObserver(
+      (entries)=>{entries.forEach((e)=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target);}});},
+      {threshold:0.12}
+    );
+    document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
+  </script>
+</body>
+</html>
