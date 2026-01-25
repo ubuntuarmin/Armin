@@ -2,67 +2,115 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Start a Project – Armin Studio</title>
+  <title>Contact & Payment – Armin Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta
     name="description"
-    content="Start a project with Armin Studio. All orders and messages go through Fiverr for safety and simplicity."
+    content="Text to start a project with Armin Studio. Learn how Zelle payments work and how we’ll collaborate."
   />
-  <link rel="stylesheet" href="index.html" disabled />
   <style>
-    body{margin:0;font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;background:#020617;color:#f9fafb;-webkit-font-smoothing:antialiased;}
-    main{min-height:100vh;display:flex;flex-direction:column;}
-    .page{max-width:1120px;margin:0 auto;padding:24px 20px 72px;}
-    @media (min-width:960px){.page{padding:32px 24px 96px;}}
+    :root{
+      --bg:#020617;
+      --accent:#22d3ee;
+      --accent-strong:#0ea5e9;
+      --accent-alt:#6366f1;
+      --text-main:#f9fafb;
+      --text-muted:#9ca3af;
+      --card:#020617;
+      --radius-lg:22px;
+      --radius-pill:999px;
+      --shadow-soft:0 26px 70px rgba(15,23,42,0.95);
+      --transition-fast:0.18s ease-out;
+    }
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;scroll-behavior:smooth;background:#020617;}
+    body{
+      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%,rgba(37,99,235,0.3),transparent 55%),
+        radial-gradient(circle at 100% 10%,rgba(34,211,238,0.25),transparent 55%),
+        radial-gradient(circle at 50% 100%,rgba(15,23,42,0.7),transparent 60%),
+        var(--bg);
+      color:var(--text-main);
+      -webkit-font-smoothing:antialiased;
+    }
     a{color:inherit;text-decoration:none;}
-    :root{--accent:#22d3ee;--accent-strong:#0ea5e9;--accent-alt:#6366f1;--text-muted:#9ca3af;--card:#020617;--radius-lg:20px;--radius-pill:999px;--transition-fast:0.18s ease-out;}
-    .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);}
-    .hover-lift:hover{transform:translateY(-4px);box-shadow:0 26px 70px rgba(15,23,42,0.95);filter:brightness(1.02);}
-    .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);}
+    main{min-height:100vh;display:flex;flex-direction:column;}
+    .page{max-width:1120px;margin:0 auto;padding:20px 16px 80px;}
+    @media (min-width:900px){.page{padding:32px 24px 110px;}}
+    .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow,filter;}
+    .hover-lift:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft);filter:brightness(1.02);}
+    .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow;}
     .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 12px 30px rgba(15,23,42,0.9);filter:brightness(0.97);}
-    .fade-in-up{opacity:0;transform:translateY(18px);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .fade-in-up{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
     .fade-in-up.visible{opacity:1;transform:translateY(0);}
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:32px;}
+
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;}
     .nav-left{display:flex;align-items:center;gap:10px;}
-    .brand-mark{width:34px;height:34px;border-radius:14px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);}
-    .brand-mark-inner{width:100%;height:100%;border-radius:11px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:15px;font-weight:700;letter-spacing:0.06em;}
+    .brand-mark{width:36px;height:36px;border-radius:16px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:13px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:16px;font-weight:700;letter-spacing:0.06em;}
     .brand-text{display:flex;flex-direction:column;gap:2px;}
-    .brand-title{font-size:17px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;}
-    .brand-sub{font-size:12px;color:var(--text-muted);}
-    .nav-links{display:none;gap:18px;font-size:13px;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
+    .brand-title{font-size:18px;font-weight:650;letter-spacing:0.08em;text-transform:uppercase;}
+    .brand-sub{font-size:13px;color:var(--text-muted);}
+    .nav-links{display:none;gap:16px;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
     .nav-links a{position:relative;padding-bottom:4px;}
     .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
     .nav-links a:hover::after{width:100%;}
-    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 18px 42px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 18px 40px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
     .nav-cta span.badge{padding:3px 9px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
-    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}}
-    section{margin-bottom:60px;}
-    .section-header{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;align-items:flex-end;margin-bottom:16px;}
-    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:4px;}
-    .section-title{font-size:1.45rem;margin:0;letter-spacing:-0.03em;}
-    .section-sub{font-size:0.9rem;color:var(--text-muted);max-width:26rem;}
-    .cta-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.05fr);gap:20px;align-items:flex-start;}
-    @media (max-width:960px){.cta-grid{grid-template-columns:minmax(0,1fr);}}
-    .cta-panel{border-radius:20px;padding:18px 18px 16px;background:radial-gradient(circle at 100% 0,rgba(34,211,238,0.24),transparent 60%),linear-gradient(140deg,#020617 0,#020617 55%,#020617 100%);border:1px solid rgba(148,163,184,0.6);box-shadow:0 26px 70px rgba(15,23,42,1);font-size:0.9rem;color:#e5e7eb;}
-    .cta-panel-title{font-size:1.08rem;font-weight:600;margin-bottom:6px;}
-    .cta-panel-sub{font-size:0.84rem;color:var(--text-muted);margin-bottom:10px;}
-    .cta-panel-steps{list-style:none;padding:0;margin:0 0 12px;display:grid;gap:6px;font-size:0.88rem;}
-    .cta-panel-steps li{display:flex;gap:8px;align-items:flex-start;}
-    .cta-step-badge{width:18px;height:18px;border-radius:999px;background:rgba(15,23,42,1);border:1px solid rgba(34,211,238,0.9);font-size:11px;display:flex;align-items:center;justify-content:center;color:#bae6fd;margin-top:2px;}
-    .cta-side-card{border-radius:20px;padding:18px 16px 16px;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.22),transparent 60%),linear-gradient(140deg,#020617 0,#020617 55%,#020617 100%);border:1px solid rgba(148,163,184,0.6);box-shadow:0 26px 70px rgba(15,23,42,1);font-size:0.86rem;color:#e5e7eb;}
-    .cta-side-highlight{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:rgba(15,23,42,0.99);border:1px solid rgba(148,163,184,0.7);font-size:0.8rem;margin-bottom:8px;color:var(--text-muted);}
-    .cta-side-dot{width:8px;height:8px;border-radius:999px;background:var(--accent);box-shadow:0 0 14px rgba(34,211,238,0.9);}
-    .cta-side-list{list-style:none;padding:0;margin:8px 0 8px;display:grid;gap:5px;font-size:0.84rem;color:var(--text-muted);}
-    .cta-side-list li{display:flex;gap:6px;}
-    .cta-side-icon{font-size:11px;color:#bae6fd;margin-top:1px;}
-    .cta-side-footer{font-size:0.82rem;color:var(--text-muted);padding-top:6px;border-top:1px dashed rgba(148,163,184,0.7);}
-    .cta-side-footer strong{color:#e5e7eb;}
-    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--radius-pill);border:0;cursor:pointer;font-weight:700;font-size:14px;color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);}
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:3px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:16px;height:2px;border-radius:999px;background:#e5e7eb;}
+    .nav-links-mobile{display:none;flex-direction:column;gap:8px;margin-top:10px;padding:10px 12px;border-radius:16px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links-mobile a{padding:4px 0;}
+    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
+
+    section{margin-bottom:70px;}
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
+    .page-title{font-size:1.9rem;margin:0 0 10px;letter-spacing:-0.04em;}
+    .header-sub{font-size:0.96rem;color:var(--text-muted);max-width:34rem;margin-bottom:18px;}
+
+    .two-col{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:flex-start;}
+    @media (max-width:900px){.two-col{grid-template-columns:minmax(0,1fr);}}
+
+    .card{
+      border-radius:var(--radius-lg);
+      padding:18px 18px 16px;
+      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.22),transparent 60%),linear-gradient(140deg,var(--card) 0,var(--card) 55%,var(--card) 100%);
+      border:1px solid rgba(148,163,184,0.6);
+      box-shadow:var(--shadow-soft);
+      font-size:0.94rem;
+      color:#e5e7eb;
+    }
+
+    .info-line{margin:6px 0;font-size:0.95rem;}
+    .info-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
+
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:10px 22px;border-radius:var(--radius-pill);
+      border:0;cursor:pointer;font-weight:700;font-size:14px;
+      color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);
+    }
+
+    .steps{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px;font-size:0.92rem;color:var(--text-muted);}
+    .steps li{display:flex;gap:8px;align-items:flex-start;}
+    .step-badge{width:18px;height:18px;border-radius:999px;background:rgba(15,23,42,1);border:1px solid rgba(34,211,238,0.9);font-size:11px;display:flex;align-items:center;justify-content:center;color:#bae6fd;margin-top:2px;}
+
+    .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px;font-size:0.9rem;color:var(--text-muted);}
+    .list li{display:flex;gap:6px;}
+    .list-icon{font-size:11px;color:#bae6fd;margin-top:1px;}
+
     footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 55%),#020617;}
-    .footer-inner{max-width:1120px;margin:0 auto;padding:16px 20px 22px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.8rem;color:var(--text-muted);}
+    .footer-inner{max-width:1120px;margin:0 auto;padding:16px 16px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.82rem;color:var(--text-muted);}
     @media (min-width:960px){.footer-inner{padding:18px 24px 26px;}}
     .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
     .footer-links a:hover{color:#e5e7eb;}
+
+    @media (max-width:600px){
+      .page-title{font-size:1.7rem;}
+      .card{padding:16px;}
+    }
   </style>
 </head>
 <body>
@@ -71,7 +119,7 @@
       <!-- NAV -->
       <header class="nav fade-in-up">
         <div class="nav-left">
-          <a href="index.html" class="brand-mark hover-lift">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
             <div class="brand-mark-inner">A</div>
           </a>
           <div class="brand-text">
@@ -79,125 +127,140 @@
             <div class="brand-sub">Modern, affordable web design</div>
           </div>
         </div>
-        <nav class="nav-links">
+        <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
-          <a href="contact.html">Start</a>
+          <a href="contact.html">Contact</a>
         </nav>
         <button
           class="nav-cta btn-pressable"
-          onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+          onclick="window.location.href='contact.html'"
         >
-          <span>Order on Fiverr</span>
-          <span class="badge">Secure</span>
+          <span>Text to start</span>
+          <span class="badge">No payment upfront</span>
+        </button>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
         </button>
       </header>
 
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+
       <!-- HEADER -->
       <section class="fade-in-up">
-        <div class="section-header">
-          <div>
-            <div class="section-label">Start a project</div>
-            <h2 class="section-title">Everything happens safely through Fiverr.</h2>
-          </div>
-          <p class="section-sub">
-            All orders, messages and project files are managed inside Fiverr for safety, clarity, and easy communication.
-          </p>
-        </div>
+        <div class="section-label">Contact & payment</div>
+        <h1 class="page-title">Text me to start your website project.</h1>
+        <p class="header-sub">
+          No forms, no complicated portals. Just send a quick text, tell me what you need,
+          and we’ll go from idea to finished website together.
+        </p>
       </section>
 
-      <!-- HOW TO START -->
+      <!-- CONTACT + PAYMENT DETAILS -->
       <section class="fade-in-up">
-        <div class="cta-grid">
-          <div class="cta-panel hover-lift">
-            <div class="cta-panel-title">3 quick steps to get your website built</div>
-            <div class="cta-panel-sub">
-              You don’t need to be technical – just follow these steps and I’ll guide you through the rest.
+        <div class="two-col">
+          <article class="card hover-lift">
+            <h2 style="margin:0 0 10px;font-size:1.2rem;">How to contact me</h2>
+
+            <div class="info-line">
+              <div class="info-label">Text number</div>
+              <div style="font-size:1.05rem;font-weight:600;">
+                +1‑EXAMPLE NUMBER
+              </div>
             </div>
 
-            <ul class="cta-panel-steps">
+            <p style="margin:10px 0 8px;font-size:0.95rem;color:var(--text-muted);">
+              When you text me, please share:
+            </p>
+            <ul class="steps">
               <li>
-                <span class="cta-step-badge">1</span>
-                <span>
-                  <strong>Open my Fiverr gig.</strong><br />
-                  Click the button below or go here directly:
-                  <a href="https://www.fiverr.com/s/bdX1vXm" target="_blank" rel="noopener noreferrer"
-                     style="color:#e0f2fe;text-decoration:underline;">Fiverr – Armin’s web design gig</a>.
-                </span>
+                <span class="step-badge">1</span>
+                <span>Your name and what you do (for example: “I run a small café” or “I’m starting a non‑profit”).</span>
               </li>
               <li>
-                <span class="cta-step-badge">2</span>
-                <span>
-                  <strong>Choose a package or ask for custom.</strong><br />
-                  Pick Basic, Standard, or Premium for a one‑page site, or message me if you want a multi‑page project.
-                </span>
+                <span class="step-badge">2</span>
+                <span>What kind of website you think you need (one‑page or multi‑page, if you already have an idea).</span>
               </li>
               <li>
-                <span class="cta-step-badge">3</span>
-                <span>
-                  <strong>Tell me about your idea.</strong><br />
-                  On Fiverr, share your business type, who your site is for, and what you want it to do.
-                  I’ll respond with a clear plan and start designing.
-                </span>
+                <span class="step-badge">3</span>
+                <span>Anything important your website must include (booking, menu, donations, calculators, etc.).</span>
               </li>
             </ul>
+
+            <p style="margin:12px 0 0;font-size:0.9rem;color:var(--text-muted);">
+              I’ll reply as soon as I can with questions, ideas, and a suggestion for the best package.
+            </p>
 
             <button
               class="btn-primary btn-pressable"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
+              style="margin-top:12px;"
+              onclick="window.location.href='tel:+1EXAMPLENUMBER'"
             >
-              Open my Fiverr gig & get started
+              Tap to text on your phone
             </button>
+          </article>
 
-            <p style="margin:8px 0 0;font-size:0.8rem;color:var(--text-muted);">
-              <strong>Note:</strong> For multi‑page sites, just send me a message on Fiverr and I’ll create a custom offer.
-            </p>
-          </div>
-
-          <aside class="cta-side-card hover-lift">
-            <div class="cta-side-highlight">
-              <span class="cta-side-dot"></span>
-              <span>Why Fiverr is good for both of us</span>
-            </div>
-
-            <p style="margin:0 0 8px;">
-              I use Fiverr so you have payment protection, a clear order page, and one place to track everything.
+          <article class="card hover-lift">
+            <h2 style="margin:0 0 10px;font-size:1.2rem;">How Zelle payments work</h2>
+            <p style="margin:0 0 8px;font-size:0.94rem;color:var(--text-muted);">
+              I use <strong>Zelle</strong> because it’s fast and simple – but you <strong>never pay first</strong>.
             </p>
 
-            <ul class="cta-side-list">
+            <ul class="steps">
               <li>
-                <span class="cta-side-icon">★</span>
-                <span><strong>Secure payments</strong> – You pay Fiverr, and they release it when you approve the work.</span>
+                <span class="step-badge">1</span>
+                <span>We agree on what we’re building and a clear price range for the project.</span>
               </li>
               <li>
-                <span class="cta-side-icon">★</span>
-                <span><strong>Organised communication</strong> – All messages, files, and revisions are in one conversation.</span>
+                <span class="step-badge">2</span>
+                <span>I design and build your website, sharing updates and asking for your feedback.</span>
               </li>
               <li>
-                <span class="cta-side-icon">★</span>
-                <span><strong>Unlimited revisions</strong> – We keep adjusting until your site looks and feels right.</span>
+                <span class="step-badge">3</span>
+                <span>We go through revisions together until you say you’re <strong>100% satisfied</strong>.</span>
               </li>
               <li>
-                <span class="cta-side-icon">★</span>
-                <span><strong>Perfect for one‑page & multi‑page</strong> – Simple for small sites, flexible for bigger ones.</span>
+                <span class="step-badge">4</span>
+                <span>Only then do you send the agreed payment via Zelle.</span>
               </li>
             </ul>
 
-            <div class="cta-side-footer">
-              <strong>Have a question before ordering?</strong><br />
-              Send me a message on Fiverr – I’ll reply as soon as I can and help you decide the best way to start.
-            </div>
-
-            <button
-              class="btn-pressable"
-              style="margin-top:8px;width:100%;padding:8px 0;border-radius:999px;border:1px solid rgba(148,163,184,0.6);background:rgba(15,23,42,0.98);color:#e5e7eb;font-size:0.86rem;font-weight:600;cursor:pointer;"
-              onclick="window.open('https://www.fiverr.com/s/bdX1vXm','_blank')"
-            >
-              Message me on Fiverr
-            </button>
-          </aside>
+            <p style="margin:10px 0 0;font-size:0.86rem;color:var(--text-muted);">
+              I’ll share my Zelle details with you directly in our text conversation when we’re ready for payment.
+            </p>
+          </article>
         </div>
+      </section>
+
+      <!-- EXPECTATIONS -->
+      <section class="fade-in-up">
+        <article class="card hover-lift">
+          <h2 style="margin:0 0 10px;font-size:1.15rem;">What you can expect from me</h2>
+          <ul class="list">
+            <li>
+              <span class="list-icon">★</span>
+              <span><strong>Clear communication</strong> – I explain everything in simple language, step by step.</span>
+            </li>
+            <li>
+              <span class="list-icon">★</span>
+              <span><strong>Unlimited revisions</strong> – we adjust layout, text, and details until your site feels right.</span>
+            </li>
+            <li>
+              <span class="list-icon">★</span>
+              <span><strong>Respect for your budget</strong> – I’ll always suggest options that make sense for where you are now.</span>
+            </li>
+            <li>
+              <span class="list-icon">★</span>
+              <span><strong>No pressure, no rush to pay</strong> – you only send Zelle once you’re happy with what we built.</span>
+            </li>
+          </ul>
+        </article>
       </section>
     </div>
   </main>
@@ -212,15 +275,30 @@
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="contact.html">Start</a>
+        <a href="contact.html">Contact</a>
       </div>
     </div>
   </footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    navToggle.addEventListener("click", () => {
+      const open = navMobile.style.display === "flex";
+      navMobile.style.display = open ? "none" : "flex";
+    });
+
     const observer = new IntersectionObserver(
-      (entries)=>{entries.forEach((e)=>{if(e.isIntersecting){e.target.classList.add("visible");observer.unobserve(e.target);}});},
+      (entries)=>{
+        entries.forEach((entry)=>{
+          if(entry.isIntersecting){
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
       {threshold:0.12}
     );
     document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
