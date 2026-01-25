@@ -43,10 +43,10 @@
     .hover-lift:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft);filter:brightness(1.03);}
     .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow;}
     .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 14px 40px rgba(15,23,42,0.9);filter:brightness(0.97);}
-    .fade-in-up{opacity:0;transform:translateY(22px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .fade-in-up{opacity:0;transform:translateY(26px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
     .fade-in-up.visible{opacity:1;transform:translateY(0);}
 
-    /* NAV (same style as other pages) */
+    /* NAV */
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
     .nav-left{display:flex;align-items:center;gap:12px;}
     .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.5);}
@@ -66,54 +66,34 @@
     .nav-links-mobile a{padding:4px 0;}
     @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
 
-    section{margin-bottom:80px;}
+    section{margin-bottom:90px;}
 
     .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
     .page-title{font-size:2rem;margin:0 0 10px;letter-spacing:-0.04em;}
-    .section-sub{font-size:1rem;color:var(--text-muted);max-width:38rem;margin-bottom:18px;}
+    .section-sub{font-size:1.02rem;color:var(--text-muted);max-width:40rem;margin-bottom:18px;}
 
-    .card-full{
+    .strip{
       border-radius:var(--radius-lg);
-      padding:26px 22px 22px;
+      padding:26px 22px 24px;
       background:radial-gradient(circle at 0 0,rgba(37,99,235,0.26),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
       border:1px solid rgba(148,163,184,0.6);
       box-shadow:var(--shadow-soft);
-      font-size:1rem;
+      font-size:1.02rem;
       color:#e5e7eb;
     }
 
-    .two-col{
-      display:grid;
-      grid-template-columns:minmax(0,1.3fr) minmax(0,1.2fr);
-      gap:24px;
-      align-items:flex-start;
-    }
-    @media (max-width:900px){.two-col{grid-template-columns:minmax(0,1fr);}}
+    .strip-title{font-size:1.45rem;margin:0 0 10px;}
+    .strip-sub{font-size:1rem;color:var(--text-muted);margin:0 0 12px;}
 
-    .list{list-style:none;padding:0;margin:0;display:grid;gap:16px;font-size:1rem;color:#e5e7eb;}
-    .list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:flex-start;}
-    .list-badge{
-      width:22px;height:22px;border-radius:999px;
-      background:rgba(34,211,238,0.22);
-      border:1px solid rgba(34,211,238,0.9);
-      display:flex;align-items:center;justify-content:center;
-      font-size:11px;color:#bae6fd;margin-top:2px;
-    }
-    .list span.sub{display:block;font-size:0.9rem;color:var(--text-muted);margin-top:3px;}
+    .point-list{list-style:none;padding:0;margin:14px 0 0;display:grid;gap:12px;font-size:1rem;}
+    .point-item{display:flex;gap:10px;align-items:flex-start;}
+    .point-badge{width:22px;height:22px;border-radius:999px;background:rgba(34,211,238,0.22);border:1px solid rgba(34,211,238,0.9);display:flex;align-items:center;justify-content:center;font-size:11px;color:#bae6fd;margin-top:2px;}
+    .point-text{flex:1;}
+    .point-sub{display:block;font-size:0.92rem;color:var(--text-muted);margin-top:3px;}
 
-    .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:0.92rem;}
-    .pill-tag{padding:7px 12px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.96);color:#e5e7eb;}
+    .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:0.96rem;}
+    .pill-tag{padding:7px 13px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.96);color:#e5e7eb;}
     .pill-tag.accent{border-color:rgba(34,211,238,0.9);color:#e0f2fe;}
-
-    .cta-block{
-      border-radius:var(--radius-lg);
-      padding:24px 22px 22px;
-      background:radial-gradient(circle at 100% 0,rgba(34,211,238,0.26),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
-      border:1px solid rgba(148,163,184,0.6);
-      box-shadow:var(--shadow-soft);
-      font-size:1rem;
-      color:#e5e7eb;
-    }
 
     .btn-primary{
       display:inline-flex;align-items:center;gap:8px;
@@ -131,7 +111,7 @@
 
     @media (max-width:720px){
       .page-title{font-size:1.8rem;}
-      .card-full,.cta-block{padding:20px 18px 18px;}
+      .strip{padding:22px 18px 20px;}
     }
   </style>
 </head>
@@ -160,7 +140,7 @@
           onclick="window.location.href='contact.html'"
         >
           <span>Text to start</span>
-          <span class="badge">Most work first, pay later</span>
+          <span class="badge">No payment first</span>
         </button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
@@ -174,62 +154,95 @@
         <a href="contact.html">Contact</a>
       </nav>
 
-      <!-- INTRO -->
+      <!-- INTRO STRIP (FULL WIDTH, BIG) -->
       <section class="fade-in-up">
-        <div class="section-label">Services</div>
-        <h1 class="page-title">Websites, logos and flyers that feel modern and clear.</h1>
-        <p class="section-sub">
-          I focus on three main areas: your website, your logo, and your flyers or posters.
-          Together, they make your brand feel real and easy to recognise – online and offline.
-        </p>
+        <article class="strip hover-lift">
+          <div class="section-label">Services</div>
+          <h1 class="page-title">What I can create for your brand.</h1>
+          <p class="section-sub">
+            I design and build websites, logos, and flyers that are easy to read, easy to use,
+            and feel modern – on both phones and computers. Scroll down and each part will appear
+            one by one as you go.
+          </p>
+          <div class="pill-row">
+            <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
+              See pricing →
+            </span>
+            <span class="pill-tag" onclick="window.location.href='contact.html'" style="cursor:pointer;">
+              Get my text number →
+            </span>
+          </div>
+        </article>
       </section>
 
-      <!-- WEBSITES -->
+      <!-- WEBSITES – PART 1: OVERVIEW -->
       <section class="fade-in-up">
-        <article class="card-full hover-lift">
-          <h2 style="margin:0 0 14px;font-size:1.4rem;">Website design & build</h2>
-          <p style="margin:0 0 14px;font-size:1.02rem;color:var(--text-muted);">
-            Your website is often the first place people meet your business or project.
-            I build sites that are easy to read, easy to use, and look great on phones and computers.
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Website design – clear and modern.</h2>
+          <p class="strip-sub">
+            Your website is usually the first place people meet your business or project.
+            I build sites that explain what you do in big, readable sections – no tiny text, no clutter.
           </p>
-
-          <ul class="list">
-            <li>
-              <div class="list-badge">1</div>
-              <div>
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">1</div>
+              <div class="point-text">
                 One‑page websites
-                <span class="sub">
-                  Simple, powerful pages that explain who you are, what you do, and how people can take action –
-                  all in a single smooth scroll.
+                <span class="point-sub">
+                  A full story on a single page: who you are, what you offer, and how to contact or book you,
+                  arranged in large, easy‑to‑scan blocks.
                 </span>
               </div>
             </li>
-            <li>
-              <div class="list-badge">2</div>
-              <div>
+            <li class="point-item">
+              <div class="point-badge">2</div>
+              <div class="point-text">
                 Multi‑page “luxury” sites
-                <span class="sub">
-                  When you need more space, I design clear multi‑page sites (for example: Home, About, Services, Contact)
-                  that still feel focused and not cluttered.
+                <span class="point-sub">
+                  When you need more space, I split your content across multiple pages
+                  (for example: Home, About, Services, Contact) with clear navigation.
                 </span>
               </div>
             </li>
-            <li>
-              <div class="list-badge">3</div>
-              <div>
-                Interactive features
-                <span class="sub">
-                  Booking forms, contact forms, feedback forms, loan or interest calculators, simple chat boxes,
-                  referral logic, and more – designed to be easy to use.
+          </ul>
+        </article>
+      </section>
+
+      <!-- WEBSITES – PART 2: FEATURES -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Website features I can add.</h2>
+          <p class="strip-sub">
+            I focus on features that actually help your visitors and your business, not random effects.
+          </p>
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">A</div>
+              <div class="point-text">
+                Forms that collect real info
+                <span class="point-sub">
+                  Contact forms, booking requests, feedback, surveys, and more – all built to be simple
+                  to fill out on mobile and desktop.
                 </span>
               </div>
             </li>
-            <li>
-              <div class="list-badge">4</div>
-              <div>
-                Built for phones and computers
-                <span class="sub">
-                  Every layout is responsive, so your site looks good and is easy to read on mobile, tablet, and desktop.
+            <li class="point-item">
+              <div class="point-badge">B</div>
+              <div class="point-text">
+                Interactive tools
+                <span class="point-sub">
+                  Loan or interest calculators, referral logic, small chat boxes, and other tools that keep
+                  people interested and help them make decisions.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">C</div>
+              <div class="point-text">
+                Analytics & integrations
+                <span class="point-sub">
+                  Connect analytics or embed tools (maps, schedulers, external forms) so you can see what’s happening
+                  on your site and use services you already like.
                 </span>
               </div>
             </li>
@@ -237,137 +250,228 @@
 
           <div class="pill-row">
             <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
-              View website pricing →
-            </span>
-            <span class="pill-tag" onclick="window.location.href='contact.html'" style="cursor:pointer;">
-              Text me about your website idea →
+              Website packages & prices →
             </span>
           </div>
         </article>
       </section>
 
-      <!-- LOGO DESIGN -->
+      <!-- WEBSITES – PART 3: EXPERIENCE -->
       <section class="fade-in-up">
-        <div class="two-col">
-          <article class="card-full hover-lift">
-            <h2 style="margin:0 0 14px;font-size:1.4rem;">Logo design (most likely free)</h2>
-            <p style="margin:0 0 12px;font-size:1.02rem;color:var(--text-muted);">
-              Your logo is the face of your brand. I create simple, modern logos that are easy to read,
-              easy to recognise, and look good on screens and printed materials.
-            </p>
-
-            <ul class="list">
-              <li>
-                <div class="list-badge">A</div>
-                <div>
-                  Clean, text‑based logos
-                  <span class="sub">
-                    Modern name‑based logos that work well on websites, social media, menus, and flyers –
-                    without being too complicated.
-                  </span>
-                </div>
-              </li>
-              <li>
-                <div class="list-badge">B</div>
-                <div>
-                  Simple icon + text logos
-                  <span class="sub">
-                    A small symbol plus your name, designed to feel professional and easy to remember.
-                  </span>
-                </div>
-              </li>
-              <li>
-                <div class="list-badge">C</div>
-                <div>
-                  Multiple variations
-                  <span class="sub">
-                    Horizontal, stacked, and small versions, so your logo fits everywhere you need it.
-                  </span>
-                </div>
-              </li>
-            </ul>
-
-            <p style="margin:18px 0 0;font-size:1rem;color:var(--accent);">
-              Most logo work is very likely <strong>free</strong> when you also work with me on a website.
-              Text me for details – I’ll tell you exactly what’s included and what it costs (if anything).
-            </p>
-          </article>
-
-          <!-- FLYER DESIGN -->
-          <article class="card-full hover-lift">
-            <h2 style="margin:0 0 14px;font-size:1.4rem;">Flyer & poster design (most likely free)</h2>
-            <p style="margin:0 0 12px;font-size:1.02rem;color:var(--text-muted);">
-              Flyers and posters help you reach people offline – in your local area, events, or community spaces.
-              I design them to match your website and logo, so everything feels connected.
-            </p>
-
-            <ul class="list">
-              <li>
-                <div class="list-badge">1</div>
-                <div>
-                  Event flyers & promos
-                  <span class="sub">
-                    Simple, bold designs for events, openings, promotions, or special offers that are easy to read
-                    from a distance.
-                  </span>
-                </div>
-              </li>
-              <li>
-                <div class="list-badge">2</div>
-                <div>
-                  Menu & service flyers
-                  <span class="sub">
-                    Clear layouts for menus, service lists, and price sheets that match your brand and are easy to scan.
-                  </span>
-                </div>
-              </li>
-              <li>
-                <div class="list-badge">3</div>
-                <div>
-                  Ready‑to‑print files
-                  <span class="sub">
-                    You get files in formats that printers accept (usually PDF/PNG), so you can print locally or online.
-                  </span>
-                </div>
-              </li>
-            </ul>
-
-            <p style="margin:18px 0 0;font-size:1rem;color:var(--accent);">
-              Most flyer and poster design is also very likely <strong>free</strong> when we’re already working
-              on your website. Text me to confirm what you need.
-            </p>
-          </article>
-        </div>
+        <article class="strip hover-lift">
+          <h2 class="strip-title">How the website feels to use.</h2>
+          <p class="strip-sub">
+            I design every page to feel smooth and simple – especially on phones.
+          </p>
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">•</div>
+              <div class="point-text">
+                Big sections, big text
+                <span class="point-sub">
+                  No squinting. Headlines and paragraphs are large and spaced out, so people can read comfortably,
+                  even on small screens.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">•</div>
+              <div class="point-text">
+                Clear calls‑to‑action
+                <span class="point-sub">
+                  Buttons and links are obvious – “Book”, “Contact”, “Donate” – so visitors always know the next step.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">•</div>
+              <div class="point-text">
+                Smooth animations
+                <span class="point-sub">
+                  Sections gently fade in and rise as you scroll, making the site feel modern without being distracting.
+                </span>
+              </div>
+            </li>
+          </ul>
+        </article>
       </section>
 
-      <!-- CTA / LINKS -->
+      <!-- LOGO DESIGN – OVERVIEW -->
       <section class="fade-in-up">
-        <article class="cta-block hover-lift">
-          <h2 style="margin:0 0 14px;font-size:1.35rem;">Want websites + logo + flyers together?</h2>
-          <p style="margin:0 0 10px;font-size:1rem;color:var(--text-muted);">
-            If you want your website, logo, and flyers to all match and feel professional, we can plan them together
-            as one project. Most logo and flyer work will likely be free when you also order a website.
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Logo design – likely free with your website.</h2>
+          <p class="strip-sub">
+            Your logo is the face of your brand. I design simple, modern logos that match your website style
+            and work everywhere you use them.
+          </p>
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">L1</div>
+              <div class="point-text">
+                Clean, text‑based logos
+                <span class="point-sub">
+                  Strong name‑only logos that look sharp on your site, social media, menus, and documents –
+                  no messy or over‑complicated graphics.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">L2</div>
+              <div class="point-text">
+                Simple icon + text logos
+                <span class="point-sub">
+                  A small symbol paired with your name, designed to be easy to remember and easy to use in many places.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">L3</div>
+              <div class="point-text">
+                Variations for real life
+                <span class="point-sub">
+                  Horizontal and stacked versions so your logo fits on websites, flyers, signs, and social media profiles.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <p style="margin:20px 0 0;font-size:1.02rem;color:var(--accent);">
+            Most logo design is very likely <strong>free</strong> when we’re also working on your website.
+            To know for sure, <strong>text me and tell me what you need</strong> – I’ll tell you exactly what’s covered.
+          </p>
+        </article>
+      </section>
+
+      <!-- FLYER DESIGN – OVERVIEW -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Flyer & poster design – also likely free.</h2>
+          <p class="strip-sub">
+            Flyers and posters help you reach people in the real world – in your local area, at events, or at your shop.
+            I design them to match your website and logo, so your brand feels connected everywhere.
           </p>
 
-          <p style="margin:0 0 10px;font-size:1rem;color:var(--text-muted);">
-            The easiest way to start is to text me:
-            <strong style="color:#e5e7eb;">+1‑EXAMPLE NUMBER</strong>.
-            Tell me what you’re planning, and I’ll explain exactly what I can include for free and what might cost extra.
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">F1</div>
+              <div class="point-text">
+                Event flyers & promotions
+                <span class="point-sub">
+                  Bold, readable layouts for events, openings, sales, and announcements – with big text and clear dates.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">F2</div>
+              <div class="point-text">
+                Menus & service lists
+                <span class="point-sub">
+                  Printed menus or service flyers that match your site, using large fonts and organised sections
+                  so people can find what they need quickly.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">F3</div>
+              <div class="point-text">
+                Ready‑to‑print files
+                <span class="point-sub">
+                  I send you high‑resolution files (usually PDF/PNG) that local print shops and online printers
+                  can use right away.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <p style="margin:20px 0 0;font-size:1.02rem;color:var(--accent);">
+            Just like logo work, most flyer and poster design is <strong>most likely free</strong> when you also
+            get a website from me. Text me what you have in mind and I’ll confirm it.
+          </p>
+        </article>
+      </section>
+
+      <!-- HOW EVERYTHING CONNECTS -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Bringing it all together for your brand.</h2>
+          <p class="strip-sub">
+            When I design your website, logo, and flyers together, everything matches:
+            colors, fonts, and style. That makes your brand look more professional and easier to remember.
           </p>
 
-          <div style="margin-top:14px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
+          <ul class="point-list">
+            <li class="point-item">
+              <div class="point-badge">1</div>
+              <div class="point-text">
+                One visual language
+                <span class="point-sub">
+                  Your website, logo, and print materials all share the same style – so people recognise you instantly,
+                  whether they see you online or offline.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">2</div>
+              <div class="point-text">
+                Easy to update over time
+                <span class="point-sub">
+                  Because everything is organised, it’s simple to refresh text, swap images, or add new flyers or pages later.
+                </span>
+              </div>
+            </li>
+            <li class="point-item">
+              <div class="point-badge">3</div>
+              <div class="point-text">
+                Built around your audience
+                <span class="point-sub">
+                  I always think about who you’re trying to reach: customers, donors, members, or clients –
+                  and design around what they need to see first.
+                </span>
+              </div>
+            </li>
+          </ul>
+
+          <div class="pill-row">
+            <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
+              Check website pricing →
+            </span>
+            <span class="pill-tag" onclick="window.location.href='contact.html'" style="cursor:pointer;">
+              Text me to ask what’s free →
+            </span>
+          </div>
+        </article>
+      </section>
+
+      <!-- FINAL CTA -->
+      <section class="fade-in-up">
+        <article class="strip hover-lift">
+          <h2 class="strip-title">Ready to see what I can do for you?</h2>
+          <p class="strip-sub">
+            If you’d like a website, logo, or flyer (or all three), the fastest way to start is to send me a text.
+            Tell me briefly who you are and what you need – I’ll reply with ideas and a simple plan.
+          </p>
+
+          <p style="margin:0 0 10px;font-size:1.02rem;">
+            Text number:
+            <strong style="color:#e5e7eb;">+1‑EXAMPLE NUMBER</strong>
+          </p>
+
+          <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
             <button
               class="btn-primary btn-pressable"
               onclick="window.location.href='tel:+1EXAMPLENUMBER'"
             >
               Tap to text on your phone
             </button>
-            <span style="font-size:0.95rem;color:var(--text-muted);">
+            <span style="font-size:0.96rem;color:var(--text-muted);">
               You can also review
               <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='pricing.html'">
                 Pricing
               </span>
-              to see website packages.
+              or see how to contact me on the
+              <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='contact.html'">
+                Contact page
+              </span>.
             </span>
           </div>
         </article>
