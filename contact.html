@@ -17,9 +17,9 @@
       --text-main:#f9fafb;
       --text-muted:#9ca3af;
       --card:#020617;
-      --radius-lg:22px;
+      --radius-lg:28px;
       --radius-pill:999px;
-      --shadow-soft:0 26px 70px rgba(15,23,42,0.95);
+      --shadow-soft:0 30px 80px rgba(15,23,42,0.95);
       --transition-fast:0.18s ease-out;
     }
     *{box-sizing:border-box;}
@@ -27,89 +27,91 @@
     body{
       font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
       background:
-        radial-gradient(circle at 0% 0%,rgba(37,99,235,0.3),transparent 55%),
-        radial-gradient(circle at 100% 10%,rgba(34,211,238,0.25),transparent 55%),
-        radial-gradient(circle at 50% 100%,rgba(15,23,42,0.7),transparent 60%),
+        radial-gradient(circle at 0% 0%,rgba(37,99,235,0.35),transparent 55%),
+        radial-gradient(circle at 100% 10%,rgba(34,211,238,0.28),transparent 55%),
+        radial-gradient(circle at 50% 100%,rgba(15,23,42,0.8),transparent 60%),
         var(--bg);
       color:var(--text-main);
       -webkit-font-smoothing:antialiased;
     }
     a{color:inherit;text-decoration:none;}
     main{min-height:100vh;display:flex;flex-direction:column;}
-    .page{max-width:1120px;margin:0 auto;padding:20px 16px 80px;}
-    @media (min-width:900px){.page{padding:32px 24px 110px;}}
+    .page{max-width:1180px;margin:0 auto;padding:22px 16px 96px;}
+    @media (min-width:960px){.page{padding:32px 28px 140px;}}
+
     .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow,filter;}
-    .hover-lift:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft);filter:brightness(1.02);}
+    .hover-lift:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft);filter:brightness(1.03);}
     .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow;}
-    .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 12px 30px rgba(15,23,42,0.9);filter:brightness(0.97);}
-    .fade-in-up{opacity:0;transform:translateY(18px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 14px 40px rgba(15,23,42,0.9);filter:brightness(0.97);}
+    .fade-in-up{opacity:0;transform:translateY(22px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
     .fade-in-up.visible{opacity:1;transform:translateY(0);}
 
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;}
-    .nav-left{display:flex;align-items:center;gap:10px;}
-    .brand-mark{width:36px;height:36px;border-radius:16px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 24px rgba(34,211,238,0.7),0 0 40px rgba(99,102,241,0.4);}
-    .brand-mark-inner{width:100%;height:100%;border-radius:13px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:16px;font-weight:700;letter-spacing:0.06em;}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
+    .nav-left{display:flex;align-items:center;gap:12px;}
+    .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.5);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:16px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:17px;font-weight:800;letter-spacing:0.06em;}
     .brand-text{display:flex;flex-direction:column;gap:2px;}
-    .brand-title{font-size:18px;font-weight:650;letter-spacing:0.08em;text-transform:uppercase;}
+    .brand-title{font-size:19px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
     .brand-sub{font-size:13px;color:var(--text-muted);}
-    .nav-links{display:none;gap:16px;font-size:12px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links{display:none;gap:20px;font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
     .nav-links a{position:relative;padding-bottom:4px;}
     .nav-links a::after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
     .nav-links a:hover::after{width:100%;}
-    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 18px 40px rgba(34,211,238,0.7),0 0 40px rgba(34,211,238,0.6);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
-    .nav-cta span.badge{padding:3px 9px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
-    .nav-toggle{display:inline-flex;flex-direction:column;gap:3px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
-    .nav-toggle span{width:16px;height:2px;border-radius:999px;background:#e5e7eb;}
-    .nav-links-mobile{display:none;flex-direction:column;gap:8px;margin-top:10px;padding:10px 12px;border-radius:16px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 20px 48px rgba(34,211,238,0.8),0 0 40px rgba(34,211,238,0.7);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
+    .nav-cta span.badge{padding:3px 10px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:4px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:18px;height:2px;border-radius:999px;background:#e5e7eb;}
+    .nav-links-mobile{display:none;flex-direction:column;gap:10px;margin-top:10px;padding:12px 14px;border-radius:18px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
     .nav-links-mobile a{padding:4px 0;}
     @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
 
-    section{margin-bottom:70px;}
+    section{margin-bottom:80px;}
     .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
-    .page-title{font-size:1.9rem;margin:0 0 10px;letter-spacing:-0.04em;}
-    .header-sub{font-size:0.96rem;color:var(--text-muted);max-width:34rem;margin-bottom:18px;}
+    .page-title{font-size:2rem;margin:0 0 10px;letter-spacing:-0.04em;}
+    .header-sub{font-size:1rem;color:var(--text-muted);max-width:38rem;margin-bottom:20px;}
 
-    .two-col{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:20px;align-items:flex-start;}
+    .two-col{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1.2fr);gap:24px;align-items:flex-start;}
     @media (max-width:900px){.two-col{grid-template-columns:minmax(0,1fr);}}
 
     .card{
       border-radius:var(--radius-lg);
-      padding:18px 18px 16px;
-      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.22),transparent 60%),linear-gradient(140deg,var(--card) 0,var(--card) 55%,var(--card) 100%);
+      padding:24px 22px 20px;
+      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.26),transparent 60%),linear-gradient(140deg,var(--card) 0,var(--card) 55%,var(--card) 100%);
       border:1px solid rgba(148,163,184,0.6);
       box-shadow:var(--shadow-soft);
-      font-size:0.94rem;
+      font-size:0.98rem;
       color:#e5e7eb;
     }
 
-    .info-line{margin:6px 0;font-size:0.95rem;}
-    .info-label{font-size:0.8rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);}
+    .info-block{margin-bottom:14px;}
+    .info-label{font-size:0.82rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-bottom:4px;}
+    .info-value{font-size:1.1rem;font-weight:650;}
 
     .btn-primary{
       display:inline-flex;align-items:center;gap:8px;
-      padding:10px 22px;border-radius:var(--radius-pill);
-      border:0;cursor:pointer;font-weight:700;font-size:14px;
+      padding:11px 24px;border-radius:var(--radius-pill);
+      border:0;cursor:pointer;font-weight:700;font-size:15px;
       color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));
       box-shadow:0 22px 55px rgba(34,211,238,0.85),0 0 45px rgba(34,211,238,0.85);
     }
 
-    .steps{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px;font-size:0.92rem;color:var(--text-muted);}
-    .steps li{display:flex;gap:8px;align-items:flex-start;}
-    .step-badge{width:18px;height:18px;border-radius:999px;background:rgba(15,23,42,1);border:1px solid rgba(34,211,238,0.9);font-size:11px;display:flex;align-items:center;justify-content:center;color:#bae6fd;margin-top:2px;}
+    .steps{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:10px;font-size:0.98rem;color:var(--text-muted);}
+    .steps li{display:flex;gap:10px;align-items:flex-start;}
+    .step-badge{width:18px;height:18px;border-radius:999px;background:rgba(15,23,42,1);border:1px solid rgba(34,211,238,0.9);font-size:11px;display:flex;align-items:center;justify-content:center;color:#bae6fd;margin-top:3px;}
 
-    .list{list-style:none;padding:0;margin:8px 0 0;display:grid;gap:6px;font-size:0.9rem;color:var(--text-muted);}
-    .list li{display:flex;gap:6px;}
-    .list-icon{font-size:11px;color:#bae6fd;margin-top:1px;}
+    .list{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px;font-size:0.98rem;color:var(--text-muted);}
+    .list li{display:flex;gap:8px;}
+    .list-icon{font-size:11px;color:#bae6fd;margin-top:2px;}
 
-    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.18),transparent 55%),#020617;}
-    .footer-inner{max-width:1120px;margin:0 auto;padding:16px 16px 24px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.82rem;color:var(--text-muted);}
-    @media (min-width:960px){.footer-inner{padding:18px 24px 26px;}}
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.2),transparent 55%),#020617;}
+    .footer-inner{max-width:1180px;margin:0 auto;padding:18px 16px 26px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);}
+    @media (min-width:960px){.footer-inner{padding:20px 28px 30px;}}
     .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
     .footer-links a:hover{color:#e5e7eb;}
 
-    @media (max-width:600px){
-      .page-title{font-size:1.7rem;}
-      .card{padding:16px;}
+    @media (max-width:720px){
+      .page-title{font-size:1.8rem;}
+      .card{padding:20px 18px 18px;}
     }
   </style>
 </head>
@@ -157,7 +159,7 @@
         <div class="section-label">Contact & payment</div>
         <h1 class="page-title">Text me to start your website project.</h1>
         <p class="header-sub">
-          No forms, no complicated portals. Just send a quick text, tell me what you need,
+          No complicated forms or sign‑ups. Just send a quick text, tell me what you need,
           and we’ll go from idea to finished website together.
         </p>
       </section>
@@ -165,19 +167,19 @@
       <!-- CONTACT + PAYMENT DETAILS -->
       <section class="fade-in-up">
         <div class="two-col">
+          <!-- CONTACT -->
           <article class="card hover-lift">
-            <h2 style="margin:0 0 10px;font-size:1.2rem;">How to contact me</h2>
+            <h2 style="margin:0 0 12px;font-size:1.3rem;">How to contact me</h2>
 
-            <div class="info-line">
+            <div class="info-block">
               <div class="info-label">Text number</div>
-              <div style="font-size:1.05rem;font-weight:600;">
-                +1‑EXAMPLE NUMBER
-              </div>
+              <div class="info-value">+1‑EXAMPLE NUMBER</div>
             </div>
 
-            <p style="margin:10px 0 8px;font-size:0.95rem;color:var(--text-muted);">
-              When you text me, please share:
+            <p style="margin:6px 0 10px;font-size:0.98rem;color:var(--text-muted);">
+              When you text, please share:
             </p>
+
             <ul class="steps">
               <li>
                 <span class="step-badge">1</span>
@@ -185,7 +187,7 @@
               </li>
               <li>
                 <span class="step-badge">2</span>
-                <span>What kind of website you think you need (one‑page or multi‑page, if you already have an idea).</span>
+                <span>What kind of website you think you need (one‑page, multi‑page, or “not sure yet”).</span>
               </li>
               <li>
                 <span class="step-badge">3</span>
@@ -193,22 +195,23 @@
               </li>
             </ul>
 
-            <p style="margin:12px 0 0;font-size:0.9rem;color:var(--text-muted);">
+            <p style="margin:12px 0 0;font-size:0.96rem;color:var(--text-muted);">
               I’ll reply as soon as I can with questions, ideas, and a suggestion for the best package.
             </p>
 
             <button
               class="btn-primary btn-pressable"
-              style="margin-top:12px;"
+              style="margin-top:14px;"
               onclick="window.location.href='tel:+1EXAMPLENUMBER'"
             >
               Tap to text on your phone
             </button>
           </article>
 
+          <!-- PAYMENT -->
           <article class="card hover-lift">
-            <h2 style="margin:0 0 10px;font-size:1.2rem;">How Zelle payments work</h2>
-            <p style="margin:0 0 8px;font-size:0.94rem;color:var(--text-muted);">
+            <h2 style="margin:0 0 12px;font-size:1.3rem;">How Zelle payments work</h2>
+            <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
               I use <strong>Zelle</strong> because it’s fast and simple – but you <strong>never pay first</strong>.
             </p>
 
@@ -219,7 +222,7 @@
               </li>
               <li>
                 <span class="step-badge">2</span>
-                <span>I design and build your website, sharing updates and asking for your feedback.</span>
+                <span>I design and build your website, sharing progress and asking for your feedback.</span>
               </li>
               <li>
                 <span class="step-badge">3</span>
@@ -231,25 +234,25 @@
               </li>
             </ul>
 
-            <p style="margin:10px 0 0;font-size:0.86rem;color:var(--text-muted);">
+            <p style="margin:12px 0 0;font-size:0.94rem;color:var(--text-muted);">
               I’ll share my Zelle details with you directly in our text conversation when we’re ready for payment.
             </p>
           </article>
         </div>
       </section>
 
-      <!-- EXPECTATIONS -->
+      <!-- EXPECTATIONS / LINKS -->
       <section class="fade-in-up">
         <article class="card hover-lift">
-          <h2 style="margin:0 0 10px;font-size:1.15rem;">What you can expect from me</h2>
+          <h2 style="margin:0 0 12px;font-size:1.3rem;">What working together feels like</h2>
           <ul class="list">
             <li>
               <span class="list-icon">★</span>
-              <span><strong>Clear communication</strong> – I explain everything in simple language, step by step.</span>
+              <span><strong>Clear communication</strong> – I explain things in simple language, step by step, and check in with you often.</span>
             </li>
             <li>
               <span class="list-icon">★</span>
-              <span><strong>Unlimited revisions</strong> – we adjust layout, text, and details until your site feels right.</span>
+              <span><strong>Unlimited revisions</strong> – we adjust layout, text, colors, and details until your site feels exactly right.</span>
             </li>
             <li>
               <span class="list-icon">★</span>
@@ -257,9 +260,22 @@
             </li>
             <li>
               <span class="list-icon">★</span>
-              <span><strong>No pressure, no rush to pay</strong> – you only send Zelle once you’re happy with what we built.</span>
+              <span><strong>No pressure, no rush to pay</strong> – Zelle payment only happens once you approve the final result.</span>
             </li>
           </ul>
+
+          <p style="margin:16px 0 6px;font-size:0.96rem;color:var(--text-muted);">
+            Want to see how pricing works in detail?
+            <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='pricing.html'">
+              Visit the Pricing page →
+            </span>
+          </p>
+          <p style="margin:0;font-size:0.96rem;color:var(--text-muted);">
+            Want to understand the types of sites I build?
+            <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='services.html'">
+              Visit the Services page →
+            </span>
+          </p>
         </article>
       </section>
     </div>
