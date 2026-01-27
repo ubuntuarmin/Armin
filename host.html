@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Hosting Comparison – Armin Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Compare Firebase, GitHub Pages, Netlify and Cloudflare: free plan limits, storage, pro pricing and best use cases." />
+
+  <style>
+    :root{
+      --bg:#020617;
+      --accent:#22d3ee;
+      --accent-strong:#0ea5e9;
+      --accent-alt:#6366f1;
+      --text-main:#f9fafb;
+      --text-muted:#9ca3af;
+      --card:#020617;
+      --radius-lg:24px;
+      --radius-pill:999px;
+      --shadow-soft:0 30px 80px rgba(15,23,42,0.95);
+      --transition-fast:0.18s ease-out;
+      --muted-contrast: rgba(148,163,184,0.18);
+    }
+
+    /* Base */
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;scroll-behavior:smooth;background:var(--bg);color:var(--text-main);-webkit-font-smoothing:antialiased;font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;}
+    a{color:inherit;text-decoration:none;}
+    main{min-height:100vh;display:flex;flex-direction:column;}
+    .page{max-width:1180px;margin:0 auto;padding:28px 18px 96px;}
+    @media (min-width:960px){.page{padding:36px 28px 140px;}}
+
+    /* NAV (keeps look consistent with site) */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px;}
+    .nav-left{display:flex;align-items:center;gap:12px;}
+    .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.45);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:16px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-weight:800;}
+    .brand-title{font-size:17px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;}
+    .brand-sub{font-size:12px;color:var(--text-muted);}
+
+    .nav-links{display:none;gap:18px;font-size:13px;text-transform:uppercase;letter-spacing:0.14em;color:var(--text-muted);}
+    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:8px 18px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#020617;font-weight:700;border:0;cursor:pointer;}
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:4px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.45);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:16px;height:2px;border-radius:999px;background:#e5e7eb;}
+    @media (min-width:880px){.nav-links{display:flex;}.nav-toggle{display:none;}}
+
+    /* Header */
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
+    .page-title{font-size:1.6rem;margin:0 0 8px;letter-spacing:-0.02em;}
+    .header-sub{font-size:0.98rem;color:var(--text-muted);max-width:60ch;margin-bottom:12px;line-height:1.5;}
+
+    /* Card */
+    .card{
+      border-radius:var(--radius-lg);
+      padding:20px;
+      background:linear-gradient(140deg,var(--card) 0,var(--card) 60%,rgba(255,255,255,0.01) 100%);
+      border:1px solid var(--muted-contrast);
+      box-shadow:var(--shadow-soft);
+      color:#e5e7eb;
+    }
+
+    /* MOBILE WARNING — subtle top banner on mobile for readability (only shown <=720px) */
+    .mobile-banner {
+      display:none;
+      align-items:center;
+      gap:12px;
+      padding:10px 12px;
+      border-radius:12px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(148,163,184,0.08);
+      color:var(--text-muted);
+      font-size:0.95rem;
+      margin-bottom:12px;
+    }
+    .mobile-banner .btn { margin-left:auto; }
+    @media (max-width:720px){
+      .mobile-banner{display:flex;}
+    }
+
+    /* Table (desktop-first readable layout) */
+    .host-table-wrap{overflow:auto;border-radius:12px;}
+    .host-table{width:100%;border-collapse:collapse;min-width:980px;font-size:0.98rem;}
+    .host-table thead th{
+      text-align:left;padding:12px 14px;color:var(--text-muted);font-size:0.78rem;text-transform:uppercase;letter-spacing:0.12em;border-bottom:1px solid rgba(148,163,184,0.06);}
+    .host-table tbody td{padding:14px;border-bottom:1px dashed rgba(148,163,184,0.04);vertical-align:top;color:#e5e7eb;}
+    .platform{font-weight:700;color:#e5f4ff;white-space:nowrap;width:160px;}
+    .stat{color:var(--text-muted);font-size:0.95rem;}
+    .benefits{color:var(--text-muted);max-width:36ch;font-size:0.95rem;line-height:1.45;}
+    .bestfor{font-weight:600;color:#e5f4ff;}
+
+    /* Platform cards for small screens (improves readability on phones) */
+    .platform-cards{display:none;gap:14px;margin-top:10px;}
+    .platform-card{background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));border:1px solid rgba(148,163,184,0.06);padding:14px;border-radius:12px;}
+    .platform-card .row{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap;margin-bottom:8px;}
+    .platform-card .label{width:130px;font-weight:700;color:#e5f4ff;}
+    .platform-card .value{color:var(--text-muted);flex:1;}
+
+    @media (max-width:880px){
+      .host-table-wrap{display:none;}
+      .platform-cards{display:flex;flex-direction:column;}
+      .page{padding:18px 12px 80px;}
+      .page-title{font-size:1.4rem;}
+      .header-sub{font-size:0.95rem;}
+      .card{padding:14px;}
+    }
+
+    /* Pills */
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(15,23,42,0.96);border:1px solid rgba(148,163,184,0.08);font-size:0.86rem;color:var(--text-muted);}
+    .pill.accent{background:linear-gradient(135deg,var(--accent),var(--accent-strong));color:#020617;border-color:transparent;font-weight:700;}
+
+    /* small notes */
+    .notes{margin-top:12px;color:var(--text-muted);font-size:0.92rem;line-height:1.45;}
+
+    /* subtle fade-in to match site transitions */
+    .fade-in-up{opacity:0;transform:translateY(12px);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .fade-in-up.visible{opacity:1;transform:translateY(0);}
+
+    /* Footer */
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.2),transparent 55%),#020617;}
+    .footer-inner{max-width:1180px;margin:0 auto;padding:18px 16px 26px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);}
+    @media (min-width:960px){.footer-inner{padding:20px 28px 30px;}}
+  </style>
+
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+<body>
+  <main>
+    <div class="page">
+      <!-- NAV -->
+      <header class="nav fade-in-up">
+        <div class="nav-left">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
+            <div class="brand-mark-inner">A</div>
+          </a>
+          <div>
+            <div class="brand-title">Armin Studio</div>
+            <div class="brand-sub">Modern, affordable web design</div>
+          </div>
+        </div>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+          <a href="customization.html">Customization</a>
+        </nav>
+
+        <div style="display:inline-flex;gap:8px;align-items:center;">
+          <button class="nav-cta btn-pressable" onclick="window.location.href='contact.html'">Text to start</button>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation"><span></span><span></span><span></span></button>
+        </div>
+      </header>
+
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation" style="display:none;">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+        <a href="customization.html">Customization</a>
+      </nav>
+
+      <!-- HEADER -->
+      <section class="fade-in-up">
+        <div class="section-label">Hosting</div>
+        <h1 class="page-title">Hosting platforms — free limits, storage & pro benefits</h1>
+        <p class="header-sub">
+          Practical comparison of Firebase Hosting, GitHub Pages, Netlify and Cloudflare Pages.
+          Columns show estimated max concurrent users on the free plan, recommended approach for large media (videos), typical pro pricing & benefits, and the scenarios each platform fits best.
+        </p>
+
+        <!-- Mobile banner (only on phones) -->
+        <div class="mobile-banner" id="mobileBanner" role="note" aria-hidden="true">
+          <div style="font-weight:600;color:#e5f4ff;">Note</div>
+          <div style="flex:1;color:var(--text-muted);font-size:0.95rem;">This comparison is wide and easier to read on a laptop or desktop — we recommend switching to a larger screen for full details.</div>
+          <button class="pill" id="bannerDismiss">Continue on mobile</button>
+        </div>
+      </section>
+
+      <!-- CONTENT CARD -->
+      <section class="card fade-in-up" aria-label="Hosting comparison">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:14px;">
+          <div>
+            <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:6px;">Platform snapshot</div>
+            <div style="font-size:1.05rem;font-weight:700;margin-bottom:6px;">Firebase · GitHub Pages · Netlify · Cloudflare</div>
+            <div class="notes">Numbers are estimates for planning. Platforms change limits and billing — always verify current provider docs before you pick.</div>
+          </div>
+
+          <div style="min-width:220px;max-width:420px;">
+            <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">How to read</div>
+            <ul style="margin:0;padding-left:18px;color:var(--text-muted);line-height:1.45;font-size:0.95rem;">
+              <li><strong>Free plan:</strong> estimated concurrent users the free tier can comfortably serve</li>
+              <li><strong>Storage:</strong> for large media; most hosts recommend object storage / CDNs for videos</li>
+              <li><strong>Pro:</strong> typical starting price and common benefits</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Desktop table (visible on wider screens) -->
+        <div class="host-table-wrap" role="table" aria-label="Hosting platforms table">
+          <table class="host-table" role="presentation">
+            <thead>
+              <tr>
+                <th>Platform</th>
+                <th>Free plan — max concurrent users (estimate)</th>
+                <th>Storage for videos / large files</th>
+                <th>Pro plan — cost & benefits</th>
+                <th>Best for</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="platform">Firebase Hosting</td>
+                <td class="stat"><span class="pill">~100–500</span><div style="color:var(--text-muted);margin-top:6px;font-size:0.9rem;">(depends on dynamic backends)</div></td>
+                <td class="stat">Small static assets OK. For large video/media use Firebase Storage (pay-as-you-go) + signed URLs or external CDN.</td>
+                <td class="benefits"><strong>$25+/mo*</strong> — Blaze (pay-as-you-go): scalable bandwidth, storage, serverless functions, built-in CDN, signed URLs, auth & database scaling.</td>
+                <td class="bestfor">Apps needing serverless backends, auth, realtime DB and integrated services.</td>
+              </tr>
+
+              <tr>
+                <td class="platform">GitHub Pages</td>
+                <td class="stat"><span class="pill">~100–200</span><div style="color:var(--text-muted);margin-top:6px;font-size:0.9rem;">(static repo hosting)</div></td>
+                <td class="stat">Not for large video hosting. Keep media in external services (YouTube, Vimeo, cloud object storage). Repo size guidelines ~1GB.</td>
+                <td class="benefits"><strong>Free</strong> — Pro/Team add CI minutes, private repos and features; no dedicated “pro hosting” for Pages itself.</td>
+                <td class="bestfor">Documentation, portfolios, simple static sites that fit in a Git repo.</td>
+              </tr>
+
+              <tr>
+                <td class="platform">Netlify</td>
+                <td class="stat"><span class="pill">~200–800</span><div style="color:var(--text-muted);margin-top:6px;font-size:0.9rem;">(edge CDN + caching)</div></td>
+                <td class="stat">Free plan serves assets; for large videos use external storage or Netlify Large Media (paid). Free bandwidth is limited.</td>
+                <td class="benefits"><strong>$19+/mo (Pro)</strong> — more build minutes, team features, passworded sites, more bandwidth, Large Media support, faster support.</td>
+                <td class="bestfor">Deploy-from-Git static sites with previews, serverless functions, and small teams.</td>
+              </tr>
+
+              <tr>
+                <td class="platform">Cloudflare Pages</td>
+                <td class="stat"><span class="pill accent">~500–2000</span><div style="color:var(--text-muted);margin-top:6px;font-size:0.9rem;">(global edge network)</div></td>
+                <td class="stat">Pages serves static assets from the edge. For large files use R2 (object storage) or a dedicated video CDN; R2 billed separately.</td>
+                <td class="benefits"><strong>$5–25+/mo**</strong> — R2/Workers usage; benefits include global edge performance, low-latency assets, Workers for edge logic and durable storage.</td>
+                <td class="bestfor">Global distribution, edge logic, low-latency static sites and apps at scale.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Mobile-friendly stacked cards (visible on small screens) -->
+        <div class="platform-cards" aria-hidden="true">
+          <article class="platform-card">
+            <div class="row"><div class="label">Platform</div><div class="value"><strong>Firebase Hosting</strong></div></div>
+            <div class="row"><div class="label">Free plan</div><div class="value"><span class="pill">~100–500 concurrent</span></div></div>
+            <div class="row"><div class="label">Storage</div><div class="value">Small static assets OK. Use Firebase Storage (pay-as-you-go) or CDN for video.</div></div>
+            <div class="row"><div class="label">Pro</div><div class="value"><strong>$25+/mo*</strong> — scalable bandwidth, serverless, signed URLs, auth, DB scaling.</div></div>
+            <div class="row"><div class="label">Best for</div><div class="value">Apps needing serverless backends and integrated Firebase services.</div></div>
+          </article>
+
+          <article class="platform-card">
+            <div class="row"><div class="label">Platform</div><div class="value"><strong>GitHub Pages</strong></div></div>
+            <div class="row"><div class="label">Free plan</div><div class="value"><span class="pill">~100–200 concurrent</span></div></div>
+            <div class="row"><div class="label">Storage</div><div class="value">Not for large video hosting — use YouTube/Vimeo or cloud object storage.</div></div>
+            <div class="row"><div class="label">Pro</div><div class="value"><strong>Free</strong> — GitHub Pro/Team add CI minutes and private repos.</div></div>
+            <div class="row"><div class="label">Best for</div><div class="value">Docs, portfolios, simple static sites stored in a repo.</div></div>
+          </article>
+
+          <article class="platform-card">
+            <div class="row"><div class="label">Platform</div><div class="value"><strong>Netlify</strong></div></div>
+            <div class="row"><div class="label">Free plan</div><div class="value"><span class="pill">~200–800 concurrent</span></div></div>
+            <div class="row"><div class="label">Storage</div><div class="value">Free for small assets; for video use external storage or Netlify Large Media (paid).</div></div>
+            <div class="row"><div class="label">Pro</div><div class="value"><strong>$19+/mo</strong> — more build minutes, Large Media, team features, passworded sites.</div></div>
+            <div class="row"><div class="label">Best for</div><div class="value">Deploy-from-Git sites with built-in CI/CD and preview tooling.</div></div>
+          </article>
+
+          <article class="platform-card">
+            <div class="row"><div class="label">Platform</div><div class="value"><strong>Cloudflare Pages</strong></div></div>
+            <div class="row"><div class="label">Free plan</div><div class="value"><span class="pill accent">~500–2000 concurrent</span></div></div>
+            <div class="row"><div class="label">Storage</div><div class="value">Use R2 for durable object storage (billed separately); or a video CDN for large files.</div></div>
+            <div class="row"><div class="label">Pro</div><div class="value"><strong>$5–25+/mo**</strong> — R2/Workers usage for edge logic & storage.</div></div>
+            <div class="row"><div class="label">Best for</div><div class="value">Global, low-latency distribution and edge logic.</div></div>
+          </article>
+        </div>
+
+        <div class="notes">
+          * Firebase example pricing: many projects use Blaze (pay-as-you-go). Cost depends on storage, function invocations, and egress.<br>
+          ** Cloudflare Pages + R2/Workers pricing depends on usage. These estimates are starting points — check providers for up-to-date quotas and pricing.
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Armin – Young Web Designer.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <span>•</span>
+        <a href="services.html">Services</a>
+        <span>•</span>
+        <a href="pricing.html">Pricing</a>
+        <span>•</span>
+        <a href="contact.html">Contact</a>
+        <span>•</span>
+        <a href="customization.html">Customization</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle (same pattern used across site)
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    if (navToggle && navMobile) {
+      navToggle.addEventListener("click", () => {
+        const open = navMobile.style.display === "flex";
+        navMobile.style.display = open ? "none" : "flex";
+      });
+    }
+
+    // Fade-in observer (keeps the same animation behavior)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+    // MOBILE BANNER behaviour:
+    // - show banner only on small screens (CSS handles display)
+    // - provide a 'don't show again' via localStorage when the user dismisses permanently
+    (function mobileBanner() {
+      const banner = document.getElementById('mobileBanner');
+      const dismissBtn = document.getElementById('bannerDismiss');
+      const KEY = 'armin_host_banner_dismissed_v1';
+      if (!banner || !dismissBtn) return;
+
+      // If user previously dismissed permanently, hide banner
+      if (localStorage.getItem(KEY) === '1') {
+        banner.style.display = 'none';
+        return;
+      }
+
+      // show if on small screen (CSS also controls visibility)
+      const isMobile = window.matchMedia('(max-width:720px)').matches;
+      if (!isMobile) return;
+
+      // Banner is visible by default via CSS; clicking continue hides for session
+      dismissBtn.addEventListener('click', () => {
+        banner.style.display = 'none';
+      });
+
+      // If user long-presses (shift+click) — store permanent dismissal (accessible alternative)
+      dismissBtn.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        localStorage.setItem(KEY, '1');
+        banner.style.display = 'none';
+        alert('Banner will not be shown again on this device.');
+      });
+
+      // Also hide banner when resized to desktop
+      window.addEventListener('resize', () => {
+        if (!window.matchMedia('(max-width:720px)').matches) banner.style.display = 'none';
+      });
+    })();
+  </script>
+</body>
+</html>
