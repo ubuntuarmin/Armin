@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Top Domains & Pricing – Armin Studio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Compare the top domain extensions for business: initial price, yearly renewals, best use cases, security & trust notes." />
+
+  <style>
+    :root{
+      --bg:#020617;
+      --accent:#22d3ee;
+      --accent-strong:#0ea5e9;
+      --accent-alt:#6366f1;
+      --text-main:#f9fafb;
+      --text-muted:#9ca3af;
+      --card:#020617;
+      --radius-lg:20px;
+      --radius-pill:999px;
+      --shadow-soft:0 30px 80px rgba(15,23,42,0.95);
+      --transition-fast:0.18s ease-out;
+      --table-bg: rgba(255,255,255,0.03);
+      --bar-bg: rgba(34,211,238,0.12);
+      --bar-fill: rgba(34,211,238,0.9);
+      --max-price:120; /* used by JS to normalize bars */
+    }
+
+    *{box-sizing:border-box;}
+    html,body{margin:0;padding:0;scroll-behavior:smooth;background:var(--bg);color:var(--text-main);-webkit-font-smoothing:antialiased;font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;}
+    a{color:inherit;text-decoration:none;}
+    main{min-height:100vh;display:flex;flex-direction:column;}
+    .page{max-width:1180px;margin:0 auto;padding:22px 16px 96px;}
+    @media (min-width:960px){.page{padding:32px 28px 140px;}}
+
+    /* NAV (kept consistent with other pages) */
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
+    .nav-left{display:flex;align-items:center;gap:12px;}
+    .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.45);}
+    .brand-mark-inner{width:100%;height:100%;border-radius:16px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-weight:800;}
+    .brand-text{display:flex;flex-direction:column;gap:2px;}
+    .brand-title{font-size:19px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+    .brand-sub{font-size:13px;color:var(--text-muted);}
+    .nav-links{display:none;gap:20px;font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
+    .nav-links a{position:relative;padding-bottom:4px;}
+    .nav-cta{
+      display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:999px;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 20px 48px rgba(34,211,238,0.8),0 0 40px rgba(34,211,238,0.7);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;
+    }
+    .nav-toggle{display:inline-flex;flex-direction:column;gap:4px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
+    .nav-toggle span{width:18px;height:2px;border-radius:999px;background:#e5e7eb;}
+    @media (min-width:880px){.nav-links{display:flex;}.nav-toggle{display:none;}}
+
+    /* Page header */
+    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
+    .page-title{font-size:1.8rem;margin:0 0 10px;letter-spacing:-0.03em;}
+    .header-sub{font-size:1rem;color:var(--text-muted);max-width:48rem;margin-bottom:20px;}
+
+    /* Card */
+    .card{
+      border-radius:var(--radius-lg);
+      padding:20px;
+      background:linear-gradient(140deg,var(--card) 0,var(--card) 60%,rgba(255,255,255,0.01) 100%);
+      border:1px solid rgba(148,163,184,0.5);
+      box-shadow:var(--shadow-soft);
+      color:#e5e7eb;
+    }
+
+    /* Mobile-only warning (user requested phrase) */
+    .mobile-warning{
+      display:none;
+      margin:10px 0 18px;
+      padding:12px 14px;
+      border-radius:12px;
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(148,163,184,0.25);
+      color:var(--text-muted);
+      font-size:0.96rem;
+    }
+    @media (max-width:720px){
+      .mobile-warning{display:block;}
+    }
+
+    /* Domain table */
+    .domains-table{
+      width:100%;
+      border-collapse:collapse;
+      margin-top:14px;
+      font-size:0.95rem;
+    }
+    .domains-table thead th{
+      text-align:left;
+      padding:10px 12px;
+      color:var(--text-muted);
+      font-size:0.82rem;
+      text-transform:uppercase;
+      letter-spacing:0.14em;
+      border-bottom:1px solid rgba(148,163,184,0.06);
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    }
+    .domains-table tbody td{
+      padding:12px;
+      border-bottom:1px dashed rgba(148,163,184,0.04);
+      vertical-align:middle;
+    }
+    .tld{font-weight:700;color:#e5f4ff;width:120px;}
+    .price{white-space:nowrap;width:140px;color:var(--text-muted);}
+    .usecase{color:var(--text-muted);max-width:36ch;}
+    .trust{width:130px;color:var(--text-muted);}
+
+    /* Price bar visual */
+    .price-bar{
+      height:10px;
+      background:var(--bar-bg);
+      border-radius:999px;
+      overflow:hidden;
+      width:100%;
+      max-width:220px;
+      margin-top:6px;
+    }
+    .price-fill{
+      height:100%;
+      background:linear-gradient(90deg,var(--bar-fill),var(--accent-alt));
+      width:0%;
+      transition:width 700ms cubic-bezier(.2,.9,.2,1);
+    }
+
+    /* small notes */
+    .notes{margin-top:12px;color:var(--text-muted);font-size:0.95rem;}
+
+    /* Legend and explanation */
+    .legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;font-size:0.92rem;color:var(--text-muted);}
+    .legend-item{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,0.01);padding:8px 10px;border-radius:999px;border:1px solid rgba(148,163,184,0.04);}
+
+    /* Footer (match other pages) */
+    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.2),transparent 55%),#020617;}
+    .footer-inner{max-width:1180px;margin:0 auto;padding:18px 16px 26px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);}
+    .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
+    .footer-links a:hover{color:#e5e7eb;}
+
+    /* Animation helper (keeps consistent) */
+    .fade-in-up{opacity:0;transform:translateY(22px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .fade-in-up.visible{opacity:1;transform:translateY(0);}
+
+    /* Responsive tweaks */
+    @media (max-width:1000px){
+      .tld, .price, .trust { width:auto; display:block; }
+      .price-fill { transition-duration:400ms; }
+    }
+  </style>
+
+  <link rel="stylesheet" href="mobile.css" />
+</head>
+
+<body>
+  <main>
+    <div class="page">
+      <!-- NAV -->
+      <header class="nav fade-in-up">
+        <div class="nav-left">
+          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
+            <div class="brand-mark-inner">A</div>
+          </a>
+          <div class="brand-text">
+            <div class="brand-title">Armin Studio</div>
+            <div class="brand-sub">Modern, affordable web design</div>
+          </div>
+        </div>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="index.html">Home</a>
+          <a href="services.html">Services</a>
+          <a href="pricing.html">Pricing</a>
+          <a href="contact.html">Contact</a>
+          <a href="customization.html">Customization</a>
+        </nav>
+
+        <div style="display:inline-flex;gap:8px;align-items:center;">
+          <button class="nav-cta btn-pressable" onclick="window.location.href='contact.html'">
+            <span>Text to start</span>
+          </button>
+          <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </header>
+
+      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation" style="display:none;">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="contact.html">Contact</a>
+        <a href="customization.html">Customization</a>
+      </nav>
+
+      <!-- HEADER -->
+      <section>
+        <div class="section-label">Domains</div>
+        <h1 class="page-title">Top domain extensions for business — price, purpose & trust</h1>
+        <p class="header-sub">
+          A practical comparison of common business domain extensions: typical initial price, yearly renewals,
+          what each extension is best for, and trust/security notes to help you choose.
+        </p>
+
+        <div class="mobile-warning card">
+          this page contains detialed info please visit on a desktop/laptop
+        </div>
+      </section>
+
+      <!-- DOMAIN CHART CARD -->
+      <section class="card fade-in-up" aria-label="Domain comparison">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:0.92rem;color:var(--text-muted);margin-bottom:6px;">At-a-glance</div>
+            <div style="font-size:1.15rem;font-weight:700;margin-bottom:6px;">Compare initial yearly cost, use case, and trust</div>
+            <div class="notes">Prices shown are approximate averages (USD) — promotional first-year prices and registrar fees vary. Renewal prices are often higher.</div>
+
+            <div class="legend" aria-hidden="true">
+              <div class="legend-item"><span style="width:10px;height:10px;background:var(--bar-fill);display:inline-block;border-radius:999px;"></span> Price index (visual)</div>
+              <div class="legend-item"><strong style="color:#e5f4ff">Trust</strong>: High / Medium / Emerging</div>
+            </div>
+          </div>
+
+          <div style="min-width:260px;max-width:420px;">
+            <div style="font-size:0.9rem;color:var(--text-muted);margin-bottom:8px;">How to read the chart</div>
+            <ul style="margin:0;padding-left:18px;color:var(--text-muted);line-height:1.5;font-size:0.95rem;">
+              <li><strong>Initial:</strong> Typical first-year charge</li>
+              <li><strong>Renew:</strong> Typical yearly renewal thereafter</li>
+              <li><strong>Best for:</strong> Recommended business scenarios</li>
+              <li><strong>Trust:</strong> How customers usually perceive the extension</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Table of domains (added .works) -->
+        <table class="domains-table" role="table" aria-label="Domain extensions comparison">
+          <thead>
+            <tr>
+              <th>TLD</th>
+              <th>Initial / Renew (USD)</th>
+              <th>Best for</th>
+              <th>Trust & security</th>
+              <th style="min-width:160px">Price index</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="tld">.com</td>
+              <td class="price"><strong>$12</strong> / $12</td>
+              <td class="usecase">Global business branding, default choice</td>
+              <td class="trust">High — most trusted</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="12" aria-hidden="true"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.net</td>
+              <td class="price"><strong>$13</strong> / $13</td>
+              <td class="usecase">Tech or networking firms when .com isn’t available</td>
+              <td class="trust">High</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="13"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.org</td>
+              <td class="price"><strong>$10</strong> / $10</td>
+              <td class="usecase">Non‑profits, community projects</td>
+              <td class="trust">High</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="10"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.co</td>
+              <td class="price"><strong>$20</strong> / $30</td>
+              <td class="usecase">Startups & companies (short alternative to .com)</td>
+              <td class="trust">Medium — well-known, pricier</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="30"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.io</td>
+              <td class="price"><strong>$35</strong> / $60</td>
+              <td class="usecase">Tech products, developer tools, startups</td>
+              <td class="trust">Medium — popular in tech</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="60"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.ai</td>
+              <td class="price"><strong>$80</strong> / $120</td>
+              <td class="usecase">AI products, machine learning services</td>
+              <td class="trust">Emerging — premium & technical</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="120"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.biz</td>
+              <td class="price"><strong>$8</strong> / $12</td>
+              <td class="usecase">Small business alternatives to .com</td>
+              <td class="trust">Medium — less common</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="12"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.us</td>
+              <td class="price"><strong>$8</strong> / $12</td>
+              <td class="usecase">U.S. local businesses, regional targeting</td>
+              <td class="trust">Medium</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="12"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.co.uk</td>
+              <td class="price"><strong>$6</strong> / $12</td>
+              <td class="usecase">UK businesses & local credibility</td>
+              <td class="trust">High in UK markets</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="12"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.shop</td>
+              <td class="price"><strong>$15</strong> / $25</td>
+              <td class="usecase">E‑commerce stores and product pages</td>
+              <td class="trust">Medium — descriptive and clear</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="25"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.store</td>
+              <td class="price"><strong>$20</strong> / $30</td>
+              <td class="usecase">Online shops — modern e‑commerce choice</td>
+              <td class="trust">Medium</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="30"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.app</td>
+              <td class="price"><strong>$15</strong> / $40</td>
+              <td class="usecase">Mobile & web apps (HTTPS required)</td>
+              <td class="trust">High — enforced security (HTTPS)</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="40"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.tech</td>
+              <td class="price"><strong>$50</strong> / $50</td>
+              <td class="usecase">Technology brands, portfolios</td>
+              <td class="trust">Medium — niche but recognizable</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="50"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.design</td>
+              <td class="price"><strong>$20</strong> / $35</td>
+              <td class="usecase">Designers, studios, portfolios</td>
+              <td class="trust">Medium — strong for creative fields</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="35"></div></div></td>
+            </tr>
+
+            <!-- added .works as requested -->
+            <tr>
+              <td class="tld">.works</td>
+              <td class="price"><strong>$9</strong> / $20</td>
+              <td class="usecase">Freelancers, studios, portfolios, side-projects</td>
+              <td class="trust">Medium — friendly, good for creative/agency use</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="20"></div></div></td>
+            </tr>
+
+            <tr>
+              <td class="tld">.dev</td>
+              <td class="price"><strong>$12</strong> / $15</td>
+              <td class="usecase">Developer portfolios, tools (HTTPS required)</td>
+              <td class="trust">High in dev community</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="15"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.online</td>
+              <td class="price"><strong>$2</strong> / $20</td>
+              <td class="usecase">General-purpose promo pages; inexpensive first-year</td>
+              <td class="trust">Medium — often promotional</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="20"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.site</td>
+              <td class="price"><strong>$2</strong> / $20</td>
+              <td class="usecase">Simple sites, landing pages, low-cost option</td>
+              <td class="trust">Medium</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="20"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.info</td>
+              <td class="price"><strong>$2</strong> / $18</td>
+              <td class="usecase">Informational sites, documentation</td>
+              <td class="trust">Medium — can be seen as lower value</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="18"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.me</td>
+              <td class="price"><strong>$15</strong> / $25</td>
+              <td class="usecase">Personal brands, portfolios, personal landing pages</td>
+              <td class="trust">Medium — friendly & personal</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="25"></div></div></td>
+            </tr>
+            <tr>
+              <td class="tld">.agency</td>
+              <td class="price"><strong>$40</strong> / $50</td>
+              <td class="usecase">Agencies, consultancies, professional firms</td>
+              <td class="trust">Medium — industry-specific premium</td>
+              <td><div class="price-bar"><div class="price-fill" data-price="50"></div></div></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="notes">
+          Notes:
+          <ul style="margin:6px 0 0 18px;">
+            <li>Registrars often run first‑year promotions (some TLDs are as low as $1 initially) — read the renewal price before buying.</li>
+            <li>Security is not tied to the TLD — use HTTPS, strong registrar accounts, and WHOIS privacy where needed.</li>
+            <li>If you can get a meaningful .com for your brand, it usually offers the best reach and trust. Country TLDs (like .co.uk) are strong locally.</li>
+          </ul>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© <span id="year"></span> Armin – Young Web Designer.</div>
+      <div class="footer-links">
+        <a href="index.html">Home</a>
+        <span>•</span>
+        <a href="services.html">Services</a>
+        <span>•</span>
+        <a href="pricing.html">Pricing</a>
+        <span>•</span>
+        <a href="contact.html">Contact</a>
+        <span>•</span>
+        <a href="customization.html">Customization</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    if (navToggle && navMobile) {
+      navToggle.addEventListener("click", () => {
+        const open = navMobile.style.display === "flex";
+        navMobile.style.display = open ? "none" : "flex";
+      });
+    }
+
+    // Animate price bars based on data-price normalized to --max-price
+    (function animatePriceBars(){
+      const fills = document.querySelectorAll('.price-fill');
+      const max = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--max-price')) || 120;
+      fills.forEach((el, i) => {
+        const price = parseFloat(el.getAttribute('data-price')) || 0;
+        // normalize and cap to 100%
+        const pct = Math.min(100, Math.round((price / max) * 100));
+        // stagger for subtle effect
+        setTimeout(()=> el.style.width = pct + '%', i * 35);
+      });
+    })();
+
+    // Simple fade-in for the main card sections (matches other pages)
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach((entry)=>{
+        if(entry.isIntersecting){
+          entry.target.classList.add("visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
+  </script>
+</body>
+</html>
