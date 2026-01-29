@@ -50,7 +50,24 @@
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
     .nav-left{display:flex;align-items:center;gap:12px;}
     .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.5);}
-    .brand-mark-inner{width:100%;height:100%;border-radius:16px;background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);display:flex;align-items:center;justify-content:center;color:#e5f4ff;font-size:17px;font-weight:800;letter-spacing:0.06em;}
+    .brand-mark-inner{
+      width:100%;
+      height:100%;
+      border-radius:16px;
+      background:radial-gradient(circle at 15% 0%,#111827 0,#020617 55%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+    }
+    .brand-logo{
+      max-width:32px;
+      max-height:32px;
+      width:auto;
+      height:auto;
+      object-fit:contain;
+      display:block;
+    }
     .brand-text{display:flex;flex-direction:column;gap:2px;}
     .brand-title{font-size:19px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
     .brand-sub{font-size:13px;color:var(--text-muted);}
@@ -96,7 +113,7 @@
       border-color:rgba(34,211,238,0.95);
       box-shadow:0 34px 90px rgba(34,211,238,0.75),0 0 80px rgba(34,211,238,0.8);
     }
-    .pricing-badge{position:absolute;top:12px;right:12px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;padding:4px 10px;border-radius:999px;background:rgba(34,211,238,0.22);border:1px solid rgba(34,211,238,0.95);color:#e0f2fe;}
+    .pricing-badge{position:absolute;top:12px;right:12px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;padding:4px 10px;border-radius:999px;background:rgba(34,211,238,0.22);border:1px solid rgba(34,211,238,0.9);color:#e0f2fe;}
     .pricing-name{font-size:0.95rem;text-transform:uppercase;letter-spacing:0.18em;color:var(--text-muted);margin-bottom:5px;}
     .pricing-title{font-size:1.2rem;margin-bottom:6px;}
     .pricing-sub{font-size:0.95rem;color:var(--text-muted);margin-bottom:12px;}
@@ -105,11 +122,7 @@
     .pricing-price-currency{font-size:1rem;color:var(--text-muted);}
     .pricing-price-note{font-size:0.86rem;color:var(--text-muted);}
     .pricing-meta{font-size:0.9rem;color:var(--text-muted);margin-bottom:10px;}
-    .pricing-list{list-style:none;padding:0;margin:0 0 14px;font-size:0.98rem;color:#e5e7eb;display:grid;gap:7px;}
-    .pricing-list li{display:flex;gap:8px;align-items:flex-start;}
-    .pricing-check{width:16px;height:16px;border-radius:999px;border:1px solid rgba(34,211,238,0.95);display:flex;align-items:center;justify-content:center;font-size:10px;color:#bae6fd;margin-top:1px;}
-    .pricing-revisions{font-size:0.86rem;color:#e5e7eb;padding-top:8px;border-top:1px dashed rgba(148,163,184,0.7);margin-bottom:10px;}
-    .pricing-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px 0;border-radius:999px;border:1px solid rgba(148,163,184,0.6);background:rgba(15,23,42,0.98);color:#e5e7eb;font-size:0.96rem;font-weight:600;cursor:pointer;}
+    .pricing-cta{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;padding:10px 0;border-radius:999px;border:1px solid rgba(148,163,184,0.6);background:rgba(15,23,42,0.95);color:#e5e7eb;font-size:0.95rem;cursor:pointer;}
     .pricing-card.featured .pricing-cta{background:linear-gradient(135deg,var(--accent),var(--accent-strong));border-color:transparent;color:#020617;}
 
     .section-subnote{margin-top:12px;font-size:0.9rem;color:var(--text-muted);}
@@ -157,7 +170,9 @@
       <header class="nav fade-in-up">
         <div class="nav-left">
           <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
-            <div class="brand-mark-inner">A</div>
+            <div class="brand-mark-inner">
+              <img src="logo.png" alt="Armin Studio logo" class="brand-logo" />
+            </div>
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
@@ -169,7 +184,7 @@
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
           <a href="contact.html">Contact</a>
-           <a href="customization.html">Customization</a>
+          <a href="customization.html">Customization</a>
         </nav>
         <button
           class="nav-cta btn-pressable"
@@ -187,8 +202,11 @@
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="pricing.html">Pricing</a>
+        <a href="guide.html">Quote estimate</a>
+        <a href="domain.html">Domain options</a>
+        <a href="host.html">Hosting options</a>
         <a href="contact.html">Contact</a>
-         <a href="customization.html">Customization</a>
+        <a href="customization.html">Customization</a>
       </nav>
 
       <!-- HEADER -->
@@ -204,7 +222,7 @@
         <p class="header-sub">
           All packages include responsive design, content upload, and
           <strong style="color:#e5e7eb;">100% Satisfaction</strong>.
-          You only pay  when you’re <strong>100% satisfied</strong> with the result.
+          You only pay when you're <strong>100% satisfied</strong> with the result.
         </p>
       </section>
 
@@ -237,10 +255,6 @@
               (for example: hero + contact)
             </div>
 
-          
-
-
-
             <button
               class="pricing-cta btn-pressable"
               onclick="window.location.href='guide.html'"
@@ -267,9 +281,6 @@
               (for example: hero, about, services/menu, contact)
             </div>
 
-        
-          
-
             <button
               class="pricing-cta btn-pressable"
               onclick="window.location.href='guide.html'"
@@ -295,7 +306,6 @@
               (for example: hero, about, services, pricing, FAQs, contact)
             </div>
 
-          
             <button
               class="pricing-cta btn-pressable"
               onclick="window.location.href='guide.html'"
@@ -312,7 +322,7 @@
           <div class="section-label">Multi‑page “luxury” sites</div>
           <h2 class="section-title" style="margin:0 0 8px;">More pages, more space to tell your story.</h2>
           <p class="section-sub">
-            When one page isn’t enough, I design simple multi‑page sites that still feel clear,
+            When one page isn't enough, I design simple multi‑page sites that still feel clear,
             modern, and easy to use on any device.
           </p>
         </div>
@@ -334,8 +344,6 @@
               <strong>2 pages</strong> · <strong>4 sections per page</strong><br />
               (for example: Home + About/Services)
             </div>
-
-           
 
             <button
               class="pricing-cta btn-pressable"
@@ -363,9 +371,6 @@
               (for example: Home, About, Services, Contact)
             </div>
 
-      
-          
-
             <button
               class="pricing-cta btn-pressable"
               onclick="window.location.href='contact.html'"
@@ -378,7 +383,7 @@
           <article class="pricing-card hover-lift">
             <div class="pricing-name">Custom multi‑page</div>
             <div class="pricing-title">Bigger or more unique sites</div>
-            <div class="pricing-sub">For when your idea doesn’t fit into a small space.</div>
+            <div class="pricing-sub">For when your idea doesn't fit into a small space.</div>
 
             <div class="pricing-price">
               <span class="pricing-price-currency">Custom</span>
@@ -386,10 +391,8 @@
 
             <div class="pricing-meta">
               For larger structures (more pages, special flows, or custom tools),
-              we’ll design a project plan and quote together after we talk.
+              we'll design a project plan and quote together after we talk.
             </div>
-
-            
 
             <button
               class="pricing-cta btn-pressable"
@@ -402,7 +405,7 @@
 
         <p class="section-subnote">
           <strong>How payments work:</strong> we agree on a price, I design and build your site,
-          we go through revisions together, and <strong>you only send Zelle once you confirm you’re happy</strong>.
+          we go through revisions together, and <strong>you only send Zelle once you confirm you're happy</strong>.
         </p>
       </section>
 
@@ -412,8 +415,8 @@
           <article class="card-small hover-lift">
             <h3 style="margin:0 0 10px;font-size:1.2rem;">Not sure which option to choose?</h3>
             <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
-              You don’t have to decide alone. Text me, tell me about your business or idea,
-              and I’ll recommend a one‑page or multi‑page setup that fits your goals and budget.
+              You don't have to decide alone. Text me, tell me about your business or idea,
+              and I'll recommend a one‑page or multi‑page setup that fits your goals and budget.
             </p>
             <button
               class="btn-primary btn-pressable"
@@ -424,12 +427,21 @@
           </article>
 
           <article class="card-small hover-lift">
-            <h3 style="margin:0 0 10px;font-size:1.2rem;">Check out customization options</h3>
+            <h3 style="margin:0 0 10px;font-size:1.2rem;">More planning tools</h3>
             <p style="margin:0 0 10px;font-size:0.96rem;color:var(--text-muted);">
-              Shows some of the things you can customize in your website
+              You can see customization options, compare domain choices, and check hosting options too.
             </p>
             <p style="margin:0;font-size:0.94rem;color:var(--accent);cursor:pointer;" onclick="window.location.href='customization.html'">
-              Customize →
+              Customize your site →
+            </p>
+            <p style="margin:6px 0 0;font-size:0.94rem;color:var(--accent);cursor:pointer;" onclick="window.location.href='guide.html'">
+              Get a quote estimate →
+            </p>
+            <p style="margin:6px 0 0;font-size:0.94rem;color:var(--accent);cursor:pointer;" onclick="window.location.href='domain.html'">
+              Compare domain options →
+            </p>
+            <p style="margin:6px 0 0;font-size:0.94rem;color:var(--accent);cursor:pointer;" onclick="window.location.href='host.html'">
+              Compare hosting options →
             </p>
           </article>
         </div>
@@ -439,13 +451,19 @@
 
   <footer>
     <div class="footer-inner">
-      <div>© <span id="year"></span> Armin studio</div>
+      <div>© <span id="year"></span> Armin Studio</div>
       <div class="footer-links">
         <a href="index.html">Home</a>
         <span>•</span>
         <a href="services.html">Services</a>
         <span>•</span>
         <a href="pricing.html">Pricing</a>
+        <span>•</span>
+        <a href="guide.html">Quote estimate</a>
+        <span>•</span>
+        <a href="domain.html">Domain options</a>
+        <span>•</span>
+        <a href="host.html">Hosting options</a>
         <span>•</span>
         <a href="contact.html">Contact</a>
       </div>
@@ -480,7 +498,7 @@
     // Typing effect
     const tEl = document.getElementById("typing-text");
     const phrases = [
-      "clear, so you always know what you’re paying for.",
+      "clear, so you always know what you're paying for.",
       "friendly for small businesses and non‑profits.",
       "simple, with unlimited revisions included.",
       "built around what you actually need – not extras."
@@ -517,4 +535,3 @@
   </script>
 </body>
 </html>
-
