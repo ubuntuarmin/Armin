@@ -869,9 +869,6 @@
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
-          <a href="guide.html">Quote estimate</a>
-          <a href="domain.html">Domain options</a>
-          <a href="host.html">Hosting options</a>
           <a href="contact.html">Contact</a>
           <a href="customization.html">Customization</a>
         </nav>
@@ -891,9 +888,6 @@
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="pricing.html">Pricing</a>
-        <a href="guide.html">Quote estimate</a>
-        <a href="domain.html">Domain options</a>
-        <a href="host.html">Hosting options</a>
         <a href="contact.html">Contact</a>
         <a href="customization.html">Customization</a>
       </nav>
@@ -943,7 +937,7 @@
             <div class="spinner-pulse"></div>
             <div class="spinner-dot"></div>
           </div>
-          <div>Loading form...</div>
+          <div>Preparing your questions and estimating ranges…</div>
         </article>
 
         <!-- QUOTE FORM -->
@@ -1134,8 +1128,8 @@
         title: "How much content per page?",
         sub: "Think about how many different blocks/sections you want on each page.",
         options: [
-          { id: "sections-light",  label: "Light",     sub: "2–3 sections per page.",      price: 10, monthly: 0, sectionsPerPage: 3 },
-          { id: "sections-medium", label: "Medium",    sub: "4–5 sections per page.",      price: 20, monthly: 0, sectionsPerPage: 5 },
+          { id: "sections-light",  label: "Light",     sub: "2–3 sections per page.",      price: 0, monthly: 0, sectionsPerPage: 3 },
+          { id: "sections-medium", label: "Medium",    sub: "4–5 sections per page.",      price: 0, monthly: 0, sectionsPerPage: 5 },
           { id: "sections-heavy",  label: "Detailed",  sub: "6+ sections per page.",       price: 0,  monthly: 0, sectionsPerPage: 6 }
         ]
       },
@@ -1192,77 +1186,20 @@
       {
         id: "seo",
         title: "How do you want to publish your site to the world?",
-        sub: "This is mostly about SEO and launch quality.",
+        sub: "I got it ",
         options: [
-          { id: "seo-basic",  label: "Basic",         sub: "Clean structure and basic tags.",                 price: 0,  monthly: 0 },
-          { id: "seo-plus",   label: "Helpful extras", sub: "Title/description suggestions for main pages.",  price: 20, monthly: 0 },
-          { id: "seo-strong", label: "More focused",   sub: "Extra time spent on structure and wording.",     price: 35, monthly: 5 }
+          { id: "seo-basic",  label: "B",         sub: "our dev team will give you all the files coded for your site.",                 price: 0,  monthly: 0 },
+          { id: "seo-plus",   label: "Free hosting on us ", sub: "This is the best option for most new/small companys.",  price: 0, monthly: 0 },
+          { id: "seo-strong", label: "Pro hosting ",   sub: "For companys expecting high traffic (1000+ users).",     price: 0, monthly: 15 }
         ]
       },
-      {
-        id: "updates",
-        title: "How often do you think you'll need updates?",
-        sub: "This helps me plan how flexible the setup should be.",
-        options: [
-          { id: "updates-rare",      label: "Rarely",     sub: "Maybe a few small changes per year.",         price: 0,  monthly: 0 },
-          { id: "updates-sometimes", label: "Sometimes",  sub: "Small edits or swaps every few months.",      price: 15, monthly: 5 },
-          { id: "updates-often",     label: "Often",      sub: "You expect regular content changes.",         price: 30, monthly: 10 }
-        ]
-      },
-      {
-        id: "timeline",
-        title: "How fast do you need your website?",
-        sub: "Faster timelines usually cost a bit more.",
-        options: [
-          { id: "time-flexible", label: "Flexible", sub: "No rush – normal schedule.",              price: 0,  monthly: 0 },
-          { id: "time-soon",     label: "Soon",     sub: "You'd like it within a few weeks.",       price: 25, monthly: 0 },
-          { id: "time-urgent",   label: "Urgent",   sub: "You want it as soon as possible.",        price: 45, monthly: 0 }
-        ]
-      },
-      {
-        id: "support",
-        title: "How much support do you want after launch?",
-        sub: "Think about how confident you feel updating the site yourself.",
-        options: [
-          { id: "support-basic", label: "Basic handover",   sub: "I show you the basics once it's live.",        price: 0,  monthly: 0 },
-          { id: "support-light", label: "Light support",    sub: "A few check‑ins and small tweaks.",            price: 20, monthly: 10 },
-          { id: "support-more",  label: "More ongoing help",sub: "More help with edits in the first months.",    price: 35, monthly: 20 }
-        ]
-      },
-      {
-        id: "forms",
-        title: "How many different forms do you need?",
-        sub: "For example: contact, booking, quote request.",
-        options: [
-          { id: "forms-0-1",   label: "0–1 forms",  sub: "Maybe just a simple contact form.",          price: 0,  monthly: 0 },
-          { id: "forms-2-3",   label: "2–3 forms",  sub: "You want a few different ways to contact you.", price: 25, monthly: 0 },
-          { id: "forms-4plus", label: "4+ forms",   sub: "More complex forms or flows.",               price: 45, monthly: 0 }
-        ]
-      },
-      {
-        id: "language",
-        title: "Do you need more than one language?",
-        sub: "Multi‑language sites add extra setup and layout work.",
-        options: [
-          { id: "lang-single", label: "Just one language", sub: "Everything in one language.",       price: 0,  monthly: 0 },
-          { id: "lang-two",    label: "Two languages",     sub: "Two versions of key pages.",        price: 40, monthly: 5 },
-          { id: "lang-multi",  label: "3+ languages",      sub: "More languages and language switcher.", price: 70, monthly: 10 }
-        ]
-      },
-      {
-        id: "extras",
-        title: "Any extra touches?",
-        sub: "Optional add‑ons to make the site feel more complete.",
-        options: [
-          { id: "extras-none",   label: "Keep it simple",          sub: "No extra add‑ons.",                          price: 0,  monthly: 0 },
-          { id: "extras-icons",  label: "Custom icons / graphics", sub: "Some extra visual polish.",                  price: 25, monthly: 0 },
-          { id: "extras-guides", label: "Mini brand / usage guide", sub: "Short guide on how to use your visuals.",   price: 40, monthly: 0 }
-        ]
-      },
+     
+      
+      
       {
         id: "animation",
         title: "How much animation do you want on your site?",
-        sub: "Stronger motion and more complex effects take more design and development time.",
+        sub: "Animations improve the modern-feel of your site.",
         slider: {
           min: 0,
           max: 100,
@@ -1277,20 +1214,20 @@
               };
             } else if (v <= 60) {
               return {
-                once: 25,
+                once: 0,
                 monthly: 0,
                 label: "Balanced – modern scroll and hover animations."
               };
             } else if (v <= 85) {
               return {
-                once: 45,
-                monthly: 5,
+                once: 20,
+                monthly: 0,
                 label: "High – lots of motion and interactive elements."
               };
             } else {
               return {
-                once: 70,
-                monthly: 10,
+                once: 30,
+                monthly: 0,
                 label: "Very energetic – complex animations and heavy motion."
               };
             }
@@ -1300,7 +1237,7 @@
       {
         id: "budgetFit",
         title: "How tight is your budget for this project?",
-        sub: "This doesn't lock you into anything – it just nudges the estimate up or down.",
+        sub: "This doesn't lock you into anything – it just nudges the estimate up or down. (To stay within your budget, we will narrow our scope to essential functionality and deferring non-critical refinements",
         slider: {
           min: 0,
           max: 100,
@@ -1321,13 +1258,13 @@
               };
             } else if (v <= 85) {
               return {
-                once: 30,
+                once: 10,
                 monthly: 0,
                 label: "Comfortable – okay investing more for better results."
               };
             } else {
               return {
-                once: 60,
+                once: 20,
                 monthly: 0,
                 label: "Very flexible – open to a higher budget for the right setup."
               };
@@ -1579,6 +1516,144 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
+             <!-- EXPORT RESULTS BUTTON (place this just before </script>) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-V7PzqYDG6wcGs2T3t3yTg9v4LcFH5dQpKJZaqAeUEMxFDoVZyWEs1okP9rE1Zcx5BMKOMn6MNRiA2ZcKkW+Kug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    // Add export controls under the summary once DOM is ready
+    (function addExportControls() {
+      const summaryEl = document.getElementById("quoteSummary");
+      if (!summaryEl) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.style.marginTop = "18px";
+      wrapper.style.display = "flex";
+      wrapper.style.flexWrap = "wrap";
+      wrapper.style.gap = "10px";
+      wrapper.style.alignItems = "center";
+      wrapper.style.justifyContent = "space-between";
+
+      const leftText = document.createElement("p");
+      leftText.style.margin = "0";
+      leftText.style.fontSize = "0.9rem";
+      leftText.style.color = "var(--text-muted)";
+      leftText.textContent = "Export your estimate to save it or share it with our team.";
+
+      const exportBtn = document.createElement("button");
+      exportBtn.type = "button";
+      exportBtn.className = "btn-secondary btn-pressable";
+      exportBtn.textContent = "Export results as PDF";
+
+      wrapper.appendChild(leftText);
+      wrapper.appendChild(exportBtn);
+      summaryEl.appendChild(wrapper);
+
+      exportBtn.addEventListener("click", async () => {
+        const { jsPDF } = window.jspdf || {};
+        if (!jsPDF) {
+          alert("PDF export is temporarily unavailable. Please take a screenshot instead.");
+          return;
+        }
+
+        // Collect data from the page
+        const onceTotal = document.getElementById("quoteTotalOnce")?.textContent || "0";
+        const monthlyTotal = document.getElementById("quoteTotalMonthly")?.textContent || "0";
+        const linesContainer = document.getElementById("quoteSummaryLines");
+
+        const lines = [];
+        if (linesContainer) {
+          linesContainer.querySelectorAll(".quote-summary-line").forEach((row) => {
+            const left = row.querySelector("strong")?.textContent?.trim() || "";
+            const right = row.querySelector(".quote-summary-line-right")?.innerText?.trim() || "";
+            if (left || right) {
+              lines.push({ left, right });
+            }
+          });
+        }
+
+        const doc = new jsPDF({ unit: "pt", format: "a4" });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const marginX = 56;
+        let y = 60;
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(16);
+        doc.text("Website Quote Estimate – Armin Studio", marginX, y);
+        y += 20;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+        const now = new Date();
+        doc.text(`Generated on: ${now.toLocaleString()}`, marginX, y);
+        y += 22;
+
+        // Totals
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(13);
+        doc.text("Estimated totals (USD)", marginX, y);
+        y += 18;
+
+        doc.setFontSize(12);
+        doc.text(`One‑time: $${onceTotal}`, marginX, y);
+        y += 16;
+        if (parseFloat(monthlyTotal) > 0) {
+          doc.text(`Monthly (estimated): $${monthlyTotal}`, marginX, y);
+          y += 18;
+        }
+
+        y += 8;
+        doc.setDrawColor(180, 190, 200);
+        doc.line(marginX, y, pageWidth - marginX, y);
+        y += 20;
+
+        // Breakdown heading
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(13);
+        doc.text("Breakdown by question", marginX, y);
+        y += 18;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(11);
+
+        const rightColX = pageWidth - marginX;
+
+        lines.forEach(({ left, right }) => {
+          const leftLines = doc.splitTextToSize(left, rightColX - marginX - 120);
+
+          // New page if needed
+          if (y + leftLines.length * 14 + 24 > doc.internal.pageSize.getHeight() - 40) {
+            doc.addPage();
+            y = 60;
+          }
+
+          leftLines.forEach((ln, idx) => {
+            doc.text(ln, marginX, y + idx * 14);
+          });
+
+          if (right) {
+            doc.text(right, rightColX, y, { align: "right" });
+          }
+
+          y += leftLines.length * 14 + 10;
+        });
+
+        y += 10;
+        if (y > doc.internal.pageSize.getHeight() - 80) {
+          doc.addPage();
+          y = 60;
+        }
+
+        doc.setFontSize(10);
+        doc.setTextColor(140);
+        doc.text(
+          "This PDF is a rough estimate, not a final quote. We'll confirm exact pricing together before any payment.",
+          marginX,
+          y
+        );
+
+        doc.save("armin-studio-website-quote.pdf");
+      });
+    })();
+  
     // Start button flow: show loader then questions
     startButton.addEventListener("click", () => {
       startCard.style.display = "none";
@@ -1593,3 +1668,4 @@
   </script>
 </body>
 </html>
+
