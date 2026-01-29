@@ -140,10 +140,17 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #e5f4ff;
-  font-size: 17px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
+  overflow: hidden; /* keep logo nicely clipped */
+}
+
+/* New: logo styling */
+.brand-logo {
+  max-width: 32px;
+  max-height: 32px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
 }
 
     .brand-text {
