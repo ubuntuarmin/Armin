@@ -202,8 +202,8 @@
       border-radius: var(--radius-pill);
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 20px 48px rgba(34, 211, 238, 0.8),
-        0 0 40px rgba(34, 211, 238, 0.7);
+        0 0px 48px rgba(34, 211, 238, 0.8),
+        0 0 4px rgba(34, 211, 238, 0.7);
       color: #020617;
       font-weight: 700;
       font-size: 13px;
@@ -433,21 +433,22 @@
     }
 
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 22px;
-      border-radius: var(--radius-pill);
-      border: 0;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 14px;
-      color: #020617;
-      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-      box-shadow:
-        0 22px 55px rgba(34, 211, 238, 0.85),
-        0 0 45px rgba(34, 211, 238, 0.85);
-    }
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  border-radius: var(--radius-pill);
+  border: 0;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 14px;
+  color: #020617;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  
+  /* Reduced the glow significantly (0.3 instead of 0.85) */
+  box-shadow: 0 10px 25px rgba(34, 211, 238, 0.3); 
+}
+
 
     .quote-help-text {
       font-size: 0.86rem;
@@ -678,9 +679,7 @@
         </div>
 
         <p class="header-sub">
-          Answer a few quick questions about your website.
-          At the end, you’ll see a clear cost breakdown (one‑time + optional monthly)
-          and a total – then you can text me your quote to get started.
+          Answer a few quick questions about your website to recive an estimated breakdown of the price.
         </p>
       </section>
 
@@ -707,7 +706,7 @@
                 class="btn-secondary btn-pressable"
                 id="resetButton"
               >
-                Reset
+               Start over
               </button>
               <button
                 type="button"
@@ -729,7 +728,7 @@
         <article class="quote-summary hover-lift" id="quoteSummary">
           <h2 class="quote-summary-title">Your estimated cost breakdown</h2>
           <p class="quote-summary-sub">
-            Here’s where your estimated cost comes from, based on the answers you chose.
+            Keep in mind this is just for you to get an ieda of our pricing and does not reflect your actual quote price. To recive a quote please text us.
           </p>
 
           <div class="quote-summary-lines" id="quoteSummaryLines"></div>
@@ -798,49 +797,51 @@
         title: "How many pages do you think you’ll need?",
         sub: "You can always adjust this later – this just shapes the estimate.",
         options: [
-          { id: "pages-1",      label: "1 page",          sub: "A focused one‑page website.",                 price: 40,  monthly: 0 },
-          { id: "pages-2-3",    label: "2–3 pages",       sub: "A bit more room to explain things.",          price: 80,  monthly: 0 },
-          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site.",                    price: 160, monthly: 0 }
+          { id: "pages-1",      label: "1 page",          sub: "A focused one‑page website.",                 price: 10,  monthly: 0, pageCount: 1 },
+          { id: "pages-2-3",    label: "2–3 pages",       sub: "A bit more room to explain things.",          price: 40,  monthly: 0, pageCount: 2 },
+          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site. (text if you need more pages)",                    price: 80,  monthly: 0, pageCount: 4 }
         ]
       },
       {
         id: "sections",
         title: "How much content per page?",
         sub: "Think about how many different blocks/sections you want on each page.",
+        // Sections are priced as: (pageCount * sectionsPerPage * 10)
+        // price is calculated in updateSummary based on this.
         options: [
-          { id: "sections-light",  label: "Light",     sub: "2–3 sections per page.",      price: 0,  monthly: 0 },
-          { id: "sections-medium", label: "Medium",    sub: "4–5 sections per page.",      price: 20, monthly: 0 },
-          { id: "sections-heavy",  label: "Detailed",  sub: "6+ sections per page.",       price: 40, monthly: 0 }
+          { id: "sections-light",  label: "Light",     sub: "2–3 sections per page.",      price: 10, monthly: 0, sectionsPerPage: 3 },
+          { id: "sections-medium", label: "Medium",    sub: "4–5 sections per page.",      price: 20, monthly: 0, sectionsPerPage: 5 },
+          { id: "sections-heavy",  label: "Detailed",  sub: "6+ sections per page.",       price: 0, monthly: 0, sectionsPerPage: 6 }
         ]
       },
       {
         id: "style",
-        title: "Which style matches your brand?",
-        sub: "This affects how much design work and polish is needed.",
+        title: "What kind of domain do you want?",
+        sub: "A good domain brings credibility to your company.",
         options: [
-          { id: "style-simple",  label: "Simple & clean",  sub: "Straightforward layout.",                      price: 0,  monthly: 0 },
-          { id: "style-brand",   label: "Branded",         sub: "Custom colors and sections to match your brand.", price: 20, monthly: 0 },
-          { id: "style-premium", label: "Premium feel",    sub: "More animations and visual details.",          price: 40, monthly: 0 }
+          { id: "style-simple",  label: "I have my own ",  sub: "Our team will help you connect it for free.",                      price: 0,  monthly: 0 },
+          { id: "style-brand",   label: "I need a domain",         sub: "We offer reputable TLD for less than $20 a year.", price: 0, monthly: 1.5 },
+          { id: "style-premium", label: "I will figure it out later",    sub: "This is not suggested but we can keep your site on a sub domain such as yoursite.firebaseapp.com.",          price: 0, monthly: 0 }
         ]
       },
       {
         id: "content",
-        title: "How ready is your content (text & images)?",
-        sub: "No problem if you need help – that’s included in the estimate.",
+        title: "Do you need custom assets?",
+        sub: "Keep in mind this is a rough estimate.  ",
         options: [
-          { id: "content-ready",  label: "Mostly ready",    sub: "You’ll send most text and photos.",          price: 0,  monthly: 0 },
-          { id: "content-polish", label: "Needs polishing", sub: "I’ll help re‑word and structure content.",   price: 20, monthly: 0 },
-          { id: "content-create", label: "Needs more help", sub: "You have ideas, I help shape most content.", price: 40, monthly: 0 }
+          { id: "content-ready",  label: "Nope, I got it",    sub: "You’ll provide all photos,viedos,logos and other assets.",          price: 0,  monthly: 0 },
+          { id: "content-polish", label: "Need some help", sub: "Our team can help edit or create up to 3 custom assets..",   price: 20, monthly: 0 },
+          { id: "content-create", label: "I need everything", sub: "Our team will create up to 6 custom assets for your website.", price: 40, monthly: 0 }
         ]
       },
       {
         id: "photos",
-        title: "What about photos and graphics?",
-        sub: "Good visuals help your site feel more professional.",
+        title: "What kind of maintenance does your site need?",
+        sub: "Our dev team will allways be at your fingertips",
         options: [
-          { id: "photos-yours",         label: "You provide photos",   sub: "You’ll send your own photos/logos.",      price: 0,  monthly: 0 },
-          { id: "photos-stock",         label: "Mix of yours + stock", sub: "I’ll source some simple stock imagery.",  price: 20, monthly: 0 },
-          { id: "photos-mostly-stock",  label: "Mostly stock",         sub: "I’ll find photos/icons to match your brand.", price: 30, monthly: 0 }
+          { id: "photos-yours",         label: "No maintenance needed",   sub: "Your site will be published just once. Editing will have fees and may take time.",      price: 0,  monthly: 0 },
+          { id: "photos-stock",         label: "Basic maintenace plan", sub: "Unlimited basic edits(such as editing menu price or changing a photo). All bugs will be fixed. ",  price: 0, monthly: 15 },
+          { id: "photos-mostly-stock",  label: "Pro maintenance",         sub: "Everything is basic plus: 2 major edits/additons per month (such as adding analytics),priority support and faster completion", price: 0, monthly: 20 }
         ]
       },
       {
@@ -849,24 +850,24 @@
         sub: "This is about what visitors can do on the site.",
         options: [
           { id: "features-basic",    label: "Basic info",      sub: "Text sections, images, simple links.",     price: 0,  monthly: 0 },
-          { id: "features-forms",    label: "Forms & actions", sub: "Contact, booking, or simple forms.",       price: 25, monthly: 0 },
-          { id: "features-advanced", label: "More advanced",   sub: "Multiple forms or special sections.",      price: 45, monthly: 0 }
+          { id: "features-forms",    label: "Forms & actions", sub: "Everythin in basic plus contact, booking, or simple forms.",       price: 5, monthly: 0 },
+          { id: "features-advanced", label: "More advanced",   sub: "Everyhting in Basic plus Advanced dynamic forms.",      price: 15, monthly: 0 }
         ]
       },
       {
         id: "blog",
-        title: "Do you want any blog or updates section?",
-        sub: "This could be news, articles, announcements, etc.",
+        title: "What kind of advanced integrations does your site need?",
+        sub: "This could be anything you can imagine of.",
         options: [
-          { id: "blog-none",   label: "No blog or updates", sub: "Just standard pages.",                    price: 0,  monthly: 0 },
-          { id: "blog-simple", label: "Simple updates area", sub: "A page where posts can be added manually.", price: 20, monthly: 5 },
-          { id: "blog-regular",label: "Regular articles",    sub: "Designed layout for frequent posts.",    price: 35, monthly: 10 }
+          { id: "blog-none",   label: "None", sub: "My site is just fine with just forms",                    price: 0,  monthly: 0 },
+          { id: "blog-simple", label: "Basic integrations", sub: "some examples: (not limited to this) language options,dark/light theme and analytics ", price: 20, monthly: 5 },
+          { id: "blog-regular",label: "Advanced intergrations",    sub: "Some examples: Login/Signup , chatrooms , advanced calculators and refferal logic. (this is a very small list of what our dev team is actually capable of.",    price: 35, monthly: 0 }
         ]
       },
       {
         id: "seo",
-        title: "How important is basic SEO to you?",
-        sub: "SEO helps people find you on Google.",
+        title: "How do you want to publish your site to the world?",
+        sub: ".",
         options: [
           { id: "seo-basic",  label: "Basic",         sub: "Clean structure and basic tags.",                 price: 0,  monthly: 0 },
           { id: "seo-plus",   label: "Helpful extras", sub: "Title/description suggestions for main pages.",  price: 20, monthly: 0 },
@@ -1037,15 +1038,36 @@
       nextButton.disabled = !hasSelection;
     }
 
-    function updateSummary() {
+       function updateSummary() {
       summaryLinesEl.innerHTML = "";
       let totalOnce = 0;
       let totalMonthly = 0;
+
+      // Get page count and selected sections option for dynamic pricing
+      const pagesStep = steps.find(s => s.id === "pages");
+      const sectionsStep = steps.find(s => s.id === "sections");
+      const chosenPagesId = selections["pages"];
+      const chosenSectionsId = selections["sections"];
+      const chosenPagesOpt = pagesStep?.options.find(o => o.id === chosenPagesId);
+      const chosenSectionsOpt = sectionsStep?.options.find(o => o.id === chosenSectionsId);
+
+      const pageCount = chosenPagesOpt?.pageCount || 1;
+      const sectionsPerPage = chosenSectionsOpt?.sectionsPerPage || 0;
+      const perSectionPrice = 10;
+      const sectionsPrice = pageCount * sectionsPerPage * perSectionPrice;
 
       steps.forEach((step) => {
         const chosenId = selections[step.id];
         const opt = step.options.find((o) => o.id === chosenId);
         if (!opt) return;
+
+        let displayPrice = opt.price;
+        let displayMonthly = opt.monthly || 0;
+
+        // Override price for sections step with dynamic calculation
+        if (step.id === "sections") {
+          displayPrice = sectionsPrice;
+        }
 
         const line = document.createElement("div");
         line.className = "quote-summary-line";
@@ -1056,9 +1078,9 @@
         const right = document.createElement("div");
         right.className = "quote-summary-line-right";
 
-        const oneTimePart = `<span class="amount">$${opt.price}</span> one‑time`;
-        const monthlyPart = opt.monthly
-          ? `<br /><span class="amount">$${opt.monthly}</span> / month`
+        const oneTimePart = `<span class="amount">$${displayPrice}</span> one‑time`;
+        const monthlyPart = displayMonthly
+          ? `<br /><span class="amount">$${displayMonthly}</span> / month`
           : "";
 
         right.innerHTML = oneTimePart + monthlyPart;
@@ -1067,8 +1089,8 @@
         line.appendChild(right);
         summaryLinesEl.appendChild(line);
 
-        totalOnce += opt.price;
-        totalMonthly += opt.monthly || 0;
+        totalOnce += displayPrice;
+        totalMonthly += displayMonthly;
       });
 
       if (totalOnce < 0) totalOnce = 0;
@@ -1151,7 +1173,6 @@
     // Typing effect
     const tEl = document.getElementById("typing-text");
     const phrases = [
-      "only a rough guide, so we can adjust together.",
       "friendly for small businesses and new brands.",
       "simple, so you never feel surprised by the price."
     ];
@@ -1189,3 +1210,4 @@
   </script>
 </body>
 </html>
+
