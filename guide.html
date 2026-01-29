@@ -415,6 +415,7 @@
 
     /* QUOTE FORM */
     /* Make quote card larger on desktop/laptop */
+/* Make quote card larger on desktop/laptop */
 .quote-card {
   border-radius: var(--radius-lg);
   padding: 28px 26px 24px;              /* a bit more padding */
@@ -436,6 +437,28 @@
     padding: 32px 32px 26px;
   }
 
+  .quote-options-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .quote-step-title {
+    font-size: 1.25rem;
+  }
+
+  .quote-step-sub {
+    font-size: 1rem;
+    max-width: 44rem;
+  }
+}
+
+/* Mobile stays compact – keep existing override style */
+@media (max-width: 720px) {
+  .quote-card {
+    padding: 18px 16px 16px;
+    max-width: 100%;
+  }
+}
   .quote-options-grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 18px;
