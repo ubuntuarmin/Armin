@@ -414,17 +414,50 @@
     }
 
     /* QUOTE FORM */
-    .quote-card {
-      border-radius: var(--radius-lg);
-      padding: 24px 20px 22px;
-      background:
-        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.24), transparent 60%),
-        linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
-      border: 1px solid rgba(148, 163, 184, 0.5);
-      box-shadow: var(--shadow-soft);
-      font-size: 0.98rem;
-      display: none;
-    }
+    /* Make quote card larger on desktop/laptop */
+.quote-card {
+  border-radius: var(--radius-lg);
+  padding: 28px 26px 24px;              /* a bit more padding */
+  background:
+    radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.24), transparent 60%),
+    linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
+  border: 1px solid rgba(148, 163, 184, 0.5);
+  box-shadow: var(--shadow-soft);
+  font-size: 1rem;
+  display: none;
+  max-width: 920px;                     /* wider than before */
+  margin: 0 auto;                       /* center in page */
+}
+
+/* Let the content breathe and stretch more on larger screens */
+@media (min-width: 960px) {
+  .quote-card {
+    max-width: 1000px;
+    padding: 32px 32px 26px;
+  }
+
+  .quote-options-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+  }
+
+  .quote-step-title {
+    font-size: 1.25rem;
+  }
+
+  .quote-step-sub {
+    font-size: 1rem;
+    max-width: 44rem;
+  }
+}
+
+/* Mobile stays compact – keep existing override style */
+@media (max-width: 720px) {
+  .quote-card {
+    padding: 18px 16px 16px;
+    max-width: 100%;
+  }
+}
 
     .quote-steps-header {
       display: flex;
