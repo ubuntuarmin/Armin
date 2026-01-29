@@ -140,10 +140,16 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #e5f4ff;
-      font-size: 17px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
+      overflow: hidden;
+    }
+
+    .brand-logo {
+      max-width: 32px;
+      max-height: 32px;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      display: block;
     }
 
     .brand-text {
@@ -309,6 +315,104 @@
       animation: caret-blink 0.9s step-end infinite;
     }
 
+    /* START SCREEN / PRE-QUOTE */
+    .start-card {
+      border-radius: var(--radius-lg);
+      padding: 24px 20px 22px;
+      background:
+        radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.24), transparent 60%),
+        linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.98rem;
+      margin-bottom: 22px;
+    }
+
+    .start-title {
+      font-size: 1.2rem;
+      margin: 0 0 8px;
+    }
+
+    .start-sub {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin: 0 0 16px;
+      max-width: 38rem;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      border: 0;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 14px;
+      color: #020617;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      box-shadow: 0 10px 25px rgba(34, 211, 238, 0.3);
+    }
+
+    .start-links {
+      margin-top: 14px;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .start-links span.link {
+      color: var(--accent);
+      cursor: pointer;
+    }
+
+    /* LOADER */
+    .quote-loader {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      padding: 22px 20px 20px;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(148,163,184,0.5);
+      background:
+        radial-gradient(circle at 100% 0, rgba(99,102,241,0.24), transparent 60%),
+        linear-gradient(135deg, var(--card) 0, var(--card) 60%, var(--card) 100%);
+      box-shadow: var(--shadow-soft);
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-bottom: 22px;
+    }
+
+    .spinner-orbit {
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      position: relative;
+      background: radial-gradient(circle at 30% 20%, #e0f2fe 0, transparent 45%);
+      box-shadow: 0 0 40px rgba(34,211,238,0.7);
+    }
+    .spinner-orbit::before,
+    .spinner-orbit::after {
+      content:"";
+      position:absolute;
+      inset:8px;
+      border-radius:inherit;
+      border:2px solid transparent;
+      border-top-color:rgba(34,211,238,0.9);
+      border-right-color:rgba(99,102,241,0.9);
+      animation: spin 1.1s linear infinite;
+    }
+    .spinner-orbit::after {
+      inset:14px;
+      border-top-color:rgba(56,189,248,0.95);
+      border-right-color:rgba(129,140,248,0.95);
+      animation-duration:1.6s;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
     /* QUOTE FORM */
     .quote-card {
       border-radius: var(--radius-lg);
@@ -319,6 +423,7 @@
       border: 1px solid rgba(148, 163, 184, 0.5);
       box-shadow: var(--shadow-soft);
       font-size: 0.98rem;
+      display: none;
     }
 
     .quote-steps-header {
@@ -404,6 +509,57 @@
       background: radial-gradient(circle at 0 0, rgba(34, 211, 238, 0.22), transparent 60%);
     }
 
+    /* ANIMATION SLIDER STEP */
+    .slider-wrap {
+      margin-bottom: 18px;
+    }
+    .slider-label-row {
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      font-size:0.9rem;
+      color:var(--text-muted);
+      margin-bottom:8px;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .slider-value-pill {
+      padding:4px 10px;
+      border-radius:999px;
+      border:1px solid rgba(148,163,184,0.7);
+      background:rgba(15,23,42,0.98);
+      font-size:0.86rem;
+      color:#e5e7eb;
+    }
+    input[type="range"] {
+      width:100%;
+      -webkit-appearance:none;
+      appearance:none;
+      height:4px;
+      border-radius:999px;
+      background:rgba(31,41,55,0.9);
+      outline:none;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      appearance:none;
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-alt));
+      box-shadow:0 0 10px rgba(34,211,238,0.9);
+      cursor:pointer;
+      margin-top:-6px;
+    }
+    input[type="range"]::-moz-range-thumb {
+      width:16px;
+      height:16px;
+      border-radius:999px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-alt));
+      box-shadow:0 0 10px rgba(34,211,238,0.9);
+      cursor:pointer;
+    }
+
     .quote-nav {
       display: flex;
       justify-content: space-between;
@@ -431,24 +587,6 @@
       font-size: 14px;
       cursor: pointer;
     }
-
-    .btn-primary {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 22px;
-  border-radius: var(--radius-pill);
-  border: 0;
-  cursor: pointer;
-  font-weight: 700;
-  font-size: 14px;
-  color: #020617;
-  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
-  
-  /* Reduced the glow significantly (0.3 instead of 0.85) */
-  box-shadow: 0 10px 25px rgba(34, 211, 238, 0.3); 
-}
-
 
     .quote-help-text {
       font-size: 0.86rem;
@@ -618,7 +756,9 @@
         font-size: 1.8rem;
       }
       .quote-card,
-      .quote-summary {
+      .quote-summary,
+      .start-card,
+      .quote-loader {
         padding: 18px 16px 16px;
       }
     }
@@ -632,7 +772,9 @@
       <header class="nav fade-in-up">
         <div class="nav-left">
           <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
-            <div class="brand-mark-inner">A</div>
+            <div class="brand-mark-inner">
+              <img src="logo.png" alt="Armin Studio logo" class="brand-logo" />
+            </div>
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
@@ -643,7 +785,9 @@
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
           <a href="pricing.html">Pricing</a>
-          <a href="quote.html">Quote</a>
+          <a href="guide.html">Quote estimate</a>
+          <a href="domain.html">Domain options</a>
+          <a href="host.html">Hosting options</a>
           <a href="contact.html">Contact</a>
           <a href="customization.html">Customization</a>
         </nav>
@@ -663,7 +807,9 @@
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="pricing.html">Pricing</a>
-        <a href="quote.html">Quote</a>
+        <a href="guide.html">Quote estimate</a>
+        <a href="domain.html">Domain options</a>
+        <a href="host.html">Hosting options</a>
         <a href="contact.html">Contact</a>
         <a href="customization.html">Customization</a>
       </nav>
@@ -671,7 +817,7 @@
       <!-- HEADER -->
       <section class="fade-in-up">
         <div class="section-label">Quote</div>
-        <h1 class="page-title">Step-by-step website quote.</h1>
+        <h1 class="page-title">Step‑by‑step website quote.</h1>
 
         <div class="typing-wrap">
           <span class="typing-prefix">This quote is</span>
@@ -679,15 +825,43 @@
         </div>
 
         <p class="header-sub">
-          Answer a few quick questions about your website to recive an estimated breakdown of the price.
+          Answer a few quick questions about your website to receive an estimated breakdown of the price.
         </p>
       </section>
 
-      <!-- QUOTE FORM -->
+      <!-- START SCREEN -->
       <section class="fade-in-up">
+        <article class="start-card hover-lift" id="startCard">
+          <h2 class="start-title">Get your custom quote estimate</h2>
+          <p class="start-sub">
+            This tool gives you a rough estimate of what your website might cost based on pages, content,
+            features, maintenance, and more. It won't replace a real quote – but it will help you feel more
+            confident before we text.
+          </p>
+          <button
+            type="button"
+            class="btn-primary btn-pressable"
+            id="startQuoteButton"
+          >
+            Start your custom quote
+          </button>
+
+          <div class="start-links">
+            Or explore other planning tools:
+            <span class="link" onclick="window.location.href='pricing.html'">Pricing</span> ·
+            <span class="link" onclick="window.location.href='domain.html'">Compare domains</span> ·
+            <span class="link" onclick="window.location.href='host.html'">Compare hosting</span>
+          </div>
+        </article>
+
+        <article class="quote-loader" id="quoteLoader" aria-hidden="true">
+          <div class="spinner-orbit"></div>
+          <div>Preparing your questions and estimating ranges…</div>
+        </article>
+
+        <!-- QUOTE FORM -->
         <article class="quote-card hover-lift" id="quoteCard">
           <div class="quote-steps-header" id="quoteStepsHeader"></div>
-
           <div id="quoteStepContent"></div>
 
           <div class="quote-nav">
@@ -706,7 +880,7 @@
                 class="btn-secondary btn-pressable"
                 id="resetButton"
               >
-               Start over
+                Start over
               </button>
               <button
                 type="button"
@@ -728,7 +902,8 @@
         <article class="quote-summary hover-lift" id="quoteSummary">
           <h2 class="quote-summary-title">Your estimated cost breakdown</h2>
           <p class="quote-summary-sub">
-            Keep in mind this is just for you to get an ieda of our pricing and does not reflect your actual quote price. To recive a quote please text us.
+            Keep in mind this is just for you to get an idea of my pricing and does not reflect your final quote.
+            To receive an exact quote, please text me with your situation.
           </p>
 
           <div class="quote-summary-lines" id="quoteSummaryLines"></div>
@@ -749,7 +924,7 @@
 
           <p class="quote-note">
             This is just an estimate – a starting point.
-            We’ll agree on final one‑time and monthly amounts together before you send any payment.
+            We'll agree on final one‑time and monthly amounts together before you send any payment.
           </p>
 
           <div class="quote-text-cta">
@@ -779,7 +954,11 @@
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="quote.html">Quote</a>
+        <a href="guide.html">Quote estimate</a>
+        <span>•</span>
+        <a href="domain.html">Domain options</a>
+        <span>•</span>
+        <a href="host.html">Hosting options</a>
         <span>•</span>
         <a href="contact.html">Contact</a>
       </div>
@@ -787,6 +966,70 @@
   </footer>
 
   <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMobile = document.getElementById("navMobile");
+    navToggle.addEventListener("click", () => {
+      const open = navMobile.style.display === "flex";
+      navMobile.style.display = open ? "none" : "flex";
+    });
+
+    // Fade-in
+    const fadeObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            fadeObserver.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12 }
+    );
+    document.querySelectorAll(".fade-in-up").forEach((el) => fadeObserver.observe(el));
+
+    // Typing effect
+    (function initTyping() {
+      const tEl = document.getElementById("typing-text");
+      const phrases = [
+        "only for you – it doesn't lock you into anything.",
+        "approximate, so we can talk more clearly about budget.",
+        "a starting point before we text about the details.",
+        "helpful if you're comparing options or planning ahead."
+      ];
+      let pIndex = 0;
+      let cIndex = 0;
+      let typing = true;
+
+      function typeLoop() {
+        const current = phrases[pIndex];
+        if (typing) {
+          if (cIndex <= current.length) {
+            tEl.textContent = current.slice(0, cIndex);
+            cIndex++;
+            setTimeout(typeLoop, 45);
+          } else {
+            typing = false;
+            setTimeout(typeLoop, 1600);
+          }
+        } else {
+          if (cIndex > 0) {
+            tEl.textContent = current.slice(0, cIndex - 1);
+            cIndex--;
+            setTimeout(typeLoop, 28);
+          } else {
+            typing = true;
+            pIndex = (pIndex + 1) % phrases.length;
+            setTimeout(typeLoop, 260);
+          }
+        }
+      }
+
+      window.addEventListener("load", () => setTimeout(typeLoop, 450));
+    })();
+
     // === EASY-TO-EDIT PRICING CONFIG ====================================
     // Each option can have:
     //   price:   one-time amount in USD
@@ -794,24 +1037,22 @@
     const steps = [
       {
         id: "pages",
-        title: "How many pages do you think you’ll need?",
+        title: "How many pages do you think you'll need?",
         sub: "You can always adjust this later – this just shapes the estimate.",
         options: [
           { id: "pages-1",      label: "1 page",          sub: "A focused one‑page website.",                 price: 10,  monthly: 0, pageCount: 1 },
           { id: "pages-2-3",    label: "2–3 pages",       sub: "A bit more room to explain things.",          price: 40,  monthly: 0, pageCount: 2 },
-          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site. (text if you need more pages)",                    price: 80,  monthly: 0, pageCount: 4 }
+          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site. (text if you need more pages)", price: 80,  monthly: 0, pageCount: 4 }
         ]
       },
       {
         id: "sections",
         title: "How much content per page?",
         sub: "Think about how many different blocks/sections you want on each page.",
-        // Sections are priced as: (pageCount * sectionsPerPage * 10)
-        // price is calculated in updateSummary based on this.
         options: [
           { id: "sections-light",  label: "Light",     sub: "2–3 sections per page.",      price: 10, monthly: 0, sectionsPerPage: 3 },
           { id: "sections-medium", label: "Medium",    sub: "4–5 sections per page.",      price: 20, monthly: 0, sectionsPerPage: 5 },
-          { id: "sections-heavy",  label: "Detailed",  sub: "6+ sections per page.",       price: 0, monthly: 0, sectionsPerPage: 6 }
+          { id: "sections-heavy",  label: "Detailed",  sub: "6+ sections per page.",       price: 0,  monthly: 0, sectionsPerPage: 6 }
         ]
       },
       {
@@ -819,29 +1060,29 @@
         title: "What kind of domain do you want?",
         sub: "A good domain brings credibility to your company.",
         options: [
-          { id: "style-simple",  label: "I have my own ",  sub: "Our team will help you connect it for free.",                      price: 0,  monthly: 0 },
-          { id: "style-brand",   label: "I need a domain",         sub: "We offer reputable TLD for less than $20 a year.", price: 0, monthly: 1.5 },
-          { id: "style-premium", label: "I will figure it out later",    sub: "This is not suggested but we can keep your site on a sub domain such as yoursite.firebaseapp.com.",          price: 0, monthly: 0 }
+          { id: "style-simple",  label: "I have my own",  sub: "Our team will help you connect it for free.",                      price: 0,  monthly: 0 },
+          { id: "style-brand",   label: "I need a domain", sub: "We suggest reputable TLDs for less than about $20 a year.",      price: 0, monthly: 1.5 },
+          { id: "style-premium", label: "I'll decide later", sub: "We can keep your site on a subdomain such as yoursite.firebaseapp.com.", price: 0, monthly: 0 }
         ]
       },
       {
         id: "content",
-        title: "Do you need custom assets?",
-        sub: "Keep in mind this is a rough estimate.  ",
+        title: "Do you need custom assets (images, videos, logos)?",
+        sub: "Keep in mind this is a rough estimate.",
         options: [
-          { id: "content-ready",  label: "Nope, I got it",    sub: "You’ll provide all photos,viedos,logos and other assets.",          price: 0,  monthly: 0 },
-          { id: "content-polish", label: "Need some help", sub: "Our team can help edit or create up to 3 custom assets..",   price: 20, monthly: 0 },
-          { id: "content-create", label: "I need everything", sub: "Our team will create up to 6 custom assets for your website.", price: 40, monthly: 0 }
+          { id: "content-ready",  label: "Nope, I've got it",    sub: "You'll provide all photos, videos, logos, and other assets.",    price: 0,  monthly: 0 },
+          { id: "content-polish", label: "Need some help",       sub: "My team can help edit or create up to 3 custom assets.",         price: 20, monthly: 0 },
+          { id: "content-create", label: "I need everything",    sub: "My team will create up to 6 custom assets for your website.",   price: 40, monthly: 0 }
         ]
       },
       {
-        id: "photos",
+        id: "maintenance",
         title: "What kind of maintenance does your site need?",
-        sub: "Our dev team will allways be at your fingertips",
+        sub: "My dev team will always be at your fingertips.",
         options: [
-          { id: "photos-yours",         label: "No maintenance needed",   sub: "Your site will be published just once. Editing will have fees and may take time.",      price: 0,  monthly: 0 },
-          { id: "photos-stock",         label: "Basic maintenace plan", sub: "Unlimited basic edits(such as editing menu price or changing a photo). All bugs will be fixed. ",  price: 0, monthly: 15 },
-          { id: "photos-mostly-stock",  label: "Pro maintenance",         sub: "Everything is basic plus: 2 major edits/additons per month (such as adding analytics),priority support and faster completion", price: 0, monthly: 20 }
+          { id: "maint-none",  label: "No maintenance needed", sub: "Your site will be published once. Future edits may have fees and take extra time.", price: 0,  monthly: 0 },
+          { id: "maint-basic", label: "Basic maintenance",     sub: "Unlimited basic edits (like updating menu prices or swapping photos). All bugs are fixed.", price: 0, monthly: 15 },
+          { id: "maint-pro",   label: "Pro maintenance",       sub: "Everything in basic plus: 2 major edits/additions per month, priority support, and faster completion.", price: 40, monthly: 35 }
         ]
       },
       {
@@ -849,25 +1090,25 @@
         title: "What kind of features do you need?",
         sub: "This is about what visitors can do on the site.",
         options: [
-          { id: "features-basic",    label: "Basic info",      sub: "Text sections, images, simple links.",     price: 0,  monthly: 0 },
-          { id: "features-forms",    label: "Forms & actions", sub: "Everythin in basic plus contact, booking, or simple forms.",       price: 5, monthly: 0 },
-          { id: "features-advanced", label: "More advanced",   sub: "Everyhting in Basic plus Advanced dynamic forms.",      price: 15, monthly: 0 }
+          { id: "features-basic",    label: "Basic info",      sub: "Text sections, images, simple links.",                              price: 0,  monthly: 0 },
+          { id: "features-forms",    label: "Forms & actions", sub: "Everything in basic plus contact, booking, or simple forms.",      price: 5,  monthly: 0 },
+          { id: "features-advanced", label: "More advanced",   sub: "Everything in basic plus more advanced dynamic forms.",            price: 15, monthly: 0 }
         ]
       },
       {
-        id: "blog",
+        id: "integrations",
         title: "What kind of advanced integrations does your site need?",
-        sub: "This could be anything you can imagine of.",
+        sub: "This could be almost anything you can imagine.",
         options: [
-          { id: "blog-none",   label: "None", sub: "My site is just fine with just forms",                    price: 0,  monthly: 0 },
-          { id: "blog-simple", label: "Basic integrations", sub: "some examples: (not limited to this) language options,dark/light theme and analytics ", price: 20, monthly: 5 },
-          { id: "blog-regular",label: "Advanced intergrations",    sub: "Some examples: Login/Signup , chatrooms , advanced calculators and refferal logic. (this is a very small list of what our dev team is actually capable of.",    price: 35, monthly: 0 }
+          { id: "integrations-none",   label: "None",              sub: "My site is fine with just forms.", price: 0,  monthly: 0 },
+          { id: "integrations-basic",  label: "Basic integrations",sub: "Examples: language options, dark/light theme, analytics.",     price: 20, monthly: 5 },
+          { id: "integrations-advanced",label: "Advanced integrations", sub: "Examples: login/signup, chat rooms, advanced calculators, referral logic, and more.", price: 60, monthly: 15 }
         ]
       },
       {
         id: "seo",
         title: "How do you want to publish your site to the world?",
-        sub: ".",
+        sub: "This is mostly about SEO and launch quality.",
         options: [
           { id: "seo-basic",  label: "Basic",         sub: "Clean structure and basic tags.",                 price: 0,  monthly: 0 },
           { id: "seo-plus",   label: "Helpful extras", sub: "Title/description suggestions for main pages.",  price: 20, monthly: 0 },
@@ -876,7 +1117,7 @@
       },
       {
         id: "updates",
-        title: "How often do you think you’ll need updates?",
+        title: "How often do you think you'll need updates?",
         sub: "This helps me plan how flexible the setup should be.",
         options: [
           { id: "updates-rare",      label: "Rarely",     sub: "Maybe a few small changes per year.",         price: 0,  monthly: 0 },
@@ -890,7 +1131,7 @@
         sub: "Faster timelines usually cost a bit more.",
         options: [
           { id: "time-flexible", label: "Flexible", sub: "No rush – normal schedule.",              price: 0,  monthly: 0 },
-          { id: "time-soon",     label: "Soon",     sub: "You’d like it within a few weeks.",       price: 25, monthly: 0 },
+          { id: "time-soon",     label: "Soon",     sub: "You'd like it within a few weeks.",       price: 25, monthly: 0 },
           { id: "time-urgent",   label: "Urgent",   sub: "You want it as soon as possible.",        price: 45, monthly: 0 }
         ]
       },
@@ -899,9 +1140,9 @@
         title: "How much support do you want after launch?",
         sub: "Think about how confident you feel updating the site yourself.",
         options: [
-          { id: "support-basic", label: "Basic handover",   sub: "I show you the basics once it’s live.",        price: 0,  monthly: 0 },
-          { id: "support-light", label: "Light support",    sub: "A few check‑ins and small tweaks.",           price: 20, monthly: 10 },
-          { id: "support-more",  label: "More ongoing help",sub: "More help with edits in the first months.",   price: 35, monthly: 20 }
+          { id: "support-basic", label: "Basic handover",   sub: "I show you the basics once it's live.",        price: 0,  monthly: 0 },
+          { id: "support-light", label: "Light support",    sub: "A few check‑ins and small tweaks.",            price: 20, monthly: 10 },
+          { id: "support-more",  label: "More ongoing help",sub: "More help with edits in the first months.",    price: 35, monthly: 20 }
         ]
       },
       {
@@ -909,19 +1150,19 @@
         title: "How many different forms do you need?",
         sub: "For example: contact, booking, quote request.",
         options: [
-          { id: "forms-0-1", label: "0–1 forms", sub: "Maybe just a simple contact form.",          price: 0,  monthly: 0 },
-          { id: "forms-2-3", label: "2–3 forms", sub: "You want a few different ways to contact you.", price: 25, monthly: 0 },
-          { id: "forms-4plus", label: "4+ forms", sub: "More complex forms or flows.",               price: 45, monthly: 0 }
+          { id: "forms-0-1",   label: "0–1 forms",  sub: "Maybe just a simple contact form.",          price: 0,  monthly: 0 },
+          { id: "forms-2-3",   label: "2–3 forms",  sub: "You want a few different ways to contact you.", price: 25, monthly: 0 },
+          { id: "forms-4plus", label: "4+ forms",   sub: "More complex forms or flows.",               price: 45, monthly: 0 }
         ]
       },
       {
         id: "language",
         title: "Do you need more than one language?",
-        sub: "Multi‑language sites add some extra setup and layout work.",
+        sub: "Multi‑language sites add extra setup and layout work.",
         options: [
           { id: "lang-single", label: "Just one language", sub: "Everything in one language.",       price: 0,  monthly: 0 },
           { id: "lang-two",    label: "Two languages",     sub: "Two versions of key pages.",        price: 40, monthly: 5 },
-          { id: "lang-multi",  label: "3+ languages",      sub: "More languages and switching layout.", price: 70, monthly: 10 }
+          { id: "lang-multi",  label: "3+ languages",      sub: "More languages and language switcher.", price: 70, monthly: 10 }
         ]
       },
       {
@@ -929,10 +1170,24 @@
         title: "Any extra touches?",
         sub: "Optional add‑ons to make the site feel more complete.",
         options: [
-          { id: "extras-none",  label: "Keep it simple",      sub: "No extra add‑ons.",                          price: 0,  monthly: 0 },
-          { id: "extras-icons", label: "Custom icons / graphics", sub: "Some extra visual polish.",              price: 25, monthly: 0 },
-          { id: "extras-guides",label: "Mini brand / usage guide", sub: "Short guide on how to use your visuals.", price: 40, monthly: 0 }
+          { id: "extras-none",   label: "Keep it simple",          sub: "No extra add‑ons.",                          price: 0,  monthly: 0 },
+          { id: "extras-icons",  label: "Custom icons / graphics", sub: "Some extra visual polish.",                  price: 25, monthly: 0 },
+          { id: "extras-guides", label: "Mini brand / usage guide", sub: "Short guide on how to use your visuals.",   price: 40, monthly: 0 }
         ]
+      },
+      {
+        id: "animation",
+        title: "How much animation do you want on your site?",
+        sub: "Stronger motion and more complex effects take more design and dev time.",
+        slider: {
+          min: 0,
+          max: 2,
+          step: 1,
+          defaultValue: 1,
+          labels: ["Calm", "Balanced", "Energetic"],
+          prices: [0, 20, 45],          // one-time price add
+          monthly: [0, 0, 5]            // monthly impact (for heavy animations)
+        }
       },
       {
         id: "complexity",
@@ -949,9 +1204,9 @@
         title: "How important is staying on a lower budget?",
         sub: "This just helps me understand how flexible we can be.",
         options: [
-          { id: "budget-low",      label: "Keep it as low as possible", sub: "We’ll keep things focused and simple.", price: -20, monthly: 0 },
+          { id: "budget-low",      label: "Keep it as low as possible", sub: "We'll keep things focused and simple.", price: -20, monthly: 0 },
           { id: "budget-balance",  label: "Balanced",                  sub: "Balance between price and features.",    price: 0,   monthly: 0 },
-          { id: "budget-flexible", label: "Flexible",                  sub: "You’re okay investing more for the right result.", price: 20, monthly: 0 }
+          { id: "budget-flexible", label: "Flexible",                  sub: "You're okay investing more for the right result.", price: 20, monthly: 0 }
         ]
       }
     ];
@@ -970,6 +1225,10 @@
     const backButton = document.getElementById("backButton");
     const nextButton = document.getElementById("nextButton");
     const resetButton = document.getElementById("resetButton");
+    const startCard = document.getElementById("startCard");
+    const startButton = document.getElementById("startQuoteButton");
+    const loaderEl = document.getElementById("quoteLoader");
+    const quoteCardEl = document.getElementById("quoteCard");
 
     function renderStepsHeader() {
       stepsHeaderEl.innerHTML = "";
@@ -991,6 +1250,61 @@
       sub.className = "quote-step-sub";
       sub.textContent = step.sub;
 
+      stepContentEl.appendChild(title);
+      stepContentEl.appendChild(sub);
+
+      // Slider-based step (animation)
+      if (step.slider) {
+        const sliderWrap = document.createElement("div");
+        sliderWrap.className = "slider-wrap";
+
+        const labelRow = document.createElement("div");
+        labelRow.className = "slider-label-row";
+
+        const labelLeft = document.createElement("span");
+        labelLeft.textContent = "Animation intensity";
+
+        const labelRight = document.createElement("span");
+        labelRight.className = "slider-value-pill";
+        labelRight.id = "animationValueLabel";
+
+        const savedValue = selections[step.id]?.value ?? step.slider.defaultValue;
+        labelRight.textContent = step.slider.labels[savedValue];
+
+        labelRow.appendChild(labelLeft);
+        labelRow.appendChild(labelRight);
+
+        const slider = document.createElement("input");
+        slider.type = "range";
+        slider.min = step.slider.min;
+        slider.max = step.slider.max;
+        slider.step = step.slider.step;
+        slider.value = savedValue;
+        slider.id = "animationSlider";
+
+        slider.addEventListener("input", () => {
+          const v = parseInt(slider.value, 10);
+          labelRight.textContent = step.slider.labels[v];
+          selections[step.id] = {
+            value: v,
+            price: step.slider.prices[v],
+            monthly: step.slider.monthly[v]
+          };
+        });
+
+        // Ensure initial selection is stored
+        selections[step.id] = {
+          value: savedValue,
+          price: step.slider.prices[savedValue],
+          monthly: step.slider.monthly[savedValue]
+        };
+
+        sliderWrap.appendChild(labelRow);
+        sliderWrap.appendChild(slider);
+        stepContentEl.appendChild(sliderWrap);
+        return;
+      }
+
       const optionsGrid = document.createElement("div");
       optionsGrid.className = "quote-options-grid";
 
@@ -998,10 +1312,8 @@
         const isSelected = selections[step.id] === opt.id;
         const card = document.createElement("button");
         card.type = "button";
-        card.className =
-          "quote-option btn-pressable" + (isSelected ? " selected" : "");
-        card.setAttribute("data-step-id", step.id);
-        card.setAttribute("data-option-id", opt.id);
+        card.className = "quote-option";
+        if (isSelected) card.classList.add("selected");
 
         const main = document.createElement("span");
         main.className = "label-main";
@@ -1017,197 +1329,122 @@
         card.addEventListener("click", () => {
           selections[step.id] = opt.id;
           renderCurrentStep();
-          updateButtons();
         });
 
         optionsGrid.appendChild(card);
       });
 
-      stepContentEl.appendChild(title);
-      stepContentEl.appendChild(sub);
       stepContentEl.appendChild(optionsGrid);
     }
 
-    function updateButtons() {
-      backButton.disabled = currentStepIndex === 0;
-      const isLast = currentStepIndex === steps.length - 1;
-      nextButton.textContent = isLast ? "See estimate" : "Next step →";
-
-      const currentStep = steps[currentStepIndex];
-      const hasSelection = !!selections[currentStep.id];
-      nextButton.disabled = !hasSelection;
+    function getSelectedOption(step, selectionId) {
+      if (!selectionId || !step.options) return null;
+      return step.options.find((opt) => opt.id === selectionId) || null;
     }
 
-       function updateSummary() {
+    function updateSummary() {
+      let onceTotal = 0;
+      let monthlyTotal = 0;
       summaryLinesEl.innerHTML = "";
-      let totalOnce = 0;
-      let totalMonthly = 0;
-
-      // Get page count and selected sections option for dynamic pricing
-      const pagesStep = steps.find(s => s.id === "pages");
-      const sectionsStep = steps.find(s => s.id === "sections");
-      const chosenPagesId = selections["pages"];
-      const chosenSectionsId = selections["sections"];
-      const chosenPagesOpt = pagesStep?.options.find(o => o.id === chosenPagesId);
-      const chosenSectionsOpt = sectionsStep?.options.find(o => o.id === chosenSectionsId);
-
-      const pageCount = chosenPagesOpt?.pageCount || 1;
-      const sectionsPerPage = chosenSectionsOpt?.sectionsPerPage || 0;
-      const perSectionPrice = 10;
-      const sectionsPrice = pageCount * sectionsPerPage * perSectionPrice;
 
       steps.forEach((step) => {
-        const chosenId = selections[step.id];
-        const opt = step.options.find((o) => o.id === chosenId);
-        if (!opt) return;
+        let lineOnce = 0;
+        let lineMonthly = 0;
+        let label = step.title;
 
-        let displayPrice = opt.price;
-        let displayMonthly = opt.monthly || 0;
+        if (step.slider) {
+          const s = selections[step.id];
+          if (!s) return;
+          lineOnce = s.price || 0;
+          lineMonthly = s.monthly || 0;
+          label += ` (${step.slider.labels[s.value]})`;
+        } else {
+          const selId = selections[step.id];
+          const opt = getSelectedOption(step, selId);
+          if (!opt) return;
 
-        // Override price for sections step with dynamic calculation
-        if (step.id === "sections") {
-          displayPrice = sectionsPrice;
+          lineOnce = opt.price || 0;
+          lineMonthly = opt.monthly || 0;
+
+          // Special case: sections also depend on pages
+          if (step.id === "sections") {
+            const pagesStep = steps.find((s) => s.id === "pages");
+            const pageOpt = getSelectedOption(pagesStep, selections["pages"]);
+            const pageCount = pageOpt?.pageCount || 1;
+            const sectionsPerPage = opt.sectionsPerPage || 3;
+            lineOnce = pageCount * sectionsPerPage * 10;
+          }
         }
 
-        const line = document.createElement("div");
-        line.className = "quote-summary-line";
+        if (lineOnce === 0 && lineMonthly === 0) return;
+
+        onceTotal += lineOnce;
+        monthlyTotal += lineMonthly;
+
+        const lineEl = document.createElement("div");
+        lineEl.className = "quote-summary-line";
 
         const left = document.createElement("div");
-        left.innerHTML = `<strong>${step.title}</strong><br />${opt.label}`;
+        left.innerHTML = `<strong>${label}</strong>`;
 
         const right = document.createElement("div");
         right.className = "quote-summary-line-right";
+        right.innerHTML = `
+          <span class="amount">$${lineOnce}</span> one‑time
+          ${lineMonthly ? ` · <span class="amount">$${lineMonthly}</span> / month` : ""}
+        `;
 
-        const oneTimePart = `<span class="amount">$${displayPrice}</span> one‑time`;
-        const monthlyPart = displayMonthly
-          ? `<br /><span class="amount">$${displayMonthly}</span> / month`
-          : "";
-
-        right.innerHTML = oneTimePart + monthlyPart;
-
-        line.appendChild(left);
-        line.appendChild(right);
-        summaryLinesEl.appendChild(line);
-
-        totalOnce += displayPrice;
-        totalMonthly += displayMonthly;
+        lineEl.appendChild(left);
+        lineEl.appendChild(right);
+        summaryLinesEl.appendChild(lineEl);
       });
 
-      if (totalOnce < 0) totalOnce = 0;
+      totalOnceEl.textContent = onceTotal.toString();
+      totalMonthlyEl.textContent = monthlyTotal.toString();
+      totalMonthlyLineEl.style.display = monthlyTotal > 0 ? "inline" : "none";
+      summaryEl.style.display = "block";
+    }
 
-      totalOnceEl.textContent = totalOnce.toString();
-      totalMonthlyEl.textContent = totalMonthly.toString();
-
-      // Hide monthly line if it's 0
-      totalMonthlyLineEl.style.display = totalMonthly > 0 ? "block" : "none";
+    function goToStep(index) {
+      if (index < 0 || index >= steps.length) return;
+      currentStepIndex = index;
+      renderStepsHeader();
+      renderCurrentStep();
     }
 
     backButton.addEventListener("click", () => {
-      if (currentStepIndex > 0) {
-        currentStepIndex--;
-        renderStepsHeader();
-        renderCurrentStep();
-        updateButtons();
-      }
+      if (currentStepIndex === 0) return;
+      goToStep(currentStepIndex - 1);
     });
 
     nextButton.addEventListener("click", () => {
-      const isLast = currentStepIndex === steps.length - 1;
-      if (!isLast) {
-        if (currentStepIndex < steps.length - 1) {
-          currentStepIndex++;
-          renderStepsHeader();
-          renderCurrentStep();
-          updateButtons();
-        }
+      if (currentStepIndex < steps.length - 1) {
+        goToStep(currentStepIndex + 1);
       } else {
         updateSummary();
-        summaryEl.style.display = "block";
-        summaryEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        quoteCardEl.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     });
 
     resetButton.addEventListener("click", () => {
       Object.keys(selections).forEach((k) => delete selections[k]);
-      currentStepIndex = 0;
-      renderStepsHeader();
-      renderCurrentStep();
-      updateButtons();
       summaryEl.style.display = "none";
-      summaryLinesEl.innerHTML = "";
-      totalOnceEl.textContent = "0";
-      totalMonthlyEl.textContent = "0";
+      currentStepIndex = 0;
+      goToStep(0);
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-    // Init quote UI
-    renderStepsHeader();
-    renderCurrentStep();
-    updateButtons();
+    // Start button flow: show loader then questions
+    startButton.addEventListener("click", () => {
+      startCard.style.display = "none";
+      loaderEl.style.display = "flex";
 
-    // Footer year
-    document.getElementById("year").textContent = new Date().getFullYear();
-
-    // Mobile nav toggle
-    const navToggle = document.getElementById("navToggle");
-    const navMobile = document.getElementById("navMobile");
-    navToggle.addEventListener("click", () => {
-      const isOpen = navMobile.style.display === "flex";
-      navMobile.style.display = isOpen ? "none" : "flex";
-    });
-
-    // On-scroll animations
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12 }
-    );
-    document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
-
-    // Typing effect
-    const tEl = document.getElementById("typing-text");
-    const phrases = [
-      "friendly for small businesses and new brands.",
-      "simple, so you never feel surprised by the price."
-    ];
-    let pIndex = 0;
-    let cIndex = 0;
-    let typing = true;
-
-    function typeLoop() {
-      const current = phrases[pIndex];
-      if (typing) {
-        if (cIndex <= current.length) {
-          tEl.textContent = current.slice(0, cIndex);
-          cIndex++;
-          setTimeout(typeLoop, 45);
-        } else {
-          typing = false;
-          setTimeout(typeLoop, 1600);
-        }
-      } else {
-        if (cIndex > 0) {
-          tEl.textContent = current.slice(0, cIndex - 1);
-          cIndex--;
-          setTimeout(typeLoop, 28);
-        } else {
-          typing = true;
-          pIndex = (pIndex + 1) % phrases.length;
-          setTimeout(typeLoop, 260);
-        }
-      }
-    }
-
-    window.addEventListener("load", () => {
-      setTimeout(typeLoop, 450);
+      setTimeout(() => {
+        loaderEl.style.display = "none";
+        quoteCardEl.style.display = "block";
+        goToStep(0);
+      }, 1300);
     });
   </script>
 </body>
 </html>
-
