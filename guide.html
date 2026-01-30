@@ -1343,19 +1343,19 @@
           return { once: 0, monthly: 0, label: "" };
         }
 
-       function applyValue(v) {
-  const vNum = Math.max(step.slider.min, Math.min(step.slider.max, v));
-  const pricing = computePricing(vNum);
-  const labelText = pricing.label || `${vNum}%`;
-  labelRight.textContent = labelText;
-  helperText.textContent = pricing.label || "";
-  selections[step.id] = {
-    value: vNum,
-    price: pricing.once || 0,
-    monthly: pricing.monthly || 0,
-    label: labelText
-  };
-}
+        function applyValue(v) {
+          const vNum = Math.max(step.slider.min, Math.min(step.slider.max, v));
+          const pricing = computePricing(vNum);
+          const labelText = pricing.label || `${vNum}%`;
+          labelRight.textContent = labelText;
+          helperText.textContent = pricing.label || "";
+          selections[step.id] = {
+            value: vNum,
+            price: pricing.once || 0,
+            monthly: pricing.monthly || 0,
+            label: labelText
+          };
+        }
 
         applyValue(savedValue);
 
@@ -1430,15 +1430,12 @@
         let label = "";
 
         if (step.slider) {
-  const s = selections[step.id];
-  if (!s) return;
-  lineOnce = s.price || 0;
-  lineMonthly = s.monthly || 0;
-
-  // use the slider label as the main text
-  label = s.label || "";
-}
-         else {
+          const s = selections[step.id];
+          if (!s) return;
+          lineOnce = s.price || 0;
+          lineMonthly = s.monthly || 0;
+          label = s.label || "";
+        } else {
           const selId = selections[step.id];
           const opt = getSelectedOption(step, selId);
           if (!opt) return;
@@ -1454,7 +1451,6 @@
             lineOnce = pageCount * sectionsPerPage * 10;
           }
 
-          // use what the user picked instead of the question
           label = opt.label || "";
         }
 
@@ -1530,159 +1526,153 @@
     });
   </script>
 
-  <!-- PDF EXPORT (fixed) -->
-<!-- 1) Load jsPDF BEFORE your export code, at the very bottom, just above </body> -->
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
-  integrity="sha512-V7PzqYDG6wcGs2T3t3yTg9v4LcFH5dQpKJZaqAeUEMxFDoVZyWEs1okP9rE1Zcx5BMKOMn6MNRiA2ZcKkW+Kug=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-></script>
+  <!-- jsPDF and export code -->
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  ></script>
+  <script>
+    (function () {
+      function addExportControls() {
+        const summaryEl = document.getElementById("quoteSummary");
+        if (!summaryEl) return;
+        if (summaryEl.dataset.exportAttached === "1") return;
+        summaryEl.dataset.exportAttached = "1";
 
-<script>
-  // Make sure jsPDF is available
-  console.log("window.jspdf:", window.jspdf);
+        const wrapper = document.createElement("div");
+        wrapper.style.marginTop = "18px";
+        wrapper.style.display = "flex";
+        wrapper.style.flexWrap = "wrap";
+        wrapper.style.gap = "10px";
+        wrapper.style.alignItems = "center";
+        wrapper.style.justifyContent = "space-between";
 
-  (function addExportControls() {
-    // Wait until DOM is fully ready AND jsPDF is loaded
-    function init() {
-      const { jsPDF } = window.jspdf || {};
-      if (!jsPDF) {
-        console.error("jsPDF not loaded");
-        alert("PDF export failed to load. Please check your internet connection and try again.");
-        return;
-      }
+        const leftText = document.createElement("p");
+        leftText.style.margin = "0";
+        leftText.style.fontSize = "0.9rem";
+        leftText.style.color = "var(--text-muted)";
+        leftText.textContent = "Export your estimate to save it or share it with our team.";
 
-      const summaryEl = document.getElementById("quoteSummary");
-      if (!summaryEl) return;
+        const exportBtn = document.createElement("button");
+        exportBtn.type = "button";
+        exportBtn.className = "btn-secondary btn-pressable";
+        exportBtn.textContent = "Export results as PDF";
 
-      const wrapper = document.createElement("div");
-      wrapper.style.marginTop = "18px";
-      wrapper.style.display = "flex";
-      wrapper.style.flexWrap = "wrap";
-      wrapper.style.gap = "10px";
-      wrapper.style.alignItems = "center";
-      wrapper.style.justifyContent = "space-between";
+        wrapper.appendChild(leftText);
+        wrapper.appendChild(exportBtn);
+        summaryEl.appendChild(wrapper);
 
-      const leftText = document.createElement("p");
-      leftText.style.margin = "0";
-      leftText.style.fontSize = "0.9rem";
-      leftText.style.color = "var(--text-muted)";
-      leftText.textContent = "Export your estimate to save it or share it with our team.";
+        exportBtn.addEventListener("click", () => {
+          const { jsPDF } = window.jspdf || {};
+          if (!jsPDF) {
+            alert("PDF export is temporarily unavailable. Please take a screenshot instead.");
+            return;
+          }
 
-      const exportBtn = document.createElement("button");
-      exportBtn.type = "button";
-      exportBtn.className = "btn-secondary btn-pressable";
-      exportBtn.textContent = "Export results as PDF";
+          const onceTotal = document.getElementById("quoteTotalOnce")?.textContent || "0";
+          const monthlyTotal = document.getElementById("quoteTotalMonthly")?.textContent || "0";
+          const linesContainer = document.getElementById("quoteSummaryLines");
 
-      wrapper.appendChild(leftText);
-      wrapper.appendChild(exportBtn);
-      summaryEl.appendChild(wrapper);
+          const lines = [];
+          if (linesContainer) {
+            linesContainer.querySelectorAll(".quote-summary-line").forEach((row) => {
+              const left = row.querySelector("strong")?.textContent?.trim() || "";
+              const right = row.querySelector(".quote-summary-line-right")?.innerText?.trim() || "";
+              if (left || right) {
+                lines.push({ left, right });
+              }
+            });
+          }
 
-      exportBtn.addEventListener("click", () => {
-        const onceTotal = document.getElementById("quoteTotalOnce")?.textContent || "0";
-        const monthlyTotal = document.getElementById("quoteTotalMonthly")?.textContent || "0";
-        const linesContainer = document.getElementById("quoteSummaryLines");
+          const doc = new jsPDF({ unit: "pt", format: "a4" });
+          const pageWidth = doc.internal.pageSize.getWidth();
+          const pageHeight = doc.internal.pageSize.getHeight();
+          const marginX = 56;
+          let y = 60;
 
-        const lines = [];
-        if (linesContainer) {
-          linesContainer.querySelectorAll(".quote-summary-line").forEach((row) => {
-            const left = row.querySelector("strong")?.textContent?.trim() || "";
-            const right = row.querySelector(".quote-summary-line-right")?.innerText?.trim() || "";
-            if (left || right) {
-              lines.push({ left, right });
-            }
-          });
-        }
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(16);
+          doc.text("Website Quote Estimate – Armin Studio", marginX, y);
+          y += 20;
 
-        const doc = new jsPDF({ unit: "pt", format: "a4" });
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const pageHeight = doc.internal.pageSize.getHeight();
-        const marginX = 56;
-        let y = 60;
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10);
+          const now = new Date();
+          doc.text(`Generated on: ${now.toLocaleString()}`, marginX, y);
+          y += 22;
 
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(16);
-        doc.text("Website Quote Estimate – Armin Studio", marginX, y);
-        y += 20;
-
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(10);
-        const now = new Date();
-        doc.text(`Generated on: ${now.toLocaleString()}`, marginX, y);
-        y += 22;
-
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(13);
-        doc.text("Estimated totals (USD)", marginX, y);
-        y += 18;
-
-        doc.setFontSize(12);
-        doc.text(`One‑time: $${onceTotal}`, marginX, y);
-        y += 16;
-        if (parseFloat(monthlyTotal) > 0) {
-          doc.text(`Monthly (estimated): $${monthlyTotal}`, marginX, y);
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(13);
+          doc.text("Estimated totals (USD)", marginX, y);
           y += 18;
-        }
 
-        y += 8;
-        doc.setDrawColor(180, 190, 200);
-        doc.line(marginX, y, pageWidth - marginX, y);
-        y += 20;
+          doc.setFontSize(12);
+          doc.text(`One‑time: $${onceTotal}`, marginX, y);
+          y += 16;
+          if (parseFloat(monthlyTotal) > 0) {
+            doc.text(`Monthly (estimated): $${monthlyTotal}`, marginX, y);
+            y += 18;
+          }
 
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(13);
-        doc.text("Breakdown", marginX, y);
-        y += 18;
+          y += 8;
+          doc.setDrawColor(180, 190, 200);
+          doc.line(marginX, y, pageWidth - marginX, y);
+          y += 20;
 
-        doc.setFont("helvetica", "normal");
-        doc.setFontSize(11);
+          doc.setFont("helvetica", "bold");
+          doc.setFontSize(13);
+          doc.text("Breakdown", marginX, y);
+          y += 18;
 
-        const rightColX = pageWidth - marginX;
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(11);
 
-        lines.forEach(({ left, right }) => {
-          const leftLines = doc.splitTextToSize(left, rightColX - marginX - 120);
+          const rightColX = pageWidth - marginX;
 
-          if (y + leftLines.length * 14 + 24 > pageHeight - 40) {
+          lines.forEach(({ left, right }) => {
+            const leftLines = doc.splitTextToSize(left, rightColX - marginX - 120);
+
+            if (y + leftLines.length * 14 + 24 > pageHeight - 40) {
+              doc.addPage();
+              y = 60;
+            }
+
+            leftLines.forEach((ln, idx) => {
+              doc.text(ln, marginX, y + idx * 14);
+            });
+
+            if (right) {
+              doc.text(right, rightColX, y, { align: "right" });
+            }
+
+            y += leftLines.length * 14 + 10;
+          });
+
+          y += 10;
+          if (y > pageHeight - 80) {
             doc.addPage();
             y = 60;
           }
 
-          leftLines.forEach((ln, idx) => {
-            doc.text(ln, marginX, y + idx * 14);
-          });
+          doc.setFontSize(10);
+          doc.setTextColor(140);
+          doc.text(
+            "This PDF is a rough estimate, not a final quote. We'll confirm exact pricing together before any payment.",
+            marginX,
+            y
+          );
 
-          if (right) {
-            doc.text(right, rightColX, y, { align: "right" });
-          }
-
-          y += leftLines.length * 14 + 10;
+          doc.save("armin-studio-website-quote.pdf");
         });
+      }
 
-        y += 10;
-        if (y > pageHeight - 80) {
-          doc.addPage();
-          y = 60;
-        }
-
-        doc.setFontSize(10);
-        doc.setTextColor(140);
-        doc.text(
-          "This PDF is a rough estimate, not a final quote. We'll confirm exact pricing together before any payment.",
-          marginX,
-          y
-        );
-
-        doc.save("armin-studio-website-quote.pdf");
-      });
-    }
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", init);
-    } else {
-      init();
-    }
-  })();
-</script>
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", addExportControls);
+      } else {
+        addExportControls();
+      }
+    })();
+  </script>
 </body>
 </html>
