@@ -1531,9 +1531,28 @@
   </script>
 
   <!-- PDF EXPORT (fixed) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-V7PzqYDG6wcGs2T3t3yTg9v4LcFH5dQpKJZaqAeUEMxFDoVZyWEs1okP9rE1Zcx5BMKOMn6MNRiA2ZcKkW+Kug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script>
-    (function addExportControls() {
+<!-- 1) Load jsPDF BEFORE your export code, at the very bottom, just above </body> -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"
+  integrity="sha512-V7PzqYDG6wcGs2T3t3yTg9v4LcFH5dQpKJZaqAeUEMxFDoVZyWEs1okP9rE1Zcx5BMKOMn6MNRiA2ZcKkW+Kug=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
+
+<script>
+  // Make sure jsPDF is available
+  console.log("window.jspdf:", window.jspdf);
+
+  (function addExportControls() {
+    // Wait until DOM is fully ready AND jsPDF is loaded
+    function init() {
+      const { jsPDF } = window.jspdf || {};
+      if (!jsPDF) {
+        console.error("jsPDF not loaded");
+        alert("PDF export failed to load. Please check your internet connection and try again.");
+        return;
+      }
+
       const summaryEl = document.getElementById("quoteSummary");
       if (!summaryEl) return;
 
@@ -1560,13 +1579,7 @@
       wrapper.appendChild(exportBtn);
       summaryEl.appendChild(wrapper);
 
-      exportBtn.addEventListener("click", async () => {
-        const { jsPDF } = window.jspdf || {};
-        if (!jsPDF) {
-          alert("PDF export is temporarily unavailable. Please take a screenshot instead.");
-          return;
-        }
-
+      exportBtn.addEventListener("click", () => {
         const onceTotal = document.getElementById("quoteTotalOnce")?.textContent || "0";
         const monthlyTotal = document.getElementById("quoteTotalMonthly")?.textContent || "0";
         const linesContainer = document.getElementById("quoteSummaryLines");
@@ -1662,7 +1675,14 @@
 
         doc.save("armin-studio-website-quote.pdf");
       });
-    })();
-  </script>
+    }
+
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", init);
+    } else {
+      init();
+    }
+  })();
+</script>
 </body>
 </html>
