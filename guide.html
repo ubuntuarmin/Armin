@@ -1343,17 +1343,19 @@
           return { once: 0, monthly: 0, label: "" };
         }
 
-        function applyValue(v) {
-          const vNum = Math.max(step.slider.min, Math.min(step.slider.max, v));
-          const pricing = computePricing(vNum);
-          labelRight.textContent = pricing.label || `${vNum}%`;
-          helperText.textContent = pricing.label || "";
-          selections[step.id] = {
-            value: vNum,
-            price: pricing.once || 0,
-            monthly: pricing.monthly || 0
-          };
-        }
+       function applyValue(v) {
+  const vNum = Math.max(step.slider.min, Math.min(step.slider.max, v));
+  const pricing = computePricing(vNum);
+  const labelText = pricing.label || `${vNum}%`;
+  labelRight.textContent = labelText;
+  helperText.textContent = pricing.label || "";
+  selections[step.id] = {
+    value: vNum,
+    price: pricing.once || 0,
+    monthly: pricing.monthly || 0,
+    label: labelText
+  };
+}
 
         applyValue(savedValue);
 
@@ -1428,14 +1430,15 @@
         let label = "";
 
         if (step.slider) {
-          const s = selections[step.id];
-          if (!s) return;
-          lineOnce = s.price || 0;
-          lineMonthly = s.monthly || 0;
+  const s = selections[step.id];
+  if (!s) return;
+  lineOnce = s.price || 0;
+  lineMonthly = s.monthly || 0;
 
-          // use the slider label as the main text
-          label = s.label || "";
-        } else {
+  // use the slider label as the main text
+  label = s.label || "";
+}
+         else {
           const selId = selections[step.id];
           const opt = getSelectedOption(step, selId);
           if (!opt) return;
