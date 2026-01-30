@@ -1193,9 +1193,6 @@
           { id: "seo-strong", label: "Pro hosting ",   sub: "For companys expecting high traffic (1000+ users).",     price: 0, monthly: 15 }
         ]
       },
-     
-      
-      
       {
         id: "animation",
         title: "How much animation do you want on your site?",
@@ -1428,7 +1425,7 @@
       steps.forEach((step) => {
         let lineOnce = 0;
         let lineMonthly = 0;
-        let label = step.title;
+        let label = "";
 
         if (step.slider) {
           const s = selections[step.id];
@@ -1436,11 +1433,8 @@
           lineOnce = s.price || 0;
           lineMonthly = s.monthly || 0;
 
-          if (step.id === "animation") {
-            label += " (animation level)";
-          } else if (step.id === "budgetFit") {
-            label += " (budget preference)";
-          }
+          // use the slider label as the main text
+          label = s.label || "";
         } else {
           const selId = selections[step.id];
           const opt = getSelectedOption(step, selId);
@@ -1456,9 +1450,13 @@
             const sectionsPerPage = opt.sectionsPerPage || 3;
             lineOnce = pageCount * sectionsPerPage * 10;
           }
+
+          // use what the user picked instead of the question
+          label = opt.label || "";
         }
 
         if (lineOnce === 0 && lineMonthly === 0) return;
+        if (!label) return;
 
         onceTotal += lineOnce;
         monthlyTotal += lineMonthly;
@@ -1516,10 +1514,22 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
-             <!-- EXPORT RESULTS BUTTON (place this just before </script>) -->
+    // Start button flow: show loader then questions
+    startButton.addEventListener("click", () => {
+      startCard.style.display = "none";
+      loaderEl.style.display = "flex";
+
+      setTimeout(() => {
+        loaderEl.style.display = "none";
+        quoteCardEl.style.display = "block";
+        goToStep(0);
+      }, 1300);
+    });
+  </script>
+
+  <!-- PDF EXPORT (fixed) -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js" integrity="sha512-V7PzqYDG6wcGs2T3t3yTg9v4LcFH5dQpKJZaqAeUEMxFDoVZyWEs1okP9rE1Zcx5BMKOMn6MNRiA2ZcKkW+Kug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script>
-    // Add export controls under the summary once DOM is ready
     (function addExportControls() {
       const summaryEl = document.getElementById("quoteSummary");
       if (!summaryEl) return;
@@ -1554,7 +1564,6 @@
           return;
         }
 
-        // Collect data from the page
         const onceTotal = document.getElementById("quoteTotalOnce")?.textContent || "0";
         const monthlyTotal = document.getElementById("quoteTotalMonthly")?.textContent || "0";
         const linesContainer = document.getElementById("quoteSummaryLines");
@@ -1572,6 +1581,7 @@
 
         const doc = new jsPDF({ unit: "pt", format: "a4" });
         const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
         const marginX = 56;
         let y = 60;
 
@@ -1586,7 +1596,6 @@
         doc.text(`Generated on: ${now.toLocaleString()}`, marginX, y);
         y += 22;
 
-        // Totals
         doc.setFont("helvetica", "bold");
         doc.setFontSize(13);
         doc.text("Estimated totals (USD)", marginX, y);
@@ -1605,10 +1614,9 @@
         doc.line(marginX, y, pageWidth - marginX, y);
         y += 20;
 
-        // Breakdown heading
         doc.setFont("helvetica", "bold");
         doc.setFontSize(13);
-        doc.text("Breakdown by question", marginX, y);
+        doc.text("Breakdown", marginX, y);
         y += 18;
 
         doc.setFont("helvetica", "normal");
@@ -1619,8 +1627,7 @@
         lines.forEach(({ left, right }) => {
           const leftLines = doc.splitTextToSize(left, rightColX - marginX - 120);
 
-          // New page if needed
-          if (y + leftLines.length * 14 + 24 > doc.internal.pageSize.getHeight() - 40) {
+          if (y + leftLines.length * 14 + 24 > pageHeight - 40) {
             doc.addPage();
             y = 60;
           }
@@ -1637,7 +1644,7 @@
         });
 
         y += 10;
-        if (y > doc.internal.pageSize.getHeight() - 80) {
+        if (y > pageHeight - 80) {
           doc.addPage();
           y = 60;
         }
@@ -1653,19 +1660,6 @@
         doc.save("armin-studio-website-quote.pdf");
       });
     })();
-  
-    // Start button flow: show loader then questions
-    startButton.addEventListener("click", () => {
-      startCard.style.display = "none";
-      loaderEl.style.display = "flex";
-
-      setTimeout(() => {
-        loaderEl.style.display = "none";
-        quoteCardEl.style.display = "block";
-        goToStep(0);
-      }, 1300);
-    });
   </script>
 </body>
 </html>
-
