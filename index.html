@@ -2,12 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Armin Studio – Modern, Affordable Web Design</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Modern, affordable web design for small businesses, new brands and non-profits."
-  />
+  
+  <!-- Primary Meta Tags -->
+  <title>Armin Studio - Affordable Modern Web Design | Professional Website Development</title>
+  <meta name="title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
+  <meta name="description" content="Armin Studio: Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions. Get your dream website today!" />
+  <meta name="keywords" content="Armin Studio, web design, affordable web design, modern website design, professional web development, small business websites, custom websites, web design agency, responsive web design, mobile-first design, startup websites" />
+  <meta name="author" content="Armin Studio" />
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <link rel="canonical" href="https://armin.works/" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://armin.works/" />
+  <meta property="og:site_name" content="Armin Studio" />
+  <meta property="og:title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
+  <meta property="og:description" content="Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
+  <meta property="og:image" content="https://armin.works/logo.png" />
+  <meta property="og:locale" content="en_US" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://armin.works/" />
+  <meta property="twitter:title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
+  <meta property="twitter:description" content="Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
+  <meta property="twitter:image" content="https://armin.works/logo.png" />
+  
+  <!-- Additional SEO -->
+  <meta name="theme-color" content="#020617" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <style>
     :root {
       --bg: #020617;
@@ -722,10 +751,136 @@
     }
   </style>
   <link rel="stylesheet" href="mobile.css" />
+  
+  <!-- Structured Data (JSON-LD) for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://armin.works/#organization",
+        "name": "Armin Studio",
+        "alternateName": "Armin Studio Web Design",
+        "url": "https://armin.works/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://armin.works/logo.png",
+          "width": 512,
+          "height": 512
+        },
+        "description": "Professional web design agency offering affordable, modern websites for small businesses, startups and non-profits.",
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "US"
+        },
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Customer Service",
+          "availableLanguage": ["English"]
+        },
+        "sameAs": []
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://armin.works/#website",
+        "url": "https://armin.works/",
+        "name": "Armin Studio",
+        "description": "Affordable Modern Web Design and Professional Website Development",
+        "publisher": {
+          "@id": "https://armin.works/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "ProfessionalService",
+        "@id": "https://armin.works/#service",
+        "name": "Armin Studio Web Design Services",
+        "image": "https://armin.works/logo.png",
+        "description": "We offer professional web design services including custom website development, responsive design, and modern web solutions for small businesses, startups, and non-profits.",
+        "priceRange": "$$$",
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "serviceType": [
+          "Web Design",
+          "Website Development",
+          "Responsive Web Design",
+          "Custom Web Development",
+          "Small Business Websites",
+          "E-commerce Web Design"
+        ],
+        "provider": {
+          "@id": "https://armin.works/#organization"
+        }
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://armin.works/#webpage",
+        "url": "https://armin.works/",
+        "name": "Armin Studio - Affordable Modern Web Design | Professional Website Development",
+        "isPartOf": {
+          "@id": "https://armin.works/#website"
+        },
+        "about": {
+          "@id": "https://armin.works/#organization"
+        },
+        "description": "Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions.",
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What makes Armin Studio different from other web design agencies?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We offer unlimited revisions and you only pay when you're 100% satisfied with the final result. We focus on affordable, modern web design for small businesses, startups, and non-profits."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "How much does a website cost at Armin Studio?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Our pricing starts at affordable rates for one-page websites and scales based on your needs. We offer flexible pricing for multi-page sites with custom features."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Do you offer revisions?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yes! We offer unlimited revisions until you're completely satisfied with your website. You only pay once the project is complete and you're happy with the result."
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <main>
     <div class="page">
+      <!-- Breadcrumb Navigation with Schema -->
+      <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://armin.works/"
+          }
+        ]
+      }
+      </script>
+      
       <!-- NAV -->
       <header class="nav fade-in-up">
         <div class="nav-left">
@@ -736,7 +891,7 @@
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
-            <div class="brand-sub">Modern, affordable web design</div>
+            <div class="brand-sub">Professional Web Design Agency</div>
           </div>
         </div>
         <nav class="nav-links" aria-label="Main navigation">
@@ -770,11 +925,11 @@
       </nav>
 
       <!-- HERO -->
-      <section class="hero fade-in-up">
+      <section class="hero fade-in-up" aria-labelledby="hero-title">
         <div>
-          <div class="hero-label">WELCOME</div>
+          <div class="hero-label">WELCOME TO ARMIN STUDIO</div>
 
-          <h1 class="hero-title">
+          <h1 id="hero-title" class="hero-title">
             We build
             <span class="glow">modern, affordable websites</span>
             for real businesses.
@@ -786,10 +941,10 @@
           </div>
 
           <p class="hero-subtitle">
-            Our web dev team creates clean, professional websites
-            for small businesses, new brands, and non‑profits.
+            Our expert web design team creates clean, professional websites
+            for small businesses, startups, new brands, and non‑profits.
             You only pay when you're <strong>100% satisfied</strong>
-            with the final result.
+            with the final result. Get affordable, modern web design that drives results.
           </p>
 
           <div class="hero-badges">
@@ -839,7 +994,7 @@
 
             <p class="hero-card-text">
               Because we are still building our portfolio, our team brings fresh ideas and a lot of effort to every project.
-            Our prices stay friendly, but we treat each site like it's my own brand.
+              Our prices stay friendly, but we treat each site like it's our own brand.
             </p>
 
             <p class="hero-card-text">
@@ -873,15 +1028,15 @@
       </section>
 
       <!-- WHO I WORK WITH -->
-      <section class="fade-in-up">
+      <section class="fade-in-up" aria-labelledby="who-we-work-with">
         <div class="section-header">
           <div>
-            <div class="section-label">Who we work with</div>
-            <h2 class="section-title">Built for small & growing organizations.</h2>
+            <div class="section-label">WHO WE WORK WITH</div>
+            <h2 id="who-we-work-with" class="section-title">Affordable Web Design for Small & Growing Businesses</h2>
           </div>
           <p class="section-sub">
             If you're a small team, a new project, or a non‑profit, you don't need a huge, complicated website.
-            You need something clear, modern, and easy to update – that's where we come in.
+            You need something clear, modern, and easy to update – that's where our professional web design services come in.
           </p>
         </div>
 
@@ -928,45 +1083,45 @@
       </section>
 
       <!-- NEXT STEPS / NAV BETWEEN PAGES -->
-      <section class="fade-in-up">
+      <section class="fade-in-up" aria-labelledby="next-steps">
         <div class="section-header">
           <div>
-            <div class="section-label">Next steps</div>
-            <h2 class="section-title">Get a estimate or just contact us for pricing.</h2>
+            <div class="section-label">NEXT STEPS</div>
+            <h2 id="next-steps" class="section-title">Get a Free Estimate for Your Modern Website</h2>
           </div>
           
         </div>
 
         <div class="preview-grid">
           <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='services.html'">
-            <h3 style="margin:0 0 10px;font-size:1.15rem;">Services – what we can build</h3>
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Our Web Design Services – What We Build</h3>
             <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
-              See the different types of websites We offer – from one‑page landing pages
-              to multi‑page "luxury" sites – and which ones fit your situation best.
+              See the different types of websites we offer – from one‑page landing pages
+              to multi‑page luxury sites – and which ones fit your business needs best.
             </p>
             <p style="margin:0;font-size:0.9rem;color:var(--accent);">
-              Go to Services →
+              View Our Services →
             </p>
           </article>
 
           <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='pricing.html'">
-            <h3 style="margin:0 0 10px;font-size:1.15rem;">Pricing – how much it costs</h3>
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Affordable Web Design Pricing</h3>
             <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
              Starting prices for one‑page and multi‑page websites, always with unlimited revisions
-              and payment only after you're happy.
+              and payment only after you're 100% satisfied with your modern website.
             </p>
             <p style="margin:0;font-size:0.9rem;color:var(--accent);">
-              Go to Pricing →
+              See Pricing Details →
             </p>
           </article>
 
           <article class="preview-card hover-lift" style="cursor:pointer;" onclick="window.location.href='guide.html'">
-            <h3 style="margin:0 0 10px;font-size:1.15rem;">Quote – estimate your price</h3>
+            <h3 style="margin:0 0 10px;font-size:1.15rem;">Free Quote – Estimate Your Website Cost</h3>
             <p style="margin:0 0 10px;font-size:0.98rem;color:var(--text-muted);">
-              Answer simple questions to get an estimated price breakdown before we text.
+              Answer simple questions to get an estimated price breakdown for your custom website before we connect.
             </p>
             <p style="margin:0;font-size:0.9rem;color:var(--accent);">
-              Get a quote estimate →
+              Get Your Free Quote →
             </p>
           </article>
         </div>
@@ -974,20 +1129,20 @@
     </div>
   </main>
 
-  <footer>
+  <footer role="contentinfo">
     <div class="footer-inner">
-      <div>© <span id="year"></span> Armin studio.</div>
-      <div class="footer-links">
+      <div>© <span id="year"></span> Armin Studio. All rights reserved. Professional Web Design Services.</div>
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="index.html">Home</a>
         <span>•</span>
         <a href="services.html">Services</a>
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="guide.html">Quote estimate</a>
+        <a href="guide.html">Quote</a>
         <span>•</span>
         <a href="contact.html">Contact</a>
-      </div>
+      </nav>
     </div>
   </footer>
 
