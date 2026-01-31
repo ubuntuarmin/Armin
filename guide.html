@@ -1205,18 +1205,27 @@
         sub: "This could be almost anything you can imagine.",
         options: [
           { id: "integrations-none",    label: "None",               sub: "My site is fine with just forms.",                                    price: 0,  monthly: 0 },
-          { id: "integrations-basic",   label: "Basic integrations", sub: "Examples: language options, dark/light theme, analytics.",           price: 20, monthly: 5 },
-          { id: "integrations-advanced",label: "Advanced integrations", sub: "Examples: login/signup, chat rooms, advanced calculators, and more.", price: 60, monthly: 15 }
+          { id: "integrations-basic",   label: "Basic integrations", sub: "Examples: language options, dark/light theme, analytics.",           price: 20, monthly: 0 },
+          { id: "integrations-advanced",label: "Advanced integrations", sub: "Examples: login/signup, chat rooms, advanced calculators, and more.", price: 60, monthly: 0 }
         ]
       },
       {
         id: "seo",
         title: "How do you want to publish your site to the world?",
-        sub: "I got it ",
+        sub: "Hosting is where your site data is stored and how it gets published on the web",
         options: [
-          { id: "seo-basic",  label: "B",         sub: "our dev team will give you all the files coded for your site.",                 price: 0,  monthly: 0 },
+          { id: "seo-basic",  label: "I got it ",         sub: "our dev team will give you all the files coded for your site.",                 price: 0,  monthly: 0 },
           { id: "seo-plus",   label: "Free hosting on us ", sub: "This is the best option for most new/small companys.",  price: 0, monthly: 0 },
           { id: "seo-strong", label: "Pro hosting ",   sub: "For companys expecting high traffic (1000+ users).",     price: 0, monthly: 15 }
+        ]
+      },
+       {
+        id: "new",
+        title: "Do you want seo optimization?",
+        sub: "SEO optimization boosts a sites organic activity by over 400% without it your site wont look as reputable.",
+        options: [
+          { id: "seo-basic",  label: "Nope im ok ",         sub: "Best for companys that will direct users to thier website, and dont worry about users searching for them.",                 price: 0,  monthly: 0 },
+          { id: "seo-plus",   label: "PRO SEO", sub: " We will rank your site in google bringing lots of traffic. ",  price: 90, monthly: 0 },
         ]
       },
       {
