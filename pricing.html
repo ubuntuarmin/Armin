@@ -184,6 +184,40 @@
     }
   </style>
   <link rel="stylesheet" href="mobile.css" />
+  
+  <!-- Structured Data (JSON-LD) for Pricing -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "PriceSpecification",
+        "@id": "https://armin.works/pricing.html#pricing",
+        "name": "Web Design Pricing",
+        "description": "Affordable web design packages with unlimited revisions",
+        "priceCurrency": "USD",
+        "valueAddedTaxIncluded": false
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://armin.works/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Pricing",
+            "item": "https://armin.works/pricing.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <main>
@@ -198,7 +232,7 @@
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
-            <div class="brand-sub">Modern, affordable web design</div>
+            <div class="brand-sub">Professional Web Design Agency</div>
           </div>
         </div>
         <nav class="nav-links" aria-label="Main navigation">
