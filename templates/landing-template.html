@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CloudSync - Your Data, Everywhere</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6;
+      color: #1f2937;
+      background: #fff;
+    }
+    
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+    
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .nav-btn {
+      padding: 0.6rem 1.5rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform 0.3s;
+    }
+    
+    .nav-btn:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 8rem 2rem 4rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><circle cx="200" cy="100" r="100" fill="rgba(255,255,255,0.1)"/><circle cx="800" cy="400" r="150" fill="rgba(255,255,255,0.1)"/><circle cx="1000" cy="200" r="80" fill="rgba(255,255,255,0.1)"/></svg>');
+      background-size: cover;
+    }
+    
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .hero-text h1 {
+      font-size: 3.5rem;
+      color: white;
+      margin-bottom: 1.5rem;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+    
+    .hero-text p {
+      font-size: 1.3rem;
+      color: rgba(255,255,255,0.9);
+      margin-bottom: 2rem;
+    }
+    
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .btn-primary {
+      padding: 1rem 2.5rem;
+      background: white;
+      color: #667eea;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: transform 0.3s, box-shadow 0.3s;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    
+    .btn-secondary {
+      padding: 1rem 2.5rem;
+      background: transparent;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: 2px solid white;
+      transition: all 0.3s;
+    }
+    
+    .btn-secondary:hover {
+      background: white;
+      color: #667eea;
+    }
+    
+    .hero-image {
+      width: 100%;
+      height: 500px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    /* Features Section */
+    .features {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+    
+    .section-header h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    
+    .section-header p {
+      font-size: 1.2rem;
+      color: #6b7280;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .feature-card {
+      padding: 2rem;
+      background: #f9fafb;
+      border-radius: 12px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    
+    .feature-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .feature-card p {
+      color: #6b7280;
+    }
+    
+    /* Benefits Section */
+    .benefits {
+      padding: 5rem 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .benefits-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    
+    .benefits-image {
+      width: 100%;
+      height: 400px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      border: 2px solid rgba(255,255,255,0.2);
+    }
+    
+    .benefits-list h2 {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .benefit-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .benefit-icon {
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+    
+    .benefit-text h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.3rem;
+    }
+    
+    .benefit-text p {
+      opacity: 0.9;
+    }
+    
+    /* Testimonials */
+    .testimonials {
+      padding: 5rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+    
+    .testimonial-card {
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .testimonial-text {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      margin-bottom: 1.5rem;
+      color: #4b5563;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 0.2rem;
+    }
+    
+    .author-info p {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+    
+    /* CTA Section */
+    .cta-section {
+      padding: 5rem 2rem;
+      background: #f9fafb;
+      text-align: center;
+    }
+    
+    .cta-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .cta-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .cta-content p {
+      font-size: 1.2rem;
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    
+    .email-form {
+      display: flex;
+      gap: 1rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .email-form input {
+      flex: 1;
+      padding: 1rem;
+      border: 2px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    
+    .email-form input:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+    
+    .email-form button {
+      padding: 1rem 2rem;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+    
+    .email-form button:hover {
+      transform: translateY(-2px);
+    }
+    
+    /* Footer */
+    footer {
+      background: #1f2937;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    footer a {
+      color: #667eea;
+      text-decoration: none;
+    }
+    
+    /* Back Button */
+    .back-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #667eea;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+      z-index: 999;
+      transition: transform 0.3s;
+      font-weight: 600;
+    }
+    
+    .back-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content,
+      .benefits-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .hero-text h1 {
+        font-size: 2.5rem;
+      }
+      
+      .email-form {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Examples Button -->
+  <a href="../examples.html" class="back-btn">← Back to Examples</a>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="logo">☁️ CloudSync</div>
+      <a href="#signup" class="nav-btn">Get Started Free</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <h1>Your Files. Anywhere. Anytime.</h1>
+        <p>
+          Securely sync and share your files across all your devices. 
+          Cloud storage made simple, fast, and reliable.
+        </p>
+        <div class="cta-buttons">
+          <a href="#signup" class="btn-primary">Start Free Trial</a>
+          <a href="#features" class="btn-secondary">Learn More</a>
+        </div>
+      </div>
+      <div class="hero-image"></div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section id="features" class="features">
+    <div class="section-header">
+      <h2>Everything You Need</h2>
+      <p>Powerful features to keep your data secure and accessible</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🔒</div>
+        <h3>Bank-Level Security</h3>
+        <p>End-to-end encryption ensures your files are always protected and private.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Lightning Fast</h3>
+        <p>Upload and download files at incredible speeds with our optimized infrastructure.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🔄</div>
+        <h3>Auto Sync</h3>
+        <p>Your files automatically sync across all devices in real-time.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">👥</div>
+        <h3>Easy Sharing</h3>
+        <p>Share files and collaborate with your team with simple, secure links.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📱</div>
+        <h3>All Devices</h3>
+        <p>Access your files from any device - phone, tablet, or computer.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">💾</div>
+        <h3>Generous Storage</h3>
+        <p>Start with 15GB free and upgrade as you grow. Never run out of space.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section class="benefits">
+    <div class="benefits-content">
+      <div class="benefits-image"></div>
+      <div class="benefits-list">
+        <h2>Why Choose CloudSync?</h2>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">✓</div>
+          <div class="benefit-text">
+            <h3>Never Lose a File</h3>
+            <p>Automatic backups ensure your important files are always safe and recoverable.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">✓</div>
+          <div class="benefit-text">
+            <h3>Work From Anywhere</h3>
+            <p>Access your files on the go with our mobile apps for iOS and Android.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">✓</div>
+          <div class="benefit-text">
+            <h3>Collaborate Seamlessly</h3>
+            <p>Real-time collaboration features make working with teams effortless.</p>
+          </div>
+        </div>
+        
+        <div class="benefit-item">
+          <div class="benefit-icon">✓</div>
+          <div class="benefit-text">
+            <h3>Privacy First</h3>
+            <p>Your data is yours. We never scan your files or sell your information.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="testimonials">
+    <div class="section-header">
+      <h2>Loved by Thousands</h2>
+      <p>See what our users have to say</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "CloudSync has transformed how our team collaborates. File sharing is effortless 
+          and we never worry about losing important documents."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar"></div>
+          <div class="author-info">
+            <h4>Sarah Johnson</h4>
+            <p>Marketing Director</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "The best cloud storage service I've used. Fast, reliable, and incredibly secure. 
+          The auto-sync feature is a lifesaver!"
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar"></div>
+          <div class="author-info">
+            <h4>Michael Chen</h4>
+            <p>Freelance Designer</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">
+          "Finally, a cloud storage solution that just works. Great value for money 
+          and excellent customer support."
+        </p>
+        <div class="testimonial-author">
+          <div class="author-avatar"></div>
+          <div class="author-info">
+            <h4>Emily Rodriguez</h4>
+            <p>Small Business Owner</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section id="signup" class="cta-section">
+    <div class="cta-content">
+      <h2>Start Your Free Trial Today</h2>
+      <p>No credit card required. 15GB free storage. Cancel anytime.</p>
+      <form class="email-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Get Started</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 CloudSync. All rights reserved.</p>
+    <p>This is a demo template created by <a href="../index.html">Armin Studio</a></p>
+  </footer>
+
+  <script>
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    
+    // Form submission
+    document.querySelector('.email-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for signing up! Check your email to get started with CloudSync.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>

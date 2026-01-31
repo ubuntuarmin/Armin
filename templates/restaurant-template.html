@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bella Cucina - Fine Italian Restaurant</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    body {
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+      color: #333;
+      background: #fafafa;
+    }
+    
+    /* Header/Nav */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+      padding: 1rem 0;
+    }
+    
+    nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #8b4513;
+      font-family: 'Georgia', serif;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    .nav-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      color: #8b4513;
+    }
+    
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><rect fill="%238b4513" width="1200" height="800"/><circle cx="600" cy="400" r="200" fill="%23d2691e" opacity="0.3"/></svg>');
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      margin-top: 70px;
+    }
+    
+    .hero-content h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      font-family: 'Georgia', serif;
+    }
+    
+    .hero-content p {
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2.5rem;
+      background: #8b4513;
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: bold;
+      transition: all 0.3s;
+      border: 2px solid #8b4513;
+    }
+    
+    .btn:hover {
+      background: transparent;
+      border-color: white;
+    }
+    
+    /* Sections */
+    section {
+      padding: 4rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #8b4513;
+    }
+    
+    .section-subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 3rem;
+      font-size: 1.1rem;
+    }
+    
+    /* About Section */
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+    
+    .about-image {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #8b4513, #d2691e);
+      border-radius: 10px;
+    }
+    
+    .about-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: #8b4513;
+    }
+    
+    .about-text p {
+      margin-bottom: 1rem;
+      line-height: 1.8;
+    }
+    
+    /* Menu Section */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    
+    .menu-item {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s;
+    }
+    
+    .menu-item:hover {
+      transform: translateY(-5px);
+    }
+    
+    .menu-category {
+      color: #8b4513;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+    
+    .menu-item h3 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: #333;
+    }
+    
+    .menu-price {
+      color: #8b4513;
+      font-size: 1.3rem;
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+    
+    .menu-desc {
+      color: #666;
+      font-size: 0.95rem;
+    }
+    
+    /* Gallery */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1rem;
+    }
+    
+    .gallery-item {
+      height: 250px;
+      background: linear-gradient(135deg, #8b4513, #d2691e);
+      border-radius: 10px;
+      transition: transform 0.3s;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+    
+    /* Reservation Form */
+    .reservation-form {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 3rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+    
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border: 2px solid #ddd;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 1rem;
+    }
+    
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #8b4513;
+    }
+    
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      background: #8b4513;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    
+    .btn-submit:hover {
+      background: #6d3710;
+    }
+    
+    /* Contact/Hours */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    
+    .contact-card {
+      background: white;
+      padding: 2rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .contact-card h3 {
+      color: #8b4513;
+      margin-bottom: 1rem;
+    }
+    
+    .contact-card p {
+      color: #666;
+      margin: 0.5rem 0;
+    }
+    
+    /* Footer */
+    footer {
+      background: #2c2c2c;
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+    
+    footer a {
+      color: #8b4513;
+      text-decoration: none;
+    }
+    
+    /* Back Button */
+    .back-btn {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: #8b4513;
+      color: white;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 999;
+      transition: transform 0.3s;
+    }
+    
+    .back-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2.5rem; }
+      .about-content { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Back to Examples Button -->
+  <a href="../examples.html" class="back-btn">← Back to Examples</a>
+
+  <!-- Header -->
+  <header>
+    <nav>
+      <div class="logo">Bella Cucina</div>
+      <ul class="nav-links">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#menu">Menu</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#reservation">Reserve</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1>Bella Cucina</h1>
+      <p>Authentic Italian Cuisine in the Heart of the City</p>
+      <a href="#reservation" class="btn">Reserve Your Table</a>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">Our Story</h2>
+    <p class="section-subtitle">Traditional recipes, modern taste</p>
+    <div class="about-content">
+      <div class="about-image"></div>
+      <div class="about-text">
+        <h3>Family Tradition Since 1985</h3>
+        <p>
+          At Bella Cucina, we bring the authentic flavors of Italy to your table. Our recipes have been 
+          passed down through three generations, ensuring every dish captures the essence of traditional 
+          Italian cuisine.
+        </p>
+        <p>
+          Using only the finest imported ingredients and locally sourced produce, our master chefs create 
+          dishes that transport you straight to the Italian countryside. From handmade pasta to wood-fired 
+          pizzas, every meal is crafted with passion and expertise.
+        </p>
+        <p>
+          Join us for an unforgettable dining experience where family, food, and tradition come together.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Section -->
+  <section id="menu">
+    <h2 class="section-title">Our Menu</h2>
+    <p class="section-subtitle">Carefully crafted Italian dishes</p>
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="menu-category">Appetizers</div>
+        <h3>Bruschetta Classica</h3>
+        <div class="menu-price">$12</div>
+        <p class="menu-desc">Toasted bread topped with fresh tomatoes, basil, garlic, and extra virgin olive oil</p>
+      </div>
+      
+      <div class="menu-item">
+        <div class="menu-category">Pasta</div>
+        <h3>Spaghetti Carbonara</h3>
+        <div class="menu-price">$22</div>
+        <p class="menu-desc">Classic Roman pasta with pancetta, eggs, Pecorino Romano, and black pepper</p>
+      </div>
+      
+      <div class="menu-item">
+        <div class="menu-category">Main Course</div>
+        <h3>Osso Buco</h3>
+        <div class="menu-price">$38</div>
+        <p class="menu-desc">Braised veal shanks with gremolata, served with saffron risotto</p>
+      </div>
+      
+      <div class="menu-item">
+        <div class="menu-category">Pizza</div>
+        <h3>Margherita</h3>
+        <div class="menu-price">$18</div>
+        <p class="menu-desc">San Marzano tomatoes, fresh mozzarella, basil, and extra virgin olive oil</p>
+      </div>
+      
+      <div class="menu-item">
+        <div class="menu-category">Seafood</div>
+        <h3>Branzino al Forno</h3>
+        <div class="menu-price">$34</div>
+        <p class="menu-desc">Oven-roasted Mediterranean sea bass with lemon, herbs, and roasted vegetables</p>
+      </div>
+      
+      <div class="menu-item">
+        <div class="menu-category">Dessert</div>
+        <h3>Tiramisu</h3>
+        <div class="menu-price">$10</div>
+        <p class="menu-desc">Classic Italian dessert with espresso-soaked ladyfingers and mascarpone cream</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery">
+    <h2 class="section-title">Gallery</h2>
+    <p class="section-subtitle">A taste of what awaits you</p>
+    <div class="gallery-grid">
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+      <div class="gallery-item"></div>
+    </div>
+  </section>
+
+  <!-- Reservation Section -->
+  <section id="reservation">
+    <h2 class="section-title">Make a Reservation</h2>
+    <p class="section-subtitle">Book your table today</p>
+    <form class="reservation-form">
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" required placeholder="John Doe">
+      </div>
+      
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" required placeholder="john@example.com">
+      </div>
+      
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" required placeholder="(555) 123-4567">
+      </div>
+      
+      <div class="form-group">
+        <label for="date">Date</label>
+        <input type="date" id="date" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="time">Time</label>
+        <select id="time" required>
+          <option value="">Select Time</option>
+          <option value="5:00 PM">5:00 PM</option>
+          <option value="5:30 PM">5:30 PM</option>
+          <option value="6:00 PM">6:00 PM</option>
+          <option value="6:30 PM">6:30 PM</option>
+          <option value="7:00 PM">7:00 PM</option>
+          <option value="7:30 PM">7:30 PM</option>
+          <option value="8:00 PM">8:00 PM</option>
+          <option value="8:30 PM">8:30 PM</option>
+          <option value="9:00 PM">9:00 PM</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="guests">Number of Guests</label>
+        <select id="guests" required>
+          <option value="">Select Guests</option>
+          <option value="1">1 Guest</option>
+          <option value="2">2 Guests</option>
+          <option value="3">3 Guests</option>
+          <option value="4">4 Guests</option>
+          <option value="5">5 Guests</option>
+          <option value="6">6+ Guests</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label for="notes">Special Requests</label>
+        <textarea id="notes" rows="3" placeholder="Any dietary restrictions or special occasions?"></textarea>
+      </div>
+      
+      <button type="submit" class="btn-submit">Confirm Reservation</button>
+    </form>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2 class="section-title">Visit Us</h2>
+    <p class="section-subtitle">We'd love to serve you</p>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>📍 Location</h3>
+        <p>123 Italian Way</p>
+        <p>Downtown District</p>
+        <p>New York, NY 10001</p>
+      </div>
+      
+      <div class="contact-card">
+        <h3>🕐 Hours</h3>
+        <p><strong>Monday - Thursday</strong></p>
+        <p>5:00 PM - 10:00 PM</p>
+        <p><strong>Friday - Sunday</strong></p>
+        <p>12:00 PM - 11:00 PM</p>
+      </div>
+      
+      <div class="contact-card">
+        <h3>📞 Contact</h3>
+        <p>Phone: (555) 123-4567</p>
+        <p>Email: info@bellacucina.com</p>
+        <p>Follow us @bellacucina</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Bella Cucina. All rights reserved.</p>
+    <p>This is a demo template created by <a href="../index.html">Armin Studio</a></p>
+  </footer>
+
+  <script>
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+    
+    // Form submission handler
+    document.querySelector('.reservation-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Thank you for your reservation! We will contact you shortly to confirm.');
+      this.reset();
+    });
+  </script>
+</body>
+</html>

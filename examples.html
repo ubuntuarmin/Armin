@@ -138,12 +138,31 @@
       border:1px solid rgba(148,163,184,0.5);
       box-shadow:0 15px 40px rgba(15,23,42,0.8);
       transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);
+      cursor:pointer;
     }
 
     .example-card:hover{
       transform:translateY(-4px);
       box-shadow:var(--shadow-soft);
       filter:brightness(1.02);
+    }
+    
+    .view-demo-btn{
+      display:inline-block;
+      margin-top:12px;
+      padding:8px 16px;
+      background:linear-gradient(135deg,var(--accent),var(--accent-strong));
+      color:#020617;
+      border-radius:999px;
+      font-size:0.88rem;
+      font-weight:700;
+      text-decoration:none;
+      transition:transform 0.2s,box-shadow 0.2s;
+    }
+    
+    .view-demo-btn:hover{
+      transform:translateY(-2px);
+      box-shadow:0 8px 20px rgba(34,211,238,0.6);
     }
 
     .example-type{
@@ -321,7 +340,7 @@
           </p>
 
           <div class="examples-grid">
-            <div class="example-card">
+            <div class="example-card" onclick="window.location.href='templates/restaurant-template.html'">
               <span class="example-type">Restaurant</span>
               <h3 class="example-title">Local Restaurant Site</h3>
               <p class="example-desc">
@@ -334,9 +353,10 @@
                 <li><span class="feature-bullet">✓</span> Location map and hours</li>
                 <li><span class="feature-bullet">✓</span> Mobile-friendly gallery</li>
               </ul>
+              <a href="templates/restaurant-template.html" class="view-demo-btn" onclick="event.stopPropagation()">View Live Demo →</a>
             </div>
 
-            <div class="example-card">
+            <div class="example-card" onclick="window.location.href='templates/portfolio-template.html'">
               <span class="example-type">Portfolio</span>
               <h3 class="example-title">Creative Portfolio</h3>
               <p class="example-desc">
@@ -349,9 +369,10 @@
                 <li><span class="feature-bullet">✓</span> Contact form</li>
                 <li><span class="feature-bullet">✓</span> Social media links</li>
               </ul>
+              <a href="templates/portfolio-template.html" class="view-demo-btn" onclick="event.stopPropagation()">View Live Demo →</a>
             </div>
 
-            <div class="example-card">
+            <div class="example-card" onclick="window.location.href='templates/landing-template.html'">
               <span class="example-type">Landing Page</span>
               <h3 class="example-title">Product Launch Page</h3>
               <p class="example-desc">
@@ -364,6 +385,7 @@
                 <li><span class="feature-bullet">✓</span> Email signup form</li>
                 <li><span class="feature-bullet">✓</span> Testimonials section</li>
               </ul>
+              <a href="templates/landing-template.html" class="view-demo-btn" onclick="event.stopPropagation()">View Live Demo →</a>
             </div>
           </div>
         </article>
