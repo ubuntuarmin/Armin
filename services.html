@@ -2,12 +2,34 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Services – Websites, Logos & Flyers | Armin Studio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta
-    name="description"
-    content="Website design, logo design, and flyer design for small businesses and non-profits. Most logo and flyer work is likely free when you text for details."
-  />
+  
+  <!-- Primary Meta Tags -->
+  <title>Web Design Services - Custom Websites, Logos & More | Armin Studio</title>
+  <meta name="title" content="Web Design Services - Custom Websites, Logos & More | Armin Studio" />
+  <meta name="description" content="Professional web design services including custom websites, landing pages, multi-page sites, logo design and flyer design. Affordable pricing for small businesses and startups. Unlimited revisions included." />
+  <meta name="keywords" content="web design services, custom website development, landing page design, multi-page website, logo design, affordable web design, responsive website design, professional web design, Armin Studio services" />
+  <meta name="robots" content="index, follow, max-image-preview:large" />
+  <link rel="canonical" href="https://armin.works/services.html" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://armin.works/services.html" />
+  <meta property="og:site_name" content="Armin Studio" />
+  <meta property="og:title" content="Web Design Services - Custom Websites, Logos & More | Armin Studio" />
+  <meta property="og:description" content="Professional web design services including custom websites, landing pages, multi-page sites, logo design and flyer design. Affordable pricing for small businesses." />
+  <meta property="og:image" content="https://armin.works/logo.png" />
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image" />
+  <meta property="twitter:url" content="https://armin.works/services.html" />
+  <meta property="twitter:title" content="Web Design Services - Custom Websites, Logos & More | Armin Studio" />
+  <meta property="twitter:description" content="Professional web design services including custom websites, landing pages, multi-page sites, logo design and flyer design." />
+  <meta property="twitter:image" content="https://armin.works/logo.png" />
+  
+  <!-- Preconnect for Performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <style>
     :root{
       --bg:#020617;
@@ -132,6 +154,78 @@
     }
   </style>
   <link rel="stylesheet" href="mobile.css" />
+  
+  <!-- Structured Data (JSON-LD) for Services -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Service",
+        "@id": "https://armin.works/services.html#webdesign",
+        "serviceType": "Web Design",
+        "name": "Professional Web Design Services",
+        "description": "Custom website design and development for small businesses, startups, and non-profits.",
+        "provider": {
+          "@type": "Organization",
+          "name": "Armin Studio",
+          "url": "https://armin.works/"
+        },
+        "areaServed": {
+          "@type": "Country",
+          "name": "United States"
+        },
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Web Design Services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Landing Page Design",
+                "description": "Professional one-page websites perfect for new businesses and products"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Multi-Page Website",
+                "description": "Complete multi-page websites with custom features for growing businesses"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Logo Design",
+                "description": "Custom logo design services for brand identity"
+              }
+            }
+          ]
+        }
+      },
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          {
+            "@type": "ListItem",
+            "position": 1,
+            "name": "Home",
+            "item": "https://armin.works/"
+          },
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": "Services",
+            "item": "https://armin.works/services.html"
+          }
+        ]
+      }
+    ]
+  }
+  </script>
 </head>
 <body>
   <main>
@@ -146,7 +240,7 @@
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
-            <div class="brand-sub">Modern, affordable web design</div>
+            <div class="brand-sub">Professional Web Design Agency</div>
           </div>
         </div>
         <nav class="nav-links" aria-label="Main navigation">
@@ -179,20 +273,20 @@
       </nav>
 
       <!-- INTRO STRIP (FULL WIDTH, BIG) -->
-      <section class="fade-in-up">
+      <section class="fade-in-up" aria-labelledby="services-title">
         <article class="strip hover-lift">
-          <div class="section-label">Services</div>
-          <h1 class="page-title">What we can create for your brand.</h1>
+          <div class="section-label">PROFESSIONAL WEB DESIGN SERVICES</div>
+          <h1 id="services-title" class="page-title">Custom Web Design Services for Your Business</h1>
           <p class="section-sub">
-            Our desgin team and developers design and build websites, logos, and flyers that are easy to read, easy to use,
-            and feel modern – on both phones and computers. Scroll down to see what we can offer.
+            Our professional design team and web developers create and build websites, logos, and flyers that are easy to read, easy to use,
+            and feel modern – on both phones and computers. Explore our affordable web design services below.
           </p>
           <div class="pill-row">
             <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
               See pricing →
             </span>
             <span class="pill-tag" onclick="window.location.href='guide.html'" style="cursor:pointer;">
-              Get a quote estimate →
+              Get a free quote →
             </span>
             <span class="pill-tag" onclick="window.location.href='contact.html'" style="cursor:pointer;">
               Contact our team →
@@ -202,12 +296,12 @@
       </section>
 
       <!-- WEBSITES – PART 1: OVERVIEW -->
-      <section class="fade-in-up">
+      <section class="fade-in-up" aria-labelledby="website-design">
         <article class="strip hover-lift">
-          <h2 class="strip-title">Website design – clear and modern.</h2>
+          <h2 id="website-design" class="strip-title">Professional Website Design – Clean and Modern</h2>
           <p class="strip-sub">
             Your website is the first place people meet your business or project.
-            We build sites that explain what you do and show your company's vision.
+            We build responsive, modern websites that explain what you do and showcase your company's vision.
           </p>
           <ul class="point-list">
             <li class="point-item">
@@ -235,11 +329,11 @@
       </section>
 
       <!-- WEBSITES – PART 2: FEATURES -->
-      <section class="fade-in-up">
+      <section class="fade-in-up" aria-labelledby="website-features">
         <article class="strip hover-lift">
-          <h2 class="strip-title">Website features we can add.</h2>
+          <h2 id="website-features" class="strip-title">Custom Website Features We Can Add</h2>
           <p class="strip-sub">
-            Our dev team focus is on features that actually help your visitors and your business, not random effects.
+            Our development team focuses on features that actually help your visitors and your business grow, not random effects.
           </p>
           <ul class="point-list">
             <li class="point-item">
