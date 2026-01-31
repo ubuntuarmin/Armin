@@ -1,0 +1,13 @@
+# robots.txt for armin.works
+User-agent: *
+Allow: /
+
+# Sitemaps
+Sitemap: https://armin.works/sitemap.xml
+
+# Block specific user agents (optional)
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
