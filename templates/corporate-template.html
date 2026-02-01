@@ -1,0 +1,1356 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>NovaCorp Consulting – Corporate Strategy & Digital Execution</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --primary-color: #1b4b8a;
+      --secondary-color: #0d284a;
+      --accent-color: #f7b500;
+      --text-color: #222222;
+      --muted-text: #777777;
+      --bg-light: #f7f9fc;
+      --border-color: #e0e4ea;
+      --max-width: 1120px;
+      --radius: 6px;
+      --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-main);
+      color: var(--text-color);
+      background: white;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-color);
+      background: white;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .navbar {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.9rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .navbar-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .navbar-logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    }
+
+    .navbar-logo-text {
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.95rem;
+      color: var(--muted-text);
+      position: relative;
+      padding: 0.2rem 0;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--primary-color);
+    }
+
+    .nav-links a.active::after,
+    .nav-links a:hover::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.2rem;
+      width: 100%;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--primary-color);
+    }
+
+    .nav-cta {
+      padding: 0.5rem 1rem;
+      border-radius: 999px;
+      background: var(--primary-color);
+      color: white !important;
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: var(--shadow-soft);
+    }
+
+    main {
+      min-height: 70vh;
+    }
+
+    .section {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 3.5rem 1.5rem;
+    }
+
+    .section-narrow {
+      max-width: 760px;
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.18em;
+      color: var(--primary-color);
+      font-weight: 600;
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      font-size: 2.3rem;
+      margin: 0 0 0.75rem;
+    }
+
+    .section-subtitle {
+      color: var(--muted-text);
+      max-width: 620px;
+    }
+
+    /* Buttons */
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      border-radius: 999px;
+      padding: 0.65rem 1.3rem;
+      border: 1px solid transparent;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: white;
+      color: var(--primary-color);
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease,
+        transform 0.1s ease, box-shadow 0.1s ease;
+    }
+
+    .btn-primary {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.11);
+    }
+
+    .btn-outline {
+      border-color: var(--border-color);
+      background: white;
+      color: var(--secondary-color);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--primary-color);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      padding: 0.2rem 0.55rem;
+      border-radius: 999px;
+      background: var(--bg-light);
+      color: var(--muted-text);
+    }
+
+    /* HOME */
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 3.2rem;
+      align-items: center;
+      padding-top: 3.2rem;
+      padding-bottom: 3.6rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      font-size: 0.75rem;
+      color: var(--muted-text);
+      margin-bottom: 1.1rem;
+    }
+
+    .hero-eyebrow span {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #16a34a;
+    }
+
+    .hero-title {
+      font-size: 2.7rem;
+      line-height: 1.1;
+      margin: 0 0 1.1rem;
+    }
+
+    .hero-subtitle {
+      color: var(--muted-text);
+      max-width: 500px;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 0.9rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 1.7rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.8rem;
+      flex-wrap: wrap;
+      font-size: 0.86rem;
+      color: var(--muted-text);
+    }
+
+    .hero-card {
+      background: linear-gradient(155deg, #0d284a, #1b4b8a);
+      color: white;
+      padding: 1.5rem 1.6rem;
+      border-radius: 18px;
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card-tag {
+      display: inline-flex;
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      margin-bottom: 0.7rem;
+    }
+
+    .hero-card-metric {
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin-bottom: 0.1rem;
+    }
+
+    .hero-card-label {
+      font-size: 0.8rem;
+      opacity: 0.85;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-card-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+      font-size: 0.8rem;
+    }
+
+    .hero-card-stat {
+      padding: 0.75rem 0.9rem;
+      border-radius: 12px;
+      background: rgba(3, 7, 18, 0.25);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+    }
+
+    .home-columns {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
+      margin-top: 2.5rem;
+    }
+
+    .home-list {
+      color: var(--muted-text);
+      font-size: 0.96rem;
+      padding-left: 1.2rem;
+    }
+
+    .home-sidebar-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      background: var(--bg-light);
+      padding: 1.4rem 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    /* SERVICES */
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.7rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .service-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.5rem 1.4rem;
+      background: white;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.03);
+    }
+
+    .service-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 0.9rem;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+    }
+
+    .service-title {
+      font-size: 1.1rem;
+      margin: 0 0 0.5rem;
+    }
+
+    .service-text {
+      font-size: 0.9rem;
+      color: var(--muted-text);
+      margin-bottom: 0.9rem;
+    }
+
+    .service-meta {
+      font-size: 0.8rem;
+      color: var(--muted-text);
+    }
+
+    .service-detail-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      margin-top: 2rem;
+    }
+
+    .service-block {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.5rem 1.6rem;
+      background: white;
+      margin-bottom: 1.5rem;
+    }
+
+    .service-block h3 {
+      margin-top: 0;
+      font-size: 1.05rem;
+    }
+
+    .service-roles-list {
+      padding-left: 1.1rem;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    /* ABOUT & TEAM */
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 3rem;
+      align-items: flex-start;
+    }
+
+    .about-highlight {
+      background: var(--bg-light);
+      border-radius: 14px;
+      padding: 1.3rem 1.4rem;
+      border: 1px solid var(--border-color);
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    .about-highlight strong {
+      color: var(--secondary-color);
+    }
+
+    .timeline {
+      border-left: 2px solid var(--border-color);
+      padding-left: 1.2rem;
+      margin: 0;
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    .timeline li {
+      margin-bottom: 1.1rem;
+      position: relative;
+    }
+
+    .timeline li::before {
+      content: "";
+      position: absolute;
+      left: -1.2rem;
+      top: 0.4rem;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--primary-color);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.8rem;
+    }
+
+    .pill {
+      font-size: 0.78rem;
+      padding: 0.22rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: white;
+      color: var(--muted-text);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .team-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.1rem 1.2rem;
+      background: white;
+    }
+
+    .team-name {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .team-role {
+      font-size: 0.85rem;
+      color: var(--muted-text);
+      margin-bottom: 0.6rem;
+    }
+
+    .team-bio {
+      font-size: 0.86rem;
+      color: var(--muted-text);
+      margin-bottom: 0.9rem;
+    }
+
+    .team-focus {
+      font-size: 0.8rem;
+      color: var(--secondary-color);
+    }
+
+    /* PORTFOLIO */
+
+    .portfolio-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .filter-pill {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-color);
+      background: white;
+      color: var(--muted-text);
+    }
+
+    .filter-pill.active {
+      background: var(--primary-color);
+      border-color: var(--primary-color);
+      color: white;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2.8rem;
+    }
+
+    .portfolio-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      overflow: hidden;
+      background: white;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .portfolio-thumb {
+      background: linear-gradient(135deg, #1b4b8a, #0d9488);
+      height: 140px;
+    }
+
+    .portfolio-body {
+      padding: 1rem 1.15rem 1.1rem;
+    }
+
+    .portfolio-tag {
+      display: inline-block;
+      font-size: 0.7rem;
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      background: var(--bg-light);
+      color: var(--muted-text);
+      margin-bottom: 0.5rem;
+    }
+
+    .portfolio-title {
+      font-size: 0.98rem;
+      margin: 0 0 0.35rem;
+    }
+
+    .portfolio-meta {
+      font-size: 0.8rem;
+      color: var(--muted-text);
+    }
+
+    .case-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2.4rem;
+    }
+
+    .case-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.4rem 1.5rem;
+      background: white;
+      margin-bottom: 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    .case-card h3 {
+      margin-top: 0;
+      font-size: 1rem;
+      color: var(--secondary-color);
+    }
+
+    /* CONTACT */
+
+    .contact-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 2.5rem;
+    }
+
+    .contact-card {
+      border-radius: 14px;
+      border: 1px solid var(--border-color);
+      padding: 1.4rem 1.5rem;
+      background: white;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-field label {
+      font-size: 0.85rem;
+      color: var(--secondary-color);
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      padding: 0.6rem 0.7rem;
+      font-size: 0.9rem;
+      font-family: inherit;
+    }
+
+    .form-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .contact-sidebar {
+      font-size: 0.9rem;
+      color: var(--muted-text);
+    }
+
+    .contact-list {
+      list-style: none;
+      padding: 0;
+      margin: 1.1rem 0 0;
+    }
+
+    .contact-list li {
+      margin-bottom: 0.7rem;
+    }
+
+    .contact-label {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+      color: var(--secondary-color);
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid var(--border-color);
+      background: #020617;
+      color: #e5e7eb;
+      margin-top: 4rem;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 2.3rem 1.5rem 1.6rem;
+      font-size: 0.85rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      color: #9ca3af;
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 1040px) {
+      .services-grid,
+      .portfolio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .case-layout,
+      .service-detail-grid,
+      .about-layout,
+      .contact-layout,
+      .home-columns,
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .navbar {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+
+      .nav-links {
+        width: 100%;
+        justify-content: flex-start;
+        overflow-x: auto;
+      }
+
+      .section {
+        padding-inline: 1.1rem;
+      }
+
+      .hero-title {
+        font-size: 2.2rem;
+      }
+
+      .services-grid,
+      .portfolio-grid,
+      .team-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .form-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .footer-inner {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- GLOBAL HEADER -->
+  <header>
+    <div class="navbar">
+      <a href="#home" class="navbar-logo">
+        <div class="navbar-logo-mark"></div>
+        <div class="navbar-logo-text">NovaCorp</div>
+      </a>
+      <nav class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#services">Services</a>
+        <a href="#about">About &amp; Team</a>
+        <a href="#portfolio">Portfolio</a>
+        <a href="#contact" class="nav-cta">Contact us</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- HOME (overview only, no deep service/about/portfolio repetition) -->
+    <section id="home" class="section hero" aria-label="Homepage">
+      <div>
+        <div class="hero-eyebrow">
+          <span></span>
+          <div>Advising established companies on complex change</div>
+        </div>
+        <h1 class="hero-title">Helping leadership teams deliver confident transformation.</h1>
+        <p class="hero-subtitle">
+          NovaCorp Consulting supports boards and executives when strategic direction is clear
+          but the path to implementation is complex, cross‑functional, and time‑critical.
+        </p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn btn-primary">Request an introductory call</a>
+          <a href="#portfolio" class="btn btn-outline">View recent engagements</a>
+        </div>
+        <div class="hero-meta">
+          <span><strong>12+ years</strong> working with corporate and upper mid‑market clients</span>
+          <span><strong>60+ programs</strong> across Europe and selected global markets</span>
+          <span><strong>Senior‑only teams</strong> on every engagement</span>
+        </div>
+      </div>
+
+      <aside class="hero-card" aria-label="Impact snapshot">
+        <div class="hero-card-tag">Impact at a glance</div>
+        <div class="hero-card-metric">€340m</div>
+        <div class="hero-card-label">
+          Cumulative value identified and tracked across client programs over the last five years.
+        </div>
+        <div class="hero-card-grid">
+          <div class="hero-card-stat">
+            <div style="font-size:0.75rem;opacity:0.8;">Transformation initiatives</div>
+            <div style="font-size:1rem;font-weight:600;margin:0.2rem 0;">70+ launched</div>
+            <div style="opacity:0.75;">Governed through clear milestones, risk logs, and decision points.</div>
+          </div>
+          <div class="hero-card-stat">
+            <div style="font-size:0.75rem;opacity:0.8;">Client continuity</div>
+            <div style="font-size:1rem;font-weight:600;margin:0.2rem 0;">93% retention</div>
+            <div style="opacity:0.75;">Multi‑year relationships built on outcomes, not slideware.</div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="section section-narrow" aria-labelledby="home-focus">
+      <header class="section-header">
+        <div class="section-kicker">Situations we support</div>
+        <h2 id="home-focus" class="section-title">When clients typically call us.</h2>
+        <p class="section-subtitle">
+          The common theme is material change that must be translated into concrete actions,
+          owned by line management and visible to the board.
+        </p>
+      </header>
+
+      <div class="home-columns">
+        <div>
+          <ul class="home-list">
+            <li>New investors or ownership structures require a sharper value‑creation plan.</li>
+            <li>Multiple initiatives compete for capital and leadership attention.</li>
+            <li>Technology investments need stronger alignment with commercial priorities.</li>
+            <li>Operational performance has plateaued despite previous improvement efforts.</li>
+          </ul>
+        </div>
+        <aside class="home-sidebar-card">
+          <strong>How the homepage fits into the site</strong>
+          <p style="margin-top:0.6rem;">
+            This overview page is designed for first‑time visitors. Detailed descriptions of our service
+            portfolio, firm background, case work, and engagement logistics are provided in the dedicated
+            sections below without repeating the same wording.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SERVICES: deep content, unique language -->
+    <section id="services" class="section" aria-labelledby="services-heading">
+      <header class="section-header">
+        <div class="section-kicker">Services</div>
+        <h2 id="services-heading" class="section-title">From strategic clarity to disciplined delivery.</h2>
+        <p class="section-subtitle">
+          We structure our work into distinct but connected areas. Together they give leadership
+          a clear line of sight from ambition to measurable outcomes.
+        </p>
+      </header>
+
+      <div class="services-grid">
+        <article class="service-card">
+          <div class="service-icon">📊</div>
+          <h3 class="service-title">Corporate direction &amp; operating architecture</h3>
+          <p class="service-text">
+            Support for boards and group leadership to refine where the company will compete
+            and how responsibilities and capital are allocated across entities.
+          </p>
+          <div class="service-meta">
+            Decision architecture • Target operating architecture • Group portfolio framing
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">⚙️</div>
+          <h3 class="service-title">Operational performance programs</h3>
+          <p class="service-text">
+            Hands‑on work with operations, finance, and HR to uncover inefficiencies,
+            redesign key flows, and connect improvement activities to financial impact.
+          </p>
+          <div class="service-meta">
+            Diagnostics • Flow redesign • Cost and throughput improvement
+          </div>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">💻</div>
+          <h3 class="service-title">Digital &amp; transformation portfolio control</h3>
+          <p class="service-text">
+            Structures to keep complex digital, data, and change initiatives aligned,
+            prioritized, and resourced in line with the agreed value‑creation plan.
+          </p>
+          <div class="service-meta">
+            Transformation office • Portfolio governance • Execution rhythm
+          </div>
+        </article>
+      </div>
+
+      <div class="service-detail-grid">
+        <!-- LEFT COLUMN: more detailed view of each area -->
+        <div>
+          <div class="service-block">
+            <h3>Corporate direction &amp; operating architecture</h3>
+            <p>
+              We work with boards, CEOs, and CFOs to translate high‑level intent into
+              a practical framework that can be communicated, funded, and managed.
+            </p>
+            <ul class="service-roles-list">
+              <li>Clarifying the role of the corporate center vs. business units.</li>
+              <li>Designing an operating architecture that supports acquisitions or carve‑outs.</li>
+              <li>Defining capital allocation rules and escalation paths.</li>
+              <li>Establishing a small set of top‑level indicators the board can rely on.</li>
+            </ul>
+          </div>
+
+          <div class="service-block">
+            <h3>Operational performance programs</h3>
+            <p>
+              Our teams partner with line leaders to look beyond isolated cost measures
+              and understand how work actually moves through the organization.
+            </p>
+            <ul class="service-roles-list">
+              <li>Mapping current‑state flows across functions and sites.</li>
+              <li>Quantifying bottlenecks, rework, and failure demand.</li>
+              <li>Developing feasible scenarios for service, cost, and capacity.</li>
+              <li>Setting up performance dialogues that leaders can run themselves.</li>
+            </ul>
+          </div>
+
+          <div class="service-block">
+            <h3>Digital &amp; transformation portfolio control</h3>
+            <p>
+              Many organizations have more initiatives than they have management capacity.
+              We help clarify which programs matter most and how they connect.
+            </p>
+            <ul class="service-roles-list">
+              <li>Creating a coherent view of the current initiative landscape.</li>
+              <li>Defining prioritization criteria grounded in value and risk.</li>
+              <li>Designing transformation offices and PMOs that add real value.</li>
+              <li>Setting a reporting rhythm that supports decisions instead of bureaucracy.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: engagement logistics, not repeated elsewhere -->
+        <aside>
+          <div class="service-block">
+            <h3>Engagement structure</h3>
+            <p>
+              Every engagement is anchored around a clear workplan, but the way we embed
+              with your teams depends on your internal capacity and timelines.
+            </p>
+            <ol class="service-roles-list" style="list-style:decimal;">
+              <li><strong>Scoping workshop.</strong> Jointly define outcomes, constraints, and accountabilities.</li>
+              <li><strong>Detailed plan.</strong> Build a timeline and resourcing plan with your internal leads.</li>
+              <li><strong>Working sprints.</strong> Conduct analysis, co‑design, and testing with sponsors involved.</li>
+              <li><strong>Handover.</strong> Transfer ownership, documentation, and routines to internal teams.</li>
+            </ol>
+          </div>
+
+          <div class="service-block">
+            <h3>How we work with your people</h3>
+            <p>
+              We do not run transformation “from the outside”. Our work is built around your
+              internal leaders, with clear roles spelled out at the outset.
+            </p>
+            <ul class="service-roles-list">
+              <li>Named executive sponsor for each workstream.</li>
+              <li>Jointly staffed project teams with clear decision rights.</li>
+              <li>Regular check‑ins with finance to validate value logic.</li>
+              <li>Knowledge transfer from day one rather than at the end.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ABOUT & TEAM: separate, deeper firm/people story -->
+    <section id="about" class="section" aria-labelledby="about-heading">
+      <header class="section-header">
+        <div class="section-kicker">About the firm</div>
+        <h2 id="about-heading" class="section-title">A focused team for complex corporate situations.</h2>
+        <p class="section-subtitle">
+          NovaCorp was created to bridge the gap between high‑level strategy work and the
+          detailed, everyday decisions required to deliver it.
+        </p>
+      </header>
+
+      <div class="about-layout">
+        <div>
+          <p>
+            Our founders came from a mix of global consulting, industry executive roles,
+            and scale‑up environments. They observed that many transformation programs
+            fell into one of two traps: overly conceptual designs that never reached the front line,
+            or fragmented initiatives without a coherent direction.
+          </p>
+          <p>
+            NovaCorp was set up to address that gap. We keep our firm deliberately lean,
+            staffed with senior people who are comfortable in the boardroom and on the shop floor.
+            We only take on a limited number of programs at any time to ensure direct partner involvement.
+          </p>
+
+          <div class="about-highlight">
+            <strong>How we choose projects</strong><br />
+            We look for situations where leadership is committed to change, access to data and
+            people can be arranged, and there is a shared understanding of what “success” means
+            in financial and non‑financial terms.
+          </div>
+        </div>
+
+        <aside aria-label="History and sectors">
+          <h3 style="margin-top:0;font-size:1rem;">Milestones</h3>
+          <ul class="timeline">
+            <li><strong>2014</strong> – NovaCorp founded in London with an initial focus on carve‑outs.</li>
+            <li><strong>2017</strong> – Expansion into operational programs for industrial and logistics clients.</li>
+            <li><strong>2019</strong> – Berlin office opened to support DACH‑based groups.</li>
+            <li><strong>2022</strong> – Portfolio extends to digital and data programs across multiple sectors.</li>
+          </ul>
+
+          <h3 style="font-size:1rem;margin-top:1.6rem;">Sectors we serve</h3>
+          <div class="pill-row">
+            <span class="pill">Industrial &amp; manufacturing</span>
+            <span class="pill">Financial services</span>
+            <span class="pill">Healthcare providers</span>
+            <span class="pill">Logistics &amp; distribution</span>
+            <span class="pill">Business services</span>
+            <span class="pill">Technology‑enabled firms</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="team-heading">
+      <header class="section-header">
+        <div class="section-kicker">Leadership</div>
+        <h2 id="team-heading" class="section-title">People you will work with.</h2>
+        <p class="section-subtitle">
+          Our leadership team remains directly involved from scoping to completion,
+          rather than handing programs down the hierarchy.
+        </p>
+      </header>
+
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-name">Elena Fischer</div>
+          <div class="team-role">Managing Partner</div>
+          <p class="team-bio">
+            Elena leads our work with group centers and multi‑business organizations. She
+            has advised on integrations, divestments, and restructurings across Europe,
+            with a particular focus on decision rights and ownership models.
+          </p>
+          <div class="team-focus">
+            Focus: group strategy, operating architecture, integrations.
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-name">David Chen</div>
+          <div class="team-role">Partner, Digital &amp; Portfolio</div>
+          <p class="team-bio">
+            David focuses on digital, data, and technology programs where multiple initiatives
+            must be aligned with clear value logic. He has set up transformation offices and
+            PMOs for clients in financial services and business services.
+          </p>
+          <div class="team-focus">
+            Focus: transformation offices, portfolio governance, technology roadmaps.
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-name">Maria Alvarez</div>
+          <div class="team-role">Principal, Performance Programs</div>
+          <p class="team-bio">
+            Maria works with operations and finance leaders to design improvement programs
+            that connect day‑to‑day changes to P&amp;L impact. Her experience covers plant
+            operations, shared services, and frontline service environments.
+          </p>
+          <div class="team-focus">
+            Focus: cost and throughput, diagnostics, performance dialogues.
+          </div>
+        </article>
+
+        <article class="team-card">
+          <div class="team-name">Jonas Weber</div>
+          <div class="team-role">Principal, Change &amp; Leadership Support</div>
+          <p class="team-bio">
+            Jonas supports leadership teams as they communicate change, navigate stakeholder
+            landscapes, and embed new routines. He often works alongside HR and communications
+            functions on large programs.
+          </p>
+          <div class="team-focus">
+            Focus: stakeholder alignment, communication design, leadership coaching.
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- PORTFOLIO: longer, case‑style without repeating other sections -->
+    <section id="portfolio" class="section" aria-labelledby="portfolio-heading">
+      <header class="section-header">
+        <div class="section-kicker">Portfolio</div>
+        <h2 id="portfolio-heading" class="section-title">Examples of our work.</h2>
+        <p class="section-subtitle">
+          We keep client names confidential, but the situations and results below
+          reflect real engagements led by our team.
+        </p>
+      </header>
+
+      <div class="portfolio-filters" aria-label="Portfolio filters">
+        <span class="filter-pill active">Overview</span>
+        <span class="filter-pill">Transformation</span>
+        <span class="filter-pill">Digital</span>
+        <span class="filter-pill">Performance</span>
+      </div>
+
+      <div class="portfolio-grid">
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Transformation</div>
+            <h3 class="portfolio-title">Industrial group operating model refresh</h3>
+            <p class="portfolio-meta">
+              Group center and business units realigned; capital allocation and reporting
+              structures redesigned to support a new portfolio strategy.
+            </p>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Digital</div>
+            <h3 class="portfolio-title">Digital onboarding for a banking group</h3>
+            <p class="portfolio-meta">
+              Multi‑country roll‑out of a new onboarding journey, governed through a newly
+              created transformation office with clear success metrics.
+            </p>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Performance</div>
+            <h3 class="portfolio-title">Healthcare network throughput program</h3>
+            <p class="portfolio-meta">
+              Redesign of appointment and bed management, supported by new performance routines
+              run by local leadership teams.
+            </p>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Performance</div>
+            <h3 class="portfolio-title">Logistics cost‑to‑serve transparency</h3>
+            <p class="portfolio-meta">
+              End‑to‑end mapping of fulfillment flows and cost drivers, establishing a new
+              baseline for service and pricing decisions.
+            </p>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Transformation</div>
+            <h3 class="portfolio-title">Group‑wide transformation office</h3>
+            <p class="portfolio-meta">
+              Central structure established to coordinate dozens of initiatives and keep
+              value creation visible to the board.
+            </p>
+          </div>
+        </article>
+
+        <article class="portfolio-card">
+          <div class="portfolio-thumb"></div>
+          <div class="portfolio-body">
+            <div class="portfolio-tag">Digital</div>
+            <h3 class="portfolio-title">Technology roadmap for business services</h3>
+            <p class="portfolio-meta">
+              Investment roadmap linked to commercial priorities and resource constraints,
+              giving leadership a practical sequence for delivery.
+            </p>
+          </div>
+        </article>
+      </div>
+
+      <div class="case-layout">
+        <div>
+          <div class="case-card">
+            <h3>Case example: Industrial group consolidation</h3>
+            <p>
+              A European industrial group with several semi‑autonomous business units needed
+              a more coherent operating model after a series of acquisitions. Our work focused
+              on clarifying the role of the corporate center, tightening capital allocation,
+              and simplifying governance.
+            </p>
+            <ul style="padding-left:1.1rem;">
+              <li>Redesigned group‑level decision forums and escalation paths.</li>
+              <li>Introduced a unified view of the investment portfolio.</li>
+              <li>Clarified responsibilities between group and business units for critical functions.</li>
+              <li>Enabled more consistent trade‑offs on growth vs. cash across the portfolio.</li>
+            </ul>
+          </div>
+
+          <div class="case-card">
+            <h3>Case example: Healthcare throughput program</h3>
+            <p>
+              A regional healthcare provider was facing growing demand and constrained capacity.
+              Rather than building new infrastructure immediately, leadership wanted to understand
+              how existing assets could be used more effectively.
+            </p>
+            <ul style="padding-left:1.1rem;">
+              <li>Mapped patient pathways and identified key bottlenecks.</li>
+              <li>Co‑designed new scheduling and bed allocation routines.</li>
+              <li>Implemented daily and weekly performance huddles led by clinical teams.</li>
+              <li>Delivered a sustained increase in throughput and better visibility of demand.</li>
+            </ul>
+          </div>
+        </div>
+
+        <aside>
+          <div class="case-card">
+            <h3>What our role looks like</h3>
+            <p>
+              In most programs we combine analytical work with facilitation and coaching.
+              Our teams are present enough to unblock progress but never a substitute for internal ownership.
+            </p>
+            <ul style="padding-left:1.1rem;">
+              <li>We convene cross‑functional working sessions rather than parallel “consultant rooms”.</li>
+              <li>We work with your finance team to pressure‑test value cases.</li>
+              <li>We build, or help refine, practical tools that your teams can maintain.</li>
+              <li>We exit gradually, as internal capability grows, instead of at a fixed symbolic date.</li>
+            </ul>
+          </div>
+
+          <div class="case-card">
+            <h3>How we measure success</h3>
+            <p>
+              Each program has its own metrics, but we always define a small set of indicators
+              with the client at the outset.
+            </p>
+            <ul style="padding-left:1.1rem;">
+              <li>Financial outcomes such as margin, cost, or capital employed.</li>
+              <li>Operational indicators like throughput, lead times, or error rates.</li>
+              <li>Organizational markers such as ownership, clarity, and confidence levels.</li>
+              <li>Evidence that routines continue without our presence.</li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- CONTACT: long, practical, not repeating prior copy -->
+    <section id="contact" class="section" aria-labelledby="contact-heading">
+      <header class="section-header">
+        <div class="section-kicker">Contact</div>
+        <h2 id="contact-heading" class="section-title">Arrange an initial discussion.</h2>
+        <p class="section-subtitle">
+          We typically begin with a short, confidential conversation to understand your context.
+          There is no commitment at this stage and no need for extensive preparation.
+        </p>
+      </header>
+
+      <div class="contact-layout">
+        <section class="contact-card" aria-label="Contact form">
+          <h3 style="margin-top:0;font-size:1rem;">Share a few details</h3>
+          <form action="#" method="post" novalidate>
+            <div class="form-grid">
+              <div class="form-field">
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" required />
+              </div>
+              <div class="form-field">
+                <label for="email">Business email</label>
+                <input id="email" name="email" type="email" required />
+              </div>
+              <div class="form-field">
+                <label for="company">Company</label>
+                <input id="company" name="company" type="text" />
+              </div>
+              <div class="form-field">
+                <label for="role">Role</label>
+                <input id="role" name="role" type="text" />
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label for="topic">Primary area you would like to discuss</label>
+              <select id="topic" name="topic">
+                <option>Corporate direction / operating architecture</option>
+                <option>Operational performance program</option>
+                <option>Digital or transformation portfolio</option>
+                <option>Combination or other topic</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="message">Brief outline (optional)</label>
+              <textarea id="message" name="message" placeholder="A few sentences on your situation, timing, and decision makers involved."></textarea>
+            </div>
+
+            <div class="form-field">
+              <label for="timeline">Indicative timeline</label>
+              <input id="timeline" name="timeline" type="text" placeholder="e.g. ‘Board decision in Q3’, ‘Program to start within 6 months’" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit inquiry</button>
+          </form>
+
+          <p style="font-size:0.8rem;color:var(--muted-text);margin-top:1rem;">
+            By submitting this form you agree that we may contact you by email for the purpose of
+            arranging a discussion. We do not add you to mailing lists or share your details with third parties.
+          </p>
+        </section>
+
+        <aside class="contact-sidebar" aria-label="Practical information">
+          <div class="contact-label">Offices</div>
+          <ul class="contact-list">
+            <li>
+              <strong>London</strong><br />
+              21 Bishopsgate<br />
+              London EC2N 4AJ<br />
+              United Kingdom
+            </li>
+            <li>
+              <strong>Berlin</strong><br />
+              Friedrichstrasse 88<br />
+              10117 Berlin<br />
+              Germany
+            </li>
+          </ul>
+
+          <div class="contact-label" style="margin-top:1.4rem;">Email</div>
+          <p>contact@novacorp-consulting.com</p>
+
+          <div class="contact-label" style="margin-top:1.4rem;">What happens next</div>
+          <p>
+            One of our partners will review your note and, if the situation is a potential fit,
+            suggest a time for an introductory call. Where helpful, we are happy to sign a mutual NDA
+            before going into specifics.
+          </p>
+
+          <div class="contact-label" style="margin-top:1.4rem;">Typical response time</div>
+          <p>Within two business days for new inquiries.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- GLOBAL FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div>&copy; 2026 NovaCorp Consulting. All rights reserved.</div>
+      <div class="footer-links">
+        <span>Privacy</span>
+        <span>Terms</span>
+        <span>Cookies</span>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
