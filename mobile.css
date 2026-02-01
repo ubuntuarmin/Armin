@@ -73,6 +73,7 @@
   /* Typing line: prevent sideways scrolling on very long phrases */
   .typing-wrap {
     flex-wrap: wrap;
+    min-height: 3.6em; /* Reserve space for ~2-3 lines to prevent layout shift */
   }
 
   .typing-text {
