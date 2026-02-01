@@ -6,399 +6,2009 @@
   <title>TechBytes - Technology Blog</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: 'Georgia', serif;
-      line-height: 1.7;
-      color: #1f2937;
-      background: #f9fafb;
+
+    :root {
+      --bg: #f4f5f7;
+      --bg-alt: #ffffff;
+      --border-subtle: #e0e4ea;
+      --border-strong: #cbd2e1;
+      --accent: #1f4f8a;
+      --accent-soft: #f0f4fb;
+      --accent-muted: #3b82f6;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+      --text-soft: #6b7280;
+      --nav-height: 64px;
+      --radius-lg: 16px;
+      --radius-md: 10px;
+      --radius-pill: 999px;
+      --shadow-soft: 0 12px 32px rgba(15, 23, 42, 0.12);
+      --shadow-subtle: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --transition-fast: 0.18s ease-out;
+      --transition-med: 0.3s ease;
     }
-    
-    /* Header */
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.7;
+      color: var(--text-main);
+      background:
+        linear-gradient(to bottom, #e5eaf3 0%, #f7f8fb 160px, #f4f5f7 100%);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      scroll-behavior: smooth;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* Header / Nav */
     header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 1.5rem 0;
       position: sticky;
       top: 0;
       z-index: 1000;
     }
-    
+
+    .nav-shell {
+      background: rgba(255,255,255,0.97);
+      border-bottom: 1px solid var(--border-subtle);
+      backdrop-filter: blur(16px);
+    }
+
     nav {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 2rem;
+      height: var(--nav-height);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-size: 0.9rem;
+      font-weight: 700;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      gap: 0.05rem;
+    }
+
+    .logo-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .logo-sub {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-soft);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.1rem;
+      transition: color var(--transition-fast);
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width var(--transition-fast);
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.15rem;
+    }
+
+    .pill-cta {
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 0.3rem 0.7rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      background: #ffffff;
+    }
+
+    .pill-cta span {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #16a34a;
+    }
+
+    .pill-sub {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .nav-toggle {
+      display: none;
+      border-radius: var(--radius-pill);
+      border: 1px solid var(--border-subtle);
+      padding: 0.35rem 0.75rem;
+      background: #ffffff;
+      color: var(--text-main);
+      font-size: 0.8rem;
+    }
+
+    .nav-mobile-panel {
+      display: none;
+      position: fixed;
+      inset: calc(var(--nav-height) + 0.5rem) 0 0 0;
+      background: rgba(255,255,255,0.98);
+      border-top: 1px solid var(--border-subtle);
+      padding: 1.25rem 1.25rem 2rem;
+      z-index: 900;
+    }
+
+    .nav-mobile-panel.open {
+      display: block;
+    }
+
+    .nav-mobile-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .nav-mobile-list a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-size: 0.95rem;
+      padding: 0.55rem 0.8rem;
+      border-radius: var(--radius-md);
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
-    .logo {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #1f2937;
-      font-family: sans-serif;
+
+    .nav-mobile-list a span {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
     }
-    
-    .nav-links {
+
+    .nav-mobile-footer {
       display: flex;
-      gap: 2rem;
-      list-style: none;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
     }
-    
-    .nav-links a {
-      color: #6b7280;
-      text-decoration: none;
-      font-family: sans-serif;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-    
-    .nav-links a:hover {
-      color: #3b82f6;
-    }
-    
+
     /* Hero */
+    .hero-shell {
+      padding: 2.2rem 0 2.2rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero-shell {
+        padding: 2.8rem 0 2.8rem;
+      }
+    }
+
     .hero {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
-      color: white;
-      padding: 4rem 2rem;
-      text-align: center;
-    }
-    
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      font-family: sans-serif;
-    }
-    
-    .hero p {
-      font-size: 1.3rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-    
-    /* Main Content */
-    .container {
-      max-width: 1000px;
-      margin: 3rem auto;
-      padding: 0 2rem;
-    }
-    
-    .blog-grid {
       display: grid;
-      gap: 2rem;
+      grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.4fr);
+      gap: 2.4rem;
+      align-items: center;
     }
-    
-    .blog-post {
-      background: white;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      transition: transform 0.3s, box-shadow 0.3s;
-      cursor: pointer;
+
+    .hero-left {
+      position: relative;
+      z-index: 1;
     }
-    
-    .blog-post:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+
+    .hero-tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.7rem 0.2rem 0.35rem;
+      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      margin-bottom: 0.9rem;
     }
-    
-    .post-image {
-      width: 100%;
-      height: 300px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      display: flex;
+
+    .hero-tagline-badge {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      font-size: 4rem;
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
     }
-    
-    .blog-post:nth-child(2) .post-image { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-    .blog-post:nth-child(3) .post-image { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-    .blog-post:nth-child(4) .post-image { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-    
-    .post-content {
-      padding: 2rem;
+
+    .hero-tagline-text {
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-soft);
     }
-    
-    .post-meta {
+
+    .hero-tagline-pill {
+      border-radius: var(--radius-pill);
+      background: var(--accent-soft);
+      padding: 0.15rem 0.6rem;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero-title {
+      font-size: clamp(2rem, 3vw, 2.6rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.8rem;
+      color: var(--accent);
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-highlights {
       display: flex;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      color: #6b7280;
-      font-size: 0.9rem;
-      font-family: sans-serif;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.3rem;
     }
-    
-    .post-category {
-      color: #3b82f6;
-      font-weight: 600;
-    }
-    
-    .post-title {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-      color: #1f2937;
-      font-family: sans-serif;
-      font-weight: 700;
-    }
-    
-    .post-excerpt {
-      color: #6b7280;
-      margin-bottom: 1rem;
-      font-size: 1.05rem;
-    }
-    
-    .read-more {
-      color: #3b82f6;
-      font-weight: 600;
-      text-decoration: none;
-      font-family: sans-serif;
+
+    .hero-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.35rem 0.8rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
       display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-pill span {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      border-radius: var(--radius-pill);
+      padding: 0.7rem 1.1rem;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .btn-primary:hover {
+      background: #173f6e;
+    }
+
+    .btn-secondary {
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .hero-meta strong {
+      font-weight: 600;
+      color: var(--text-main);
+    }
+
+    /* Hero right card */
+    .hero-right-wrap {
+      position: relative;
+      z-index: 0;
+    }
+
+    .hero-card {
+      border-radius: var(--radius-lg);
+      padding: 1.2rem 1.15rem;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-card-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .hero-card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .hero-card-title {
+      font-size: 1rem;
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .hero-card-chip {
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.6rem;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-subtle);
+      font-size: 0.75rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-card-body {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
+      gap: 0.9rem;
+      align-items: center;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-card-text {
+      font-size: 0.82rem;
+      color: var(--text-soft);
+    }
+
+    .hero-card-metrics {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .hero-card-metric {
+      border-radius: 10px;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+      padding: 0.45rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .hero-card-metric span:first-child {
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .hero-card-metric span:last-child {
+      font-size: 0.88rem;
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .hero-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .hero-card-footer-left {
+      display: flex;
       align-items: center;
       gap: 0.5rem;
     }
-    
-    .read-more:hover {
-      gap: 0.8rem;
+
+    .hero-card-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #16a34a;
     }
-    
-    /* Sidebar */
+
+    .hero-card-footer-cta {
+      font-size: 0.8rem;
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    /* Main */
+    .main-shell {
+      padding-bottom: 3rem;
+    }
+
     .layout {
       display: grid;
-      grid-template-columns: 1fr 300px;
-      gap: 3rem;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+      gap: 2.1rem;
+      align-items: flex-start;
     }
-    
+
+    /* Pages (multi-page behavior) */
+    .page {
+      display: none;
+      animation: fadeIn 0.2s ease-out;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(3px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-label {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-heading {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.6rem;
+    }
+
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.2rem;
+    }
+
+    /* Blog grid */
+    .blog-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .blog-post {
+      background: #ffffff;
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-subtle);
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
+      min-height: 180px;
+      cursor: pointer;
+      transition: box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .blog-post:hover {
+      box-shadow: var(--shadow-soft);
+      border-color: var(--border-strong);
+      transform: translateY(-2px);
+    }
+
+    .post-image {
+      position: relative;
+      background: var(--accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .post-image-inner {
+      font-size: 1.9rem;
+    }
+
+    .post-content {
+      padding: 1.05rem 1.15rem 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .post-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      align-items: center;
+    }
+
+    .post-category-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.15rem 0.55rem;
+      background: var(--accent-soft);
+      border: 1px solid var(--border-subtle);
+      color: var(--accent);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .post-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 999px;
+      background: #9ca3af;
+    }
+
+    .post-title {
+      font-size: 1.02rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-top: 0.05rem;
+    }
+
+    .post-excerpt {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      margin-bottom: 0.1rem;
+    }
+
+    .post-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .post-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .post-tag {
+      border-radius: var(--radius-pill);
+      padding: 0.12rem 0.55rem;
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .read-more {
+      color: var(--accent);
+      font-weight: 500;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      background: transparent;
+    }
+
+    .read-more:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    /* Article page */
+    .article-header {
+      margin-bottom: 1rem;
+    }
+
+    .article-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 0.4rem;
+    }
+
+    .article-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .article-meta-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.6rem;
+      border: 1px solid var(--border-subtle);
+      background: var(--accent-soft);
+      font-size: 0.78rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .article-body {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .article-body h3 {
+      font-size: 1.02rem;
+      color: var(--text-main);
+      margin-top: 0.4rem;
+    }
+
+    .article-body p {
+      color: var(--text-muted);
+    }
+
+    .article-body ul {
+      margin-left: 1.1rem;
+      margin-top: 0.15rem;
+      margin-bottom: 0.15rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .article-body li {
+      margin-bottom: 0.2rem;
+    }
+
+    .article-footer-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 0.7rem;
+    }
+
+    .article {
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 1.15rem 1.2rem 1.3rem;
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Categories */
+    .categories-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 0.9rem;
+      margin-top: 0.3rem;
+    }
+
+    .category-card {
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 0.8rem 0.9rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      cursor: pointer;
+      font-size: 0.86rem;
+      box-shadow: var(--shadow-subtle);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+    }
+
+    .category-card:hover {
+      border-color: var(--accent);
+      box-shadow: var(--shadow-soft);
+      transform: translateY(-1px);
+    }
+
+    .category-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+    }
+
+    .category-meta strong {
+      color: var(--text-main);
+    }
+
+    .category-count {
+      border-radius: var(--radius-pill);
+      padding: 0.12rem 0.45rem;
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+      color: var(--text-soft);
+      font-size: 0.74rem;
+    }
+
+    .category-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    /* About */
+    .about-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.4fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+
+    .about-section {
+      border-radius: 14px;
+      background: #ffffff;
+      border: 1px solid var(--border-subtle);
+      padding: 1rem 1.1rem 1.1rem;
+      box-shadow: var(--shadow-subtle);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .about-section h3 {
+      font-size: 1rem;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+    }
+
+    .about-section p {
+      color: var(--text-muted);
+      margin-bottom: 0.4rem;
+    }
+
+    .about-section ul {
+      margin-left: 1.1rem;
+      margin-top: 0.15rem;
+      margin-bottom: 0.2rem;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    .about-section li {
+      margin-bottom: 0.2rem;
+    }
+
+    .about-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.4rem;
+      margin-top: 0.1rem;
+    }
+
+    .about-meta-card {
+      border-radius: 10px;
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+      padding: 0.55rem 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .about-signature {
+      margin-top: 0.6rem;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
+
+    .about-signature strong {
+      color: var(--text-main);
+    }
+
+    /* Sidebar */
     .sidebar {
       position: sticky;
-      top: 100px;
+      top: calc(var(--nav-height) + 1.4rem);
       align-self: start;
+      display: flex;
+      flex-direction: column;
+      gap: 1.15rem;
     }
-    
+
     .widget {
-      background: white;
-      padding: 1.5rem;
+      background: #ffffff;
       border-radius: 12px;
-      margin-bottom: 2rem;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      border: 1px solid var(--border-subtle);
+      padding: 0.95rem 0.95rem 1rem;
+      box-shadow: var(--shadow-subtle);
     }
-    
+
+    .widget-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.7rem;
+    }
+
     .widget h3 {
-      font-size: 1.2rem;
-      margin-bottom: 1rem;
-      font-family: sans-serif;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--text-soft);
     }
-    
+
+    .widget-sub {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
     .widget ul {
       list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.15rem;
     }
-    
+
     .widget li {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid #f3f4f6;
+      font-size: 0.87rem;
     }
-    
-    .widget li:last-child {
-      border-bottom: none;
-    }
-    
+
     .widget a {
-      color: #6b7280;
+      color: var(--text-main);
       text-decoration: none;
-      font-family: sans-serif;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.4rem;
+      border-radius: 9px;
+      padding: 0.4rem 0.55rem;
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+      font-size: 0.86rem;
     }
-    
+
+    .widget a span {
+      font-size: 0.76rem;
+      color: var(--text-soft);
+    }
+
     .widget a:hover {
-      color: #3b82f6;
+      border-color: var(--accent);
+      background: var(--accent-soft);
     }
-    
+
+    .widget p {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 0.6rem;
+    }
+
+    .widget input[type="email"] {
+      width: 100%;
+      padding: 0.7rem 0.7rem;
+      border-radius: 9px;
+      border: 1px solid var(--border-subtle);
+      background: #f9fafb;
+      color: var(--text-main);
+      font-size: 0.85rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .widget input::placeholder {
+      color: var(--text-soft);
+    }
+
+    .widget button {
+      width: 100%;
+      padding: 0.7rem;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: var(--accent);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 0.86rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-subtle);
+    }
+
+    .widget button:hover {
+      background: #173f6e;
+    }
+
+    .widget-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.25rem;
+      margin-bottom: 0.15rem;
+    }
+
+    .widget-chip {
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.6rem;
+      font-size: 0.76rem;
+      color: var(--text-soft);
+      background: #f9fafb;
+      border: 1px solid var(--border-subtle);
+    }
+
+    .widget-chip.active {
+      background: var(--accent-soft);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
     /* Footer */
     footer {
-      background: #1f2937;
-      color: white;
+      border-top: 1px solid var(--border-subtle);
+      background: #ffffff;
+      color: var(--text-soft);
       text-align: center;
-      padding: 2rem;
-      margin-top: 4rem;
+      padding: 1.4rem 1.25rem 1.4rem;
+      margin-top: 1.5rem;
+      font-size: 0.8rem;
     }
-    
+
+    footer p + p {
+      margin-top: 0.25rem;
+    }
+
     footer a {
-      color: #3b82f6;
+      color: var(--accent);
       text-decoration: none;
     }
-    
-    /* Back Button */
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Back Button (same functionality, more classic look) */
     .back-btn {
       position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background: #3b82f6;
-      color: white;
-      padding: 1rem 1.5rem;
-      border-radius: 50px;
+      bottom: 1.4rem;
+      right: 1.4rem;
+      background: #ffffff;
+      color: var(--accent);
+      padding: 0.7rem 1rem;
+      border-radius: var(--radius-pill);
       text-decoration: none;
-      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+      box-shadow: var(--shadow-soft);
       z-index: 999;
-      transition: transform 0.3s;
       font-weight: 600;
-      font-family: sans-serif;
+      font-size: 0.86rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: 1px solid var(--border-subtle);
+      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
     }
-    
+
     .back-btn:hover {
-      transform: scale(1.05);
+      background: var(--accent);
+      color: #ffffff;
+      box-shadow: 0 16px 36px rgba(15,23,42,0.25);
     }
-    
+
+    .back-btn-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: minmax(0, 1.5fr);
+      }
+      .hero-right-wrap {
+        display: none;
+      }
+      .layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .sidebar {
+        position: static;
+        order: 2;
+      }
+    }
+
     @media (max-width: 768px) {
-      .hero h1 { font-size: 2rem; }
-      .layout { grid-template-columns: 1fr; }
-      .nav-links { display: none; }
-      .sidebar { position: static; }
+      .nav-links,
+      .nav-cta {
+        display: none;
+      }
+      .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+      }
+      .hero-shell {
+        padding: 1.7rem 0 1.8rem;
+      }
+      .hero-title {
+        font-size: 1.7rem;
+      }
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+      .hero-actions {
+        gap: 0.5rem;
+      }
+      .btn-primary,
+      .btn-secondary {
+        width: 100%;
+        justify-content: center;
+      }
+      .blog-post {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 0;
+      }
+      .post-image {
+        min-height: 130px;
+      }
+      .post-content {
+        padding: 0.9rem 0.95rem 0.95rem;
+      }
+      .sidebar {
+        gap: 1rem;
+      }
+      .widget {
+        padding: 0.85rem 0.85rem 0.9rem;
+      }
+      .about-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .about-meta-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .categories-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .back-btn {
+        right: 1rem;
+        bottom: 1rem;
+        padding: 0.65rem 0.9rem;
+      }
+      .back-btn-label {
+        display: none;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-highlights {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.4rem;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Back Button -->
-  <a href="../examples.html" class="back-btn">← Back to Examples</a>
+  <!-- Back Button (kept from original template, same link) -->
+  <a href="../examples.html" class="back-btn">
+    <span>←</span>
+    <span class="back-btn-label">Back to Examples</span>
+  </a>
 
-  <!-- Header -->
-  <header>
-    <nav>
-      <div class="logo">TechBytes</div>
-      <ul class="nav-links">
-        <li><a href="#home">Home</a></li>
-        <li><a href="#articles">Articles</a></li>
-        <li><a href="#categories">Categories</a></li>
-        <li><a href="#about">About</a></li>
-      </ul>
-    </nav>
-  </header>
-
-  <!-- Hero -->
-  <section class="hero" id="home">
-    <h1>TechBytes Blog</h1>
-    <p>Your daily dose of technology news, tutorials, and insights</p>
-  </section>
-
-  <!-- Main Content -->
-  <div class="container" id="articles">
-    <div class="layout">
-      <!-- Blog Posts -->
-      <div class="blog-grid">
-        <article class="blog-post" onclick="alert('This would open the full article')">
-          <div class="post-image">💻</div>
-          <div class="post-content">
-            <div class="post-meta">
-              <span class="post-category">Web Development</span>
-              <span>•</span>
-              <span>March 15, 2026</span>
-              <span>•</span>
-              <span>5 min read</span>
-            </div>
-            <h2 class="post-title">Getting Started with Modern JavaScript</h2>
-            <p class="post-excerpt">
-              Learn the fundamentals of modern JavaScript including ES6+ features, async/await, 
-              and best practices for building scalable web applications.
-            </p>
-            <a href="#" class="read-more" onclick="event.stopPropagation()">Read More →</a>
-          </div>
-        </article>
-
-        <article class="blog-post" onclick="alert('This would open the full article')">
-          <div class="post-image">🎨</div>
-          <div class="post-content">
-            <div class="post-meta">
-              <span class="post-category">Design</span>
-              <span>•</span>
-              <span>March 12, 2026</span>
-              <span>•</span>
-              <span>8 min read</span>
-            </div>
-            <h2 class="post-title">UI/UX Design Trends for 2026</h2>
-            <p class="post-excerpt">
-              Explore the latest trends in user interface and user experience design. 
-              From neumorphism to glassmorphism, discover what's shaping digital design this year.
-            </p>
-            <a href="#" class="read-more" onclick="event.stopPropagation()">Read More →</a>
-          </div>
-        </article>
-
-        <article class="blog-post" onclick="alert('This would open the full article')">
-          <div class="post-image">🚀</div>
-          <div class="post-content">
-            <div class="post-meta">
-              <span class="post-category">DevOps</span>
-              <span>•</span>
-              <span>March 10, 2026</span>
-              <span>•</span>
-              <span>10 min read</span>
-            </div>
-            <h2 class="post-title">Docker for Beginners: Complete Guide</h2>
-            <p class="post-excerpt">
-              A comprehensive introduction to Docker containerization. Learn how to create, 
-              deploy, and manage containers for your applications.
-            </p>
-            <a href="#" class="read-more" onclick="event.stopPropagation()">Read More →</a>
-          </div>
-        </article>
-
-        <article class="blog-post" onclick="alert('This would open the full article')">
-          <div class="post-image">📱</div>
-          <div class="post-content">
-            <div class="post-meta">
-              <span class="post-category">Mobile</span>
-              <span>•</span>
-              <span>March 8, 2026</span>
-              <span>•</span>
-              <span>7 min read</span>
-            </div>
-            <h2 class="post-title">Building Progressive Web Apps</h2>
-            <p class="post-excerpt">
-              Progressive Web Apps combine the best of web and mobile apps. 
-              Learn how to build fast, reliable, and engaging web experiences.
-            </p>
-            <a href="#" class="read-more" onclick="event.stopPropagation()">Read More →</a>
-          </div>
-        </article>
-      </div>
-
-      <!-- Sidebar -->
-      <aside class="sidebar" id="categories">
-        <div class="widget">
-          <h3>Popular Categories</h3>
-          <ul>
-            <li><a href="#">Web Development (24)</a></li>
-            <li><a href="#">Design (18)</a></li>
-            <li><a href="#">DevOps (12)</a></li>
-            <li><a href="#">Mobile (15)</a></li>
-            <li><a href="#">Security (9)</a></li>
-          </ul>
-        </div>
-
-        <div class="widget">
-          <h3>Recent Posts</h3>
-          <ul>
-            <li><a href="#">Modern JavaScript Guide</a></li>
-            <li><a href="#">UI/UX Trends 2026</a></li>
-            <li><a href="#">Docker for Beginners</a></li>
-            <li><a href="#">Progressive Web Apps</a></li>
-          </ul>
-        </div>
-
-        <div class="widget">
-          <h3>Subscribe</h3>
-          <p style="margin-bottom: 1rem; color: #6b7280; font-size: 0.95rem;">Get the latest articles delivered to your inbox</p>
-          <input type="email" placeholder="Your email" style="width: 100%; padding: 0.8rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: 0.5rem;">
-          <button style="width: 100%; padding: 0.8rem; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600;" onclick="alert('Thank you for subscribing!')">Subscribe</button>
-        </div>
-      </aside>
+  <!-- Mobile Nav Panel -->
+  <div class="nav-mobile-panel" id="mobileNav">
+    <ul class="nav-mobile-list">
+      <li><a href="#home" data-page="home" class="mobile-link"><span>Home</span>Overview</a></li>
+      <li><a href="#articles" data-page="home" class="mobile-link"><span>Articles</span>Latest posts</a></li>
+      <li><a href="#categories" data-page="categories" class="mobile-link"><span>Categories</span>Topics</a></li>
+      <li><a href="#about" data-page="about" class="mobile-link"><span>About</span>Template info</a></li>
+    </ul>
+    <div class="nav-mobile-footer">
+      <span>TechBytes blog template.</span>
+      <span>Armin Studio • 2026</span>
     </div>
   </div>
 
+  <!-- Header -->
+  <header>
+    <div class="nav-shell">
+      <div class="container">
+        <nav>
+          <div class="logo-wrap">
+            <div class="logo-mark">TB</div>
+            <div class="logo-text">
+              <div class="logo-title">TechBytes</div>
+              <div class="logo-sub">Template by Armin Studio</div>
+            </div>
+          </div>
+
+          <ul class="nav-links">
+            <li><a href="#home" data-page="home" class="nav-link active">Home</a></li>
+            <li><a href="#articles" data-page="home" class="nav-link">Articles</a></li>
+            <li><a href="#categories" data-page="categories" class="nav-link">Categories</a></li>
+            <li><a href="#about" data-page="about" class="nav-link">About</a></li>
+          </ul>
+
+          <div class="nav-cta">
+            <a href="#subscribe" class="pill-cta">
+              <span></span>
+              Weekly tech insights
+            </a>
+            <div class="pill-sub">Demo template • Armin Studio</div>
+          </div>
+
+          <button class="nav-toggle" id="navToggle">
+            Menu
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero-shell" id="home">
+    <div class="container">
+      <div class="hero">
+        <div class="hero-left">
+          <div class="hero-tagline">
+            <div class="hero-tagline-badge">A</div>
+            <div class="hero-tagline-text">Professional technology blog template</div>
+            <div class="hero-tagline-pill">By Armin Studio</div>
+          </div>
+          <h1 class="hero-title">
+            A clear, professional home for your technology writing.
+          </h1>
+          <p class="hero-subtitle">
+            TechBytes is a structured, mobile-friendly blog template for teams and individuals who want a classic editorial feel without heavy frameworks. Adapt it to your own brand, content, and stack.
+          </p>
+
+          <div class="hero-highlights">
+            <div class="hero-pill">
+              <span></span>
+              Readable on phones, tablets, and desktops
+            </div>
+            <div class="hero-pill">
+              <span></span>
+              Designed for long-form articles and series
+            </div>
+          </div>
+
+          <div class="hero-actions">
+            <a href="#articles" data-page="home" class="btn-primary nav-link-like">Browse latest articles →</a>
+            <a href="#about" data-page="about" class="btn-secondary nav-link-like">Learn about this template</a>
+          </div>
+
+          <div class="hero-meta">
+            <div><strong>Content areas</strong> · Web development, design, DevOps, mobile &amp; more</div>
+            <div><strong>Template focus</strong> · Professional, calm, and easy to adapt</div>
+          </div>
+        </div>
+
+        <div class="hero-right-wrap">
+          <div class="hero-card">
+            <div class="hero-card-header">
+              <div class="hero-card-meta">
+                <div class="hero-card-label">Included Example</div>
+                <div class="hero-card-title">Modern JavaScript for Product Teams</div>
+              </div>
+              <div class="hero-card-chip">Web Development · 12 min</div>
+            </div>
+
+            <div class="hero-card-body">
+              <div class="hero-card-text">
+                The sample articles show how you can structure long-form content with clear headings, summaries, and supporting points — suitable for engineering teams, product organizations, or individual authors.
+              </div>
+              <div class="hero-card-metrics">
+                <div class="hero-card-metric">
+                  <span>Readability</span>
+                  <span>Optimized for mobile</span>
+                </div>
+                <div class="hero-card-metric">
+                  <span>Structure</span>
+                  <span>Sections &amp; bullets</span>
+                </div>
+                <div class="hero-card-metric">
+                  <span>Topics</span>
+                  <span>Code &amp; product</span>
+                </div>
+                <div class="hero-card-metric">
+                  <span>Style</span>
+                  <span>Neutral &amp; adaptable</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-card-footer">
+              <div class="hero-card-footer-left">
+                <div class="hero-card-dot"></div>
+                <span>Demo only – replace with your own feature article.</span>
+              </div>
+              <div class="hero-card-footer-cta">
+                View article layout
+                <span>↗</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="main-shell">
+    <div class="container">
+      <div class="layout">
+        <!-- PAGE: HOME (Latest articles) -->
+        <div class="page active" id="page-home">
+          <div id="articles">
+            <div class="section-label">Latest articles</div>
+            <div class="section-heading">Recent example posts from TechBytes</div>
+            <div class="section-sub">
+              These articles are sample content that ship with the template. Replace the copy and structure as needed while keeping the layout consistent across your publication.
+            </div>
+
+            <div class="blog-grid">
+              <!-- Article 1: Web Development -->
+              <article class="blog-post" data-article="modern-js">
+                <div class="post-image">
+                  <div class="post-image-inner">💻</div>
+                </div>
+                <div class="post-content">
+                  <div class="post-meta">
+                    <span class="post-category-pill">Web Development</span>
+                    <div class="post-dot"></div>
+                    <span>March 15, 2026</span>
+                    <div class="post-dot"></div>
+                    <span>5 min read</span>
+                  </div>
+                  <h2 class="post-title">Getting Started with Modern JavaScript</h2>
+                  <p class="post-excerpt">
+                    A concise overview of how modern JavaScript is structured today: modules, async workflows, and patterns that help teams ship reliable interfaces.
+                  </p>
+                  <div class="post-footer">
+                    <div class="post-tags">
+                      <span class="post-tag">ES2026+</span>
+                      <span class="post-tag">Async</span>
+                      <span class="post-tag">Frontend</span>
+                    </div>
+                    <a href="#articles" class="read-more" data-article-link="modern-js">Read article →</a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Article 2: Design -->
+              <article class="blog-post" data-article="ux-trends">
+                <div class="post-image">
+                  <div class="post-image-inner">🎨</div>
+                </div>
+                <div class="post-content">
+                  <div class="post-meta">
+                    <span class="post-category-pill">Design</span>
+                    <div class="post-dot"></div>
+                    <span>March 12, 2026</span>
+                    <div class="post-dot"></div>
+                    <span>8 min read</span>
+                  </div>
+                  <h2 class="post-title">UI/UX Design Trends for 2026</h2>
+                  <p class="post-excerpt">
+                    An editorial look at design movements that are influencing modern products, with practical guidance for incorporating them without over-designing.
+                  </p>
+                  <div class="post-footer">
+                    <div class="post-tags">
+                      <span class="post-tag">UX</span>
+                      <span class="post-tag">Product</span>
+                      <span class="post-tag">Patterns</span>
+                    </div>
+                    <a href="#articles" class="read-more" data-article-link="ux-trends">Read article →</a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Article 3: DevOps -->
+              <article class="blog-post" data-article="docker-guide">
+                <div class="post-image">
+                  <div class="post-image-inner">🚀</div>
+                </div>
+                <div class="post-content">
+                  <div class="post-meta">
+                    <span class="post-category-pill">DevOps</span>
+                    <div class="post-dot"></div>
+                    <span>March 10, 2026</span>
+                    <div class="post-dot"></div>
+                    <span>10 min read</span>
+                  </div>
+                  <h2 class="post-title">Docker for Beginners: Complete Guide</h2>
+                  <p class="post-excerpt">
+                    A structured introduction to containers, images, and orchestrating local environments for teams new to Docker.
+                  </p>
+                  <div class="post-footer">
+                    <div class="post-tags">
+                      <span class="post-tag">Docker</span>
+                      <span class="post-tag">DevOps</span>
+                      <span class="post-tag">Infrastructure</span>
+                    </div>
+                    <a href="#articles" class="read-more" data-article-link="docker-guide">Read article →</a>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Article 4: Mobile / PWA -->
+              <article class="blog-post" data-article="pwa">
+                <div class="post-image">
+                  <div class="post-image-inner">📱</div>
+                </div>
+                <div class="post-content">
+                  <div class="post-meta">
+                    <span class="post-category-pill">Mobile</span>
+                    <div class="post-dot"></div>
+                    <span>March 8, 2026</span>
+                    <div class="post-dot"></div>
+                    <span>7 min read</span>
+                  </div>
+                  <h2 class="post-title">Building Progressive Web Apps</h2>
+                  <p class="post-excerpt">
+                    How to approach PWAs from a practical standpoint: capabilities, offline behavior, and reasonable performance budgets.
+                  </p>
+                  <div class="post-footer">
+                    <div class="post-tags">
+                      <span class="post-tag">PWA</span>
+                      <span class="post-tag">Mobile Web</span>
+                      <span class="post-tag">Performance</span>
+                    </div>
+                    <a href="#articles" class="read-more" data-article-link="pwa">Read article →</a>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: SINGLE ARTICLE -->
+        <div class="page" id="page-article">
+          <div class="section-label">Article</div>
+          <div class="section-heading">In-depth reading</div>
+          <div class="section-sub">
+            This page shows the long-form layout used for individual posts. Each example article below has different content, but shares the same consistent structure.
+          </div>
+
+          <!-- Article 1: Modern JS -->
+          <article class="article" id="article-modern-js">
+            <header class="article-header">
+              <div class="article-meta">
+                <span class="article-meta-pill">Web Development</span>
+                <span>Published March 15, 2026</span>
+                <span>•</span>
+                <span>5 min read</span>
+                <span>•</span>
+                <span>Sample content</span>
+              </div>
+              <h2 class="article-title">Getting Started with Modern JavaScript</h2>
+            </header>
+            <div class="article-body">
+              <p>
+                JavaScript has evolved from a scripting language for small interactions into a complete platform for building applications across the web, desktop, and mobile.
+                This example article introduces some of the ideas behind that evolution in a way that is suitable for a blog post or internal knowledge base.
+              </p>
+              <p>
+                In practice, "modern JavaScript" means using the language features that are widely supported and focusing on code that remains readable for your team.
+                It is less about chasing every new proposal and more about using solid patterns consistently.
+              </p>
+
+              <h3>1. Writing modular code</h3>
+              <p>
+                Breaking your code into modules makes it easier to reason about, test, and reuse. Even in small projects, thinking in terms of modules encourages better structure:
+              </p>
+              <ul>
+                <li>Organize code by feature rather than by technical layer alone.</li>
+                <li>Keep default exports for main functionality, and named exports for helpers.</li>
+                <li>Avoid unnecessary global variables and implicit dependencies.</li>
+              </ul>
+
+              <h3>2. Handling asynchronous work</h3>
+              <p>
+                Many tasks in modern applications are asynchronous: loading data, saving changes, or reacting to user events.
+                The async/await syntax provides a clear way to express these flows without deeply nested callbacks.
+              </p>
+
+              <h3>3. Focusing on clarity first</h3>
+              <p>
+                Small pieces of code may seem impressive when written in a clever way, but clarity is what allows colleagues—and your future self—to understand and maintain the application.
+                Naming, comments where appropriate, and consistent formatting all contribute to readable JavaScript.
+              </p>
+
+              <p class="article-footer-note">
+                This example is part of the TechBytes template by Armin Studio.
+                Replace it with your own tutorials, notes, or engineering updates while using the same structure for headings, text, and lists.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 2: UX Trends -->
+          <article class="article hidden" id="article-ux-trends">
+            <header class="article-header">
+              <div class="article-meta">
+                <span class="article-meta-pill">Design</span>
+                <span>Published March 12, 2026</span>
+                <span>•</span>
+                <span>8 min read</span>
+                <span>•</span>
+                <span>Sample content</span>
+              </div>
+              <h2 class="article-title">UI/UX Design Trends for 2026</h2>
+            </header>
+            <div class="article-body">
+              <p>
+                Design trends can be helpful to observe, as long as they do not become strict rules.
+                The goal of any interface is to communicate clearly and support the user's objectives.
+                With that in mind, trends are simply patterns that many teams have found useful in a given period.
+              </p>
+
+              <h3>1. Clear hierarchy and spacing</h3>
+              <p>
+                Many modern products are moving back toward calm, carefully spaced layouts that give content room to breathe.
+                This tends to be more sustainable and easier to maintain than highly decorative interfaces.
+              </p>
+
+              <h3>2. Supporting both light and dark environments</h3>
+              <p>
+                While this template uses a light theme by default, it is structured so that color choices can be updated if you decide to introduce a dark mode or alternative theme later.
+              </p>
+
+              <h3>3. Consistent components</h3>
+              <p>
+                Whether you are using a full design system or simply documenting a few components in a shared file, consistency pays off in reduced complexity and faster collaboration between design and engineering.
+              </p>
+
+              <p class="article-footer-note">
+                This is demonstration text included to show how a design-focused article could be presented within the TechBytes layout.
+                Replace the body of the article with your own case studies, visual examples, and guidelines.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 3: Docker Guide -->
+          <article class="article hidden" id="article-docker-guide">
+            <header class="article-header">
+              <div class="article-meta">
+                <span class="article-meta-pill">DevOps</span>
+                <span>Published March 10, 2026</span>
+                <span>•</span>
+                <span>10 min read</span>
+                <span>•</span>
+                <span>Sample content</span>
+              </div>
+              <h2 class="article-title">Docker for Beginners: Complete Guide</h2>
+            </header>
+            <div class="article-body">
+              <p>
+                Docker provides a way to package applications and their dependencies into isolated units called containers.
+                This article outline shows how you might introduce Docker concepts to readers who are new to the ecosystem.
+              </p>
+
+              <h3>1. How images and containers differ</h3>
+              <p>
+                An image is a static description of everything your application needs, while a container is a running instance of that image.
+                Understanding the difference is essential for debugging, scaling, and deploying services.
+              </p>
+
+              <h3>2. Local development flows</h3>
+              <p>
+                Using Docker locally can help ensure that each member of the team is working from a consistent environment.
+                Compose files, for example, allow you to define services such as databases and queues in a single configuration file.
+              </p>
+
+              <h3>3. Moving toward production</h3>
+              <p>
+                When you are ready to deploy, containers can be scheduled and managed in various environments, including cloud providers and on-premise clusters.
+                The specific approach depends on your organization, but the underlying concepts remain similar.
+              </p>
+
+              <p class="article-footer-note">
+                The DevOps example included in TechBytes is meant as a template.
+                It gives you a starting point for documenting infrastructure practices, release procedures, or onboarding guides in a way that feels consistent with the rest of your blog.
+              </p>
+            </div>
+          </article>
+
+          <!-- Article 4: PWA -->
+          <article class="article hidden" id="article-pwa">
+            <header class="article-header">
+              <div class="article-meta">
+                <span class="article-meta-pill">Mobile</span>
+                <span>Published March 8, 2026</span>
+                <span>•</span>
+                <span>7 min read</span>
+                <span>•</span>
+                <span>Sample content</span>
+              </div>
+              <h2 class="article-title">Building Progressive Web Apps</h2>
+            </header>
+            <div class="article-body">
+              <p>
+                Progressive Web Apps aim to provide a reliable, fast experience on the open web while offering some of the capabilities that users expect from native applications.
+                This example post outlines talking points you might cover in a real article.
+              </p>
+
+              <h3>1. Discoverability and installation</h3>
+              <p>
+                PWAs can be installed from the browser and appear alongside native apps.
+                Clear prompts and a straightforward value proposition help users understand why they might want to install your application.
+              </p>
+
+              <h3>2. Offline behavior</h3>
+              <p>
+                Service workers enable caching strategies that allow parts of your application to continue working even when the network is unavailable.
+                This is especially important for users on mobile connections.
+              </p>
+
+              <h3>3. Performance awareness</h3>
+              <p>
+                Because PWAs run on a wide range of devices, performance should be considered from the beginning.
+                Monitoring bundle sizes, image formats, and script execution is a practical way to keep the experience responsive.
+              </p>
+
+              <p class="article-footer-note">
+                Replace this example with your own step-by-step implementation guide, performance notes, or case studies while keeping the structure offered by the TechBytes template.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <!-- PAGE: CATEGORIES -->
+        <div class="page" id="page-categories">
+          <div class="section-label">Categories</div>
+          <div class="section-heading">Organize content by discipline</div>
+          <div class="section-sub">
+            Use categories to help readers quickly find content that matches their interests.
+            The descriptions below are examples – adjust the names and summaries to match your publication.
+          </div>
+
+          <div class="categories-grid" id="categories">
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>Web Development</strong>
+                <span class="category-count">24 posts</span>
+              </div>
+              <div class="category-desc">
+                Practical guides, patterns, and examples for building and maintaining web applications.
+              </div>
+            </div>
+
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>Design</strong>
+                <span class="category-count">18 posts</span>
+              </div>
+              <div class="category-desc">
+                Articles that explore user experience, interface design, and product thinking.
+              </div>
+            </div>
+
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>DevOps</strong>
+                <span class="category-count">12 posts</span>
+              </div>
+              <div class="category-desc">
+                Content focused on infrastructure, automation, observability, and release processes.
+              </div>
+            </div>
+
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>Mobile</strong>
+                <span class="category-count">15 posts</span>
+              </div>
+              <div class="category-desc">
+                Coverage of native and cross-platform mobile development, including PWAs.
+              </div>
+            </div>
+
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>Security</strong>
+                <span class="category-count">9 posts</span>
+              </div>
+              <div class="category-desc">
+                Security considerations for modern applications, from authentication to secure deployment.
+              </div>
+            </div>
+
+            <div class="category-card" data-page="home">
+              <div class="category-meta">
+                <strong>Product &amp; Strategy</strong>
+                <span class="category-count">11 posts</span>
+              </div>
+              <div class="category-desc">
+                Essays on roadmaps, communication, and decision-making for technology teams.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PAGE: ABOUT -->
+        <div class="page" id="page-about">
+          <div class="section-label">About</div>
+          <div class="section-heading">About the TechBytes template</div>
+          <div class="section-sub">
+            TechBytes is a demonstration blog layout created by Armin Studio.
+            It is intended as a starting point for your own professional technology blog or knowledge base.
+          </div>
+
+          <div class="about-layout" id="about">
+            <section class="about-section">
+              <h3>Purpose of this template</h3>
+              <p>
+                The goal of TechBytes is to provide a dependable, well-structured layout that can be used for a wide range of technology topics.
+                It avoids overly experimental visuals and instead focuses on readability and clear navigation.
+              </p>
+              <p>
+                Everything is built with HTML, CSS, and a small amount of JavaScript for page switching.
+                You can keep it in this form, or connect it to a static site generator or CMS later.
+              </p>
+              <ul>
+                <li><strong>Professional tone</strong> – neutral color palette and careful typography.</li>
+                <li><strong>Mobile-first</strong> – layout adjusts gracefully on smaller screens.</li>
+                <li><strong>Simple to adapt</strong> – no framework lock-in or build requirements.</li>
+              </ul>
+              <p class="about-signature">
+                This template is authored by <strong>Armin Studio</strong> in 2026.
+                If you customize the design or content, please retain a reference to the studio to acknowledge the original work.
+              </p>
+            </section>
+
+            <section class="about-section">
+              <h3>Structure included in this file</h3>
+              <p>
+                The template behaves like a multi-page site using sections that are shown or hidden based on navigation.
+                The following views are included:
+              </p>
+              <div class="about-meta-grid">
+                <div class="about-meta-card">
+                  <strong>Home &amp; Articles</strong><br />
+                  Landing hero and a list of recent example posts.
+                </div>
+                <div class="about-meta-card">
+                  <strong>Article layout</strong><br />
+                  Four different example articles with full-body text.
+                </div>
+                <div class="about-meta-card">
+                  <strong>Categories</strong><br />
+                  Overview of content areas with counts and short descriptions.
+                </div>
+                <div class="about-meta-card">
+                  <strong>About</strong><br />
+                  Space to explain your own goals, audience, and publishing cadence.
+                </div>
+              </div>
+              <p>
+                Because this is a template, you are encouraged to replace all placeholder text with your own content, while keeping the navigation structure consistent for your readers.
+              </p>
+            </section>
+          </div>
+        </div>
+
+        <!-- Sidebar (shared) -->
+        <aside class="sidebar" id="subscribe">
+          <div class="widget">
+            <div class="widget-header">
+              <h3>Popular Categories</h3>
+              <span class="widget-sub">Example topics</span>
+            </div>
+            <ul>
+              <li><a href="#categories" data-page="categories">Web Development <span>24</span></a></li>
+              <li><a href="#categories" data-page="categories">Design <span>18</span></a></li>
+              <li><a href="#categories" data-page="categories">DevOps <span>12</span></a></li>
+              <li><a href="#categories" data-page="categories">Mobile <span>15</span></a></li>
+              <li><a href="#categories" data-page="categories">Security <span>9</span></a></li>
+            </ul>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h3>Recent Posts</h3>
+              <span class="widget-sub">Sample headlines</span>
+            </div>
+            <ul>
+              <li><a href="#articles" data-article-link="modern-js">Modern JavaScript Guide <span>5 min</span></a></li>
+              <li><a href="#articles" data-article-link="ux-trends">UI/UX Trends 2026 <span>8 min</span></a></li>
+              <li><a href="#articles" data-article-link="docker-guide">Docker for Beginners <span>10 min</span></a></li>
+              <li><a href="#articles" data-article-link="pwa">Progressive Web Apps <span>7 min</span></a></li>
+            </ul>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h3>Subscribe</h3>
+              <span class="widget-sub">Stay informed</span>
+            </div>
+            <p>
+              Receive occasional updates when new articles, guides, or templates are added.
+              This is a demonstration form – connect it to your own newsletter service in production.
+            </p>
+            <input type="email" placeholder="Your email address" />
+            <button type="button" onclick="alert('Thank you for subscribing! (Demo behavior in the TechBytes template.)')">
+              Subscribe to TechBytes
+            </button>
+          </div>
+
+          <div class="widget">
+            <div class="widget-header">
+              <h3>Tags</h3>
+              <span class="widget-sub">Example filters</span>
+            </div>
+            <div class="widget-chips">
+              <span class="widget-chip active">JavaScript</span>
+              <span class="widget-chip">UX</span>
+              <span class="widget-chip">Docker</span>
+              <span class="widget-chip">PWA</span>
+              <span class="widget-chip">Performance</span>
+              <span class="widget-chip">Accessibility</span>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
   <!-- Footer -->
-  <footer id="about">
+  <footer>
     <p>&copy; 2026 TechBytes Blog. All rights reserved.</p>
-    <p>This is a demo template created by <a href="../index.html">Armin Studio</a></p>
+    <p>
+      TechBytes is a demo blog template created by
+      <a href="../index.html">Armin Studio</a>. Customize it freely, but please keep a reference to the original studio.
+    </p>
   </footer>
+
+  <script>
+    (function () {
+      const navLinks = document.querySelectorAll(".nav-link");
+      const navLikeLinks = document.querySelectorAll(".nav-link-like");
+      const mobileLinks = document.querySelectorAll(".mobile-link");
+      const pageLinks = document.querySelectorAll("[data-page]");
+      const pageHome = document.getElementById("page-home");
+      const pageArticle = document.getElementById("page-article");
+      const pageCategories = document.getElementById("page-categories");
+      const pageAbout = document.getElementById("page-about");
+      const pages = {
+        home: pageHome,
+        article: pageArticle,
+        categories: pageCategories,
+        about: pageAbout
+      };
+
+      function setActivePage(pageKey) {
+        Object.keys(pages).forEach(function (key) {
+          if (pages[key]) {
+            pages[key].classList.toggle("active", key === pageKey);
+          }
+        });
+
+        // Update main nav active state
+        navLinks.forEach(function (link) {
+          const linkPage = link.getAttribute("data-page");
+          link.classList.toggle("active", linkPage === pageKey);
+        });
+
+        closeMobileNav();
+      }
+
+      // Article mapping
+      const articleMap = {
+        "modern-js": "article-modern-js",
+        "ux-trends": "article-ux-trends",
+        "docker-guide": "article-docker-guide",
+        "pwa": "article-pwa"
+      };
+
+      function openArticle(slug) {
+        if (!articleMap[slug]) return;
+
+        // Switch to article page
+        setActivePage("article");
+
+        // Show selected article, hide others
+        Object.keys(articleMap).forEach(function (key) {
+          const id = articleMap[key];
+          const el = document.getElementById(id);
+          if (!el) return;
+          if (key === slug) {
+            el.classList.remove("hidden");
+          } else {
+            el.classList.add("hidden");
+          }
+        });
+
+        // Scroll into view
+        window.scrollTo({ top: pageArticle.offsetTop - 70, behavior: "smooth" });
+      }
+
+      // Hook up "Read article" links (home + sidebar)
+      document.querySelectorAll("[data-article-link]").forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          const slug = link.getAttribute("data-article-link");
+          openArticle(slug);
+        });
+      });
+
+      // Make entire blog cards clickable (except direct links)
+      document.querySelectorAll(".blog-post").forEach(function (post) {
+        post.addEventListener("click", function (event) {
+          const directLink = event.target.closest("[data-article-link]");
+          if (directLink) return;
+          const slug = post.getAttribute("data-article");
+          if (!slug) return;
+          openArticle(slug);
+        });
+      });
+
+      // Page navigation from header, mobile menu, sidebar, hero buttons, and category cards
+      function handlePageLinkClick(event, link) {
+        const pageKey = link.getAttribute("data-page");
+        if (!pageKey) return;
+        setActivePage(pageKey);
+      }
+
+      pageLinks.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          // allow anchor jump, but still manage page state
+          handlePageLinkClick(event, link);
+        });
+      });
+
+      // Category cards: go to home and show article list
+      document.querySelectorAll(".category-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          setActivePage("home");
+          window.scrollTo({ top: pageHome.offsetTop - 70, behavior: "smooth" });
+        });
+      });
+
+      // Mobile nav toggle
+      const navToggle = document.getElementById("navToggle");
+      const mobileNav = document.getElementById("mobileNav");
+
+      function openMobileNav() {
+        mobileNav.classList.add("open");
+      }
+
+      function closeMobileNav() {
+        mobileNav.classList.remove("open");
+      }
+
+      if (navToggle && mobileNav) {
+        navToggle.addEventListener("click", function () {
+          if (mobileNav.classList.contains("open")) {
+            closeMobileNav();
+          } else {
+            openMobileNav();
+          }
+        });
+      }
+
+      // Close mobile nav when mobile links are used
+      mobileLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          closeMobileNav();
+        });
+      });
+
+      // Close mobile nav on resize to desktop
+      window.addEventListener("resize", function () {
+        if (window.innerWidth > 768) {
+          closeMobileNav();
+        }
+      });
+
+      // Ensure initial state: show home page
+      setActivePage("home");
+    })();
+  </script>
 </body>
 </html>
