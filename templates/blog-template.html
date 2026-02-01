@@ -3,44 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TechBytes - Technology Blog</title>
+  <title>TechBytes - Engineering & Product Blog</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #f4f5f7;
+      /* Softer, friendlier theme */
+      --bg: #f6f4ff;
       --bg-alt: #ffffff;
-      --border-subtle: #e0e4ea;
-      --border-strong: #cbd2e1;
-      --accent: #1f4f8a;
-      --accent-soft: #f0f4fb;
-      --accent-muted: #3b82f6;
+      --border-subtle: #e1ddff;
+      --border-strong: #c6c1ff;
+      --accent: #635bff;
+      --accent-soft: #f0efff;
+      --accent-alt: #ff7a59;
       --text-main: #111827;
       --text-muted: #4b5563;
       --text-soft: #6b7280;
       --nav-height: 64px;
-      --radius-lg: 16px;
-      --radius-md: 10px;
+      --radius-lg: 18px;
+      --radius-md: 12px;
       --radius-pill: 999px;
-      --shadow-soft: 0 12px 32px rgba(15, 23, 42, 0.12);
-      --shadow-subtle: 0 8px 24px rgba(15, 23, 42, 0.08);
+      --shadow-soft: 0 16px 40px rgba(15, 23, 42, 0.18);
+      --shadow-subtle: 0 10px 28px rgba(15, 23, 42, 0.12);
       --transition-fast: 0.18s ease-out;
-      --transition-med: 0.3s ease;
     }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
       line-height: 1.7;
       color: var(--text-main);
       background:
-        linear-gradient(to bottom, #e5eaf3 0%, #f7f8fb 160px, #f4f5f7 100%);
+        radial-gradient(circle at top left, rgba(99,91,255,0.18), transparent 55%),
+        radial-gradient(circle at bottom right, rgba(255,122,89,0.12), transparent 50%),
+        #f8fafc;
       min-height: 100vh;
       -webkit-font-smoothing: antialiased;
       scroll-behavior: smooth;
     }
 
     .container {
-      max-width: 1100px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 0 1.25rem;
     }
@@ -53,9 +55,9 @@
     }
 
     .nav-shell {
-      background: rgba(255,255,255,0.97);
-      border-bottom: 1px solid var(--border-subtle);
-      backdrop-filter: blur(16px);
+      background: rgba(248,249,255,0.96);
+      border-bottom: 1px solid rgba(201, 196, 255, 0.7);
+      backdrop-filter: blur(14px);
     }
 
     nav {
@@ -69,21 +71,21 @@
     .logo-wrap {
       display: flex;
       align-items: center;
-      gap: 0.6rem;
+      gap: 0.65rem;
     }
 
     .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: var(--accent);
+      width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ff7a59, #ffb86b);
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #ffffff;
+      color: #1f2933;
       font-size: 0.9rem;
-      font-weight: 700;
-      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.3);
+      font-weight: 800;
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.35);
     }
 
     .logo-text {
@@ -95,22 +97,21 @@
     .logo-title {
       font-size: 1.05rem;
       font-weight: 700;
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      color: var(--accent);
+      letter-spacing: 0.02em;
+      color: #111827;
     }
 
     .logo-sub {
       font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: var(--text-soft);
+      color: #6b7280;
     }
 
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 1.5rem;
+      gap: 1.6rem;
       list-style: none;
     }
 
@@ -151,14 +152,14 @@
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      gap: 0.15rem;
+      gap: 0.2rem;
     }
 
     .pill-cta {
       border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
-      padding: 0.3rem 0.7rem;
-      font-size: 0.75rem;
+      border: 1px solid rgba(201,196,255,0.9);
+      padding: 0.3rem 0.75rem;
+      font-size: 0.78rem;
       color: var(--text-soft);
       display: inline-flex;
       align-items: center;
@@ -168,23 +169,23 @@
     }
 
     .pill-cta span {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
-      background: #16a34a;
+      background: #22c55e;
     }
 
     .pill-sub {
       font-size: 0.7rem;
       color: var(--text-soft);
-      letter-spacing: 0.14em;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
     }
 
     .nav-toggle {
       display: none;
       border-radius: var(--radius-pill);
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(201,196,255,0.9);
       padding: 0.35rem 0.75rem;
       background: #ffffff;
       color: var(--text-main);
@@ -195,8 +196,8 @@
       display: none;
       position: fixed;
       inset: calc(var(--nav-height) + 0.5rem) 0 0 0;
-      background: rgba(255,255,255,0.98);
-      border-top: 1px solid var(--border-subtle);
+      background: rgba(248,249,255,0.98);
+      border-top: 1px solid rgba(201,196,255,0.9);
       padding: 1.25rem 1.25rem 2rem;
       z-index: 900;
     }
@@ -209,7 +210,7 @@
       list-style: none;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.8rem;
       margin-bottom: 1.25rem;
     }
 
@@ -217,10 +218,10 @@
       text-decoration: none;
       color: var(--text-main);
       font-size: 0.95rem;
-      padding: 0.55rem 0.8rem;
+      padding: 0.6rem 0.85rem;
       border-radius: var(--radius-md);
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      background: #ffffff;
+      border: 1px solid rgba(221,217,255,0.9);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -244,19 +245,19 @@
 
     /* Hero */
     .hero-shell {
-      padding: 2.2rem 0 2.2rem;
+      padding: 2.4rem 0 2.4rem;
     }
 
     @media (min-width: 768px) {
       .hero-shell {
-        padding: 2.8rem 0 2.8rem;
+        padding: 3rem 0 3rem;
       }
     }
 
     .hero {
       display: grid;
       grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.4fr);
-      gap: 2.4rem;
+      gap: 2.6rem;
       align-items: center;
     }
 
@@ -271,7 +272,7 @@
       gap: 0.45rem;
       border-radius: var(--radius-pill);
       padding: 0.2rem 0.7rem 0.2rem 0.35rem;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       background: #ffffff;
       margin-bottom: 0.9rem;
     }
@@ -284,7 +285,7 @@
       height: 20px;
       border-radius: 999px;
       font-size: 0.75rem;
-      background: var(--accent);
+      background: #111827;
       color: #ffffff;
       font-weight: 600;
     }
@@ -300,25 +301,29 @@
       border-radius: var(--radius-pill);
       background: var(--accent-soft);
       padding: 0.15rem 0.6rem;
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       color: var(--accent);
       letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
     .hero-title {
-      font-size: clamp(2rem, 3vw, 2.6rem);
-      line-height: 1.15;
+      font-size: clamp(2.1rem, 3.2vw, 2.7rem);
+      line-height: 1.12;
       letter-spacing: -0.03em;
       margin-bottom: 0.8rem;
-      color: var(--accent);
+      color: #111827;
+    }
+
+    .hero-title span {
+      color: var(--accent-alt);
     }
 
     .hero-subtitle {
       font-size: 0.98rem;
       color: var(--text-muted);
       max-width: 32rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
 
     .hero-highlights {
@@ -331,18 +336,18 @@
     .hero-pill {
       border-radius: var(--radius-pill);
       padding: 0.35rem 0.8rem;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-soft);
       background: #ffffff;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
     }
 
     .hero-pill span {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 999px;
       background: var(--accent);
     }
@@ -351,13 +356,13 @@
       display: flex;
       flex-wrap: wrap;
       gap: 0.7rem;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.1rem;
     }
 
     .btn-primary,
     .btn-secondary {
       border-radius: var(--radius-pill);
-      padding: 0.7rem 1.1rem;
+      padding: 0.7rem 1.15rem;
       font-size: 0.9rem;
       border: none;
       cursor: pointer;
@@ -366,23 +371,24 @@
       gap: 0.35rem;
       text-decoration: none;
       white-space: nowrap;
-      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), transform var(--transition-fast);
     }
 
     .btn-primary {
-      background: var(--accent);
+      background: linear-gradient(135deg, #635bff, #8f85ff);
       color: #ffffff;
       font-weight: 600;
       box-shadow: var(--shadow-subtle);
     }
 
     .btn-primary:hover {
-      background: #173f6e;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-soft);
     }
 
     .btn-secondary {
       background: #ffffff;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       color: var(--text-main);
       font-weight: 500;
     }
@@ -395,7 +401,7 @@
     .hero-meta {
       display: flex;
       flex-wrap: wrap;
-      gap: 1.5rem;
+      gap: 1.4rem;
       font-size: 0.8rem;
       color: var(--text-soft);
     }
@@ -405,7 +411,6 @@
       color: var(--text-main);
     }
 
-    /* Hero right card */
     .hero-right-wrap {
       position: relative;
       z-index: 0;
@@ -413,9 +418,9 @@
 
     .hero-card {
       border-radius: var(--radius-lg);
-      padding: 1.2rem 1.15rem;
+      padding: 1.2rem 1.2rem 1.1rem;
       background: #ffffff;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       box-shadow: var(--shadow-soft);
     }
 
@@ -433,8 +438,8 @@
     }
 
     .hero-card-label {
-      font-size: 0.75rem;
-      letter-spacing: 0.14em;
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--text-soft);
     }
@@ -447,51 +452,51 @@
 
     .hero-card-chip {
       border-radius: var(--radius-pill);
-      padding: 0.2rem 0.6rem;
-      background: var(--accent-soft);
-      border: 1px solid var(--border-subtle);
-      font-size: 0.75rem;
-      color: var(--accent);
+      padding: 0.2rem 0.7rem;
+      background: #fef3c7;
+      border: 1px solid #facc15;
+      font-size: 0.78rem;
+      color: #92400e;
       text-transform: uppercase;
-      letter-spacing: 0.12em;
+      letter-spacing: 0.1em;
     }
 
     .hero-card-body {
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.1fr);
       gap: 0.9rem;
-      align-items: center;
+      align-items: flex-start;
       margin-bottom: 0.9rem;
     }
 
     .hero-card-text {
-      font-size: 0.82rem;
-      color: var(--text-soft);
+      font-size: 0.84rem;
+      color: var(--text-muted);
     }
 
     .hero-card-metrics {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 0.5rem;
-      font-size: 0.75rem;
+      gap: 0.55rem;
+      font-size: 0.76rem;
       color: var(--text-soft);
     }
 
     .hero-card-metric {
-      border-radius: 10px;
-      border: 1px solid var(--border-subtle);
-      background: #f9fafb;
-      padding: 0.45rem 0.5rem;
+      border-radius: 11px;
+      border: 1px solid rgba(214,210,255,0.9);
+      background: #f9f9ff;
+      padding: 0.45rem 0.55rem;
       display: flex;
       flex-direction: column;
       gap: 0.12rem;
     }
 
     .hero-card-metric span:first-child {
-      font-size: 0.72rem;
-      color: var(--text-soft);
+      font-size: 0.7rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
+      color: var(--text-soft);
     }
 
     .hero-card-metric span:last-child {
@@ -505,7 +510,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 0.5rem;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--text-soft);
     }
 
@@ -516,10 +521,10 @@
     }
 
     .hero-card-dot {
-      width: 8px;
-      height: 8px;
+      width: 9px;
+      height: 9px;
       border-radius: 999px;
-      background: #16a34a;
+      background: #22c55e;
     }
 
     .hero-card-footer-cta {
@@ -542,7 +547,6 @@
       align-items: flex-start;
     }
 
-    /* Pages (multi-page behavior) */
     .page {
       display: none;
       animation: fadeIn 0.2s ease-out;
@@ -578,7 +582,7 @@
       margin-bottom: 1.2rem;
     }
 
-    /* Blog grid */
+    /* Home: article grid */
     .blog-grid {
       display: flex;
       flex-direction: column;
@@ -587,9 +591,9 @@
 
     .blog-post {
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       box-shadow: var(--shadow-subtle);
       display: grid;
       grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.9fr);
@@ -606,18 +610,18 @@
 
     .post-image {
       position: relative;
-      background: var(--accent-soft);
+      background: linear-gradient(135deg, #e5e0ff, #ffe6dd);
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
     .post-image-inner {
-      font-size: 1.9rem;
+      font-size: 2rem;
     }
 
     .post-content {
-      padding: 1.05rem 1.15rem 1.1rem;
+      padding: 1.05rem 1.2rem 1.1rem;
       display: flex;
       flex-direction: column;
       gap: 0.45rem;
@@ -634,10 +638,10 @@
 
     .post-category-pill {
       border-radius: var(--radius-pill);
-      padding: 0.15rem 0.55rem;
-      background: var(--accent-soft);
-      border: 1px solid var(--border-subtle);
-      color: var(--accent);
+      padding: 0.15rem 0.6rem;
+      background: #ede9fe;
+      border: 1px solid #c4b5fd;
+      color: #4c1d95;
       font-size: 0.76rem;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -651,7 +655,7 @@
     }
 
     .post-title {
-      font-size: 1.02rem;
+      font-size: 1.04rem;
       font-weight: 600;
       color: var(--text-main);
       margin-top: 0.05rem;
@@ -682,11 +686,11 @@
 
     .post-tag {
       border-radius: var(--radius-pill);
-      padding: 0.12rem 0.55rem;
+      padding: 0.12rem 0.6rem;
       font-size: 0.72rem;
       color: var(--text-soft);
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      background: #f3f4ff;
+      border: 1px solid rgba(214,210,255,0.9);
     }
 
     .read-more {
@@ -732,17 +736,17 @@
 
     .article-meta-pill {
       border-radius: var(--radius-pill);
-      padding: 0.2rem 0.6rem;
-      border: 1px solid var(--border-subtle);
-      background: var(--accent-soft);
+      padding: 0.2rem 0.65rem;
+      border: 1px solid rgba(214,210,255,0.9);
+      background: #ede9fe;
       font-size: 0.78rem;
-      color: var(--accent);
+      color: #4c1d95;
       text-transform: uppercase;
       letter-spacing: 0.12em;
     }
 
     .article-body {
-      font-size: 0.93rem;
+      font-size: 0.94rem;
       color: var(--text-muted);
       display: flex;
       flex-direction: column;
@@ -779,9 +783,9 @@
 
     .article {
       background: #ffffff;
-      border-radius: 14px;
+      border-radius: 16px;
       padding: 1.15rem 1.2rem 1.3rem;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       box-shadow: var(--shadow-subtle);
     }
 
@@ -789,7 +793,14 @@
       display: none !important;
     }
 
-    /* Categories */
+    /* Categories page */
+    .categories-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.7fr) minmax(0, 1.3fr);
+      gap: 1.4rem;
+      align-items: flex-start;
+    }
+
     .categories-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -798,22 +809,23 @@
     }
 
     .category-card {
-      border-radius: 12px;
+      border-radius: 14px;
       background: #ffffff;
-      border: 1px solid var(--border-subtle);
-      padding: 0.8rem 0.9rem;
+      border: 1px solid rgba(214,210,255,0.9);
+      padding: 0.85rem 0.9rem;
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
       cursor: pointer;
       font-size: 0.86rem;
       box-shadow: var(--shadow-subtle);
-      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
+      transition: border-color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast), background var(--transition-fast);
     }
 
     .category-card:hover {
       border-color: var(--accent);
       box-shadow: var(--shadow-soft);
+      background: #f5f3ff;
       transform: translateY(-1px);
     }
 
@@ -832,19 +844,52 @@
 
     .category-count {
       border-radius: var(--radius-pill);
-      padding: 0.12rem 0.45rem;
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      padding: 0.12rem 0.5rem;
+      background: #f3f4ff;
+      border: 1px solid rgba(214,210,255,0.9);
       color: var(--text-soft);
       font-size: 0.74rem;
     }
 
     .category-desc {
-      font-size: 0.82rem;
+      font-size: 0.83rem;
       color: var(--text-muted);
     }
 
-    /* About */
+    .category-example-panel {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid rgba(214,210,255,0.9);
+      padding: 1rem 1.1rem 1.1rem;
+      box-shadow: var(--shadow-subtle);
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .category-example-panel h3 {
+      font-size: 1rem;
+      margin-bottom: 0.35rem;
+      color: var(--text-main);
+    }
+
+    .category-example-panel small {
+      display: block;
+      margin-bottom: 0.45rem;
+      color: var(--text-soft);
+    }
+
+    .category-example-list {
+      list-style: none;
+      margin-top: 0.35rem;
+    }
+
+    .category-example-list li {
+      margin-bottom: 0.3rem;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    /* About page */
     .about-layout {
       display: grid;
       grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.4fr);
@@ -853,9 +898,9 @@
     }
 
     .about-section {
-      border-radius: 14px;
+      border-radius: 16px;
       background: #ffffff;
-      border: 1px solid var(--border-subtle);
+      border: 1px solid rgba(214,210,255,0.9);
       padding: 1rem 1.1rem 1.1rem;
       box-shadow: var(--shadow-subtle);
       font-size: 0.9rem;
@@ -885,17 +930,41 @@
       margin-bottom: 0.2rem;
     }
 
+    .about-timeline {
+      list-style: none;
+      margin-top: 0.4rem;
+      border-left: 2px solid rgba(214,210,255,0.9);
+      padding-left: 0.7rem;
+    }
+
+    .about-timeline li {
+      margin-bottom: 0.45rem;
+      position: relative;
+      font-size: 0.86rem;
+    }
+
+    .about-timeline li::before {
+      content: "";
+      position: absolute;
+      left: -0.86rem;
+      top: 0.38rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
     .about-meta-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 0.4rem;
-      margin-top: 0.1rem;
+      margin-top: 0.15rem;
     }
 
     .about-meta-card {
-      border-radius: 10px;
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      border-radius: 11px;
+      background: #f5f3ff;
+      border: 1px solid rgba(214,210,255,0.9);
       padding: 0.55rem 0.6rem;
       font-size: 0.8rem;
       color: var(--text-muted);
@@ -923,8 +992,8 @@
 
     .widget {
       background: #ffffff;
-      border-radius: 12px;
-      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      border: 1px solid rgba(214,210,255,0.9);
       padding: 0.95rem 0.95rem 1rem;
       box-shadow: var(--shadow-subtle);
     }
@@ -967,10 +1036,10 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.4rem;
-      border-radius: 9px;
+      border-radius: 10px;
       padding: 0.4rem 0.55rem;
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      background: #f6f5ff;
+      border: 1px solid rgba(214,210,255,0.9);
       font-size: 0.86rem;
     }
 
@@ -981,7 +1050,7 @@
 
     .widget a:hover {
       border-color: var(--accent);
-      background: var(--accent-soft);
+      background: #ede9fe;
     }
 
     .widget p {
@@ -993,9 +1062,9 @@
     .widget input[type="email"] {
       width: 100%;
       padding: 0.7rem 0.7rem;
-      border-radius: 9px;
-      border: 1px solid var(--border-subtle);
-      background: #f9fafb;
+      border-radius: 10px;
+      border: 1px solid rgba(214,210,255,0.9);
+      background: #f9f9ff;
       color: var(--text-main);
       font-size: 0.85rem;
       margin-bottom: 0.55rem;
@@ -1010,7 +1079,7 @@
       padding: 0.7rem;
       border-radius: var(--radius-pill);
       border: none;
-      background: var(--accent);
+      background: linear-gradient(135deg, #635bff, #8f85ff);
       color: #ffffff;
       font-weight: 600;
       font-size: 0.86rem;
@@ -1019,7 +1088,7 @@
     }
 
     .widget button:hover {
-      background: #173f6e;
+      box-shadow: var(--shadow-soft);
     }
 
     .widget-chips {
@@ -1032,23 +1101,23 @@
 
     .widget-chip {
       border-radius: var(--radius-pill);
-      padding: 0.2rem 0.6rem;
+      padding: 0.2rem 0.65rem;
       font-size: 0.76rem;
       color: var(--text-soft);
-      background: #f9fafb;
-      border: 1px solid var(--border-subtle);
+      background: #f3f4ff;
+      border: 1px solid rgba(214,210,255,0.9);
     }
 
     .widget-chip.active {
-      background: var(--accent-soft);
+      background: #ede9fe;
       border-color: var(--accent);
       color: var(--accent);
     }
 
     /* Footer */
     footer {
-      border-top: 1px solid var(--border-subtle);
-      background: #ffffff;
+      border-top: 1px solid rgba(214,210,255,0.9);
+      background: rgba(252,252,255,0.98);
       color: var(--text-soft);
       text-align: center;
       padding: 1.4rem 1.25rem 1.4rem;
@@ -1069,7 +1138,7 @@
       text-decoration: underline;
     }
 
-    /* Back Button (same functionality, more classic look) */
+    /* Back Button */
     .back-btn {
       position: fixed;
       bottom: 1.4rem;
@@ -1086,14 +1155,15 @@
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      border: 1px solid var(--border-subtle);
-      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast);
+      border: 1px solid rgba(214,210,255,0.9);
+      transition: background var(--transition-fast), color var(--transition-fast), box-shadow var(--transition-fast), transform var(--transition-fast);
     }
 
     .back-btn:hover {
-      background: var(--accent);
+      background: linear-gradient(135deg, #635bff, #8f85ff);
       color: #ffffff;
-      box-shadow: 0 16px 36px rgba(15,23,42,0.25);
+      box-shadow: 0 18px 40px rgba(15,23,42,0.3);
+      transform: translateY(-1px);
     }
 
     .back-btn-label {
@@ -1117,6 +1187,12 @@
         position: static;
         order: 2;
       }
+      .categories-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .category-example-panel {
+        margin-top: 0.6rem;
+      }
     }
 
     @media (max-width: 768px) {
@@ -1129,16 +1205,13 @@
         align-items: center;
       }
       .hero-shell {
-        padding: 1.7rem 0 1.8rem;
+        padding: 1.9rem 0 1.9rem;
       }
       .hero-title {
-        font-size: 1.7rem;
+        font-size: 1.8rem;
       }
       .hero-subtitle {
         font-size: 0.9rem;
-      }
-      .hero-actions {
-        gap: 0.5rem;
       }
       .btn-primary,
       .btn-secondary {
@@ -1153,7 +1226,7 @@
         min-height: 130px;
       }
       .post-content {
-        padding: 0.9rem 0.95rem 0.95rem;
+        padding: 0.95rem 0.95rem 0.95rem;
       }
       .sidebar {
         gap: 1rem;
@@ -1194,7 +1267,7 @@
   </style>
 </head>
 <body>
-  <!-- Back Button (kept from original template, same link) -->
+  <!-- Back Button (kept, same functionality) -->
   <a href="../examples.html" class="back-btn">
     <span>←</span>
     <span class="back-btn-label">Back to Examples</span>
@@ -1205,11 +1278,11 @@
     <ul class="nav-mobile-list">
       <li><a href="#home" data-page="home" class="mobile-link"><span>Home</span>Overview</a></li>
       <li><a href="#articles" data-page="home" class="mobile-link"><span>Articles</span>Latest posts</a></li>
-      <li><a href="#categories" data-page="categories" class="mobile-link"><span>Categories</span>Topics</a></li>
-      <li><a href="#about" data-page="about" class="mobile-link"><span>About</span>Template info</a></li>
+      <li><a href="#categories" data-page="categories" class="mobile-link"><span>Topics</span>By area</a></li>
+      <li><a href="#about" data-page="about" class="mobile-link"><span>About</span>Team</a></li>
     </ul>
     <div class="nav-mobile-footer">
-      <span>TechBytes blog template.</span>
+      <span>TechBytes engineering blog.</span>
       <span>Armin Studio • 2026</span>
     </div>
   </div>
@@ -1223,28 +1296,26 @@
             <div class="logo-mark">TB</div>
             <div class="logo-text">
               <div class="logo-title">TechBytes</div>
-              <div class="logo-sub">Template by Armin Studio</div>
+              <div class="logo-sub">Engineering &amp; Product Notes</div>
             </div>
           </div>
 
           <ul class="nav-links">
             <li><a href="#home" data-page="home" class="nav-link active">Home</a></li>
             <li><a href="#articles" data-page="home" class="nav-link">Articles</a></li>
-            <li><a href="#categories" data-page="categories" class="nav-link">Categories</a></li>
-            <li><a href="#about" data-page="about" class="nav-link">About</a></li>
+            <li><a href="#categories" data-page="categories" class="nav-link">Topics</a></li>
+            <li><a href="#about" data-page="about" class="nav-link">About Us</a></li>
           </ul>
 
           <div class="nav-cta">
             <a href="#subscribe" class="pill-cta">
               <span></span>
-              Weekly tech insights
+              New posts every other week
             </a>
-            <div class="pill-sub">Demo template • Armin Studio</div>
+            <div class="pill-sub">Written by the TechBytes team</div>
           </div>
 
-          <button class="nav-toggle" id="navToggle">
-            Menu
-          </button>
+          <button class="nav-toggle" id="navToggle">Menu</button>
         </nav>
       </div>
     </div>
@@ -1256,36 +1327,36 @@
       <div class="hero">
         <div class="hero-left">
           <div class="hero-tagline">
-            <div class="hero-tagline-badge">A</div>
-            <div class="hero-tagline-text">Professional technology blog template</div>
-            <div class="hero-tagline-pill">By Armin Studio</div>
+            <div class="hero-tagline-badge">TB</div>
+            <div class="hero-tagline-text">Inside the TechBytes product &amp; platform team</div>
+            <div class="hero-tagline-pill">Behind our releases</div>
           </div>
           <h1 class="hero-title">
-            A clear, professional home for your technology writing.
+            Notes from the people building <span>TechBytes</span>.
           </h1>
           <p class="hero-subtitle">
-            TechBytes is a structured, mobile-friendly blog template for teams and individuals who want a classic editorial feel without heavy frameworks. Adapt it to your own brand, content, and stack.
+            Shipping a developer‑focused product means learning in public. Here we document the decisions, experiments, and trade‑offs behind TechBytes – from frontend details to how we run incidents.
           </p>
 
           <div class="hero-highlights">
             <div class="hero-pill">
               <span></span>
-              Readable on phones, tablets, and desktops
+              Real stories from our engineers, designers &amp; PMs
             </div>
             <div class="hero-pill">
               <span></span>
-              Designed for long-form articles and series
+              Topics across web, infra, mobile &amp; product culture
             </div>
           </div>
 
           <div class="hero-actions">
-            <a href="#articles" data-page="home" class="btn-primary nav-link-like">Browse latest articles →</a>
-            <a href="#about" data-page="about" class="btn-secondary nav-link-like">Learn about this template</a>
+            <a href="#articles" data-page="home" class="btn-primary nav-link-like">Read our latest post →</a>
+            <a href="#categories" data-page="categories" class="btn-secondary nav-link-like">Explore topics</a>
           </div>
 
           <div class="hero-meta">
-            <div><strong>Content areas</strong> · Web development, design, DevOps, mobile &amp; more</div>
-            <div><strong>Template focus</strong> · Professional, calm, and easy to adapt</div>
+            <div><strong>What you’ll find</strong> · Post‑mortems, architecture notes, design decisions, and product experiments.</div>
+            <div><strong>Why we write</strong> · To keep ourselves honest, and to help other teams facing similar problems.</div>
           </div>
         </div>
 
@@ -1293,32 +1364,33 @@
           <div class="hero-card">
             <div class="hero-card-header">
               <div class="hero-card-meta">
-                <div class="hero-card-label">Included Example</div>
-                <div class="hero-card-title">Modern JavaScript for Product Teams</div>
+                <div class="hero-card-label">Currently featured</div>
+                <div class="hero-card-title">How we finally deleted 40k lines of legacy JS</div>
               </div>
-              <div class="hero-card-chip">Web Development · 12 min</div>
+              <div class="hero-card-chip">Case study</div>
             </div>
 
             <div class="hero-card-body">
               <div class="hero-card-text">
-                The sample articles show how you can structure long-form content with clear headings, summaries, and supporting points — suitable for engineering teams, product organizations, or individual authors.
+                Over the past year, we’ve been migrating TechBytes from a jQuery‑heavy frontend to a modular setup.
+                In our latest article, we walk through what worked, what broke, and how we kept shipping during the transition.
               </div>
               <div class="hero-card-metrics">
                 <div class="hero-card-metric">
-                  <span>Readability</span>
-                  <span>Optimized for mobile</span>
+                  <span>Timeline</span>
+                  <span>11 months, 23 deployments</span>
                 </div>
                 <div class="hero-card-metric">
-                  <span>Structure</span>
-                  <span>Sections &amp; bullets</span>
+                  <span>Impact</span>
+                  <span>30% faster page loads</span>
                 </div>
                 <div class="hero-card-metric">
-                  <span>Topics</span>
-                  <span>Code &amp; product</span>
+                  <span>Team</span>
+                  <span>3 engineers, 1 designer</span>
                 </div>
                 <div class="hero-card-metric">
-                  <span>Style</span>
-                  <span>Neutral &amp; adaptable</span>
+                  <span>Takeaways</span>
+                  <span>Refactor while shipping</span>
                 </div>
               </div>
             </div>
@@ -1326,10 +1398,10 @@
             <div class="hero-card-footer">
               <div class="hero-card-footer-left">
                 <div class="hero-card-dot"></div>
-                <span>Demo only – replace with your own feature article.</span>
+                <span>Written by the Web Platform group · Updated regularly.</span>
               </div>
               <div class="hero-card-footer-cta">
-                View article layout
+                Coming soon on the blog
                 <span>↗</span>
               </div>
             </div>
@@ -1343,40 +1415,40 @@
   <main class="main-shell">
     <div class="container">
       <div class="layout">
-        <!-- PAGE: HOME (Latest articles) -->
+        <!-- PAGE: HOME -->
         <div class="page active" id="page-home">
           <div id="articles">
-            <div class="section-label">Latest articles</div>
-            <div class="section-heading">Recent example posts from TechBytes</div>
+            <div class="section-label">Latest from the team</div>
+            <div class="section-heading">A snapshot of what we’re working on right now</div>
             <div class="section-sub">
-              These articles are sample content that ship with the template. Replace the copy and structure as needed while keeping the layout consistent across your publication.
+              We publish when we have something concrete to share: a launch debrief, a technical decision, or a process change that made life easier for our customers and for us.
             </div>
 
             <div class="blog-grid">
-              <!-- Article 1: Web Development -->
+              <!-- Article 1: Web -->
               <article class="blog-post" data-article="modern-js">
                 <div class="post-image">
                   <div class="post-image-inner">💻</div>
                 </div>
                 <div class="post-content">
                   <div class="post-meta">
-                    <span class="post-category-pill">Web Development</span>
+                    <span class="post-category-pill">Web Platform</span>
                     <div class="post-dot"></div>
-                    <span>March 15, 2026</span>
+                    <span>April 4, 2026</span>
                     <div class="post-dot"></div>
-                    <span>5 min read</span>
+                    <span>7 min read</span>
                   </div>
-                  <h2 class="post-title">Getting Started with Modern JavaScript</h2>
+                  <h2 class="post-title">What “modern JavaScript” means for TechBytes</h2>
                   <p class="post-excerpt">
-                    A concise overview of how modern JavaScript is structured today: modules, async workflows, and patterns that help teams ship reliable interfaces.
+                    How we drew the line between “good enough” and “rewrite” when upgrading our frontend stack – and the conventions we now expect in every new pull request.
                   </p>
                   <div class="post-footer">
                     <div class="post-tags">
-                      <span class="post-tag">ES2026+</span>
-                      <span class="post-tag">Async</span>
-                      <span class="post-tag">Frontend</span>
+                      <span class="post-tag">ES Modules</span>
+                      <span class="post-tag">Codebase Health</span>
+                      <span class="post-tag">Engineering</span>
                     </div>
-                    <a href="#articles" class="read-more" data-article-link="modern-js">Read article →</a>
+                    <a href="#articles" class="read-more" data-article-link="modern-js">Read story →</a>
                   </div>
                 </div>
               </article>
@@ -1388,23 +1460,24 @@
                 </div>
                 <div class="post-content">
                   <div class="post-meta">
-                    <span class="post-category-pill">Design</span>
+                    <span class="post-category-pill">Product Design</span>
                     <div class="post-dot"></div>
-                    <span>March 12, 2026</span>
+                    <span>March 22, 2026</span>
                     <div class="post-dot"></div>
-                    <span>8 min read</span>
+                    <span>9 min read</span>
                   </div>
-                  <h2 class="post-title">UI/UX Design Trends for 2026</h2>
+                  <h2 class="post-title">Designing our new “incident view” from scratch</h2>
                   <p class="post-excerpt">
-                    An editorial look at design movements that are influencing modern products, with practical guidance for incorporating them without over-designing.
+                    Our customers debug production issues under pressure.
+                    This is how we redesigned the incident view to remove clutter, surface the right signals, and ship faster follow‑ups.
                   </p>
                   <div class="post-footer">
                     <div class="post-tags">
                       <span class="post-tag">UX</span>
-                      <span class="post-tag">Product</span>
-                      <span class="post-tag">Patterns</span>
+                      <span class="post-tag">Research</span>
+                      <span class="post-tag">Customer Stories</span>
                     </div>
-                    <a href="#articles" class="read-more" data-article-link="ux-trends">Read article →</a>
+                    <a href="#articles" class="read-more" data-article-link="ux-trends">Read story →</a>
                   </div>
                 </div>
               </article>
@@ -1416,51 +1489,53 @@
                 </div>
                 <div class="post-content">
                   <div class="post-meta">
-                    <span class="post-category-pill">DevOps</span>
+                    <span class="post-category-pill">Infrastructure</span>
                     <div class="post-dot"></div>
                     <span>March 10, 2026</span>
                     <div class="post-dot"></div>
                     <span>10 min read</span>
                   </div>
-                  <h2 class="post-title">Docker for Beginners: Complete Guide</h2>
+                  <h2 class="post-title">How we made local environments boring (in a good way)</h2>
                   <p class="post-excerpt">
-                    A structured introduction to containers, images, and orchestrating local environments for teams new to Docker.
+                    New hires used to spend days setting up TechBytes locally.
+                    Here’s how we moved to a container‑first setup and cut onboarding time in half.
                   </p>
                   <div class="post-footer">
                     <div class="post-tags">
                       <span class="post-tag">Docker</span>
-                      <span class="post-tag">DevOps</span>
-                      <span class="post-tag">Infrastructure</span>
+                      <span class="post-tag">Developer Experience</span>
+                      <span class="post-tag">Onboarding</span>
                     </div>
-                    <a href="#articles" class="read-more" data-article-link="docker-guide">Read article →</a>
+                    <a href="#articles" class="read-more" data-article-link="docker-guide">Read story →</a>
                   </div>
                 </div>
               </article>
 
-              <!-- Article 4: Mobile / PWA -->
+              <!-- Article 4: Mobile -->
               <article class="blog-post" data-article="pwa">
                 <div class="post-image">
                   <div class="post-image-inner">📱</div>
                 </div>
                 <div class="post-content">
                   <div class="post-meta">
-                    <span class="post-category-pill">Mobile</span>
+                    <span class="post-category-pill">Mobile Experience</span>
                     <div class="post-dot"></div>
-                    <span>March 8, 2026</span>
+                    <span>February 27, 2026</span>
                     <div class="post-dot"></div>
-                    <span>7 min read</span>
+                    <span>8 min read</span>
                   </div>
-                  <h2 class="post-title">Building Progressive Web Apps</h2>
+                  <h2 class="post-title">Why our mobile web app matters more than a native client</h2>
                   <p class="post-excerpt">
-                    How to approach PWAs from a practical standpoint: capabilities, offline behavior, and reasonable performance budgets.
+                    TechBytes customers jump between laptop and phone all day.
+                    We chose to invest in a fast PWA instead of rushing a native app – this post explains why.
                   </p>
                   <div class="post-footer">
                     <div class="post-tags">
                       <span class="post-tag">PWA</span>
-                      <span class="post-tag">Mobile Web</span>
                       <span class="post-tag">Performance</span>
+                      <span class="post-tag">Product Bets</span>
                     </div>
-                    <a href="#articles" class="read-more" data-article-link="pwa">Read article →</a>
+                    <a href="#articles" class="read-more" data-article-link="pwa">Read story →</a>
                   </div>
                 </div>
               </article>
@@ -1468,149 +1543,163 @@
           </div>
         </div>
 
-        <!-- PAGE: SINGLE ARTICLE -->
+        <!-- PAGE: ARTICLE -->
         <div class="page" id="page-article">
-          <div class="section-label">Article</div>
-          <div class="section-heading">In-depth reading</div>
+          <div class="section-label">Deep dive</div>
+          <div class="section-heading">Stories from inside TechBytes</div>
           <div class="section-sub">
-            This page shows the long-form layout used for individual posts. Each example article below has different content, but shares the same consistent structure.
+            Each article captures a specific project or decision.
+            We keep them detailed enough that another team could reuse the lessons, not just the conclusion.
           </div>
 
           <!-- Article 1: Modern JS -->
           <article class="article" id="article-modern-js">
             <header class="article-header">
               <div class="article-meta">
-                <span class="article-meta-pill">Web Development</span>
-                <span>Published March 15, 2026</span>
+                <span class="article-meta-pill">Web Platform</span>
+                <span>April 4, 2026</span>
                 <span>•</span>
-                <span>5 min read</span>
+                <span>7 min read</span>
                 <span>•</span>
-                <span>Sample content</span>
+                <span>By Mira, Frontend Engineer</span>
               </div>
-              <h2 class="article-title">Getting Started with Modern JavaScript</h2>
+              <h2 class="article-title">What “modern JavaScript” means for TechBytes</h2>
             </header>
             <div class="article-body">
               <p>
-                JavaScript has evolved from a scripting language for small interactions into a complete platform for building applications across the web, desktop, and mobile.
-                This example article introduces some of the ideas behind that evolution in a way that is suitable for a blog post or internal knowledge base.
+                When TechBytes launched, a lot of our frontend code grew organically.
+                jQuery snippets, small framework experiments, and inline handlers all lived side by side.
+                That worked until we started shipping bigger features and our own velocity slowed down.
               </p>
               <p>
-                In practice, "modern JavaScript" means using the language features that are widely supported and focusing on code that remains readable for your team.
-                It is less about chasing every new proposal and more about using solid patterns consistently.
+                Last year we paused and agreed on what “modern JavaScript” should mean for us.
+                It wasn’t about chasing every new feature; it was about picking a small set of conventions the whole team could rely on.
               </p>
 
-              <h3>1. Writing modular code</h3>
+              <h3>1. We standardized our module structure</h3>
               <p>
-                Breaking your code into modules makes it easier to reason about, test, and reuse. Even in small projects, thinking in terms of modules encourages better structure:
+                We introduced a simple rule: every significant UI lives in its own folder with a clear entry file, tests, and a short README.
+                No more anonymous utilities floating around in random places.
               </p>
               <ul>
-                <li>Organize code by feature rather than by technical layer alone.</li>
-                <li>Keep default exports for main functionality, and named exports for helpers.</li>
-                <li>Avoid unnecessary global variables and implicit dependencies.</li>
+                <li><strong>Feature‑first folders</strong> – search, incidents, billing each have their own home.</li>
+                <li><strong>Named exports only</strong> – to make imports and refactors more traceable.</li>
+                <li><strong>One responsibility per module</strong> – rendering, data fetching, and formatting are separate.</li>
               </ul>
 
-              <h3>2. Handling asynchronous work</h3>
+              <h3>2. We made asynchronous flows visible</h3>
               <p>
-                Many tasks in modern applications are asynchronous: loading data, saving changes, or reacting to user events.
-                The async/await syntax provides a clear way to express these flows without deeply nested callbacks.
+                A lot of user‑facing bugs came from unclear loading and error states.
+                We rewrote critical flows using <code>async/await</code> and explicit state objects instead of ad‑hoc flags.
+              </p>
+              <p>
+                The biggest win: every network interaction now has a dedicated “happy path” and “fallback path” documented right in the code and captured in our tests.
               </p>
 
-              <h3>3. Focusing on clarity first</h3>
+              <h3>3. We optimized for new teammates, not just early contributors</h3>
               <p>
-                Small pieces of code may seem impressive when written in a clever way, but clarity is what allows colleagues—and your future self—to understand and maintain the application.
-                Naming, comments where appropriate, and consistent formatting all contribute to readable JavaScript.
+                The best part of this work is that our onboarding changed.
+                Instead of explaining “how we used to do things”, we point new engineers to a handful of modules that demonstrate the current standard.
+                They can ship confidently within their first week.
               </p>
 
               <p class="article-footer-note">
-                This example is part of the TechBytes template by Armin Studio.
-                Replace it with your own tutorials, notes, or engineering updates while using the same structure for headings, text, and lists.
+                If you are going through a similar upgrade, our main advice is to start small: choose one area, agree on a standard, and document it.
+                Momentum came from a series of small, well‑defined cleanups – not a big‑bang rewrite.
               </p>
             </div>
           </article>
 
-          <!-- Article 2: UX Trends -->
+          <!-- Article 2: Design -->
           <article class="article hidden" id="article-ux-trends">
             <header class="article-header">
               <div class="article-meta">
-                <span class="article-meta-pill">Design</span>
-                <span>Published March 12, 2026</span>
+                <span class="article-meta-pill">Product Design</span>
+                <span>March 22, 2026</span>
                 <span>•</span>
-                <span>8 min read</span>
+                <span>9 min read</span>
                 <span>•</span>
-                <span>Sample content</span>
+                <span>By Lea, Product Designer</span>
               </div>
-              <h2 class="article-title">UI/UX Design Trends for 2026</h2>
+              <h2 class="article-title">Designing our new “incident view” from scratch</h2>
             </header>
             <div class="article-body">
               <p>
-                Design trends can be helpful to observe, as long as they do not become strict rules.
-                The goal of any interface is to communicate clearly and support the user's objectives.
-                With that in mind, trends are simply patterns that many teams have found useful in a given period.
+                Our incident view is one of the most stressful places in TechBytes:
+                people come here when something is wrong in production.
+                For a long time, the layout felt like a collection of useful widgets that didn’t quite fit together.
+              </p>
+              <p>
+                We rebuilt it from the ground up with one goal: help on‑call engineers answer “what changed?” in under a minute.
               </p>
 
-              <h3>1. Clear hierarchy and spacing</h3>
+              <h3>1. We started with real incident transcripts</h3>
               <p>
-                Many modern products are moving back toward calm, carefully spaced layouts that give content room to breathe.
-                This tends to be more sustainable and easier to maintain than highly decorative interfaces.
+                Instead of only looking at numbers in dashboards, we read through transcripts from recent incidents.
+                We highlighted every moment someone had to switch tools, ask a question in chat, or scroll back and forth.
               </p>
 
-              <h3>2. Supporting both light and dark environments</h3>
+              <h3>2. We redesigned navigation around questions, not features</h3>
               <p>
-                While this template uses a light theme by default, it is structured so that color choices can be updated if you decide to introduce a dark mode or alternative theme later.
+                The new layout is grouped by the questions people ask under pressure: <em>Is it widespread?</em>,
+                <em>What changed recently?</em>, and <em>Who needs to know?</em>.
+                Each section contains just enough detail to answer that question, with links to go deeper if needed.
               </p>
 
-              <h3>3. Consistent components</h3>
+              <h3>3. We tested in short, focused sessions</h3>
               <p>
-                Whether you are using a full design system or simply documenting a few components in a shared file, consistency pays off in reduced complexity and faster collaboration between design and engineering.
+                We ran 25‑minute sessions with customers and internal engineers where we replayed anonymized incidents.
+                Instead of asking “do you like this?”, we asked them to talk through their thinking, out loud, while they navigated.
               </p>
 
               <p class="article-footer-note">
-                This is demonstration text included to show how a design-focused article could be presented within the TechBytes layout.
-                Replace the body of the article with your own case studies, visual examples, and guidelines.
+                The final design isn’t glamorous, but it’s calm and predictable.
+                That’s the bar we now use for any surface at TechBytes that people rely on during stressful moments.
               </p>
             </div>
           </article>
 
-          <!-- Article 3: Docker Guide -->
+          <!-- Article 3: DevOps -->
           <article class="article hidden" id="article-docker-guide">
             <header class="article-header">
               <div class="article-meta">
-                <span class="article-meta-pill">DevOps</span>
-                <span>Published March 10, 2026</span>
+                <span class="article-meta-pill">Infrastructure</span>
+                <span>March 10, 2026</span>
                 <span>•</span>
                 <span>10 min read</span>
                 <span>•</span>
-                <span>Sample content</span>
+                <span>By Arun, Platform Engineer</span>
               </div>
-              <h2 class="article-title">Docker for Beginners: Complete Guide</h2>
+              <h2 class="article-title">How we made local environments boring (in a good way)</h2>
             </header>
             <div class="article-body">
               <p>
-                Docker provides a way to package applications and their dependencies into isolated units called containers.
-                This article outline shows how you might introduce Docker concepts to readers who are new to the ecosystem.
+                Every company has that one setup document that nobody really trusts anymore.
+                Ours was 14 pages long and full of “if this doesn’t work, try…” notes.
+                New engineers joked about earning a badge when they finally got TechBytes running locally.
               </p>
 
-              <h3>1. How images and containers differ</h3>
+              <h3>1. We mapped reality before reaching for tools</h3>
               <p>
-                An image is a static description of everything your application needs, while a container is a running instance of that image.
-                Understanding the difference is essential for debugging, scaling, and deploying services.
+                Before introducing anything new, we asked each engineer to write down how they actually ran the app day to day.
+                The answers were surprisingly different.
+                That list became our backlog for standardization.
               </p>
 
-              <h3>2. Local development flows</h3>
+              <h3>2. We adopted containers one service at a time</h3>
               <p>
-                Using Docker locally can help ensure that each member of the team is working from a consistent environment.
-                Compose files, for example, allow you to define services such as databases and queues in a single configuration file.
+                Instead of a massive migration, we started with services that caused the most friction: search, background jobs, and our billing integration.
+                We wrote Dockerfiles with clear comments and kept them versioned alongside the code.
               </p>
 
-              <h3>3. Moving toward production</h3>
+              <h3>3. We treat Docker configuration as product surface</h3>
               <p>
-                When you are ready to deploy, containers can be scheduled and managed in various environments, including cloud providers and on-premise clusters.
-                The specific approach depends on your organization, but the underlying concepts remain similar.
+                Our <code>docker-compose</code> file now acts as a menu of what’s available to developers.
+                We document expected resource usage, dependencies, and any gotchas directly alongside the configuration.
               </p>
 
               <p class="article-footer-note">
-                The DevOps example included in TechBytes is meant as a template.
-                It gives you a starting point for documenting infrastructure practices, release procedures, or onboarding guides in a way that feels consistent with the rest of your blog.
+                The result isn’t perfect, but it is consistent – and new hires now spend their first day reading code, not wrestling with dependencies.
               </p>
             </div>
           </article>
@@ -1619,41 +1708,42 @@
           <article class="article hidden" id="article-pwa">
             <header class="article-header">
               <div class="article-meta">
-                <span class="article-meta-pill">Mobile</span>
-                <span>Published March 8, 2026</span>
+                <span class="article-meta-pill">Mobile Experience</span>
+                <span>February 27, 2026</span>
                 <span>•</span>
-                <span>7 min read</span>
+                <span>8 min read</span>
                 <span>•</span>
-                <span>Sample content</span>
+                <span>By Cora, Mobile Engineer</span>
               </div>
-              <h2 class="article-title">Building Progressive Web Apps</h2>
+              <h2 class="article-title">Why our mobile web app matters more than a native client</h2>
             </header>
             <div class="article-body">
               <p>
-                Progressive Web Apps aim to provide a reliable, fast experience on the open web while offering some of the capabilities that users expect from native applications.
-                This example post outlines talking points you might cover in a real article.
+                We get asked about a native mobile app a lot.
+                For now, we’ve decided to focus our energy on a fast, reliable mobile web experience instead.
+                That decision comes from how our customers actually use TechBytes.
               </p>
 
-              <h3>1. Discoverability and installation</h3>
+              <h3>1. Most mobile sessions are “check‑ins”, not deep work</h3>
               <p>
-                PWAs can be installed from the browser and appear alongside native apps.
-                Clear prompts and a straightforward value proposition help users understand why they might want to install your application.
+                Our data shows that mobile sessions tend to be short: checking an incident, glancing at a dashboard, or confirming that a deploy finished.
+                The PWA is built around those quick questions.
               </p>
 
-              <h3>2. Offline behavior</h3>
+              <h3>2. Offline is about reassurance, not full parity</h3>
               <p>
-                Service workers enable caching strategies that allow parts of your application to continue working even when the network is unavailable.
-                This is especially important for users on mobile connections.
+                We don’t replicate the entire product offline, but we cache what matters:
+                current incidents, recent deploys, and a lightweight activity log.
+                When you’re on a train with spotty coverage, that’s usually all you need.
               </p>
 
-              <h3>3. Performance awareness</h3>
+              <h3>3. A good PWA keeps options open</h3>
               <p>
-                Because PWAs run on a wide range of devices, performance should be considered from the beginning.
-                Monitoring bundle sizes, image formats, and script execution is a practical way to keep the experience responsive.
+                By investing in performance, responsive layouts, and solid offline behavior now, we keep the door open to a native wrapper later – without having to maintain two completely separate products today.
               </p>
 
               <p class="article-footer-note">
-                Replace this example with your own step-by-step implementation guide, performance notes, or case studies while keeping the structure offered by the TechBytes template.
+                If you’re weighing similar trade‑offs, consider where your users actually spend their time and what they need most when they’re away from their desk.
               </p>
             </div>
           </article>
@@ -1661,194 +1751,217 @@
 
         <!-- PAGE: CATEGORIES -->
         <div class="page" id="page-categories">
-          <div class="section-label">Categories</div>
-          <div class="section-heading">Organize content by discipline</div>
+          <div class="section-label">Topics</div>
+          <div class="section-heading">How we organize the TechBytes blog</div>
           <div class="section-sub">
-            Use categories to help readers quickly find content that matches their interests.
-            The descriptions below are examples – adjust the names and summaries to match your publication.
+            TechBytes sits at the intersection of product and infrastructure.
+            We group posts into a few broad areas so you can quickly find the work that’s closest to what you do every day.
           </div>
 
-          <div class="categories-grid" id="categories">
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>Web Development</strong>
-                <span class="category-count">24 posts</span>
-              </div>
-              <div class="category-desc">
-                Practical guides, patterns, and examples for building and maintaining web applications.
+          <div class="categories-layout" id="categories">
+            <div>
+              <div class="categories-grid">
+                <div class="category-card" data-category="webdev">
+                  <div class="category-meta">
+                    <strong>Web Platform</strong>
+                    <span class="category-count">24 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    Everything related to our dashboard, APIs, and browser experience – including performance work and accessibility.
+                  </div>
+                </div>
+
+                <div class="category-card" data-category="design">
+                  <div class="category-meta">
+                    <strong>Product Design</strong>
+                    <span class="category-count">18 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    How we turn feedback into interfaces: research notes, design changes, and content guidelines.
+                  </div>
+                </div>
+
+                <div class="category-card" data-category="devops">
+                  <div class="category-meta">
+                    <strong>Infrastructure</strong>
+                    <span class="category-count">15 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    Our stack under the hood: deployments, observability, scaling stories, and incident reviews.
+                  </div>
+                </div>
+
+                <div class="category-card" data-category="mobile">
+                  <div class="category-meta">
+                    <strong>Mobile Experience</strong>
+                    <span class="category-count">10 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    How TechBytes behaves on phones and tablets, plus the decisions behind our PWA strategy.
+                  </div>
+                </div>
+
+                <div class="category-card" data-category="security">
+                  <div class="category-meta">
+                    <strong>Security</strong>
+                    <span class="category-count">9 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    Practical security work: hardening projects, reviews, and everyday habits we try to keep.
+                  </div>
+                </div>
+
+                <div class="category-card" data-category="culture">
+                  <div class="category-meta">
+                    <strong>Team &amp; Process</strong>
+                    <span class="category-count">11 posts</span>
+                  </div>
+                  <div class="category-desc">
+                    How we run TechBytes as a team: planning, decision‑making, and how we communicate change.
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>Design</strong>
-                <span class="category-count">18 posts</span>
-              </div>
-              <div class="category-desc">
-                Articles that explore user experience, interface design, and product thinking.
-              </div>
-            </div>
+            <aside class="category-example-panel" id="categoryPanel">
+              <h3 id="categoryTitle">Click a topic to see how we think about it</h3>
+              <small id="categorySubtitle">We use this space to share a few representative posts from each area.</small>
 
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>DevOps</strong>
-                <span class="category-count">12 posts</span>
-              </div>
-              <div class="category-desc">
-                Content focused on infrastructure, automation, observability, and release processes.
-              </div>
-            </div>
+              <p id="categoryIntro">
+                Some readers come for architecture details, others for product thinking.
+                Picking a topic on the left updates this panel with example article ideas from that part of the TechBytes blog.
+              </p>
 
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>Mobile</strong>
-                <span class="category-count">15 posts</span>
-              </div>
-              <div class="category-desc">
-                Coverage of native and cross-platform mobile development, including PWAs.
-              </div>
-            </div>
-
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>Security</strong>
-                <span class="category-count">9 posts</span>
-              </div>
-              <div class="category-desc">
-                Security considerations for modern applications, from authentication to secure deployment.
-              </div>
-            </div>
-
-            <div class="category-card" data-page="home">
-              <div class="category-meta">
-                <strong>Product &amp; Strategy</strong>
-                <span class="category-count">11 posts</span>
-              </div>
-              <div class="category-desc">
-                Essays on roadmaps, communication, and decision-making for technology teams.
-              </div>
-            </div>
+              <ul class="category-example-list" id="categoryExamples">
+                <li>Start with <strong>Web Platform</strong> if you care about frontend performance and refactors.</li>
+                <li>Pick <strong>Team &amp; Process</strong> if you’re curious how we work together day to day.</li>
+              </ul>
+            </aside>
           </div>
         </div>
 
         <!-- PAGE: ABOUT -->
         <div class="page" id="page-about">
-          <div class="section-label">About</div>
-          <div class="section-heading">About the TechBytes template</div>
+          <div class="section-label">About us</div>
+          <div class="section-heading">The TechBytes team, in our own words</div>
           <div class="section-sub">
-            TechBytes is a demonstration blog layout created by Armin Studio.
-            It is intended as a starting point for your own professional technology blog or knowledge base.
+            TechBytes is a fictional company for this template – but the way we describe it is how many real product and platform teams work.
+            You can adapt this page to your own story.
           </div>
 
           <div class="about-layout" id="about">
             <section class="about-section">
-              <h3>Purpose of this template</h3>
+              <h3>What TechBytes does</h3>
               <p>
-                The goal of TechBytes is to provide a dependable, well-structured layout that can be used for a wide range of technology topics.
-                It avoids overly experimental visuals and instead focuses on readability and clear navigation.
+                TechBytes is a toolkit for engineering teams who want to understand how their changes behave in the real world.
+                It connects deployment metadata, alerts, and logs so that you can move from “something is wrong” to “this change caused it” with fewer tabs and less guesswork.
               </p>
               <p>
-                Everything is built with HTML, CSS, and a small amount of JavaScript for page switching.
-                You can keep it in this form, or connect it to a static site generator or CMS later.
+                This blog is where we write about what it takes to build that toolkit:
+                the boring infrastructure work, the surprisingly hard UX problems, and the experiments that didn’t work the way we thought they would.
               </p>
               <ul>
-                <li><strong>Professional tone</strong> – neutral color palette and careful typography.</li>
-                <li><strong>Mobile-first</strong> – layout adjusts gracefully on smaller screens.</li>
-                <li><strong>Simple to adapt</strong> – no framework lock-in or build requirements.</li>
+                <li>Our customers are engineering and SRE teams shipping user‑facing products.</li>
+                <li>Our focus is practical: fewer buzzwords, more “here’s exactly what we tried”.</li>
+                <li>Our posts are written by the people who did the work, not a marketing team.</li>
               </ul>
+
               <p class="about-signature">
-                This template is authored by <strong>Armin Studio</strong> in 2026.
-                If you customize the design or content, please retain a reference to the studio to acknowledge the original work.
+                This site layout was designed and built as a template by <strong>Armin Studio</strong>.
+                If you use it for your own company, we appreciate you keeping a small credit link in the footer.
               </p>
             </section>
 
             <section class="about-section">
-              <h3>Structure included in this file</h3>
+              <h3>How we work and what we share</h3>
               <p>
-                The template behaves like a multi-page site using sections that are shown or hidden based on navigation.
-                The following views are included:
+                We’re a small distributed team spread across a few time zones.
+                That shapes both our product and how we collaborate:
               </p>
+              <ul class="about-timeline">
+                <li><strong>Async‑first collaboration</strong> – we write design docs and post‑mortems that work without meetings.</li>
+                <li><strong>Small, frequent changes</strong> – big projects are broken into visible, mergeable steps.</li>
+                <li><strong>Shared ownership</strong> – engineers rotate through product, infra, and support work.</li>
+                <li><strong>Writing as part of the job</strong> – this blog is one of the ways we keep ourselves accountable.</li>
+              </ul>
               <div class="about-meta-grid">
                 <div class="about-meta-card">
-                  <strong>Home &amp; Articles</strong><br />
-                  Landing hero and a list of recent example posts.
+                  <strong>Who writes here</strong><br />
+                  Engineers, designers, PMs, and occasionally leadership.
                 </div>
                 <div class="about-meta-card">
-                  <strong>Article layout</strong><br />
-                  Four different example articles with full-body text.
+                  <strong>How often</strong><br />
+                  Every other week, depending on what we ship.
                 </div>
                 <div class="about-meta-card">
-                  <strong>Categories</strong><br />
-                  Overview of content areas with counts and short descriptions.
+                  <strong>Topics</strong><br />
+                  Anything that taught us something worth sharing.
                 </div>
                 <div class="about-meta-card">
-                  <strong>About</strong><br />
-                  Space to explain your own goals, audience, and publishing cadence.
+                  <strong>Audience</strong><br />
+                  Teams building and running software at similar scale.
                 </div>
               </div>
-              <p>
-                Because this is a template, you are encouraged to replace all placeholder text with your own content, while keeping the navigation structure consistent for your readers.
-              </p>
             </section>
           </div>
         </div>
 
-        <!-- Sidebar (shared) -->
+        <!-- Sidebar -->
         <aside class="sidebar" id="subscribe">
           <div class="widget">
             <div class="widget-header">
-              <h3>Popular Categories</h3>
-              <span class="widget-sub">Example topics</span>
+              <h3>Popular Topics</h3>
+              <span class="widget-sub">Where readers start</span>
             </div>
             <ul>
-              <li><a href="#categories" data-page="categories">Web Development <span>24</span></a></li>
-              <li><a href="#categories" data-page="categories">Design <span>18</span></a></li>
-              <li><a href="#categories" data-page="categories">DevOps <span>12</span></a></li>
-              <li><a href="#categories" data-page="categories">Mobile <span>15</span></a></li>
-              <li><a href="#categories" data-page="categories">Security <span>9</span></a></li>
+              <li><a href="#categories" data-page="categories">Web Platform <span>24</span></a></li>
+              <li><a href="#categories" data-page="categories">Product Design <span>18</span></a></li>
+              <li><a href="#categories" data-page="categories">Infrastructure <span>15</span></a></li>
+              <li><a href="#categories" data-page="categories">Mobile Experience <span>10</span></a></li>
+              <li><a href="#categories" data-page="categories">Team &amp; Process <span>11</span></a></li>
             </ul>
           </div>
 
           <div class="widget">
             <div class="widget-header">
               <h3>Recent Posts</h3>
-              <span class="widget-sub">Sample headlines</span>
+              <span class="widget-sub">From the last few weeks</span>
             </div>
             <ul>
-              <li><a href="#articles" data-article-link="modern-js">Modern JavaScript Guide <span>5 min</span></a></li>
-              <li><a href="#articles" data-article-link="ux-trends">UI/UX Trends 2026 <span>8 min</span></a></li>
-              <li><a href="#articles" data-article-link="docker-guide">Docker for Beginners <span>10 min</span></a></li>
-              <li><a href="#articles" data-article-link="pwa">Progressive Web Apps <span>7 min</span></a></li>
+              <li><a href="#articles" data-article-link="modern-js">What “modern JS” means to us <span>7 min</span></a></li>
+              <li><a href="#articles" data-article-link="ux-trends">Redesigning incident view <span>9 min</span></a></li>
+              <li><a href="#articles" data-article-link="docker-guide">Making local envs boring <span>10 min</span></a></li>
+              <li><a href="#articles" data-article-link="pwa">Why we bet on PWA first <span>8 min</span></a></li>
             </ul>
           </div>
 
           <div class="widget">
             <div class="widget-header">
-              <h3>Subscribe</h3>
-              <span class="widget-sub">Stay informed</span>
+              <h3>Newsletter</h3>
+              <span class="widget-sub">One email a month</span>
             </div>
             <p>
-              Receive occasional updates when new articles, guides, or templates are added.
-              This is a demonstration form – connect it to your own newsletter service in production.
+              We send a short, practical summary of new posts and what we’re working on.
+              No tracking pixels, no marketing drip – just a note from the TechBytes team.
             </p>
-            <input type="email" placeholder="Your email address" />
-            <button type="button" onclick="alert('Thank you for subscribing! (Demo behavior in the TechBytes template.)')">
-              Subscribe to TechBytes
+            <input type="email" placeholder="you@example.com" />
+            <button type="button" onclick="alert('Thanks for subscribing to TechBytes! (Demo only in this template.)')">
+              Get updates from the team
             </button>
           </div>
 
           <div class="widget">
             <div class="widget-header">
               <h3>Tags</h3>
-              <span class="widget-sub">Example filters</span>
+              <span class="widget-sub">Common themes</span>
             </div>
             <div class="widget-chips">
-              <span class="widget-chip active">JavaScript</span>
-              <span class="widget-chip">UX</span>
-              <span class="widget-chip">Docker</span>
+              <span class="widget-chip active">Refactoring</span>
+              <span class="widget-chip">Incidents</span>
+              <span class="widget-chip">Developer Experience</span>
+              <span class="widget-chip">Research</span>
               <span class="widget-chip">PWA</span>
-              <span class="widget-chip">Performance</span>
-              <span class="widget-chip">Accessibility</span>
+              <span class="widget-chip">Team Habits</span>
             </div>
           </div>
         </aside>
@@ -1858,10 +1971,10 @@
 
   <!-- Footer -->
   <footer>
-    <p>&copy; 2026 TechBytes Blog. All rights reserved.</p>
+    <p>&copy; 2026 TechBytes. All content on this site is written by the TechBytes product &amp; engineering team.</p>
     <p>
-      TechBytes is a demo blog template created by
-      <a href="../index.html">Armin Studio</a>. Customize it freely, but please keep a reference to the original studio.
+      Site design and base HTML/CSS template by
+      <a href="../index.html">Armin Studio</a>. If you reuse this layout, please keep a visible credit.
     </p>
   </footer>
 
@@ -1928,7 +2041,7 @@
         window.scrollTo({ top: pageArticle.offsetTop - 70, behavior: "smooth" });
       }
 
-      // Hook up "Read article" links (home + sidebar)
+      // Hook up "Read story" links (home + sidebar)
       document.querySelectorAll("[data-article-link]").forEach(function (link) {
         link.addEventListener("click", function (event) {
           event.preventDefault();
@@ -1948,29 +2061,113 @@
         });
       });
 
-      // Page navigation from header, mobile menu, sidebar, hero buttons, and category cards
-      function handlePageLinkClick(event, link) {
+      // Category panel content
+      const categoryPanelTitle = document.getElementById("categoryTitle");
+      const categoryPanelSubtitle = document.getElementById("categorySubtitle");
+      const categoryPanelIntro = document.getElementById("categoryIntro");
+      const categoryExamplesList = document.getElementById("categoryExamples");
+
+      const categoryCopy = {
+        webdev: {
+          title: "Web Platform at TechBytes",
+          subtitle: "Where we talk about our dashboard, APIs, and browser performance.",
+          intro: "Most of our customer‑visible surface sits here. Posts in this topic often include code snippets, performance graphs, and migration notes.",
+          examples: [
+            "How we tuned our dashboard for slow corporate VPNs.",
+            "Introducing type‑safe API clients across the app.",
+            "Audit: Cleaning up a decade of CSS decisions."
+          ]
+        },
+        design: {
+          title: "Product Design at TechBytes",
+          subtitle: "Research, UX decisions, and the small details that make tools feel calm.",
+          intro: "We share process here: from early sketches to the questions we ask customers before we change a workflow.",
+          examples: [
+            "Running remote usability tests with busy SRE teams.",
+            "Why we stopped chasing dark‑mode screenshots.",
+            "Writing incident copy that reduces anxiety."
+          ]
+        },
+        devops: {
+          title: "Infrastructure at TechBytes",
+          subtitle: "How we ship changes safely and keep systems observable.",
+          intro: "These posts often read like field notes: what we tried, what failed, and what we’d do differently next time.",
+          examples: [
+            "Our first year with canary releases in production.",
+            "Refactoring alerts so on‑call can actually sleep.",
+            "Moving a critical service without a hard cutover."
+          ]
+        },
+        mobile: {
+          title: "Mobile Experience at TechBytes",
+          subtitle: "Keeping TechBytes useful on phones and tablets.",
+          intro: "We focus on short, focused sessions: checking an incident on the train, or confirming a deploy from a café.",
+          examples: [
+            "Designing an incident summary that fits on one screen.",
+            "Optimizing our bundle for mid‑range Android devices.",
+            "Making push notifications more helpful than noisy."
+          ]
+        },
+        security: {
+          title: "Security at TechBytes",
+          subtitle: "Small, continuous improvements instead of rare big pushes.",
+          intro: "We write about how security shows up in everyday decisions: schema changes, logging, and customer support.",
+          examples: [
+            "How we handle access when people change teams.",
+            "Scrubbing sensitive data from logs without losing context.",
+            "Running security reviews that don’t stall delivery."
+          ]
+        },
+        culture: {
+          title: "Team & Process at TechBytes",
+          subtitle: "How we try to run a healthy product and engineering org.",
+          intro: "These posts are about habits rather than tools: how we meet, how we disagree, and how we keep momentum.",
+          examples: [
+            "What changed after we shortened our planning meetings.",
+            "Our approach to sharing responsibility for incidents.",
+            "Why we ask everyone to write one blog post a year."
+          ]
+        }
+      };
+
+      document.querySelectorAll(".category-card").forEach(function (card) {
+        card.addEventListener("click", function () {
+          const key = card.getAttribute("data-category");
+          const info = categoryCopy[key];
+          if (!info) return;
+
+          categoryPanelTitle.textContent = info.title;
+          categoryPanelSubtitle.textContent = info.subtitle;
+          categoryPanelIntro.textContent = info.intro;
+
+          categoryExamplesList.innerHTML = "";
+          info.examples.forEach(function (text) {
+            const li = document.createElement("li");
+            li.textContent = "• " + text;
+            categoryExamplesList.appendChild(li);
+          });
+        });
+      });
+
+      // Page navigation (header, hero buttons, sidebar, mobile)
+      function handlePageLinkClick(link) {
         const pageKey = link.getAttribute("data-page");
         if (!pageKey) return;
         setActivePage(pageKey);
       }
 
       pageLinks.forEach(function (link) {
-        link.addEventListener("click", function (event) {
-          // allow anchor jump, but still manage page state
-          handlePageLinkClick(event, link);
+        link.addEventListener("click", function () {
+          handlePageLinkClick(link);
         });
       });
 
-      // Category cards: go to home and show article list
-      document.querySelectorAll(".category-card").forEach(function (card) {
-        card.addEventListener("click", function () {
-          setActivePage("home");
-          window.scrollTo({ top: pageHome.offsetTop - 70, behavior: "smooth" });
+      navLikeLinks.forEach(function (link) {
+        link.addEventListener("click", function () {
+          handlePageLinkClick(link);
         });
       });
 
-      // Mobile nav toggle
       const navToggle = document.getElementById("navToggle");
       const mobileNav = document.getElementById("mobileNav");
 
@@ -1992,21 +2189,19 @@
         });
       }
 
-      // Close mobile nav when mobile links are used
       mobileLinks.forEach(function (link) {
         link.addEventListener("click", function () {
           closeMobileNav();
         });
       });
 
-      // Close mobile nav on resize to desktop
       window.addEventListener("resize", function () {
         if (window.innerWidth > 768) {
           closeMobileNav();
         }
       });
 
-      // Ensure initial state: show home page
+      // Initial state
       setActivePage("home");
     })();
   </script>
