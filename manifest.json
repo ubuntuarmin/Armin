@@ -1,0 +1,64 @@
+{
+  "name": "Armin Studio - Professional Web Design Agency",
+  "short_name": "Armin Studio",
+  "description": "Affordable modern web design services for small businesses, startups and non-profits. Custom web development with unlimited revisions by Armin Works.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "business",
+    "productivity",
+    "design"
+  ],
+  "keywords": [
+    "Armin Studio",
+    "Armin Works",
+    "web design",
+    "web design armin",
+    "armin studio web design",
+    "armin works web design",
+    "website design",
+    "web development",
+    "affordable web design",
+    "professional web design",
+    "custom websites",
+    "small business websites"
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "description": "View our web design services",
+      "url": "/services.html",
+      "icons": []
+    },
+    {
+      "name": "Pricing",
+      "short_name": "Pricing",
+      "description": "View our pricing plans",
+      "url": "/pricing.html",
+      "icons": []
+    },
+    {
+      "name": "Contact",
+      "short_name": "Contact",
+      "description": "Get in touch with us",
+      "url": "/contact.html",
+      "icons": []
+    }
+  ],
+  "lang": "en-US",
+  "dir": "ltr",
+  "scope": "/"
+}

@@ -1,9 +1,15 @@
 # robots.txt for armin.works
+# Armin Studio (Armin Works) - Professional Web Design Agency
 User-agent: *
 Allow: /
+Crawl-delay: 0
 
 # Sitemaps
 Sitemap: https://armin.works/sitemap.xml
+Sitemap: https://armin.works/sitemap_index.xml
+
+# Additional Resources
+# Visit our humans.txt at https://armin.works/humans.txt
 
 # Block specific user agents (optional)
 User-agent: GPTBot
@@ -11,3 +17,22 @@ Disallow: /
 
 User-agent: ChatGPT-User
 Disallow: /
+
+# Allow all major search engines explicitly
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /

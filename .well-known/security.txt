@@ -1,0 +1,8 @@
+Contact: https://armin.works/contact.html
+Expires: 2027-02-02T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://armin.works/.well-known/security.txt
+
+# Our Security Policy
+# If you discover any security issues with Armin Studio (Armin Works) website,
+# please report them responsibly.

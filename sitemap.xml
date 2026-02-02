@@ -5,7 +5,7 @@
   <!-- Homepage -->
   <url>
     <loc>https://armin.works/</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
@@ -17,7 +17,7 @@
   <!-- Services Page -->
   <url>
     <loc>https://armin.works/services.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -25,7 +25,7 @@
   <!-- Pricing Page -->
   <url>
     <loc>https://armin.works/pricing.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -33,7 +33,7 @@
   <!-- Contact Page -->
   <url>
     <loc>https://armin.works/contact.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -41,7 +41,7 @@
   <!-- Customization Page -->
   <url>
     <loc>https://armin.works/customization.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -49,7 +49,7 @@
   <!-- Guide/Estimate Page -->
   <url>
     <loc>https://armin.works/guide.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -57,7 +57,7 @@
   <!-- Domain Page -->
   <url>
     <loc>https://armin.works/domain.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -65,9 +65,60 @@
   <!-- Host Page -->
   <url>
     <loc>https://armin.works/host.html</loc>
-    <lastmod>2026-01-31</lastmod>
+    <lastmod>2026-02-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+  </url>
+  
+  <!-- Examples Page -->
+  <url>
+    <loc>https://armin.works/examples.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <!-- Template Pages -->
+  <url>
+    <loc>https://armin.works/templates/landing-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://armin.works/templates/corporate-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://armin.works/templates/ecommerce-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://armin.works/templates/restaurant-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://armin.works/templates/portfolio-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://armin.works/templates/blog-template.html</loc>
+    <lastmod>2026-02-02</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
   
 </urlset>

@@ -1,0 +1,24 @@
+/* TEAM */
+  Studio: Armin Studio (Armin Works)
+  Site: https://armin.works
+  Contact: contact [at] armin.works
+  Location: United States
+
+/* SITE */
+  Last update: 2026-02-02
+  Standards: HTML5, CSS3, JavaScript
+  Components: Responsive Design, Modern UI/UX
+  Software: Custom Development
+  Keywords: Armin Studio, Armin Works, web design armin, armin studio web design, armin works web design, professional web design, affordable web design, custom web development
+
+/* THANKS */
+  To all our clients and supporters who trust us with their web design needs.
+  
+/* BRAND */
+  Name: Armin Studio
+  Also known as: Armin Works, Web Design Armin
+  Services: Web Design, Web Development, Logo Design, Responsive Design
+  Specialty: Affordable Modern Web Design for Small Businesses
+  
+  We build modern, affordable websites for small businesses, startups, and non-profits.
+  Unlimited revisions. You only pay when satisfied.
