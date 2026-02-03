@@ -1,5 +1,5 @@
 # robots.txt for armin.works
-# Armin Studio (Armin Works) - Professional Web Design Agency
+# Armin Studio (Armin Works) - Modern Web Design
 User-agent: *
 Allow: /
 Crawl-delay: 0

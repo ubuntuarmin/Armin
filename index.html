@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,8 +7,8 @@
   <!-- Primary Meta Tags -->
   <title>Armin Studio - Affordable Modern Web Design | Professional Website Development</title>
   <meta name="title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
-  <meta name="description" content="Armin Studio: Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions. Get your dream website today!" />
-  <meta name="keywords" content="Armin Studio, Armin Works, web design armin, armin studio web design, armin works web design, web design, affordable web design, modern website design, professional web development, small business websites, custom websites, web design agency, responsive web design, mobile-first design, startup websites" />
+  <meta name="description" content="Armin Studio offers affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions. Get your dream website today!" />
+  <meta name="keywords" content="Armin Studio, Armin Works, web design, affordable web design, modern website design, small business websites, custom websites, responsive web design, mobile-first design, startup websites, website development, web designer, website builder, one page website, multi page website, business website, non-profit website, ecommerce website, portfolio website, landing page design" />
   <meta name="author" content="Armin Studio" />
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
   <meta http-equiv="cache-control" content="no-cache, must-revalidate" />
@@ -24,7 +24,7 @@
   <meta property="og:url" content="https://armin.works/" />
   <meta property="og:site_name" content="Armin Studio" />
   <meta property="og:title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
-  <meta property="og:description" content="Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
+  <meta property="og:description" content="Affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
   <meta property="og:image" content="https://armin.works/logo.png" />
   <meta property="og:locale" content="en_US" />
   
@@ -32,10 +32,16 @@
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://armin.works/" />
   <meta property="twitter:title" content="Armin Studio - Affordable Modern Web Design | Professional Website Development" />
-  <meta property="twitter:description" content="Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
+  <meta property="twitter:description" content="Affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions." />
   <meta property="twitter:image" content="https://armin.works/logo.png" />
   
   <!-- Additional SEO -->
+  <meta name="geo.region" content="US" />
+  <meta name="geo.placename" content="United States" />
+  <meta name="language" content="English" />
+  <meta name="coverage" content="Worldwide" />
+  <meta name="target" content="all" />
+  <meta name="audience" content="all" />
   <meta name="theme-color" content="#020617" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -45,6 +51,9 @@
   <link rel="icon" href="/logo.png" type="image/png">
   <link rel="manifest" href="/manifest.json" />
   <link rel="author" href="/humans.txt" />
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="/logo.png" as="image" type="image/png" />
   
   <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -168,8 +177,8 @@
       );
       padding: 2px;
       box-shadow:
-        0 0 28px rgba(34, 211, 238, 0.75),
-        0 0 50px rgba(99, 102, 241, 0.5);
+        0 0 18px rgba(34, 211, 238, 0.4),
+        0 0 32px rgba(99, 102, 241, 0.25);
     }
 
     .brand-mark-inner {
@@ -279,8 +288,8 @@
       border-radius: var(--radius-pill);
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 20px 48px rgba(34, 211, 238, 0.8),
-        0 0 40px rgba(34, 211, 238, 0.7);
+        0 12px 32px rgba(34, 211, 238, 0.5),
+        0 0 24px rgba(34, 211, 238, 0.4);
       color: #020617;
       font-weight: 700;
       font-size: 13px;
@@ -472,8 +481,8 @@
       color: #020617;
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 24px 60px rgba(34, 211, 238, 0.95),
-        0 0 45px rgba(34, 211, 238, 0.9);
+        0 16px 40px rgba(34, 211, 238, 0.6),
+        0 0 28px rgba(34, 211, 238, 0.5);
       transition: all var(--transition-fast);
       position: relative;
       overflow: hidden;
@@ -491,8 +500,8 @@
     .btn-primary:hover {
       transform: translateY(-3px) scale(1.02);
       box-shadow:
-        0 30px 70px rgba(34, 211, 238, 1),
-        0 0 60px rgba(34, 211, 238, 1);
+        0 20px 50px rgba(34, 211, 238, 0.7),
+        0 0 38px rgba(34, 211, 238, 0.6);
     }
 
     .btn-primary:hover::before {
@@ -869,7 +878,7 @@
           "width": 512,
           "height": 512
         },
-        "description": "Professional web design agency offering affordable, modern websites for small businesses, startups and non-profits.",
+        "description": "Affordable, modern websites for small businesses, startups and non-profits.",
         "address": {
           "@type": "PostalAddress",
           "addressCountry": "US"
@@ -899,7 +908,7 @@
         "@id": "https://armin.works/#service",
         "name": "Armin Studio Web Design Services",
         "image": "https://armin.works/logo.png",
-        "description": "We offer professional web design services including custom website development, responsive design, and modern web solutions for small businesses, startups, and non-profits.",
+        "description": "We offer custom website development, responsive design, and modern web solutions for small businesses, startups, and non-profits.",
         "priceRange": "$$$",
         "areaServed": {
           "@type": "Country",
@@ -911,10 +920,25 @@
           "Responsive Web Design",
           "Custom Web Development",
           "Small Business Websites",
-          "E-commerce Web Design"
+          "E-commerce Web Design",
+          "Landing Page Design",
+          "Portfolio Website Design",
+          "Business Website Development",
+          "Startup Website Design",
+          "Non-Profit Website Design",
+          "Mobile-Friendly Web Design",
+          "Modern Website Design",
+          "Affordable Web Design"
         ],
         "provider": {
           "@id": "https://armin.works/#organization"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "5",
+          "highPrice": "500",
+          "offerCount": "10"
         }
       },
       {
@@ -928,7 +952,7 @@
         "about": {
           "@id": "https://armin.works/#organization"
         },
-        "description": "Professional web design agency offering affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions.",
+        "description": "Affordable, modern websites for small businesses, startups & non-profits. Custom web development with unlimited revisions.",
         "inLanguage": "en-US"
       },
       {
@@ -993,7 +1017,6 @@
           </a>
           <div class="brand-text">
             <div class="brand-title">Armin Studio</div>
-            <div class="brand-sub">Professional Web Design Agency</div>
           </div>
         </div>
         <nav class="nav-links" aria-label="Main navigation">
@@ -1020,10 +1043,9 @@
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="pricing.html">Pricing</a>
-        <a href="guide.html">Quote estimate</a>
+        <a href="guide.html">Estimate</a>
         <a href="contact.html">Contact</a>
         <a href="customization.html">Customization</a>
-         <a href="guide.html">Estimate</a>
       </nav>
 
       <!-- HERO -->
@@ -1243,7 +1265,7 @@
 
   <footer role="contentinfo">
     <div class="footer-inner">
-      <div>© <span id="year"></span> Armin Studio. All rights reserved. Professional Web Design Services.</div>
+      <div>© <span id="year"></span> Armin Studio. All rights reserved.</div>
       <nav class="footer-links" aria-label="Footer navigation">
         <a href="index.html">Home</a>
         <span>•</span>
@@ -1251,7 +1273,7 @@
         <span>•</span>
         <a href="pricing.html">Pricing</a>
         <span>•</span>
-        <a href="guide.html">Quote</a>
+        <a href="guide.html">Estimate</a>
         <span>•</span>
         <a href="contact.html">Contact</a>
         <span>•</span>
