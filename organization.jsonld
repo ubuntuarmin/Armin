@@ -18,7 +18,7 @@
     "height": 512,
     "caption": "Armin Studio Logo"
   },
-  "description": "Armin Studio (Armin Works) is a professional web design agency offering affordable, modern websites for small businesses, startups and non-profits. We specialize in custom web development with unlimited revisions.",
+  "description": "Armin Studio (Armin Works) offers affordable, modern websites for small businesses, startups and non-profits. We specialize in custom web development with unlimited revisions.",
   "slogan": "Affordable Modern Web Design",
   "foundingDate": "2024",
   "address": {
@@ -59,7 +59,7 @@
       "itemOffered": {
         "@type": "Service",
         "name": "Web Design Services",
-        "description": "Professional web design and development for small businesses",
+        "description": "Web design and development for small businesses",
         "serviceType": "Web Design"
       },
       "priceSpecification": {
