@@ -74,12 +74,15 @@
   .typing-wrap {
     flex-wrap: wrap;
     min-height: 3.6em; /* Reserve space for ~2-3 lines to prevent layout shift */
+    font-size: 1rem; /* Ensure consistent font size */
   }
 
   .typing-text {
     max-width: 100%;
     white-space: normal;
     border-right-width: 1px;
+    font-size: 1rem; /* Match wrapper font-size for consistent sizing */
+    min-height: 1.4em; /* Maintain minimum height */
   }
 
   /* BUTTON ROWS / PILLS ------------------------------------------------- */
