@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-US">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -51,6 +51,9 @@
   <link rel="icon" href="/logo.png" type="image/png">
   <link rel="manifest" href="/manifest.json" />
   <link rel="author" href="/humans.txt" />
+  
+  <!-- Preload Critical Resources -->
+  <link rel="preload" href="/logo.png" as="image" type="image/png" />
   
   <!-- Preconnect for Performance -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -285,8 +288,8 @@
       border-radius: var(--radius-pill);
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 20px 48px rgba(34, 211, 238, 0.8),
-        0 0 40px rgba(34, 211, 238, 0.7);
+        0 12px 32px rgba(34, 211, 238, 0.5),
+        0 0 24px rgba(34, 211, 238, 0.4);
       color: #020617;
       font-weight: 700;
       font-size: 13px;
@@ -478,8 +481,8 @@
       color: #020617;
       background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       box-shadow:
-        0 24px 60px rgba(34, 211, 238, 0.95),
-        0 0 45px rgba(34, 211, 238, 0.9);
+        0 16px 40px rgba(34, 211, 238, 0.6),
+        0 0 28px rgba(34, 211, 238, 0.5);
       transition: all var(--transition-fast);
       position: relative;
       overflow: hidden;
@@ -497,8 +500,8 @@
     .btn-primary:hover {
       transform: translateY(-3px) scale(1.02);
       box-shadow:
-        0 30px 70px rgba(34, 211, 238, 1),
-        0 0 60px rgba(34, 211, 238, 1);
+        0 20px 50px rgba(34, 211, 238, 0.7),
+        0 0 38px rgba(34, 211, 238, 0.6);
     }
 
     .btn-primary:hover::before {
@@ -917,10 +920,25 @@
           "Responsive Web Design",
           "Custom Web Development",
           "Small Business Websites",
-          "E-commerce Web Design"
+          "E-commerce Web Design",
+          "Landing Page Design",
+          "Portfolio Website Design",
+          "Business Website Development",
+          "Startup Website Design",
+          "Non-Profit Website Design",
+          "Mobile-Friendly Web Design",
+          "Modern Website Design",
+          "Affordable Web Design"
         ],
         "provider": {
           "@id": "https://armin.works/#organization"
+        },
+        "offers": {
+          "@type": "AggregateOffer",
+          "priceCurrency": "USD",
+          "lowPrice": "5",
+          "highPrice": "500",
+          "offerCount": "10"
         }
       },
       {
