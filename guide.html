@@ -25,6 +25,11 @@
   <meta property="og:title" content="Free Website Quote Calculator | Armin Studio" />
   <meta property="og:description" content="Get an instant, free quote for your website project. Transparent pricing." />
   <meta property="og:image" content="https://armin.works/logo.png" />
+
+  <!-- Freshness Signals for SEO -->
+  <meta name="last-modified" content="2026-02-03T12:19:36Z" />
+  <meta property="article:modified_time" content="2026-02-03T12:19:36Z" />
+  <meta property="og:updated_time" content="2026-02-03T12:19:36Z" />
   
   <link rel="manifest" href="/manifest.json" />
   <link rel="author" href="/humans.txt" />
@@ -200,16 +205,29 @@
       color: var(--text-muted);
     }
 
-    .nav-links a {
+        .nav-links a {
       position: relative;
-      padding-bottom: 4px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      transition: all var(--transition-fast);
+    }
+
+    .nav-links a::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(99, 102, 241, 0.1));
+      opacity: 0;
+      transition: opacity var(--transition-fast);
     }
 
     .nav-links a::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: 0;
+      left: 50%;
+      bottom: 2px;
+      transform: translateX(-50%);
       width: 0;
       height: 2px;
       border-radius: 999px;
@@ -217,8 +235,25 @@
       transition: width var(--transition-fast);
     }
 
+    .nav-links a:hover {
+      color: var(--text-main);
+      transform: translateY(-2px);
+    }
+
+    .nav-links a:hover::before {
+      opacity: 1;
+    }
+
     .nav-links a:hover::after {
-      width: 100%;
+      width: 70%;
+    }
+
+    .nav-links a.active {
+      color: var(--accent);
+    }
+
+    .nav-links a.active::after {
+      width: 70%;
     }
 
     .nav-cta {
@@ -266,12 +301,12 @@
       background: #e5e7eb;
     }
 
-    .nav-links-mobile {
+        .nav-links-mobile {
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 4px;
       margin-top: 10px;
-      padding: 12px 14px;
+      padding: 8px 8px;
       border-radius: 18px;
       background: rgba(15, 23, 42, 0.98);
       border: 1px solid rgba(148, 163, 184, 0.5);
@@ -280,7 +315,24 @@
       letter-spacing: 0.16em;
       color: var(--text-muted);
     }
-    .nav-links-mobile a { padding: 4px 0; }
+    
+    .nav-links-mobile a {
+      padding: 10px 12px;
+      border-radius: 10px;
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .nav-links-mobile a:hover {
+      background: rgba(34, 211, 238, 0.1);
+      color: var(--text-main);
+      transform: translateX(4px);
+    }
+
+    .nav-links-mobile a.active {
+      background: rgba(34, 211, 238, 0.15);
+      color: var(--accent);
+    }
 
     @media (min-width: 880px) {
       .nav { margin-bottom: 40px; }
@@ -868,7 +920,7 @@
       }
     }
   </style>
-  <link rel="stylesheet" href="mobile.css" />
+  <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
 
   <!-- Structured Data (JSON-LD) -->
   <script type="application/ld+json">
@@ -1085,6 +1137,18 @@
   </footer>
 
   <script>
+        // Mark active page in navigation
+    (function() {
+      const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+      const navLinks = document.querySelectorAll('.nav-links a, .nav-links-mobile a');
+      navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href');
+        if (linkPage === currentPage || (currentPage === '' && linkPage === 'index.html')) {
+          link.classList.add('active');
+        }
+      });
+    })();
+
     document.getElementById("year").textContent = new Date().getFullYear();
 
     // Mobile nav toggle
