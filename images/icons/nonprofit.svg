@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Non-profit/community icon - hands together -->
+  <g transform="translate(60, 60)">
+    <!-- Heart in center -->
+    <path d="M0 -5 C-10 -15 -20 -10 -20 0 C-20 10 0 20 0 20 C0 20 20 10 20 0 C20 -10 10 -15 0 -5 Z" 
+          fill="#22d3ee" opacity="0.3" stroke="#22d3ee" stroke-width="2"/>
+    
+    <!-- Left hand -->
+    <path d="M-25 5 L-20 0 L-15 10 L-20 15 L-25 20" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="-20" cy="0" r="4" fill="#6366f1"/>
+    
+    <!-- Right hand -->
+    <path d="M25 5 L20 0 L15 10 L20 15 L25 20" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="20" cy="0" r="4" fill="#6366f1"/>
+    
+    <!-- Supporting circles -->
+    <circle cx="-15" cy="-25" r="3" fill="#22d3ee" opacity="0.6"/>
+    <circle cx="15" cy="-25" r="3" fill="#22d3ee" opacity="0.6"/>
+    <circle cx="0" cy="-30" r="3" fill="#6366f1" opacity="0.6"/>
+  </g>
+</svg>

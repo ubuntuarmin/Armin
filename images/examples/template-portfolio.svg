@@ -1,0 +1,27 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Portfolio template preview -->
+  <rect width="400" height="300" fill="#0a0a0a"/>
+  
+  <!-- Header -->
+  <text x="40" y="40" font-size="20" fill="#e5e7eb" font-weight="bold">John Designer</text>
+  <text x="40" y="58" font-size="12" fill="#9ca3af">Creative Portfolio</text>
+  
+  <!-- Grid of work samples -->
+  <rect x="40" y="80" width="100" height="90" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2"/>
+  <rect x="150" y="80" width="100" height="90" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <rect x="260" y="80" width="100" height="90" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2"/>
+  
+  <rect x="40" y="180" width="100" height="90" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  <rect x="150" y="180" width="100" height="90" rx="8" fill="#1e293b" stroke="#22d3ee" stroke-width="2"/>
+  <rect x="260" y="180" width="100" height="90" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2"/>
+  
+  <!-- Project icons -->
+  <circle cx="90" cy="125" r="15" fill="#22d3ee" opacity="0.3"/>
+  <text x="90" y="133" font-size="20" text-anchor="middle">🎨</text>
+  
+  <circle cx="200" cy="125" r="15" fill="#6366f1" opacity="0.3"/>
+  <text x="200" y="133" font-size="20" text-anchor="middle">📱</text>
+  
+  <circle cx="310" cy="125" r="15" fill="#22d3ee" opacity="0.3"/>
+  <text x="310" y="133" font-size="20" text-anchor="middle">💻</text>
+</svg>

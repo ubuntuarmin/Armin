@@ -1,0 +1,21 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Affordable/value icon - price tag with star -->
+  <g transform="translate(60, 60)">
+    <!-- Price tag -->
+    <path d="M-25 -20 L0 -20 L20 0 L0 20 L-25 20 Z" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+    
+    <!-- Hole for string -->
+    <circle cx="-15" cy="0" r="4" fill="#22d3ee" opacity="0.3" stroke="#22d3ee" stroke-width="1"/>
+    
+    <!-- Dollar sign -->
+    <text x="0" y="5" font-size="20" fill="#22d3ee" text-anchor="middle" font-weight="bold">$</text>
+    
+    <!-- Star -->
+    <path d="M25 -25 L28 -18 L36 -17 L30 -11 L32 -3 L25 -7 L18 -3 L20 -11 L14 -17 L22 -18 Z" 
+          fill="#fbbf24" stroke="#22d3ee" stroke-width="1"/>
+    
+    <!-- Sparkles -->
+    <circle cx="-30" cy="-15" r="2" fill="#22d3ee" opacity="0.6"/>
+    <circle cx="-28" cy="15" r="2" fill="#6366f1" opacity="0.6"/>
+  </g>
+</svg>

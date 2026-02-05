@@ -1,0 +1,15 @@
+<svg width="300" height="120" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simple text-based logo example -->
+  <rect width="300" height="120" fill="#020617"/>
+  
+  <!-- Logo -->
+  <text x="150" y="60" font-size="36" fill="#22d3ee" text-anchor="middle" font-weight="bold" letter-spacing="2">BRAND</text>
+  <text x="150" y="85" font-size="12" fill="#6366f1" text-anchor="middle" font-weight="normal" letter-spacing="4">CREATIVE STUDIO</text>
+  
+  <!-- Decorative elements -->
+  <line x1="40" y1="95" x2="120" y2="95" stroke="#22d3ee" stroke-width="2"/>
+  <line x1="180" y1="95" x2="260" y2="95" stroke="#22d3ee" stroke-width="2"/>
+  
+  <!-- Label -->
+  <text x="150" y="115" font-size="10" fill="#9ca3af" text-anchor="middle">Text-Based Logo</text>
+</svg>

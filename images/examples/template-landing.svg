@@ -1,0 +1,32 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Landing page template preview -->
+  <rect width="400" height="300" fill="#020617"/>
+  
+  <!-- Hero section -->
+  <circle cx="200" cy="80" r="40" fill="#22d3ee" opacity="0.2" stroke="#22d3ee" stroke-width="3"/>
+  <text x="200" y="90" font-size="32" text-anchor="middle">🚀</text>
+  
+  <text x="200" y="140" font-size="24" fill="#22d3ee" text-anchor="middle" font-weight="bold">Launch Your Product</text>
+  <rect x="100" y="150" width="200" height="6" rx="3" fill="#6366f1" opacity="0.4"/>
+  <rect x="130" y="165" width="140" height="6" rx="3" fill="#6366f1" opacity="0.3"/>
+  
+  <!-- Features -->
+  <rect x="50" y="190" width="90" height="60" rx="8" fill="#1e293b" opacity="0.5"/>
+  <circle cx="95" cy="210" r="8" fill="#22d3ee"/>
+  <rect x="70" y="225" width="50" height="4" rx="2" fill="#6366f1" opacity="0.5"/>
+  <rect x="75" y="235" width="40" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+  
+  <rect x="155" y="190" width="90" height="60" rx="8" fill="#1e293b" opacity="0.5"/>
+  <circle cx="200" cy="210" r="8" fill="#6366f1"/>
+  <rect x="175" y="225" width="50" height="4" rx="2" fill="#6366f1" opacity="0.5"/>
+  <rect x="180" y="235" width="40" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+  
+  <rect x="260" y="190" width="90" height="60" rx="8" fill="#1e293b" opacity="0.5"/>
+  <circle cx="305" cy="210" r="8" fill="#22d3ee"/>
+  <rect x="280" y="225" width="50" height="4" rx="2" fill="#6366f1" opacity="0.5"/>
+  <rect x="285" y="235" width="40" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+  
+  <!-- CTA button -->
+  <rect x="140" y="265" width="120" height="30" rx="15" fill="#22d3ee"/>
+  <text x="200" y="285" font-size="14" fill="#020617" text-anchor="middle" font-weight="bold">Get Started</text>
+</svg>

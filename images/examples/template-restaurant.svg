@@ -1,0 +1,29 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Restaurant template preview -->
+  <rect width="400" height="300" fill="#1a1a1a"/>
+  
+  <!-- Hero with food image placeholder -->
+  <rect x="0" y="0" width="400" height="120" fill="#2d1810"/>
+  <circle cx="200" cy="60" r="30" fill="#fbbf24" opacity="0.3"/>
+  <text x="200" y="70" font-size="40" text-anchor="middle">🍽️</text>
+  
+  <!-- Restaurant name -->
+  <text x="200" y="110" font-size="24" fill="#fbbf24" text-anchor="middle" font-weight="bold">Bella Cucina</text>
+  
+  <!-- Menu section -->
+  <rect x="20" y="140" width="360" height="140" rx="8" fill="#2a2a2a"/>
+  <text x="40" y="165" font-size="18" fill="#fbbf24" font-weight="bold">Our Menu</text>
+  
+  <!-- Menu items -->
+  <rect x="40" y="180" width="150" height="35" rx="4" fill="#1a1a1a" stroke="#fbbf24" stroke-width="1"/>
+  <text x="50" y="200" font-size="12" fill="#e5e7eb">Pasta Primavera</text>
+  <text x="180" y="200" font-size="12" fill="#fbbf24" text-anchor="end">$14.99</text>
+  
+  <rect x="210" y="180" width="150" height="35" rx="4" fill="#1a1a1a" stroke="#fbbf24" stroke-width="1"/>
+  <text x="220" y="200" font-size="12" fill="#e5e7eb">Margherita Pizza</text>
+  <text x="350" y="200" font-size="12" fill="#fbbf24" text-anchor="end">$12.99</text>
+  
+  <!-- CTA button -->
+  <rect x="140" y="235" width="120" height="35" rx="18" fill="#fbbf24"/>
+  <text x="200" y="258" font-size="14" fill="#1a1a1a" text-anchor="middle" font-weight="bold">Reserve Table</text>
+</svg>
