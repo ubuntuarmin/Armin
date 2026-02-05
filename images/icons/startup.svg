@@ -1,0 +1,25 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Startup/rocket icon -->
+  <g transform="translate(60, 60)">
+    <!-- Rocket body -->
+    <path d="M0 -40 L15 10 L0 5 L-15 10 Z" fill="#6366f1" stroke="#22d3ee" stroke-width="2"/>
+    
+    <!-- Window -->
+    <circle cx="0" cy="-15" r="6" fill="#22d3ee" opacity="0.8"/>
+    
+    <!-- Flames -->
+    <path d="M-12 10 L-8 20 L-10 25 Z" fill="#fbbf24" opacity="0.8"/>
+    <path d="M0 8 L0 22 L-2 28 Z" fill="#ef4444" opacity="0.9"/>
+    <path d="M12 10 L8 20 L10 25 Z" fill="#fbbf24" opacity="0.8"/>
+    
+    <!-- Wings -->
+    <path d="M-15 -10 L-25 5 L-15 5 Z" fill="#1e293b" stroke="#22d3ee" stroke-width="1.5"/>
+    <path d="M15 -10 L25 5 L15 5 Z" fill="#1e293b" stroke="#22d3ee" stroke-width="1.5"/>
+    
+    <!-- Stars -->
+    <circle cx="-30" cy="-25" r="2" fill="#22d3ee"/>
+    <circle cx="25" cy="-30" r="2" fill="#6366f1"/>
+    <circle cx="35" cy="-10" r="2" fill="#22d3ee"/>
+    <circle cx="-35" cy="0" r="2" fill="#6366f1"/>
+  </g>
+</svg>

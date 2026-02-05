@@ -1,0 +1,30 @@
+<svg width="400" height="300" viewBox="0 0 400 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- One-page website mockup -->
+  <rect width="400" height="300" fill="#020617"/>
+  
+  <!-- Browser window -->
+  <rect x="20" y="20" width="360" height="260" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  
+  <!-- Browser chrome -->
+  <rect x="20" y="20" width="360" height="30" rx="8" fill="#1e293b"/>
+  <circle cx="35" cy="35" r="5" fill="#ef4444"/>
+  <circle cx="50" cy="35" r="5" fill="#fbbf24"/>
+  <circle cx="65" cy="35" r="5" fill="#22c55e"/>
+  <rect x="100" y="28" width="200" height="14" rx="7" fill="#0f172a"/>
+  
+  <!-- Hero section -->
+  <rect x="40" y="70" width="320" height="80" rx="4" fill="#1e293b" stroke="#22d3ee" stroke-width="1" opacity="0.5"/>
+  <text x="200" y="100" font-size="20" fill="#22d3ee" text-anchor="middle" font-weight="bold">Your Business Name</text>
+  <rect x="120" y="115" width="160" height="8" rx="4" fill="#6366f1" opacity="0.4"/>
+  <rect x="140" y="130" width="120" height="8" rx="4" fill="#6366f1" opacity="0.3"/>
+  
+  <!-- Content sections -->
+  <rect x="40" y="165" width="150" height="50" rx="4" fill="#1e293b" opacity="0.4"/>
+  <rect x="210" y="165" width="150" height="50" rx="4" fill="#1e293b" opacity="0.4"/>
+  
+  <!-- Footer -->
+  <rect x="40" y="235" width="320" height="30" rx="4" fill="#1e293b" opacity="0.3"/>
+  
+  <!-- Label -->
+  <text x="200" y="295" font-size="14" fill="#22d3ee" text-anchor="middle" font-weight="bold">ONE-PAGE WEBSITE</text>
+</svg>

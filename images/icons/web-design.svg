@@ -1,0 +1,18 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Modern web design icon with browser window and code -->
+  <rect x="15" y="20" width="90" height="70" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  <rect x="15" y="20" width="90" height="15" rx="8" fill="#1e293b"/>
+  <circle cx="25" cy="27.5" r="3" fill="#ef4444"/>
+  <circle cx="35" cy="27.5" r="3" fill="#fbbf24"/>
+  <circle cx="45" cy="27.5" r="3" fill="#22c55e"/>
+  
+  <!-- Code brackets -->
+  <path d="M30 50 L25 60 L30 70" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M50 45 L50 75" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+  <path d="M60 45 L60 75" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+  <path d="M90 50 L95 60 L90 70" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Modern touch -->
+  <circle cx="60" cy="100" r="10" fill="#22d3ee" opacity="0.3"/>
+  <path d="M60 95 L60 105 M55 100 L65 100" stroke="#22d3ee" stroke-width="2" stroke-linecap="round"/>
+</svg>

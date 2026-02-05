@@ -1,0 +1,20 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Flyer/poster design icon -->
+  <rect x="25" y="15" width="70" height="90" rx="4" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  
+  <!-- Header -->
+  <rect x="35" y="25" width="50" height="8" rx="2" fill="#22d3ee"/>
+  
+  <!-- Image placeholder -->
+  <rect x="35" y="40" width="50" height="30" rx="2" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+  <circle cx="45" cy="50" r="4" fill="#6366f1"/>
+  <path d="M35 65 L50 55 L60 60 L85 45" stroke="#6366f1" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Text lines -->
+  <rect x="35" y="77" width="40" height="3" rx="1.5" fill="#6366f1" opacity="0.6"/>
+  <rect x="35" y="84" width="50" height="3" rx="1.5" fill="#6366f1" opacity="0.4"/>
+  <rect x="35" y="91" width="35" height="3" rx="1.5" fill="#6366f1" opacity="0.4"/>
+  
+  <!-- Corner fold -->
+  <path d="M85 15 L85 25 L95 25 Z" fill="#22d3ee" opacity="0.3"/>
+</svg>

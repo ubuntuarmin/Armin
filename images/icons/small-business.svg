@@ -1,0 +1,29 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Small business icon - storefront -->
+  <rect x="20" y="40" width="80" height="60" rx="4" fill="#0f172a" stroke="#22d3ee" stroke-width="2"/>
+  
+  <!-- Awning -->
+  <path d="M15 40 L105 40 L100 50 L20 50 Z" fill="#6366f1" stroke="#22d3ee" stroke-width="1.5"/>
+  <line x1="30" y1="40" x2="25" y2="50" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="45" y1="40" x2="40" y2="50" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="60" y1="40" x2="55" y2="50" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="75" y1="40" x2="70" y2="50" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="90" y1="40" x2="85" y2="50" stroke="#22d3ee" stroke-width="1"/>
+  
+  <!-- Door -->
+  <rect x="50" y="70" width="20" height="30" rx="2" fill="#1e293b" stroke="#6366f1" stroke-width="1.5"/>
+  <circle cx="65" cy="85" r="2" fill="#22d3ee"/>
+  
+  <!-- Windows -->
+  <rect x="30" y="60" width="12" height="15" rx="1" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="36" y1="60" x2="36" y2="75" stroke="#22d3ee" stroke-width="0.5"/>
+  <line x1="30" y1="67.5" x2="42" y2="67.5" stroke="#22d3ee" stroke-width="0.5"/>
+  
+  <rect x="78" y="60" width="12" height="15" rx="1" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+  <line x1="84" y1="60" x2="84" y2="75" stroke="#22d3ee" stroke-width="0.5"/>
+  <line x1="78" y1="67.5" x2="90" y2="67.5" stroke="#22d3ee" stroke-width="0.5"/>
+  
+  <!-- Sign -->
+  <rect x="40" y="25" width="40" height="10" rx="2" fill="#22d3ee"/>
+  <text x="60" y="32" font-size="6" fill="#0f172a" text-anchor="middle" font-weight="bold">OPEN</text>
+</svg>

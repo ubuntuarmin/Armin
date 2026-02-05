@@ -1,0 +1,13 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fast/speed icon -->
+  <g transform="translate(60, 60)">
+    <!-- Lightning bolt -->
+    <path d="M5 -30 L-10 0 L5 0 L-5 30 L20 -5 L5 -5 Z" fill="#22d3ee" stroke="#6366f1" stroke-width="2"/>
+    
+    <!-- Speed lines -->
+    <line x1="-30" y1="-15" x2="-20" y2="-15" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <line x1="-35" y1="-5" x2="-20" y2="-5" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <line x1="-35" y1="5" x2="-22" y2="5" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+    <line x1="-30" y1="15" x2="-18" y2="15" stroke="#22d3ee" stroke-width="2" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>
