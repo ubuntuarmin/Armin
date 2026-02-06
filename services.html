@@ -81,6 +81,14 @@
     .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 14px 40px rgba(15,23,42,0.9);filter:brightness(0.97);}
     .fade-in-up{opacity:0;transform:translateY(26px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
     .fade-in-up.visible{opacity:1;transform:translateY(0);}
+    
+    /* IMAGE ANIMATIONS */
+    .image-zoom{opacity:0;transform:scale(0.85);transition:opacity 0.8s ease-out,transform 0.8s ease-out;}
+    .image-zoom.visible{opacity:1;transform:scale(1);}
+    .image-slide-left{opacity:0;transform:translateX(-30px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .image-slide-left.visible{opacity:1;transform:translateX(0);}
+    .image-slide-right{opacity:0;transform:translateX(30px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    .image-slide-right.visible{opacity:1;transform:translateX(0);}
 
     /* NAV */
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
@@ -298,8 +306,7 @@
           <div class="section-label">PROFESSIONAL WEB DESIGN SERVICES</div>
           <h1 id="services-title" class="page-title">Custom Web Design Services for Your Business</h1>
           <p class="section-sub">
-            Our professional design team and web developers create websites, logos, and flyers that are easy to read, easy to use,
-            and feel modern – on both phones and computers. Explore our affordable web design services below.
+            We create modern websites, logos, and flyers that work beautifully on any device.
           </p>
           <div class="pill-row">
             <span class="pill-tag accent" onclick="window.location.href='pricing.html'" style="cursor:pointer;">
@@ -320,16 +327,15 @@
         <article class="strip hover-lift">
           <h2 id="website-design" class="strip-title"><img src="/images/icons/web-design.svg" alt="Website Design" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" />Professional Website Design – Clean and Modern</h2>
           <p class="strip-sub">
-            Your website is the first place people meet your business or project.
-            We build responsive, modern websites that explain what you do and showcase your company's vision.
+            We build responsive websites that showcase your business.
           </p>
           
           <!-- Visual comparison of layouts -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:30px 0;">
-            <div style="text-align:center;">
+            <div style="text-align:center;" class="image-slide-left">
               <img src="/images/mockups/one-page-layout.svg" alt="One-Page Website Layout Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(34,211,238,0.3);" />
             </div>
-            <div style="text-align:center;">
+            <div style="text-align:center;" class="image-slide-right">
               <img src="/images/mockups/multi-page-layout.svg" alt="Multi-Page Website Layout Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(99,102,241,0.3);" />
             </div>
           </div>
@@ -340,8 +346,7 @@
               <div class="point-text">
                 One‑page websites
                 <span class="point-sub">
-                  A full story on a single page: who you are, what you offer, and how to contact or book you,
-                  arranged in large, easy‑to‑scan blocks. Add menus, forms, and much more.
+                  Tell your full story on a single scrolling page with clear sections.
                 </span>
               </div>
             </li>
@@ -364,18 +369,18 @@
         <article class="strip hover-lift">
           <h2 id="website-features" class="strip-title"><img src="/images/icons/custom-forms.svg" alt="Custom Features" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" />Custom Website Features We Can Add</h2>
           <p class="strip-sub">
-            Our development team focuses on features that actually help your visitors and your business grow, not random effects.
+            Features that help your visitors and grow your business.
           </p>
           
           <!-- Feature demonstrations -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:30px 0;">
-            <div style="text-align:center;">
+            <div style="text-align:center;" class="image-zoom">
               <img src="/images/features/contact-form-demo.svg" alt="Contact Form Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(34,211,238,0.3);" />
             </div>
-            <div style="text-align:center;">
+            <div style="text-align:center;" class="image-zoom">
               <img src="/images/features/calculator-demo.svg" alt="Calculator Tool Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(99,102,241,0.3);" />
             </div>
-            <div style="text-align:center;">
+            <div style="text-align:center;" class="image-zoom">
               <img src="/images/features/analytics-dashboard.svg" alt="Analytics Dashboard Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(34,211,238,0.3);" />
             </div>
           </div>
@@ -474,13 +479,13 @@
           
           <!-- Logo examples -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:30px 0;background:rgba(15,23,42,0.5);padding:30px;border-radius:16px;">
-            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(34,211,238,0.2);">
+            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(34,211,238,0.2);" class="image-zoom">
               <img src="/images/examples/logo-text.svg" alt="Text-Based Logo Example" style="max-width:100%;height:auto;" />
             </div>
-            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(99,102,241,0.2);">
+            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(99,102,241,0.2);" class="image-zoom">
               <img src="/images/examples/logo-icon-text.svg" alt="Icon + Text Logo Example" style="max-width:100%;height:auto;" />
             </div>
-            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(34,211,238,0.2);">
+            <div style="text-align:center;padding:20px;background:rgba(2,6,23,0.8);border-radius:12px;border:1px solid rgba(34,211,238,0.2);" class="image-zoom">
               <img src="/images/examples/logo-modern.svg" alt="Modern Minimal Logo Example" style="max-width:100%;height:auto;" />
             </div>
           </div>
@@ -724,7 +729,7 @@
       },
       {threshold:0.12}
     );
-    document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right").forEach((el)=>observer.observe(el));
   </script>
 </body>
 </html>
