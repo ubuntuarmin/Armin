@@ -428,8 +428,9 @@
             <div style="text-align:center;" class="image-zoom stagger-1">
               <img src="/images/features/contact-form-demo.svg" alt="Contact Form Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(34,211,238,0.3);" />
             </div>
-            <div style="text-align:center;" class="image-zoom stagger-2">
-              <img src="/images/features/calculator-demo.svg" alt="Calculator Tool Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(99,102,241,0.3);" />
+            <div style="text-align:center;cursor:pointer;" class="image-zoom stagger-2" onclick="openCalculatorModal()">
+              <img src="/images/features/calculator-demo.svg" alt="Calculator Tool Example - Click to try" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(99,102,241,0.3);transition:all 0.3s;" onmouseover="this.style.transform='scale(1.05)';this.style.borderColor='rgba(34,211,238,0.6)'" onmouseout="this.style.transform='scale(1)';this.style.borderColor='rgba(99,102,241,0.3)'" />
+              <p style="margin-top:10px;color:#22d3ee;font-size:14px;font-weight:600;">Click to try the calculator →</p>
             </div>
             <div style="text-align:center;" class="image-zoom stagger-3">
               <img src="/images/features/analytics-dashboard.svg" alt="Analytics Dashboard Example" style="max-width:100%;height:auto;border-radius:12px;border:2px solid rgba(34,211,238,0.3);" />
@@ -742,6 +743,117 @@
     </div>
   </footer>
 
+  <!-- Calculator Modal -->
+  <div id="calculatorModal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;padding:20px;overflow-y:auto;">
+    <div style="background:#020617;max-width:1100px;width:100%;border-radius:24px;border:2px solid rgba(34,211,238,0.4);position:relative;box-shadow:0 25px 50px -12px rgba(0,0,0,0.5);max-height:90vh;overflow-y:auto;">
+      <!-- Close button -->
+      <button onclick="closeCalculatorModal()" style="position:absolute;top:20px;right:20px;background:rgba(34,211,238,0.2);border:none;color:#22d3ee;width:40px;height:40px;border-radius:50%;cursor:pointer;font-size:24px;font-weight:bold;transition:all 0.3s;z-index:10;" onmouseover="this.style.background='rgba(34,211,238,0.3)';this.style.transform='rotate(90deg)'" onmouseout="this.style.background='rgba(34,211,238,0.2)';this.style.transform='rotate(0deg)'">×</button>
+      
+      <div style="padding:40px 30px;">
+        <h3 style="color:#22d3ee;font-size:28px;margin:0 0 10px 0;text-align:center;">Interactive Loan Calculator</h3>
+        <p style="text-align:center;color:#9ca3af;margin:0 0 30px 0;">Calculate your loan payments and see the breakdown</p>
+        
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:30px;max-width:1000px;margin:0 auto;">
+          <!-- Left: Calculator Inputs -->
+          <div style="background:#0f172a;padding:25px;border-radius:16px;border:1px solid rgba(99,102,241,0.3);">
+            <h4 style="color:#e5e7eb;font-size:18px;margin:0 0 20px 0;">Loan Details</h4>
+            
+            <div style="margin-bottom:20px;">
+              <label style="display:block;color:#9ca3af;font-size:13px;margin-bottom:8px;">
+                Loan Amount ($)
+              </label>
+              <input type="number" id="loanAmount" value="50000" min="1000" max="10000000" step="1000"
+                style="width:100%;padding:12px;background:#1e293b;border:1px solid #6366f1;border-radius:8px;color:#e5e7eb;font-size:16px;"
+                oninput="calculateLoan()">
+              <input type="range" id="loanAmountRange" min="1000" max="500000" value="50000" step="1000"
+                style="width:100%;margin-top:8px;"
+                oninput="document.getElementById('loanAmount').value=this.value;calculateLoan()">
+            </div>
+            
+            <div style="margin-bottom:20px;">
+              <label style="display:block;color:#9ca3af;font-size:13px;margin-bottom:8px;">
+                Annual Interest Rate (%)
+              </label>
+              <input type="number" id="interestRate" value="4.5" min="0" max="30" step="0.1"
+                style="width:100%;padding:12px;background:#1e293b;border:1px solid #6366f1;border-radius:8px;color:#e5e7eb;font-size:16px;"
+                oninput="calculateLoan()">
+              <input type="range" id="interestRateRange" min="0" max="15" value="4.5" step="0.1"
+                style="width:100%;margin-top:8px;"
+                oninput="document.getElementById('interestRate').value=this.value;calculateLoan()">
+            </div>
+            
+            <div style="margin-bottom:20px;">
+              <label style="display:block;color:#9ca3af;font-size:13px;margin-bottom:8px;">
+                Loan Term (Years)
+              </label>
+              <input type="number" id="loanTerm" value="30" min="1" max="40" step="1"
+                style="width:100%;padding:12px;background:#1e293b;border:1px solid #6366f1;border-radius:8px;color:#e5e7eb;font-size:16px;"
+                oninput="calculateLoan()">
+              <input type="range" id="loanTermRange" min="1" max="40" value="30" step="1"
+                style="width:100%;margin-top:8px;"
+                oninput="document.getElementById('loanTerm').value=this.value;calculateLoan()">
+            </div>
+            
+            <button onclick="calculateLoan()" 
+              style="width:100%;padding:14px;background:#22d3ee;border:none;border-radius:10px;color:#0f172a;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;"
+              onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 20px rgba(34,211,238,0.4)'"
+              onmouseout="this.style.transform='translateY(0)';this.style.boxShadow='none'">
+              Calculate Payment
+            </button>
+          </div>
+          
+          <!-- Right: Results Display -->
+          <div style="background:#0f172a;padding:25px;border-radius:16px;border:1px solid rgba(34,211,238,0.3);">
+            <h4 style="color:#e5e7eb;font-size:18px;margin:0 0 20px 0;">Payment Breakdown</h4>
+            
+            <div style="background:#1e293b;padding:20px;border-radius:12px;margin-bottom:15px;border:2px solid #22d3ee;">
+              <div style="color:#9ca3af;font-size:13px;margin-bottom:5px;">Monthly Payment</div>
+              <div id="monthlyPayment" style="color:#22d3ee;font-size:32px;font-weight:700;">$268.41</div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+              <div style="background:#1e293b;padding:15px;border-radius:10px;">
+                <div style="color:#9ca3af;font-size:12px;margin-bottom:5px;">Total Interest</div>
+                <div id="totalInterest" style="color:#6366f1;font-size:18px;font-weight:600;">$46,626</div>
+              </div>
+              <div style="background:#1e293b;padding:15px;border-radius:10px;">
+                <div style="color:#9ca3af;font-size:12px;margin-bottom:5px;">Total Amount</div>
+                <div id="totalAmount" style="color:#22d3ee;font-size:18px;font-weight:600;">$96,626</div>
+              </div>
+            </div>
+            
+            <div style="background:#1e293b;padding:15px;border-radius:10px;margin-bottom:15px;">
+              <div style="color:#9ca3af;font-size:12px;margin-bottom:8px;">Payment Distribution</div>
+              <div style="display:flex;height:20px;border-radius:6px;overflow:hidden;">
+                <div id="principalBar" style="background:#22d3ee;width:52%;transition:width 0.5s;"></div>
+                <div id="interestBar" style="background:#6366f1;width:48%;transition:width 0.5s;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;font-size:11px;">
+                <span style="color:#22d3ee;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" style="display:inline-block;vertical-align:middle;margin-right:4px;">
+                    <rect width="12" height="12" fill="#22d3ee" rx="2"/>
+                  </svg>
+                  Principal: <span id="principalPercent">52%</span>
+                </span>
+                <span style="color:#6366f1;">
+                  <svg width="12" height="12" viewBox="0 0 12 12" style="display:inline-block;vertical-align:middle;margin-right:4px;">
+                    <rect width="12" height="12" fill="#6366f1" rx="2"/>
+                  </svg>
+                  Interest: <span id="interestPercent">48%</span>
+                </span>
+              </div>
+            </div>
+            
+            <div style="background:#1e293b;padding:15px;border-radius:10px;">
+              <div style="color:#9ca3af;font-size:12px;margin-bottom:5px;">Total # of Payments</div>
+              <div id="totalPayments" style="color:#e5e7eb;font-size:16px;font-weight:600;">360 payments</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
         // Mark active page in navigation
     (function() {
@@ -787,6 +899,66 @@
       {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
     document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate, .animate-svg").forEach((el)=>observer.observe(el));
+
+    // Calculator Modal Functions
+    function openCalculatorModal() {
+      document.getElementById('calculatorModal').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+      // Calculate on open
+      calculateLoan();
+    }
+
+    function closeCalculatorModal() {
+      document.getElementById('calculatorModal').style.display = 'none';
+      document.body.style.overflow = 'auto';
+    }
+
+    function calculateLoan() {
+      // Get input values
+      const principal = parseFloat(document.getElementById('loanAmount').value) || 50000;
+      const annualRate = parseFloat(document.getElementById('interestRate').value) || 4.5;
+      const years = parseFloat(document.getElementById('loanTerm').value) || 30;
+      
+      // Calculate monthly payment
+      const monthlyRate = annualRate / 100 / 12;
+      const numberOfPayments = years * 12;
+      
+      let monthlyPayment;
+      if (monthlyRate === 0) {
+        monthlyPayment = principal / numberOfPayments;
+      } else {
+        monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numberOfPayments)) / 
+                        (Math.pow(1 + monthlyRate, numberOfPayments) - 1);
+      }
+      
+      // Calculate totals
+      const totalAmount = monthlyPayment * numberOfPayments;
+      const totalInterest = totalAmount - principal;
+      
+      // Calculate percentages
+      const principalPercent = Math.round((principal / totalAmount) * 100);
+      const interestPercent = 100 - principalPercent;
+      
+      // Update display
+      document.getElementById('monthlyPayment').textContent = '$' + monthlyPayment.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('totalInterest').textContent = '$' + totalInterest.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      document.getElementById('totalPayments').textContent = numberOfPayments + ' payments';
+      
+      // Update bars
+      document.getElementById('principalBar').style.width = principalPercent + '%';
+      document.getElementById('interestBar').style.width = interestPercent + '%';
+      document.getElementById('principalPercent').textContent = principalPercent + '%';
+      document.getElementById('interestPercent').textContent = interestPercent + '%';
+    }
+
+    // Close modal on outside click
+    window.addEventListener('click', function(event) {
+      const modal = document.getElementById('calculatorModal');
+      if (event.target === modal) {
+        closeCalculatorModal();
+      }
+    });
   </script>
 </body>
 </html>
