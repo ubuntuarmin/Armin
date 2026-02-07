@@ -39,15 +39,36 @@
     <animate attributeName="opacity" begin="1.3s" dur="0.4s" from="0" to="1" fill="freeze" />
     <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="1" to="0" fill="freeze" />
     
-    <!-- Code lines -->
-    <rect x="80" y="120" width="120" height="8" rx="4" fill="#6366f1" opacity="0.6"/>
-    <rect x="80" y="135" width="180" height="8" rx="4" fill="#22d3ee" opacity="0.5"/>
-    <rect x="100" y="150" width="150" height="8" rx="4" fill="#6366f1" opacity="0.4"/>
-    <rect x="100" y="165" width="200" height="8" rx="4" fill="#22d3ee" opacity="0.6"/>
-    <rect x="80" y="180" width="140" height="8" rx="4" fill="#6366f1" opacity="0.5"/>
+    <!-- Code lines with typing animation -->
+    <rect x="80" y="120" width="0" height="8" rx="4" fill="#6366f1" opacity="0.6">
+      <animate attributeName="width" begin="1.5s" dur="0.5s" from="0" to="120" fill="freeze" />
+    </rect>
+    <rect x="80" y="135" width="0" height="8" rx="4" fill="#22d3ee" opacity="0.5">
+      <animate attributeName="width" begin="1.8s" dur="0.6s" from="0" to="180" fill="freeze" />
+    </rect>
+    <rect x="100" y="150" width="0" height="8" rx="4" fill="#6366f1" opacity="0.4">
+      <animate attributeName="width" begin="2.1s" dur="0.5s" from="0" to="150" fill="freeze" />
+    </rect>
+    <rect x="100" y="165" width="0" height="8" rx="4" fill="#22d3ee" opacity="0.6">
+      <animate attributeName="width" begin="2.4s" dur="0.7s" from="0" to="200" fill="freeze" />
+    </rect>
+    <rect x="80" y="180" width="0" height="8" rx="4" fill="#6366f1" opacity="0.5">
+      <animate attributeName="width" begin="2.7s" dur="0.5s" from="0" to="140" fill="freeze" />
+    </rect>
     
-    <rect x="320" y="120" width="200" height="120" rx="8" fill="#1e293b" opacity="0.3"/>
-    <text x="420" y="185" font-size="32" text-anchor="middle" opacity="0.3">🎨</text>
+    <!-- Design preview area with icon -->
+    <rect x="320" y="120" width="200" height="120" rx="8" fill="#1e293b" opacity="0.3">
+      <animate attributeName="opacity" begin="2s" dur="0.5s" from="0" to="0.3" fill="freeze" />
+    </rect>
+    <!-- Design icon (palette) -->
+    <g opacity="0">
+      <animate attributeName="opacity" begin="2.3s" dur="0.4s" from="0" to="0.5" fill="freeze" />
+      <ellipse cx="420" cy="180" rx="15" ry="20" fill="none" stroke="#6366f1" stroke-width="2"/>
+      <circle cx="414" cy="172" r="3" fill="#22d3ee"/>
+      <circle cx="426" cy="172" r="3" fill="#6366f1"/>
+      <circle cx="414" cy="188" r="3" fill="#22c55e"/>
+      <circle cx="426" cy="188" r="3" fill="#f59e0b"/>
+    </g>
     
     <!-- Cursor blinking -->
     <rect x="210" y="135" width="3" height="8" fill="#22d3ee">
@@ -60,18 +81,36 @@
     <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="0" to="1" fill="freeze" />
     <animate attributeName="opacity" begin="4.5s" dur="0.3s" from="1" to="0" fill="freeze" />
     
-    <!-- Magic sparkles -->
+    <!-- Magic sparkles with movement -->
     <circle cx="200" cy="180" r="4" fill="#22d3ee">
+      <animate attributeName="cx" begin="3.5s" dur="1s" from="200" to="350" fill="freeze" />
+      <animate attributeName="cy" begin="3.5s" dur="1s" from="180" to="160" fill="freeze" />
       <animate attributeName="r" begin="3.5s" dur="0.5s" from="2" to="15" fill="freeze" />
       <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="1" to="0" fill="freeze" />
     </circle>
     <circle cx="350" cy="200" r="4" fill="#6366f1">
+      <animate attributeName="cx" begin="3.7s" dur="0.8s" from="350" to="250" fill="freeze" />
+      <animate attributeName="cy" begin="3.7s" dur="0.8s" from="200" to="180" fill="freeze" />
       <animate attributeName="r" begin="3.7s" dur="0.5s" from="2" to="12" fill="freeze" />
       <animate attributeName="opacity" begin="3.7s" dur="0.5s" from="1" to="0" fill="freeze" />
     </circle>
     <circle cx="280" cy="240" r="4" fill="#22d3ee">
+      <animate attributeName="cx" begin="3.9s" dur="0.7s" from="280" to="300" fill="freeze" />
+      <animate attributeName="cy" begin="3.9s" dur="0.7s" from="240" to="170" fill="freeze" />
       <animate attributeName="r" begin="3.9s" dur="0.5s" from="2" to="18" fill="freeze" />
       <animate attributeName="opacity" begin="3.9s" dur="0.5s" from="1" to="0" fill="freeze" />
+    </circle>
+    
+    <!-- Additional particles moving across -->
+    <circle cx="180" cy="150" r="3" fill="#22c55e">
+      <animate attributeName="cx" begin="3.6s" dur="0.9s" from="180" to="400" fill="freeze" />
+      <animate attributeName="cy" begin="3.6s" dur="0.9s" from="150" to="190" fill="freeze" />
+      <animate attributeName="opacity" begin="3.6s" dur="0.9s" from="1" to="0" fill="freeze" />
+    </circle>
+    <circle cx="450" cy="220" r="3" fill="#f59e0b">
+      <animate attributeName="cx" begin="3.8s" dur="0.8s" from="450" to="200" fill="freeze" />
+      <animate attributeName="cy" begin="3.8s" dur="0.8s" from="220" to="160" fill="freeze" />
+      <animate attributeName="opacity" begin="3.8s" dur="0.8s" from="1" to="0" fill="freeze" />
     </circle>
   </g>
   
@@ -79,47 +118,76 @@
   <g class="website-view" opacity="0">
     <animate attributeName="opacity" begin="4.5s" dur="0.6s" from="0" to="1" fill="freeze" />
     
-    <!-- Hero section -->
+    <!-- Hero section with slide-in animation -->
     <rect x="80" y="110" width="440" height="100" rx="12" fill="#1e293b" stroke="#22d3ee" stroke-width="2">
+      <animate attributeName="y" begin="4.5s" dur="0.5s" from="80" to="110" fill="freeze" />
       <animate attributeName="height" begin="4.5s" dur="0.5s" from="60" to="100" fill="freeze" />
     </rect>
     <text x="300" y="150" font-size="22" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">
       <animate attributeName="opacity" begin="4.8s" dur="0.3s" from="0" to="1" fill="freeze" />
+      <animate attributeName="y" begin="4.8s" dur="0.3s" from="140" to="150" fill="freeze" />
       Your Business Name
     </text>
     <rect x="220" y="165" width="160" height="6" rx="3" fill="#6366f1" opacity="0">
       <animate attributeName="opacity" begin="5s" dur="0.3s" from="0" to="0.6" fill="freeze" />
+      <animate attributeName="width" begin="5s" dur="0.3s" from="0" to="160" fill="freeze" />
     </rect>
     <rect x="240" y="178" width="120" height="6" rx="3" fill="#6366f1" opacity="0">
       <animate attributeName="opacity" begin="5.1s" dur="0.3s" from="0" to="0.4" fill="freeze" />
+      <animate attributeName="width" begin="5.1s" dur="0.3s" from="0" to="120" fill="freeze" />
     </rect>
     <rect x="265" y="192" width="70" height="14" rx="7" fill="#22d3ee" opacity="0">
       <animate attributeName="opacity" begin="5.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+      <animate attributeName="transform" begin="5.3s" dur="0.3s" from="scale(0.5)" to="scale(1)" fill="freeze" />
     </rect>
     
-    <!-- Content cards -->
+    <!-- Content cards with slide-up animation -->
     <g opacity="0">
       <animate attributeName="opacity" begin="5.6s" dur="0.4s" from="0" to="1" fill="freeze" />
-      <rect x="80" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
-      <circle cx="145" cy="265" r="15" fill="#22d3ee" opacity="0.3"/>
-      <rect x="95" y="290" width="100" height="4" rx="2" fill="#6366f1" opacity="0.4"/>
-      <rect x="105" y="300" width="80" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+      <rect x="80" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6">
+        <animate attributeName="y" begin="5.6s" dur="0.4s" from="250" to="230" fill="freeze" />
+      </rect>
+      <circle cx="145" cy="265" r="15" fill="#22d3ee" opacity="0.3">
+        <animate attributeName="r" begin="5.7s" dur="0.3s" from="5" to="15" fill="freeze" />
+      </circle>
+      <rect x="95" y="290" width="100" height="4" rx="2" fill="#6366f1" opacity="0.4">
+        <animate attributeName="width" begin="5.8s" dur="0.2s" from="0" to="100" fill="freeze" />
+      </rect>
+      <rect x="105" y="300" width="80" height="4" rx="2" fill="#6366f1" opacity="0.3">
+        <animate attributeName="width" begin="5.9s" dur="0.2s" from="0" to="80" fill="freeze" />
+      </rect>
     </g>
     
     <g opacity="0">
       <animate attributeName="opacity" begin="5.8s" dur="0.4s" from="0" to="1" fill="freeze" />
-      <rect x="230" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
-      <circle cx="295" cy="265" r="15" fill="#6366f1" opacity="0.3"/>
-      <rect x="245" y="290" width="100" height="4" rx="2" fill="#22d3ee" opacity="0.4"/>
-      <rect x="255" y="300" width="80" height="4" rx="2" fill="#22d3ee" opacity="0.3"/>
+      <rect x="230" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6">
+        <animate attributeName="y" begin="5.8s" dur="0.4s" from="250" to="230" fill="freeze" />
+      </rect>
+      <circle cx="295" cy="265" r="15" fill="#6366f1" opacity="0.3">
+        <animate attributeName="r" begin="5.9s" dur="0.3s" from="5" to="15" fill="freeze" />
+      </circle>
+      <rect x="245" y="290" width="100" height="4" rx="2" fill="#22d3ee" opacity="0.4">
+        <animate attributeName="width" begin="6s" dur="0.2s" from="0" to="100" fill="freeze" />
+      </rect>
+      <rect x="255" y="300" width="80" height="4" rx="2" fill="#22d3ee" opacity="0.3">
+        <animate attributeName="width" begin="6.1s" dur="0.2s" from="0" to="80" fill="freeze" />
+      </rect>
     </g>
     
     <g opacity="0">
       <animate attributeName="opacity" begin="6s" dur="0.4s" from="0" to="1" fill="freeze" />
-      <rect x="380" y="230" width="140" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
-      <circle cx="450" cy="265" r="15" fill="#22d3ee" opacity="0.3"/>
-      <rect x="395" y="290" width="110" height="4" rx="2" fill="#6366f1" opacity="0.4"/>
-      <rect x="405" y="300" width="90" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+      <rect x="380" y="230" width="140" height="100" rx="12" fill="#1e293b" opacity="0.6">
+        <animate attributeName="y" begin="6s" dur="0.4s" from="250" to="230" fill="freeze" />
+      </rect>
+      <circle cx="450" cy="265" r="15" fill="#22d3ee" opacity="0.3">
+        <animate attributeName="r" begin="6.1s" dur="0.3s" from="5" to="15" fill="freeze" />
+      </circle>
+      <rect x="395" y="290" width="110" height="4" rx="2" fill="#6366f1" opacity="0.4">
+        <animate attributeName="width" begin="6.2s" dur="0.2s" from="0" to="110" fill="freeze" />
+      </rect>
+      <rect x="405" y="300" width="90" height="4" rx="2" fill="#6366f1" opacity="0.3">
+        <animate attributeName="width" begin="6.3s" dur="0.2s" from="0" to="90" fill="freeze" />
+      </rect>
     </g>
   </g>
   
@@ -138,7 +206,7 @@
   <!-- Status text -->
   <text x="300" y="380" font-size="16" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">
     <animate attributeName="opacity" begin="7s" dur="0.4s" from="0" to="1" fill="freeze" />
-    Professional Website Ready! ✨
+    Professional Website Ready!
   </text>
   
   <!-- Ambient decorative elements -->
