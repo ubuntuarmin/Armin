@@ -96,6 +96,13 @@
     .stagger-1{transition-delay:0.1s;}
     .stagger-2{transition-delay:0.2s;}
     .stagger-3{transition-delay:0.3s;}
+    
+    /* Accessibility: Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up{transform:none;filter:none;transition:opacity 0.3s ease;}
+      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible{transform:none;filter:none;}
+      .stagger-1,.stagger-2,.stagger-3{transition-delay:0s;}
+    }
 
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
     .nav-left{display:flex;align-items:center;gap:12px;}

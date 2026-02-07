@@ -88,6 +88,12 @@
     .image-zoom.visible{opacity:1;transform:scale(1) rotateZ(0deg);filter:blur(0px);}
     .image-slide-up{opacity:0;transform:translateY(50px) scale(0.92);filter:blur(3px);transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1),transform 0.85s cubic-bezier(0.22,1,0.36,1),filter 0.7s ease-out;}
     .image-slide-up.visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0px);}
+    
+    /* Accessibility: Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in-up,.image-zoom,.image-slide-up{transform:none;filter:none;transition:opacity 0.3s ease;}
+      .fade-in-up.visible,.image-zoom.visible,.image-slide-up.visible{transform:none;filter:none;}
+    }
 
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
     .nav-left{display:flex;align-items:center;gap:12px;}
