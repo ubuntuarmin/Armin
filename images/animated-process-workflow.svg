@@ -1,0 +1,170 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated process workflow - steps progressively appear on scroll -->
+  
+  <!-- Background -->
+  <rect width="600" height="400" fill="#020617" opacity="0"/>
+  
+  <!-- Step 1: Consultation - Animates first -->
+  <g class="step step-1">
+    <circle cx="100" cy="80" r="50" fill="#1e293b" stroke="#22d3ee" stroke-width="4" opacity="0">
+      <animate attributeName="opacity" begin="0s" dur="0.6s" from="0" to="1" fill="freeze" />
+      <animate attributeName="r" begin="0s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="100" cy="80" r="35" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="0.2s" dur="0.4s" from="0" to="0.3" fill="freeze" />
+    </circle>
+    <text x="100" y="75" font-size="36" text-anchor="middle" opacity="0">💬
+      <animate attributeName="opacity" begin="0.4s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="100" y="150" font-size="16" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">1. Consultation
+      <animate attributeName="opacity" begin="0.5s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="100" y="170" font-size="12" fill="#9ca3af" text-anchor="middle" opacity="0">Share your vision
+      <animate attributeName="opacity" begin="0.6s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <g class="arrow arrow-1">
+    <path d="M150 80 L220 80" stroke="#22d3ee" stroke-width="3" stroke-dasharray="5,5" opacity="0" stroke-dashoffset="70">
+      <animate attributeName="opacity" begin="0.8s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+      <animate attributeName="stroke-dashoffset" begin="0.8s" dur="0.5s" from="70" to="0" fill="freeze" />
+    </path>
+    <path d="M215 75 L220 80 L215 85" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" begin="1.2s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 2: Design -->
+  <g class="step step-2">
+    <circle cx="270" cy="80" r="50" fill="#1e293b" stroke="#6366f1" stroke-width="4" opacity="0">
+      <animate attributeName="opacity" begin="1.3s" dur="0.6s" from="0" to="1" fill="freeze" />
+      <animate attributeName="r" begin="1.3s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="270" cy="80" r="35" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" begin="1.5s" dur="0.4s" from="0" to="0.3" fill="freeze" />
+    </circle>
+    <text x="270" y="75" font-size="36" text-anchor="middle" opacity="0">🎨
+      <animate attributeName="opacity" begin="1.7s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="270" y="150" font-size="16" fill="#6366f1" text-anchor="middle" font-weight="bold" opacity="0">2. Design
+      <animate attributeName="opacity" begin="1.8s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="270" y="170" font-size="12" fill="#9ca3af" text-anchor="middle" opacity="0">Create mockups
+      <animate attributeName="opacity" begin="1.9s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <g class="arrow arrow-2">
+    <path d="M320 80 L390 80" stroke="#6366f1" stroke-width="3" stroke-dasharray="5,5" opacity="0" stroke-dashoffset="70">
+      <animate attributeName="opacity" begin="2.1s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+      <animate attributeName="stroke-dashoffset" begin="2.1s" dur="0.5s" from="70" to="0" fill="freeze" />
+    </path>
+    <path d="M385 75 L390 80 L385 85" stroke="#6366f1" stroke-width="3" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" begin="2.5s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 3: Development -->
+  <g class="step step-3">
+    <circle cx="440" cy="80" r="50" fill="#1e293b" stroke="#22d3ee" stroke-width="4" opacity="0">
+      <animate attributeName="opacity" begin="2.6s" dur="0.6s" from="0" to="1" fill="freeze" />
+      <animate attributeName="r" begin="2.6s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="440" cy="80" r="35" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="2.8s" dur="0.4s" from="0" to="0.3" fill="freeze" />
+    </circle>
+    <text x="440" y="75" font-size="36" text-anchor="middle" opacity="0">💻
+      <animate attributeName="opacity" begin="3.0s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="440" y="150" font-size="16" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">3. Development
+      <animate attributeName="opacity" begin="3.1s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="440" y="170" font-size="12" fill="#9ca3af" text-anchor="middle" opacity="0">Build your site
+      <animate attributeName="opacity" begin="3.2s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+  </g>
+  
+  <!-- Arrow down -->
+  <g class="arrow arrow-3">
+    <path d="M440 135 L440 210" stroke="#22d3ee" stroke-width="3" stroke-dasharray="5,5" opacity="0" stroke-dashoffset="75">
+      <animate attributeName="opacity" begin="3.4s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+      <animate attributeName="stroke-dashoffset" begin="3.4s" dur="0.5s" from="75" to="0" fill="freeze" />
+    </path>
+    <path d="M435 205 L440 210 L445 205" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" begin="3.8s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 4: Review -->
+  <g class="step step-4">
+    <circle cx="440" cy="260" r="50" fill="#1e293b" stroke="#6366f1" stroke-width="4" opacity="0">
+      <animate attributeName="opacity" begin="3.9s" dur="0.6s" from="0" to="1" fill="freeze" />
+      <animate attributeName="r" begin="3.9s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="440" cy="260" r="35" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" begin="4.1s" dur="0.4s" from="0" to="0.3" fill="freeze" />
+    </circle>
+    <text x="440" y="255" font-size="36" text-anchor="middle" opacity="0">👀
+      <animate attributeName="opacity" begin="4.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="440" y="330" font-size="16" fill="#6366f1" text-anchor="middle" font-weight="bold" opacity="0">4. Review
+      <animate attributeName="opacity" begin="4.4s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="440" y="350" font-size="12" fill="#9ca3af" text-anchor="middle" opacity="0">Unlimited revisions
+      <animate attributeName="opacity" begin="4.5s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+  </g>
+  
+  <!-- Arrow left -->
+  <g class="arrow arrow-4">
+    <path d="M390 260 L210 260" stroke="#6366f1" stroke-width="3" stroke-dasharray="5,5" opacity="0" stroke-dashoffset="180">
+      <animate attributeName="opacity" begin="4.7s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+      <animate attributeName="stroke-dashoffset" begin="4.7s" dur="0.7s" from="180" to="0" fill="freeze" />
+    </path>
+    <path d="M215 255 L210 260 L215 265" stroke="#6366f1" stroke-width="3" stroke-linecap="round" opacity="0">
+      <animate attributeName="opacity" begin="5.3s" dur="0.2s" from="0" to="0.5" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 5: Launch -->
+  <g class="step step-5">
+    <circle cx="160" cy="260" r="50" fill="#1e293b" stroke="#22d3ee" stroke-width="4" opacity="0">
+      <animate attributeName="opacity" begin="5.4s" dur="0.6s" from="0" to="1" fill="freeze" />
+      <animate attributeName="r" begin="5.4s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="160" cy="260" r="35" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="5.6s" dur="0.4s" from="0" to="0.3" fill="freeze" />
+    </circle>
+    <text x="160" y="255" font-size="36" text-anchor="middle" opacity="0">🚀
+      <animate attributeName="opacity" begin="5.8s" dur="0.3s" from="0" to="1" fill="freeze" />
+      <!-- Rocket pulses at the end -->
+      <animate attributeName="font-size" begin="6.2s" dur="0.3s" from="36" to="42" fill="freeze" />
+    </text>
+    <text x="160" y="330" font-size="16" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">5. Launch
+      <animate attributeName="opacity" begin="5.9s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <text x="160" y="350" font-size="12" fill="#9ca3af" text-anchor="middle" opacity="0">Go live!
+      <animate attributeName="opacity" begin="6.0s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <!-- Success particles -->
+    <circle cx="140" cy="240" r="3" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="6.2s" dur="0.4s" values="0;0.8;0" fill="freeze" />
+      <animate attributeName="cy" begin="6.2s" dur="0.4s" from="240" to="220" fill="freeze" />
+    </circle>
+    <circle cx="180" cy="240" r="3" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="6.3s" dur="0.4s" values="0;0.8;0" fill="freeze" />
+      <animate attributeName="cy" begin="6.3s" dur="0.4s" from="240" to="220" fill="freeze" />
+    </circle>
+    <circle cx="160" cy="235" r="3" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" begin="6.25s" dur="0.4s" values="0;0.8;0" fill="freeze" />
+      <animate attributeName="cy" begin="6.25s" dur="0.4s" from="235" to="215" fill="freeze" />
+    </circle>
+  </g>
+  
+  <!-- Decorative ambient particles -->
+  <circle cx="50" cy="50" r="3" fill="#22d3ee" opacity="0.4"/>
+  <circle cx="550" cy="350" r="3" fill="#6366f1" opacity="0.4"/>
+  <circle cx="530" cy="40" r="3" fill="#22d3ee" opacity="0.4"/>
+</svg>

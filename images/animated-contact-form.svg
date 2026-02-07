@@ -1,0 +1,143 @@
+<svg width="450" height="350" viewBox="0 0 450 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated contact form - shows user typing and form submission -->
+  <rect width="450" height="350" fill="#020617" opacity="0"/>
+  
+  <!-- Form container -->
+  <g class="form-container">
+    <rect x="75" y="25" width="300" height="300" rx="16" fill="#0f172a" stroke="#22d3ee" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" begin="0s" dur="0.5s" from="0" to="1" fill="freeze" />
+    </rect>
+    
+    <!-- Header -->
+    <rect x="75" y="25" width="300" height="50" rx="16" fill="#1e293b" opacity="0">
+      <animate attributeName="opacity" begin="0.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    <text x="225" y="55" font-size="20" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">Contact Us
+      <animate attributeName="opacity" begin="0.5s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+  </g>
+  
+  <!-- Name field -->
+  <g class="field field-name">
+    <text x="95" y="105" font-size="12" fill="#9ca3af" opacity="0">Name:
+      <animate attributeName="opacity" begin="0.8s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <rect x="95" y="112" width="260" height="32" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" begin="0.9s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    <!-- Typing animation in name field -->
+    <text x="105" y="133" font-size="13" fill="#f9fafb" opacity="0">
+      <animate attributeName="opacity" begin="1.3s" dur="0.1s" from="0" to="1" fill="freeze" />
+      John Doe
+      <set attributeName="textContent" to="J" begin="1.3s" />
+      <set attributeName="textContent" to="Jo" begin="1.4s" />
+      <set attributeName="textContent" to="Joh" begin="1.5s" />
+      <set attributeName="textContent" to="John" begin="1.6s" />
+      <set attributeName="textContent" to="John " begin="1.7s" />
+      <set attributeName="textContent" to="John D" begin="1.8s" />
+      <set attributeName="textContent" to="John Do" begin="1.9s" />
+      <set attributeName="textContent" to="John Doe" begin="2.0s" />
+    </text>
+    <!-- Blinking cursor -->
+    <rect x="175" y="124" width="2" height="16" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="1.3s" dur="2s" values="0;1;1;0;1;1;0" keyTimes="0;0.1;0.4;0.5;0.6;0.9;1" fill="freeze" />
+    </rect>
+  </g>
+  
+  <!-- Email field -->
+  <g class="field field-email">
+    <text x="95" y="170" font-size="12" fill="#9ca3af" opacity="0">Email:
+      <animate attributeName="opacity" begin="2.2s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <rect x="95" y="177" width="260" height="32" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" begin="2.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    <!-- Typing animation in email field -->
+    <text x="105" y="198" font-size="13" fill="#f9fafb" opacity="0">
+      <animate attributeName="opacity" begin="2.7s" dur="0.1s" from="0" to="1" fill="freeze" />
+      john@example.com
+      <set attributeName="textContent" to="j" begin="2.7s" />
+      <set attributeName="textContent" to="jo" begin="2.8s" />
+      <set attributeName="textContent" to="joh" begin="2.9s" />
+      <set attributeName="textContent" to="john" begin="3.0s" />
+      <set attributeName="textContent" to="john@" begin="3.1s" />
+      <set attributeName="textContent" to="john@e" begin="3.2s" />
+      <set attributeName="textContent" to="john@ex" begin="3.3s" />
+      <set attributeName="textContent" to="john@exa" begin="3.4s" />
+      <set attributeName="textContent" to="john@exam" begin="3.5s" />
+      <set attributeName="textContent" to="john@examp" begin="3.6s" />
+      <set attributeName="textContent" to="john@exampl" begin="3.7s" />
+      <set attributeName="textContent" to="john@example" begin="3.8s" />
+      <set attributeName="textContent" to="john@example." begin="3.9s" />
+      <set attributeName="textContent" to="john@example.c" begin="4.0s" />
+      <set attributeName="textContent" to="john@example.co" begin="4.1s" />
+      <set attributeName="textContent" to="john@example.com" begin="4.2s" />
+    </text>
+    <!-- Blinking cursor -->
+    <rect x="220" y="189" width="2" height="16" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="2.7s" dur="2s" values="0;1;1;0;1;1;0" keyTimes="0;0.1;0.4;0.5;0.6;0.9;1" fill="freeze" />
+    </rect>
+  </g>
+  
+  <!-- Message field -->
+  <g class="field field-message">
+    <text x="95" y="235" font-size="12" fill="#9ca3af" opacity="0">Message:
+      <animate attributeName="opacity" begin="4.4s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    <rect x="95" y="242" width="260" height="60" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" begin="4.5s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    <!-- Message text appears -->
+    <text x="105" y="263" font-size="12" fill="#f9fafb" opacity="0">
+      <animate attributeName="opacity" begin="4.9s" dur="0.2s" from="0" to="1" fill="freeze" />
+      I'd like to discuss
+    </text>
+    <text x="105" y="278" font-size="12" fill="#f9fafb" opacity="0">
+      <animate attributeName="opacity" begin="5.1s" dur="0.2s" from="0" to="1" fill="freeze" />
+      building a website...
+    </text>
+  </g>
+  
+  <!-- Submit button -->
+  <g class="submit-button">
+    <rect x="155" y="313" width="140" height="40" rx="20" fill="#1e293b" stroke="#22d3ee" stroke-width="2" opacity="0">
+      <animate attributeName="opacity" begin="5.5s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    <text x="225" y="338" font-size="15" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">Send Message
+      <animate attributeName="opacity" begin="5.6s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </text>
+    
+    <!-- Button click animation -->
+    <rect x="155" y="313" width="140" height="40" rx="20" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="6.2s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </rect>
+    <text x="225" y="338" font-size="15" fill="#0f172a" text-anchor="middle" font-weight="bold" opacity="0">Send Message
+      <animate attributeName="opacity" begin="6.2s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </text>
+    
+    <!-- Loading spinner -->
+    <g opacity="0">
+      <animate attributeName="opacity" begin="6.5s" dur="0.2s" from="0" to="1" fill="freeze" />
+      <animate attributeName="opacity" begin="7.2s" dur="0.2s" from="1" to="0" fill="freeze" />
+      <circle cx="225" cy="333" r="8" stroke="#0f172a" stroke-width="2" fill="none" stroke-dasharray="15 35" opacity="0.3">
+        <animateTransform attributeName="transform" type="rotate" begin="6.5s" dur="0.8s" from="0 225 333" to="360 225 333" repeatCount="1" />
+      </circle>
+    </g>
+  </g>
+  
+  <!-- Success message -->
+  <g class="success" opacity="0">
+    <animate attributeName="opacity" begin="7.4s" dur="0.4s" from="0" to="1" fill="freeze" />
+    
+    <!-- Success checkmark circle -->
+    <circle cx="225" cy="170" r="35" fill="#22c55e" stroke="#0f172a" stroke-width="3">
+      <animate attributeName="r" begin="7.4s" dur="0.3s" from="20" to="35" fill="freeze" />
+    </circle>
+    <path d="M210 170 L220 180 L240 155" stroke="#0f172a" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="40" stroke-dashoffset="40">
+      <animate attributeName="stroke-dashoffset" begin="7.6s" dur="0.4s" from="40" to="0" fill="freeze" />
+    </path>
+    
+    <text x="225" y="230" font-size="18" fill="#22d3ee" text-anchor="middle" font-weight="bold">Message Sent!</text>
+    <text x="225" y="255" font-size="13" fill="#9ca3af" text-anchor="middle">We'll get back to you soon.</text>
+  </g>
+</svg>

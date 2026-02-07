@@ -1,0 +1,154 @@
+<svg width="600" height="400" viewBox="0 0 600 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated hero illustration - browser with code transforming to beautiful website -->
+  <rect width="600" height="400" fill="#020617" opacity="0"/>
+  
+  <!-- Main browser window -->
+  <g class="browser-window">
+    <rect x="50" y="50" width="500" height="300" rx="12" fill="#0f172a" stroke="#22d3ee" stroke-width="3" opacity="0">
+      <animate attributeName="opacity" begin="0s" dur="0.5s" from="0" to="1" fill="freeze" />
+    </rect>
+    
+    <!-- Browser chrome -->
+    <rect x="50" y="50" width="500" height="40" rx="12" fill="#1e293b" opacity="0">
+      <animate attributeName="opacity" begin="0.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    
+    <!-- Traffic lights -->
+    <circle cx="75" cy="70" r="7" fill="#ef4444" opacity="0">
+      <animate attributeName="opacity" begin="0.5s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </circle>
+    <circle cx="100" cy="70" r="7" fill="#fbbf24" opacity="0">
+      <animate attributeName="opacity" begin="0.6s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </circle>
+    <circle cx="125" cy="70" r="7" fill="#22c55e" opacity="0">
+      <animate attributeName="opacity" begin="0.7s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </circle>
+    
+    <!-- URL bar -->
+    <rect x="170" y="58" width="350" height="24" rx="12" fill="#0f172a" opacity="0">
+      <animate attributeName="opacity" begin="0.8s" dur="0.2s" from="0" to="1" fill="freeze" />
+    </rect>
+    <text x="185" y="75" font-size="12" fill="#9ca3af" opacity="0">
+      <animate attributeName="opacity" begin="1s" dur="0.3s" from="0" to="1" fill="freeze" />
+      https://your-website.com
+    </text>
+  </g>
+  
+  <!-- Phase 1: Code view -->
+  <g class="code-view" opacity="0">
+    <animate attributeName="opacity" begin="1.3s" dur="0.4s" from="0" to="1" fill="freeze" />
+    <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="1" to="0" fill="freeze" />
+    
+    <!-- Code lines -->
+    <rect x="80" y="120" width="120" height="8" rx="4" fill="#6366f1" opacity="0.6"/>
+    <rect x="80" y="135" width="180" height="8" rx="4" fill="#22d3ee" opacity="0.5"/>
+    <rect x="100" y="150" width="150" height="8" rx="4" fill="#6366f1" opacity="0.4"/>
+    <rect x="100" y="165" width="200" height="8" rx="4" fill="#22d3ee" opacity="0.6"/>
+    <rect x="80" y="180" width="140" height="8" rx="4" fill="#6366f1" opacity="0.5"/>
+    
+    <rect x="320" y="120" width="200" height="120" rx="8" fill="#1e293b" opacity="0.3"/>
+    <text x="420" y="185" font-size="32" text-anchor="middle" opacity="0.3">🎨</text>
+    
+    <!-- Cursor blinking -->
+    <rect x="210" y="135" width="3" height="8" fill="#22d3ee">
+      <animate attributeName="opacity" begin="1.5s" dur="1.5s" values="0;1;1;0;1;1;0" keyTimes="0;0.1;0.4;0.5;0.6;0.9;1" fill="freeze" />
+    </rect>
+  </g>
+  
+  <!-- Transformation animation -->
+  <g class="transform-effect" opacity="0">
+    <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="0" to="1" fill="freeze" />
+    <animate attributeName="opacity" begin="4.5s" dur="0.3s" from="1" to="0" fill="freeze" />
+    
+    <!-- Magic sparkles -->
+    <circle cx="200" cy="180" r="4" fill="#22d3ee">
+      <animate attributeName="r" begin="3.5s" dur="0.5s" from="2" to="15" fill="freeze" />
+      <animate attributeName="opacity" begin="3.5s" dur="0.5s" from="1" to="0" fill="freeze" />
+    </circle>
+    <circle cx="350" cy="200" r="4" fill="#6366f1">
+      <animate attributeName="r" begin="3.7s" dur="0.5s" from="2" to="12" fill="freeze" />
+      <animate attributeName="opacity" begin="3.7s" dur="0.5s" from="1" to="0" fill="freeze" />
+    </circle>
+    <circle cx="280" cy="240" r="4" fill="#22d3ee">
+      <animate attributeName="r" begin="3.9s" dur="0.5s" from="2" to="18" fill="freeze" />
+      <animate attributeName="opacity" begin="3.9s" dur="0.5s" from="1" to="0" fill="freeze" />
+    </circle>
+  </g>
+  
+  <!-- Phase 2: Beautiful website -->
+  <g class="website-view" opacity="0">
+    <animate attributeName="opacity" begin="4.5s" dur="0.6s" from="0" to="1" fill="freeze" />
+    
+    <!-- Hero section -->
+    <rect x="80" y="110" width="440" height="100" rx="12" fill="#1e293b" stroke="#22d3ee" stroke-width="2">
+      <animate attributeName="height" begin="4.5s" dur="0.5s" from="60" to="100" fill="freeze" />
+    </rect>
+    <text x="300" y="150" font-size="22" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">
+      <animate attributeName="opacity" begin="4.8s" dur="0.3s" from="0" to="1" fill="freeze" />
+      Your Business Name
+    </text>
+    <rect x="220" y="165" width="160" height="6" rx="3" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" begin="5s" dur="0.3s" from="0" to="0.6" fill="freeze" />
+    </rect>
+    <rect x="240" y="178" width="120" height="6" rx="3" fill="#6366f1" opacity="0">
+      <animate attributeName="opacity" begin="5.1s" dur="0.3s" from="0" to="0.4" fill="freeze" />
+    </rect>
+    <rect x="265" y="192" width="70" height="14" rx="7" fill="#22d3ee" opacity="0">
+      <animate attributeName="opacity" begin="5.3s" dur="0.3s" from="0" to="1" fill="freeze" />
+    </rect>
+    
+    <!-- Content cards -->
+    <g opacity="0">
+      <animate attributeName="opacity" begin="5.6s" dur="0.4s" from="0" to="1" fill="freeze" />
+      <rect x="80" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
+      <circle cx="145" cy="265" r="15" fill="#22d3ee" opacity="0.3"/>
+      <rect x="95" y="290" width="100" height="4" rx="2" fill="#6366f1" opacity="0.4"/>
+      <rect x="105" y="300" width="80" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+    </g>
+    
+    <g opacity="0">
+      <animate attributeName="opacity" begin="5.8s" dur="0.4s" from="0" to="1" fill="freeze" />
+      <rect x="230" y="230" width="130" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
+      <circle cx="295" cy="265" r="15" fill="#6366f1" opacity="0.3"/>
+      <rect x="245" y="290" width="100" height="4" rx="2" fill="#22d3ee" opacity="0.4"/>
+      <rect x="255" y="300" width="80" height="4" rx="2" fill="#22d3ee" opacity="0.3"/>
+    </g>
+    
+    <g opacity="0">
+      <animate attributeName="opacity" begin="6s" dur="0.4s" from="0" to="1" fill="freeze" />
+      <rect x="380" y="230" width="140" height="100" rx="12" fill="#1e293b" opacity="0.6"/>
+      <circle cx="450" cy="265" r="15" fill="#22d3ee" opacity="0.3"/>
+      <rect x="395" y="290" width="110" height="4" rx="2" fill="#6366f1" opacity="0.4"/>
+      <rect x="405" y="300" width="90" height="4" rx="2" fill="#6366f1" opacity="0.3"/>
+    </g>
+  </g>
+  
+  <!-- Success indicator -->
+  <g class="success" opacity="0">
+    <animate attributeName="opacity" begin="6.5s" dur="0.4s" from="0" to="1" fill="freeze" />
+    
+    <circle cx="300" cy="175" r="20" fill="#22c55e" stroke="#0f172a" stroke-width="2">
+      <animate attributeName="r" begin="6.5s" dur="0.3s" from="10" to="20" fill="freeze" />
+    </circle>
+    <path d="M290 175 L297 182 L310 167" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="30" stroke-dashoffset="30">
+      <animate attributeName="stroke-dashoffset" begin="6.7s" dur="0.3s" from="30" to="0" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Status text -->
+  <text x="300" y="380" font-size="16" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">
+    <animate attributeName="opacity" begin="7s" dur="0.4s" from="0" to="1" fill="freeze" />
+    Professional Website Ready! ✨
+  </text>
+  
+  <!-- Ambient decorative elements -->
+  <circle cx="30" cy="30" r="3" fill="#22d3ee" opacity="0.4">
+    <animate attributeName="opacity" begin="0s" dur="2s" values="0.2;0.6;0.2" repeatCount="indefinite" />
+  </circle>
+  <circle cx="570" cy="370" r="3" fill="#6366f1" opacity="0.4">
+    <animate attributeName="opacity" begin="1s" dur="2s" values="0.2;0.6;0.2" repeatCount="indefinite" />
+  </circle>
+  <circle cx="560" cy="30" r="3" fill="#22d3ee" opacity="0.4">
+    <animate attributeName="opacity" begin="0.5s" dur="2s" values="0.2;0.6;0.2" repeatCount="indefinite" />
+  </circle>
+</svg>

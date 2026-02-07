@@ -97,11 +97,18 @@
     .stagger-2{transition-delay:0.2s;}
     .stagger-3{transition-delay:0.3s;}
     
+    /* Animated SVG - paused by default, plays on scroll */
+    .animate-svg{opacity:0;transform:scale(0.95);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .animate-svg.visible{opacity:1;transform:scale(1);}
+    .animate-svg.visible svg *{animation-play-state:running !important;}
+    .animate-svg svg *{animation-play-state:paused !important;}
+    
     /* Accessibility: Respect user's motion preferences */
     @media (prefers-reduced-motion: reduce) {
-      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up{transform:none;filter:none;transition:opacity 0.3s ease;}
-      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible{transform:none;filter:none;}
+      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up,.animate-svg{transform:none;filter:none;transition:opacity 0.3s ease;}
+      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible,.animate-svg.visible{transform:none;filter:none;}
       .stagger-1,.stagger-2,.stagger-3{transition-delay:0s;}
+      .animate-svg svg *{animation:none !important;}
     }
 
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
@@ -507,11 +514,11 @@
       </section>
 
       <!-- OUR PROCESS -->
-      <section class="fade-in-up" style="text-align:center;">
+      <section class="animate-svg" style="text-align:center;">
         <div class="section-label">OUR PROCESS</div>
         <h2 class="section-title" style="margin:0 0 20px;">How We Build Your Website</h2>
         <p class="section-sub" style="margin:0 auto 40px;">Simple, transparent workflow from consultation to launch</p>
-        <img src="/images/process-workflow.svg" alt="Website Development Process - From Consultation to Launch" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
+        <img src="/images/animated-process-workflow.svg" alt="Animated Website Development Process - From Consultation to Launch" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
       </section>
 
       <!-- HELP / LINKS -->
@@ -606,13 +613,22 @@
         entries.forEach((entry)=>{
           if(entry.isIntersecting){
             entry.target.classList.add("visible");
+            
+            // For animate-svg elements, restart the animation
+            if (entry.target.classList.contains("animate-svg")) {
+              const svg = entry.target.querySelector("svg");
+              if (svg) {
+                svg.setCurrentTime(0);
+              }
+            }
+            
             observer.unobserve(entry.target);
           }
         });
       },
       {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
-    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .animate-svg").forEach((el)=>observer.observe(el));
 
     // Typing effect
     const tEl = document.getElementById("typing-text");
