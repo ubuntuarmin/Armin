@@ -953,12 +953,12 @@
     }
 
     // Close modal on outside click
-    window.onclick = function(event) {
+    window.addEventListener('click', function(event) {
       const modal = document.getElementById('calculatorModal');
       if (event.target === modal) {
         closeCalculatorModal();
       }
-    }
+    });
   </script>
 </body>
 </html>
