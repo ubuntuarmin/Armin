@@ -106,11 +106,18 @@
     .stagger-4{transition-delay:0.4s;}
     .stagger-5{transition-delay:0.5s;}
     
+    /* Animated SVG - paused by default, plays on scroll */
+    .animate-svg{opacity:0;transform:scale(0.95);transition:opacity 0.6s ease-out,transform 0.6s ease-out;}
+    .animate-svg.visible{opacity:1;transform:scale(1);}
+    .animate-svg.visible svg *{animation-play-state:running !important;}
+    .animate-svg svg *{animation-play-state:paused !important;}
+    
     /* Accessibility: Respect user's motion preferences */
     @media (prefers-reduced-motion: reduce) {
-      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up,.image-fade-rotate{transform:none;filter:none;transition:opacity 0.3s ease;}
-      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible,.image-fade-rotate.visible{transform:none;filter:none;}
+      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up,.image-fade-rotate,.animate-svg{transform:none;filter:none;transition:opacity 0.3s ease;}
+      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible,.image-fade-rotate.visible,.animate-svg.visible{transform:none;filter:none;}
       .stagger-1,.stagger-2,.stagger-3,.stagger-4,.stagger-5{transition-delay:0s;}
+      .animate-svg svg *{animation:none !important;}
     }
 
 
@@ -354,6 +361,11 @@
             We build responsive websites that showcase your business.
           </p>
           
+          <!-- Animated website building demo -->
+          <div class="animate-svg" style="text-align:center;margin:30px 0;">
+            <img src="/images/animated-website-building.svg" alt="Animated Website Building Process - Pages appearing one by one" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
+          </div>
+          
           <!-- Visual comparison of layouts -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin:30px 0;">
             <div style="text-align:center;" class="image-slide-left">
@@ -394,6 +406,11 @@
           <p class="strip-sub">
             Features that help your visitors and grow your business.
           </p>
+          
+          <!-- Animated contact form demo -->
+          <div class="animate-svg" style="text-align:center;margin:30px 0 40px;">
+            <img src="/images/animated-contact-form.svg" alt="Animated Contact Form Demo - User interaction simulation" style="max-width:100%;height:auto;max-height:350px;margin:0 auto;display:block;" />
+          </div>
           
           <!-- Feature demonstrations -->
           <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;margin:30px 0;">
@@ -743,13 +760,22 @@
         entries.forEach((entry)=>{
           if(entry.isIntersecting){
             entry.target.classList.add("visible");
+            
+            // For animate-svg elements, restart the animation
+            if (entry.target.classList.contains("animate-svg")) {
+              const svg = entry.target.querySelector("svg");
+              if (svg) {
+                svg.setCurrentTime(0);
+              }
+            }
+            
             observer.unobserve(entry.target);
           }
         });
       },
       {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
-    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate, .animate-svg").forEach((el)=>observer.observe(el));
   </script>
 </body>
 </html>

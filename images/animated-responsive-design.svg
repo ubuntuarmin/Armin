@@ -1,0 +1,131 @@
+<svg width="500" height="400" viewBox="0 0 500 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated responsive design demo - shows mobile, tablet, desktop appearing -->
+  <rect width="500" height="400" fill="#020617" opacity="0"/>
+  
+  <!-- Desktop screen -->
+  <g class="device desktop" opacity="0">
+    <animate attributeName="opacity" begin="0s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      begin="0s" 
+      dur="0.6s" 
+      from="0 -50" 
+      to="0 0" 
+      fill="freeze" />
+    
+    <!-- Desktop monitor -->
+    <rect x="50" y="60" width="280" height="180" rx="8" fill="#0f172a" stroke="#22d3ee" stroke-width="3"/>
+    <rect x="50" y="60" width="280" height="20" rx="8" fill="#1e293b"/>
+    
+    <!-- Desktop content -->
+    <rect x="70" y="95" width="240" height="40" rx="4" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="190" y="118" font-size="12" fill="#22d3ee" text-anchor="middle" font-weight="bold">Website Layout</text>
+    
+    <rect x="70" y="145" width="115" height="80" rx="4" fill="#1e293b" opacity="0.6"/>
+    <rect x="195" y="145" width="115" height="80" rx="4" fill="#1e293b" opacity="0.6"/>
+    
+    <!-- Desktop base -->
+    <rect x="165" y="240" width="50" height="15" fill="#1e293b"/>
+    <rect x="120" y="255" width="140" height="8" rx="4" fill="#1e293b"/>
+    
+    <!-- Desktop label -->
+    <text x="190" y="285" font-size="14" fill="#22d3ee" text-anchor="middle" font-weight="bold">Desktop</text>
+  </g>
+  
+  <!-- Tablet screen -->
+  <g class="device tablet" opacity="0">
+    <animate attributeName="opacity" begin="0.8s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      begin="0.8s" 
+      dur="0.6s" 
+      from="0 50" 
+      to="0 0" 
+      fill="freeze" />
+    
+    <!-- Tablet device -->
+    <rect x="180" y="110" width="150" height="200" rx="12" fill="#0f172a" stroke="#6366f1" stroke-width="3"/>
+    
+    <!-- Tablet content -->
+    <rect x="195" y="130" width="120" height="30" rx="4" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+    <text x="255" y="149" font-size="10" fill="#6366f1" text-anchor="middle" font-weight="bold">Responsive</text>
+    
+    <rect x="195" y="170" width="120" height="60" rx="4" fill="#1e293b" opacity="0.6"/>
+    <rect x="195" y="240" width="120" height="55" rx="4" fill="#1e293b" opacity="0.6"/>
+    
+    <!-- Home button -->
+    <circle cx="255" cy="300" r="5" fill="#1e293b" stroke="#6366f1" stroke-width="1"/>
+    
+    <!-- Tablet label -->
+    <text x="255" y="330" font-size="14" fill="#6366f1" text-anchor="middle" font-weight="bold">Tablet</text>
+  </g>
+  
+  <!-- Mobile phone -->
+  <g class="device mobile" opacity="0">
+    <animate attributeName="opacity" begin="1.6s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      begin="1.6s" 
+      dur="0.6s" 
+      from="50 0" 
+      to="0 0" 
+      fill="freeze" />
+    
+    <!-- Mobile device -->
+    <rect x="360" y="90" width="90" height="180" rx="12" fill="#0f172a" stroke="#22d3ee" stroke-width="3"/>
+    
+    <!-- Mobile notch -->
+    <rect x="385" y="90" width="40" height="8" rx="4" fill="#1e293b"/>
+    
+    <!-- Mobile content -->
+    <rect x="370" y="110" width="70" height="25" rx="4" fill="#1e293b" stroke="#22d3ee" stroke-width="1"/>
+    <text x="405" y="126" font-size="8" fill="#22d3ee" text-anchor="middle" font-weight="bold">Mobile</text>
+    
+    <rect x="370" y="145" width="70" height="50" rx="4" fill="#1e293b" opacity="0.6"/>
+    <rect x="370" y="205" width="70" height="50" rx="4" fill="#1e293b" opacity="0.6"/>
+    
+    <!-- Mobile home indicator -->
+    <rect x="390" y="262" width="30" height="3" rx="1.5" fill="#1e293b"/>
+    
+    <!-- Mobile label -->
+    <text x="405" y="290" font-size="14" fill="#22d3ee" text-anchor="middle" font-weight="bold">Mobile</text>
+  </g>
+  
+  <!-- Connecting lines to show responsive relationship -->
+  <g class="connections" opacity="0">
+    <animate attributeName="opacity" begin="2.5s" dur="0.6s" from="0" to="0.5" fill="freeze" />
+    
+    <path d="M 190 270 Q 250 300 255 310" stroke="#22d3ee" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+    <path d="M 255 310 Q 350 300 405 270" stroke="#22d3ee" stroke-width="2" stroke-dasharray="4,4" fill="none"/>
+  </g>
+  
+  <!-- "Responsive Design" text -->
+  <text x="250" y="370" font-size="18" fill="#22d3ee" text-anchor="middle" font-weight="bold" opacity="0">
+    <animate attributeName="opacity" begin="3.2s" dur="0.5s" from="0" to="1" fill="freeze" />
+    Works on All Devices
+  </text>
+  
+  <!-- Checkmarks on each device -->
+  <g class="checkmarks" opacity="0">
+    <animate attributeName="opacity" begin="3.8s" dur="0.4s" from="0" to="1" fill="freeze" />
+    
+    <!-- Desktop check -->
+    <circle cx="310" cy="150" r="12" fill="#22c55e"/>
+    <path d="M305 150 L308 153 L315 145" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Tablet check -->
+    <circle cx="315" cy="180" r="12" fill="#22c55e"/>
+    <path d="M310 180 L313 183 L320 175" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+    
+    <!-- Mobile check -->
+    <circle cx="350" cy="140" r="12" fill="#22c55e"/>
+    <path d="M345 140 L348 143 L355 135" stroke="#0f172a" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  
+  <!-- Decorative particles -->
+  <circle cx="40" cy="40" r="3" fill="#22d3ee" opacity="0.4"/>
+  <circle cx="460" cy="360" r="3" fill="#6366f1" opacity="0.4"/>
+</svg>
