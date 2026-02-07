@@ -1,0 +1,242 @@
+<svg width="600" height="350" viewBox="0 0 600 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Animated pricing value visualization - shows the journey from idea to website -->
+  <rect width="600" height="350" fill="#020617" opacity="0"/>
+  
+  <!-- Step 1: Your Idea (lightbulb) -->
+  <g class="step step-1" opacity="0">
+    <animate attributeName="opacity" begin="0s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="scale" 
+      begin="0s" 
+      dur="0.6s" 
+      from="0.5" 
+      to="1" 
+      additive="sum"
+      fill="freeze" />
+    
+    <!-- Background circle -->
+    <circle cx="100" cy="120" r="50" fill="#0f172a" stroke="#22d3ee" stroke-width="3">
+      <animate attributeName="r" begin="0s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="100" cy="120" r="35" fill="#22d3ee" opacity="0.2"/>
+    
+    <!-- Lightbulb icon -->
+    <g transform="translate(100, 120)">
+      <!-- Bulb -->
+      <circle cx="0" cy="-8" r="14" fill="#fbbf24" opacity="0.9"/>
+      <path d="M-8,3 L-5,10 L5,10 L8,3" fill="#9ca3af"/>
+      <rect x="-4" y="10" width="8" height="4" rx="1" fill="#6b7280"/>
+      <!-- Light rays -->
+      <g opacity="0.6">
+        <line x1="0" y1="-25" x2="0" y2="-30" stroke="#fbbf24" stroke-width="2" stroke-linecap="round">
+          <animate attributeName="opacity" begin="0.5s" dur="1.5s" values="0.3;1;0.3" repeatCount="indefinite" />
+        </line>
+        <line x1="18" y1="-18" x2="22" y2="-22" stroke="#fbbf24" stroke-width="2" stroke-linecap="round">
+          <animate attributeName="opacity" begin="0.7s" dur="1.5s" values="0.3;1;0.3" repeatCount="indefinite" />
+        </line>
+        <line x1="-18" y1="-18" x2="-22" y2="-22" stroke="#fbbf24" stroke-width="2" stroke-linecap="round">
+          <animate attributeName="opacity" begin="0.6s" dur="1.5s" values="0.3;1;0.3" repeatCount="indefinite" />
+        </line>
+      </g>
+    </g>
+    
+    <!-- Label -->
+    <text x="100" y="195" font-size="14" fill="#22d3ee" text-anchor="middle" font-weight="bold">Your Idea</text>
+    <text x="100" y="212" font-size="11" fill="#9ca3af" text-anchor="middle">Share your vision</text>
+  </g>
+  
+  <!-- Arrow 1 -->
+  <g class="arrow arrow-1" opacity="0">
+    <animate attributeName="opacity" begin="0.8s" dur="0.4s" from="0" to="1" fill="freeze" />
+    <path d="M165 120 L215 120" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-dasharray="60" stroke-dashoffset="60">
+      <animate attributeName="stroke-dashoffset" begin="0.8s" dur="0.6s" from="60" to="0" fill="freeze" />
+    </path>
+    <path d="M205 115 L215 120 L205 125" stroke="#22d3ee" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="20" stroke-dashoffset="20">
+      <animate attributeName="stroke-dashoffset" begin="1.2s" dur="0.3s" from="20" to="0" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 2: We Build (tools) -->
+  <g class="step step-2" opacity="0">
+    <animate attributeName="opacity" begin="1.5s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="scale" 
+      begin="1.5s" 
+      dur="0.6s" 
+      from="0.5" 
+      to="1" 
+      additive="sum"
+      fill="freeze" />
+    
+    <!-- Background circle -->
+    <circle cx="300" cy="120" r="50" fill="#0f172a" stroke="#6366f1" stroke-width="3">
+      <animate attributeName="r" begin="1.5s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="300" cy="120" r="35" fill="#6366f1" opacity="0.2"/>
+    
+    <!-- Tools icon (hammer and wrench crossing) -->
+    <g transform="translate(300, 120)">
+      <!-- Hammer -->
+      <g transform="rotate(-45)">
+        <rect x="-2" y="-15" width="4" height="20" fill="#6366f1"/>
+        <rect x="-6" y="-18" width="12" height="6" rx="1" fill="#6366f1"/>
+        <!-- Hammer motion -->
+        <animateTransform 
+          attributeName="transform" 
+          type="rotate" 
+          begin="2s" 
+          dur="1s" 
+          values="-45; -30; -45" 
+          repeatCount="indefinite" />
+      </g>
+      <!-- Wrench -->
+      <g transform="rotate(45)">
+        <path d="M-2,-15 L-2,-5 L-4,-3 L-4,0 L0,4 L4,0 L4,-3 L2,-5 L2,-15 Z" fill="#22d3ee"/>
+        <circle cx="0" cy="-12" r="3" fill="none" stroke="#22d3ee" stroke-width="2"/>
+        <!-- Wrench motion -->
+        <animateTransform 
+          attributeName="transform" 
+          type="rotate" 
+          begin="2.2s" 
+          dur="1s" 
+          values="45; 60; 45" 
+          repeatCount="indefinite" />
+      </g>
+      <!-- Sparks -->
+      <circle cx="8" cy="-8" r="2" fill="#fbbf24" opacity="0">
+        <animate attributeName="opacity" begin="2.3s" dur="0.8s" values="0;1;0" repeatCount="indefinite" />
+        <animate attributeName="cx" begin="2.3s" dur="0.8s" values="8;12;8" repeatCount="indefinite" />
+        <animate attributeName="cy" begin="2.3s" dur="0.8s" values="-8;-12;-8" repeatCount="indefinite" />
+      </circle>
+    </g>
+    
+    <!-- Label -->
+    <text x="300" y="195" font-size="14" fill="#6366f1" text-anchor="middle" font-weight="bold">We Build</text>
+    <text x="300" y="212" font-size="11" fill="#9ca3af" text-anchor="middle">Design & develop</text>
+  </g>
+  
+  <!-- Arrow 2 -->
+  <g class="arrow arrow-2" opacity="0">
+    <animate attributeName="opacity" begin="2.3s" dur="0.4s" from="0" to="1" fill="freeze" />
+    <path d="M365 120 L415 120" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-dasharray="60" stroke-dashoffset="60">
+      <animate attributeName="stroke-dashoffset" begin="2.3s" dur="0.6s" from="60" to="0" fill="freeze" />
+    </path>
+    <path d="M405 115 L415 120 L405 125" stroke="#6366f1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none" stroke-dasharray="20" stroke-dashoffset="20">
+      <animate attributeName="stroke-dashoffset" begin="2.7s" dur="0.3s" from="20" to="0" fill="freeze" />
+    </path>
+  </g>
+  
+  <!-- Step 3: You Review (magnifying glass) -->
+  <g class="step step-3" opacity="0">
+    <animate attributeName="opacity" begin="3s" dur="0.6s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="scale" 
+      begin="3s" 
+      dur="0.6s" 
+      from="0.5" 
+      to="1" 
+      additive="sum"
+      fill="freeze" />
+    
+    <!-- Background circle -->
+    <circle cx="500" cy="120" r="50" fill="#0f172a" stroke="#22d3ee" stroke-width="3">
+      <animate attributeName="r" begin="3s" dur="0.6s" from="30" to="50" fill="freeze" />
+    </circle>
+    <circle cx="500" cy="120" r="35" fill="#22d3ee" opacity="0.2"/>
+    
+    <!-- Magnifying glass icon -->
+    <g transform="translate(500, 120)">
+      <circle cx="-3" cy="-5" r="10" fill="none" stroke="#22d3ee" stroke-width="3"/>
+      <line x1="5" y1="3" x2="12" y2="10" stroke="#22d3ee" stroke-width="3" stroke-linecap="round"/>
+      <!-- Moving checkmarks being discovered -->
+      <g opacity="0">
+        <animate attributeName="opacity" begin="3.5s" dur="0.4s" from="0" to="1" fill="freeze" />
+        <path d="M-8 -5 L-5 -2 L-1 -8" stroke="#22c55e" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <circle cx="-3" cy="-5" r="2" fill="#22c55e" opacity="0.3">
+          <animate attributeName="r" begin="3.5s" dur="1s" values="2;4;2" repeatCount="indefinite" />
+        </circle>
+      </g>
+    </g>
+    
+    <!-- Label -->
+    <text x="500" y="195" font-size="14" fill="#22d3ee" text-anchor="middle" font-weight="bold">You Review</text>
+    <text x="500" y="212" font-size="11" fill="#9ca3af" text-anchor="middle">Unlimited revisions</text>
+  </g>
+  
+  <!-- Final result banner -->
+  <g class="result" opacity="0">
+    <animate attributeName="opacity" begin="4s" dur="0.8s" from="0" to="1" fill="freeze" />
+    <animateTransform 
+      attributeName="transform" 
+      type="translate" 
+      begin="4s" 
+      dur="0.8s" 
+      from="0 30" 
+      to="0 0" 
+      fill="freeze" />
+    
+    <!-- Success banner -->
+    <rect x="150" y="260" width="300" height="60" rx="12" fill="#0f172a" stroke="#22c55e" stroke-width="3"/>
+    <rect x="150" y="260" width="300" height="60" rx="12" fill="#22c55e" opacity="0.1"/>
+    
+    <!-- Checkmark icon -->
+    <circle cx="200" cy="290" r="18" fill="#22c55e">
+      <animate attributeName="r" begin="4.3s" dur="0.4s" from="10" to="18" fill="freeze" />
+    </circle>
+    <path d="M192 290 L197 295 L208 282" stroke="#0f172a" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="25" stroke-dashoffset="25">
+      <animate attributeName="stroke-dashoffset" begin="4.5s" dur="0.4s" from="25" to="0" fill="freeze" />
+    </path>
+    
+    <!-- Success text -->
+    <text x="240" y="285" font-size="16" fill="#22d3ee" font-weight="bold">Perfect Website</text>
+    <text x="240" y="303" font-size="12" fill="#9ca3af">Pay only when 100% satisfied</text>
+  </g>
+  
+  <!-- Value propositions floating in -->
+  <g class="values" opacity="0">
+    <animate attributeName="opacity" begin="5s" dur="0.6s" from="0" to="1" fill="freeze" />
+    
+    <!-- Affordable tag -->
+    <g transform="translate(50, 260)">
+      <rect x="0" y="0" width="80" height="28" rx="14" fill="#1e293b" stroke="#22d3ee" stroke-width="2">
+        <animate attributeName="y" begin="5s" dur="0.5s" from="20" to="0" fill="freeze" />
+      </rect>
+      <text x="40" y="18" font-size="11" fill="#22d3ee" text-anchor="middle" font-weight="bold">Affordable</text>
+    </g>
+    
+    <!-- Modern tag -->
+    <g transform="translate(515, 260)">
+      <rect x="0" y="0" width="70" height="28" rx="14" fill="#1e293b" stroke="#6366f1" stroke-width="2">
+        <animate attributeName="y" begin="5.2s" dur="0.5s" from="20" to="0" fill="freeze" />
+      </rect>
+      <text x="35" y="18" font-size="11" fill="#6366f1" text-anchor="middle" font-weight="bold">Modern</text>
+    </g>
+    
+    <!-- Fast tag -->
+    <g transform="translate(50, 300)">
+      <rect x="0" y="0" width="60" height="28" rx="14" fill="#1e293b" stroke="#22c55e" stroke-width="2">
+        <animate attributeName="y" begin="5.4s" dur="0.5s" from="20" to="0" fill="freeze" />
+      </rect>
+      <text x="30" y="18" font-size="11" fill="#22c55e" text-anchor="middle" font-weight="bold">Fast</text>
+    </g>
+    
+    <!-- Quality tag -->
+    <g transform="translate(525, 300)">
+      <rect x="0" y="0" width="60" height="28" rx="14" fill="#1e293b" stroke="#f59e0b" stroke-width="2">
+        <animate attributeName="y" begin="5.6s" dur="0.5s" from="20" to="0" fill="freeze" />
+      </rect>
+      <text x="30" y="18" font-size="11" fill="#f59e0b" text-anchor="middle" font-weight="bold">Quality</text>
+    </g>
+  </g>
+  
+  <!-- Decorative elements -->
+  <circle cx="25" cy="25" r="3" fill="#22d3ee" opacity="0.4">
+    <animate attributeName="opacity" begin="0s" dur="2s" values="0.2;0.6;0.2" repeatCount="indefinite" />
+  </circle>
+  <circle cx="575" cy="25" r="3" fill="#6366f1" opacity="0.4">
+    <animate attributeName="opacity" begin="1s" dur="2s" values="0.2;0.6;0.2" repeatCount="indefinite" />
+  </circle>
+</svg>

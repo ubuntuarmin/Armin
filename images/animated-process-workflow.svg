@@ -44,9 +44,15 @@
     <circle cx="270" cy="80" r="35" fill="#6366f1" opacity="0">
       <animate attributeName="opacity" begin="1.5s" dur="0.4s" from="0" to="0.3" fill="freeze" />
     </circle>
-    <text x="270" y="75" font-size="36" text-anchor="middle" opacity="0">🎨
+    <!-- Design icon (palette) -->
+    <g opacity="0">
       <animate attributeName="opacity" begin="1.7s" dur="0.3s" from="0" to="1" fill="freeze" />
-    </text>
+      <ellipse cx="270" cy="80" rx="12" ry="16" fill="none" stroke="#e0f2fe" stroke-width="2"/>
+      <circle cx="266" cy="74" r="2.5" fill="#22d3ee"/>
+      <circle cx="274" cy="74" r="2.5" fill="#6366f1"/>
+      <circle cx="266" cy="86" r="2.5" fill="#22c55e"/>
+      <circle cx="274" cy="86" r="2.5" fill="#f59e0b"/>
+    </g>
     <text x="270" y="150" font-size="16" fill="#6366f1" text-anchor="middle" font-weight="bold" opacity="0">2. Design
       <animate attributeName="opacity" begin="1.8s" dur="0.3s" from="0" to="1" fill="freeze" />
     </text>
