@@ -138,14 +138,120 @@
       filter: brightness(0.97);
     }
 
+    /* MULTI-STEP SCROLL ANIMATIONS */
     .fade-in-up {
       opacity: 0;
-      transform: translateY(22px);
-      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), 
+                  transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .fade-in-up.visible {
       opacity: 1;
       transform: translateY(0);
+    }
+    
+    /* Advanced image animations - multi-step on scroll */
+    .image-zoom {
+      opacity: 0;
+      transform: scale(0.75) rotateZ(-2deg);
+      filter: blur(4px);
+      transition: opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  transform 1s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.8s ease-out;
+    }
+    .image-zoom.visible {
+      opacity: 1;
+      transform: scale(1) rotateZ(0deg);
+      filter: blur(0px);
+    }
+    
+    .image-slide-left {
+      opacity: 0;
+      transform: translateX(-60px) scale(0.9);
+      filter: blur(3px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.7s ease-out;
+    }
+    .image-slide-left.visible {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0px);
+    }
+    
+    .image-slide-right {
+      opacity: 0;
+      transform: translateX(60px) scale(0.9);
+      filter: blur(3px);
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.7s ease-out;
+    }
+    .image-slide-right.visible {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0px);
+    }
+    
+    .image-slide-up {
+      opacity: 0;
+      transform: translateY(50px) scale(0.92);
+      filter: blur(3px);
+      transition: opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                  transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
+                  filter 0.7s ease-out;
+    }
+    .image-slide-up.visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0px);
+    }
+    
+    .image-fade-rotate {
+      opacity: 0;
+      transform: rotate(-5deg) scale(0.85);
+      filter: brightness(0.7);
+      transition: opacity 1s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  transform 1s cubic-bezier(0.34, 1.56, 0.64, 1),
+                  filter 0.8s ease-out;
+    }
+    .image-fade-rotate.visible {
+      opacity: 1;
+      transform: rotate(0deg) scale(1);
+      filter: brightness(1);
+    }
+    
+    /* Staggered animation delays for multiple items */
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    
+    /* Accessibility: Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in-up,
+      .image-zoom,
+      .image-slide-left,
+      .image-slide-right,
+      .image-slide-up,
+      .image-fade-rotate {
+        transform: none;
+        filter: none;
+        transition: opacity 0.3s ease;
+      }
+      .fade-in-up.visible,
+      .image-zoom.visible,
+      .image-slide-left.visible,
+      .image-slide-right.visible,
+      .image-slide-up.visible,
+      .image-fade-rotate.visible {
+        transform: none;
+        filter: none;
+      }
+      .stagger-1, .stagger-2, .stagger-3, .stagger-4, .stagger-5 {
+        transition-delay: 0s;
+      }
     }
 
     /* NAV */
@@ -1069,7 +1175,7 @@
 
           <p class="hero-subtitle">
             Professional websites for small businesses and startups.
-            Pay only when you're <strong>100% satisfied</strong>.
+            Pay only when <strong>100% satisfied</strong>.
           </p>
 
           <div class="hero-badges">
@@ -1097,8 +1203,7 @@
           <div class="hero-note">
             <span class="dot"></span>
             <span>
-              <strong>Unlimited revisions.</strong> We design, build, and refine your site first –
-              then you pay once you're happy.
+              <strong>Unlimited revisions.</strong> We build and refine first – you pay once happy.
             </span>
           </div>
         </div>
@@ -1114,15 +1219,15 @@
             <div class="hero-card-title">Designers with big energy.</div>
             <div class="hero-card-age">
               Our <strong>web developers</strong> build websites that
-              look modern, feel professional, and are simple for real people to use.
+              look modern and feel professional.
             </div>
 
             <p class="hero-card-text">
-              We bring fresh ideas and friendly prices, treating each site like our own.
+              Fresh ideas and friendly prices. We treat each site like our own.
             </p>
 
             <p class="hero-card-text">
-              Focused on <strong>marketing and conversion</strong>, not just good looks.
+              Focused on <strong>results</strong>, not just good looks.
             </p>
 
             <div class="hero-card-pill-row">
@@ -1135,7 +1240,7 @@
             <div class="hero-card-footer">
               <div class="hero-card-footer-left">
                 <strong>Ready when you are.</strong><br />
-                Text us your idea and we will suggest the best layout and price for your situation.
+                Text us your idea for the best layout and price.
               </div>
               <div
                 class="hero-card-footer-right btn-pressable"
@@ -1157,7 +1262,7 @@
             <h2 id="who-we-work-with" class="section-title">Affordable Web Design for Small & Growing Businesses</h2>
           </div>
           <p class="section-sub">
-            Clear, modern websites for small teams and new projects.
+            Clear, modern websites for small teams.
           </p>
         </div>
 
@@ -1202,7 +1307,7 @@
 
       <!-- VISUAL SHOWCASE -->
       <section class="fade-in-up" style="text-align:center;margin-bottom:60px;">
-        <img src="/images/hero-illustration.svg" alt="Modern Web Design Illustration - Browser window with responsive design elements" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
+        <img src="/images/hero-illustration.svg" alt="Modern Web Design Illustration - Browser window with responsive design elements" class="image-zoom" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
       </section>
 
       <!-- NEXT STEPS / NAV BETWEEN PAGES -->
@@ -1303,7 +1408,7 @@
       navMobile.style.display = isOpen ? "none" : "flex";
     });
 
-    // On-scroll animations
+    // Multi-step scroll animations
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -1313,9 +1418,13 @@
           }
         });
       },
-      { threshold: 0.12 }
+      { threshold: 0.08, rootMargin: "0px 0px -50px 0px" }
     );
-    document.querySelectorAll(".fade-in-up").forEach((el) => observer.observe(el));
+    
+    // Observe all animated elements
+    document.querySelectorAll(
+      ".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate"
+    ).forEach((el) => observer.observe(el));
 
     // Typing effect
     const phrases = [

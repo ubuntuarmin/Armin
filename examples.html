@@ -79,8 +79,40 @@
     .hover-lift:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft);filter:brightness(1.03);}
     .btn-pressable{transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow;}
     .btn-pressable:active{transform:translateY(1px) scale(0.98);box-shadow:0 14px 40px rgba(15,23,42,0.9);filter:brightness(0.97);}
-    .fade-in-up{opacity:0;transform:translateY(26px);transition:opacity 0.7s ease-out,transform 0.7s ease-out;}
+    /* MULTI-STEP SCROLL ANIMATIONS */
+    .fade-in-up{opacity:0;transform:translateY(30px);transition:opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94),transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94);}
     .fade-in-up.visible{opacity:1;transform:translateY(0);}
+    
+    /* Advanced image animations - multi-step on scroll */
+    .image-zoom{opacity:0;transform:scale(0.75) rotateZ(-2deg);filter:blur(4px);transition:opacity 1s cubic-bezier(0.34,1.56,0.64,1),transform 1s cubic-bezier(0.34,1.56,0.64,1),filter 0.8s ease-out;}
+    .image-zoom.visible{opacity:1;transform:scale(1) rotateZ(0deg);filter:blur(0px);}
+    
+    .image-slide-left{opacity:0;transform:translateX(-60px) scale(0.9);filter:blur(3px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1),filter 0.7s ease-out;}
+    .image-slide-left.visible{opacity:1;transform:translateX(0) scale(1);filter:blur(0px);}
+    
+    .image-slide-right{opacity:0;transform:translateX(60px) scale(0.9);filter:blur(3px);transition:opacity 0.9s cubic-bezier(0.22,1,0.36,1),transform 0.9s cubic-bezier(0.22,1,0.36,1),filter 0.7s ease-out;}
+    .image-slide-right.visible{opacity:1;transform:translateX(0) scale(1);filter:blur(0px);}
+    
+    .image-slide-up{opacity:0;transform:translateY(50px) scale(0.92);filter:blur(3px);transition:opacity 0.85s cubic-bezier(0.22,1,0.36,1),transform 0.85s cubic-bezier(0.22,1,0.36,1),filter 0.7s ease-out;}
+    .image-slide-up.visible{opacity:1;transform:translateY(0) scale(1);filter:blur(0px);}
+    
+    .image-fade-rotate{opacity:0;transform:rotate(-5deg) scale(0.85);filter:brightness(0.7);transition:opacity 1s cubic-bezier(0.34,1.56,0.64,1),transform 1s cubic-bezier(0.34,1.56,0.64,1),filter 0.8s ease-out;}
+    .image-fade-rotate.visible{opacity:1;transform:rotate(0deg) scale(1);filter:brightness(1);}
+    
+    /* Staggered animation delays for multiple items */
+    .stagger-1{transition-delay:0.1s;}
+    .stagger-2{transition-delay:0.2s;}
+    .stagger-3{transition-delay:0.3s;}
+    .stagger-4{transition-delay:0.4s;}
+    .stagger-5{transition-delay:0.5s;}
+    
+    /* Accessibility: Respect user's motion preferences */
+    @media (prefers-reduced-motion: reduce) {
+      .fade-in-up,.image-zoom,.image-slide-left,.image-slide-right,.image-slide-up,.image-fade-rotate{transform:none;filter:none;transition:opacity 0.3s ease;}
+      .fade-in-up.visible,.image-zoom.visible,.image-slide-left.visible,.image-slide-right.visible,.image-slide-up.visible,.image-fade-rotate.visible{transform:none;filter:none;}
+      .stagger-1,.stagger-2,.stagger-3,.stagger-4,.stagger-5{transition-delay:0s;}
+    }
+
 
     /* NAV */
     .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
@@ -371,7 +403,7 @@
           </p>
 
           <div class="examples-grid">
-            <div class="example-card" onclick="window.location.href='templates/restaurant-template.html'">
+            <div class="example-card image-slide-up stagger-1" onclick="window.location.href='templates/restaurant-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
                 <img src="/images/examples/template-restaurant.svg" alt="Restaurant Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
@@ -390,7 +422,7 @@
               <a href="templates/restaurant-template.html" class="view-demo-btn" onclick="event.stopPropagation()">View Live Demo →</a>
             </div>
 
-            <div class="example-card" onclick="window.location.href='templates/portfolio-template.html'">
+            <div class="example-card image-slide-up stagger-2" onclick="window.location.href='templates/portfolio-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
                 <img src="/images/examples/template-portfolio.svg" alt="Portfolio Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
@@ -409,7 +441,7 @@
               <a href="templates/portfolio-template.html" class="view-demo-btn" onclick="event.stopPropagation()">View Live Demo →</a>
             </div>
 
-            <div class="example-card" onclick="window.location.href='templates/landing-template.html'">
+            <div class="example-card image-slide-up stagger-3" onclick="window.location.href='templates/landing-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
                 <img src="/images/examples/template-landing.svg" alt="Landing Page Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
@@ -508,7 +540,7 @@
       navMobile.style.display = open ? "none" : "flex";
     });
 
-    // On-scroll animations
+    // Multi-step scroll animations
     const observer = new IntersectionObserver(
       (entries)=>{
         entries.forEach((entry)=>{
@@ -518,9 +550,9 @@
           }
         });
       },
-      {threshold:0.12}
+      {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
-    document.querySelectorAll(".fade-in-up").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate").forEach((el)=>observer.observe(el));
   </script>
 </body>
 </html>
