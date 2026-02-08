@@ -72,8 +72,9 @@
     }
     a{color:inherit;text-decoration:none;}
     main{min-height:100vh;display:flex;flex-direction:column;}
-    .page{max-width:1180px;margin:0 auto;padding:22px 16px 96px;}
-    @media (min-width:960px){.page{padding:32px 28px 140px;}}
+    .page{max-width:1180px;margin:0 auto;padding:20px 20px 64px;}
+    @media (min-width:768px){.page{padding:24px 24px 80px;}}
+    @media (min-width:960px){.page{padding:32px 32px 96px;}}
 
     .hover-lift{transition:transform var(--transition-fast),box-shadow var(--transition-fast),background var(--transition-fast),border-color var(--transition-fast),filter var(--transition-fast);will-change:transform,box-shadow,filter;}
     .hover-lift:hover{transform:translateY(-6px);box-shadow:var(--shadow-soft);filter:brightness(1.03);}
@@ -158,7 +159,8 @@
     .nav-links-mobile a.active{background:rgba(34,211,238,0.15);color:var(--accent);}
     @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
 
-    section{margin-bottom:90px;}
+    section{margin-bottom:56px;}
+    @media (min-width:768px){section{margin-bottom:64px;}}
 
     .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
     .page-title{font-size:2rem;margin:0 0 10px;letter-spacing:-0.04em;}
@@ -396,7 +398,7 @@
       <!-- ONE-PAGE WEBSITES -->
       <section class="fade-in-up" aria-labelledby="one-page-title">
         <article class="strip hover-lift">
-          <h2 id="one-page-title" class="strip-title"><img src="/images/mockups/one-page-layout.svg" alt="One-Page Sites" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" />One-Page Websites</h2>
+          <h2 id="one-page-title" class="strip-title"><img src="images/mockups/one-page-layout.svg" alt="One-Page Sites" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" />One-Page Websites</h2>
           <p class="strip-sub">
             Perfect for businesses that want to tell their story on a single, scrollable page.
             Everything visitors need is right there – no clicking through multiple pages.
@@ -405,9 +407,9 @@
           <div class="examples-grid">
             <div class="example-card image-slide-up stagger-1" onclick="window.location.href='templates/restaurant-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
-                <img src="/images/examples/template-restaurant.svg" alt="Restaurant Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
+                <img src="images/examples/template-restaurant.svg" alt="Restaurant Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
-              <span class="example-type"><img src="/images/icons/small-business.svg" alt="Restaurant" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Restaurant</span>
+              <span class="example-type"><img src="images/icons/small-business.svg" alt="Restaurant" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Restaurant</span>
               <h3 class="example-title">Local Restaurant Site</h3>
               <p class="example-desc">
                 A beautiful one-page site featuring menu sections, photo gallery, contact information,
@@ -424,9 +426,9 @@
 
             <div class="example-card image-slide-up stagger-2" onclick="window.location.href='templates/portfolio-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
-                <img src="/images/examples/template-portfolio.svg" alt="Portfolio Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
+                <img src="images/examples/template-portfolio.svg" alt="Portfolio Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
-              <span class="example-type"><img src="/images/icons/logo-design.svg" alt="Portfolio" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Portfolio</span>
+              <span class="example-type"><img src="images/icons/logo-design.svg" alt="Portfolio" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Portfolio</span>
               <h3 class="example-title">Creative Portfolio</h3>
               <p class="example-desc">
                 Showcase your work with a clean, modern portfolio. Perfect for photographers, designers,
@@ -443,9 +445,9 @@
 
             <div class="example-card image-slide-up stagger-3" onclick="window.location.href='templates/landing-template.html'">
               <div style="margin-bottom:15px;text-align:center;background:rgba(15,23,42,0.5);padding:15px;border-radius:12px;">
-                <img src="/images/examples/template-landing.svg" alt="Landing Page Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
+                <img src="images/examples/template-landing.svg" alt="Landing Page Template Preview" style="max-width:100%;height:auto;border-radius:8px;" />
               </div>
-              <span class="example-type"><img src="/images/icons/startup.svg" alt="Landing Page" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Landing Page</span>
+              <span class="example-type"><img src="images/icons/startup.svg" alt="Landing Page" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:5px;" />Landing Page</span>
               <h3 class="example-title">Product Launch Page</h3>
               <p class="example-desc">
                 High-converting landing page designed to capture leads and showcase your new product
