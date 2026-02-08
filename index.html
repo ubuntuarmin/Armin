@@ -105,11 +105,11 @@
     .page {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 22px 16px 96px;
+      padding: 20px 18px 80px;
     }
 
     @media (min-width: 960px) {
-      .page { padding: 32px 28px 140px; }
+      .page { padding: 32px 32px 120px; }
     }
 
     /* UTILITIES & ANIMATIONS */
@@ -498,16 +498,17 @@
     /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1.1fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 48px;
       align-items: center;
-      margin-bottom: 90px;
+      margin-bottom: 70px;
     }
 
     @media (max-width: 880px) {
       .hero {
         grid-template-columns: minmax(0, 1fr);
-        margin-bottom: 70px;
+        gap: 36px;
+        margin-bottom: 60px;
       }
     }
 
@@ -566,7 +567,7 @@
     .hero-subtitle {
       color: var(--text-muted);
       font-size: 1.05rem;
-      line-height: 1.9;
+      line-height: 1.7;
       max-width: 42rem;
       margin-bottom: 26px;
     }
@@ -697,7 +698,7 @@
 
     .hero-right {
       position: relative;
-      padding: 5px;
+      padding: 8px;
       border-radius: 30px;
       background:
         radial-gradient(circle at 0 0, rgba(37, 99, 235, 0.55), transparent 55%),
@@ -758,7 +759,7 @@
     .hero-card-text {
       font-size: 0.95rem;
       color: var(--text-muted);
-      line-height: 1.9;
+      line-height: 1.7;
       margin-bottom: 12px;
     }
 
@@ -818,7 +819,7 @@
     }
 
     /* SHARED SECTIONS */
-    section { margin-bottom: 80px; }
+    section { margin-bottom: 64px; }
 
     .section-header {
       display: flex;
@@ -926,6 +927,10 @@
     }
 
     @media (max-width: 900px) {
+      .preview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 600px) {
       .preview-grid { grid-template-columns: minmax(0, 1fr); }
     }
 
