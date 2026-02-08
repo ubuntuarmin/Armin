@@ -105,11 +105,15 @@
     .page {
       max-width: 1180px;
       margin: 0 auto;
-      padding: 20px 18px 80px;
+      padding: 20px 20px 64px;
+    }
+
+    @media (min-width: 768px) {
+      .page { padding: 24px 24px 80px; }
     }
 
     @media (min-width: 960px) {
-      .page { padding: 32px 32px 120px; }
+      .page { padding: 32px 32px 96px; }
     }
 
     /* UTILITIES & ANIMATIONS */
@@ -498,17 +502,23 @@
     /* HERO */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 48px;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 32px;
       align-items: center;
-      margin-bottom: 70px;
+      margin-bottom: 56px;
     }
 
-    @media (max-width: 880px) {
+    @media (min-width: 768px) {
       .hero {
-        grid-template-columns: minmax(0, 1fr);
-        gap: 36px;
-        margin-bottom: 60px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: 40px;
+        margin-bottom: 64px;
+      }
+    }
+
+    @media (min-width: 960px) {
+      .hero {
+        gap: 48px;
       }
     }
 
@@ -819,7 +829,11 @@
     }
 
     /* SHARED SECTIONS */
-    section { margin-bottom: 64px; }
+    section { margin-bottom: 56px; }
+
+    @media (min-width: 768px) {
+      section { margin-bottom: 64px; }
+    }
 
     .section-header {
       display: flex;
@@ -922,16 +936,21 @@
 
     .preview-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: minmax(0, 1fr);
       gap: 20px;
     }
 
-    @media (max-width: 900px) {
-      .preview-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    @media (min-width: 640px) {
+      .preview-grid { 
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
     }
 
-    @media (max-width: 600px) {
-      .preview-grid { grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 960px) {
+      .preview-grid { 
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
     }
 
     .preview-card {
@@ -1190,10 +1209,10 @@
       <!-- HERO -->
       <section class="hero fade-in-up" aria-labelledby="hero-title">
         <div>
-          <div class="hero-label"><img src="/images/icons/fast.svg" alt="Fast" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px;" />WELCOME TO ARMIN STUDIO</div>
+          <div class="hero-label"><img src="images/icons/fast.svg" alt="Fast" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:8px;" />WELCOME TO ARMIN STUDIO</div>
 
           <h1 id="hero-title" class="hero-title">
-            <img src="/images/icons/startup.svg" alt="Rocket Launch" style="width:40px;height:40px;display:inline-block;vertical-align:middle;margin-right:6px;" />We build
+            <img src="images/icons/startup.svg" alt="Rocket Launch" style="width:40px;height:40px;display:inline-block;vertical-align:middle;margin-right:6px;" />We build
             <span class="glow">modern, affordable websites</span>
             for real businesses.
           </h1>
@@ -1209,9 +1228,9 @@
           </p>
 
           <div class="hero-badges">
-            <span class="hero-chip accent"><img src="/images/icons/small-business.svg" alt="Small Business" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />Small & new businesses</span>
-            <span class="hero-chip"><img src="/images/icons/nonprofit.svg" alt="Non-profits" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />Non‑profits & community projects</span>
-            <span class="hero-chip"><img src="/images/icons/responsive-design.svg" alt="Responsive Design" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />One‑page & multi‑page sites</span>
+            <span class="hero-chip accent"><img src="images/icons/small-business.svg" alt="Small Business" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />Small & new businesses</span>
+            <span class="hero-chip"><img src="images/icons/nonprofit.svg" alt="Non-profits" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />Non‑profits & community projects</span>
+            <span class="hero-chip"><img src="images/icons/responsive-design.svg" alt="Responsive Design" style="width:20px;height:20px;display:inline-block;vertical-align:middle;margin-right:6px;" />One‑page & multi‑page sites</span>
           </div>
 
           <div class="hero-actions">
@@ -1295,7 +1314,7 @@
 
         <!-- Animated clients showcase -->
         <div class="animate-svg" style="text-align:center;margin:30px 0 40px;">
-          <img src="/images/animated-clients-showcase.svg" alt="Animated showcase - Small businesses, Startups, and Non-profits" style="max-width:100%;height:auto;max-height:300px;margin:0 auto;display:block;" />
+          <img src="images/animated-clients-showcase.svg" alt="Animated showcase - Small businesses, Startups, and Non-profits" style="max-width:100%;height:auto;max-height:300px;margin:0 auto;display:block;" />
         </div>
 
         <article class="card-full hover-lift">
@@ -1309,7 +1328,7 @@
 
       <!-- VISUAL SHOWCASE -->
       <section class="animate-svg" style="text-align:center;margin-bottom:60px;">
-        <img src="/images/animated-hero-illustration.svg" alt="Animated Web Design Process - Code transforming into a beautiful website" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
+        <img src="images/animated-hero-illustration.svg" alt="Animated Web Design Process - Code transforming into a beautiful website" style="max-width:100%;height:auto;max-height:400px;margin:0 auto;display:block;" />
       </section>
 
       <!-- NEXT STEPS / NAV BETWEEN PAGES -->
