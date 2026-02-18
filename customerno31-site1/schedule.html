@@ -13,19 +13,19 @@
 
     body {
       font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
-      background: #0a0e27;
+      background: #0f1419;
       color: #fff;
       line-height: 1.6;
     }
 
     /* Navigation */
     nav {
-      background: rgba(10, 14, 39, 0.95);
+      background: rgba(15, 20, 25, 0.95);
       padding: 20px 0;
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 3px solid #ffd700;
+      border-bottom: 3px solid #dc2626;
     }
 
     .nav-container {
@@ -38,11 +38,30 @@
     }
 
     .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
       font-size: 1.8rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #dc2626;
       text-transform: uppercase;
       letter-spacing: 2px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      background: #1e3a8a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      color: #fff;
+      text-align: center;
+      line-height: 1.2;
+      padding: 5px;
+      border: 2px solid #dc2626;
     }
 
     .nav-links {
@@ -61,19 +80,28 @@
     }
 
     .nav-links a:hover {
-      color: #ffd700;
+      color: #dc2626;
+    }
+
+    .mobile-menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.8rem;
+      cursor: pointer;
     }
 
     /* Page Header */
     .page-header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
       padding: 60px 20px;
       text-align: center;
     }
 
     .page-header h1 {
       font-size: 3.5rem;
-      color: #ffd700;
+      color: #dc2626;
       text-transform: uppercase;
       letter-spacing: 3px;
     }
@@ -111,7 +139,7 @@
     .record-value {
       font-size: 3.5rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #dc2626;
     }
 
     .record-label {
@@ -128,10 +156,10 @@
 
     .section-title {
       font-size: 2.5rem;
-      color: #ffd700;
+      color: #dc2626;
       margin-bottom: 30px;
       text-transform: uppercase;
-      border-bottom: 3px solid #ffd700;
+      border-bottom: 3px solid #dc2626;
       padding-bottom: 15px;
     }
 
@@ -143,7 +171,7 @@
     }
 
     .game-card {
-      background: #151b3d;
+      background: #1a1f2e;
       border-radius: 15px;
       padding: 30px;
       display: grid;
@@ -156,7 +184,7 @@
 
     .game-card:hover {
       transform: translateX(10px);
-      border-color: #ffd700;
+      border-color: #dc2626;
       box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
     }
 
@@ -179,7 +207,7 @@
     .date-day {
       font-size: 2rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #dc2626;
       line-height: 1;
     }
 
@@ -258,8 +286,8 @@
 
     .ticket-link {
       display: inline-block;
-      background: #ffd700;
-      color: #0a0e27;
+      background: #dc2626;
+      color: #0f1419;
       padding: 8px 20px;
       border-radius: 25px;
       text-decoration: none;
@@ -275,10 +303,10 @@
 
     /* Footer */
     footer {
-      background: #0a0e27;
+      background: #0f1419;
       padding: 40px 20px;
       text-align: center;
-      border-top: 3px solid #ffd700;
+      border-top: 3px solid #dc2626;
     }
 
     footer p {
@@ -287,16 +315,39 @@
     }
 
     @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2.5rem;
+      .mobile-menu-toggle {
+        display: block;
       }
 
       .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: rgba(15, 20, 25, 0.98);
+        flex-direction: column;
+        padding: 20px;
         gap: 15px;
+        border-top: 2px solid #dc2626;
       }
 
-      .nav-links a {
-        font-size: 0.8rem;
+      .nav-links.active {
+        display: flex;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.7rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
       }
 
       .game-card {
@@ -312,14 +363,40 @@
         font-size: 2.5rem;
       }
     }
+
+    @media (max-width: 480px) {
+      .nav-container {
+        padding: 0 15px;
+      }
+
+      .page-header {
+        padding: 40px 15px;
+      }
+
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 40px 15px;
+      }
+
+      .game-card {
+        padding: 20px 15px;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <div class="logo">⚡ Thunder Bolts</div>
-      <ul class="nav-links">
+      <div class="logo">
+        <div class="logo-placeholder">TEAM LOGO</div>
+        <span>Thunder Bolts</span>
+      </div>
+      <button class="mobile-menu-toggle" onclick="toggleMenu()">☰</button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="roster.html">Roster</a></li>
         <li><a href="schedule.html">Schedule</a></li>
@@ -526,5 +603,12 @@
       <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+  </script>
 </body>
 </html>
