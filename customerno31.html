@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Justin Zaiff - Website Templates | Armin Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 300;
+    }
+
+    .templates-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .template-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease;
+      animation-fill-mode: both;
+    }
+
+    .template-card:nth-child(1) {
+      animation-delay: 0.2s;
+    }
+
+    .template-card:nth-child(2) {
+      animation-delay: 0.4s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.4);
+    }
+
+    .template-header {
+      padding: 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.3));
+      z-index: 1;
+    }
+
+    .template-header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .sports-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    }
+
+    .construction-header {
+      background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%);
+    }
+
+    .template-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .template-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .template-body {
+      padding: 40px;
+      color: #333;
+    }
+
+    .template-description {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .features-list li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      color: #444;
+      font-size: 1rem;
+    }
+
+    .features-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #22c55e;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 35px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .templates-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .template-title {
+        font-size: 1.6rem;
+      }
+
+      .template-header,
+      .template-body {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Welcome, Justin Zaiff</h1>
+      <p class="subtitle">Choose Your Perfect Website Template</p>
+    </header>
+
+    <div class="templates-grid">
+      <!-- Sports Team Template -->
+      <div class="template-card">
+        <div class="template-header sports-header">
+          <h2 class="template-title">Sports Team Pro</h2>
+          <p class="template-subtitle">Professional Sports Website</p>
+        </div>
+        <div class="template-body">
+          <p class="template-description">
+            A dynamic, high-energy website designed specifically for sports teams. Perfect for showcasing your roster, schedule, and team achievements.
+          </p>
+          <ul class="features-list">
+            <li>Team home page with hero section</li>
+            <li>Player roster with detailed profiles</li>
+            <li>Schedule & results tracking</li>
+            <li>Fully responsive design</li>
+            <li>Modern sports aesthetics</li>
+          </ul>
+          <a href="customerno31-site1/index.html" class="cta-button">View Sports Template</a>
+        </div>
+      </div>
+
+      <!-- Construction/Remodeling Template -->
+      <div class="template-card">
+        <div class="template-header construction-header">
+          <h2 class="template-title">BuildPro Remodeling</h2>
+          <p class="template-subtitle">Construction & Remodeling Website</p>
+        </div>
+        <div class="template-body">
+          <p class="template-description">
+            A comprehensive website solution for construction and remodeling businesses. Showcase your projects, services, and connect with potential clients.
+          </p>
+          <ul class="features-list">
+            <li>Professional home page with portfolio highlights</li>
+            <li>Detailed services showcase</li>
+            <li>Project portfolio gallery</li>
+            <li>About us & team profiles</li>
+            <li>Contact form with quote request</li>
+          </ul>
+          <a href="customerno31-site2/index.html" class="cta-button">View Construction Template</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

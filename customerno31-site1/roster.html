@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Roster - Thunder Bolts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+      background: #0a0e27;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(10, 14, 39, 0.95);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #ffd700;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover {
+      color: #ffd700;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      margin-top: 10px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    /* Roster Grid */
+    .roster-section {
+      margin-bottom: 60px;
+    }
+
+    .position-title {
+      font-size: 2rem;
+      color: #ffd700;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 10px;
+    }
+
+    .roster-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .player-card {
+      background: #151b3d;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .player-card:hover {
+      transform: translateY(-5px);
+      border-color: #ffd700;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .player-header {
+      background: linear-gradient(135deg, #1e3a8a, #312e81);
+      padding: 30px;
+      text-align: center;
+      position: relative;
+    }
+
+    .player-avatar {
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 15px;
+      background: #ffd700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border: 4px solid #fff;
+    }
+
+    .player-number {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: #ffd700;
+      color: #0a0e27;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 900;
+    }
+
+    .player-name {
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .player-position {
+      color: #ffd700;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .player-body {
+      padding: 20px;
+    }
+
+    .player-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-bottom: 15px;
+    }
+
+    .stat-item {
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: #ffd700;
+    }
+
+    .stat-label {
+      font-size: 0.75rem;
+      color: #9ca3af;
+      text-transform: uppercase;
+    }
+
+    .player-bio {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      line-height: 1.6;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 15px;
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0e27;
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 3px solid #ffd700;
+    }
+
+    footer p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links a {
+        font-size: 0.8rem;
+      }
+
+      .roster-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">⚡ Thunder Bolts</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="roster.html">Roster</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Team Roster</h1>
+    <p>Meet the 2026 Thunder Bolts Squad</p>
+  </section>
+
+  <!-- Roster Content -->
+  <div class="container">
+    <!-- Guards -->
+    <div class="roster-section">
+      <h2 class="position-title">🏀 Guards</h2>
+      <div class="roster-grid">
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#23</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Marcus Johnson</h3>
+            <p class="player-position">Point Guard</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">18.5</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">7.2</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">4.1</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Team captain and floor general. Known for explosive speed and clutch plays in critical moments.</p>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#7</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Ryan Martinez</h3>
+            <p class="player-position">Shooting Guard</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">21.3</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">3.8</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">5.2</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Elite shooter with exceptional range. Leads the team in three-point percentage at 42%.</p>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#11</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Derek Collins</h3>
+            <p class="player-position">Point Guard</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">12.7</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">5.9</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">3.4</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Versatile backup guard with excellent court vision and defensive intensity.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Forwards -->
+    <div class="roster-section">
+      <h2 class="position-title">⚡ Forwards</h2>
+      <div class="roster-grid">
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#32</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Brandon Smith</h3>
+            <p class="player-position">Power Forward</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">16.8</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">2.1</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">9.5</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Physical presence in the paint with exceptional rebounding and mid-range shooting ability.</p>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#21</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Tyler Anderson</h3>
+            <p class="player-position">Small Forward</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">14.2</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">3.7</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">6.8</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Athletic wing player known for high-flying dunks and lockdown perimeter defense.</p>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#15</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Chris Robinson</h3>
+            <p class="player-position">Small Forward</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">10.5</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">2.3</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">5.1</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Reliable role player with excellent three-point shooting and hustle plays.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Centers -->
+    <div class="roster-section">
+      <h2 class="position-title">🏆 Centers</h2>
+      <div class="roster-grid">
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#45</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Jake Williams</h3>
+            <p class="player-position">Center</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">19.7</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">1.8</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">11.2</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Dominant force in the paint. Leads team in rebounds and blocks with 2.8 per game.</p>
+          </div>
+        </div>
+
+        <div class="player-card">
+          <div class="player-header">
+            <div class="player-number">#50</div>
+            <div class="player-avatar">🏀</div>
+            <h3 class="player-name">Aaron Thompson</h3>
+            <p class="player-position">Center</p>
+          </div>
+          <div class="player-body">
+            <div class="player-stats">
+              <div class="stat-item">
+                <div class="stat-value">8.9</div>
+                <div class="stat-label">PPG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">1.2</div>
+                <div class="stat-label">APG</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-value">7.3</div>
+                <div class="stat-label">RPG</div>
+              </div>
+            </div>
+            <p class="player-bio">Energetic backup center providing quality minutes with strong defensive presence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

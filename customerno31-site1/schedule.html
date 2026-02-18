@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Schedule & Results - Thunder Bolts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+      background: #0a0e27;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(10, 14, 39, 0.95);
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #ffd700;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+      text-transform: uppercase;
+    }
+
+    .nav-links a:hover {
+      color: #ffd700;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+      padding: 60px 20px;
+      text-align: center;
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      color: #ffd700;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      margin-top: 10px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    /* Container */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    /* Record Summary */
+    .record-summary {
+      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 60px;
+      display: flex;
+      justify-content: center;
+      gap: 60px;
+      flex-wrap: wrap;
+    }
+
+    .record-item {
+      text-align: center;
+    }
+
+    .record-value {
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: #ffd700;
+    }
+
+    .record-label {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-top: 5px;
+      letter-spacing: 1px;
+    }
+
+    /* Schedule Sections */
+    .schedule-section {
+      margin-bottom: 60px;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      color: #ffd700;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      border-bottom: 3px solid #ffd700;
+      padding-bottom: 15px;
+    }
+
+    /* Game Cards */
+    .games-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .game-card {
+      background: #151b3d;
+      border-radius: 15px;
+      padding: 30px;
+      display: grid;
+      grid-template-columns: 150px 1fr 150px;
+      align-items: center;
+      gap: 30px;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .game-card:hover {
+      transform: translateX(10px);
+      border-color: #ffd700;
+      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+    }
+
+    .game-card.upcoming {
+      border-left: 5px solid #10b981;
+    }
+
+    .game-card.completed.win {
+      border-left: 5px solid #22c55e;
+    }
+
+    .game-card.completed.loss {
+      border-left: 5px solid #ef4444;
+    }
+
+    .game-date {
+      text-align: center;
+    }
+
+    .date-day {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #ffd700;
+      line-height: 1;
+    }
+
+    .date-month {
+      font-size: 1rem;
+      text-transform: uppercase;
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    .date-time {
+      font-size: 0.9rem;
+      color: #d1d5db;
+      margin-top: 5px;
+    }
+
+    .game-info {
+      text-align: center;
+    }
+
+    .teams {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .vs {
+      color: #9ca3af;
+      font-size: 1.2rem;
+      margin: 0 15px;
+    }
+
+    .location {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .game-result {
+      text-align: center;
+    }
+
+    .score {
+      font-size: 2.5rem;
+      font-weight: 900;
+    }
+
+    .score.win {
+      color: #22c55e;
+    }
+
+    .score.loss {
+      color: #ef4444;
+    }
+
+    .result-label {
+      font-size: 1.1rem;
+      text-transform: uppercase;
+      margin-top: 5px;
+      font-weight: 700;
+    }
+
+    .result-label.win {
+      color: #22c55e;
+    }
+
+    .result-label.loss {
+      color: #ef4444;
+    }
+
+    .upcoming-label {
+      font-size: 1.5rem;
+      color: #10b981;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .ticket-link {
+      display: inline-block;
+      background: #ffd700;
+      color: #0a0e27;
+      padding: 8px 20px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-top: 10px;
+      transition: transform 0.3s;
+    }
+
+    .ticket-link:hover {
+      transform: scale(1.1);
+    }
+
+    /* Footer */
+    footer {
+      background: #0a0e27;
+      padding: 40px 20px;
+      text-align: center;
+      border-top: 3px solid #ffd700;
+    }
+
+    footer p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 768px) {
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links a {
+        font-size: 0.8rem;
+      }
+
+      .game-card {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .record-summary {
+        gap: 30px;
+      }
+
+      .record-value {
+        font-size: 2.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">⚡ Thunder Bolts</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="roster.html">Roster</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Schedule & Results</h1>
+    <p>2026 Season</p>
+  </section>
+
+  <!-- Content -->
+  <div class="container">
+    <!-- Record Summary -->
+    <div class="record-summary">
+      <div class="record-item">
+        <div class="record-value">18-5</div>
+        <div class="record-label">Overall Record</div>
+      </div>
+      <div class="record-item">
+        <div class="record-value">12-2</div>
+        <div class="record-label">Home Record</div>
+      </div>
+      <div class="record-item">
+        <div class="record-value">6-3</div>
+        <div class="record-label">Away Record</div>
+      </div>
+    </div>
+
+    <!-- Upcoming Games -->
+    <div class="schedule-section">
+      <h2 class="section-title">⚡ Upcoming Games</h2>
+      <div class="games-list">
+        <div class="game-card upcoming">
+          <div class="game-date">
+            <div class="date-day">22</div>
+            <div class="date-month">FEB</div>
+            <div class="date-time">7:00 PM</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">vs</span> City Hawks
+            </div>
+            <div class="location">📍 Thunder Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="upcoming-label">Next Game</div>
+            <a href="#" class="ticket-link">Get Tickets</a>
+          </div>
+        </div>
+
+        <div class="game-card upcoming">
+          <div class="game-date">
+            <div class="date-day">25</div>
+            <div class="date-month">FEB</div>
+            <div class="date-time">8:00 PM</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">@</span> Mountain Lions
+            </div>
+            <div class="location">📍 Lion's Den Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="upcoming-label">Away</div>
+            <a href="#" class="ticket-link">Get Tickets</a>
+          </div>
+        </div>
+
+        <div class="game-card upcoming">
+          <div class="game-date">
+            <div class="date-day">28</div>
+            <div class="date-month">FEB</div>
+            <div class="date-time">7:30 PM</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">vs</span> Coastal Sharks
+            </div>
+            <div class="location">📍 Thunder Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="upcoming-label">Home</div>
+            <a href="#" class="ticket-link">Get Tickets</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Recent Results -->
+    <div class="schedule-section">
+      <h2 class="section-title">🏆 Recent Results</h2>
+      <div class="games-list">
+        <div class="game-card completed win">
+          <div class="game-date">
+            <div class="date-day">18</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">vs</span> River Rapids
+            </div>
+            <div class="location">📍 Thunder Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="score win">105-98</div>
+            <div class="result-label win">Win</div>
+          </div>
+        </div>
+
+        <div class="game-card completed win">
+          <div class="game-date">
+            <div class="date-day">15</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">@</span> Desert Vipers
+            </div>
+            <div class="location">📍 Viper Pit</div>
+          </div>
+          <div class="game-result">
+            <div class="score win">112-107</div>
+            <div class="result-label win">Win</div>
+          </div>
+        </div>
+
+        <div class="game-card completed loss">
+          <div class="game-date">
+            <div class="date-day">12</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">vs</span> Storm Chasers
+            </div>
+            <div class="location">📍 Thunder Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="score loss">89-92</div>
+            <div class="result-label loss">Loss</div>
+          </div>
+        </div>
+
+        <div class="game-card completed win">
+          <div class="game-date">
+            <div class="date-day">08</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">@</span> Valley Warriors
+            </div>
+            <div class="location">📍 Warrior Stadium</div>
+          </div>
+          <div class="game-result">
+            <div class="score win">118-110</div>
+            <div class="result-label win">Win</div>
+          </div>
+        </div>
+
+        <div class="game-card completed win">
+          <div class="game-date">
+            <div class="date-day">05</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">vs</span> Northern Wolves
+            </div>
+            <div class="location">📍 Thunder Arena</div>
+          </div>
+          <div class="game-result">
+            <div class="score win">101-95</div>
+            <div class="result-label win">Win</div>
+          </div>
+        </div>
+
+        <div class="game-card completed win">
+          <div class="game-date">
+            <div class="date-day">01</div>
+            <div class="date-month">FEB</div>
+          </div>
+          <div class="game-info">
+            <div class="teams">
+              Thunder Bolts <span class="vs">@</span> City Hawks
+            </div>
+            <div class="location">📍 Hawks Nest</div>
+          </div>
+          <div class="game-result">
+            <div class="score win">97-91</div>
+            <div class="result-label win">Win</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
