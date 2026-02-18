@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog & News - BuildPro Construction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2c3e50;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #f39c12;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(243, 156, 18, 0.1);
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #f39c12;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f39c12;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a:hover {
+      color: #f39c12;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #f39c12 0%, #7f8c8d 100%);
+      padding: 100px 20px 60px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="rgba(255,255,255,0.05)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .page-header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+    }
+
+    /* Blog Section */
+    .blog-section {
+      padding: 80px 20px;
+      background: #ecf0f1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .blog-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 40px;
+    }
+
+    /* Featured Article */
+    .featured-article {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      margin-bottom: 50px;
+      transition: all 0.3s ease;
+    }
+
+    .featured-article:hover {
+      box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
+    }
+
+    .featured-image {
+      width: 100%;
+      height: 400px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px dashed #f39c12;
+    }
+
+    .featured-image-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+    }
+
+    .featured-image-bg::after {
+      content: '[ Featured Image ]';
+      position: absolute;
+      bottom: 20px;
+      font-size: 1.2rem;
+      color: rgba(255, 255, 255, 0.9);
+      font-weight: 600;
+    }
+
+    .featured-content {
+      padding: 40px;
+    }
+
+    .featured-badge {
+      display: inline-block;
+      background: #f39c12;
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-transform: uppercase;
+    }
+
+    .featured-content h2 {
+      font-size: 2.2rem;
+      color: #2c3e50;
+      margin-bottom: 15px;
+    }
+
+    .post-meta {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .post-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .featured-excerpt {
+      color: #555;
+      line-height: 1.8;
+      font-size: 1.1rem;
+      margin-bottom: 25px;
+    }
+
+    .read-more-btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: #f39c12;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      min-height: 44px;
+      line-height: 20px;
+    }
+
+    .read-more-btn:hover {
+      background: #e67e22;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+    }
+
+    /* Blog Posts Grid */
+    .blog-posts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      grid-column: 1;
+    }
+
+    .blog-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .blog-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
+    }
+
+    .blog-image {
+      width: 100%;
+      height: 220px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 3px dashed rgba(243, 156, 18, 0.3);
+    }
+
+    .blog-image-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .blog-card:hover .blog-image-bg {
+      transform: scale(1.1);
+    }
+
+    .blog-image-bg::after {
+      content: '[ Image ]';
+      position: absolute;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+    }
+
+    .blog-card:nth-child(1) .blog-image-bg {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .blog-card:nth-child(2) .blog-image-bg {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .blog-card:nth-child(3) .blog-image-bg {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    }
+
+    .blog-card:nth-child(4) .blog-image-bg {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+    }
+
+    .blog-card:nth-child(5) .blog-image-bg {
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+    }
+
+    .blog-card:nth-child(6) .blog-image-bg {
+      background: linear-gradient(135deg, #34495e, #2c3e50);
+    }
+
+    .blog-content {
+      padding: 25px;
+    }
+
+    .blog-category {
+      display: inline-block;
+      background: rgba(243, 156, 18, 0.1);
+      color: #f39c12;
+      padding: 4px 12px;
+      border-radius: 15px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .blog-content h3 {
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .blog-excerpt {
+      color: #555;
+      line-height: 1.7;
+      font-size: 0.95rem;
+      margin-bottom: 15px;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      grid-column: 2;
+    }
+
+    .sidebar-widget {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      margin-bottom: 30px;
+    }
+
+    .sidebar-widget h3 {
+      font-size: 1.4rem;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      padding-bottom: 15px;
+      border-bottom: 3px solid #f39c12;
+    }
+
+    .category-list {
+      list-style: none;
+    }
+
+    .category-list li {
+      margin-bottom: 12px;
+    }
+
+    .category-list a {
+      color: #555;
+      text-decoration: none;
+      font-size: 1rem;
+      transition: all 0.3s;
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+    }
+
+    .category-list a:hover {
+      color: #f39c12;
+      padding-left: 10px;
+    }
+
+    .category-count {
+      background: #ecf0f1;
+      padding: 2px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: #7f8c8d;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 18px 40px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      min-height: 44px;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #34495e;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: #1a252f;
+      padding: 50px 20px 30px;
+      color: #bdc3c7;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      color: #f39c12;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #f39c12;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #2c3e50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .social-links a:hover {
+      background: #f39c12;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #34495e;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 70%;
+        background: #1a252f;
+        border-left: 3px solid #f39c12;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .nav-links a {
+        padding: 18px 0;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .blog-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        grid-column: 1;
+      }
+
+      .blog-posts {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .featured-image {
+        height: 300px;
+      }
+
+      .featured-content {
+        padding: 30px 25px;
+      }
+
+      .cta-section h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .page-header {
+        padding: 80px 15px 50px;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+
+      .logo-placeholder {
+        width: 35px;
+        height: 35px;
+        font-size: 0.5rem;
+      }
+
+      .featured-content h2 {
+        font-size: 1.5rem;
+      }
+
+      .featured-content {
+        padding: 25px 20px;
+      }
+
+      .featured-image {
+        height: 250px;
+      }
+
+      .blog-content h3 {
+        font-size: 1.2rem;
+      }
+
+      .sidebar-widget {
+        padding: 25px 20px;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 14px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder" aria-label="Company Logo">LOGO</div>
+        <div class="logo">BuildPro</div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+        <li><a href="services.html" aria-label="View our Services">Services</a></li>
+        <li><a href="portfolio.html" aria-label="View our Portfolio">Portfolio</a></li>
+        <li><a href="about.html" aria-label="Learn About us">About</a></li>
+        <li><a href="contact.html" aria-label="Contact us">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="page-header-content">
+      <h1>Blog & News</h1>
+      <p>Stay updated with construction tips, project highlights, and industry insights</p>
+    </div>
+  </section>
+
+  <!-- Blog Section -->
+  <section class="blog-section">
+    <div class="container">
+      <!-- Featured Article -->
+      <article class="featured-article">
+        <div class="featured-image">
+          <div class="featured-image-bg">📰</div>
+        </div>
+        <div class="featured-content">
+          <span class="featured-badge">Featured</span>
+          <h2>Top 10 Home Renovation Trends for 2026</h2>
+          <div class="post-meta">
+            <span>📅 January 15, 2026</span>
+            <span>👤 By John Anderson</span>
+            <span>💬 12 Comments</span>
+          </div>
+          <p class="featured-excerpt">Discover the latest trends shaping home renovations this year. From sustainable materials to smart home integration, we explore what's hot in residential construction and how these trends can enhance your living space while adding value to your property.</p>
+          <a href="#" class="read-more-btn">Read Full Article</a>
+        </div>
+      </article>
+
+      <div class="blog-layout">
+        <!-- Blog Posts -->
+        <div class="blog-posts">
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">🔨</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Tips & Advice</span>
+              <h3>How to Choose the Right Contractor for Your Project</h3>
+              <div class="post-meta">
+                <span>📅 Jan 12, 2026</span>
+              </div>
+              <p class="blog-excerpt">Learn the key factors to consider when selecting a construction contractor. We share expert tips on vetting credentials, checking references, and ensuring quality work.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">🏡</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Project Showcase</span>
+              <h3>Before & After: Downtown Office Transformation</h3>
+              <div class="post-meta">
+                <span>📅 Jan 10, 2026</span>
+              </div>
+              <p class="blog-excerpt">Take a look at our recent commercial renovation project. See how we transformed a dated office space into a modern, efficient workplace.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">💡</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Design Ideas</span>
+              <h3>Kitchen Layout Mistakes to Avoid</h3>
+              <div class="post-meta">
+                <span>📅 Jan 8, 2026</span>
+              </div>
+              <p class="blog-excerpt">Planning a kitchen remodel? Avoid these common layout mistakes that can impact functionality and reduce the value of your renovation investment.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">🌿</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Sustainability</span>
+              <h3>Eco-Friendly Building Materials Guide</h3>
+              <div class="post-meta">
+                <span>📅 Jan 5, 2026</span>
+              </div>
+              <p class="blog-excerpt">Explore sustainable building materials that reduce environmental impact without compromising quality. From recycled content to renewable resources.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">💰</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Budget Planning</span>
+              <h3>Understanding Construction Cost Estimates</h3>
+              <div class="post-meta">
+                <span>📅 Jan 3, 2026</span>
+              </div>
+              <p class="blog-excerpt">Decode your construction estimate and understand where your money goes. Learn to identify hidden costs and get the most value from your budget.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+
+          <article class="blog-card">
+            <div class="blog-image">
+              <div class="blog-image-bg">🏗️</div>
+            </div>
+            <div class="blog-content">
+              <span class="blog-category">Industry News</span>
+              <h3>New Building Codes: What You Need to Know</h3>
+              <div class="post-meta">
+                <span>📅 Dec 30, 2025</span>
+              </div>
+              <p class="blog-excerpt">Stay informed about recent updates to building codes and regulations. We break down what these changes mean for your upcoming construction project.</p>
+              <a href="#" class="read-more-btn">Read More</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+          <div class="sidebar-widget">
+            <h3>Categories</h3>
+            <ul class="category-list">
+              <li><a href="#">Tips & Advice <span class="category-count">18</span></a></li>
+              <li><a href="#">Project Showcase <span class="category-count">24</span></a></li>
+              <li><a href="#">Design Ideas <span class="category-count">31</span></a></li>
+              <li><a href="#">Sustainability <span class="category-count">12</span></a></li>
+              <li><a href="#">Budget Planning <span class="category-count">15</span></a></li>
+              <li><a href="#">Industry News <span class="category-count">9</span></a></li>
+            </ul>
+          </div>
+
+          <div class="sidebar-widget">
+            <h3>Recent Posts</h3>
+            <ul class="category-list">
+              <li><a href="#">Top 10 Home Renovation Trends</a></li>
+              <li><a href="#">Choosing the Right Contractor</a></li>
+              <li><a href="#">Office Transformation Project</a></li>
+              <li><a href="#">Kitchen Layout Mistakes</a></li>
+              <li><a href="#">Eco-Friendly Materials</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Start Your Project?</h2>
+      <p>Let's turn your construction dreams into reality</p>
+      <a href="contact.html" class="btn btn-primary" aria-label="Contact us to start your project">Contact Us Today</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>BuildPro Construction</h3>
+        <p>Expert construction and remodeling services since 1998.</p>
+        <p style="margin-top: 15px;">📞 (555) 123-4567<br>📧 info@buildpro.com</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html#remodeling">Home Remodeling</a></li>
+          <li><a href="services.html#commercial">Commercial Build</a></li>
+          <li><a href="services.html#renovation">Renovation</a></li>
+          <li><a href="services.html#design">Interior Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Business Hours</h3>
+        <p>Monday - Friday: 8am - 6pm<br>
+        Saturday: 9am - 4pm<br>
+        Sunday: Closed</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BuildPro Construction. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const navLinks = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      
+      if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

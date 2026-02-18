@@ -37,6 +37,26 @@
       align-items: center;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #f39c12;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(243, 156, 18, 0.1);
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #f39c12;
+    }
+
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
@@ -46,10 +66,27 @@
       gap: 10px;
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
     .nav-links {
       display: flex;
       gap: 30px;
       list-style: none;
+      transition: right 0.3s ease;
     }
 
     .nav-links a {
@@ -57,7 +94,10 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
-      transition: color 0.3s;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
     .nav-links a:hover {
@@ -125,17 +165,23 @@
       padding: 20px;
       background: #ecf0f1;
       border-radius: 10px;
-      transition: transform 0.3s;
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .info-item:hover {
       transform: translateX(10px);
+      box-shadow: 0 5px 15px rgba(243, 156, 18, 0.2);
     }
 
     .info-icon {
       font-size: 2rem;
       min-width: 50px;
       text-align: center;
+      padding: 10px;
+      background: rgba(243, 156, 18, 0.1);
+      border: 2px dashed rgba(243, 156, 18, 0.3);
+      border-radius: 8px;
     }
 
     .info-content h3 {
@@ -173,12 +219,13 @@
     .form-group select,
     .form-group textarea {
       width: 100%;
-      padding: 12px 15px;
+      padding: 14px 18px;
       border: 2px solid #ecf0f1;
       border-radius: 5px;
       font-size: 1rem;
       font-family: inherit;
-      transition: border-color 0.3s;
+      transition: all 0.3s ease;
+      min-height: 44px;
     }
 
     .form-group input:focus,
@@ -186,6 +233,7 @@
     .form-group textarea:focus {
       outline: none;
       border-color: #f39c12;
+      box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.1);
     }
 
     .form-group textarea {
@@ -201,20 +249,21 @@
 
     .submit-btn {
       width: 100%;
-      padding: 15px;
+      padding: 18px;
       background: linear-gradient(135deg, #f39c12, #e67e22);
       color: #fff;
       border: none;
       border-radius: 5px;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       font-weight: 700;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      min-height: 56px;
     }
 
     .submit-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(243, 156, 18, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(243, 156, 18, 0.5);
     }
 
     /* Map Section */
@@ -235,14 +284,31 @@
       max-width: 1200px;
       margin: 0 auto;
       height: 400px;
-      background: linear-gradient(135deg, #3498db, #2980b9);
+      background: rgba(52, 152, 219, 0.05);
+      border: 3px dashed rgba(52, 152, 219, 0.3);
       border-radius: 10px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 4rem;
-      color: #fff;
+      color: #3498db;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .map-placeholder:hover {
+      box-shadow: 0 15px 40px rgba(52, 152, 219, 0.2);
+    }
+
+    .map-placeholder::after {
+      content: '[ Map Location Placeholder ]';
+      position: absolute;
+      bottom: 40px;
+      font-size: 1rem;
+      color: rgba(52, 152, 219, 0.6);
+      font-weight: 600;
     }
 
     /* Hours Section */
@@ -275,6 +341,13 @@
       padding: 15px;
       background: rgba(255,255,255,0.1);
       border-radius: 5px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .hours-item:hover {
+      background: rgba(255,255,255,0.15);
+      transform: translateY(-3px);
     }
 
     .hours-day {
@@ -306,16 +379,52 @@
     }
 
     @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2.5rem;
+      .hamburger {
+        display: flex;
       }
 
       .nav-links {
-        gap: 15px;
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 70%;
+        background: #1a252f;
+        border-left: 3px solid #f39c12;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
       }
 
       .nav-links a {
-        font-size: 0.85rem;
+        padding: 18px 0;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
       }
 
       .contact-grid {
@@ -336,19 +445,82 @@
         grid-template-columns: 1fr;
       }
     }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .page-header {
+        padding: 60px 15px;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+
+      .logo-placeholder {
+        width: 35px;
+        height: 35px;
+        font-size: 0.5rem;
+      }
+
+      .container {
+        padding: 60px 15px;
+      }
+
+      .contact-info h2,
+      .quote-form h2 {
+        font-size: 1.8rem;
+      }
+
+      .map-section,
+      .hours-section {
+        padding: 60px 15px;
+      }
+
+      .map-title {
+        font-size: 2rem;
+      }
+
+      .map-placeholder {
+        height: 250px;
+        font-size: 2.5rem;
+      }
+
+      .info-item {
+        padding: 15px;
+      }
+
+      .submit-btn {
+        font-size: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body>
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <div class="logo">🏗️ BuildPro</div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+      <div class="logo-container">
+        <div class="logo-placeholder" aria-label="Company Logo">LOGO</div>
+        <div class="logo">BuildPro</div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+        <li><a href="services.html" aria-label="View our Services">Services</a></li>
+        <li><a href="portfolio.html" aria-label="View our Portfolio">Portfolio</a></li>
+        <li><a href="about.html" aria-label="Learn About us">About</a></li>
+        <li><a href="contact.html" aria-label="Contact us">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -413,28 +585,28 @@
           <div class="form-row">
             <div class="form-group">
               <label for="firstName">First Name *</label>
-              <input type="text" id="firstName" name="firstName" required>
+              <input type="text" id="firstName" name="firstName" aria-label="Enter your first name" required>
             </div>
             <div class="form-group">
               <label for="lastName">Last Name *</label>
-              <input type="text" id="lastName" name="lastName" required>
+              <input type="text" id="lastName" name="lastName" aria-label="Enter your last name" required>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group">
               <label for="email">Email *</label>
-              <input type="email" id="email" name="email" required>
+              <input type="email" id="email" name="email" aria-label="Enter your email address" required>
             </div>
             <div class="form-group">
               <label for="phone">Phone *</label>
-              <input type="tel" id="phone" name="phone" required>
+              <input type="tel" id="phone" name="phone" aria-label="Enter your phone number" required>
             </div>
           </div>
 
           <div class="form-group">
             <label for="projectType">Project Type *</label>
-            <select id="projectType" name="projectType" required>
+            <select id="projectType" name="projectType" aria-label="Select your project type" required>
               <option value="">Select a project type</option>
               <option value="kitchen">Kitchen Remodel</option>
               <option value="bathroom">Bathroom Remodel</option>
@@ -447,7 +619,7 @@
 
           <div class="form-group">
             <label for="budget">Estimated Budget</label>
-            <select id="budget" name="budget">
+            <select id="budget" name="budget" aria-label="Select your estimated budget">
               <option value="">Select a budget range</option>
               <option value="10-25k">$10,000 - $25,000</option>
               <option value="25-50k">$25,000 - $50,000</option>
@@ -458,7 +630,7 @@
 
           <div class="form-group">
             <label for="timeline">Preferred Timeline</label>
-            <select id="timeline" name="timeline">
+            <select id="timeline" name="timeline" aria-label="Select your preferred timeline">
               <option value="">Select a timeline</option>
               <option value="asap">As soon as possible</option>
               <option value="1-3">1-3 months</option>
@@ -469,10 +641,10 @@
 
           <div class="form-group">
             <label for="message">Project Details *</label>
-            <textarea id="message" name="message" placeholder="Tell us about your project..." required></textarea>
+            <textarea id="message" name="message" placeholder="Tell us about your project..." aria-label="Describe your project details" required></textarea>
           </div>
 
-          <button type="submit" class="submit-btn">Request Free Quote</button>
+          <button type="submit" class="submit-btn" aria-label="Submit your quote request">Request Free Quote</button>
         </form>
       </div>
     </div>
@@ -514,20 +686,45 @@
   </footer>
 
   <script>
+    /**
+     * Toggles the mobile navigation menu visibility
+     * Adds/removes the 'active' class to slide menu in/out
+     */
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+
+    /**
+     * Handles contact form submission
+     * Prevents default form action and displays success message
+     * @param {Event} event - The form submission event
+     */
     function handleSubmit(event) {
       event.preventDefault();
       
-      // Get form data
       const formData = new FormData(event.target);
       const data = Object.fromEntries(formData);
       
-      // In a real application, this would send to a server
       console.log('Quote Request:', data);
       
-      // Show success message
       alert('Thank you for your quote request! We\'ll get back to you within 24 hours.');
       
-      // Reset form
       event.target.reset();
     }
   </script>

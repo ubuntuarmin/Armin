@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>News - Thunder Bolts</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+      background: #0f1419;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: rgba(15, 20, 25, 0.98);
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #dc2626;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #dc2626;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #dc2626;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #dc2626;
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.9rem;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+
+    .nav-links a:hover {
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #dc2626 0%, #1e40af 50%, #dc2626 100%);
+      padding: 80px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+      animation: drift 20s linear infinite;
+    }
+
+    @keyframes drift {
+      from { transform: translate(0, 0); }
+      to { transform: translate(100px, 100px); }
+    }
+
+    .page-header h1 {
+      font-size: 3.5rem;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 3px 3px 6px rgba(0,0,0,0.5);
+      letter-spacing: 3px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      margin-top: 15px;
+      font-weight: 300;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Main Content */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+
+    /* Category Filter */
+    .category-filter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 50px;
+    }
+
+    .filter-btn {
+      background: rgba(30, 64, 175, 0.2);
+      border: 2px solid #1e40af;
+      color: #fff;
+      padding: 12px 28px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: linear-gradient(135deg, #dc2626, #1e40af);
+      border-color: #dc2626;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
+    }
+
+    /* Featured Article */
+    .featured-article {
+      background: #1a1f2e;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 60px;
+      border: 2px solid #1e40af;
+      transition: all 0.3s;
+    }
+
+    .featured-article:hover {
+      border-color: #dc2626;
+      box-shadow: 0 10px 40px rgba(220, 38, 38, 0.3);
+      transform: translateY(-5px);
+    }
+
+    .featured-image {
+      width: 100%;
+      height: 450px;
+      background: linear-gradient(135deg, #1e40af, #dc2626);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.6);
+      border: 3px dashed rgba(255,255,255,0.2);
+      border-left: none;
+      border-right: none;
+    }
+
+    .featured-content {
+      padding: 40px;
+    }
+
+    .article-meta {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .article-date {
+      color: #9ca3af;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    .article-category {
+      background: linear-gradient(135deg, #dc2626, #1e40af);
+      color: #fff;
+      padding: 6px 18px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    .featured-content h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      color: #fff;
+      line-height: 1.3;
+    }
+
+    .article-excerpt {
+      font-size: 1.2rem;
+      color: #e5e7eb;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      font-weight: 400;
+    }
+
+    .read-more-btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #dc2626, #1e40af);
+      color: #fff;
+      padding: 15px 40px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+    }
+
+    .read-more-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+    }
+
+    /* News Grid */
+    .news-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 35px;
+    }
+
+    .news-card {
+      background: #1a1f2e;
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s;
+      border: 2px solid transparent;
+    }
+
+    .news-card:hover {
+      transform: translateY(-8px);
+      border-color: #dc2626;
+      box-shadow: 0 10px 30px rgba(220, 38, 38, 0.4);
+    }
+
+    .news-image {
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #1e40af, #dc2626);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.6);
+      border: 3px dashed rgba(255,255,255,0.2);
+      border-left: none;
+      border-right: none;
+    }
+
+    .news-content {
+      padding: 30px;
+    }
+
+    .news-content h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .news-content .article-excerpt {
+      font-size: 1rem;
+      margin-bottom: 20px;
+      color: #d1d5db;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f1419;
+      padding: 50px 20px;
+      text-align: center;
+      border-top: 3px solid #dc2626;
+    }
+
+    footer p {
+      color: #9ca3af;
+      font-size: 0.95rem;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      color: #dc2626;
+      font-size: 1.5rem;
+      transition: transform 0.3s;
+      padding: 10px;
+    }
+
+    .social-links a:hover {
+      transform: scale(1.3);
+      color: #1e40af;
+    }
+
+    /* Mobile Styles */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 79px;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: calc(100vh - 79px);
+        background: rgba(15, 20, 25, 0.98);
+        flex-direction: column;
+        padding: 30px 20px;
+        gap: 0;
+        transition: right 0.3s ease;
+        border-left: 3px solid #dc2626;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+
+      .nav-links a {
+        display: block;
+        padding: 15px 20px;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .page-header {
+        padding: 60px 20px 40px;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .category-filter {
+        gap: 10px;
+      }
+
+      .filter-btn {
+        padding: 10px 20px;
+        font-size: 0.8rem;
+      }
+
+      .featured-image {
+        height: 250px;
+        font-size: 1rem;
+      }
+
+      .featured-content {
+        padding: 25px;
+      }
+
+      .featured-content h2 {
+        font-size: 1.8rem;
+      }
+
+      .article-excerpt {
+        font-size: 1rem;
+      }
+
+      .news-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .news-image {
+        height: 200px;
+      }
+
+      .news-content {
+        padding: 20px;
+      }
+
+      .news-content h3 {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+      }
+
+      .featured-content h2 {
+        font-size: 1.5rem;
+      }
+
+      .news-content h3 {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">TEAM LOGO</div>
+        <div class="logo">Thunder Bolts</div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="roster.html">Roster</a></li>
+        <li><a href="schedule.html">Schedule</a></li>
+        <li><a href="news.html">News</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <h1>Team News</h1>
+    <p>Stay updated with the latest Thunder Bolts news</p>
+  </section>
+
+  <!-- Main Content -->
+  <div class="container">
+    <!-- Category Filter -->
+    <div class="category-filter">
+      <button class="filter-btn active">All</button>
+      <button class="filter-btn">Team News</button>
+      <button class="filter-btn">Game Recaps</button>
+      <button class="filter-btn">Player Spotlight</button>
+      <button class="filter-btn">Community</button>
+    </div>
+
+    <!-- Featured Article -->
+    <article class="featured-article">
+      <div class="featured-image">[ Featured Article Image ]</div>
+      <div class="featured-content">
+        <div class="article-meta">
+          <span class="article-date">📅 March 15, 2026</span>
+          <span class="article-category">Team News</span>
+        </div>
+        <h2>Thunder Bolts Clinch Playoff Spot with Dominant Victory</h2>
+        <p class="article-excerpt">
+          In a thrilling match that had fans on their feet, the Thunder Bolts secured their playoff berth with a commanding 98-76 victory over the rival City Hawks. Marcus "Thunder" Johnson led the team with an impressive 32 points and 8 assists, showcasing why he's considered one of the league's elite players.
+        </p>
+        <a href="#" class="read-more-btn">Read More</a>
+      </div>
+    </article>
+
+    <!-- News Grid -->
+    <div class="news-grid">
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 12, 2026</span>
+            <span class="article-category">Player Spotlight</span>
+          </div>
+          <h3>Ryan Martinez Named Player of the Week</h3>
+          <p class="article-excerpt">
+            Lightning strikes twice as Ryan "Lightning" Martinez earns his second Player of the Week honor this season after averaging 28 points over three games.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 10, 2026</span>
+            <span class="article-category">Game Recaps</span>
+          </div>
+          <h3>Last-Second Shot Seals Victory Against Titans</h3>
+          <p class="article-excerpt">
+            Jake Williams' buzzer-beater three-pointer lifted the Thunder Bolts to a dramatic 92-90 win over the Mountain Titans in front of a sold-out home crowd.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 8, 2026</span>
+            <span class="article-category">Community</span>
+          </div>
+          <h3>Thunder Bolts Host Youth Basketball Clinic</h3>
+          <p class="article-excerpt">
+            Over 200 young athletes participated in our annual youth clinic, learning skills and drills from Thunder Bolts players and coaching staff.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 5, 2026</span>
+            <span class="article-category">Team News</span>
+          </div>
+          <h3>Coach Anderson Extends Contract Through 2028</h3>
+          <p class="article-excerpt">
+            Thunder Bolts announce contract extension for Head Coach Mike Anderson, rewarding him for leading the team to their best season in franchise history.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 3, 2026</span>
+            <span class="article-category">Game Recaps</span>
+          </div>
+          <h3>Defensive Masterclass in Win Over Storm</h3>
+          <p class="article-excerpt">
+            Thunder Bolts' suffocating defense held the Desert Storm to just 68 points in an 89-68 blowout victory, marking the team's best defensive performance of the season.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+
+      <article class="news-card">
+        <div class="news-image">[ Article Image ]</div>
+        <div class="news-content">
+          <div class="article-meta">
+            <span class="article-date">📅 March 1, 2026</span>
+            <span class="article-category">Player Spotlight</span>
+          </div>
+          <h3>Marcus Johnson Reaches 5,000 Career Points</h3>
+          <p class="article-excerpt">
+            In a historic night, team captain Marcus "Thunder" Johnson became just the third player in franchise history to reach the 5,000 career points milestone.
+          </p>
+          <a href="#" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
+      <div class="social-links">
+        <a href="#" aria-label="Facebook">📘</a>
+        <a href="#" aria-label="Twitter">🐦</a>
+        <a href="#" aria-label="Instagram">📷</a>
+        <a href="#" aria-label="YouTube">📺</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const navLinks = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      const navContainer = document.querySelector('.nav-container');
+      
+      if (!navContainer.contains(e.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    // Category filter functionality
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

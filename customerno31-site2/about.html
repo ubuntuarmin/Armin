@@ -37,6 +37,26 @@
       align-items: center;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #f39c12;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(243, 156, 18, 0.1);
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #f39c12;
+    }
+
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
@@ -46,10 +66,27 @@
       gap: 10px;
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
     .nav-links {
       display: flex;
       gap: 30px;
       list-style: none;
+      transition: right 0.3s ease;
     }
 
     .nav-links a {
@@ -57,7 +94,10 @@
       text-decoration: none;
       font-weight: 600;
       font-size: 0.95rem;
-      transition: color 0.3s;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
     }
 
     .nav-links a:hover {
@@ -115,13 +155,25 @@
     .story-image {
       width: 100%;
       height: 400px;
-      background: linear-gradient(135deg, #3498db, #2980b9);
+      background: rgba(52, 152, 219, 0.05);
+      border: 3px dashed rgba(52, 152, 219, 0.3);
       border-radius: 10px;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       font-size: 8rem;
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    .story-image::after {
+      content: '[ Image Placeholder ]';
+      position: absolute;
+      bottom: 30px;
+      font-size: 1rem;
+      color: rgba(52, 152, 219, 0.6);
+      font-weight: 600;
     }
 
     /* Values Section */
@@ -152,16 +204,23 @@
       border-radius: 10px;
       text-align: center;
       box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      transition: transform 0.3s;
+      transition: all 0.3s ease;
+      cursor: pointer;
     }
 
     .value-card:hover {
       transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
     }
 
     .value-icon {
       font-size: 3.5rem;
       margin-bottom: 20px;
+      padding: 15px;
+      background: rgba(243, 156, 18, 0.05);
+      border: 3px dashed rgba(243, 156, 18, 0.3);
+      border-radius: 10px;
+      display: inline-block;
     }
 
     .value-card h3 {
@@ -195,19 +254,31 @@
 
     .team-member {
       text-align: center;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
     }
 
     .member-photo {
       width: 200px;
       height: 200px;
       margin: 0 auto 20px;
-      background: linear-gradient(135deg, #f39c12, #e67e22);
+      background: rgba(243, 156, 18, 0.05);
+      border: 3px dashed rgba(243, 156, 18, 0.3);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 4rem;
       box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .team-member:hover .member-photo {
+      box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3);
     }
 
     .member-name {
@@ -254,12 +325,23 @@
     .cert-item {
       text-align: center;
       padding: 30px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .cert-item:hover {
+      transform: translateY(-5px);
     }
 
     .cert-icon {
       font-size: 3rem;
       margin-bottom: 15px;
       color: #f39c12;
+      padding: 15px;
+      background: rgba(243, 156, 18, 0.1);
+      border: 3px dashed rgba(243, 156, 18, 0.3);
+      border-radius: 10px;
+      display: inline-block;
     }
 
     .cert-item h3 {
@@ -291,21 +373,24 @@
     }
 
     .btn {
-      padding: 15px 35px;
+      padding: 18px 40px;
       background: #2c3e50;
       color: #fff;
       text-decoration: none;
       border-radius: 5px;
       font-weight: 700;
-      font-size: 1.1rem;
-      transition: all 0.3s;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
       display: inline-block;
+      min-height: 44px;
+      min-width: 160px;
+      text-align: center;
     }
 
     .btn:hover {
       background: #34495e;
-      transform: translateY(-2px);
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
     }
 
     /* Footer */
@@ -326,16 +411,52 @@
     }
 
     @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2.5rem;
+      .hamburger {
+        display: flex;
       }
 
       .nav-links {
-        gap: 15px;
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 70%;
+        background: #1a252f;
+        border-left: 3px solid #f39c12;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
       }
 
       .nav-links a {
-        font-size: 0.85rem;
+        padding: 18px 0;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
       }
 
       .story-section {
@@ -351,6 +472,60 @@
         width: 150px;
         height: 150px;
       }
+
+      .values-grid,
+      .team-grid,
+      .certifications-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .page-header {
+        padding: 60px 15px;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+
+      .logo-placeholder {
+        width: 35px;
+        height: 35px;
+        font-size: 0.5rem;
+      }
+
+      .story-content h2,
+      .values-title,
+      .team-title,
+      .certifications-title {
+        font-size: 2rem;
+      }
+
+      .story-content p,
+      .value-card p,
+      .member-bio {
+        font-size: 1rem;
+      }
+
+      .container {
+        padding: 60px 15px;
+      }
+
+      .values-section,
+      .certifications-section,
+      .cta-section {
+        padding: 60px 15px;
+      }
     }
   </style>
 </head>
@@ -358,13 +533,21 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <div class="logo">🏗️ BuildPro</div>
-      <ul class="nav-links">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="services.html">Services</a></li>
-        <li><a href="portfolio.html">Portfolio</a></li>
-        <li><a href="about.html">About</a></li>
-        <li><a href="contact.html">Contact</a></li>
+      <div class="logo-container">
+        <div class="logo-placeholder" aria-label="Company Logo">LOGO</div>
+        <div class="logo">BuildPro</div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+        <li><a href="services.html" aria-label="View our Services">Services</a></li>
+        <li><a href="portfolio.html" aria-label="View our Portfolio">Portfolio</a></li>
+        <li><a href="about.html" aria-label="Learn About us">About</a></li>
+        <li><a href="contact.html" aria-label="Contact us">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -490,7 +673,7 @@
     <div class="container">
       <h2>Let's Work Together</h2>
       <p>Experience the BuildPro difference on your next project</p>
-      <a href="contact.html" class="btn">Contact Us Today</a>
+      <a href="contact.html" class="btn" aria-label="Contact us to work together">Contact Us Today</a>
     </div>
   </section>
 
@@ -501,5 +684,31 @@
       <p>📞 (555) 123-4567 | 📧 info@buildpro.com</p>
     </div>
   </footer>
+
+  <script>
+    /**
+     * Toggles the mobile navigation menu visibility
+     * Adds/removes the 'active' class to slide menu in/out
+     */
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const navLinks = document.getElementById('navLinks');
+      
+      if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+  </script>
 </body>
 </html>
