@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BuildPro Construction - Expert Remodeling & Building Services</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2c3e50;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f39c12;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #f39c12;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+      padding: 120px 20px 80px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="rgba(255,255,255,0.05)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      margin-bottom: 30px;
+      opacity: 0.95;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: all 0.3s;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #34495e;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: #e67e22;
+    }
+
+    .btn-secondary:hover {
+      background: #ecf0f1;
+      transform: translateY(-2px);
+    }
+
+    /* Services Preview */
+    .services-preview {
+      padding: 80px 20px;
+      background: #ecf0f1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      font-size: 1.2rem;
+      color: #7f8c8d;
+      margin-bottom: 50px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-top: 40px;
+    }
+
+    .service-card {
+      background: #fff;
+      padding: 35px;
+      border-radius: 10px;
+      text-align: center;
+      transition: all 0.3s;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
+
+    .service-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    }
+
+    .service-icon {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #2c3e50;
+    }
+
+    .service-card p {
+      color: #7f8c8d;
+      line-height: 1.8;
+    }
+
+    /* Portfolio Preview */
+    .portfolio-preview {
+      padding: 80px 20px;
+      background: #fff;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 25px;
+      margin-top: 40px;
+    }
+
+    .portfolio-item {
+      position: relative;
+      height: 300px;
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .portfolio-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.7));
+      z-index: 1;
+    }
+
+    .portfolio-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      transition: transform 0.3s;
+    }
+
+    .portfolio-item:hover .portfolio-bg {
+      transform: scale(1.1);
+    }
+
+    .portfolio-item:nth-child(1) .portfolio-bg {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .portfolio-item:nth-child(2) .portfolio-bg {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .portfolio-item:nth-child(3) .portfolio-bg {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .portfolio-info {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 25px;
+      color: #fff;
+      z-index: 2;
+    }
+
+    .portfolio-info h3 {
+      font-size: 1.5rem;
+      margin-bottom: 5px;
+    }
+
+    .portfolio-info p {
+      font-size: 0.95rem;
+      opacity: 0.9;
+    }
+
+    /* Why Choose Us */
+    .why-choose {
+      padding: 80px 20px;
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-top: 40px;
+    }
+
+    .feature-item {
+      text-align: center;
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 20px;
+      color: #f39c12;
+    }
+
+    .feature-item h3 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+    }
+
+    .feature-item p {
+      color: #bdc3c7;
+      line-height: 1.8;
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+
+    /* Footer */
+    footer {
+      background: #1a252f;
+      padding: 50px 20px 30px;
+      color: #bdc3c7;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      color: #f39c12;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #f39c12;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #34495e;
+    }
+
+    @media (max-width: 768px) {
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+
+      .nav-links a {
+        font-size: 0.85rem;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .portfolio-grid,
+      .services-grid,
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo">🏗️ BuildPro</div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="services.html">Services</a></li>
+        <li><a href="portfolio.html">Portfolio</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Building Dreams, Creating Spaces</h1>
+      <p>Expert construction and remodeling services for your home and business</p>
+      <div class="cta-buttons">
+        <a href="contact.html" class="btn btn-primary">Get Free Quote</a>
+        <a href="portfolio.html" class="btn btn-secondary">View Our Work</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="services-preview">
+    <div class="container">
+      <h2 class="section-title">Our Services</h2>
+      <p class="section-subtitle">Comprehensive construction and remodeling solutions</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">🏠</div>
+          <h3>Home Remodeling</h3>
+          <p>Transform your home with our expert remodeling services. From kitchens to bathrooms, we do it all.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🏢</div>
+          <h3>Commercial Build</h3>
+          <p>Professional commercial construction services tailored to your business needs.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔨</div>
+          <h3>Renovation</h3>
+          <p>Breathe new life into old spaces with our comprehensive renovation services.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🎨</div>
+          <h3>Interior Design</h3>
+          <p>Complete interior design services to make your vision a reality.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio Preview -->
+  <section class="portfolio-preview">
+    <div class="container">
+      <h2 class="section-title">Featured Projects</h2>
+      <p class="section-subtitle">See what we've built for our satisfied clients</p>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <div class="portfolio-bg">🏡</div>
+          <div class="portfolio-info">
+            <h3>Modern Kitchen Remodel</h3>
+            <p>Complete kitchen transformation in suburban home</p>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-bg">🏢</div>
+          <div class="portfolio-info">
+            <h3>Office Building Renovation</h3>
+            <p>5,000 sq ft commercial space modernization</p>
+          </div>
+        </div>
+        <div class="portfolio-item">
+          <div class="portfolio-bg">🏠</div>
+          <div class="portfolio-info">
+            <h3>Home Addition Project</h3>
+            <p>Two-story addition with master suite</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="why-choose">
+    <div class="container">
+      <h2 class="section-title">Why Choose BuildPro?</h2>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">⭐</div>
+          <h3>25+ Years Experience</h3>
+          <p>Decades of expertise in construction and remodeling</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">✓</div>
+          <h3>Licensed & Insured</h3>
+          <p>Fully licensed contractors with comprehensive insurance</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💰</div>
+          <h3>Fair Pricing</h3>
+          <p>Competitive rates with no hidden fees</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🏆</div>
+          <h3>Quality Guarantee</h3>
+          <p>100% satisfaction guarantee on all our work</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Start Your Project?</h2>
+      <p>Get in touch today for a free consultation and quote</p>
+      <a href="contact.html" class="btn btn-primary">Contact Us Now</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>BuildPro Construction</h3>
+        <p>Expert construction and remodeling services since 1998.</p>
+        <p style="margin-top: 15px;">📞 (555) 123-4567<br>📧 info@buildpro.com</p>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html#remodeling">Home Remodeling</a></li>
+          <li><a href="services.html#commercial">Commercial Build</a></li>
+          <li><a href="services.html#renovation">Renovation</a></li>
+          <li><a href="services.html#design">Interior Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Business Hours</h3>
+        <p>Monday - Friday: 8am - 6pm<br>
+        Saturday: 9am - 4pm<br>
+        Sunday: Closed</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BuildPro Construction. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>
