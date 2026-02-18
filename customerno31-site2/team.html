@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Team - BuildPro Construction</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #2c3e50;
+      line-height: 1.6;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2c3e50;
+      padding: 20px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #f39c12;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(243, 156, 18, 0.1);
+      font-weight: 700;
+      font-size: 0.7rem;
+      color: #f39c12;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #f39c12;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 30px;
+      height: 3px;
+      background: #fff;
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a:hover {
+      color: #f39c12;
+    }
+
+    /* Page Header */
+    .page-header {
+      background: linear-gradient(135deg, #f39c12 0%, #7f8c8d 100%);
+      padding: 100px 20px 60px;
+      text-align: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url('data:image/svg+xml,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="0" width="40" height="40" fill="rgba(255,255,255,0.05)"/></svg>');
+      opacity: 0.5;
+    }
+
+    .page-header-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .page-header p {
+      font-size: 1.3rem;
+      opacity: 0.95;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 80px 20px;
+      background: #ecf0f1;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 35px;
+      margin-top: 40px;
+    }
+
+    .team-card {
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+    }
+
+    .team-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
+    }
+
+    .team-photo {
+      width: 100%;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 4px dashed #f39c12;
+    }
+
+    .team-photo-bg {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #3498db, #2ecc71);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      transition: transform 0.3s ease;
+      position: relative;
+    }
+
+    .team-card:hover .team-photo-bg {
+      transform: scale(1.05);
+    }
+
+    .team-photo-bg::after {
+      content: 'Photo';
+      position: absolute;
+      bottom: 20px;
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.8);
+      font-weight: 600;
+    }
+
+    .team-card:nth-child(1) .team-photo-bg {
+      background: linear-gradient(135deg, #e74c3c, #c0392b);
+    }
+
+    .team-card:nth-child(2) .team-photo-bg {
+      background: linear-gradient(135deg, #3498db, #2980b9);
+    }
+
+    .team-card:nth-child(3) .team-photo-bg {
+      background: linear-gradient(135deg, #2ecc71, #27ae60);
+    }
+
+    .team-card:nth-child(4) .team-photo-bg {
+      background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    }
+
+    .team-card:nth-child(5) .team-photo-bg {
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+    }
+
+    .team-card:nth-child(6) .team-photo-bg {
+      background: linear-gradient(135deg, #1abc9c, #16a085);
+    }
+
+    .team-info {
+      padding: 30px;
+    }
+
+    .team-info h3 {
+      font-size: 1.6rem;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+
+    .team-role {
+      color: #f39c12;
+      font-weight: 600;
+      font-size: 1rem;
+      margin-bottom: 15px;
+    }
+
+    .team-bio {
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+    }
+
+    .team-contact {
+      margin-bottom: 20px;
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+
+    .team-contact p {
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .team-social {
+      display: flex;
+      gap: 12px;
+    }
+
+    .team-social a {
+      width: 38px;
+      height: 38px;
+      background: #ecf0f1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2c3e50;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.1rem;
+    }
+
+    .team-social a:hover {
+      background: #f39c12;
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    /* CTA Section */
+    .cta-section {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, #f39c12, #e67e22);
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      font-size: 1.3rem;
+      margin-bottom: 30px;
+    }
+
+    .btn {
+      padding: 18px 40px;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      min-height: 44px;
+      min-width: 160px;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: #2c3e50;
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #34495e;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: #1a252f;
+      padding: 50px 20px 30px;
+      color: #bdc3c7;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 30px;
+    }
+
+    .footer-section h3 {
+      color: #f39c12;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-section ul li a {
+      color: #bdc3c7;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: #f39c12;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: #2c3e50;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      font-size: 1.2rem;
+    }
+
+    .social-links a:hover {
+      background: #f39c12;
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 30px;
+      border-top: 1px solid #34495e;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 0;
+        height: 100vh;
+        width: 70%;
+        background: #1a252f;
+        border-left: 3px solid #f39c12;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        z-index: 1000;
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+      }
+
+      .nav-links a {
+        padding: 18px 0;
+        width: 100%;
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.4rem;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .page-header p {
+        font-size: 1.1rem;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 25px;
+      }
+
+      .cta-section h2 {
+        font-size: 2rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 1.8rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .page-header {
+        padding: 80px 15px 50px;
+      }
+
+      .logo {
+        font-size: 1.2rem;
+      }
+
+      .logo-placeholder {
+        width: 35px;
+        height: 35px;
+        font-size: 0.5rem;
+      }
+
+      .team-info {
+        padding: 25px;
+      }
+
+      .team-info h3 {
+        font-size: 1.4rem;
+      }
+
+      .btn {
+        font-size: 1rem;
+        padding: 14px 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder" aria-label="Company Logo">LOGO</div>
+        <div class="logo">BuildPro</div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" aria-label="Go to Home page">Home</a></li>
+        <li><a href="services.html" aria-label="View our Services">Services</a></li>
+        <li><a href="portfolio.html" aria-label="View our Portfolio">Portfolio</a></li>
+        <li><a href="about.html" aria-label="Learn About us">About</a></li>
+        <li><a href="contact.html" aria-label="Contact us">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="page-header-content">
+      <h1>Meet Our Team</h1>
+      <p>Experienced professionals dedicated to bringing your vision to life</p>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👨</div>
+          </div>
+          <div class="team-info">
+            <h3>John Anderson</h3>
+            <p class="team-role">Owner & CEO</p>
+            <p class="team-bio">With over 25 years in construction, John founded BuildPro with a vision to deliver exceptional quality and customer service. He oversees all operations and maintains our commitment to excellence.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4567</p>
+              <p>📧 john@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+              <a href="#" aria-label="Facebook">f</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👩</div>
+          </div>
+          <div class="team-info">
+            <h3>Maria Garcia</h3>
+            <p class="team-role">Co-Owner & Operations Manager</p>
+            <p class="team-bio">Maria brings 20 years of project management expertise to BuildPro. She ensures every project runs smoothly, stays on schedule, and exceeds client expectations.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4568</p>
+              <p>📧 maria@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+              <a href="#" aria-label="Instagram">📷</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👨</div>
+          </div>
+          <div class="team-info">
+            <h3>David Chen</h3>
+            <p class="team-role">Senior Project Manager</p>
+            <p class="team-bio">David specializes in large-scale commercial projects and complex renovations. His attention to detail and problem-solving skills ensure successful project delivery every time.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4569</p>
+              <p>📧 david@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👩</div>
+          </div>
+          <div class="team-info">
+            <h3>Sarah Mitchell</h3>
+            <p class="team-role">Lead Interior Designer</p>
+            <p class="team-bio">Sarah transforms spaces with her creative vision and expertise in modern design. She works closely with clients to create beautiful, functional interiors that reflect their style.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4570</p>
+              <p>📧 sarah@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="Pinterest">P</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👨</div>
+          </div>
+          <div class="team-info">
+            <h3>Michael Torres</h3>
+            <p class="team-role">Residential Project Manager</p>
+            <p class="team-bio">Michael leads our residential division with passion and precision. His hands-on approach and excellent communication keep homeowners informed and satisfied throughout their project.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4571</p>
+              <p>📧 michael@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Twitter">𝕏</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="team-card">
+          <div class="team-photo">
+            <div class="team-photo-bg">👩</div>
+          </div>
+          <div class="team-info">
+            <h3>Jennifer Lee</h3>
+            <p class="team-role">Design Consultant</p>
+            <p class="team-bio">Jennifer helps clients navigate design decisions with her extensive knowledge of materials, finishes, and trends. She makes the selection process enjoyable and stress-free.</p>
+            <div class="team-contact">
+              <p>📞 (555) 123-4572</p>
+              <p>📧 jennifer@buildpro.com</p>
+            </div>
+            <div class="team-social">
+              <a href="#" aria-label="LinkedIn">in</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="Facebook">f</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Work With Our Expert Team</h2>
+      <p>Let our experienced professionals guide you through your construction project</p>
+      <a href="contact.html" class="btn btn-primary" aria-label="Contact us to start your project">Get Started Today</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3>BuildPro Construction</h3>
+        <p>Expert construction and remodeling services since 1998.</p>
+        <p style="margin-top: 15px;">📞 (555) 123-4567<br>📧 info@buildpro.com</p>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Twitter">𝕏</a>
+          <a href="#" aria-label="Instagram">📷</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="portfolio.html">Portfolio</a></li>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Services</h3>
+        <ul>
+          <li><a href="services.html#remodeling">Home Remodeling</a></li>
+          <li><a href="services.html#commercial">Commercial Build</a></li>
+          <li><a href="services.html#renovation">Renovation</a></li>
+          <li><a href="services.html#design">Interior Design</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Business Hours</h3>
+        <p>Monday - Friday: 8am - 6pm<br>
+        Saturday: 9am - 4pm<br>
+        Sunday: Closed</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 BuildPro Construction. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    document.addEventListener('click', function(event) {
+      const nav = document.querySelector('nav');
+      const navLinks = document.getElementById('navLinks');
+      const hamburger = document.querySelector('.hamburger');
+      
+      if (!nav.contains(event.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
