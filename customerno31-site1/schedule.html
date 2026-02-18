@@ -13,19 +13,20 @@
 
     body {
       font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
-      background: #0a0e27;
+      background: #0f1419;
       color: #fff;
       line-height: 1.6;
     }
 
     /* Navigation */
     nav {
-      background: rgba(10, 14, 39, 0.95);
-      padding: 20px 0;
+      background: rgba(15, 20, 25, 0.98);
+      padding: 15px 0;
       position: sticky;
       top: 0;
       z-index: 1000;
-      border-bottom: 3px solid #ffd700;
+      border-bottom: 3px solid #dc2626;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
     }
 
     .nav-container {
@@ -37,12 +38,50 @@
       align-items: center;
     }
 
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #dc2626;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
+    }
+
     .logo {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #dc2626;
       text-transform: uppercase;
       letter-spacing: 2px;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      background: none;
+      border: none;
+      padding: 5px;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #dc2626;
+      border-radius: 2px;
+      transition: all 0.3s;
     }
 
     .nav-links {
@@ -55,27 +94,31 @@
       color: #fff;
       text-decoration: none;
       font-weight: 700;
-      font-size: 0.95rem;
-      transition: color 0.3s;
+      font-size: 0.9rem;
+      transition: all 0.3s;
       text-transform: uppercase;
+      padding: 8px 12px;
+      border-radius: 5px;
     }
 
     .nav-links a:hover {
-      color: #ffd700;
+      color: #dc2626;
+      background: rgba(220, 38, 38, 0.1);
     }
 
     /* Page Header */
     .page-header {
-      background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+      background: linear-gradient(135deg, #dc2626 0%, #1e40af 100%);
       padding: 60px 20px;
       text-align: center;
     }
 
     .page-header h1 {
       font-size: 3.5rem;
-      color: #ffd700;
+      color: #fff;
       text-transform: uppercase;
       letter-spacing: 3px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
     .page-header p {
@@ -93,7 +136,7 @@
 
     /* Record Summary */
     .record-summary {
-      background: linear-gradient(135deg, #7c3aed, #a855f7);
+      background: linear-gradient(135deg, #dc2626, #1e40af);
       padding: 40px;
       border-radius: 20px;
       text-align: center;
@@ -111,7 +154,7 @@
     .record-value {
       font-size: 3.5rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #fff;
     }
 
     .record-label {
@@ -128,10 +171,10 @@
 
     .section-title {
       font-size: 2.5rem;
-      color: #ffd700;
+      color: #dc2626;
       margin-bottom: 30px;
       text-transform: uppercase;
-      border-bottom: 3px solid #ffd700;
+      border-bottom: 3px solid #dc2626;
       padding-bottom: 15px;
     }
 
@@ -143,7 +186,7 @@
     }
 
     .game-card {
-      background: #151b3d;
+      background: #1a1f2e;
       border-radius: 15px;
       padding: 30px;
       display: grid;
@@ -156,8 +199,8 @@
 
     .game-card:hover {
       transform: translateX(10px);
-      border-color: #ffd700;
-      box-shadow: 0 5px 20px rgba(255, 215, 0, 0.3);
+      border-color: #dc2626;
+      box-shadow: 0 5px 20px rgba(220, 38, 38, 0.3);
     }
 
     .game-card.upcoming {
@@ -179,7 +222,7 @@
     .date-day {
       font-size: 2rem;
       font-weight: 900;
-      color: #ffd700;
+      color: #dc2626;
       line-height: 1;
     }
 
@@ -258,27 +301,29 @@
 
     .ticket-link {
       display: inline-block;
-      background: #ffd700;
-      color: #0a0e27;
-      padding: 8px 20px;
+      background: #dc2626;
+      color: #fff;
+      padding: 10px 24px;
       border-radius: 25px;
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 700;
       margin-top: 10px;
-      transition: transform 0.3s;
+      transition: all 0.3s;
     }
 
     .ticket-link:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
+      background: #b91c1c;
+      box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);
     }
 
     /* Footer */
     footer {
-      background: #0a0e27;
+      background: #0f1419;
       padding: 40px 20px;
       text-align: center;
-      border-top: 3px solid #ffd700;
+      border-top: 3px solid #dc2626;
     }
 
     footer p {
@@ -287,29 +332,133 @@
     }
 
     @media (max-width: 768px) {
-      .page-header h1 {
-        font-size: 2.5rem;
+      .hamburger {
+        display: flex;
       }
 
       .nav-links {
-        gap: 15px;
+        position: fixed;
+        top: 79px;
+        right: -100%;
+        width: 70%;
+        max-width: 300px;
+        height: calc(100vh - 79px);
+        background: rgba(15, 20, 25, 0.98);
+        flex-direction: column;
+        padding: 30px 20px;
+        gap: 0;
+        transition: right 0.3s ease;
+        border-left: 3px solid #dc2626;
+        box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links li {
+        width: 100%;
+        margin-bottom: 10px;
       }
 
       .nav-links a {
-        font-size: 0.8rem;
+        display: block;
+        padding: 15px 20px;
+        font-size: 1rem;
+        border-bottom: 1px solid rgba(220, 38, 38, 0.2);
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+        font-size: 0.6rem;
+      }
+
+      .logo {
+        font-size: 1.3rem;
+      }
+
+      .page-header {
+        padding: 50px 20px;
+      }
+
+      .page-header h1 {
+        font-size: 2.5rem;
       }
 
       .game-card {
         grid-template-columns: 1fr;
         text-align: center;
+        padding: 20px;
+        gap: 20px;
       }
 
       .record-summary {
         gap: 30px;
+        padding: 30px 20px;
       }
 
       .record-value {
         font-size: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .ticket-link {
+        padding: 12px 28px;
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-header h1 {
+        font-size: 2rem;
+      }
+
+      .page-header p {
+        font-size: 1rem;
+      }
+
+      .record-value {
+        font-size: 2rem;
+      }
+
+      .record-label {
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.6rem;
+      }
+
+      .date-day {
+        font-size: 1.5rem;
+      }
+
+      .date-month {
+        font-size: 0.85rem;
+      }
+
+      .teams {
+        font-size: 1.1rem;
+      }
+
+      .vs {
+        font-size: 1rem;
+      }
+
+      .score {
+        font-size: 2rem;
+      }
+
+      .upcoming-label {
+        font-size: 1.2rem;
+      }
+
+      .game-card {
+        padding: 15px;
       }
     }
   </style>
@@ -318,8 +467,16 @@
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
-      <div class="logo">⚡ Thunder Bolts</div>
-      <ul class="nav-links">
+      <div class="logo-container">
+        <div class="logo-placeholder">TEAM LOGO</div>
+        <div class="logo">⚡ Thunder Bolts</div>
+      </div>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Home</a></li>
         <li><a href="roster.html">Roster</a></li>
         <li><a href="schedule.html">Schedule</a></li>
@@ -526,5 +683,29 @@
       <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
     </div>
   </footer>
+
+  <script>
+    function toggleMenu() {
+      const navLinks = document.getElementById('navLinks');
+      navLinks.classList.toggle('active');
+    }
+
+    // Close menu when clicking a link
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('active');
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      const navLinks = document.getElementById('navLinks');
+      const navContainer = document.querySelector('.nav-container');
+      
+      if (!navContainer.contains(e.target) && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+      }
+    });
+  </script>
 </body>
 </html>
