@@ -678,8 +678,8 @@
         <li><a href="index.html">Home</a></li>
         <li><a href="roster.html">Roster</a></li>
         <li><a href="schedule.html">Schedule</a></li>
-        <li><a href="#mission">Mission</a></li>
-        <li><a href="#apply">Join Us</a></li>
+        <li><a href="mission.html">Mission</a></li>
+        <li><a href="tryouts.html">Join Us</a></li>
       </ul>
     </div>
   </nav>
@@ -700,19 +700,19 @@
       <h2 class="section-title">Season Stats</h2>
       <div class="stats-grid">
         <div class="stat-card">
-          <div class="stat-number">18</div>
+          <div class="stat-number" data-target="18" data-suffix="">0</div>
           <div class="stat-label">Wins</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">5</div>
+          <div class="stat-number" data-target="5" data-suffix="">0</div>
           <div class="stat-label">Losses</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">2nd</div>
+          <div class="stat-number" data-target="2" data-suffix="nd">0</div>
           <div class="stat-label">League Rank</div>
         </div>
         <div class="stat-card">
-          <div class="stat-number">89</div>
+          <div class="stat-number" data-target="89" data-suffix="">0</div>
           <div class="stat-label">Avg Points</div>
         </div>
       </div>
@@ -749,33 +749,33 @@
     </div>
   </section>
 
-  <!-- Featured Players -->
+  <!-- Program Overview Section (replaces Star Players) -->
   <section class="featured-section">
     <div class="container">
-      <h2 class="section-title">Star Players</h2>
+      <h2 class="section-title">Our Program</h2>
       <div class="players-grid">
         <div class="player-card">
-          <div class="player-image">[ Player Photo ]</div>
+          <div class="player-image" style="font-size: 4rem; display: flex; align-items: center; justify-content: center;">🏀</div>
           <div class="player-info">
-            <div class="player-number">#23</div>
-            <h3 class="player-name">Marcus "Thunder" Johnson</h3>
-            <p class="player-position">Point Guard</p>
+            <div class="player-number" style="font-size: 1.2rem;">Training</div>
+            <h3 class="player-name">Professional Coaching</h3>
+            <p class="player-position">Expert coaches with professional experience help you master fundamentals and advanced techniques.</p>
           </div>
         </div>
         <div class="player-card">
-          <div class="player-image">[ Player Photo ]</div>
+          <div class="player-image" style="font-size: 4rem; display: flex; align-items: center; justify-content: center;">🎯</div>
           <div class="player-info">
-            <div class="player-number">#7</div>
-            <h3 class="player-name">Ryan "Lightning" Martinez</h3>
-            <p class="player-position">Shooting Guard</p>
+            <div class="player-number" style="font-size: 1.2rem;">Development</div>
+            <h3 class="player-name">Player Development</h3>
+            <p class="player-position">Personalized training plans, video analysis, and regular feedback to help you reach your potential.</p>
           </div>
         </div>
         <div class="player-card">
-          <div class="player-image">[ Player Photo ]</div>
+          <div class="player-image" style="font-size: 4rem; display: flex; align-items: center; justify-content: center;">🏅</div>
           <div class="player-info">
-            <div class="player-number">#45</div>
-            <h3 class="player-name">Jake "Storm" Williams</h3>
-            <p class="player-position">Center</p>
+            <div class="player-number" style="font-size: 1.2rem;">Competition</div>
+            <h3 class="player-name">Competitive League</h3>
+            <p class="player-position">Regular season games, tournaments, and championships to test your skills against top competition.</p>
           </div>
         </div>
       </div>
@@ -861,6 +861,52 @@
         navLinks.classList.remove('active');
       }
     });
+
+    /**
+     * Counting Animation for Stats
+     * Numbers count up from 0 to target value when scrolled into view
+     */
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number[data-target]');
+      
+      counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const suffix = counter.getAttribute('data-suffix') || '';
+        const duration = 2000;
+        const start = 0;
+        const increment = target / (duration / 16);
+        let current = start;
+        
+        const updateCounter = () => {
+          current += increment;
+          if (current < target) {
+            counter.textContent = Math.floor(current) + suffix;
+            requestAnimationFrame(updateCounter);
+          } else {
+            counter.textContent = target + suffix;
+          }
+        };
+        
+        updateCounter();
+      });
+    }
+
+    // Intersection Observer for stats animation
+    const statsSection = document.querySelector('.stats-section');
+    let statsAnimated = false;
+
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !statsAnimated) {
+          animateCounters();
+          statsAnimated = true;
+        }
+      });
+    }, { threshold: 0.3 });
+
+    if (statsSection) {
+      statsObserver.observe(statsSection);
+    }
   </script>
 </body>
 </html>
