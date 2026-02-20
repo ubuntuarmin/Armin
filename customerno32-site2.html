@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mungia Bounce Rentals – Bouncy House Rentals</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --teal:    #0d9488;
+      --teal-dk: #0f766e;
+      --orange:  #f97316;
+      --orange-lt: #fed7aa;
+      --dark:    #0f1c1b;
+      --card-bg: #f8fafc;
+      --text:    #1e293b;
+      --muted:   #64748b;
+      --white:   #ffffff;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── NAVIGATION ────────────────────────────── */
+    nav {
+      background: var(--dark);
+      padding: 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 68px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-decoration: none;
+    }
+
+    .logo-box {
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--orange);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 800;
+      color: var(--orange);
+      letter-spacing: 0.5px;
+      background: rgba(249,115,22,0.08);
+      flex-shrink: 0;
+    }
+
+    .brand-name {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.3px;
+    }
+
+    .brand-name span { color: var(--orange); }
+
+    .nav-list {
+      display: flex;
+      gap: 4px;
+      list-style: none;
+    }
+
+    .nav-list a {
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .nav-list a:hover { background: rgba(255,255,255,0.1); color: var(--white); }
+
+    .nav-cta {
+      background: var(--orange) !important;
+      color: var(--white) !important;
+      border-radius: 8px !important;
+    }
+
+    .nav-cta:hover { background: #ea6c04 !important; }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      padding: 4px;
+    }
+
+    .hamburger span {
+      width: 26px;
+      height: 3px;
+      background: var(--white);
+      border-radius: 3px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-list {
+        display: none;
+        flex-direction: column;
+        position: fixed;
+        top: 68px;
+        right: 0;
+        width: 70%;
+        height: calc(100vh - 68px);
+        background: var(--dark);
+        padding: 24px 20px;
+        gap: 4px;
+        box-shadow: -4px 0 20px rgba(0,0,0,0.4);
+      }
+      .nav-list.open { display: flex; }
+      .nav-list a { font-size: 1rem; padding: 12px 16px; }
+      .logo-box { width: 40px; height: 40px; }
+      .brand-name { font-size: 1.15rem; }
+    }
+
+    /* ── HERO ──────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--dark) 0%, #0d2622 40%, #14423a 100%);
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 520px; height: 520px;
+      background: radial-gradient(circle, rgba(249,115,22,0.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(13,148,136,0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--orange);
+    }
+
+    .hero-desc {
+      color: rgba(255,255,255,0.72);
+      font-size: 1.1rem;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-main {
+      background: var(--orange);
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+
+    .btn-main:hover { background: #ea6c04; transform: translateY(-2px); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      padding: 14px 32px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      border: 2px solid rgba(255,255,255,0.35);
+      transition: border-color 0.2s, background 0.2s;
+      display: inline-block;
+    }
+
+    .btn-outline:hover { border-color: var(--white); background: rgba(255,255,255,0.06); }
+
+    .hero-visual {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .hero-photo-placeholder {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: linear-gradient(135deg, rgba(13,148,136,0.25), rgba(249,115,22,0.25));
+      border: 2px dashed rgba(255,255,255,0.25);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-align: center;
+      padding: 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .stat-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      padding: 18px 14px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--orange);
+      display: block;
+    }
+
+    .stat-lbl {
+      font-size: 0.76rem;
+      color: rgba(255,255,255,0.6);
+      margin-top: 2px;
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-visual { order: -1; }
+      .hero-photo-placeholder { aspect-ratio: 16/7; }
+    }
+
+    /* ── SECTION SHARED ────────────────────────── */
+    .section {
+      padding: 96px 24px;
+    }
+
+    .section-alt { background: #f1fafa; }
+
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .tag {
+      display: inline-block;
+      background: rgba(13,148,136,0.12);
+      color: var(--teal-dk);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .tag-orange {
+      background: rgba(249,115,22,0.12);
+      color: #c2410c;
+    }
+
+    .sec-title {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 900;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 14px;
+      letter-spacing: -0.4px;
+    }
+
+    .sec-sub {
+      color: var(--muted);
+      font-size: 1.05rem;
+      max-width: 640px;
+      margin-bottom: 56px;
+    }
+
+    .centered { text-align: center; }
+    .centered .sec-sub { margin-left: auto; margin-right: auto; }
+
+    /* ── WHY US ────────────────────────────────── */
+    .benefits-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+    }
+
+    .benefit {
+      background: var(--white);
+      border: 2px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 32px 28px;
+      transition: border-color 0.25s, box-shadow 0.25s;
+    }
+
+    .benefit:hover {
+      border-color: var(--teal);
+      box-shadow: 0 6px 28px rgba(13,148,136,0.12);
+    }
+
+    .benefit-icon {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.7rem;
+      margin-bottom: 18px;
+    }
+
+    .benefit h3 { font-size: 1.1rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+    .benefit p { color: var(--muted); font-size: 0.95rem; }
+
+    /* ── RENTALS ───────────────────────────────── */
+    .rentals-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 28px;
+    }
+
+    .rental-card {
+      background: var(--white);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      border: 1px solid #e2e8f0;
+      transition: transform 0.25s, box-shadow 0.25s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .rental-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.12); }
+
+    .rental-visual {
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      position: relative;
+      background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+    }
+
+    .rental-visual.v2 { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .rental-visual.v3 { background: linear-gradient(135deg, #fce7f3, #fbcfe8); }
+    .rental-visual.v4 { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+    .rental-visual.v5 { background: linear-gradient(135deg, #e0f2fe, #bae6fd); }
+    .rental-visual.v6 { background: linear-gradient(135deg, #ffedd5, #fed7aa); }
+
+    .badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: 0.5px;
+    }
+
+    .rental-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .rental-name { font-size: 1.15rem; font-weight: 800; color: var(--dark); margin-bottom: 8px; }
+    .rental-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 14px; flex: 1; }
+
+    .specs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .spec {
+      background: #f1f5f9;
+      color: var(--teal-dk);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+    }
+
+    .rental-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #f1f5f9;
+      padding-top: 14px;
+      margin-top: auto;
+    }
+
+    .rental-price { font-size: 1.5rem; font-weight: 900; color: var(--teal-dk); }
+    .rental-price span { font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+
+    .rental-link {
+      background: var(--teal);
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 8px;
+      transition: background 0.2s;
+    }
+
+    .rental-link:hover { background: var(--teal-dk); }
+
+    /* ── PRICING ───────────────────────────────── */
+    .pricing-section { background: var(--dark); }
+    .pricing-section .tag { background: rgba(249,115,22,0.2); color: var(--orange-lt); }
+    .pricing-section .sec-title { color: var(--white); }
+    .pricing-section .sec-sub { color: rgba(255,255,255,0.6); }
+
+    .pricing-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .pkg {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 22px;
+      padding: 36px 32px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s;
+    }
+
+    .pkg:hover { border-color: rgba(249,115,22,0.5); }
+
+    .pkg.popular {
+      background: var(--teal-dk);
+      border-color: var(--teal);
+      position: relative;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--orange);
+      color: var(--white);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 5px 18px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .pkg-name { font-size: 1rem; font-weight: 700; color: rgba(255,255,255,0.65); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+    .pkg-price { font-size: 3rem; font-weight: 900; color: var(--white); line-height: 1; }
+    .pkg-period { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-top: 4px; margin-bottom: 28px; }
+    .pkg-divider { height: 1px; background: rgba(255,255,255,0.12); margin-bottom: 24px; }
+    .pkg-features { list-style: none; flex: 1; }
+
+    .pkg-features li {
+      color: rgba(255,255,255,0.75);
+      font-size: 0.92rem;
+      padding: 7px 0;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .pkg-features li::before {
+      content: '✓';
+      color: var(--teal);
+      font-weight: 900;
+      flex-shrink: 0;
+    }
+
+    .pkg.popular .pkg-features li::before { color: #a7f3d0; }
+
+    .pkg-btn {
+      display: block;
+      text-align: center;
+      margin-top: 28px;
+      padding: 14px;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: 0.2s;
+      background: rgba(255,255,255,0.1);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .pkg-btn:hover { background: rgba(255,255,255,0.18); }
+    .pkg.popular .pkg-btn { background: var(--orange); border-color: var(--orange); }
+    .pkg.popular .pkg-btn:hover { background: #ea6c04; }
+
+    /* ── HOW IT WORKS ──────────────────────────── */
+    .steps-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 24px;
+      position: relative;
+    }
+
+    .step {
+      text-align: center;
+      padding: 36px 24px;
+      background: var(--white);
+      border-radius: 20px;
+      border: 1px solid #e2e8f0;
+      position: relative;
+    }
+
+    .step-num {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dk));
+      color: var(--white);
+      font-size: 1.4rem;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 18px;
+    }
+
+    .step h3 { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 10px; }
+    .step p { color: var(--muted); font-size: 0.9rem; }
+
+    /* ── CONTACT ───────────────────────────────── */
+    .contact-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    @media (max-width: 820px) {
+      .contact-wrapper { grid-template-columns: 1fr; }
+    }
+
+    .contact-left h3 {
+      font-size: 1.7rem;
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 14px;
+    }
+
+    .contact-left p {
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-size: 0.98rem;
+    }
+
+    .contact-items { display: flex; flex-direction: column; gap: 18px; }
+
+    .ci {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      background: var(--card-bg);
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .ci-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ccfbf1, #99f6e4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .ci strong { display: block; font-weight: 700; color: var(--dark); font-size: 0.95rem; }
+    .ci small { color: var(--muted); font-size: 0.83rem; }
+
+    /* Form */
+    .booking-form {
+      background: var(--white);
+      border: 1px solid #e2e8f0;
+      border-radius: 22px;
+      padding: 40px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.06);
+    }
+
+    .booking-form h3 { font-size: 1.3rem; font-weight: 800; color: var(--dark); margin-bottom: 28px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 520px) { .form-row { grid-template-columns: 1fr; } }
+
+    .form-field { margin-bottom: 18px; }
+
+    .form-field label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 6px;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      color: var(--text);
+      background: #fafafa;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--teal); background: var(--white); }
+
+    .form-field textarea { resize: vertical; min-height: 90px; }
+
+    .form-submit {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(135deg, var(--teal), var(--teal-dk));
+      color: var(--white);
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.15s;
+      font-family: inherit;
+    }
+
+    .form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: var(--dark);
+      padding: 64px 24px 32px;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    }
+
+    .footer-brand-name {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--white);
+      margin-bottom: 12px;
+    }
+
+    .footer-brand-name span { color: var(--orange); }
+    .footer-brand p { font-size: 0.9rem; line-height: 1.7; }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: var(--white);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a {
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col ul li a:hover { color: var(--orange); }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 0.83rem;
+      text-align: center;
+      color: rgba(255,255,255,0.35);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a class="brand" href="#">
+        <div class="logo-box">LOGO</div>
+        <span class="brand-name">Mungia <span>Bounce</span></span>
+      </a>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-list" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#rentals">Rentals</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#contact" class="nav-cta">Book Now</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <span class="hero-tag">Serving the Greater Area</span>
+        <h1>Party Rentals<br>That <em>Wow</em> the<br>Whole Crowd</h1>
+        <p class="hero-desc">Premium bouncy houses, combos, and obstacle courses delivered, set up, and taken down — all included. Safe, sanitized, and ready to bounce.</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-main">Book a Rental</a>
+          <a href="#rentals" class="btn-outline">View Inventory</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-photo-placeholder">[ Bouncy House / Party Event Photo ]</div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <span class="stat-num">500+</span>
+            <span class="stat-lbl">Events Served</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">6</span>
+            <span class="stat-lbl">Units Available</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">5★</span>
+            <span class="stat-lbl">Avg. Rating</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="section" id="about">
+    <div class="container">
+      <div class="centered">
+        <span class="tag">Why Mungia Bounce</span>
+        <h2 class="sec-title">The Bounce You Can Trust</h2>
+        <p class="sec-sub">We make party planning effortless — professional gear, dependable service, and big smiles guaranteed.</p>
+      </div>
+      <div class="benefits-grid">
+        <div class="benefit">
+          <div class="benefit-icon">🛡️</div>
+          <h3>Safety First</h3>
+          <p>All units are inspected, sanitized, and meet industry safety standards. Your guests' safety is our top priority.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">🚚</div>
+          <h3>Free Delivery &amp; Setup</h3>
+          <p>We deliver, set up, and break down every rental at no extra charge. You just focus on the fun.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">✨</div>
+          <h3>Always Clean</h3>
+          <p>Every unit is thoroughly cleaned and sanitized after each use. Guaranteed fresh for every event.</p>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">📞</div>
+          <h3>Reliable Service</h3>
+          <p>We show up on time, every time. Our team is friendly, professional, and ready to make your event a success.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Rental Inventory -->
+  <section class="section section-alt" id="rentals">
+    <div class="container">
+      <div class="centered">
+        <span class="tag tag-orange">Our Inventory</span>
+        <h2 class="sec-title">Choose Your Bounce</h2>
+        <p class="sec-sub">From classic bounce houses to combo units with slides, we have the perfect inflatable for every event.</p>
+      </div>
+      <div class="rentals-grid">
+        <div class="rental-card">
+          <div class="rental-visual">
+            🏠
+            <span class="badge">Most Popular</span>
+          </div>
+          <div class="rental-body">
+            <p class="rental-name">Classic Bounce House</p>
+            <p class="rental-desc">The all-time favorite! A spacious jumping area perfect for birthday parties and backyard fun.</p>
+            <div class="specs">
+              <span class="spec">Up to 8 kids</span>
+              <span class="spec">15×15 ft</span>
+              <span class="spec">All ages</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$150 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rental-card">
+          <div class="rental-visual v2">
+            🎢
+            <span class="badge">Best Value</span>
+          </div>
+          <div class="rental-body">
+            <p class="rental-name">Bounce &amp; Slide Combo</p>
+            <p class="rental-desc">Double the fun! Combines a bounce area with an exciting slide so kids never run out of things to do.</p>
+            <div class="specs">
+              <span class="spec">Up to 10 kids</span>
+              <span class="spec">18×15 ft</span>
+              <span class="spec">Ages 3+</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$200 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rental-card">
+          <div class="rental-visual v3">🏰</div>
+          <div class="rental-body">
+            <p class="rental-name">Princess Castle</p>
+            <p class="rental-desc">A magical pink castle bouncer fit for royalty. Perfect for princess-themed birthdays and parties.</p>
+            <div class="specs">
+              <span class="spec">Up to 6 kids</span>
+              <span class="spec">13×13 ft</span>
+              <span class="spec">Ages 2–10</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$175 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rental-card">
+          <div class="rental-visual v4">🦸</div>
+          <div class="rental-body">
+            <p class="rental-name">Superhero Adventure</p>
+            <p class="rental-desc">Action-packed superhero-themed bouncer with colorful graphics. Fuel your little hero's imagination!</p>
+            <div class="specs">
+              <span class="spec">Up to 8 kids</span>
+              <span class="spec">15×15 ft</span>
+              <span class="spec">Ages 3–12</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$175 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rental-card">
+          <div class="rental-visual v5">
+            🌊
+            <span class="badge">Summer Hit</span>
+          </div>
+          <div class="rental-body">
+            <p class="rental-name">Water Slide Combo</p>
+            <p class="rental-desc">Beat the heat with this epic water slide and bounce combo. The ultimate summer party upgrade!</p>
+            <div class="specs">
+              <span class="spec">Up to 8 kids</span>
+              <span class="spec">20×15 ft</span>
+              <span class="spec">Ages 4+</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$250 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="rental-card">
+          <div class="rental-visual v6">🎪</div>
+          <div class="rental-body">
+            <p class="rental-name">Obstacle Course</p>
+            <p class="rental-desc">An inflatable challenge course with tunnels, climbing walls, and slides for older kids and adults.</p>
+            <div class="specs">
+              <span class="spec">Up to 6 at a time</span>
+              <span class="spec">30×10 ft</span>
+              <span class="spec">Ages 5+</span>
+            </div>
+            <div class="rental-footer">
+              <div class="rental-price">$300 <span>/ day</span></div>
+              <a href="#contact" class="rental-link">Book Now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="section pricing-section" id="pricing">
+    <div class="container">
+      <div class="centered">
+        <span class="tag">Pricing Packages</span>
+        <h2 class="sec-title">Simple, Transparent Pricing</h2>
+        <p class="sec-sub">No hidden fees. What you see is what you pay. All packages include delivery, setup, and takedown.</p>
+      </div>
+      <div class="pricing-row">
+        <div class="pkg">
+          <div class="pkg-name">Basic Party</div>
+          <div class="pkg-price">$150</div>
+          <div class="pkg-period">4-hour rental</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>1 bounce house of your choice</li>
+            <li>Free delivery &amp; setup</li>
+            <li>Safety instructions included</li>
+            <li>Up to 30-mile radius</li>
+          </ul>
+          <a href="#contact" class="pkg-btn">Get Started</a>
+        </div>
+
+        <div class="pkg popular">
+          <div class="popular-badge">⭐ Most Popular</div>
+          <div class="pkg-name">All-Day Party</div>
+          <div class="pkg-price">$225</div>
+          <div class="pkg-period">8-hour rental</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>1 bounce house of your choice</li>
+            <li>Free delivery &amp; setup</li>
+            <li>Priority booking</li>
+            <li>Up to 30-mile radius</li>
+            <li>Attendant available (add-on)</li>
+          </ul>
+          <a href="#contact" class="pkg-btn">Get Started</a>
+        </div>
+
+        <div class="pkg">
+          <div class="pkg-name">Weekend Bundle</div>
+          <div class="pkg-price">$375</div>
+          <div class="pkg-period">2-day rental</div>
+          <div class="pkg-divider"></div>
+          <ul class="pkg-features">
+            <li>1 bounce house of your choice</li>
+            <li>Free delivery &amp; setup</li>
+            <li>Saturday &amp; Sunday included</li>
+            <li>Up to 30-mile radius</li>
+            <li>Discount on add-ons</li>
+          </ul>
+          <a href="#contact" class="pkg-btn">Get Started</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section" id="how-it-works">
+    <div class="container">
+      <div class="centered">
+        <span class="tag">Getting Started</span>
+        <h2 class="sec-title">How It Works</h2>
+        <p class="sec-sub">Booking your bouncy house is quick and easy. We handle all the logistics so you can enjoy the party.</p>
+      </div>
+      <div class="steps-row">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Choose Your Unit</h3>
+          <p>Browse our inventory and pick the bouncy house that fits your event, space, and budget.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Book Online or Call</h3>
+          <p>Fill out our booking form or give us a call to confirm your date, time, and rental details.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>We Deliver &amp; Set Up</h3>
+          <p>Our team arrives on time, sets everything up safely, and walks you through all the guidelines.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h3>Enjoy the Fun!</h3>
+          <p>Sit back, relax, and let the kids bounce! We'll return at the agreed time for takedown.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / Booking -->
+  <section class="section section-alt" id="contact">
+    <div class="container">
+      <span class="tag">Get In Touch</span>
+      <h2 class="sec-title">Book Your Rental Today</h2>
+      <p class="sec-sub">Ready to make your event epic? Fill out the form and we'll get back to you within 24 hours.</p>
+      <div class="contact-wrapper">
+        <div class="contact-left">
+          <h3>Let's Plan Your Party!</h3>
+          <p>Edward Mungia and the Mungia Bounce team are ready to make your event one to remember. Reach out by phone, email, or submit the booking form and we'll take it from there.</p>
+          <div class="contact-items">
+            <div class="ci">
+              <div class="ci-icon">📞</div>
+              <div>
+                <strong>(555) 123-4567</strong>
+                <small>Mon–Sat, 8am–7pm</small>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">📧</div>
+              <div>
+                <strong>edward@mungiabounce.com</strong>
+                <small>We reply within 24 hours</small>
+              </div>
+            </div>
+            <div class="ci">
+              <div class="ci-icon">📍</div>
+              <div>
+                <strong>Serving the Greater Area</strong>
+                <small>Up to 30-mile delivery radius</small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="booking-form">
+          <h3>Request a Booking</h3>
+          <form>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" placeholder="Jane" required>
+              </div>
+              <div class="form-field">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" placeholder="Smith" required>
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="femail">Email Address</label>
+              <input type="email" id="femail" placeholder="jane@example.com" required>
+            </div>
+            <div class="form-field">
+              <label for="fphone">Phone Number</label>
+              <input type="tel" id="fphone" placeholder="(555) 000-0000">
+            </div>
+            <div class="form-row">
+              <div class="form-field">
+                <label for="fdate">Event Date</label>
+                <input type="date" id="fdate" required>
+              </div>
+              <div class="form-field">
+                <label for="ftime">Start Time</label>
+                <input type="time" id="ftime">
+              </div>
+            </div>
+            <div class="form-field">
+              <label for="funit">Preferred Unit</label>
+              <select id="funit">
+                <option value="">-- Select a bouncy house --</option>
+                <option>Classic Bounce House</option>
+                <option>Bounce &amp; Slide Combo</option>
+                <option>Princess Castle</option>
+                <option>Superhero Adventure</option>
+                <option>Water Slide Combo</option>
+                <option>Obstacle Course</option>
+                <option>Not sure yet</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="fmsg">Additional Details</label>
+              <textarea id="fmsg" placeholder="Tell us about your event, address, or any special requests..."></textarea>
+            </div>
+            <button type="submit" class="form-submit">Send Booking Request</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="footer-brand-name">Mungia <span>Bounce</span></div>
+        <p>Bringing smiles and big bounces to parties, events, and celebrations throughout the area. Owned and operated by Edward Mungia.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#rentals">Our Rentals</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#contact">Book Now</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:5551234567">(555) 123-4567</a></li>
+          <li><a href="mailto:edward@mungiabounce.com">edward@mungiabounce.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Mungia Bounce Rentals. All rights reserved. | Owned by Edward Mungia</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    document.querySelectorAll('.nav-list a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    document.addEventListener('click', e => {
+      const navInner = document.querySelector('.nav-inner');
+      const navLinks = document.getElementById('navLinks');
+      if (!navInner.contains(e.target) && navLinks.classList.contains('open')) {
+        navLinks.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
