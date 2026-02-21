@@ -1,0 +1,64 @@
+name: Pastebin Watcher
+on:
+  schedule:
+    # Runs at :02, :07, :12, etc.
+    - cron: '2/5 * * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: ai-agent-group
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+jobs:
+  check-paste:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch Command from Pastebin
+        run: |
+          # 1. Fetch content
+          RAW_CONTENT=$(curl -L -s "https://pastebin.com/raw/XhpYUMec")
+          echo "Signal detected: $RAW_CONTENT"
+
+          # 2. Handle the RUN command
+          if [[ "$RAW_CONTENT" == RUN:* ]]; then
+            TASK_PROMPT=$(echo "$RAW_CONTENT" | sed 's/^RUN: //')
+            
+            # Memory Check: What was the exact text of the last task we ran?
+            LATEST_TASK=$(gh issue list --state all --limit 1 --json body --jq '.[0].body')
+            
+            # Busy Check: Is the AI currently working on something right now?
+            OPEN_ISSUE=$(gh issue list --search "AI Task" --state open --json number --jq '.[0].number')
+            
+            if [ -n "$OPEN_ISSUE" ] && [ "$OPEN_ISSUE" != "null" ]; then
+              echo "Safety: The AI is currently working on a task. Skipping to save requests."
+            
+            elif [[ "$LATEST_TASK" == "$TASK_PROMPT @copilot" ]]; then
+              echo "Safety: You already ran this exact prompt. Skipping to prevent a double-charge."
+            
+            else
+              echo "Action: Triggering Copilot with task: $TASK_PROMPT"
+              gh issue create --title "AI Task" --body "$TASK_PROMPT @copilot"
+            fi
+          
+          # 3. Handle the MERGE command
+          elif [[ "$RAW_CONTENT" == "MERGE" ]]; then
+            echo "Action: Searching for open Pull Request..."
+            PR_NUM=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
+            
+            if [ -z "$PR_NUM" ] || [ "$PR_NUM" == "null" ]; then
+              echo "Safety: No open PR found. It was either already merged or isn't ready yet."
+            else
+              echo "Success: Merging PR #$PR_NUM"
+              gh pr merge "$PR_NUM" --merge --admin
+            fi
+            
+          else
+            echo "Result: Standing by (WAIT mode)."
+          fi
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
