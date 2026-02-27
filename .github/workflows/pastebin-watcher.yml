@@ -1,8 +1,7 @@
 name: Pastebin Watcher
 on:
   schedule:
-    # Runs at :02, :07, :12, etc.
-    - cron: '2/5 * * * *'
+    - cron: '2-59/5 * * * *'
   workflow_dispatch:
 
 concurrency:
@@ -28,33 +27,44 @@ jobs:
           if [[ "$RAW_CONTENT" == RUN:* ]]; then
             TASK_PROMPT=$(echo "$RAW_CONTENT" | sed 's/^RUN: //')
             
-            # Memory Check: What was the exact text of the last task we ran?
-            LATEST_TASK=$(gh issue list --state all --limit 1 --json body --jq '.[0].body')
+            # Use 'select' in jq to ensure we don't get 'null' strings
+            LATEST_TASK=$(gh issue list --state all --limit 1 --json body --jq '.[0].body // ""')
+            OPEN_ISSUE=$(gh issue list --search "AI Task" --state open --json number --jq '.[0].number // empty')
             
-            # Busy Check: Is the AI currently working on something right now?
-            OPEN_ISSUE=$(gh issue list --search "AI Task" --state open --json number --jq '.[0].number')
-            
-            if [ -n "$OPEN_ISSUE" ] && [ "$OPEN_ISSUE" != "null" ]; then
-              echo "Safety: The AI is currently working on a task. Skipping to save requests."
-            
+            if [ -n "$OPEN_ISSUE" ]; then
+              echo "Safety: The AI is currently working on task #$OPEN_ISSUE. Skipping."
             elif [[ "$LATEST_TASK" == "$TASK_PROMPT @copilot" ]]; then
-              echo "Safety: You already ran this exact prompt. Skipping to prevent a double-charge."
-            
+              echo "Safety: Duplicate prompt detected. Skipping."
             else
-              echo "Action: Triggering Copilot with task: $TASK_PROMPT"
+              echo "Action: Triggering Copilot..."
               gh issue create --title "AI Task" --body "$TASK_PROMPT @copilot"
             fi
           
           # 3. Handle the MERGE command
           elif [[ "$RAW_CONTENT" == "MERGE" ]]; then
-            echo "Action: Searching for open Pull Request..."
-            PR_NUM=$(gh pr list --state open --limit 1 --json number --jq '.[0].number')
+            PR_NUM=$(gh pr list --state open --limit 1 --json number --jq '.[0].number // empty')
             
-            if [ -z "$PR_NUM" ] || [ "$PR_NUM" == "null" ]; then
-              echo "Safety: No open PR found. It was either already merged or isn't ready yet."
+            if [ -z "$PR_NUM" ]; then
+              echo "Safety: No open PR found."
             else
               echo "Success: Merging PR #$PR_NUM"
               gh pr merge "$PR_NUM" --merge --admin
+            fi
+
+          # 4. Handle the DELETE command
+          elif [[ "$RAW_CONTENT" == "DELETE" ]]; then
+            echo "Action: Clearing all open AI Tasks..."
+            # Get IDs and remove any literal "null" or empty lines
+            OPEN_AI_TASKS=$(gh issue list --search "AI Task" --state open --json number --jq '.[].number' | grep -v "null")
+            
+            if [ -z "$OPEN_AI_TASKS" ]; then
+              echo "Result: No open tasks found."
+            else
+              for ISSUE_NUM in $OPEN_AI_TASKS; do
+                echo "Closing issue #$ISSUE_NUM..."
+                gh issue close "$ISSUE_NUM" --comment "Force closed via Pastebin DELETE command."
+              done
+              echo "Success: System cleared."
             fi
             
           else
