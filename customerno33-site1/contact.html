@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Reza Persian Bread</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FFF8F0;
+      color: #3B2417;
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2A1810;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C8922A;
+      box-shadow: 0 2px 15px rgba(42, 24, 16, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #C8922A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      background: rgba(200, 146, 42, 0.1);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #D4A853;
+      font-size: 0.85rem;
+      display: block;
+      letter-spacing: 3px;
+      font-weight: 400;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #C8922A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #F5EDE0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #C8922A;
+    }
+
+    /* Page Banner - Map style with dark overlay */
+    .page-banner {
+      background: #2A1810;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .page-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        linear-gradient(90deg, transparent 49.5%, rgba(200, 146, 42, 0.05) 49.5%, rgba(200, 146, 42, 0.05) 50.5%, transparent 50.5%),
+        linear-gradient(0deg, transparent 49.5%, rgba(200, 146, 42, 0.05) 49.5%, rgba(200, 146, 42, 0.05) 50.5%, transparent 50.5%);
+      background-size: 60px 60px;
+    }
+
+    .page-banner h1 {
+      font-size: 3rem;
+      color: #F5EDE0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-banner p {
+      color: #D4C4B0;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Contact Layout - Split Grid */
+    .contact-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 70px 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    /* Left Side - Info Cards */
+    .contact-info h2 {
+      font-size: 2rem;
+      color: #2A1810;
+      margin-bottom: 10px;
+    }
+
+    .contact-info > p {
+      color: #7A6455;
+      font-size: 1rem;
+      margin-bottom: 30px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .info-cards {
+      display: grid;
+      gap: 20px;
+    }
+
+    .info-card {
+      display: grid;
+      grid-template-columns: 55px 1fr;
+      gap: 15px;
+      align-items: start;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(42, 24, 16, 0.06);
+      transition: transform 0.3s;
+    }
+
+    .info-card:hover {
+      transform: translateX(5px);
+    }
+
+    .info-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 10px;
+      background: rgba(200, 146, 42, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .info-icon svg {
+      width: 24px;
+      height: 24px;
+      stroke: #C8922A;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .info-detail h3 {
+      font-size: 1.05rem;
+      color: #2A1810;
+      margin-bottom: 4px;
+    }
+
+    .info-detail p {
+      color: #5A4A3A;
+      font-size: 0.9rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .info-detail a {
+      color: #C8922A;
+      text-decoration: none;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .info-detail a:hover {
+      text-decoration: underline;
+    }
+
+    /* Right Side - Contact Form */
+    .contact-form-wrapper {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 25px rgba(42, 24, 16, 0.08);
+    }
+
+    .contact-form-wrapper h2 {
+      font-size: 1.6rem;
+      color: #2A1810;
+      margin-bottom: 25px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.9rem;
+      color: #2A1810;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 2px solid #E8D5C0;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      color: #3B2417;
+      transition: border-color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #FFF8F0;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #C8922A;
+    }
+
+    .form-group textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .btn-primary {
+      background: #C8922A;
+      color: #2A1810;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: inline-block;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-primary:hover {
+      background: #D4A853;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 146, 42, 0.4);
+    }
+
+    /* Map Placeholder */
+    .map-section {
+      background: #F5EDE0;
+      padding: 0;
+    }
+
+    .map-placeholder {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #E8D5C0, #D4C4B0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7A6455;
+      font-size: 1.1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Hours Section */
+    .hours-section {
+      background: #2A1810;
+      padding: 70px 20px;
+    }
+
+    .hours-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .hours-text h2 {
+      font-size: 2.2rem;
+      color: #C8922A;
+      margin-bottom: 15px;
+    }
+
+    .hours-text p {
+      color: #D4C4B0;
+      font-size: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .hours-table {
+      background: rgba(200, 146, 42, 0.05);
+      border: 1px solid rgba(200, 146, 42, 0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px 25px;
+      border-bottom: 1px solid rgba(200, 146, 42, 0.1);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .hours-row:last-child {
+      border-bottom: none;
+    }
+
+    .hours-row .day {
+      color: #F5EDE0;
+      font-weight: 600;
+    }
+
+    .hours-row .time {
+      color: #C8922A;
+      font-weight: 600;
+    }
+
+    .hours-row.today {
+      background: rgba(200, 146, 42, 0.1);
+    }
+
+    /* FAQ */
+    .faq-section {
+      padding: 70px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .faq-header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .faq-header h2 {
+      font-size: 2rem;
+      color: #2A1810;
+      margin-bottom: 10px;
+    }
+
+    .faq-header .accent-line {
+      width: 80px;
+      height: 3px;
+      background: #C8922A;
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    .faq-item {
+      background: #fff;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 8px rgba(42, 24, 16, 0.05);
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 20px 25px;
+      background: none;
+      border: none;
+      font-size: 1.05rem;
+      color: #2A1810;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Georgia', 'Times New Roman', serif;
+    }
+
+    .faq-question::after {
+      content: '+';
+      font-size: 1.4rem;
+      color: #C8922A;
+      font-weight: 700;
+      transition: transform 0.3s;
+    }
+
+    .faq-question.open::after {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 25px 20px;
+      color: #5A4A3A;
+      font-size: 0.95rem;
+      display: none;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .faq-answer.show {
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      background: #1A0F0A;
+      padding: 50px 20px 25px;
+      color: #D4C4B0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      color: #C8922A;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col h4 {
+      color: #F5EDE0;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: #D4C4B0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col ul li a:hover {
+      color: #C8922A;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(200, 146, 42, 0.2);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7A6455;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #2A1810;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(200, 146, 42, 0.1);
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+
+      .contact-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .contact-form-wrapper {
+        padding: 25px;
+      }
+
+      .hours-inner {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .map-placeholder {
+        height: 280px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .page-banner h1 {
+        font-size: 1.7rem;
+      }
+
+      .hours-row {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Reza<span>Persian Bread</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <h1>Contact Us</h1>
+    <p>We would love to hear from you. Visit us, call, or send a message.</p>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact-section">
+    <div class="contact-info">
+      <h2>Get In Touch</h2>
+      <p>Whether you have a question, want to place an order, or just want to say hello, we are here for you.</p>
+
+      <div class="info-cards">
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="info-detail">
+            <h3>Our Location</h3>
+            <p>123 Bread Street<br>Your City, ST 12345</p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <div class="info-detail">
+            <h3>Phone</h3>
+            <p><a href="tel:+15551234567">(555) 123-4567</a></p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div class="info-detail">
+            <h3>Email</h3>
+            <p><a href="mailto:info@rezabread.com">info@rezabread.com</a></p>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-icon">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="info-detail">
+            <h3>Bakery Hours</h3>
+            <p>Mon-Sat: 6AM - 8PM<br>Sunday: 7AM - 6PM</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper">
+      <h2>Send Us a Message</h2>
+      <form>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Your name">
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="your@email.com">
+        </div>
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" placeholder="What is this about?">
+        </div>
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" placeholder="How can we help you?"></textarea>
+        </div>
+        <button type="submit" class="btn-primary">Send Message</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Map -->
+  <section class="map-section">
+    <div class="map-placeholder">[Google Map Embed - Bakery Location]</div>
+  </section>
+
+  <!-- Hours -->
+  <section class="hours-section">
+    <div class="hours-inner">
+      <div class="hours-text">
+        <h2>Bakery Hours</h2>
+        <p>We start baking before dawn so fresh bread is waiting for you when we open. Stop by for the best selection early in the morning.</p>
+      </div>
+      <div class="hours-table">
+        <div class="hours-row">
+          <span class="day">Monday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Tuesday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Wednesday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Thursday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Friday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Saturday</span>
+          <span class="time">6:00 AM - 8:00 PM</span>
+        </div>
+        <div class="hours-row">
+          <span class="day">Sunday</span>
+          <span class="time">7:00 AM - 6:00 PM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="faq-header">
+      <h2>Frequently Asked Questions</h2>
+      <div class="accent-line"></div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Do you take custom bread orders?</button>
+      <div class="faq-answer">Yes! We accept custom orders for any quantity. For large orders or special requests, please contact us at least 48 hours in advance so we can prepare everything fresh for you.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Do you offer delivery?</button>
+      <div class="faq-answer">We offer delivery for catering and wholesale orders within a 25-mile radius. For individual orders, we recommend visiting our bakery for the freshest bread experience.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">What time is the bread freshest?</button>
+      <div class="faq-answer">Our first batch of bread comes out of the oven around 6 AM. We bake throughout the day, but the morning offers the widest selection of fresh varieties.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Are your breads vegan-friendly?</button>
+      <div class="faq-answer">Most of our traditional Persian breads, including Sangak, Lavash, and Taftoon, are vegan. Our specialty items like Shirmal contain dairy. Please ask our staff about specific items.</div>
+    </div>
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">Can I visit the bakery to see the baking process?</button>
+      <div class="faq-answer">We love sharing our craft! Our bakery has a viewing area where you can watch our bakers at work. For group visits or tours, please call ahead to schedule.</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Reza Persian Bread</h3>
+        <p>Authentic Persian bread baked fresh daily using traditional recipes and the finest ingredients. Serving our community with warmth and quality.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="menu.html">Wholesale</a></li>
+          <li><a href="contact.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="contact.html">Mon-Sat: 6AM - 8PM</a></li>
+          <li><a href="contact.html">Sunday: 7AM - 6PM</a></li>
+          <li><a href="contact.html">Holidays: 8AM - 4PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Reza Persian Bread. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+
+    function toggleFaq(btn) {
+      var answer = btn.nextElementSibling;
+      var isOpen = btn.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.faq-question').forEach(function(q) {
+        q.classList.remove('open');
+        q.nextElementSibling.classList.remove('show');
+      });
+      // Open clicked if it was closed
+      if (!isOpen) {
+        btn.classList.add('open');
+        answer.classList.add('show');
+      }
+    }
+  </script>
+
+</body>
+</html>

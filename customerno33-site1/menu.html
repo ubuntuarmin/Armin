@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Menu - Reza Persian Bread</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FFF8F0;
+      color: #3B2417;
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2A1810;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C8922A;
+      box-shadow: 0 2px 15px rgba(42, 24, 16, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #C8922A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      background: rgba(200, 146, 42, 0.1);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #D4A853;
+      font-size: 0.85rem;
+      display: block;
+      letter-spacing: 3px;
+      font-weight: 400;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #C8922A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #F5EDE0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #C8922A;
+    }
+
+    /* Page Banner - Distinct from hero, uses textured pattern */
+    .page-banner {
+      background: #2A1810;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 20px,
+        rgba(200, 146, 42, 0.03) 20px,
+        rgba(200, 146, 42, 0.03) 40px
+      );
+    }
+
+    .page-banner h1 {
+      font-size: 3rem;
+      color: #F5EDE0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-banner p {
+      color: #D4C4B0;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Category Filter Tabs */
+    .category-tabs {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 10px 28px;
+      border: 2px solid #C8922A;
+      background: transparent;
+      color: #C8922A;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .tab-btn:hover,
+    .tab-btn.active {
+      background: #C8922A;
+      color: #2A1810;
+    }
+
+    /* Menu Grid - Different from homepage cards, uses horizontal layout */
+    .menu-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    .menu-category {
+      margin-bottom: 50px;
+    }
+
+    .menu-category h2 {
+      font-size: 2rem;
+      color: #2A1810;
+      margin-bottom: 8px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid rgba(200, 146, 42, 0.3);
+    }
+
+    .menu-category .cat-desc {
+      color: #7A6455;
+      font-size: 0.95rem;
+      margin-bottom: 25px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-items {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 25px;
+    }
+
+    .menu-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 20px;
+      background: #fff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(42, 24, 16, 0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .menu-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 25px rgba(42, 24, 16, 0.12);
+    }
+
+    .menu-item-img {
+      height: 100%;
+      min-height: 140px;
+      background: linear-gradient(135deg, #F5EDE0, #E8D5C0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7A6455;
+      font-size: 0.75rem;
+    }
+
+    .menu-item-info {
+      padding: 20px 20px 20px 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .menu-item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 8px;
+    }
+
+    .menu-item-header h3 {
+      font-size: 1.15rem;
+      color: #2A1810;
+    }
+
+    .menu-item-header .price {
+      font-size: 1.1rem;
+      color: #C8922A;
+      font-weight: 700;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-item-info p {
+      color: #7A6455;
+      font-size: 0.9rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .menu-item-tags {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .item-tag {
+      font-size: 0.7rem;
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-weight: 600;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .tag-popular {
+      background: rgba(200, 146, 42, 0.12);
+      color: #C8922A;
+    }
+
+    .tag-vegan {
+      background: rgba(34, 139, 34, 0.1);
+      color: #228B22;
+    }
+
+    .tag-new {
+      background: rgba(107, 29, 42, 0.1);
+      color: #6B1D2A;
+    }
+
+    /* Special Notice Box */
+    .notice-box {
+      max-width: 1200px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+    }
+
+    .notice-inner {
+      background: linear-gradient(135deg, #2A1810, #4A2C2A);
+      padding: 40px;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 30px;
+      align-items: center;
+      color: #F5EDE0;
+    }
+
+    .notice-inner h3 {
+      font-size: 1.4rem;
+      margin-bottom: 8px;
+      color: #C8922A;
+    }
+
+    .notice-inner p {
+      font-size: 0.95rem;
+      color: #D4C4B0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-primary {
+      background: #C8922A;
+      color: #2A1810;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: #D4A853;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 146, 42, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: #1A0F0A;
+      padding: 50px 20px 25px;
+      color: #D4C4B0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      color: #C8922A;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col h4 {
+      color: #F5EDE0;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: #D4C4B0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col ul li a:hover {
+      color: #C8922A;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(200, 146, 42, 0.2);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7A6455;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #2A1810;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(200, 146, 42, 0.1);
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+
+      .menu-items {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-item {
+        grid-template-columns: 100px 1fr;
+      }
+
+      .notice-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .category-tabs {
+        gap: 10px;
+      }
+
+      .tab-btn {
+        padding: 8px 20px;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .menu-item {
+        grid-template-columns: 1fr;
+      }
+
+      .menu-item-img {
+        min-height: 120px;
+      }
+
+      .menu-item-info {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Reza<span>Persian Bread</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html" class="active">Menu</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <h1>Our Bread Menu</h1>
+    <p>Handcrafted daily using traditional Persian recipes</p>
+  </section>
+
+  <!-- Category Tabs -->
+  <div class="category-tabs">
+    <button class="tab-btn active">All Breads</button>
+    <button class="tab-btn">Flatbreads</button>
+    <button class="tab-btn">Stone-Baked</button>
+    <button class="tab-btn">Specialty</button>
+    <button class="tab-btn">Sweets</button>
+  </div>
+
+  <!-- Menu Content -->
+  <section class="menu-section">
+
+    <!-- Flatbreads -->
+    <div class="menu-category">
+      <h2>Traditional Flatbreads</h2>
+      <p class="cat-desc">The foundation of every Persian meal, our flatbreads are baked fresh throughout the day.</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="menu-item-img">[Sangak]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Sangak</h3>
+              <span class="price">$4.50</span>
+            </div>
+            <p>Traditional whole wheat bread baked on hot river stones. Crispy edges with soft, airy center.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-popular">Bestseller</span>
+              <span class="item-tag tag-vegan">Vegan</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Lavash]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Lavash</h3>
+              <span class="price">$3.00</span>
+            </div>
+            <p>Thin, soft flatbread perfect for wraps, scooping dips, or alongside any meal.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-vegan">Vegan</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Taftoon]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Taftoon</h3>
+              <span class="price">$3.50</span>
+            </div>
+            <p>Round, lightly leavened bread baked in a clay oven. Soft, fluffy, and slightly chewy.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-vegan">Vegan</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Pita]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Persian Pita</h3>
+              <span class="price">$2.50</span>
+            </div>
+            <p>Light and pocket-style, ideal for stuffing with kebab, herbs, and fresh vegetables.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-vegan">Vegan</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stone-Baked -->
+    <div class="menu-category">
+      <h2>Stone-Baked Breads</h2>
+      <p class="cat-desc">Our signature stone-baked breads use a traditional deck oven for a perfect golden crust.</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="menu-item-img">[Barbari]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Barbari</h3>
+              <span class="price">$5.00</span>
+            </div>
+            <p>Thick, golden bread with a glossy romal glaze. Ridged top with a pillowy soft interior.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-popular">Bestseller</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Noon Shirmal]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Shirmal</h3>
+              <span class="price">$5.50</span>
+            </div>
+            <p>Saffron-infused enriched bread with a buttery, flaky texture and golden color.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-new">Specialty</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Noon Berenji]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Noon Berenji</h3>
+              <span class="price">$6.00</span>
+            </div>
+            <p>Delicate rice flour cookies with a melt-in-your-mouth texture and rosewater aroma.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-new">Specialty</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Komaj]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Komaj</h3>
+              <span class="price">$4.00</span>
+            </div>
+            <p>Date-filled bread with turmeric and cumin, a savory-sweet traditional favorite.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-popular">Popular</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specialty -->
+    <div class="menu-category">
+      <h2>Specialty &amp; Sweets</h2>
+      <p class="cat-desc">Our selection of sweet breads and specialty baked goods for celebrations and everyday treats.</p>
+      <div class="menu-items">
+        <div class="menu-item">
+          <div class="menu-item-img">[Noon Khamei]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Noon Khamei</h3>
+              <span class="price">$3.50</span>
+            </div>
+            <p>Persian cream puff with a light pastry shell filled with sweet whipped cream.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-popular">Favorite</span>
+            </div>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="menu-item-img">[Noon Zanjebili]</div>
+          <div class="menu-item-info">
+            <div class="menu-item-header">
+              <h3>Noon Zanjebili</h3>
+              <span class="price">$4.00</span>
+            </div>
+            <p>Aromatic ginger bread cookies spiced with cinnamon and cardamom. Perfect with tea.</p>
+            <div class="menu-item-tags">
+              <span class="item-tag tag-new">Seasonal</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notice Box -->
+  <div class="notice-box">
+    <div class="notice-inner">
+      <div>
+        <h3>Catering &amp; Wholesale Orders</h3>
+        <p>Planning an event or need bread for your restaurant? We offer bulk pricing and custom orders. Contact us for a personalized quote.</p>
+      </div>
+      <a href="catering.html" class="btn-primary">Get a Quote</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Reza Persian Bread</h3>
+        <p>Authentic Persian bread baked fresh daily using traditional recipes and the finest ingredients. Serving our community with warmth and quality.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="menu.html">Wholesale</a></li>
+          <li><a href="contact.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="contact.html">Mon-Sat: 6AM - 8PM</a></li>
+          <li><a href="contact.html">Sunday: 7AM - 6PM</a></li>
+          <li><a href="contact.html">Holidays: 8AM - 4PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Reza Persian Bread. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>

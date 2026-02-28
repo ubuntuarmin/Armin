@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery - Reza Persian Bread</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FFF8F0;
+      color: #3B2417;
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2A1810;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C8922A;
+      box-shadow: 0 2px 15px rgba(42, 24, 16, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #C8922A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      background: rgba(200, 146, 42, 0.1);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #D4A853;
+      font-size: 0.85rem;
+      display: block;
+      letter-spacing: 3px;
+      font-weight: 400;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #C8922A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #F5EDE0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #C8922A;
+    }
+
+    /* Page Banner - Mosaic style for gallery */
+    .page-banner {
+      background: #2A1810;
+      padding: 60px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-banner::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(200, 146, 42, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(184, 92, 56, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(107, 29, 42, 0.08) 0%, transparent 40%);
+    }
+
+    .page-banner h1 {
+      font-size: 3rem;
+      color: #F5EDE0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-banner p {
+      color: #D4C4B0;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      position: relative;
+      z-index: 1;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Gallery Filter */
+    .gallery-filter {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px 20px;
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 24px;
+      border: 2px solid transparent;
+      background: #F5EDE0;
+      color: #5A4A3A;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #C8922A;
+      color: #2A1810;
+      border-color: #C8922A;
+    }
+
+    /* Masonry Gallery Grid */
+    .gallery-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px 20px 80px;
+    }
+
+    .gallery-grid {
+      columns: 3;
+      column-gap: 20px;
+    }
+
+    .gallery-item {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(42, 24, 16, 0.06);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-img {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7A6455;
+      font-size: 0.85rem;
+      background: linear-gradient(135deg, #F5EDE0, #E8D5C0);
+    }
+
+    .gallery-img.tall {
+      height: 350px;
+    }
+
+    .gallery-img.medium {
+      height: 260px;
+    }
+
+    .gallery-img.short {
+      height: 200px;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(42, 24, 16, 0.85), transparent);
+      padding: 30px 20px 20px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .gallery-overlay h3 {
+      color: #F5EDE0;
+      font-size: 1.1rem;
+      margin-bottom: 4px;
+    }
+
+    .gallery-overlay p {
+      color: #D4C4B0;
+      font-size: 0.85rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Featured Gallery - Large showcase with side info */
+    .featured-gallery {
+      background: #2A1810;
+      padding: 80px 20px;
+    }
+
+    .featured-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .featured-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .featured-header h2 {
+      font-size: 2.5rem;
+      color: #F5EDE0;
+      margin-bottom: 10px;
+    }
+
+    .featured-header .accent-line {
+      width: 80px;
+      height: 3px;
+      background: #C8922A;
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    .featured-showcase {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 20px;
+    }
+
+    .featured-large {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .featured-large .gallery-img {
+      height: 450px;
+    }
+
+    .featured-large .gallery-overlay {
+      opacity: 1;
+    }
+
+    .featured-side {
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .featured-small {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .featured-small .gallery-img {
+      height: 100%;
+      min-height: 210px;
+    }
+
+    .featured-small .gallery-overlay {
+      opacity: 1;
+    }
+
+    /* Instagram CTA */
+    .instagram-cta {
+      padding: 60px 20px;
+      text-align: center;
+      background: #F5EDE0;
+    }
+
+    .instagram-cta h2 {
+      font-size: 2rem;
+      color: #2A1810;
+      margin-bottom: 10px;
+    }
+
+    .instagram-cta p {
+      color: #7A6455;
+      font-size: 1rem;
+      margin-bottom: 25px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-primary {
+      background: #C8922A;
+      color: #2A1810;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #D4A853;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 146, 42, 0.4);
+    }
+
+    /* Footer */
+    footer {
+      background: #1A0F0A;
+      padding: 50px 20px 25px;
+      color: #D4C4B0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      color: #C8922A;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col h4 {
+      color: #F5EDE0;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: #D4C4B0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col ul li a:hover {
+      color: #C8922A;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(200, 146, 42, 0.2);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7A6455;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #2A1810;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(200, 146, 42, 0.1);
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+
+      .gallery-grid {
+        columns: 2;
+      }
+
+      .featured-showcase {
+        grid-template-columns: 1fr;
+      }
+
+      .featured-large .gallery-img {
+        height: 300px;
+      }
+
+      .featured-side {
+        grid-template-rows: auto;
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid {
+        columns: 1;
+      }
+
+      .featured-side {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-filter {
+        gap: 8px;
+      }
+
+      .filter-btn {
+        padding: 6px 16px;
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Reza<span>Persian Bread</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="gallery.html" class="active">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <h1>Our Gallery</h1>
+    <p>A visual journey through our bakery, breads, and community</p>
+  </section>
+
+  <!-- Filter -->
+  <div class="gallery-filter">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Breads</button>
+    <button class="filter-btn">Bakery</button>
+    <button class="filter-btn">Events</button>
+    <button class="filter-btn">Behind the Scenes</button>
+  </div>
+
+  <!-- Gallery Grid -->
+  <section class="gallery-section">
+    <div class="gallery-grid">
+      <div class="gallery-item">
+        <div class="gallery-img tall">[Fresh Sangak on Stones]</div>
+        <div class="gallery-overlay">
+          <h3>Sangak on River Stones</h3>
+          <p>Traditional stone-baked bread</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img medium">[Baker at Work]</div>
+        <div class="gallery-overlay">
+          <h3>Morning Prep</h3>
+          <p>Our bakers start at 4 AM</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img short">[Barbari Close-up]</div>
+        <div class="gallery-overlay">
+          <h3>Golden Barbari</h3>
+          <p>Fresh from the oven</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img medium">[Bakery Interior]</div>
+        <div class="gallery-overlay">
+          <h3>Our Bakery</h3>
+          <p>Warm and welcoming</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img tall">[Dough Preparation]</div>
+        <div class="gallery-overlay">
+          <h3>Handmade Dough</h3>
+          <p>Crafted with care every day</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img short">[Bread Display]</div>
+        <div class="gallery-overlay">
+          <h3>Daily Selection</h3>
+          <p>Fresh varieties every morning</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img medium">[Lavash Rolling]</div>
+        <div class="gallery-overlay">
+          <h3>Rolling Lavash</h3>
+          <p>Paper-thin perfection</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img short">[Stone Oven]</div>
+        <div class="gallery-overlay">
+          <h3>The Stone Oven</h3>
+          <p>Heart of our bakery</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img tall">[Community Event]</div>
+        <div class="gallery-overlay">
+          <h3>Community Day</h3>
+          <p>Sharing bread with neighbors</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img medium">[Noon Berenji]</div>
+        <div class="gallery-overlay">
+          <h3>Persian Sweets</h3>
+          <p>Delicate rice flour treats</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img short">[Flour Dusting]</div>
+        <div class="gallery-overlay">
+          <h3>Artisan Touch</h3>
+          <p>Every detail matters</p>
+        </div>
+      </div>
+      <div class="gallery-item">
+        <div class="gallery-img medium">[Catering Setup]</div>
+        <div class="gallery-overlay">
+          <h3>Catering Service</h3>
+          <p>Events large and small</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Gallery -->
+  <section class="featured-gallery">
+    <div class="featured-inner">
+      <div class="featured-header">
+        <h2>Featured Photos</h2>
+        <div class="accent-line"></div>
+      </div>
+      <div class="featured-showcase">
+        <div class="featured-large">
+          <div class="gallery-img">[Bakery Grand Photo]</div>
+          <div class="gallery-overlay">
+            <h3>Our Bakery in Full Swing</h3>
+            <p>Where tradition meets community every day</p>
+          </div>
+        </div>
+        <div class="featured-side">
+          <div class="featured-small">
+            <div class="gallery-img">[Bread Basket]</div>
+            <div class="gallery-overlay">
+              <h3>Daily Fresh Bread</h3>
+              <p>Ready for our customers</p>
+            </div>
+          </div>
+          <div class="featured-small">
+            <div class="gallery-img">[Team Photo]</div>
+            <div class="gallery-overlay">
+              <h3>Our Team</h3>
+              <p>The heart and soul of Reza</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Instagram CTA -->
+  <section class="instagram-cta">
+    <h2>Follow Us on Social Media</h2>
+    <p>See our latest creations and behind-the-scenes moments</p>
+    <a href="contact.html" class="btn-primary">Get in Touch</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Reza Persian Bread</h3>
+        <p>Authentic Persian bread baked fresh daily using traditional recipes and the finest ingredients. Serving our community with warmth and quality.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="menu.html">Wholesale</a></li>
+          <li><a href="contact.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="contact.html">Mon-Sat: 6AM - 8PM</a></li>
+          <li><a href="contact.html">Sunday: 7AM - 6PM</a></li>
+          <li><a href="contact.html">Holidays: 8AM - 4PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Reza Persian Bread. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>

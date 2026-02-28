@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reza Persian Bread - Website Template | Armin Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #2A1810 0%, #4A2C2A 50%, #6B1D2A 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      color: #C8922A;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 300;
+      color: #D4C4B0;
+    }
+
+    .template-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease;
+      animation-fill-mode: both;
+      animation-delay: 0.2s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    .template-header {
+      padding: 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #C8922A 0%, #D4A853 50%, #B85C38 100%);
+    }
+
+    .template-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+      z-index: 1;
+    }
+
+    .template-header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .template-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #2A1810;
+    }
+
+    .template-subtitle {
+      font-size: 1.1rem;
+      color: #3B2417;
+      opacity: 0.9;
+    }
+
+    .template-body {
+      padding: 40px;
+      color: #333;
+    }
+
+    .template-description {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .features-list li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      color: #444;
+      font-size: 1rem;
+    }
+
+    .features-list li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: #C8922A;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 35px;
+      background: linear-gradient(135deg, #C8922A 0%, #D4A853 100%);
+      color: #2A1810;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(200, 146, 42, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 146, 42, 0.6);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #D4C4B0;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #C8922A;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .template-title {
+        font-size: 1.6rem;
+      }
+
+      .template-header,
+      .template-body {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Reza Persian Bread</h1>
+      <p class="subtitle">Authentic Artisan Bakery Website Template</p>
+    </header>
+
+    <div class="template-card">
+      <div class="template-header">
+        <h2 class="template-title">Persian Bakery Template</h2>
+        <p class="template-subtitle">6-Page Artisan Bakery Website</p>
+      </div>
+      <div class="template-body">
+        <p class="template-description">
+          A warm, elegant website designed for an authentic Persian bakery. Features a rich color palette of saffron gold, deep burgundy, and earthy brown tones that reflect the warmth and tradition of Persian bread-making.
+        </p>
+        <ul class="features-list">
+          <li>Home page with hero section, featured breads, and testimonials</li>
+          <li>Full bread menu with categories and pricing</li>
+          <li>Our Story page with timeline and team profiles</li>
+          <li>Photo gallery with masonry grid layout</li>
+          <li>Catering services with pricing tiers and inquiry form</li>
+          <li>Contact page with location info, hours, and FAQ</li>
+        </ul>
+        <a href="customerno33-site1/index.html" class="cta-button">View Bakery Template</a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link">Back to Armin Studio</a>
+  </div>
+</body>
+</html>

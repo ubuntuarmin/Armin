@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story - Reza Persian Bread</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FFF8F0;
+      color: #3B2417;
+      line-height: 1.7;
+    }
+
+    /* Navigation */
+    nav {
+      background: #2A1810;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C8922A;
+      box-shadow: 0 2px 15px rgba(42, 24, 16, 0.3);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #C8922A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      background: rgba(200, 146, 42, 0.1);
+    }
+
+    .logo {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #C8922A;
+      letter-spacing: 1px;
+    }
+
+    .logo span {
+      color: #D4A853;
+      font-size: 0.85rem;
+      display: block;
+      letter-spacing: 3px;
+      font-weight: 400;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #C8922A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+      transition: right 0.3s ease;
+    }
+
+    .nav-links a {
+      color: #F5EDE0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #C8922A;
+    }
+
+    /* Page Banner - Wide with centered text */
+    .page-banner {
+      background: linear-gradient(to right, #2A1810, #4A2C2A, #2A1810);
+      padding: 70px 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .page-banner h1 {
+      font-size: 3rem;
+      color: #F5EDE0;
+    }
+
+    .page-banner p {
+      color: #D4C4B0;
+      font-size: 1.1rem;
+      margin-top: 10px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Intro Section - Full width quote */
+    .intro-quote {
+      text-align: center;
+      padding: 70px 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .intro-quote blockquote {
+      font-size: 1.6rem;
+      color: #4A2C2A;
+      font-style: italic;
+      line-height: 1.8;
+      position: relative;
+      padding: 0 40px;
+    }
+
+    .intro-quote blockquote::before,
+    .intro-quote blockquote::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: #C8922A;
+      margin: 20px auto;
+    }
+
+    .intro-quote cite {
+      display: block;
+      margin-top: 15px;
+      font-size: 1rem;
+      color: #7A6455;
+      font-style: normal;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Timeline - Alternating Left/Right Layout */
+    .timeline-section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px 80px;
+      position: relative;
+    }
+
+    .timeline-section::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 80px;
+      width: 3px;
+      background: linear-gradient(to bottom, #C8922A, rgba(200, 146, 42, 0.2));
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr 80px 1fr;
+      gap: 0;
+      margin-bottom: 50px;
+      align-items: center;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+      grid-column: 1;
+      text-align: right;
+      padding-right: 30px;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-image {
+      grid-column: 3;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+      grid-column: 3;
+      text-align: left;
+      padding-left: 30px;
+    }
+
+    .timeline-item:nth-child(even) .timeline-image {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    .timeline-dot {
+      grid-column: 2;
+      grid-row: 1;
+      width: 50px;
+      height: 50px;
+      background: #C8922A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #2A1810;
+      font-weight: 700;
+      font-size: 0.85rem;
+      z-index: 1;
+      margin: 0 auto;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .timeline-content h3 {
+      font-size: 1.4rem;
+      color: #2A1810;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      color: #5A4A3A;
+      font-size: 0.95rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .timeline-image {
+      height: 180px;
+      border: 2px dashed rgba(200, 146, 42, 0.3);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7A6455;
+      font-size: 0.8rem;
+      background: rgba(200, 146, 42, 0.04);
+    }
+
+    /* Values Section - Different background with icon cards */
+    .values-section {
+      background: #2A1810;
+      padding: 80px 20px;
+      color: #F5EDE0;
+    }
+
+    .values-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      color: #F5EDE0;
+      margin-bottom: 10px;
+    }
+
+    .section-header .accent-line {
+      width: 80px;
+      height: 3px;
+      background: #C8922A;
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    .section-header p {
+      color: #D4C4B0;
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 0 auto;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .value-card {
+      text-align: center;
+      padding: 35px 20px;
+      border: 1px solid rgba(200, 146, 42, 0.2);
+      border-radius: 12px;
+      background: rgba(200, 146, 42, 0.05);
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-6px);
+      border-color: #C8922A;
+    }
+
+    .value-icon {
+      width: 70px;
+      height: 70px;
+      margin: 0 auto 20px;
+      border-radius: 50%;
+      background: rgba(200, 146, 42, 0.1);
+      border: 2px solid #C8922A;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .value-icon svg {
+      width: 32px;
+      height: 32px;
+      stroke: #C8922A;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .value-card h3 {
+      font-size: 1.15rem;
+      margin-bottom: 10px;
+      color: #C8922A;
+    }
+
+    .value-card p {
+      font-size: 0.9rem;
+      color: #D4C4B0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Team Section - Circular Profiles */
+    .team-section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .team-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .team-header h2 {
+      font-size: 2.5rem;
+      color: #2A1810;
+      margin-bottom: 10px;
+    }
+
+    .team-header .accent-line {
+      width: 80px;
+      height: 3px;
+      background: #C8922A;
+      margin: 15px auto;
+      border-radius: 2px;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+    }
+
+    .team-member {
+      text-align: center;
+    }
+
+    .member-photo {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      border: 4px solid #C8922A;
+      margin: 0 auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #7A6455;
+      font-size: 0.8rem;
+      background: linear-gradient(135deg, #F5EDE0, #E8D5C0);
+    }
+
+    .team-member h3 {
+      font-size: 1.2rem;
+      color: #2A1810;
+      margin-bottom: 5px;
+    }
+
+    .team-member .role {
+      color: #C8922A;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .team-member p {
+      color: #5A4A3A;
+      font-size: 0.9rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* Footer */
+    footer {
+      background: #1A0F0A;
+      padding: 50px 20px 25px;
+      color: #D4C4B0;
+    }
+
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+    }
+
+    .footer-brand h3 {
+      font-size: 1.4rem;
+      color: #C8922A;
+      margin-bottom: 10px;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col h4 {
+      color: #F5EDE0;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 8px;
+    }
+
+    .footer-col ul li a {
+      color: #D4C4B0;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .footer-col ul li a:hover {
+      color: #C8922A;
+    }
+
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 30px auto 0;
+      padding-top: 20px;
+      border-top: 1px solid rgba(200, 146, 42, 0.2);
+      text-align: center;
+      font-size: 0.85rem;
+      color: #7A6455;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .btn-primary {
+      background: #C8922A;
+      color: #2A1810;
+      padding: 14px 32px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #D4A853;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(200, 146, 42, 0.4);
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #2A1810;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.3);
+      }
+
+      .nav-links.active {
+        right: 0;
+      }
+
+      .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid rgba(200, 146, 42, 0.1);
+        font-size: 1.1rem;
+      }
+
+      .logo-placeholder {
+        width: 40px;
+        height: 40px;
+      }
+
+      .page-banner h1 {
+        font-size: 2rem;
+      }
+
+      .intro-quote blockquote {
+        font-size: 1.2rem;
+        padding: 0 10px;
+      }
+
+      .timeline-section::before {
+        left: 25px;
+      }
+
+      .timeline-item {
+        grid-template-columns: 50px 1fr;
+        gap: 15px;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content {
+        grid-column: 2;
+        text-align: left;
+        padding: 0;
+      }
+
+      .timeline-item:nth-child(odd) .timeline-image,
+      .timeline-item:nth-child(even) .timeline-image {
+        display: none;
+      }
+
+      .timeline-dot {
+        grid-column: 1;
+        width: 40px;
+        height: 40px;
+        font-size: 0.75rem;
+      }
+
+      .values-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .team-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .footer-content {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .values-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .page-banner h1 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Reza<span>Persian Bread</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html" class="active">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <h1>Our Story</h1>
+    <p>A tradition of Persian baking, passed down through generations</p>
+  </section>
+
+  <!-- Intro Quote -->
+  <section class="intro-quote">
+    <blockquote>
+      Bread is more than food in Persian culture. It is a symbol of life, hospitality, and the bond between family and community.
+      <cite>- Reza, Founder</cite>
+    </blockquote>
+  </section>
+
+  <!-- Timeline -->
+  <section class="timeline-section">
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>The Dream Begins</h3>
+        <p>Reza arrived with a dream: to bring the authentic taste of Persian bread to a new community. Armed with family recipes and years of baking experience, the journey started from a small kitchen.</p>
+      </div>
+      <div class="timeline-dot">2004</div>
+      <div class="timeline-image">[Early Bakery Photo]</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">[First Storefront Photo]</div>
+      <div class="timeline-dot">2008</div>
+      <div class="timeline-content">
+        <h3>First Bakery Opens</h3>
+        <p>After four years of community pop-ups and farmers market appearances, Reza opened the first dedicated storefront bakery. The aroma of fresh Sangak and Barbari quickly drew loyal customers.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>Stone Oven Tradition</h3>
+        <p>Investing in an authentic stone oven imported from Iran brought our bread to the next level. The traditional baking method gives each loaf its signature crust and flavor that cannot be replicated.</p>
+      </div>
+      <div class="timeline-dot">2012</div>
+      <div class="timeline-image">[Stone Oven Photo]</div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-image">[Expanded Bakery Photo]</div>
+      <div class="timeline-dot">2018</div>
+      <div class="timeline-content">
+        <h3>Expanding Our Reach</h3>
+        <p>Growing demand led to a larger bakery space and the launch of our catering and wholesale programs. Local restaurants began featuring Reza bread on their menus.</p>
+      </div>
+    </div>
+
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>A Community Staple</h3>
+        <p>Today, Reza Persian Bread serves thousands of customers weekly. We remain committed to the same traditional methods and quality ingredients that started it all over 20 years ago.</p>
+      </div>
+      <div class="timeline-dot">Now</div>
+      <div class="timeline-image">[Current Bakery Photo]</div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="values-section">
+    <div class="values-inner">
+      <div class="section-header">
+        <h2>What We Stand For</h2>
+        <div class="accent-line"></div>
+        <p>The principles that guide every loaf we bake</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          </div>
+          <h3>Tradition</h3>
+          <p>Every recipe follows centuries-old Persian baking methods, preserving the authentic flavors of our heritage.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
+          <h3>Quality</h3>
+          <p>We use only premium flour, natural ingredients, and never cut corners. Quality is non-negotiable in every loaf.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Community</h3>
+          <p>Our bakery is a gathering place. We believe in nourishing not just bodies, but the bonds that bring people together.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Freshness</h3>
+          <p>Every loaf is baked fresh daily. We start before dawn so our bread is ready and warm when you arrive.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="team-section">
+    <div class="team-header">
+      <h2>Meet Our Bakers</h2>
+      <div class="accent-line"></div>
+    </div>
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-photo">[Photo]</div>
+        <h3>Reza</h3>
+        <div class="role">Founder &amp; Head Baker</div>
+        <p>With over 30 years of baking experience, Reza brings the authentic taste of Iran to every loaf. His passion for tradition drives the entire bakery.</p>
+      </div>
+      <div class="team-member">
+        <div class="member-photo">[Photo]</div>
+        <h3>Parisa</h3>
+        <div class="role">Pastry Specialist</div>
+        <p>Parisa specializes in Persian sweets and pastries, crafting delicate Noon Berenji and Noon Khamei with artisanal precision.</p>
+      </div>
+      <div class="team-member">
+        <div class="member-photo">[Photo]</div>
+        <h3>Amir</h3>
+        <div class="role">Stone Oven Master</div>
+        <p>Trained in the art of stone oven baking, Amir ensures every Sangak and Barbari comes out with the perfect crust and texture.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <h3>Reza Persian Bread</h3>
+        <p>Authentic Persian bread baked fresh daily using traditional recipes and the finest ingredients. Serving our community with warmth and quality.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="menu.html">Wholesale</a></li>
+          <li><a href="contact.html">Custom Orders</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="contact.html">Mon-Sat: 6AM - 8PM</a></li>
+          <li><a href="contact.html">Sunday: 7AM - 6PM</a></li>
+          <li><a href="contact.html">Holidays: 8AM - 4PM</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2026 Reza Persian Bread. All rights reserved.
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.querySelector('.nav-links').classList.toggle('active');
+    }
+    document.addEventListener('click', function(e) {
+      const nav = document.querySelector('.nav-links');
+      const hamburger = document.querySelector('.hamburger');
+      if (!nav.contains(e.target) && !hamburger.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+  </script>
+
+</body>
+</html>
