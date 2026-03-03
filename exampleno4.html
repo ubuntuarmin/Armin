@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Bliss Bakery & Café - Website Template | Armin Studio</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #3D1A24 0%, #6B2D3E 50%, #8B2252 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+      color: #F7BFCA;
+    }
+
+    .subtitle {
+      font-size: 1.3rem;
+      opacity: 0.9;
+      font-weight: 300;
+      color: #EDD5DC;
+    }
+
+    .template-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease;
+      animation-fill-mode: both;
+      animation-delay: 0.2s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+    }
+
+    .template-header {
+      padding: 40px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #8B2252 0%, #C4557A 50%, #E8869E 100%);
+    }
+
+    .template-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.1), rgba(0,0,0,0.2));
+      z-index: 1;
+    }
+
+    .template-header > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .template-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+
+    .template-subtitle {
+      font-size: 1.1rem;
+      color: #FFE4EC;
+      opacity: 0.95;
+    }
+
+    .template-body {
+      padding: 40px;
+      color: #333;
+    }
+
+    .template-description {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      margin-bottom: 25px;
+      color: #555;
+    }
+
+    .features-list {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .features-list li {
+      padding: 12px 0;
+      padding-left: 30px;
+      position: relative;
+      color: #444;
+      font-size: 1rem;
+      border-bottom: 1px solid #f5eaed;
+    }
+
+    .features-list li:last-child {
+      border-bottom: none;
+    }
+
+    .features-list li::before {
+      content: '\2713';
+      position: absolute;
+      left: 0;
+      color: #8B2252;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 15px 35px;
+      background: linear-gradient(135deg, #8B2252 0%, #C4557A 100%);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(139, 34, 82, 0.4);
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 34, 82, 0.6);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 30px;
+      color: #EDD5DC;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover {
+      color: #F7BFCA;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .subtitle {
+        font-size: 1.1rem;
+      }
+
+      .template-title {
+        font-size: 1.6rem;
+      }
+
+      .template-header,
+      .template-body {
+        padding: 30px 25px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Sweet Bliss Bakery &amp; Café</h1>
+      <p class="subtitle">Artisan Bakery &amp; Café Website Template</p>
+    </header>
+
+    <div class="template-card">
+      <div class="template-header">
+        <h2 class="template-title">Bakery &amp; Café Template</h2>
+        <p class="template-subtitle">6-Page Artisan Bakery &amp; Café Website</p>
+      </div>
+      <div class="template-body">
+        <p class="template-description">
+          A charming and elegant website crafted for artisan bakeries and cozy cafés. Features a warm blush rose and cream palette with rich chocolate accents, perfectly evoking the sweetness and warmth of a beloved neighbourhood café and patisserie.
+        </p>
+        <ul class="features-list">
+          <li>Home page with hero section, featured treats, and customer reviews</li>
+          <li>Full menu page covering café drinks, savoury bites, and sweet creations</li>
+          <li>Our Story page with founder journey and bakery values</li>
+          <li>Photo gallery with masonry grid layout showcasing cakes and desserts</li>
+          <li>Catering &amp; events page with service packages and inquiry form</li>
+          <li>Contact page with map placeholder, hours, and FAQ</li>
+        </ul>
+        <a href="exampleno4-site1/index.html" class="cta-button">View Bakery &amp; Café Template</a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-link">Back to Armin Studio</a>
+  </div>
+</body>
+</html>

@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story - Sweet Bliss Bakery &amp; Café</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FDF5F7;
+      color: #2C1810;
+      line-height: 1.7;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      background: #3D1A24;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C4557A;
+      box-shadow: 0 2px 15px rgba(61, 26, 36, 0.35);
+    }
+
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 0 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .logo-container { display: flex; align-items: center; gap: 14px; }
+
+    .logo-placeholder {
+      width: 50px; height: 50px;
+      border: 3px solid #C4557A; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700; color: #C4557A;
+      background: rgba(196, 85, 122, 0.12);
+    }
+
+    .logo { font-size: 1.5rem; font-weight: 700; color: #F7BFCA; letter-spacing: 0.5px; }
+    .logo span { color: #E8A5B0; font-size: 0.8rem; display: block; letter-spacing: 2px; font-weight: 400; font-family: 'Segoe UI', sans-serif; }
+
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: #C4557A; border-radius: 2px; transition: 0.3s; }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: #F0DAE0; text-decoration: none; font-weight: 600;
+      font-size: 0.9rem; transition: color 0.3s; min-height: 44px;
+      display: flex; align-items: center; font-family: 'Segoe UI', sans-serif;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #F7BFCA; }
+
+    /* ── Page header ── */
+    .page-header {
+      background: linear-gradient(135deg, #3D1A24 0%, #6B2D3E 50%, #8B2252 100%);
+      padding: 70px 20px 60px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-header::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 60px;
+      background: linear-gradient(to top, #FDF5F7, transparent);
+    }
+
+    .page-header h1 { font-size: 3rem; color: #FDF5F7; margin-bottom: 12px; position: relative; z-index: 1; }
+    .page-header p { font-size: 1.1rem; color: #EDD5DC; font-family: 'Segoe UI', sans-serif; position: relative; z-index: 1; }
+
+    /* ── Layout ── */
+    .section { padding: 80px 20px; }
+    .section-alt { background: #F7E8EC; }
+    .section-dark { background: #3D1A24; color: #FDF5F7; }
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: #C4557A;
+      font-family: 'Segoe UI', sans-serif; margin-bottom: 10px; display: block;
+    }
+
+    .section-dark .section-label { color: #F7BFCA; }
+
+    /* ── Origin story ── */
+    .story-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 70px;
+    }
+
+    .story-text h2 {
+      font-size: 2.4rem;
+      color: #3D1A24;
+      line-height: 1.3;
+      margin-bottom: 22px;
+    }
+
+    .story-text p {
+      font-size: 1rem;
+      color: #5A3040;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.8;
+      margin-bottom: 16px;
+    }
+
+    .story-visual {
+      background: linear-gradient(135deg, #F7E8EC, #FADADD);
+      border-radius: 16px;
+      padding: 48px 36px;
+      text-align: center;
+      border: 1px solid #E8A5B0;
+    }
+
+    .story-visual .big-icon { font-size: 5rem; display: block; margin-bottom: 16px; }
+
+    .story-visual h3 {
+      font-size: 1.4rem;
+      color: #3D1A24;
+      margin-bottom: 10px;
+    }
+
+    .story-visual p {
+      font-size: 0.95rem;
+      color: #8B4060;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.65;
+    }
+
+    /* ── Timeline ── */
+    .timeline {
+      position: relative;
+      padding-left: 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, #C4557A, #E8A5B0);
+      transform: translateX(-50%);
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    .timeline-item:last-child { margin-bottom: 0; }
+
+    .timeline-content {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(247, 191, 202, 0.2);
+      border-radius: 12px;
+      padding: 24px 26px;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.15rem;
+      color: #F7BFCA;
+      margin-bottom: 8px;
+    }
+
+    .timeline-content p {
+      font-size: 0.92rem;
+      color: #EDD5DC;
+      font-family: 'Segoe UI', sans-serif;
+      line-height: 1.65;
+    }
+
+    .timeline-left { text-align: right; }
+    .timeline-right { text-align: left; }
+
+    .timeline-empty {
+      background: transparent !important;
+      border: none !important;
+      padding: 0 !important;
+    }
+
+    .timeline-dot {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, #C4557A, #8B2252);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff; font-weight: 700; font-size: 0.8rem;
+      font-family: 'Segoe UI', sans-serif;
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(196, 85, 122, 0.2);
+    }
+
+    /* ── Values ── */
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .value-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px 26px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(61, 26, 36, 0.07);
+      border-top: 4px solid #C4557A;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(61, 26, 36, 0.12);
+    }
+
+    .value-icon { font-size: 2.2rem; margin-bottom: 16px; display: block; }
+
+    .value-card h3 { font-size: 1.2rem; color: #3D1A24; margin-bottom: 10px; }
+
+    .value-card p { font-size: 0.92rem; color: #6B3045; font-family: 'Segoe UI', sans-serif; line-height: 1.65; }
+
+    /* ── Team ── */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .team-card {
+      text-align: center;
+    }
+
+    .team-avatar {
+      width: 100px; height: 100px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C4557A, #8B2252);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2.2rem;
+      margin: 0 auto 18px;
+      border: 4px solid #F7E8EC;
+    }
+
+    .team-card h3 { font-size: 1.15rem; color: #FDF5F7; margin-bottom: 4px; }
+    .team-card .role {
+      font-size: 0.85rem; color: #F7BFCA; font-family: 'Segoe UI', sans-serif;
+      letter-spacing: 1px; text-transform: uppercase; margin-bottom: 12px;
+    }
+    .team-card p { font-size: 0.9rem; color: #EDD5DC; font-family: 'Segoe UI', sans-serif; line-height: 1.6; }
+
+    /* ── Footer ── */
+    footer { background: #2C1018; padding: 50px 20px 24px; color: #EDD5DC; }
+
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 36px;
+    }
+
+    .footer-brand .logo-text {
+      font-size: 1.3rem; font-weight: 700; color: #F7BFCA;
+      margin-bottom: 12px; display: block; font-family: Georgia, serif;
+    }
+
+    .footer-brand p { font-size: 0.9rem; line-height: 1.65; color: #C8A0AC; font-family: 'Segoe UI', sans-serif; }
+
+    .footer-col h4 {
+      font-size: 0.85rem; font-weight: 700; color: #F7BFCA;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 16px; font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: #C8A0AC; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; font-family: 'Segoe UI', sans-serif; }
+    .footer-col ul li a:hover { color: #F7BFCA; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(247, 191, 202, 0.15);
+      padding-top: 20px; text-align: center; font-size: 0.85rem;
+      color: #9A6070; font-family: 'Segoe UI', sans-serif;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none; position: fixed; top: 0; right: -100%;
+        width: 70%; height: 100vh; background: #2C1018;
+        flex-direction: column; padding: 80px 30px 30px; gap: 0;
+        transition: right 0.3s ease; box-shadow: -5px 0 20px rgba(0,0,0,0.4);
+        overflow-y: auto;
+      }
+      .nav-links.open { display: flex; right: 0; }
+      .nav-links li { border-bottom: 1px solid rgba(247, 191, 202, 0.1); }
+      .nav-links a { padding: 16px 0; font-size: 1rem; }
+      .logo-placeholder { width: 40px; height: 40px; }
+      .page-header h1 { font-size: 2rem; }
+      .story-grid { grid-template-columns: 1fr; gap: 36px; }
+      .story-text h2 { font-size: 1.9rem; }
+      .timeline::before { left: 20px; }
+      .timeline-item { grid-template-columns: 1fr; padding-left: 50px; position: relative; }
+      .timeline-dot { position: absolute; left: 0; top: 0; }
+      .timeline-left { text-align: left; }
+      .timeline-empty { display: none; }
+      .values-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .values-grid { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Sweet Bliss<span>BAKERY &amp; CAFÉ</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html" class="active">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Our Story</h1>
+    <p>A family's love for sweets, turned into something beautiful</p>
+  </div>
+
+  <!-- Origin Story -->
+  <section class="section">
+    <div class="container">
+      <div class="story-grid">
+        <div class="story-text">
+          <span class="section-label">How It All Began</span>
+          <h2>Born from a Grandmother's Kitchen</h2>
+          <p>Sweet Bliss started in 2016 as a small project — a young boy's dream of becoming a chef and his mother's way of keeping grandma's beloved dessert recipes alive. What began with a hand mixer, a tiny kitchen, and an enormous love for sugar has grown into a full-time family business.</p>
+          <p>Two years after our first sale, we took the leap full time. Today we pour that same passion into every macaron, every custom cake, and every cup of coffee we serve. We're not just a bakery — we're a gathering place where memories are made over warm soup and sweet things.</p>
+          <p>Our café blends a European patisserie tradition with the comfort of a neighbourhood hangout. Whether you're here for a perfectly cooked chicken parmesan, a nutella crepe, or a custom wedding cake, you'll always find warmth, quality, and a friendly face.</p>
+        </div>
+        <div class="story-visual">
+          <span class="big-icon">&#127874;</span>
+          <h3>Family-Made Since 2016</h3>
+          <p>Started with little more than an idea, grandma's recipes, and a child's dream — grown into a full-service bakery and café beloved by the community.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline -->
+  <section class="section section-dark">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:55px;">
+        <span class="section-label">Our Journey</span>
+        <h2 style="font-size:2.4rem; color:#FDF5F7;">From Dream to Destination</h2>
+      </div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="timeline-content timeline-left">
+            <h4>The First Batch</h4>
+            <p>We sold our very first custom cookies at a local school fundraiser. The response was overwhelming — people kept asking for our card.</p>
+          </div>
+          <div class="timeline-dot">2016</div>
+          <div class="timeline-content timeline-empty"></div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content timeline-empty"></div>
+          <div class="timeline-dot">2017</div>
+          <div class="timeline-content timeline-right">
+            <h4>Word Spreads</h4>
+            <p>Custom cake orders began arriving weekly. We added cupcakes, cake pops, and a signature macaron collection to our repertoire.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content timeline-left">
+            <h4>Going Full Time</h4>
+            <p>We made the leap to full-time baking and opened our café space, adding savoury bites, French pastries, and specialty coffee to the menu.</p>
+          </div>
+          <div class="timeline-dot">2018</div>
+          <div class="timeline-content timeline-empty"></div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content timeline-empty"></div>
+          <div class="timeline-dot">2020</div>
+          <div class="timeline-content timeline-right">
+            <h4>Catering &amp; Events</h4>
+            <p>We launched our event catering service — candy buffets, dessert stations, and edible centrepieces for weddings, parties, and corporate events.</p>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-content timeline-left">
+            <h4>Today &amp; Beyond</h4>
+            <p>Rated 4.3 on Google, loved by hundreds of guests monthly. We keep growing, keep baking, and keep making every occasion sweeter.</p>
+          </div>
+          <div class="timeline-dot">Now</div>
+          <div class="timeline-content timeline-empty"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Values -->
+  <section class="section section-alt">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:50px;">
+        <span class="section-label">What We Stand For</span>
+        <h2 style="font-size:2.2rem; color:#3D1A24; margin-bottom:0;">Our Values</h2>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <span class="value-icon">&#10024;</span>
+          <h3>Quality Ingredients</h3>
+          <p>We never compromise on what goes into our food. Every ingredient is chosen for its quality, freshness, and flavour.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#10084;&#65039;</span>
+          <h3>Made with Love</h3>
+          <p>Every item — from a single cake pop to a multi-tier wedding cake — is crafted by hand with genuine care and attention.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#127775;</span>
+          <h3>Community First</h3>
+          <p>We're more than a business — we're your neighbours. Friendly service, fair prices, and a space where everyone feels welcome.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#127919;</span>
+          <h3>Creativity</h3>
+          <p>No two custom orders are the same. We love bringing imaginative designs to life and pushing the boundaries of what's possible in sugar.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#127759;</span>
+          <h3>Inclusive &amp; Welcoming</h3>
+          <p>Hablamos Español. Every guest who walks through our door deserves warmth, attentive service, and a smile.</p>
+        </div>
+        <div class="value-card">
+          <span class="value-icon">&#9832;&#65039;</span>
+          <h3>French Tradition</h3>
+          <p>Rooted in classic patisserie technique — macarons, canelés, choux — executed with precision and passion every single day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section section-dark">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:50px;">
+        <span class="section-label">The People Behind the Magic</span>
+        <h2 style="font-size:2.2rem; color:#FDF5F7; margin-bottom:0;">Meet the Team</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card">
+          <div class="team-avatar">&#128105;&#8205;&#127859;</div>
+          <h3>Elena Morales</h3>
+          <p class="role">Founder &amp; Head Baker</p>
+          <p>The heart of Sweet Bliss. Elena oversees every custom order and ensures every product leaving the kitchen meets her exacting standards.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">&#128104;&#8205;&#127859;</div>
+          <h3>Marco Morales</h3>
+          <p class="role">Co-Founder &amp; Café Chef</p>
+          <p>The inspiration behind it all — grown from an 8-year-old aspiring chef into the café's savoury cook, creating soups, tapas, and hot dishes.</p>
+        </div>
+        <div class="team-card">
+          <div class="team-avatar">&#128105;</div>
+          <h3>Sophie Laurent</h3>
+          <p class="role">Patissière</p>
+          <p>Trained in classic French technique, Sophie brings our macaron, canelé, and choux creations to a level of artistry that keeps guests coming back.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">Sweet Bliss Bakery &amp; Café</span>
+        <p>A family-run bakery and café crafting handmade desserts, artisan pastries, and memorable event treats since 2016. Hablamos Español.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Offerings</h4>
+        <ul>
+          <li><a href="menu.html">Custom Cakes</a></li>
+          <li><a href="menu.html">Macarons &amp; Pastries</a></li>
+          <li><a href="catering.html">Candy Buffets</a></li>
+          <li><a href="catering.html">Dessert Stations</a></li>
+          <li><a href="contact.html">Delivery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="#">Mon–Fri: 7am – 7pm</a></li>
+          <li><a href="#">Sat: 8am – 8pm</a></li>
+          <li><a href="#">Sun: 9am – 5pm</a></li>
+          <li><a href="contact.html">Find Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sweet Bliss Bakery &amp; Café. All rights reserved. | Website by Armin Studio</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
