@@ -418,120 +418,6 @@
       margin: 0 0 28px;
     }
 
-    /* CUSTOMER NUMBER SECTION */
-    .customerno-section {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 32px;
-      margin-bottom: 52px;
-    }
-
-    .customerno-banner {
-      background: var(--navy);
-      color: #ffffff;
-      border-radius: 6px;
-      padding: 20px 24px;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: flex-start;
-      gap: 16px;
-    }
-
-    .customerno-badge {
-      background: var(--blue);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      padding: 4px 10px;
-      border-radius: 3px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .customerno-banner-text h3 {
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin: 0 0 6px;
-    }
-
-    .customerno-banner-text p {
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin: 0;
-      line-height: 1.5;
-    }
-
-    .customerno-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 16px;
-    }
-
-    @media (min-width: 600px) {
-      .customerno-grid { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .customerno-card {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 18px 20px;
-      transition: border-color 0.15s, box-shadow 0.15s;
-    }
-
-    .customerno-card:hover {
-      border-color: var(--blue-light);
-      box-shadow: var(--shadow);
-    }
-
-    .customerno-card a {
-      display: block;
-    }
-
-    .customerno-card-num {
-      font-size: 11px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      color: var(--blue);
-      margin-bottom: 6px;
-    }
-
-    .customerno-card-name {
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 4px;
-    }
-
-    .customerno-card-type {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .customerno-card-link {
-      font-size: 0.88rem;
-      color: var(--blue);
-      font-weight: 500;
-    }
-
-    .customerno-card-link:hover { text-decoration: underline; }
-
-    .customerno-note {
-      margin-top: 20px;
-      padding: 14px 18px;
-      background: #eff6ff;
-      border-left: 3px solid var(--blue);
-      border-radius: 0 4px 4px 0;
-      font-size: 0.92rem;
-      color: #1e40af;
-      line-height: 1.5;
-    }
-
     /* NEXT STEPS GRID */
     .nav-grid {
       display: grid;
@@ -644,25 +530,6 @@
 
     .footer-links a { color: #64748b; }
     .footer-links a:hover { color: #94a3b8; }
-
-    /* Utility classes for inline style replacement */
-    .customerno-intro {
-      font-size: 0.92rem;
-      color: var(--text-muted);
-      margin: 0 0 20px;
-      line-height: 1.5;
-    }
-
-    .examples-label {
-      margin-bottom: 14px;
-    }
-
-    .customerno-note-link {
-      color: var(--blue);
-      font-weight: 600;
-    }
-
-    .customerno-note-link:hover { text-decoration: underline; }
 
     .nav-card-anchor {
       display: block;
@@ -898,51 +765,6 @@
             </div>
           </div>
         </section>
-
-        <!-- CUSTOMER NUMBER SYSTEM -->
-        <div class="customerno-section" aria-labelledby="customerno-title">
-          <div class="customerno-banner">
-            <span class="customerno-badge">How It Works</span>
-            <div class="customerno-banner-text">
-              <h3 id="customerno-title">Your Customer Number</h3>
-              <p>Every client we work with receives a unique customer number (e.g., Customer #34). This number is used to organize your project files, track your site designs, and reference your work throughout the process. When you contact us, we assign you a number and your project begins.</p>
-            </div>
-          </div>
-
-          <div class="section-label examples-label">Example Client Sites — See What We've Built</div>
-          <p class="customerno-intro">Browse real sites we've built for past clients. These are custom sites — each one designed specifically for that business, not a template. Use these as inspiration when describing what you want for your own site.</p>
-
-          <div class="customerno-grid">
-            <div class="customerno-card">
-              <a href="customerno31.html">
-                <div class="customerno-card-num">Customer #31</div>
-                <div class="customerno-card-name">Sports Team Site</div>
-                <div class="customerno-card-type">Multi-page — Roster, Schedule, Gallery, Training</div>
-                <span class="customerno-card-link">View Site &rarr;</span>
-              </a>
-            </div>
-            <div class="customerno-card">
-              <a href="customerno32.html">
-                <div class="customerno-card-num">Customer #32</div>
-                <div class="customerno-card-name">Construction Company</div>
-                <div class="customerno-card-type">Multi-page — Services, Portfolio, Testimonials</div>
-                <span class="customerno-card-link">View Site &rarr;</span>
-              </a>
-            </div>
-            <div class="customerno-card">
-              <a href="customerno33.html">
-                <div class="customerno-card-num">Customer #33</div>
-                <div class="customerno-card-name">Reza Persian Bread</div>
-                <div class="customerno-card-type">Multi-page — Menu, Gallery, Catering, Contact</div>
-                <span class="customerno-card-link">View Site &rarr;</span>
-              </a>
-            </div>
-          </div>
-
-          <div class="customerno-note">
-            <strong>Note:</strong> These are custom-built examples created for each specific client — not reusable templates. Every site we build is unique to your business. Browse these to get ideas, then <a href="contact.html" class="customerno-note-link">contact us</a> to start your own.
-          </div>
-        </div>
 
         <!-- NEXT STEPS -->
         <section aria-labelledby="next-steps">
