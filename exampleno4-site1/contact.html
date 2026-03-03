@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Sweet Bliss Bakery &amp; Café</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FDF5F7;
+      color: #2C1810;
+      line-height: 1.7;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      background: #3D1A24;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C4557A;
+      box-shadow: 0 2px 15px rgba(61, 26, 36, 0.35);
+    }
+
+    .nav-container {
+      max-width: 1200px; margin: 0 auto; padding: 0 20px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+
+    .logo-container { display: flex; align-items: center; gap: 14px; }
+
+    .logo-placeholder {
+      width: 50px; height: 50px;
+      border: 3px solid #C4557A; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700; color: #C4557A;
+      background: rgba(196, 85, 122, 0.12);
+    }
+
+    .logo { font-size: 1.5rem; font-weight: 700; color: #F7BFCA; letter-spacing: 0.5px; }
+    .logo span { color: #E8A5B0; font-size: 0.8rem; display: block; letter-spacing: 2px; font-weight: 400; font-family: 'Segoe UI', sans-serif; }
+
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: #C4557A; border-radius: 2px; transition: 0.3s; }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: #F0DAE0; text-decoration: none; font-weight: 600; font-size: 0.9rem;
+      transition: color 0.3s; min-height: 44px; display: flex; align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #F7BFCA; }
+
+    /* ── Page header ── */
+    .page-header {
+      background: linear-gradient(135deg, #3D1A24 0%, #6B2D3E 50%, #8B2252 100%);
+      padding: 70px 20px 60px; text-align: center; position: relative; overflow: hidden;
+    }
+
+    .page-header::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: linear-gradient(to top, #FDF5F7, transparent);
+    }
+
+    .page-header h1 { font-size: 3rem; color: #FDF5F7; margin-bottom: 12px; position: relative; z-index: 1; }
+    .page-header p { font-size: 1.1rem; color: #EDD5DC; font-family: 'Segoe UI', sans-serif; position: relative; z-index: 1; }
+
+    /* ── Layout ── */
+    .section { padding: 75px 20px; }
+    .section-alt { background: #F7E8EC; }
+    .section-dark { background: #3D1A24; color: #FDF5F7; }
+    .container { max-width: 1200px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.78rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; color: #C4557A;
+      font-family: 'Segoe UI', sans-serif; margin-bottom: 10px; display: block;
+    }
+
+    .section-dark .section-label { color: #F7BFCA; }
+
+    /* ── Contact info cards ── */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-bottom: 60px;
+    }
+
+    .info-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 22px;
+      text-align: center;
+      box-shadow: 0 4px 18px rgba(61, 26, 36, 0.08);
+      border-top: 3px solid #C4557A;
+      transition: transform 0.3s;
+    }
+
+    .info-card:hover { transform: translateY(-4px); }
+
+    .info-icon {
+      font-size: 2rem; margin-bottom: 12px; display: block;
+    }
+
+    .info-card h3 {
+      font-size: 0.85rem; font-weight: 700; color: #8B2252;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      font-family: 'Segoe UI', sans-serif; margin-bottom: 10px;
+    }
+
+    .info-card p {
+      font-size: 0.93rem; color: #5A3040; font-family: 'Segoe UI', sans-serif; line-height: 1.65;
+    }
+
+    /* ── Contact form + map ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .contact-form {
+      background: #fff;
+      border-radius: 14px;
+      padding: 38px;
+      box-shadow: 0 4px 24px rgba(61, 26, 36, 0.1);
+    }
+
+    .contact-form h3 { font-size: 1.5rem; color: #3D1A24; margin-bottom: 24px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    .form-group { margin-bottom: 18px; }
+
+    .form-group label {
+      display: block; margin-bottom: 6px;
+      font-size: 0.87rem; font-weight: 700; color: #3D1A24;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; padding: 12px 14px;
+      border: 2px solid #E8C0CA; border-radius: 6px;
+      font-size: 0.95rem; font-family: 'Segoe UI', sans-serif;
+      color: #3D1A24; background: #FDF5F7;
+      transition: border-color 0.3s; outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus { border-color: #C4557A; }
+
+    .form-group textarea { min-height: 120px; resize: vertical; }
+
+    .form-submit {
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #C4557A, #8B2252);
+      color: #fff; border: none;
+      border-radius: 6px; font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all 0.3s; font-family: 'Segoe UI', sans-serif;
+    }
+
+    .form-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139, 34, 82, 0.4); }
+
+    /* ── Map placeholder ── */
+    .map-side { display: flex; flex-direction: column; gap: 24px; }
+
+    .map-placeholder {
+      background: linear-gradient(135deg, #F7E8EC, #FADADD);
+      border: 2px solid #E8A5B0;
+      border-radius: 14px;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .map-placeholder span { font-size: 3rem; }
+
+    .map-placeholder p {
+      font-size: 0.95rem; color: #8B4060;
+      font-family: 'Segoe UI', sans-serif; text-align: center;
+      padding: 0 20px;
+    }
+
+    .hours-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 28px 26px;
+      box-shadow: 0 4px 18px rgba(61, 26, 36, 0.08);
+    }
+
+    .hours-card h3 { font-size: 1.2rem; color: #3D1A24; margin-bottom: 18px; }
+
+    .hours-table { width: 100%; }
+
+    .hours-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #F0D5DC;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.93rem;
+    }
+
+    .hours-row:last-child { border-bottom: none; }
+
+    .hours-day { color: #5A3040; font-weight: 600; }
+
+    .hours-time { color: #3D1A24; }
+
+    .hours-closed { color: #C4557A; font-style: italic; }
+
+    /* ── FAQ ── */
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .faq-item {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(247, 191, 202, 0.2);
+      border-radius: 12px;
+      padding: 24px 26px;
+    }
+
+    .faq-item h4 { font-size: 1.05rem; color: #F7BFCA; margin-bottom: 10px; }
+
+    .faq-item p {
+      font-size: 0.92rem; color: #EDD5DC;
+      font-family: 'Segoe UI', sans-serif; line-height: 1.65;
+    }
+
+    /* ── Footer ── */
+    footer { background: #2C1018; padding: 50px 20px 24px; color: #EDD5DC; }
+
+    .footer-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 36px;
+    }
+
+    .footer-brand .logo-text {
+      font-size: 1.3rem; font-weight: 700; color: #F7BFCA;
+      margin-bottom: 12px; display: block; font-family: Georgia, serif;
+    }
+
+    .footer-brand p { font-size: 0.9rem; line-height: 1.65; color: #C8A0AC; font-family: 'Segoe UI', sans-serif; }
+
+    .footer-col h4 {
+      font-size: 0.85rem; font-weight: 700; color: #F7BFCA;
+      letter-spacing: 2px; text-transform: uppercase;
+      margin-bottom: 16px; font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: 10px; }
+    .footer-col ul li a { color: #C8A0AC; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; font-family: 'Segoe UI', sans-serif; }
+    .footer-col ul li a:hover { color: #F7BFCA; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(247, 191, 202, 0.15);
+      padding-top: 20px; text-align: center; font-size: 0.85rem;
+      color: #9A6070; font-family: 'Segoe UI', sans-serif;
+      max-width: 1200px; margin: 0 auto;
+    }
+
+    /* ── Mobile ── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        display: none; position: fixed; top: 0; right: -100%;
+        width: 70%; height: 100vh; background: #2C1018;
+        flex-direction: column; padding: 80px 30px 30px; gap: 0;
+        transition: right 0.3s ease; box-shadow: -5px 0 20px rgba(0,0,0,0.4);
+        overflow-y: auto;
+      }
+      .nav-links.open { display: flex; right: 0; }
+      .nav-links li { border-bottom: 1px solid rgba(247, 191, 202, 0.1); }
+      .nav-links a { padding: 16px 0; font-size: 1rem; }
+      .logo-placeholder { width: 40px; height: 40px; }
+      .page-header h1 { font-size: 2rem; }
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .contact-grid { grid-template-columns: 1fr; gap: 36px; }
+      .form-row { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .info-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">Sweet Bliss<span>BAKERY &amp; CAFÉ</span></div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="page-header">
+    <h1>Contact Us</h1>
+    <p>We'd love to hear from you — pop in, call, or drop us a message</p>
+  </div>
+
+  <!-- Info Cards -->
+  <section class="section">
+    <div class="container">
+      <div class="info-grid">
+        <div class="info-card">
+          <span class="info-icon">&#128205;</span>
+          <h3>Location</h3>
+          <p>4210 Sugar Lane<br>Houston, TX 77007<br><em style="font-size:0.85rem; color:#C4557A;">On-site parking available</em></p>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">&#128222;</span>
+          <h3>Phone</h3>
+          <p>(555) 824-0199<br><br><em style="font-size:0.85rem; color:#C4557A;">Hablamos Español</em></p>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">&#9993;&#65039;</span>
+          <h3>Email</h3>
+          <p>hello@sweetblisscafe.com<br>orders@sweetblisscafe.com</p>
+        </div>
+        <div class="info-card">
+          <span class="info-icon">&#11088;</span>
+          <h3>Google Rating</h3>
+          <p>Rated <strong style="color:#C4557A;">4.3 / 5</strong> on Google<br><span style="color:#F7D060; font-size:1.1rem;">&#9733;&#9733;&#9733;&#9733;&#9734;</span></p>
+        </div>
+      </div>
+
+      <!-- Contact Form + Map -->
+      <div class="contact-grid">
+        <div class="contact-form">
+          <h3>Send Us a Message</h3>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" placeholder="Jane">
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" placeholder="Smith">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="jane@example.com">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject">
+              <option value="">Select a topic...</option>
+              <option>General Enquiry</option>
+              <option>Custom Cake Order</option>
+              <option>Catering Quote</option>
+              <option>Delivery Information</option>
+              <option>Feedback</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Your Message</label>
+            <textarea id="message" placeholder="How can we help you? Tell us about your order, event, or any questions you have..."></textarea>
+          </div>
+          <button class="form-submit" type="button">Send Message</button>
+        </div>
+
+        <div class="map-side">
+          <div class="map-placeholder">
+            <span>&#128205;</span>
+            <p><strong>4210 Sugar Lane, Houston TX 77007</strong><br>Map placeholder — replace with Google Maps embed</p>
+          </div>
+          <div class="hours-card">
+            <h3>Opening Hours</h3>
+            <div class="hours-table">
+              <div class="hours-row">
+                <span class="hours-day">Monday – Friday</span>
+                <span class="hours-time">7:00 am – 7:00 pm</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Saturday</span>
+                <span class="hours-time">8:00 am – 8:00 pm</span>
+              </div>
+              <div class="hours-row">
+                <span class="hours-day">Sunday</span>
+                <span class="hours-time">9:00 am – 5:00 pm</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section section-dark">
+    <div class="container">
+      <div style="text-align:center; margin-bottom:50px;">
+        <span class="section-label">Frequently Asked Questions</span>
+        <h2 style="font-size:2.1rem; color:#FDF5F7; margin-bottom:0;">Common Questions</h2>
+      </div>
+      <div class="faq-grid">
+
+        <div class="faq-item">
+          <h4>How far in advance do I need to order a custom cake?</h4>
+          <p>We require at least 48 hours for standard custom cakes. For wedding cakes and large multi-tier orders, we recommend booking 2–4 weeks in advance to secure your date.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Do you offer delivery?</h4>
+          <p>Yes! We offer local delivery within Houston. Delivery fees vary by distance. For catering orders, delivery and setup is included in all packages. Call us to check your area.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Can you accommodate dietary restrictions?</h4>
+          <p>We do our best to accommodate gluten-free, dairy-free, and nut-free requests. Please let us know about any allergies when placing your order so we can advise accordingly.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Do you offer tastings for wedding cakes?</h4>
+          <p>Absolutely! We offer complimentary tasting sessions for wedding cake enquiries. Contact us to schedule a tasting appointment with one of our bakers.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>What payment methods do you accept?</h4>
+          <p>We accept all major credit and debit cards, cash, and Venmo. A 50% deposit is required for all custom orders, with the balance due upon collection or delivery.</p>
+        </div>
+
+        <div class="faq-item">
+          <h4>Is parking available?</h4>
+          <p>Yes — we have free on-site parking available for all guests. There is also additional street parking available on Sugar Lane.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo-text">Sweet Bliss Bakery &amp; Café</span>
+        <p>A family-run bakery and café crafting handmade desserts, artisan pastries, and memorable event treats since 2016. Hablamos Español.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Offerings</h4>
+        <ul>
+          <li><a href="menu.html">Custom Cakes</a></li>
+          <li><a href="menu.html">Macarons &amp; Pastries</a></li>
+          <li><a href="catering.html">Candy Buffets</a></li>
+          <li><a href="catering.html">Dessert Stations</a></li>
+          <li><a href="contact.html">Delivery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="#">Mon–Fri: 7am – 7pm</a></li>
+          <li><a href="#">Sat: 8am – 8pm</a></li>
+          <li><a href="#">Sun: 9am – 5pm</a></li>
+          <li><a href="contact.html">Find Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sweet Bliss Bakery &amp; Café. All rights reserved. | Website by Armin Studio</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+  </script>
+</body>
+</html>

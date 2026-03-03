@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Bliss Bakery &amp; Café - Home</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: #FDF5F7;
+      color: #2C1810;
+      line-height: 1.7;
+    }
+
+    /* ── Navigation ── */
+    nav {
+      background: #3D1A24;
+      padding: 18px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid #C4557A;
+      box-shadow: 0 2px 15px rgba(61, 26, 36, 0.35);
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .logo-placeholder {
+      width: 50px;
+      height: 50px;
+      border: 3px solid #C4557A;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #C4557A;
+      background: rgba(196, 85, 122, 0.12);
+      text-align: center;
+      line-height: 1.2;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #F7BFCA;
+      letter-spacing: 0.5px;
+    }
+
+    .logo span {
+      color: #E8A5B0;
+      font-size: 0.8rem;
+      display: block;
+      letter-spacing: 2px;
+      font-weight: 400;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 28px;
+      height: 3px;
+      background: #C4557A;
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: #F0DAE0;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
+      letter-spacing: 0.5px;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #F7BFCA;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      background: linear-gradient(135deg, #3D1A24 0%, #6B2D3E 45%, #8B2252 100%);
+      padding: 100px 20px 90px;
+      position: relative;
+      overflow: hidden;
+      min-height: 580px;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 75% 45%, rgba(232, 134, 158, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(196, 85, 122, 0.12) 0%, transparent 50%);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 100px;
+      background: linear-gradient(to top, #FDF5F7, transparent);
+    }
+
+    .hero-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-size: 3.2rem;
+      color: #FDF5F7;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .hero-text h1 em {
+      color: #F7BFCA;
+      font-style: italic;
+    }
+
+    .hero-text p {
+      font-size: 1.15rem;
+      color: #EDD5DC;
+      margin-bottom: 35px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .hero-rating {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.12);
+      padding: 8px 18px;
+      border-radius: 30px;
+      color: #F7BFCA;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.9rem;
+      margin-bottom: 30px;
+    }
+
+    .stars { color: #F7D060; font-size: 1rem; }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: #C4557A;
+      color: #fff;
+      padding: 15px 32px;
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', sans-serif;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: #8B2252;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(139, 34, 82, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #F7BFCA;
+      padding: 15px 32px;
+      border: 2px solid #C4557A;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', sans-serif;
+      display: inline-block;
+    }
+
+    .btn-outline:hover {
+      background: rgba(196, 85, 122, 0.2);
+    }
+
+    /* Hero visual card */
+    .hero-visual {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(247, 191, 202, 0.25);
+      border-radius: 16px;
+      padding: 36px 30px;
+      backdrop-filter: blur(4px);
+    }
+
+    .hero-visual h3 {
+      font-size: 1.1rem;
+      color: #F7BFCA;
+      margin-bottom: 22px;
+      letter-spacing: 1px;
+      font-family: 'Segoe UI', sans-serif;
+      text-transform: uppercase;
+    }
+
+    .specials-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .specials-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #EDD5DC;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(247, 191, 202, 0.15);
+    }
+
+    .specials-list li:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .special-price {
+      color: #F7BFCA;
+      font-weight: 700;
+    }
+
+    /* ── Section common ── */
+    .section {
+      padding: 80px 20px;
+    }
+
+    .section-dark {
+      background: #3D1A24;
+      color: #FDF5F7;
+    }
+
+    .section-rose {
+      background: #F7E8EC;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 55px;
+    }
+
+    .section-label {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #C4557A;
+      font-family: 'Segoe UI', sans-serif;
+      margin-bottom: 12px;
+    }
+
+    .section-dark .section-label {
+      color: #F7BFCA;
+    }
+
+    .section-header h2 {
+      font-size: 2.5rem;
+      line-height: 1.25;
+      color: #3D1A24;
+    }
+
+    .section-dark .section-header h2 {
+      color: #FDF5F7;
+    }
+
+    .section-header p {
+      margin-top: 14px;
+      font-size: 1.1rem;
+      color: #6B3045;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .section-dark .section-header p {
+      color: #EDD5DC;
+    }
+
+    /* ── Feature cards ── */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .feature-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 36px 28px;
+      text-align: center;
+      box-shadow: 0 4px 20px rgba(61, 26, 36, 0.08);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-top: 4px solid #C4557A;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 35px rgba(61, 26, 36, 0.14);
+    }
+
+    .feature-icon {
+      width: 64px;
+      height: 64px;
+      background: linear-gradient(135deg, #F7E8EC, #FADADD);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      color: #3D1A24;
+      margin-bottom: 12px;
+    }
+
+    .feature-card p {
+      color: #6B3045;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+    }
+
+    /* ── Menu preview ── */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 28px;
+    }
+
+    .menu-category {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(247, 191, 202, 0.2);
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    .menu-category h3 {
+      font-size: 1.2rem;
+      color: #F7BFCA;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(247, 191, 202, 0.25);
+      letter-spacing: 0.5px;
+    }
+
+    .menu-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(247, 191, 202, 0.15);
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 0.95rem;
+    }
+
+    .menu-item:last-child { border-bottom: none; }
+
+    .menu-item-name { color: #EDD5DC; }
+    .menu-item-price { color: #F7BFCA; font-weight: 700; }
+
+    /* ── Testimonials ── */
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .testimonial-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 30px 26px;
+      box-shadow: 0 4px 20px rgba(61, 26, 36, 0.08);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '\201C';
+      font-size: 4rem;
+      color: #E8A5B0;
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+      font-family: Georgia, serif;
+    }
+
+    .testimonial-text {
+      color: #5A3040;
+      font-size: 0.97rem;
+      line-height: 1.7;
+      margin-bottom: 20px;
+      padding-top: 20px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #C4557A, #8B2252);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .author-name {
+      font-weight: 700;
+      color: #3D1A24;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .author-stars { color: #F7D060; font-size: 0.85rem; }
+
+    /* ── CTA Banner ── */
+    .cta-banner {
+      background: linear-gradient(135deg, #8B2252, #C4557A);
+      padding: 70px 20px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .cta-banner h2 {
+      font-size: 2.4rem;
+      margin-bottom: 14px;
+    }
+
+    .cta-banner p {
+      font-size: 1.15rem;
+      margin-bottom: 32px;
+      opacity: 0.9;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .btn-white {
+      background: #fff;
+      color: #8B2252;
+      padding: 15px 38px;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 700;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.3s;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .btn-white:hover {
+      background: #FDF5F7;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    /* ── Footer ── */
+    footer {
+      background: #2C1018;
+      padding: 50px 20px 24px;
+      color: #EDD5DC;
+    }
+
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 36px;
+    }
+
+    .footer-brand .logo {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #F7BFCA;
+      margin-bottom: 12px;
+      display: block;
+      font-family: Georgia, serif;
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: #C8A0AC;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-col h4 {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #F7BFCA;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+
+    .footer-col ul li a {
+      color: #C8A0AC;
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .footer-col ul li a:hover { color: #F7BFCA; }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(247, 191, 202, 0.15);
+      padding-top: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: #9A6070;
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* ── Mobile navigation ── */
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 70%;
+        height: 100vh;
+        background: #2C1018;
+        flex-direction: column;
+        padding: 80px 30px 30px;
+        gap: 0;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 20px rgba(0,0,0,0.4);
+        overflow-y: auto;
+      }
+
+      .nav-links.open {
+        display: flex;
+        right: 0;
+      }
+
+      .nav-links li {
+        border-bottom: 1px solid rgba(247, 191, 202, 0.1);
+      }
+
+      .nav-links a {
+        padding: 16px 0;
+        font-size: 1rem;
+      }
+
+      .logo-placeholder { width: 40px; height: 40px; }
+
+      .hero-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero { padding: 70px 20px 60px; min-height: auto; }
+
+      .hero-text h1 { font-size: 2.2rem; }
+
+      .hero-visual { display: none; }
+
+      .features-grid { grid-template-columns: 1fr; }
+
+      .menu-grid { grid-template-columns: 1fr; }
+
+      .testimonials-grid { grid-template-columns: 1fr; }
+
+      .footer-grid { grid-template-columns: 1fr; gap: 30px; }
+
+      .section-header h2 { font-size: 1.9rem; }
+
+      .cta-banner h2 { font-size: 1.8rem; }
+    }
+
+    @media (min-width: 769px) and (max-width: 1024px) {
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-container">
+      <div class="logo-container">
+        <div class="logo-placeholder">LOGO</div>
+        <div class="logo">
+          Sweet Bliss
+          <span>BAKERY &amp; CAFÉ</span>
+        </div>
+      </div>
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </div>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="menu.html">Menu</a></li>
+        <li><a href="about.html">Our Story</a></li>
+        <li><a href="gallery.html">Gallery</a></li>
+        <li><a href="catering.html">Catering</a></li>
+        <li><a href="contact.html">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-text">
+        <div class="hero-rating">
+          <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span>Rated 4.3 on Google</span>
+        </div>
+        <h1>Where Every Bite Feels Like <em>Home</em></h1>
+        <p>Handcrafted cakes, freshly baked pastries, hearty bites, and specialty coffee — made with love in every single order.</p>
+        <div class="hero-buttons">
+          <a href="menu.html" class="btn-primary">Explore Our Menu</a>
+          <a href="catering.html" class="btn-outline">Order a Custom Cake</a>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <h3>Today's Specials</h3>
+        <ul class="specials-list">
+          <li>
+            <span class="menu-item-name">Chicken Parmesan</span>
+            <span class="special-price">$14.50</span>
+          </li>
+          <li>
+            <span class="menu-item-name">Nutella Crepes</span>
+            <span class="special-price">$8.00</span>
+          </li>
+          <li>
+            <span class="menu-item-name">Chocolate Fudge Cake</span>
+            <span class="special-price">$7.50</span>
+          </li>
+          <li>
+            <span class="menu-item-name">Kolache (3-pack)</span>
+            <span class="special-price">$6.00</span>
+          </li>
+          <li>
+            <span class="menu-item-name">Cappuccino</span>
+            <span class="special-price">$4.50</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Why Guests Love Us</p>
+        <h2>Crafted with Passion, Served with Heart</h2>
+        <p>From our open kitchen to your table — freshness, warmth, and quality in every visit.</p>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">&#127859;</div>
+          <h3>From-Scratch Kitchen</h3>
+          <p>Every dish — from our warming soups to our golden chicken parmesan — is prepared fresh daily using quality ingredients.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127856;</div>
+          <h3>Custom Celebrations</h3>
+          <p>Fully customised cakes, cupcakes, cake pops and cookie sets for birthdays, weddings, and every sweet occasion.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#9749;</div>
+          <h3>Specialty Coffee</h3>
+          <p>From velvety cappuccinos and smooth lattes to our signature moccachino — your perfect cup awaits.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127903;</div>
+          <h3>French Patisserie</h3>
+          <p>Classic macarons, choux pastry, canelés, and celebration cakes inspired by the finest French baking tradition.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#127881;</div>
+          <h3>Event Services</h3>
+          <p>Full candy buffets, dessert stations, edible centrepieces, and catering packages — we make your event unforgettable.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">&#128666;</div>
+          <h3>Delivery &amp; Takeout</h3>
+          <p>Enjoy our treats wherever you are. We offer local delivery, convenient takeout, and parking on site.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Menu Preview -->
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">A Taste of What's Inside</p>
+        <h2>Menu Highlights</h2>
+        <p>A little something for every craving, any time of day.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-category">
+          <h3>Café &amp; Savoury</h3>
+          <div class="menu-item"><span class="menu-item-name">Roasted Tomato Soup</span><span class="menu-item-price">$9.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Chicken Parmesan</span><span class="menu-item-price">$14.50</span></div>
+          <div class="menu-item"><span class="menu-item-name">Tapas Platter (4 pcs)</span><span class="menu-item-price">$12.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Quiche du Jour</span><span class="menu-item-price">$10.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Soup &amp; Bread Combo</span><span class="menu-item-price">$11.50</span></div>
+        </div>
+        <div class="menu-category">
+          <h3>Sweet Creations</h3>
+          <div class="menu-item"><span class="menu-item-name">Nutella Crepes</span><span class="menu-item-price">$8.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Chocolate Fudge Cake</span><span class="menu-item-price">$7.50</span></div>
+          <div class="menu-item"><span class="menu-item-name">Kolache (3-pack)</span><span class="menu-item-price">$6.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Macaron Box (6 pcs)</span><span class="menu-item-price">$13.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Cake Pop (each)</span><span class="menu-item-price">$3.50</span></div>
+        </div>
+        <div class="menu-category">
+          <h3>Coffee &amp; Drinks</h3>
+          <div class="menu-item"><span class="menu-item-name">Cappuccino</span><span class="menu-item-price">$4.50</span></div>
+          <div class="menu-item"><span class="menu-item-name">Latte</span><span class="menu-item-price">$4.75</span></div>
+          <div class="menu-item"><span class="menu-item-name">Moccachino</span><span class="menu-item-price">$5.00</span></div>
+          <div class="menu-item"><span class="menu-item-name">Matcha Latte</span><span class="menu-item-price">$5.25</span></div>
+          <div class="menu-item"><span class="menu-item-name">Fresh Lemonade</span><span class="menu-item-price">$3.50</span></div>
+        </div>
+        <div class="menu-category">
+          <h3>Custom Orders</h3>
+          <div class="menu-item"><span class="menu-item-name">Custom Cake (6")</span><span class="menu-item-price">From $48</span></div>
+          <div class="menu-item"><span class="menu-item-name">Custom Cookie Set</span><span class="menu-item-price">From $36</span></div>
+          <div class="menu-item"><span class="menu-item-name">Cupcake Dozen</span><span class="menu-item-price">From $42</span></div>
+          <div class="menu-item"><span class="menu-item-name">Candy Buffet Setup</span><span class="menu-item-price">From $150</span></div>
+          <div class="menu-item"><span class="menu-item-name">Dessert Station</span><span class="menu-item-price">From $200</span></div>
+        </div>
+      </div>
+      <div style="text-align:center; margin-top:44px;">
+        <a href="menu.html" class="btn-primary">View Full Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="section section-rose">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">What Guests Are Saying</p>
+        <h2>Loved by Our Community</h2>
+        <p>Real words from guests who keep coming back.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <p class="testimonial-text">The kolaches are absolutely incredible — I order a dozen every weekend. Their coffee is perfect too. Best neighbourhood café we've found!</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">M</div>
+            <div>
+              <div class="author-name">Maria S.</div>
+              <div class="author-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">Ordered a custom birthday cake and it was beyond beautiful. The flavours were amazing and everyone at the party was asking where it came from!</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">J</div>
+            <div>
+              <div class="author-name">James T.</div>
+              <div class="author-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <p class="testimonial-text">The chicken parmesan is restaurant quality and the nutella crepes are to die for. Friendly staff and great prices — we come here every week.</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">L</div>
+            <div>
+              <div class="author-name">Lisa R.</div>
+              <div class="author-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Banner -->
+  <div class="cta-banner">
+    <h2>Ready to Place a Custom Order?</h2>
+    <p>Custom cakes, cookies, cupcakes and full event dessert services — made fresh just for you.</p>
+    <a href="catering.html" class="btn-white">Get a Quote</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <span class="logo">Sweet Bliss Bakery &amp; Café</span>
+        <p>A family-run bakery and café crafting handmade desserts, artisan pastries, and memorable event treats since 2016. Hablamos Español.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="menu.html">Menu</a></li>
+          <li><a href="about.html">Our Story</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="catering.html">Catering</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Offerings</h4>
+        <ul>
+          <li><a href="menu.html">Custom Cakes</a></li>
+          <li><a href="menu.html">Macarons &amp; Pastries</a></li>
+          <li><a href="catering.html">Candy Buffets</a></li>
+          <li><a href="catering.html">Dessert Stations</a></li>
+          <li><a href="contact.html">Delivery</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Hours</h4>
+        <ul>
+          <li><a href="#">Mon–Fri: 7am – 7pm</a></li>
+          <li><a href="#">Sat: 8am – 8pm</a></li>
+          <li><a href="#">Sun: 9am – 5pm</a></li>
+          <li><a href="contact.html">Find Us</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2024 Sweet Bliss Bakery &amp; Café. All rights reserved. | Website by Armin Studio</p>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navLinks');
+      nav.classList.toggle('open');
+    }
+  </script>
+</body>
+</html>
