@@ -35,187 +35,357 @@
   <link rel="author" href="/humans.txt" />
   
   <style>
-    :root{
-      --bg:#020617;
-      --accent:#22d3ee;
-      --accent-strong:#0ea5e9;
-      --accent-alt:#6366f1;
-      --text-main:#f9fafb;
-      --text-muted:#9ca3af;
-      --card:#020617;
-      --radius-lg:28px;
-      --radius-pill:999px;
-      --shadow-soft:0 30px 80px rgba(15,23,42,0.95);
-      --transition-fast:0.18s ease-out;
+    :root {
+      --navy: #1a2e4a;
+      --blue: #1d4ed8;
+      --blue-light: #3b82f6;
+      --text: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --bg: #f9fafb;
+      --white: #ffffff;
+      --shadow: 0 2px 8px rgba(0,0,0,0.08);
+      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
     }
-    *{box-sizing:border-box;}
-    html,body{margin:0;padding:0;scroll-behavior:smooth;background:#020617;}
-    body{
-      font-family:system-ui,-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,sans-serif;
-      background:
-        radial-gradient(circle at 0% 0%,rgba(37,99,235,0.35),transparent 55%),
-        radial-gradient(circle at 100% 10%,rgba(34,211,238,0.28),transparent 55%),
-        radial-gradient(circle at 50% 100%,rgba(15,23,42,0.8),transparent 60%),
-        var(--bg);
-      color:var(--text-main);
-      -webkit-font-smoothing:antialiased;
-    }
-    a{color:inherit;text-decoration:none;}
-    main{min-height:100vh;display:flex;flex-direction:column;}
-    .page{max-width:1180px;margin:0 auto;padding:20px 20px 64px;}
-    @media (min-width:768px){.page{padding:24px 24px 80px;}}
-    @media (min-width:960px){.page{padding:32px 32px 96px;}}
 
-    /* ANIMATIONS & INTERACTIONS */
-    .hover-lift{
-      transition:
-        transform var(--transition-fast),
-        box-shadow var(--transition-fast),
-        background var(--transition-fast),
-        border-color var(--transition-fast),
-        filter var(--transition-fast);
-      will-change:transform,box-shadow,filter;
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+      background: var(--white);
     }
-    .hover-lift:hover{
-      transform:translateY(-6px) translateZ(0);
-      box-shadow:var(--shadow-soft);
-      filter:brightness(1.03);
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      line-height: 1.6;
     }
-    .hover-glow{
-      transition:box-shadow var(--transition-fast),border-color var(--transition-fast),background var(--transition-fast),transform var(--transition-fast);
+
+    a { color: inherit; text-decoration: none; }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
-    .hover-glow:hover{
-      box-shadow:0 0 32px rgba(34,211,238,0.65);
-      border-color:rgba(34,211,238,0.9);
-      transform:translateY(-4px);
+
+    .page {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
     }
-    .btn-pressable{
-      transition:transform var(--transition-fast),box-shadow var(--transition-fast),filter var(--transition-fast);
-      will-change:transform,box-shadow;
+
+    @media (min-width: 768px) {
+      .page { padding: 0 32px; }
     }
-    .btn-pressable:active{
-      transform:translateY(1px) scale(0.98);
-      box-shadow:0 14px 40px rgba(15,23,42,0.9);
-      filter:brightness(0.97);
+
+    .content-area {
+      background: var(--bg);
+      padding: 48px 0 64px;
     }
-    .fade-in-up{
-      opacity:0;
-      transform:translateY(26px);
-      transition:opacity 0.7s ease-out,transform 0.7s ease-out;
+
+    /* ANIMATIONS */
+    .fade-in-up {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.7s ease-out, transform 0.7s ease-out;
     }
-    .fade-in-up.visible{
-      opacity:1;
-      transform:translateY(0);
+    .fade-in-up.visible {
+      opacity: 1;
+      transform: translateY(0);
     }
 
     /* NAV */
-    .nav{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:32px;}
-    .nav-left{display:flex;align-items:center;gap:12px;}
-    .brand-mark{width:40px;height:40px;border-radius:18px;background:conic-gradient(from 180deg,#22d3ee,#6366f1,#22c55e,#0ea5e9,#22d3ee);padding:2px;box-shadow:0 0 28px rgba(34,211,238,0.75),0 0 50px rgba(99,102,241,0.5);}
-    .brand-mark-inner {
-  width: 100%;
-  height: 100%;
-  border-radius: 16px;
-  background:
-    radial-gradient(circle at 15% 0%, #111827 0, #020617 55%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden; /* keep logo nicely clipped */
-}
-
-/* New: logo styling */
-.brand-logo {
-  max-width: 32px;
-  max-height: 32px;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-}
-    .brand-text{display:flex;flex-direction:column;gap:2px;}
-    .brand-title{font-size:19px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
-    .brand-sub{font-size:13px;color:var(--text-muted);}
-    .nav-links{display:none;gap:20px;font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
-    .nav-links a{position:relative;padding:8px 12px;border-radius:8px;transition:all var(--transition-fast);}
-    .nav-links a::before{content:"";position:absolute;inset:0;border-radius:8px;background:linear-gradient(135deg,rgba(34,211,238,0.1),rgba(99,102,241,0.1));opacity:0;transition:opacity var(--transition-fast);}
-    .nav-links a::after{content:"";position:absolute;left:50%;bottom:2px;transform:translateX(-50%);width:0;height:2px;border-radius:999px;background:linear-gradient(90deg,var(--accent),var(--accent-alt));transition:width var(--transition-fast);}
-    .nav-links a:hover{color:var(--text-main);transform:translateY(-2px);}
-    .nav-links a:hover::before{opacity:1;}
-    .nav-links a:hover::after{width:70%;}
-    .nav-links a.active{color:var(--accent);}
-    .nav-links a.active::after{width:70%;}
-    .nav-cta{display:inline-flex;align-items:center;gap:8px;padding:9px 20px;border-radius:var(--radius-pill);background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 20px 48px rgba(34,211,238,0.8),0 0 40px rgba(34,211,238,0.7);color:#020617;font-weight:700;font-size:13px;border:0;cursor:pointer;white-space:nowrap;}
-    .nav-cta span.badge{padding:3px 10px;border-radius:999px;font-size:10px;text-transform:uppercase;letter-spacing:0.18em;background:rgba(15,23,42,0.98);color:#e0f2fe;}
-    .nav-toggle{display:inline-flex;flex-direction:column;gap:4px;padding:6px 8px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.95);cursor:pointer;}
-    .nav-toggle span{width:18px;height:2px;border-radius:999px;background:#e5e7eb;}
-    .nav-links-mobile{display:none;flex-direction:column;gap:4px;margin-top:10px;padding:8px 8px;border-radius:18px;background:rgba(15,23,42,0.98);border:1px solid rgba(148,163,184,0.5);font-size:13px;text-transform:uppercase;letter-spacing:0.16em;color:var(--text-muted);}
-    .nav-links-mobile a{padding:10px 12px;border-radius:10px;transition:all var(--transition-fast);position:relative;}
-    .nav-links-mobile a:hover{background:rgba(34,211,238,0.1);color:var(--text-main);transform:translateX(4px);}
-    .nav-links-mobile a.active{background:rgba(34,211,238,0.15);color:var(--accent);}
-    @media (min-width:880px){.nav{margin-bottom:40px;}.nav-links{display:flex;}.nav-toggle{display:none;}}
-
-    section{margin-bottom:56px;}
-    @media (min-width:768px){section{margin-bottom:64px;}}
-
-    .section-label{font-size:12px;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:6px;}
-    .page-title{font-size:2rem;margin:0 0 10px;letter-spacing:-0.04em;}
-    .section-sub{font-size:1.02rem;color:var(--text-muted);max-width:40rem;margin-bottom:18px;}
-
-    .strip{
-      border-radius:var(--radius-lg);
-      padding:26px 22px 24px;
-      background:radial-gradient(circle at 0 0,rgba(37,99,235,0.26),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
-      border:1px solid rgba(148,163,184,0.6);
-      box-shadow:var(--shadow-soft);
-      font-size:1.02rem;
-      color:#e5e7eb;
+    .site-header {
+      background: var(--navy);
+      border-bottom: 3px solid var(--blue);
     }
 
-    .strip-title{font-size:1.45rem;margin:0 0 10px;}
-    .strip-sub{font-size:1rem;color:var(--text-muted);margin:0 0 12px;}
-
-    .grid-3{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:18px;
-      margin-top:14px;
-    }
-    @media (max-width:960px){.grid-3{grid-template-columns:minmax(0,1fr);}}
-
-    .tile{
-      border-radius:24px;
-      padding:22px 18px 18px;
-      background:radial-gradient(circle at 0 0,rgba(34,211,238,0.18),transparent 60%),linear-gradient(135deg,var(--card) 0,var(--card) 60%,var(--card) 100%);
-      border:1px solid rgba(148,163,184,0.55);
-      box-shadow:var(--shadow-soft);
-      font-size:1rem;
-      color:#e5e7eb;
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
     }
 
-    .tile-title{font-size:1.1rem;margin:0 0 6px;}
-    .tile-sub{font-size:0.96rem;color:var(--text-muted);margin:0;}
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
-    .pill-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;font-size:0.96rem;}
-    .pill-tag{padding:7px 13px;border-radius:999px;border:1px solid rgba(148,163,184,0.5);background:rgba(15,23,42,0.96);color:#e5e7eb;}
-    .pill-tag.accent{border-color:rgba(34,211,238,0.9);color:#e0f2fe;}
+    .brand-logo {
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      display: block;
+    }
 
-    .btn-primary{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:var(--radius-pill);border:0;cursor:pointer;font-weight:700;font-size:15px;color:#020617;background:linear-gradient(135deg,var(--accent),var(--accent-strong));box-shadow:0 24px 60px rgba(34,211,238,0.95),0 0 45px rgba(34,211,238,0.9);transition:all var(--transition-fast);position:relative;overflow:hidden;}
-    .btn-primary::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,0.3),transparent);opacity:0;transition:opacity var(--transition-fast);}
-    .btn-primary:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 30px 70px rgba(34,211,238,1),0 0 60px rgba(34,211,238,1);}
-    .btn-primary:hover::before{opacity:1;}
-    .btn-primary:active{transform:translateY(-1px) scale(1);}
+    .brand-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 0.05em;
+    }
 
-    footer{border-top:1px solid rgba(15,23,42,1);margin-top:auto;background:radial-gradient(circle at 0 0,rgba(37,99,235,0.2),transparent 55%),#020617;}
-    .footer-inner{max-width:1180px;margin:0 auto;padding:18px 16px 26px;display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:0.86rem;color:var(--text-muted);}
-    @media (min-width:960px){.footer-inner{padding:20px 28px 30px;}}
-    .footer-links{display:flex;flex-wrap:wrap;gap:10px;}
-    .footer-links a:hover{color:#e5e7eb;}
+    .brand-sub {
+      font-size: 12px;
+      color: #93c5fd;
+      display: block;
+    }
 
-    @media (max-width:720px){
-      .page-title{font-size:1.8rem;}
-      .strip{padding:22px 18px 20px;}
-      .tile{padding:18px 16px 16px;}
+    .nav-links {
+      display: none;
+      gap: 4px;
+    }
+
+    .nav-links a {
+      color: #cbd5e1;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+    }
+
+    .nav-cta {
+      display: inline-block;
+      padding: 9px 20px;
+      background: var(--blue);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 14px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover { background: var(--blue-light); }
+
+    .nav-toggle {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      padding: 8px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 20px;
+      height: 2px;
+      background: #ffffff;
+      display: block;
+    }
+
+    .nav-links-mobile {
+      display: none;
+      flex-direction: column;
+      background: #162236;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 8px 0;
+    }
+
+    .nav-links-mobile a {
+      color: #cbd5e1;
+      font-size: 15px;
+      padding: 12px 24px;
+      display: block;
+      transition: background 0.15s;
+    }
+
+    .nav-links-mobile a:hover,
+    .nav-links-mobile a.active {
+      background: rgba(255,255,255,0.07);
+      color: #ffffff;
+    }
+
+    @media (min-width: 880px) {
+      .nav-links { display: flex; }
+      .nav-toggle { display: none; }
+    }
+
+    /* SECTIONS */
+    section { margin-bottom: 52px; }
+
+    .section-label {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .page-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 10px;
+    }
+
+    .section-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      max-width: 40rem;
+      margin-bottom: 18px;
+    }
+
+    .strip {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .strip:hover {
+      border-color: var(--blue-light);
+      box-shadow: var(--shadow-md);
+    }
+
+    .strip-title {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 10px;
+    }
+
+    .strip-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      margin: 0 0 12px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 960px) {
+      .grid-3 { grid-template-columns: minmax(0, 1fr); }
+    }
+
+    .tile {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 20px 18px;
+      font-size: 1rem;
+      color: var(--text);
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+
+    .tile:hover {
+      border-color: var(--blue-light);
+      box-shadow: var(--shadow);
+    }
+
+    .tile-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--navy);
+      margin: 0 0 6px;
+    }
+
+    .tile-sub {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+
+    .pill-tag {
+      padding: 7px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .pill-tag.accent {
+      border-color: var(--blue-light);
+      color: var(--blue);
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 12px 28px;
+      background: var(--blue);
+      color: #ffffff;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 4px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--blue-light); }
+
+    /* FOOTER */
+    footer {
+      background: var(--navy);
+      margin-top: auto;
+    }
+
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 20px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    @media (min-width: 768px) {
+      .footer-inner { padding: 20px 32px 24px; }
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 16px;
+    }
+
+    .footer-links a { color: #64748b; }
+    .footer-links a:hover { color: #94a3b8; }
+
+    @media (max-width: 720px) {
+      .page-title { font-size: 1.8rem; }
+      .strip { padding: 22px 18px 20px; }
+      .tile { padding: 18px 16px 16px; }
     }
   </style>
   <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
@@ -243,20 +413,16 @@
   </script>
 </head>
 <body>
-  <main>
+  <div class="site-header">
     <div class="page">
-      <!-- NAV -->
-      <header class="nav fade-in-up">
-        <div class="nav-left">
-          <a href="index.html" class="brand-mark hover-lift" aria-label="Armin Studio – Home">
-  <div class="brand-mark-inner">
-    <img src="logo.png" alt="Armin Studio logo" class="brand-logo" />
-  </div>
-</a>
-          <div class="brand-text">
-            <div class="brand-title">Armin Studio</div>
+      <header class="nav">
+        <a href="index.html" class="nav-brand" aria-label="Armin Studio – Home">
+          <img src="logo.png" alt="Armin Studio logo" class="brand-logo" />
+          <div>
+            <span class="brand-title">Armin Studio</span>
+            <span class="brand-sub">Professional Web Design</span>
           </div>
-        </div>
+        </a>
         <nav class="nav-links" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <a href="services.html">Services</a>
@@ -264,30 +430,32 @@
           <a href="pricing.html">Pricing</a>
           <a href="contact.html">Contact</a>
           <a href="customization.html">Customization</a>
+          <a href="guide.html">Estimate</a>
         </nav>
-        <button
-          class="nav-cta btn-pressable"
-          onclick="window.location.href='contact.html'"
-        >
-          <span>Text to start</span>
-        </button>
+        <button class="nav-cta" onclick="window.location.href='contact.html'">Get Started</button>
         <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
           <span></span><span></span><span></span>
         </button>
       </header>
+    </div>
+    <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
+      <a href="index.html">Home</a>
+      <a href="services.html">Services</a>
+      <a href="examples.html">Examples</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="guide.html">Estimate</a>
+      <a href="contact.html">Contact</a>
+      <a href="customization.html">Customization</a>
+    </nav>
+  </div>
 
-      <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="examples.html">Examples</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="contact.html">Contact</a>
-        <a href="customization.html">Customization</a>
-      </nav>
+  <main>
+    <div class="content-area">
+    <div class="page">
 
       <!-- INTRO EXPLANATION (TEMPLATE TEXT TO EDIT) -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <div class="section-label">Customization</div>
           <h1 class="page-title">Make your site actually yours .</h1>
           <p class="section-sub">
@@ -300,28 +468,28 @@
 
       <!-- SECTION 1 – LAYOUT & STRUCTURE -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <h2 class="strip-title">1. Theme & style </h2>
           <p class="strip-sub">
             We will match your companys current theme and style or help you create one.
           </p>
 
           <div class="grid-3">
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Colors </h3>
               <p class="tile-sub">
                 Let us know the colors that you want and dont want in your website. 
                 Or if you want gradient colors/ changing colors.
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Theme </h3>
               <p class="tile-sub">
                 Let us know how you want customers to feel when visitng your site.
                 For example: modern, simple, easy to use , advanced , animated.
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Font size & animation </h3>
               <p class="tile-sub">
                 Tell us how big you want the text and  how you want your headers to look. 
@@ -332,21 +500,20 @@
 
           <div class="pill-row">
               All of this is provided free of additional charges.
-            </span>
-          </div>
+            </div>
         </article>
       </section>
 
       <!-- SECTION 2 – COLORS & BRANDING -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <h2 class="strip-title">2. Your name </h2>
           <p class="strip-sub">
            Choose where you want customers to see your site.
           </p>
 
           <div class="grid-3">
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Sub Domain</h3>
               <p class="tile-sub">
                 If hosting your site with us, you can get a free sub domain from us like yoursite.armin.works,
@@ -354,14 +521,14 @@
                 All of these are free with some limits.
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">BYOD</h3>
               <p class="tile-sub">
                 If you have a domain alredy purchused our team can help guide you to connect it to your site. 
                 This is free of charge. 
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Get a domain</h3>
               <p class="tile-sub">
                 Our studio can find the best value domains and tranfer the bill to you.
@@ -371,27 +538,27 @@
            <div class="pill-row">
                Learn more about domains <a href="domain.html"><strong><u>here</u></strong></a>
                  </div>
-            </span>
             </div>
+          </div>
         </article>
       </section>
 
       <!-- SECTION 3 – CONTENT BLOCKS -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <h2 class="strip-title">3. How do you want your product? </h2>
           <p class="strip-sub">
             Host your site on the web with us or take look at the other options.
           </p>
 
           <div class="grid-3">
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Just the code </h3>
               <p class="tile-sub">
                 We will give you all the files we have coded for your site. examples: index.html, services.html,  popup.js 
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Host with us</h3>
               <p class="tile-sub">
                 We will host your site for you and mange it for free. 
@@ -399,7 +566,7 @@
                 We give you a choice of firebsase, github, netlify and cloudfare hosting as these are the most reliable and generous.
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title"> Premuim hosting </h3>
               <p class="tile-sub">
               This is for companies that expect lots of users (more than 100 at once) and have huge viedos and files they want on their site.
@@ -412,27 +579,27 @@
 
       <!-- SECTION 4 – FORMS & INTERACTIONS -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <h2 class="strip-title">4. Forms & interactive elements</h2>
           <p class="strip-sub">
             With our dev teams skills almost anything you want to add to your site is possible.
           </p>
 
           <div class="grid-3">
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">forms</h3>
               <p class="tile-sub">
                 we can design almost any form/survey you can imagine of. For example: order forms , custom quotes and contact forms.
                 They can be configured to send data to an email or other places of your choice. 
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Calculators & logic</h3>
               <p class="tile-sub">
                We can create custom calculators that can be embedded in your site and elsewhere.
               </p>
             </div>
-            <div class="tile hover-glow">
+            <div class="tile">
               <h3 class="tile-title">Chat / feedback</h3>
               <p class="tile-sub">
                 Our dev team can create interactive ways for customers to leave feedback to build your company's credibility.
@@ -447,7 +614,7 @@
 
       <!-- FINAL CTA -->
       <section class="fade-in-up">
-        <article class="strip hover-lift">
+        <article class="strip">
           <h2 class="strip-title">Ready to customize your own project?</h2>
           <p class="strip-sub">
            <a href="guide.html" style="text-decoration: underline; color: inherit;">
@@ -457,23 +624,23 @@
 
           <p style="margin:0 0 10px;font-size:1.02rem;">
             Text number:
-            <strong style="color:#e5e7eb;">+1‑EXAMPLE NUMBER</strong>
+            <strong style="color:var(--text);">+1‑EXAMPLE NUMBER</strong>
           </p>
 
           <div style="margin-top:16px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;">
             <button
-              class="btn-primary btn-pressable"
+              class="btn-primary"
               onclick="window.location.href='tel:+1EXAMPLENUMBER'"
             >
               Tap to text on your phone
             </button>
             <span style="font-size:0.96rem;color:var(--text-muted);">
               Or learn more on the
-              <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='pricing.html'">
+              <span style="color:var(--blue);cursor:pointer;" onclick="window.location.href='pricing.html'">
                 Pricing
               </span>
               and
-              <span style="color:var(--accent);cursor:pointer;" onclick="window.location.href='services.html'">
+              <span style="color:var(--blue);cursor:pointer;" onclick="window.location.href='services.html'">
                 Services
               </span>
               pages.
@@ -482,24 +649,20 @@
         </article>
       </section>
     </div>
+    </div>
   </main>
 
-  <footer>
+  <footer role="contentinfo">
     <div class="footer-inner">
-      <div>© <span id="year"></span> Armin studio</div>
-      <div class="footer-links">
+      <div>&copy; <span id="year"></span> Armin Studio. All rights reserved.</div>
+      <nav class="footer-links" aria-label="Footer navigation">
         <a href="index.html">Home</a>
-        <span>•</span>
         <a href="services.html">Services</a>
-        <span>•</span>
         <a href="pricing.html">Pricing</a>
-        <span>•</span>
+        <a href="guide.html">Estimate</a>
         <a href="contact.html">Contact</a>
-        <span>•</span>
-        <a href="customization.html">Customization</a>
-        <span>•</span>
         <a href="examples.html">Examples</a>
-      </div>
+      </nav>
     </div>
   </footer>
 
