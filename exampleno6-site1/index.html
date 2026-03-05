@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scoops & Dreams — Artisan Ice Cream</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink:      #FF6B9D;
+      --pink-dark: #E8457A;
+      --purple:    #9B59B6;
+      --purple-dark:#7D3C98;
+      --teal:      #1ABC9C;
+      --teal-dark: #148F77;
+      --yellow:    #F7DC6F;
+      --cream:     #FFF8F0;
+      --coral:     #FF6B6B;
+      --mint:      #A8E6CF;
+      --sky:       #AED9E0;
+      --dark:      #1A0A2E;
+      --dark2:     #2D1B4E;
+      --white:     #FFFFFF;
+      --text-muted:#A09CB0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ─── BACKGROUND BUBBLES ─── */
+    .bg-bubbles {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.08;
+      animation: floatBubble linear infinite;
+    }
+    .bubble:nth-child(1)  { width:80px;  height:80px;  background:var(--pink);   left:10%; animation-duration:18s; animation-delay:0s;   }
+    .bubble:nth-child(2)  { width:120px; height:120px; background:var(--purple); left:25%; animation-duration:24s; animation-delay:4s;   }
+    .bubble:nth-child(3)  { width:60px;  height:60px;  background:var(--teal);   left:40%; animation-duration:15s; animation-delay:2s;   }
+    .bubble:nth-child(4)  { width:100px; height:100px; background:var(--coral);  left:55%; animation-duration:20s; animation-delay:7s;   }
+    .bubble:nth-child(5)  { width:90px;  height:90px;  background:var(--yellow); left:70%; animation-duration:22s; animation-delay:1s;   }
+    .bubble:nth-child(6)  { width:50px;  height:50px;  background:var(--mint);   left:85%; animation-duration:16s; animation-delay:9s;   }
+    .bubble:nth-child(7)  { width:140px; height:140px; background:var(--pink);   left:5%;  animation-duration:30s; animation-delay:5s;   }
+    .bubble:nth-child(8)  { width:70px;  height:70px;  background:var(--sky);    left:60%; animation-duration:19s; animation-delay:3s;   }
+
+    @keyframes floatBubble {
+      0%   { transform: translateY(110vh) scale(0.8); opacity:0; }
+      10%  { opacity: 0.08; }
+      90%  { opacity: 0.08; }
+      100% { transform: translateY(-20vh) scale(1.2); opacity:0; }
+    }
+
+    /* ─── NAVIGATION ─── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(26, 10, 46, 0.96);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--pink);
+      box-shadow: 0 4px 30px rgba(255, 107, 157, 0.25);
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+
+    .logo-icon {
+      width: 50px; height: 50px;
+      border: 3px solid var(--pink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(255,107,157,0.15);
+      animation: rotateLogo 8s linear infinite;
+    }
+
+    @keyframes rotateLogo {
+      0%   { box-shadow: 0 0 0 0 rgba(255,107,157,0.6); }
+      50%  { box-shadow: 0 0 20px 8px rgba(255,107,157,0.2); }
+      100% { box-shadow: 0 0 0 0 rgba(255,107,157,0.6); }
+    }
+
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name  { font-size: 1.3rem; font-weight: 800; color: var(--white); letter-spacing: 0.3px; }
+    .logo-name span { color: var(--pink); }
+    .logo-tagline { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--pink);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(255,107,157,0.5);
+      transform: translateY(-2px);
+    }
+
+    .nav-cta {
+      background: linear-gradient(135deg, var(--pink), var(--coral)) !important;
+      color: var(--white) !important;
+      font-weight: 700 !important;
+      box-shadow: 0 4px 20px rgba(255,107,157,0.4) !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: none;
+      background: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: var(--pink);
+      border-radius: 3px;
+      transition: all 0.3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; right: -100%;
+      width: 70%;
+      height: 100%;
+      background: rgba(26,10,46,0.98);
+      z-index: 2000;
+      flex-direction: column;
+      padding: 80px 32px 32px;
+      gap: 8px;
+      transition: right 0.4s cubic-bezier(0.25,0.8,0.25,1);
+      border-left: 3px solid var(--pink);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 14px 20px;
+      border-radius: 12px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .mobile-menu a:hover { background: rgba(255,107,157,0.15); border-left-color: var(--pink); color: var(--pink); }
+    .mobile-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 1999;
+    }
+    .mobile-overlay.open { display: block; }
+    .close-btn {
+      position: absolute;
+      top: 24px; right: 24px;
+      background: none;
+      border: none;
+      color: var(--pink);
+      font-size: 1.8rem;
+      cursor: pointer;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 40%, #3D1A6E 70%, #1A0A2E 100%);
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      z-index: 1;
+    }
+
+    /* Animated gradient orbs */
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(255,107,157,0.3) 0%, transparent 70%);
+      top: -150px; right: -100px;
+      animation: orbFloat1 10s ease-in-out infinite;
+      border-radius: 50%;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(155,89,182,0.25) 0%, transparent 70%);
+      bottom: -100px; left: -80px;
+      animation: orbFloat2 13s ease-in-out infinite;
+      border-radius: 50%;
+    }
+
+    @keyframes orbFloat1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(-40px,40px) scale(1.1); }
+      66%      { transform: translate(30px,-30px) scale(0.95); }
+    }
+    @keyframes orbFloat2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(60px,-50px) scale(1.15); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      width: 100%;
+    }
+
+    .hero-content { animation: slideInLeft 1s ease both; }
+
+    @keyframes slideInLeft {
+      from { opacity:0; transform: translateX(-60px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,107,157,0.2);
+      border: 1px solid rgba(255,107,157,0.4);
+      color: var(--pink);
+      padding: 8px 18px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      animation: pulseBadge 3s ease-in-out infinite;
+    }
+    @keyframes pulseBadge {
+      0%,100% { box-shadow: 0 0 0 0 rgba(255,107,157,0); }
+      50%      { box-shadow: 0 0 20px 4px rgba(255,107,157,0.3); }
+    }
+
+    .hero-title {
+      font-size: clamp(2.8rem, 5vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+
+    .hero-title .gradient-word {
+      background: linear-gradient(135deg, var(--pink), var(--yellow), var(--coral));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 4s ease-in-out infinite alternate;
+      background-size: 200% 200%;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .hero-desc {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.8;
+      margin-bottom: 40px;
+      max-width: 480px;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      color: var(--white);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 30px rgba(255,107,157,0.45);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--coral), var(--pink));
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .btn-primary:hover::before { opacity: 1; }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,107,157,0.6); }
+    .btn-primary span { position: relative; z-index: 1; }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: transparent;
+      color: var(--white);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: 2px solid rgba(255,255,255,0.4);
+      transition: all 0.3s ease;
+    }
+    .btn-outline:hover {
+      background: rgba(255,255,255,0.1);
+      border-color: var(--white);
+      transform: translateY(-3px);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      animation: slideInRight 1s ease 0.2s both;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    @keyframes slideInRight {
+      from { opacity:0; transform: translateX(60px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+
+    /* Big ice cream SVG illustration */
+    .ice-cream-main {
+      width: 360px;
+      height: 460px;
+      position: relative;
+      animation: floatMain 5s ease-in-out infinite;
+    }
+    @keyframes floatMain {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50%      { transform: translateY(-20px) rotate(2deg); }
+    }
+
+    /* Orbiting scoops */
+    .scoop-orbit {
+      position: absolute;
+      inset: 0;
+      animation: orbitSpin 20s linear infinite;
+    }
+    @keyframes orbitSpin {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .orbit-scoop {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      animation: orbitSpin 20s linear infinite reverse;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    }
+    .orbit-scoop:nth-child(1) { top: 0;    left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 35% 35%, #FFB5C8, var(--pink)); }
+    .orbit-scoop:nth-child(2) { top: 50%;  right: 0;  transform: translateY(-50%); background: radial-gradient(circle at 35% 35%, #C8A2D4, var(--purple)); }
+    .orbit-scoop:nth-child(3) { bottom: 0; left: 50%; transform: translateX(-50%); background: radial-gradient(circle at 35% 35%, #A8E6CF, var(--teal)); }
+    .orbit-scoop:nth-child(4) { top: 50%;  left: 0;   transform: translateY(-50%); background: radial-gradient(circle at 35% 35%, #FFF3A3, #F7DC6F); }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 48px;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 2rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, var(--pink), var(--yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.75rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      animation: fadeInUp 1s 1.5s both;
+    }
+    .scroll-arrow {
+      width: 24px;
+      height: 40px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-radius: 12px;
+      position: relative;
+    }
+    .scroll-arrow::after {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 4px;
+      height: 10px;
+      background: var(--pink);
+      border-radius: 2px;
+      animation: scrollBounce 2s ease-in-out infinite;
+    }
+    @keyframes scrollBounce {
+      0%,100% { transform: translateX(-50%) translateY(0); opacity:1; }
+      100%     { transform: translateX(-50%) translateY(16px); opacity:0; }
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section { position: relative; z-index: 1; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(255,107,157,0.15), rgba(155,89,182,0.15));
+      border: 1px solid rgba(255,107,157,0.3);
+      color: var(--pink);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(2rem, 3.5vw, 3.2rem);
+      font-weight: 900;
+      color: var(--dark);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .section-title .accent { color: var(--pink); }
+
+    .section-desc {
+      font-size: 1.05rem;
+      color: #6B7280;
+      max-width: 580px;
+      margin: 0 auto;
+      line-height: 1.8;
+    }
+
+    /* ─── MARQUEE ─── */
+    .marquee-section {
+      background: linear-gradient(135deg, var(--pink), var(--purple), var(--coral));
+      padding: 20px 0;
+      overflow: hidden;
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marqueeScroll 25s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-track:hover { animation-play-state: paused; }
+
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .marquee-item {
+      white-space: nowrap;
+      color: white;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .marquee-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      flex-shrink: 0;
+    }
+
+    /* ─── FLAVORS SECTION ─── */
+    .flavors-section {
+      padding: 120px 24px;
+      background: var(--cream);
+    }
+
+    .flavors-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .flavor-card {
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+      background: white;
+    }
+
+    .flavor-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    }
+
+    .flavor-visual {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .flavor-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      transition: opacity 0.3s;
+    }
+
+    .flavor-card:hover .flavor-visual::before { opacity: 0.25; }
+
+    .flavor-card:nth-child(1) .flavor-visual { background: linear-gradient(135deg, #FFE4EC, #FFC1D3); }
+    .flavor-card:nth-child(1) .flavor-visual::before { background: radial-gradient(circle, var(--pink), transparent); }
+
+    .flavor-card:nth-child(2) .flavor-visual { background: linear-gradient(135deg, #E8D5F5, #D4AAEE); }
+    .flavor-card:nth-child(2) .flavor-visual::before { background: radial-gradient(circle, var(--purple), transparent); }
+
+    .flavor-card:nth-child(3) .flavor-visual { background: linear-gradient(135deg, #D4F5ED, #A8E6CF); }
+    .flavor-card:nth-child(3) .flavor-visual::before { background: radial-gradient(circle, var(--teal), transparent); }
+
+    .flavor-card:nth-child(4) .flavor-visual { background: linear-gradient(135deg, #FFF9D4, #FFF3A3); }
+    .flavor-card:nth-child(4) .flavor-visual::before { background: radial-gradient(circle, var(--yellow), transparent); }
+
+    .flavor-card:nth-child(5) .flavor-visual { background: linear-gradient(135deg, #FFE4D4, #FFCBA4); }
+    .flavor-card:nth-child(5) .flavor-visual::before { background: radial-gradient(circle, var(--coral), transparent); }
+
+    .flavor-card:nth-child(6) .flavor-visual { background: linear-gradient(135deg, #D4EEF5, var(--sky)); }
+    .flavor-card:nth-child(6) .flavor-visual::before { background: radial-gradient(circle, var(--sky), transparent); }
+
+    .flavor-emoji {
+      font-size: 4.5rem;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+      transition: transform 0.4s ease;
+      z-index: 1;
+      position: relative;
+    }
+
+    .flavor-card:hover .flavor-emoji {
+      transform: scale(1.15) rotate(10deg);
+    }
+
+    .flavor-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      z-index: 2;
+    }
+
+    .flavor-info {
+      padding: 24px;
+    }
+
+    .flavor-name {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .flavor-desc {
+      font-size: 0.88rem;
+      color: #6B7280;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .flavor-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .flavor-price {
+      font-size: 1.5rem;
+      font-weight: 900;
+      color: var(--pink);
+    }
+
+    .flavor-price span { font-size: 0.9rem; color: #9CA3AF; font-weight: 400; }
+
+    .add-btn {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      border: none;
+      color: white;
+      font-size: 1.4rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(255,107,157,0.4);
+    }
+    .add-btn:hover { transform: scale(1.15) rotate(90deg); box-shadow: 0 8px 25px rgba(255,107,157,0.6); }
+
+    /* ─── ABOUT / WHY US ─── */
+    .about-section {
+      padding: 120px 24px;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark2) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-section::before {
+      content: '';
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(255,107,157,0.12) 0%, transparent 70%);
+      right: -200px; top: -200px;
+      border-radius: 50%;
+    }
+
+    .about-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-visual {
+      position: relative;
+    }
+
+    .about-big-scoop {
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      display: block;
+      font-size: 12rem;
+      text-align: center;
+      line-height: 1;
+      filter: drop-shadow(0 20px 40px rgba(255,107,157,0.4));
+      animation: floatMain 6s ease-in-out infinite;
+    }
+
+    .about-float-card {
+      position: absolute;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      animation: floatCard 5s ease-in-out infinite;
+    }
+    .about-float-card:nth-child(2) { top: 10%;  right: 0;  animation-delay: 0s; }
+    .about-float-card:nth-child(3) { bottom: 15%; left: 5%; animation-delay: 1.5s; }
+    .about-float-card:nth-child(4) { top: 45%;  right: -5%; animation-delay: 0.8s; }
+
+    @keyframes floatCard {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-10px); }
+    }
+
+    .float-card-icon { font-size: 1.8rem; }
+    .float-card-text .num { font-size: 1.2rem; font-weight: 800; color: var(--white); }
+    .float-card-text .lbl { font-size: 0.72rem; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 1px; }
+
+    .about-content .section-badge { margin-bottom: 12px; }
+
+    .about-title {
+      font-size: clamp(2rem, 3vw, 2.8rem);
+      font-weight: 900;
+      color: var(--white);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+    .about-title .accent { color: var(--pink); }
+
+    .about-desc {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.9;
+      margin-bottom: 40px;
+    }
+
+    .features-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      transition: all 0.3s;
+    }
+    .feature-item:hover {
+      background: rgba(255,107,157,0.1);
+      border-color: rgba(255,107,157,0.3);
+      transform: translateX(8px);
+    }
+
+    .feature-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, rgba(255,107,157,0.2), rgba(155,89,182,0.2));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      flex-shrink: 0;
+    }
+
+    .feature-text .title { font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .feature-text .desc  { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.5; }
+
+    /* ─── MENU PREVIEW ─── */
+    .menu-preview-section {
+      padding: 120px 24px;
+      background: white;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .menu-tab {
+      padding: 12px 28px;
+      border-radius: 50px;
+      border: 2px solid rgba(255,107,157,0.3);
+      background: transparent;
+      color: var(--pink);
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      letter-spacing: 0.3px;
+    }
+    .menu-tab:hover, .menu-tab.active {
+      background: var(--pink);
+      color: white;
+      border-color: var(--pink);
+      box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+      transform: translateY(-2px);
+    }
+
+    .menu-items-grid {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 20px;
+      border-radius: 16px;
+      background: var(--cream);
+      border: 1px solid rgba(255,107,157,0.15);
+      transition: all 0.3s;
+    }
+    .menu-item:hover {
+      background: rgba(255,107,157,0.08);
+      border-color: rgba(255,107,157,0.35);
+      transform: scale(1.02);
+      box-shadow: 0 8px 25px rgba(255,107,157,0.15);
+    }
+
+    .menu-item-icon { font-size: 2.5rem; flex-shrink: 0; }
+    .menu-item-name { font-size: 1rem; font-weight: 700; color: var(--dark); margin-bottom: 2px; }
+    .menu-item-desc { font-size: 0.8rem; color: #9CA3AF; }
+    .menu-item-price {
+      margin-left: auto;
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--pink);
+      white-space: nowrap;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    .testimonials-section {
+      padding: 120px 24px;
+      background: linear-gradient(135deg, #FFF0F5, #F5E8FF, #E8F8F5);
+      background-size: 400% 400%;
+      animation: gradientBg 12s ease-in-out infinite;
+    }
+
+    @keyframes gradientBg {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .testimonials-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .testimonial-card {
+      background: white;
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      transition: all 0.4s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      position: absolute;
+      top: -10px;
+      right: 20px;
+      font-size: 10rem;
+      font-family: Georgia, serif;
+      color: rgba(255,107,157,0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .testimonial-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 50px rgba(255,107,157,0.2);
+    }
+
+    .stars {
+      color: var(--yellow);
+      font-size: 1.1rem;
+      margin-bottom: 16px;
+      filter: drop-shadow(0 1px 3px rgba(247,220,111,0.4));
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: #4B5563;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: white;
+    }
+
+    .author-name { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+    .author-handle { font-size: 0.75rem; color: #9CA3AF; }
+
+    /* ─── CTA ─── */
+    .cta-section {
+      padding: 120px 24px;
+      background: linear-gradient(135deg, var(--pink-dark) 0%, var(--purple-dark) 50%, var(--dark) 100%);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+      top: -150px; left: -100px;
+      border-radius: 50%;
+      animation: orbFloat1 15s ease-in-out infinite;
+    }
+
+    .cta-section::after {
+      content: '';
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%);
+      bottom: -100px; right: -80px;
+      border-radius: 50%;
+      animation: orbFloat2 12s ease-in-out infinite;
+    }
+
+    .cta-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cta-emoji { font-size: 4rem; display: block; margin-bottom: 24px; animation: floatMain 4s ease-in-out infinite; }
+
+    .cta-title {
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 900;
+      color: white;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .cta-desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-white {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      color: var(--pink-dark);
+      text-decoration: none;
+      padding: 16px 36px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 800;
+      transition: all 0.3s;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .btn-white:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(0,0,0,0.35); }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--dark);
+      padding: 60px 24px 32px;
+      border-top: 3px solid var(--pink);
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-name { color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
+    .footer-brand .logo-name span { color: var(--pink); }
+    .footer-brand p { color: rgba(255,255,255,0.55); font-size: 0.9rem; line-height: 1.8; max-width: 280px; }
+
+    .footer-col h4 { color: white; font-weight: 700; margin-bottom: 20px; font-size: 0.95rem; letter-spacing: 0.5px; }
+    .footer-col a {
+      display: block;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.88rem;
+      margin-bottom: 10px;
+      transition: all 0.3s;
+    }
+    .footer-col a:hover { color: var(--pink); transform: translateX(6px); }
+
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.4); font-size: 0.82rem; }
+    .social-links { display: flex; gap: 12px; }
+    .social-link {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+    .social-link:hover {
+      background: var(--pink);
+      border-color: var(--pink);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255,107,157,0.4);
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeInUp {
+      from { opacity:0; transform: translateY(30px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+    .reveal-delay-5 { transition-delay: 0.5s; }
+    .reveal-delay-6 { transition-delay: 0.6s; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 960px) {
+      .hero-inner   { grid-template-columns: 1fr; gap: 48px; text-align: center; padding-top: 60px; }
+      .hero-buttons { justify-content: center; }
+      .hero-stats   { justify-content: center; }
+      .hero-desc    { margin: 0 auto 40px; }
+      .hero-visual  { order: -1; }
+      .ice-cream-main { width: 260px; height: 340px; }
+      .about-inner  { grid-template-columns: 1fr; gap: 48px; }
+      .about-big-scoop { font-size: 8rem; }
+      .about-float-card { display: none; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 36px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .flavors-grid { grid-template-columns: repeat(2, 1fr); }
+      .menu-items-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      .flavors-grid { grid-template-columns: 1fr; }
+      .hero-stats { gap: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Background bubbles -->
+<div class="bg-bubbles" aria-hidden="true">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="menu.html">🍦 Menu</a>
+  <a href="contact.html">📍 Find Us</a>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">🍦</div>
+      <div class="logo-text">
+        <div class="logo-name">Scoops<span> & Dreams</span></div>
+        <div class="logo-tagline">Artisan Ice Cream</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Find Us</a></li>
+      <li><a href="menu.html" class="nav-cta">Order Now</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">✨ Handcrafted Daily</div>
+      <h1 class="hero-title">
+        Where Every Scoop Is a<br>
+        <span class="gradient-word">Sweet Dream</span>
+      </h1>
+      <p class="hero-desc">
+        Artisan ice cream made fresh every morning with real cream, seasonal fruits, and unexpected flavor combinations that turn ordinary moments into memories.
+      </p>
+      <div class="hero-buttons">
+        <a href="menu.html" class="btn-primary">
+          <span>🍦</span>
+          <span>Explore the Menu</span>
+        </a>
+        <a href="contact.html" class="btn-outline">
+          <span>📍</span>
+          <span>Find Our Shop</span>
+        </a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Flavors</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">8K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Real Cream</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- Main ice cream illustration -->
+      <div class="ice-cream-main">
+        <svg viewBox="0 0 360 460" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;">
+          <defs>
+            <radialGradient id="coneGrad" cx="50%" cy="30%" r="60%">
+              <stop offset="0%" stop-color="#FDDCA0"/>
+              <stop offset="100%" stop-color="#D4900A"/>
+            </radialGradient>
+            <radialGradient id="scoop1Grad" cx="40%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#FFB5C8"/>
+              <stop offset="100%" stop-color="#FF6B9D"/>
+            </radialGradient>
+            <radialGradient id="scoop2Grad" cx="40%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#C8A2D4"/>
+              <stop offset="100%" stop-color="#9B59B6"/>
+            </radialGradient>
+            <radialGradient id="scoop3Grad" cx="40%" cy="35%" r="60%">
+              <stop offset="0%" stop-color="#A8E6CF"/>
+              <stop offset="100%" stop-color="#1ABC9C"/>
+            </radialGradient>
+            <filter id="shadow">
+              <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="rgba(0,0,0,0.25)"/>
+            </filter>
+            <filter id="glow">
+              <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="rgba(255,107,157,0.6)"/>
+            </filter>
+          </defs>
+
+          <!-- Cone -->
+          <polygon points="180,440 90,220 270,220" fill="url(#coneGrad)" filter="url(#shadow)"/>
+          <!-- Cone waffle pattern -->
+          <g stroke="#C4820A" stroke-width="1.5" opacity="0.6">
+            <line x1="135" y1="220" x2="180" y2="440"/><line x1="150" y1="220" x2="180" y2="440"/>
+            <line x1="165" y1="220" x2="180" y2="440"/><line x1="180" y1="220" x2="180" y2="440"/>
+            <line x1="195" y1="220" x2="180" y2="440"/><line x1="210" y1="220" x2="180" y2="440"/>
+            <line x1="225" y1="220" x2="180" y2="440"/>
+            <line x1="90" y1="240" x2="270" y2="240"/><line x1="93" y1="260" x2="267" y2="260"/>
+            <line x1="100" y1="280" x2="260" y2="280"/><line x1="107" y1="300" x2="253" y2="300"/>
+            <line x1="117" y1="320" x2="243" y2="320"/><line x1="127" y1="340" x2="233" y2="340"/>
+            <line x1="140" y1="360" x2="220" y2="360"/><line x1="153" y1="380" x2="207" y2="380"/>
+            <line x1="163" y1="400" x2="197" y2="400"/>
+          </g>
+
+          <!-- Bottom scoop (teal/mint) -->
+          <ellipse cx="180" cy="230" rx="85" ry="30" fill="url(#scoop3Grad)" opacity="0.4"/>
+          <circle cx="180" cy="210" r="85" fill="url(#scoop3Grad)" filter="url(#shadow)"/>
+
+          <!-- Middle scoop (purple) -->
+          <ellipse cx="180" cy="150" rx="78" ry="26" fill="url(#scoop2Grad)" opacity="0.4"/>
+          <circle cx="180" cy="135" r="78" fill="url(#scoop2Grad)" filter="url(#shadow)"/>
+
+          <!-- Top scoop (pink) -->
+          <ellipse cx="180" cy="80" rx="70" ry="24" fill="url(#scoop1Grad)" opacity="0.4"/>
+          <circle cx="180" cy="60" r="70" fill="url(#scoop1Grad)" filter="url(#shadow)"/>
+
+          <!-- Drips -->
+          <ellipse cx="215" cy="95" rx="12" ry="25" fill="#FF6B9D" opacity="0.85" transform="rotate(15,215,95)"/>
+          <ellipse cx="148" cy="165" rx="10" ry="22" fill="#9B59B6" opacity="0.85" transform="rotate(-10,148,165)"/>
+          <ellipse cx="230" cy="175" rx="9" ry="20" fill="#1ABC9C" opacity="0.85" transform="rotate(8,230,175)"/>
+
+          <!-- Sprinkles on top scoop -->
+          <g>
+            <rect x="155" y="30" width="14" height="5" rx="2.5" fill="#F7DC6F" transform="rotate(30,162,32)"/>
+            <rect x="185" y="20" width="14" height="5" rx="2.5" fill="#FF6B6B" transform="rotate(-20,192,22)"/>
+            <rect x="170" y="45" width="12" height="4" rx="2" fill="#A8E6CF" transform="rotate(45,176,47)"/>
+            <rect x="200" y="35" width="12" height="4" rx="2" fill="#AED9E0" transform="rotate(-35,206,37)"/>
+            <rect x="145" y="55" width="10" height="4" rx="2" fill="#FF6B9D" transform="rotate(60,150,57)"/>
+          </g>
+
+          <!-- Cherry on top -->
+          <circle cx="180" cy="-10" r="18" fill="#E8457A" filter="url(#glow)">
+            <animate attributeName="cy" from="-15" to="-5" dur="3s" repeatCount="indefinite" values="-15;-5;-15" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4,0,0.6,1;0.4,0,0.6,1"/>
+          </circle>
+          <line x1="180" y1="-10" x2="192" y2="-35" stroke="#2E7D32" stroke-width="3" stroke-linecap="round">
+            <animate attributeName="d" dur="3s" repeatCount="indefinite"/>
+          </line>
+          <circle cx="180" cy="-10" r="7" fill="rgba(255,255,255,0.3)"/>
+        </svg>
+      </div>
+
+      <!-- Orbiting scoops -->
+      <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;">
+        <div style="width:360px;height:360px;position:relative;animation:orbitSpin 22s linear infinite;">
+          <div class="orbit-scoop" style="position:absolute;top:0;left:50%;transform:translateX(-50%);animation:orbitSpin 22s linear infinite reverse;">🍓</div>
+          <div class="orbit-scoop" style="position:absolute;top:50%;right:-30px;transform:translateY(-50%);animation:orbitSpin 22s linear infinite reverse;">🍇</div>
+          <div class="orbit-scoop" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);animation:orbitSpin 22s linear infinite reverse;">🍃</div>
+          <div class="orbit-scoop" style="position:absolute;top:50%;left:-30px;transform:translateY(-50%);animation:orbitSpin 22s linear infinite reverse;">🍋</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="scroll-arrow"></div>
+    Scroll down
+  </div>
+</section>
+
+<!-- Marquee -->
+<div class="marquee-section" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">🍦 Strawberry Dream <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍫 Dark Chocolate Fudge <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍋 Lemon Sorbet <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🫐 Wild Blueberry <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🌸 Lavender Honey <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍪 Cookie & Cream <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🥭 Mango Tango <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍑 Peach Bellini <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍦 Strawberry Dream <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍫 Dark Chocolate Fudge <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍋 Lemon Sorbet <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🫐 Wild Blueberry <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🌸 Lavender Honey <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍪 Cookie & Cream <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🥭 Mango Tango <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🍑 Peach Bellini <div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- Flavors Section -->
+<section class="flavors-section">
+  <div class="section-header reveal">
+    <div class="section-badge">Our Signature Collection</div>
+    <h2 class="section-title">Fan <span class="accent">Favorite</span> Flavors</h2>
+    <p class="section-desc">Each flavor is hand-crafted with premium ingredients. We make small batches fresh every morning so you always get the best.</p>
+  </div>
+
+  <div class="flavors-grid">
+    <div class="flavor-card reveal reveal-delay-1">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🍓</span>
+        <span class="flavor-badge">Best Seller</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Strawberry Dream</div>
+        <div class="flavor-desc">Real California strawberries blended with sweet cream and a hint of rose water. Pure summer in every bite.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$5.50 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Strawberry Dream">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flavor-card reveal reveal-delay-2">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🌸</span>
+        <span class="flavor-badge">Signature</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Lavender Honey</div>
+        <div class="flavor-desc">Fragrant lavender from local farms paired with wildflower honey and floral undertones. Luxuriously unique.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$6.00 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Lavender Honey">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flavor-card reveal reveal-delay-3">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🍃</span>
+        <span class="flavor-badge">Dairy-Free</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Mint Chip Bliss</div>
+        <div class="flavor-desc">Cool garden mint with handmade dark chocolate chips. So refreshing it feels like a breeze on a summer afternoon.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$5.50 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Mint Chip Bliss">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flavor-card reveal reveal-delay-4">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🍫</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Dark Chocolate Fudge</div>
+        <div class="flavor-desc">72% Belgian dark chocolate with ribbons of homemade fudge swirl. Deeply rich, intensely satisfying.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$6.00 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Dark Chocolate Fudge">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flavor-card reveal reveal-delay-5">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🥭</span>
+        <span class="flavor-badge">Seasonal</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Mango Tango</div>
+        <div class="flavor-desc">Sweet Alphonso mangoes with a secret kick of tajín and lime. Tropical, tangy, and totally addictive.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$5.50 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Mango Tango">+</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flavor-card reveal reveal-delay-6">
+      <div class="flavor-visual">
+        <span class="flavor-emoji">🍪</span>
+      </div>
+      <div class="flavor-info">
+        <div class="flavor-name">Cookie & Cream</div>
+        <div class="flavor-desc">Creamy vanilla base loaded with crushed homemade chocolate sandwich cookies. A classic reinvented.</div>
+        <div class="flavor-footer">
+          <div class="flavor-price">$5.50 <span>/ scoop</span></div>
+          <button class="add-btn" aria-label="Add Cookie and Cream">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:56px;" class="reveal">
+    <a href="menu.html" class="btn-primary" style="display:inline-flex;">
+      <span>🍨</span>
+      <span>View All 50+ Flavors</span>
+    </a>
+  </div>
+</section>
+
+<!-- About Section -->
+<section class="about-section">
+  <div class="about-inner">
+    <div class="about-visual reveal">
+      <div class="about-big-scoop">🍨</div>
+      <div class="about-float-card">
+        <div class="float-card-icon">🌿</div>
+        <div class="float-card-text">
+          <div class="num">100%</div>
+          <div class="lbl">Natural Ingredients</div>
+        </div>
+      </div>
+      <div class="about-float-card">
+        <div class="float-card-icon">⭐</div>
+        <div class="float-card-text">
+          <div class="num">4.9 / 5</div>
+          <div class="lbl">Average Rating</div>
+        </div>
+      </div>
+      <div class="about-float-card">
+        <div class="float-card-icon">🏆</div>
+        <div class="float-card-text">
+          <div class="num">#1 Rated</div>
+          <div class="lbl">Local Ice Cream Shop</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="about-content reveal reveal-delay-2">
+      <div class="section-badge">Our Story</div>
+      <h2 class="about-title">Made with <span class="accent">Love</span> &<br>Real Ingredients</h2>
+      <p class="about-desc">
+        Since 2018, Scoops & Dreams has been crafting small-batch artisan ice cream from scratch. We source our dairy from a family farm just 30 miles away, and every flavor is developed by our head ice cream artisan who spent years training in Italy and Japan.
+      </p>
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon">🥛</div>
+          <div class="feature-text">
+            <div class="title">Farm-Fresh Dairy</div>
+            <div class="desc">Cream from grass-fed cows at Meadowbrook Farm, delivered fresh every morning.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🌱</div>
+          <div class="feature-text">
+            <div class="title">No Artificial Anything</div>
+            <div class="desc">Zero artificial colors, flavors, or preservatives — ever. Real food, real taste.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎨</div>
+          <div class="feature-text">
+            <div class="title">New Flavors Every Season</div>
+            <div class="desc">We create 10+ new seasonal flavors every quarter inspired by local harvests and global cuisines.</div>
+          </div>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">♿</div>
+          <div class="feature-text">
+            <div class="title">Inclusive Menu</div>
+            <div class="desc">Dairy-free, gluten-free, and vegan options available so everyone can enjoy.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Menu Preview -->
+<section class="menu-preview-section">
+  <div class="section-header reveal">
+    <div class="section-badge">Quick Picks</div>
+    <h2 class="section-title">Something for <span class="accent">Everyone</span></h2>
+    <p class="section-desc">From classic scoops to elaborate sundaes, we have exactly what you're craving.</p>
+  </div>
+
+  <div class="menu-tabs" role="tablist">
+    <button class="menu-tab active" onclick="switchTab(event,'scoops')" role="tab">🍦 Scoops</button>
+    <button class="menu-tab" onclick="switchTab(event,'sundaes')" role="tab">🍨 Sundaes</button>
+    <button class="menu-tab" onclick="switchTab(event,'shakes')" role="tab">🥤 Shakes</button>
+  </div>
+
+  <div class="menu-items-grid" id="menuGrid">
+    <!-- Content populated by JS -->
+  </div>
+
+  <div style="text-align:center;margin-top:48px;" class="reveal">
+    <a href="menu.html" class="btn-primary" style="display:inline-flex;">
+      <span>📋</span>
+      <span>Full Menu & Pricing</span>
+    </a>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section class="testimonials-section">
+  <div class="section-header reveal">
+    <div class="section-badge">Happy Customers</div>
+    <h2 class="section-title">People Are <span class="accent">Raving</span></h2>
+    <p class="section-desc">Don't take our word for it — here's what our regulars are saying about the best ice cream in town.</p>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card reveal reveal-delay-1">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The Lavender Honey flavor changed my life. I've been back four times this week alone. The cream is so incredibly rich and the flavors are unlike anything you'll find in a supermarket."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,var(--pink),var(--coral));">S</div>
+        <div>
+          <div class="author-name">Sofia Martinez</div>
+          <div class="author-handle">@sofiam · Local Review</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal reveal-delay-2">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"Brought the whole family and everyone found something they loved. The vegan mango sorbet is genuinely the best I've ever had — you'd never know it was dairy-free. A must-visit!"</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,var(--purple),var(--purple-dark));">D</div>
+        <div>
+          <div class="author-name">David Chen</div>
+          <div class="author-handle">@davidc · Google Review</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card reveal reveal-delay-3">
+      <div class="stars">★★★★★</div>
+      <p class="testimonial-text">"The shop itself is gorgeous — the perfect Instagrammable moment every time. But beyond the aesthetics, the ice cream quality is on another level. Worth every single penny."</p>
+      <div class="testimonial-author">
+        <div class="author-avatar" style="background:linear-gradient(135deg,var(--teal),var(--teal-dark));">A</div>
+        <div>
+          <div class="author-name">Amber Johnson</div>
+          <div class="author-handle">@amberj · Yelp Review</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="cta-inner">
+    <span class="cta-emoji">🍦</span>
+    <h2 class="cta-title">Your Next Favorite Flavor Is Waiting</h2>
+    <p class="cta-desc">Come in and let us scoop something magical for you. Or browse our full menu and plan your perfect visit.</p>
+    <div class="cta-buttons">
+      <a href="menu.html" class="btn-white">🍨 See the Full Menu</a>
+      <a href="contact.html" class="btn-outline">📍 Get Directions</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-name">Scoops<span> & Dreams</span></div>
+      <p>Artisan ice cream handcrafted with love, local ingredients, and an obsession for perfect flavor. Come taste the difference.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="menu.html">Full Menu</a>
+      <a href="menu.html#sundaes">Sundaes</a>
+      <a href="menu.html#shakes">Milkshakes</a>
+      <a href="contact.html">Find Us</a>
+    </div>
+    <div class="footer-col">
+      <h4>Visit Us</h4>
+      <a href="contact.html">📍 123 Sweet Street</a>
+      <a href="contact.html">⏰ Mon–Fri: 11am–10pm</a>
+      <a href="contact.html">⏰ Sat–Sun: 10am–11pm</a>
+      <a href="contact.html">📞 (555) 123-4567</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Scoops & Dreams. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" aria-label="Instagram">📸</a>
+      <a class="social-link" href="#" aria-label="Facebook">📘</a>
+      <a class="social-link" href="#" aria-label="TikTok">🎵</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Menu tab data
+  const menuData = {
+    scoops: [
+      { icon:'🍓', name:'Strawberry Dream',    desc:'Real California strawberries',    price:'$5.50' },
+      { icon:'🌸', name:'Lavender Honey',       desc:'Floral & wildflower honey',       price:'$6.00' },
+      { icon:'🍃', name:'Mint Chip Bliss',      desc:'Cool mint & dark chocolate chips',price:'$5.50' },
+      { icon:'🍫', name:'Dark Chocolate Fudge', desc:'72% Belgian chocolate',           price:'$6.00' },
+      { icon:'🥭', name:'Mango Tango',          desc:'Alphonso mango with tajín',       price:'$5.50' },
+      { icon:'🍪', name:'Cookie & Cream',       desc:'Vanilla with crushed cookies',    price:'$5.50' },
+    ],
+    sundaes: [
+      { icon:'🍨', name:'Classic Banana Split',    desc:'3 scoops, banana, toppings',      price:'$12.00' },
+      { icon:'🌈', name:'Rainbow Sundae',           desc:'5 flavors with rainbow toppings', price:'$14.00' },
+      { icon:'🍫', name:'Hot Fudge Brownie',        desc:'Warm brownie & hot fudge drizzle',price:'$13.00' },
+      { icon:'🍑', name:'Peach Melba Sundae',       desc:'Peach sorbet & raspberry coulis', price:'$11.00' },
+    ],
+    shakes: [
+      { icon:'🥤', name:'Strawberry Cloud Shake',  desc:'Thick strawberry milkshake',        price:'$8.00' },
+      { icon:'🍫', name:'Triple Chocolate Shake',  desc:'Dark, milk & white chocolate',       price:'$9.00' },
+      { icon:'🌸', name:'Lavender Dreamsicle',     desc:'Lavender honey shake with vanilla',  price:'$9.50' },
+      { icon:'🥭', name:'Tropical Mango Freeze',   desc:'Mango sorbet blended smooth',        price:'$8.50' },
+    ],
+  };
+
+  function switchTab(e, tab) {
+    document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    renderMenu(tab);
+  }
+
+  function renderMenu(tab) {
+    const grid = document.getElementById('menuGrid');
+    const items = menuData[tab];
+    grid.innerHTML = items.map(item => `
+      <div class="menu-item">
+        <div class="menu-item-icon">${item.icon}</div>
+        <div>
+          <div class="menu-item-name">${item.name}</div>
+          <div class="menu-item-desc">${item.desc}</div>
+        </div>
+        <div class="menu-item-price">${item.price}</div>
+      </div>
+    `).join('');
+  }
+
+  renderMenu('scoops');
+
+  // Add scoop button animation feedback
+  document.addEventListener('click', e => {
+    if (e.target.classList.contains('add-btn')) {
+      const btn = e.target;
+      btn.style.background = 'linear-gradient(135deg, #1ABC9C, #148F77)';
+      btn.textContent = '✓';
+      setTimeout(() => {
+        btn.style.background = 'linear-gradient(135deg, var(--pink), var(--coral))';
+        btn.textContent = '+';
+      }, 1200);
+    }
+  });
+</script>
+</body>
+</html>

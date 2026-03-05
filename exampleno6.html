@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ice Cream Shop Template - Example No. 6 | Armin Studio</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;
+      background:linear-gradient(135deg, #1A0A2E 0%, #2D1B4E 40%, #3D1A6E 70%, #1A0A2E 100%);
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+      color:#fff;
+      overflow-x:hidden;
+      position:relative;
+    }
+
+    /* Animated background bubbles */
+    .bg-bubbles {
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:0;
+    }
+    .bubble {
+      position:absolute;
+      border-radius:50%;
+      opacity:0.07;
+      animation:floatUp linear infinite;
+    }
+    .bubble:nth-child(1) { width:100px; height:100px; background:#FF6B9D; left:10%; animation-duration:20s; }
+    .bubble:nth-child(2) { width:140px; height:140px; background:#9B59B6; left:30%; animation-duration:28s; animation-delay:5s; }
+    .bubble:nth-child(3) { width:80px;  height:80px;  background:#1ABC9C; left:55%; animation-duration:16s; animation-delay:2s; }
+    .bubble:nth-child(4) { width:120px; height:120px; background:#FF6B6B; left:75%; animation-duration:22s; animation-delay:8s; }
+    .bubble:nth-child(5) { width:60px;  height:60px;  background:#F7DC6F; left:88%; animation-duration:18s; animation-delay:4s; }
+
+    @keyframes floatUp {
+      0%   { transform:translateY(110vh); opacity:0; }
+      5%   { opacity:0.07; }
+      95%  { opacity:0.07; }
+      100% { transform:translateY(-20vh); opacity:0; }
+    }
+
+    .container {
+      max-width:860px;
+      width:100%;
+      position:relative;
+      z-index:1;
+    }
+
+    header {
+      text-align:center;
+      margin-bottom:48px;
+      animation:fadeInDown 0.8s ease;
+    }
+
+    .header-badge {
+      display:inline-block;
+      background:rgba(255,107,157,0.2);
+      border:1px solid rgba(255,107,157,0.4);
+      color:#FF6B9D;
+      padding:6px 18px;
+      border-radius:50px;
+      font-size:0.78rem;
+      font-weight:700;
+      letter-spacing:2px;
+      text-transform:uppercase;
+      margin-bottom:18px;
+    }
+
+    h1 {
+      font-size:clamp(2rem,5vw,3.2rem);
+      margin-bottom:12px;
+      font-weight:900;
+      background:linear-gradient(135deg, #FF6B9D, #F7DC6F, #FF6B6B);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+      background-clip:text;
+      background-size:200%;
+      animation:gradientShift 4s ease-in-out infinite alternate;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position:0% 50%; }
+      100% { background-position:100% 50%; }
+    }
+
+    .subtitle {
+      font-size:1.05rem;
+      opacity:0.75;
+      font-weight:300;
+      color:#D4C8E0;
+      letter-spacing:0.5px;
+    }
+
+    /* Big emoji animation */
+    .hero-emoji {
+      font-size:4rem;
+      display:block;
+      margin:0 auto 16px;
+      animation:bounceEmoji 3s ease-in-out infinite;
+      filter:drop-shadow(0 8px 20px rgba(255,107,157,0.5));
+    }
+
+    @keyframes bounceEmoji {
+      0%,100% { transform:translateY(0) rotate(-5deg); }
+      50%      { transform:translateY(-16px) rotate(5deg); }
+    }
+
+    /* Template card */
+    .template-card {
+      background:white;
+      border-radius:24px;
+      overflow:hidden;
+      box-shadow:0 24px 80px rgba(0,0,0,0.5);
+      transition:transform 0.3s ease, box-shadow 0.3s ease;
+      animation:fadeInUp 0.8s ease both;
+      animation-delay:0.2s;
+    }
+
+    .template-card:hover {
+      transform:translateY(-10px);
+      box-shadow:0 36px 100px rgba(0,0,0,0.6), 0 0 60px rgba(255,107,157,0.2);
+    }
+
+    .template-header {
+      padding:44px;
+      color:white;
+      position:relative;
+      overflow:hidden;
+      background:linear-gradient(135deg, #1A0A2E 0%, #9B59B6 50%, #FF6B9D 100%);
+    }
+
+    .template-header::before {
+      content:'';
+      position:absolute;
+      width:400px; height:400px;
+      background:radial-gradient(circle,rgba(255,255,255,0.1) 0%,transparent 70%);
+      top:-150px; right:-80px;
+      border-radius:50%;
+    }
+
+    .template-header::after {
+      content:'';
+      position:absolute;
+      width:300px; height:300px;
+      background:radial-gradient(circle,rgba(255,107,157,0.3) 0%,transparent 70%);
+      bottom:-100px; left:-60px;
+      border-radius:50%;
+    }
+
+    .template-header > * { position:relative; z-index:2; }
+
+    .template-badge {
+      display:inline-block;
+      background:rgba(255,255,255,0.2);
+      border:1px solid rgba(255,255,255,0.35);
+      color:white;
+      padding:5px 14px;
+      border-radius:50px;
+      font-size:0.75rem;
+      font-weight:700;
+      letter-spacing:1px;
+      text-transform:uppercase;
+      margin-bottom:14px;
+    }
+
+    .template-title {
+      font-size:2.2rem;
+      font-weight:900;
+      margin-bottom:8px;
+      text-shadow:0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    .template-subtitle {
+      font-size:1rem;
+      opacity:0.88;
+    }
+
+    /* Floating scoops in header */
+    .header-floaters {
+      position:absolute;
+      right:40px;
+      top:50%;
+      transform:translateY(-50%);
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      z-index:3;
+    }
+
+    .float-scoop {
+      font-size:2.2rem;
+      animation:floatScoop ease-in-out infinite;
+      filter:drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+    }
+
+    .float-scoop:nth-child(1) { animation-duration:3s; animation-delay:0s; }
+    .float-scoop:nth-child(2) { animation-duration:3.5s; animation-delay:0.6s; }
+    .float-scoop:nth-child(3) { animation-duration:2.8s; animation-delay:1.2s; }
+
+    @keyframes floatScoop {
+      0%,100% { transform:translateY(0) scale(1); }
+      50%      { transform:translateY(-10px) scale(1.08); }
+    }
+
+    .template-body {
+      padding:44px;
+      color:#333;
+    }
+
+    .template-description {
+      font-size:1.02rem;
+      line-height:1.85;
+      margin-bottom:28px;
+      color:#555;
+    }
+
+    /* Pages pills */
+    .pages-pills {
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:28px;
+    }
+
+    .pill {
+      background:linear-gradient(135deg, rgba(255,107,157,0.1), rgba(155,89,182,0.1));
+      border:1px solid rgba(255,107,157,0.25);
+      color:#E8457A;
+      padding:7px 16px;
+      border-radius:50px;
+      font-size:0.82rem;
+      font-weight:700;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Features list */
+    .features-list {
+      list-style:none;
+      margin-bottom:36px;
+    }
+
+    .features-list li {
+      padding:13px 0;
+      padding-left:36px;
+      position:relative;
+      color:#444;
+      font-size:0.97rem;
+      border-bottom:1px solid #F8F0F5;
+      line-height:1.5;
+    }
+
+    .features-list li:last-child { border-bottom:none; }
+
+    .features-list li::before {
+      content:'✓';
+      position:absolute;
+      left:0;
+      color:#FF6B9D;
+      font-weight:bold;
+      font-size:1.1rem;
+      width:26px; height:26px;
+      background:rgba(255,107,157,0.12);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      top:12px;
+    }
+
+    /* Highlight strip */
+    .highlight-strip {
+      background:linear-gradient(135deg, rgba(255,107,157,0.08), rgba(155,89,182,0.08));
+      border:1px solid rgba(255,107,157,0.2);
+      border-radius:16px;
+      padding:20px 24px;
+      margin-bottom:32px;
+      display:flex;
+      align-items:center;
+      gap:16px;
+    }
+
+    .highlight-strip .icon { font-size:2rem; flex-shrink:0; }
+    .highlight-strip p {
+      font-size:0.9rem;
+      color:#555;
+      line-height:1.6;
+    }
+    .highlight-strip p strong { color:#E8457A; }
+
+    /* CTA button */
+    .cta-button {
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:16px 40px;
+      background:linear-gradient(135deg, #FF6B9D 0%, #FF6B6B 100%);
+      color:white;
+      text-decoration:none;
+      border-radius:50px;
+      font-weight:800;
+      font-size:1.05rem;
+      transition:all 0.3s ease;
+      box-shadow:0 6px 25px rgba(255,107,157,0.5);
+      letter-spacing:0.3px;
+    }
+
+    .cta-button:hover {
+      transform:translateY(-3px);
+      box-shadow:0 10px 35px rgba(255,107,157,0.7);
+    }
+
+    .back-link {
+      display:block;
+      text-align:center;
+      margin-top:36px;
+      color:rgba(255,255,255,0.55);
+      text-decoration:none;
+      font-size:0.95rem;
+      transition:color 0.3s;
+    }
+
+    .back-link:hover { color:#FF6B9D; }
+
+    @keyframes fadeInDown {
+      from { opacity:0; transform:translateY(-30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    @media(max-width:600px) {
+      h1 { font-size:1.9rem; }
+      .template-title { font-size:1.6rem; }
+      .template-header, .template-body { padding:28px 22px; }
+      .header-floaters { display:none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Background bubbles -->
+  <div class="bg-bubbles" aria-hidden="true">
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+    <div class="bubble"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="header-badge">✨ Most Visual Example</div>
+      <span class="hero-emoji">🍦</span>
+      <h1>Artisan Ice Cream Shop</h1>
+      <p class="subtitle">Example No. 6 — Premium Ice Cream & Dessert Brand Website</p>
+    </header>
+
+    <div class="template-card">
+      <div class="template-header">
+        <div class="template-badge">3-Page Website</div>
+        <h2 class="template-title">Scoops & Dreams Template</h2>
+        <p class="template-subtitle">Vibrant, animated website for an artisan ice cream shop</p>
+
+        <!-- Floating scoops -->
+        <div class="header-floaters">
+          <span class="float-scoop">🍦</span>
+          <span class="float-scoop">🍓</span>
+          <span class="float-scoop">🍨</span>
+        </div>
+      </div>
+
+      <div class="template-body">
+        <p class="template-description">
+          A visually striking, animation-rich website for "Scoops & Dreams" — a fictional artisan ice cream shop. Built with bold colors (hot pink, lavender, teal), fluid CSS animations, floating elements, and immersive scroll effects. This example showcases what's possible when design and motion work together to create a truly memorable brand experience.
+        </p>
+
+        <div class="pages-pills">
+          <span class="pill">🏠 Home</span>
+          <span class="pill">🍦 Full Menu</span>
+          <span class="pill">📍 Find Us</span>
+        </div>
+
+        <div class="highlight-strip">
+          <div class="icon">🎨</div>
+          <p>This example features our <strong>most advanced visual design</strong> — with animated SVG ice cream, orbiting elements, floating particle effects, a scrolling marquee, CSS gradient animations, and interactive components throughout.</p>
+        </div>
+
+        <ul class="features-list">
+          <li>Animated hero with hand-crafted SVG ice cream illustration, orbiting scoops, and floating stats</li>
+          <li>Scrolling flavor marquee, scroll-reveal animations, and gradient color shifts on load</li>
+          <li>6 signature flavor cards with hover lift, animated emoji, and interactive "Add" button</li>
+          <li>Sticky menu navigation on the menu page with 5 sections: Scoops, Sundaes, Shakes, Specialties & Toppings</li>
+          <li>Animated particle background on menu page with floating food emojis</li>
+          <li>Animated map with moving cars and a pulsing location pin on the contact page</li>
+          <li>Interactive contact form with success animation and a real-time FAQ accordion</li>
+          <li>Fully responsive with mobile hamburger menu on all 3 pages</li>
+        </ul>
+
+        <a href="exampleno6-site1/index.html" class="cta-button">
+          <span>🍦</span>
+          <span>View Ice Cream Template</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="examples.html" class="back-link">← Back to all examples</a>
+  </div>
+</body>
+</html>
