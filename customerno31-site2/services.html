@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Services - BuildPro Construction</title>
+  <title>Our Services - Total Power</title>
   <style>
     * {
       margin: 0;
@@ -13,19 +13,20 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #ffffff;
-      color: #2c3e50;
+      background: #0d0d0d;
+      color: #ffffff;
       line-height: 1.6;
     }
 
     /* Navigation */
     nav {
-      background: #2c3e50;
+      background: #111111;
       padding: 20px 0;
       position: sticky;
       top: 0;
       z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
+      border-bottom: 3px solid #dc2626;
     }
 
     .nav-container {
@@ -46,21 +47,21 @@
     .logo-placeholder {
       width: 50px;
       height: 50px;
-      border: 3px solid #f39c12;
+      border: 3px solid #dc2626;
       border-radius: 5px;
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(243, 156, 18, 0.1);
+      background: rgba(220, 38, 38, 0.1);
       font-weight: 700;
       font-size: 0.7rem;
-      color: #f39c12;
+      color: #dc2626;
     }
 
     .logo {
       font-size: 1.8rem;
       font-weight: 700;
-      color: #f39c12;
+      color: #dc2626;
       display: flex;
       align-items: center;
       gap: 10px;
@@ -77,7 +78,7 @@
     .hamburger span {
       width: 30px;
       height: 3px;
-      background: #fff;
+      background: #1a1a1a;
       border-radius: 3px;
       transition: 0.3s;
     }
@@ -101,12 +102,12 @@
     }
 
     .nav-links a:hover {
-      color: #f39c12;
+      color: #dc2626;
     }
 
     /* Page Header */
     .page-header {
-      background: linear-gradient(135deg, #e67e22 0%, #f39c12 100%);
+      background: linear-gradient(160deg, #0d0d0d 0%, #1a0000 40%, #dc2626 100%);
       padding: 80px 20px;
       text-align: center;
       color: #fff;
@@ -149,13 +150,13 @@
 
     .service-content h2 {
       font-size: 2.5rem;
-      color: #2c3e50;
+      color: #ffffff;
       margin-bottom: 20px;
     }
 
     .service-content p {
       font-size: 1.1rem;
-      color: #7f8c8d;
+      color: #999999;
       margin-bottom: 20px;
       line-height: 1.8;
     }
@@ -170,14 +171,14 @@
       padding-left: 35px;
       position: relative;
       font-size: 1.05rem;
-      color: #2c3e50;
+      color: #ffffff;
     }
 
     .service-features li::before {
       content: '✓';
       position: absolute;
       left: 0;
-      color: #27ae60;
+      color: #b91c1c;
       font-weight: bold;
       font-size: 1.3rem;
     }
@@ -227,8 +228,8 @@
     }
 
     .service-image.additions {
-      background: rgba(243, 156, 18, 0.1);
-      border-color: rgba(243, 156, 18, 0.3);
+      background: rgba(220, 38, 38, 0.1);
+      border-color: rgba(220, 38, 38, 0.3);
     }
 
     .service-image.remodeling::after {
@@ -248,12 +249,12 @@
     }
 
     .service-image.additions::after {
-      color: rgba(243, 156, 18, 0.6);
+      color: rgba(220, 38, 38, 0.6);
     }
 
     /* Process Section */
     .process-section {
-      background: #ecf0f1;
+      background: #1a1a1a;
       padding: 80px 20px;
       margin-top: 40px;
     }
@@ -262,7 +263,7 @@
       font-size: 2.5rem;
       text-align: center;
       margin-bottom: 60px;
-      color: #2c3e50;
+      color: #ffffff;
     }
 
     .process-steps {
@@ -274,7 +275,7 @@
     }
 
     .step {
-      background: #fff;
+      background: #1a1a1a;
       padding: 35px;
       border-radius: 10px;
       text-align: center;
@@ -285,13 +286,13 @@
 
     .step:hover {
       transform: translateY(-10px);
-      box-shadow: 0 15px 40px rgba(243, 156, 18, 0.3);
+      box-shadow: 0 15px 40px rgba(220, 38, 38, 0.3);
     }
 
     .step-number {
       width: 60px;
       height: 60px;
-      background: #f39c12;
+      background: #dc2626;
       color: #fff;
       border-radius: 50%;
       display: flex;
@@ -305,17 +306,17 @@
     .step h3 {
       font-size: 1.4rem;
       margin-bottom: 15px;
-      color: #2c3e50;
+      color: #ffffff;
     }
 
     .step p {
-      color: #7f8c8d;
+      color: #999999;
       line-height: 1.6;
     }
 
     /* CTA Section */
     .cta-section {
-      background: linear-gradient(135deg, #2c3e50, #34495e);
+      background: linear-gradient(135deg, #111111, #222222);
       padding: 80px 20px;
       text-align: center;
       color: #fff;
@@ -333,7 +334,7 @@
 
     .btn {
       padding: 18px 40px;
-      background: #f39c12;
+      background: #dc2626;
       color: #fff;
       text-decoration: none;
       border-radius: 5px;
@@ -347,16 +348,16 @@
     }
 
     .btn:hover {
-      background: #e67e22;
+      background: #b91c1c;
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(243, 156, 18, 0.5);
+      box-shadow: 0 8px 20px rgba(220, 38, 38, 0.5);
     }
 
     /* Footer */
     footer {
-      background: #1a252f;
+      background: #0d0d0d;
       padding: 50px 20px 30px;
-      color: #bdc3c7;
+      color: #aaaaaa;
     }
 
     .footer-content {
@@ -380,8 +381,8 @@
         top: 0;
         height: 100vh;
         width: 70%;
-        background: #1a252f;
-        border-left: 3px solid #f39c12;
+        background: #0d0d0d;
+        border-left: 3px solid #dc2626;
         flex-direction: column;
         padding: 80px 30px 30px;
         gap: 0;
@@ -489,7 +490,7 @@
     <div class="nav-container">
       <div class="logo-container">
         <div class="logo-placeholder" aria-label="Company Logo">LOGO</div>
-        <div class="logo">BuildPro</div>
+        <div class="logo">Total Power</div>
       </div>
       <div class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu">
         <span></span>
@@ -649,8 +650,8 @@
   <!-- Footer -->
   <footer>
     <div class="footer-content">
-      <p>&copy; 2026 BuildPro Construction. All rights reserved.</p>
-      <p><a href="tel:+15551234567" style="color: #f39c12; text-decoration: none;">📞 (555) 123-4567</a> | <a href="mailto:info@buildpro.com" style="color: #f39c12; text-decoration: none;">📧 info@buildpro.com</a></p>
+      <p>&copy; 2026 Total Power. All rights reserved.</p>
+      <p><a href="tel:+15551234567" style="color: #dc2626; text-decoration: none;">📞 (555) 123-4567</a> | <a href="mailto:info@totalpower.com" style="color: #dc2626; text-decoration: none;">📧 info@totalpower.com</a></p>
     </div>
   </footer>
 

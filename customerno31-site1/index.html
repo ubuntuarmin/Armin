@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Thunder Bolts - Professional Sports Team</title>
+  <title>American Elite - Professional Sports Team</title>
   <style>
     * {
       margin: 0;
@@ -105,11 +105,12 @@
 
     /* Hero Section */
     .hero {
-      background: linear-gradient(135deg, #dc2626 0%, #1e40af 50%, #dc2626 100%);
+      background: linear-gradient(160deg, #0d0d0d 0%, #1e1e1e 30%, #1e3a8a 60%, #dc2626 100%);
       padding: 120px 20px 80px;
       text-align: center;
       position: relative;
       overflow: hidden;
+      border-bottom: 4px solid #dc2626;
     }
 
     .hero::before {
@@ -659,15 +660,140 @@
         font-size: 1.5rem;
       }
     }
+
+    /* ── Animated Loading Logo ── */
+    #loader-overlay {
+      position: fixed;
+      inset: 0;
+      background: #0d0d0d;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #loader-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .loader-shield {
+      width: 120px;
+      height: 140px;
+      position: relative;
+      margin-bottom: 28px;
+      animation: shieldPulse 1.8s ease-in-out infinite;
+    }
+    @keyframes shieldPulse {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(220,38,38,0.6)); }
+      50% { transform: scale(1.08); filter: drop-shadow(0 0 28px rgba(220,38,38,0.9)); }
+    }
+    .loader-wordmark {
+      font-family: 'Arial Black', 'Arial Bold', Arial, sans-serif;
+      font-size: 2rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #fff;
+      text-align: center;
+    }
+    .loader-wordmark span {
+      color: #dc2626;
+    }
+    .loader-tagline {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: rgba(255,255,255,0.55);
+      margin-top: 8px;
+      text-transform: uppercase;
+    }
+    .loader-bar-wrap {
+      width: 160px;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin-top: 32px;
+      overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #1e40af, #dc2626);
+      border-radius: 2px;
+      animation: loadFill 2s ease forwards;
+    }
+    @keyframes loadFill {
+      0%   { width: 0%; }
+      60%  { width: 85%; }
+      100% { width: 100%; }
+    }
+    /* star sparks around the shield */
+    .loader-stars {
+      position: absolute;
+      inset: -20px;
+    }
+    .loader-star {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: #fff;
+      clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);
+      opacity: 0;
+    }
+    .loader-star:nth-child(1) { top: 10%; left: 50%; animation: sparkle 2s 0.2s ease-in-out infinite; }
+    .loader-star:nth-child(2) { top: 50%; left: 5%;  animation: sparkle 2s 0.6s ease-in-out infinite; }
+    .loader-star:nth-child(3) { top: 50%; right: 5%; animation: sparkle 2s 0.9s ease-in-out infinite; }
+    .loader-star:nth-child(4) { bottom: 5%; left: 20%; animation: sparkle 2s 0.4s ease-in-out infinite; }
+    .loader-star:nth-child(5) { bottom: 5%; right: 20%; animation: sparkle 2s 1.1s ease-in-out infinite; }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0.5); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
   </style>
 </head>
 <body>
+
+  <!-- Animated Loading Logo -->
+  <div id="loader-overlay">
+    <div class="loader-shield">
+      <div class="loader-stars">
+        <div class="loader-star"></div>
+        <div class="loader-star"></div>
+        <div class="loader-star"></div>
+        <div class="loader-star"></div>
+        <div class="loader-star"></div>
+      </div>
+      <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg" width="120" height="140">
+        <!-- Shield body -->
+        <path d="M60 4 L112 24 L112 72 Q112 112 60 136 Q8 112 8 72 L8 24 Z" fill="#0d0d0d" stroke="#dc2626" stroke-width="3"/>
+        <!-- Red top band -->
+        <path d="M60 4 L112 24 L112 44 L8 44 L8 24 Z" fill="#dc2626"/>
+        <!-- Blue middle -->
+        <path d="M8 44 L112 44 L112 72 Q112 95 60 116 Q8 95 8 72 Z" fill="#1e3a8a"/>
+        <!-- White star -->
+        <polygon points="60,55 65,70 80,70 68,79 73,94 60,85 47,94 52,79 40,70 55,70" fill="#fff"/>
+        <!-- Border overlay for depth -->
+        <path d="M60 4 L112 24 L112 72 Q112 112 60 136 Q8 112 8 72 L8 24 Z" fill="none" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.2"/>
+      </svg>
+    </div>
+    <div class="loader-wordmark">AMERICAN <span>ELITE</span></div>
+    <div class="loader-tagline">Authority · Excellence · Champions</div>
+    <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function () {
+      setTimeout(function () {
+        document.getElementById('loader-overlay').classList.add('hidden');
+      }, 2400);
+    });
+  </script>
   <!-- Navigation -->
   <nav>
     <div class="nav-container">
       <div class="logo-container">
         <div class="logo-placeholder">TEAM LOGO</div>
-        <div class="logo">Thunder Bolts</div>
+        <div class="logo">American Elite</div>
       </div>
       <div class="hamburger" onclick="toggleMenu()">
         <span></span>
@@ -688,7 +814,7 @@
   <section class="hero">
     <div class="hero-content">
       <div class="hero-image-placeholder">[ Hero Image / Team Photo ]</div>
-      <h1>Thunder Bolts</h1>
+      <h1>American Elite</h1>
       <p>Champions in the Making</p>
       <div class="season-tag">2026 SEASON</div>
     </div>
@@ -725,7 +851,7 @@
       <h2 class="section-title">Our Mission</h2>
       <div class="mission-content">
         <p class="mission-text">
-          At Thunder Bolts, we're more than just a team—we're a family committed to excellence on and off the court. Our mission is to develop not only outstanding athletes but also exceptional individuals who embody integrity, teamwork, and perseverance.
+          At American Elite, we're more than just a team—we're a family committed to excellence on and off the court. Our mission is to develop not only outstanding athletes but also exceptional individuals who embody integrity, teamwork, and perseverance.
         </p>
         <div class="mission-values">
           <div class="value-item">
@@ -785,7 +911,7 @@
   <!-- How to Apply Section -->
   <section class="apply-section" id="apply">
     <div class="container apply-content">
-      <h2 class="section-title">Join the Thunder Bolts</h2>
+      <h2 class="section-title">Join the American Elite</h2>
       <p class="apply-intro">
         Ready to be part of something special? We're looking for dedicated athletes who want to compete at the highest level. Follow these steps to join our team.
       </p>
@@ -818,7 +944,7 @@
       <h2 class="section-title">Next Game</h2>
       <div class="game-info">
         <div class="game-date">Saturday, February 22, 2026 - 7:00 PM</div>
-        <div class="game-teams">Thunder Bolts vs. City Hawks</div>
+        <div class="game-teams">American Elite vs. City Hawks</div>
         <div class="game-location">📍 Thunder Arena, Downtown Stadium</div>
         <a href="#" class="ticket-btn">Get Tickets</a>
       </div>
@@ -828,7 +954,7 @@
   <!-- Footer -->
   <footer>
     <div class="container">
-      <p>&copy; 2026 Thunder Bolts. All rights reserved.</p>
+      <p>&copy; 2026 American Elite. All rights reserved.</p>
       <div class="social-links">
         <a href="#" aria-label="Facebook">📘</a>
         <a href="#" aria-label="Twitter">🐦</a>
