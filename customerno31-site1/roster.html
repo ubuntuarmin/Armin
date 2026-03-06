@@ -373,7 +373,35 @@
         font-size: 0.7rem;
       }
     }
-  </style>
+      /* Roster Search */
+    .roster-search-wrap { margin-bottom:25px; }
+    #rosterSearch {
+      width:100%; max-width:400px; padding:12px 18px;
+      border:2px solid #dc2626; background:#1a1a1a; color:#fff;
+      border-radius:25px; font-size:1rem; outline:none; transition:border-color 0.3s;
+    }
+    #rosterSearch::placeholder { color:#888; }
+    #rosterSearch:focus { border-color:#ff4444; }
+    .player-card[style*="display: none"], .player-card.player-hidden { display:none!important; }
+    /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -409,8 +437,11 @@
     <!-- Guards -->
     <div class="roster-section">
       <h2 class="position-title">🏀 Guards</h2>
-      <div class="roster-grid">
-        <div class="player-card">
+              <div class="roster-search-wrap">
+          <input type="search" id="rosterSearch" placeholder="&#128269; Search by name or position..." aria-label="Search players"/>
+        </div>
+<div class="roster-grid">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#23</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -419,15 +450,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">18.5</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">7.2</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">4.1</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -436,7 +467,7 @@
           </div>
         </div>
 
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#7</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -445,15 +476,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">21.3</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">3.8</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">5.2</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -462,7 +493,7 @@
           </div>
         </div>
 
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#11</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -471,15 +502,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">12.7</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">5.9</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">3.4</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -494,7 +525,7 @@
     <div class="roster-section">
       <h2 class="position-title">⚡ Forwards</h2>
       <div class="roster-grid">
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#32</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -503,15 +534,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">16.8</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">2.1</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">9.5</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -520,7 +551,7 @@
           </div>
         </div>
 
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#21</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -529,15 +560,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">14.2</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">3.7</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">6.8</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -546,7 +577,7 @@
           </div>
         </div>
 
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#15</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -555,15 +586,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">10.5</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">2.3</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">5.1</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -578,7 +609,7 @@
     <div class="roster-section">
       <h2 class="position-title">🏆 Centers</h2>
       <div class="roster-grid">
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#45</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -587,15 +618,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">19.7</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">1.8</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">11.2</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -604,7 +635,7 @@
           </div>
         </div>
 
-        <div class="player-card">
+        <div class="player-card reveal">
           <div class="player-header">
             <div class="player-number">#50</div>
             <div class="player-avatar">PLAYER PHOTO</div>
@@ -613,15 +644,15 @@
           </div>
           <div class="player-body">
             <div class="player-stats">
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">8.9</div>
                 <div class="stat-label">PPG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">1.2</div>
                 <div class="stat-label">APG</div>
               </div>
-              <div class="stat-item">
+              <div class="stat-item reveal">
                 <div class="stat-value">7.3</div>
                 <div class="stat-label">RPG</div>
               </div>
@@ -662,6 +693,51 @@
         navLinks.classList.remove('active');
       }
     });
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Roster Search
+    (function(){
+      var input=document.getElementById("rosterSearch");
+      if(!input)return;
+      input.addEventListener("input",function(){
+        var q=this.value.toLowerCase().trim();
+        document.querySelectorAll(".player-card").forEach(function(card){
+          var name=(card.querySelector(".player-name")||{}).textContent||"";
+          var pos=(card.querySelector(".player-position")||{}).textContent||"";
+          card.style.display=(!q||name.toLowerCase().includes(q)||pos.toLowerCase().includes(q))?"":"none";
+        });
+      });
+    })();
+</script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>
