@@ -331,6 +331,9 @@
       .nav-links { display: none; }
     }
   </style>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <!-- Back to Examples Button -->
@@ -564,6 +567,93 @@
       alert('Thank you for your reservation! We will contact you shortly to confirm.');
       this.reset();
     });
+  </script>
+
+  <!-- React FAQ & Reservation Components -->
+  <section id="faq" class="faq-section" style="padding:80px 20px;background:#fafafa;">
+    <h2 style="text-align:center;color:#8b4513;font-family:Georgia,serif;font-size:2rem;margin-bottom:8px;">Frequently Asked Questions</h2>
+    <p style="text-align:center;color:#666;margin-bottom:40px;">Everything you need to know about dining with us</p>
+    <div id="react-faq" style="max-width:800px;margin:0 auto;"></div>
+  </section>
+
+  <section style="padding:80px 20px;background:#fff;">
+    <h2 style="text-align:center;color:#8b4513;font-family:Georgia,serif;font-size:2rem;margin-bottom:8px;">Make a Reservation</h2>
+    <p style="text-align:center;color:#666;margin-bottom:40px;">Book your table with us today</p>
+    <div id="react-reservation" style="max-width:600px;margin:0 auto;"></div>
+  </section>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function FAQAccordion() {
+      const [openIndex, setOpenIndex] = useState(null);
+      const faqs = [
+        { q: "Do you accept walk-ins or reservations only?", a: "We welcome both walk-ins and reservations. However, we highly recommend making a reservation, especially on weekends and holidays, to guarantee your table. Walk-ins are accommodated based on availability." },
+        { q: "Do you accommodate dietary restrictions?", a: "Absolutely! We offer a variety of gluten-free, vegetarian, and vegan options. Please inform your server about any allergies or dietary needs when ordering, and our chefs will be happy to accommodate you." },
+        { q: "Is there parking available near the restaurant?", a: "Yes, there is a public parking garage half a block away on Italian Way, as well as street parking in the surrounding area. Valet service is available Friday through Sunday evenings." },
+        { q: "Can you host private events or large groups?", a: "We have a private dining room that can accommodate groups of up to 30 guests. For larger events or wedding receptions, please contact us at events@bellacucina.com for custom packages." },
+        { q: "What is your cancellation policy?", a: "We kindly ask that you cancel your reservation at least 24 hours in advance. For parties of 6 or more, please notify us 48 hours before your reservation to avoid a cancellation fee." },
+      ];
+      return (
+        <div>
+          <style>{`
+            .react-faq-item { border:1px solid #e8d5b7; border-radius:8px; margin-bottom:12px; overflow:hidden; background:#fff; cursor:pointer; transition:box-shadow 0.2s; }
+            .react-faq-item:hover { box-shadow:0 4px 16px rgba(139,69,19,0.12); }
+            .react-faq-q { padding:18px 20px; font-weight:600; color:#8b4513; display:flex; justify-content:space-between; align-items:center; font-family:Georgia,serif; font-size:1rem; }
+            .react-faq-a { padding:0 20px 18px; color:#555; line-height:1.7; }
+          `}</style>
+          {faqs.map((faq, i) => (
+            <div key={i} className="react-faq-item" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+              <div className="react-faq-q">{faq.q} <span style={{fontSize:'1.2rem',color:'#c8860a'}}>{openIndex === i ? '▲' : '▼'}</span></div>
+              {openIndex === i && <div className="react-faq-a">{faq.a}</div>}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function ReservationForm() {
+      const [form, setForm] = useState({ name:'', email:'', date:'', time:'', party:'', notes:'' });
+      const [submitted, setSubmitted] = useState(false);
+      const update = (k, v) => setForm(f => ({ ...f, [k]: v }));
+      const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
+      const inputStyle = { width:'100%', padding:'12px', border:'1px solid #e8d5b7', borderRadius:'6px', fontFamily:'Georgia,serif', fontSize:'1rem', marginTop:'6px', boxSizing:'border-box', color:'#333' };
+      const labelStyle = { display:'block', fontWeight:'600', color:'#8b4513', marginBottom:'4px', fontSize:'0.9rem' };
+      if (submitted) return (
+        <div style={{textAlign:'center',padding:'40px 20px',background:'#fff9f0',border:'1px solid #e8d5b7',borderRadius:'12px'}}>
+          <div style={{fontSize:'3rem',marginBottom:'16px'}}>🍽️</div>
+          <h3 style={{color:'#8b4513',fontFamily:'Georgia,serif',marginBottom:'8px'}}>Reservation Received!</h3>
+          <p style={{color:'#666'}}>Thank you, {form.name}! We'll confirm your table for {form.party} guests on {form.date} at {form.time}. See you soon!</p>
+          <button onClick={() => { setForm({ name:'', email:'', date:'', time:'', party:'', notes:'' }); setSubmitted(false); }} style={{marginTop:'20px',padding:'12px 28px',background:'#8b4513',color:'#fff',border:'none',borderRadius:'6px',fontFamily:'Georgia,serif',cursor:'pointer',fontSize:'1rem'}}>Make Another Reservation</button>
+        </div>
+      );
+      return (
+        <form onSubmit={handleSubmit} style={{background:'#fff',padding:'32px',border:'1px solid #e8d5b7',borderRadius:'12px',boxShadow:'0 4px 24px rgba(139,69,19,0.08)'}}>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px',marginBottom:'16px'}}>
+            <div><label style={labelStyle}>Full Name *</label><input required style={inputStyle} value={form.name} onChange={e=>update('name',e.target.value)} placeholder="John Doe" /></div>
+            <div><label style={labelStyle}>Email *</label><input required type="email" style={inputStyle} value={form.email} onChange={e=>update('email',e.target.value)} placeholder="john@example.com" /></div>
+            <div><label style={labelStyle}>Date *</label><input required type="date" style={inputStyle} value={form.date} onChange={e=>update('date',e.target.value)} /></div>
+            <div><label style={labelStyle}>Time *</label>
+              <select required style={inputStyle} value={form.time} onChange={e=>update('time',e.target.value)}>
+                <option value="">Select time</option>
+                {['5:00 PM','5:30 PM','6:00 PM','6:30 PM','7:00 PM','7:30 PM','8:00 PM','8:30 PM','9:00 PM'].map(t=><option key={t}>{t}</option>)}
+              </select>
+            </div>
+            <div><label style={labelStyle}>Party Size *</label>
+              <select required style={inputStyle} value={form.party} onChange={e=>update('party',e.target.value)}>
+                <option value="">Select size</option>
+                {['1','2','3','4','5','6+'].map(n=><option key={n}>{n} {n==='1'?'Guest':'Guests'}</option>)}
+              </select>
+            </div>
+          </div>
+          <div style={{marginBottom:'20px'}}><label style={labelStyle}>Special Requests</label><textarea style={{...inputStyle,resize:'vertical',minHeight:'80px'}} value={form.notes} onChange={e=>update('notes',e.target.value)} placeholder="Dietary needs, special occasions..." /></div>
+          <button type="submit" style={{width:'100%',padding:'14px',background:'#8b4513',color:'#fff',border:'none',borderRadius:'6px',fontFamily:'Georgia,serif',fontSize:'1.05rem',fontWeight:'600',cursor:'pointer',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#6d3610'} onMouseOut={e=>e.target.style.background='#8b4513'}>Confirm Reservation ✓</button>
+        </form>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-faq')).render(<FAQAccordion />);
+    ReactDOM.createRoot(document.getElementById('react-reservation')).render(<ReservationForm />);
   </script>
 </body>
 </html>

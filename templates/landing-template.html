@@ -423,6 +423,9 @@
       }
     }
   </style>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <!-- Back to Examples Button -->
@@ -601,6 +604,7 @@
         <input type="email" placeholder="Enter your email" required>
         <button type="submit">Get Started</button>
       </form>
+      <div id="react-waitlist-form"></div>
     </div>
   </section>
 
@@ -628,6 +632,56 @@
       alert('Thank you for signing up! Check your email to get started with CloudSync.');
       this.reset();
     });
+  </script>
+
+  <!-- React Waitlist Component -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function WaitlistForm() {
+      const [form, setForm] = useState({ name:'', email:'' });
+      const [submitted, setSubmitted] = useState(false);
+      const [signupCount, setSignupCount] = useState(1247);
+      const update = (k, v) => setForm(f=>({...f,[k]:v}));
+
+      useEffect(() => {
+        const interval = setInterval(() => setSignupCount(c => c + Math.floor(Math.random() * 3) + 1), 10000);
+        return () => clearInterval(interval);
+      }, []);
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        setSignupCount(c => c + 1);
+        setSubmitted(true);
+      };
+
+      const inputStyle = { width:'100%', padding:'14px 16px', border:'2px solid rgba(255,255,255,0.3)', borderRadius:'10px', fontSize:'1rem', background:'rgba(255,255,255,0.15)', color:'#fff', outline:'none', boxSizing:'border-box' };
+
+      if (submitted) return (
+        <div style={{textAlign:'center',padding:'40px 24px',background:'rgba(255,255,255,0.1)',borderRadius:'16px',backdropFilter:'blur(12px)',border:'1px solid rgba(255,255,255,0.2)',maxWidth:'480px',margin:'0 auto'}}>
+          <div style={{fontSize:'3rem',marginBottom:'16px'}}>🚀</div>
+          <h3 style={{color:'#fff',fontSize:'1.5rem',fontWeight:'700',marginBottom:'10px'}}>You're on the list!</h3>
+          <p style={{color:'rgba(255,255,255,0.85)',marginBottom:'6px'}}>Welcome aboard, <strong>{form.name}</strong>! You're #{signupCount.toLocaleString()} on the waitlist.</p>
+          <p style={{color:'rgba(255,255,255,0.7)',fontSize:'0.9rem'}}>We'll notify you at <strong>{form.email}</strong> when we launch.</p>
+        </div>
+      );
+
+      return (
+        <div style={{maxWidth:'480px',margin:'32px auto 0',padding:'0 16px'}}>
+          <div style={{textAlign:'center',marginBottom:'20px'}}>
+            <span style={{display:'inline-block',padding:'6px 16px',background:'rgba(255,255,255,0.15)',borderRadius:'50px',color:'rgba(255,255,255,0.9)',fontSize:'0.85rem',fontWeight:'600',border:'1px solid rgba(255,255,255,0.25)'}}>🔥 {signupCount.toLocaleString()} people already joined</span>
+          </div>
+          <form onSubmit={handleSubmit} style={{display:'flex',flexDirection:'column',gap:'12px'}}>
+            <input required value={form.name} onChange={e=>update('name',e.target.value)} placeholder="Your first name" style={inputStyle} onFocus={e=>e.target.style.borderColor='rgba(255,255,255,0.7)'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.3)'} />
+            <input required type="email" value={form.email} onChange={e=>update('email',e.target.value)} placeholder="Your email address" style={inputStyle} onFocus={e=>e.target.style.borderColor='rgba(255,255,255,0.7)'} onBlur={e=>e.target.style.borderColor='rgba(255,255,255,0.3)'} />
+            <button type="submit" style={{padding:'15px',background:'#fff',color:'#6c2bd9',border:'none',borderRadius:'10px',fontWeight:'700',fontSize:'1rem',cursor:'pointer',transition:'transform 0.15s,box-shadow 0.15s',boxShadow:'0 4px 16px rgba(0,0,0,0.2)'}} onMouseOver={e=>{e.target.style.transform='translateY(-2px)';e.target.style.boxShadow='0 8px 24px rgba(0,0,0,0.25)';}} onMouseOut={e=>{e.target.style.transform='none';e.target.style.boxShadow='0 4px 16px rgba(0,0,0,0.2)';}}>Join the Waitlist — It's Free →</button>
+          </form>
+          <p style={{textAlign:'center',color:'rgba(255,255,255,0.6)',fontSize:'0.8rem',marginTop:'12px'}}>No credit card required. Cancel anytime.</p>
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-waitlist-form')).render(<WaitlistForm />);
   </script>
 </body>
 </html>
