@@ -759,7 +759,7 @@
         else if (f.name.trim().length < 2) e.name = 'Name must be at least 2 characters';
         if (!f.email.trim()) e.email = 'Email is required';
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Please enter a valid email';
-        if (f.phone && (f.phone.match(/\d/g) || []).length < 6) e.phone = 'Please enter a valid phone number (at least 6 digits)';
+        if (f.phone && !/^[\d\s\-\+\(\)\.]{6,20}$/.test(f.phone.trim())) e.phone = 'Please enter a valid phone number';
         if (!f.subject.trim()) e.subject = 'Subject is required';
         if (!f.message.trim()) e.message = 'Message is required';
         else if (f.message.trim().length < 10) e.message = 'Message must be at least 10 characters';

@@ -437,34 +437,15 @@
   </script>
 
   <!-- React Filter & Cart Components -->
-  <div id="react-cart-counter" style="position:fixed;top:16px;right:20px;z-index:1001;"></div>
-
-  <section style="padding:60px 20px;background:#f8f9fa;text-align:center;">
-    <h2 style="font-size:1.6rem;font-weight:700;color:#333;margin-bottom:8px;">Browse Products</h2>
-    <p style="color:#666;margin-bottom:28px;">Filter by category to find what you need</p>
-    <div id="react-product-filter" style="max-width:1100px;margin:0 auto;"></div>
-  </section>
+  <div id="react-shop" style="position:relative;"></div>
 
   <script type="text/babel">
     const { useState } = React;
 
-    function CartCounter() {
-      const [count, setCount] = useState(0);
-      React.useEffect(() => {
-        window.__addToCart = () => setCount(c => c + 1);
-      }, []);
-      return (
-        <div style={{display:'flex',alignItems:'center',gap:'8px',background:'#fff',borderRadius:'50px',padding:'8px 16px',boxShadow:'0 2px 12px rgba(0,0,0,0.15)',cursor:'default'}}>
-          <span style={{fontSize:'1.2rem'}}>🛒</span>
-          {count > 0 && <span style={{background:'#e44d26',color:'#fff',borderRadius:'50%',width:'22px',height:'22px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.75rem',fontWeight:'700'}}>{count}</span>}
-          <span style={{fontSize:'0.85rem',fontWeight:'600',color:'#333'}}>{count === 0 ? 'Cart' : `${count} item${count>1?'s':''}`}</span>
-        </div>
-      );
-    }
-
-    function ProductFilter() {
-      const categories = ['All', 'Electronics', 'Clothing', 'Accessories'];
+    function Shop() {
+      const [cartCount, setCartCount] = useState(0);
       const [active, setActive] = useState('All');
+      const categories = ['All', 'Electronics', 'Clothing', 'Accessories'];
       const products = [
         { name:'Wireless Earbuds', price:'$79', category:'Electronics', emoji:'🎧', desc:'Premium sound quality with 24h battery life' },
         { name:'Smart Watch', price:'$199', category:'Electronics', emoji:'⌚', desc:'Track fitness, notifications & more' },
@@ -476,33 +457,46 @@
         { name:'Baseball Cap', price:'$24', category:'Clothing', emoji:'🧢', desc:'Adjustable fit, UV protection built-in' },
       ];
       const filtered = active === 'All' ? products : products.filter(p => p.category === active);
+      const addToCart = () => setCartCount(c => c + 1);
+
       return (
         <div>
-          <div style={{display:'flex',gap:'10px',justifyContent:'center',flexWrap:'wrap',marginBottom:'32px'}}>
-            {categories.map(cat => (
-              <button key={cat} onClick={() => setActive(cat)} style={{padding:'10px 22px',borderRadius:'50px',border:'2px solid',borderColor: active===cat ? '#e44d26' : '#ddd',background: active===cat ? '#e44d26' : '#fff',color: active===cat ? '#fff' : '#555',fontWeight:'600',cursor:'pointer',fontSize:'0.9rem',transition:'all 0.2s'}}>{cat}</button>
-            ))}
+          {/* Floating Cart Counter */}
+          <div style={{position:'fixed',top:'16px',right:'20px',zIndex:1001,display:'flex',alignItems:'center',gap:'8px',background:'#fff',borderRadius:'50px',padding:'8px 16px',boxShadow:'0 2px 12px rgba(0,0,0,0.15)'}}>
+            <span style={{fontSize:'1.2rem'}}>🛒</span>
+            {cartCount > 0 && <span style={{background:'#e44d26',color:'#fff',borderRadius:'50%',width:'22px',height:'22px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.75rem',fontWeight:'700'}}>{cartCount}</span>}
+            <span style={{fontSize:'0.85rem',fontWeight:'600',color:'#333'}}>{cartCount === 0 ? 'Cart' : `${cartCount} item${cartCount>1?'s':''}`}</span>
           </div>
-          <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:'20px'}}>
-            {filtered.map((p,i) => (
-              <div key={i} style={{background:'#fff',borderRadius:'12px',padding:'24px 20px',boxShadow:'0 2px 12px rgba(0,0,0,0.08)',textAlign:'center',transition:'transform 0.2s, box-shadow 0.2s'}} onMouseOver={e=>{e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 8px 24px rgba(0,0,0,0.14)';}} onMouseOut={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)';}}>
-                <div style={{fontSize:'2.5rem',marginBottom:'12px'}}>{p.emoji}</div>
-                <div style={{fontSize:'0.75rem',fontWeight:'600',color:'#e44d26',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'6px'}}>{p.category}</div>
-                <h3 style={{fontSize:'1rem',fontWeight:'700',color:'#222',marginBottom:'6px'}}>{p.name}</h3>
-                <p style={{fontSize:'0.85rem',color:'#666',marginBottom:'14px',lineHeight:'1.5'}}>{p.desc}</p>
-                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                  <span style={{fontWeight:'700',fontSize:'1.15rem',color:'#333'}}>{p.price}</span>
-                  <button onClick={() => window.__addToCart && window.__addToCart()} style={{padding:'8px 16px',background:'#e44d26',color:'#fff',border:'none',borderRadius:'6px',cursor:'pointer',fontWeight:'600',fontSize:'0.85rem',minHeight:'36px'}}>Add to Cart</button>
+
+          {/* Product Filter Section */}
+          <section style={{padding:'60px 20px',background:'#f8f9fa',textAlign:'center'}}>
+            <h2 style={{fontSize:'1.6rem',fontWeight:'700',color:'#333',marginBottom:'8px'}}>Browse Products</h2>
+            <p style={{color:'#666',marginBottom:'28px'}}>Filter by category to find what you need</p>
+            <div style={{display:'flex',gap:'10px',justifyContent:'center',flexWrap:'wrap',marginBottom:'32px'}}>
+              {categories.map(cat => (
+                <button key={cat} onClick={() => setActive(cat)} style={{padding:'10px 22px',borderRadius:'50px',border:'2px solid',borderColor: active===cat ? '#e44d26' : '#ddd',background: active===cat ? '#e44d26' : '#fff',color: active===cat ? '#fff' : '#555',fontWeight:'600',cursor:'pointer',fontSize:'0.9rem',transition:'all 0.2s',minHeight:'44px'}}>{cat}</button>
+              ))}
+            </div>
+            <div style={{display:'grid',gridTemplateColumns:'repeat(auto-fill,minmax(220px,1fr))',gap:'20px',maxWidth:'1100px',margin:'0 auto'}}>
+              {filtered.map((p,i) => (
+                <div key={i} style={{background:'#fff',borderRadius:'12px',padding:'24px 20px',boxShadow:'0 2px 12px rgba(0,0,0,0.08)',textAlign:'center',transition:'transform 0.2s, box-shadow 0.2s'}} onMouseOver={e=>{e.currentTarget.style.transform='translateY(-4px)';e.currentTarget.style.boxShadow='0 8px 24px rgba(0,0,0,0.14)';}} onMouseOut={e=>{e.currentTarget.style.transform='none';e.currentTarget.style.boxShadow='0 2px 12px rgba(0,0,0,0.08)';}}>
+                  <div style={{fontSize:'2.5rem',marginBottom:'12px'}}>{p.emoji}</div>
+                  <div style={{fontSize:'0.75rem',fontWeight:'600',color:'#e44d26',textTransform:'uppercase',letterSpacing:'0.05em',marginBottom:'6px'}}>{p.category}</div>
+                  <h3 style={{fontSize:'1rem',fontWeight:'700',color:'#222',marginBottom:'6px'}}>{p.name}</h3>
+                  <p style={{fontSize:'0.85rem',color:'#666',marginBottom:'14px',lineHeight:'1.5'}}>{p.desc}</p>
+                  <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+                    <span style={{fontWeight:'700',fontSize:'1.15rem',color:'#333'}}>{p.price}</span>
+                    <button onClick={addToCart} style={{padding:'8px 16px',background:'#e44d26',color:'#fff',border:'none',borderRadius:'6px',cursor:'pointer',fontWeight:'600',fontSize:'0.85rem',minHeight:'44px'}}>Add to Cart</button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          </section>
         </div>
       );
     }
 
-    ReactDOM.createRoot(document.getElementById('react-cart-counter')).render(<CartCounter />);
-    ReactDOM.createRoot(document.getElementById('react-product-filter')).render(<ProductFilter />);
+    ReactDOM.createRoot(document.getElementById('react-shop')).render(<Shop />);
   </script>
 </body>
 </html>
