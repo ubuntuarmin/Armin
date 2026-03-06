@@ -645,8 +645,7 @@
       const update = (k, v) => setForm(f=>({...f,[k]:v}));
 
       useEffect(() => {
-        const interval = setInterval(() => setSignupCount(c => c + Math.floor(Math.random() * 3) + 1), 10000);
-        return () => clearInterval(interval);
+        // Count is a static demo figure; only real form submissions increment it
       }, []);
 
       const handleSubmit = (e) => {
