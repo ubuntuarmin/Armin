@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galerie - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%); padding: 80px 24px; text-align: center; }
+    .page-hero .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .page-hero h1 { font-size: clamp(2.4rem,5vw,3.8rem); color: #FFF8EE; font-style: italic; margin-bottom: 14px; }
+    .page-hero p { color: #B0BCCF; font-family: sans-serif; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+
+    /* GALLERY BODY */
+    .gallery-body { max-width: 1400px; margin: 0 auto; padding: 80px 24px; }
+
+    /* Filter bar */
+    .filter-bar { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 56px; justify-content: center; }
+    .filter-btn { padding: 10px 24px; border-radius: 100px; font-family: sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.3s; border: 2px solid var(--cream2); color: var(--brown); background: var(--light); }
+    .filter-btn.active, .filter-btn:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+    /* Hero gallery block — 2 tall + 1 wide */
+    .hero-gallery { display: grid; grid-template-columns: 1fr 1fr 2fr; grid-template-rows: 500px; gap: 16px; margin-bottom: 16px; }
+    .hero-gallery .g-ph { border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; background: var(--cream2); border: 2px dashed rgba(184,146,42,0.3); transition: border-color 0.3s; cursor: pointer; }
+    .hero-gallery .g-ph:hover { border-color: var(--gold); }
+    .g-ph .ph-icon { font-size: 3.5rem; opacity: 0.3; }
+    .g-ph .ph-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 10px; opacity: 0.5; }
+    .g-ph .ph-size { font-size: 0.65rem; color: #999; font-family: sans-serif; margin-top: 4px; }
+
+    /* Standard grid */
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .gallery-grid .g-ph { min-height: 260px; }
+    .gallery-grid .g-ph.tall { grid-row: span 2; min-height: 536px; }
+    .gallery-grid .g-ph.wide { grid-column: span 2; }
+    .gallery-grid .g-ph.feature { grid-column: span 2; grid-row: span 2; min-height: 536px; }
+
+    /* Behind-the-scenes strip */
+    .bts-strip { background: var(--navy); padding: 80px 24px; margin-top: 80px; }
+    .bts-inner { max-width: 1400px; margin: 0 auto; }
+    .bts-header { text-align: center; margin-bottom: 48px; }
+    .bts-header .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 10px; }
+    .bts-header h2 { font-size: clamp(1.8rem,3vw,2.6rem); color: #FFF8EE; font-style: italic; }
+    .bts-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+    .bts-ph { aspect-ratio: 1; background: rgba(255,255,255,0.05); border: 2px dashed rgba(184,146,42,0.25); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 16px; transition: border-color 0.3s; }
+    .bts-ph:hover { border-color: var(--gold); }
+    .bts-ph .ph-icon { font-size: 2.5rem; opacity: 0.25; color: var(--gold2); }
+    .bts-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 8px; opacity: 0.45; }
+
+    /* Video placeholder */
+    .video-section { padding: 80px 24px; }
+    .video-inner { max-width: 960px; margin: 0 auto; text-align: center; }
+    .video-ph { background: var(--cream2); border-radius: 16px; min-height: 540px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed rgba(184,146,42,0.3); position: relative; overflow: hidden; }
+    .video-ph .play-btn { width: 80px; height: 80px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 20px; box-shadow: 0 8px 30px rgba(184,146,42,0.35); }
+    .video-ph .ph-label { font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; opacity: 0.5; }
+    .video-ph .ph-sub { font-size: 0.75rem; color: #999; font-family: sans-serif; margin-top: 8px; }
+    .video-title { font-size: clamp(1.8rem,3vw,2.6rem); color: var(--navy); font-style: italic; margin-bottom: 14px; margin-top: 0; }
+    .video-desc { color: #6B5744; font-family: sans-serif; font-size: 1rem; max-width: 600px; margin: 0 auto 36px; }
+
+    @media (max-width: 900px) {
+      .hero-gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 300px 300px; }
+      .hero-gallery .g-ph:last-child { grid-column: span 2; }
+      .gallery-grid { grid-template-columns: repeat(2,1fr); }
+      .gallery-grid .g-ph.tall, .gallery-grid .g-ph.feature { grid-row: span 1; min-height: 260px; }
+      .gallery-grid .g-ph.wide, .gallery-grid .g-ph.feature { grid-column: span 1; }
+      .bts-grid { grid-template-columns: repeat(3,1fr); }
+    }
+    @media (max-width: 480px) { .gallery-grid { grid-template-columns: 1fr; } .bts-grid { grid-template-columns: repeat(2,1fr); } }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html" class="active">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="eyebrow">Galerie</p>
+  <h1>A Feast for the Eyes</h1>
+  <div class="divider"></div>
+  <p>Every image tells the story of craft, colour, and care that goes into each creation at La Maison Dorée.</p>
+</section>
+
+<div class="gallery-body">
+
+  <div class="filter-bar">
+    <button class="filter-btn active">All</button>
+    <button class="filter-btn">Breads</button>
+    <button class="filter-btn">Pastries</button>
+    <button class="filter-btn">Cakes</button>
+    <button class="filter-btn">Interior</button>
+    <button class="filter-btn">Events</button>
+    <button class="filter-btn">Team</button>
+  </div>
+
+  <!-- HERO GALLERY BLOCK -->
+  <div class="hero-gallery">
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Portrait Photo</p>
+      <p class="ph-size">700 × 1050px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Portrait Photo</p>
+      <p class="ph-size">700 × 1050px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Wide Hero Photo</p>
+      <p class="ph-size">1400 × 1050px</p>
+    </div>
+  </div>
+
+  <!-- MAIN GALLERY MOSAIC -->
+  <div class="gallery-grid">
+    <div class="g-ph feature">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Feature Image</p>
+      <p class="ph-size">800 × 800px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph tall">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Tall Photo</p>
+      <p class="ph-size">600 × 900px</p>
+    </div>
+    <div class="g-ph wide">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Wide Photo</p>
+      <p class="ph-size">1200 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+    <div class="g-ph">
+      <div class="ph-icon">🖼️</div>
+      <p class="ph-label">Square</p>
+      <p class="ph-size">600 × 600px</p>
+    </div>
+  </div>
+
+</div><!-- gallery-body -->
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+  <div class="video-inner">
+    <h2 class="video-title">Watch Us Work</h2>
+    <p class="video-desc">A short film of our bakers at 3 AM — the quiet hour when the magic truly begins. Replace with your embedded video or YouTube iframe.</p>
+    <div class="video-ph">
+      <div class="play-btn">▶</div>
+      <p class="ph-label">Video Embed Placeholder</p>
+      <p class="ph-sub">Replace with YouTube iframe or HTML5 &lt;video&gt; tag · Recommended: 16:9 ratio</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEHIND THE SCENES -->
+<section class="bts-strip">
+  <div class="bts-inner">
+    <div class="bts-header">
+      <p class="eyebrow">Dans les Coulisses</p>
+      <h2>Behind the Scenes</h2>
+    </div>
+    <div class="bts-grid">
+      <div class="bts-ph"><div class="ph-icon">📸</div><p class="ph-label">BTS Photo · 400×400px</p></div>
+      <div class="bts-ph"><div class="ph-icon">📸</div><p class="ph-label">BTS Photo · 400×400px</p></div>
+      <div class="bts-ph"><div class="ph-icon">📸</div><p class="ph-label">BTS Photo · 400×400px</p></div>
+      <div class="bts-ph"><div class="ph-icon">📸</div><p class="ph-label">BTS Photo · 400×400px</p></div>
+      <div class="bts-ph"><div class="ph-icon">📸</div><p class="ph-label">BTS Photo · 400×400px</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>

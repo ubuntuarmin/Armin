@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Événements - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%); padding: 80px 24px; text-align: center; }
+    .page-hero .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .page-hero h1 { font-size: clamp(2.4rem,5vw,3.8rem); color: #FFF8EE; font-style: italic; margin-bottom: 14px; }
+    .page-hero p { color: #B0BCCF; font-family: sans-serif; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+
+    /* FEATURED EVENT */
+    .featured-event { max-width: 1280px; margin: 80px auto; padding: 0 24px; }
+    .event-feature-card {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 0;
+      background: var(--light); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 50px rgba(0,0,0,0.1);
+    }
+    .event-img-ph { min-height: 500px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; border-right: 3px solid var(--gold); border: 2px dashed rgba(184,146,42,0.3); }
+    .event-img-ph .ph-icon { font-size: 5rem; opacity: 0.25; }
+    .event-img-ph .ph-label { font-family: sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); margin-top: 14px; opacity: 0.5; }
+    .event-img-ph .ph-sub { font-family: sans-serif; font-size: 0.7rem; color: #999; margin-top: 8px; }
+    .event-info { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; }
+    .event-badge { display: inline-block; background: var(--navy); color: var(--gold); font-family: sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 6px 16px; border-radius: 100px; margin-bottom: 20px; }
+    .event-info h2 { font-size: 2rem; color: var(--navy); font-style: italic; margin-bottom: 14px; }
+    .event-meta { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+    .meta-item { display: flex; align-items: center; gap: 8px; font-family: sans-serif; font-size: 0.85rem; color: #6B5744; }
+    .meta-icon { font-size: 1.1rem; }
+    .event-info p { font-size: 0.95rem; color: #6B5744; font-family: sans-serif; line-height: 1.8; margin-bottom: 28px; }
+    .btn-gold { background: var(--gold); color: var(--navy); padding: 14px 32px; border-radius: 4px; font-weight: 700; font-family: sans-serif; font-size: 0.9rem; text-decoration: none; display: inline-block; transition: background 0.3s; }
+    .btn-gold:hover { background: var(--gold2); }
+    @media (max-width: 768px) { .event-feature-card { grid-template-columns: 1fr; } .event-img-ph { min-height: 280px; } .event-info { padding: 32px 24px; } }
+
+    /* EVENTS GRID */
+    .events-section { padding: 80px 24px; background: var(--cream2); }
+    .events-inner { max-width: 1280px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 12px; }
+    .section-header h2 { font-size: clamp(2rem,4vw,3rem); color: var(--navy); font-style: italic; margin-bottom: 16px; }
+    .divider-center { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+    .events-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .event-card { background: var(--light); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+    .event-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .event-card-img { min-height: 260px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px; border-bottom: 3px solid var(--gold); }
+    .event-card-img .ph-icon { font-size: 3.5rem; opacity: 0.3; }
+    .event-card-img .ph-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 10px; opacity: 0.5; }
+    .event-card-body { padding: 24px; }
+    .event-date { font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); font-family: sans-serif; text-transform: uppercase; margin-bottom: 8px; }
+    .event-card-body h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 8px; }
+    .event-card-body p { font-size: 0.85rem; color: #6B5744; font-family: sans-serif; line-height: 1.65; margin-bottom: 18px; }
+    .event-spots { display: inline-block; background: var(--cream2); color: var(--brown); font-family: sans-serif; font-size: 0.75rem; padding: 4px 12px; border-radius: 100px; margin-bottom: 16px; }
+    .event-spots.few { background: #FFF3CD; color: #856404; }
+    @media (max-width: 900px) { .events-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .events-grid { grid-template-columns: 1fr; } }
+
+    /* CLASSES SECTION */
+    .classes-section { padding: 100px 24px; background: var(--navy); }
+    .classes-inner { max-width: 1280px; margin: 0 auto; }
+    .classes-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; margin-top: 60px; }
+    .classes-img-ph { min-height: 560px; background: rgba(255,255,255,0.05); border: 2px dashed rgba(184,146,42,0.3); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+    .classes-img-ph .ph-icon { font-size: 5rem; opacity: 0.2; color: var(--gold2); }
+    .classes-img-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 14px; opacity: 0.5; }
+    .classes-text .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .classes-text h2 { font-size: clamp(1.8rem,3vw,2.6rem); color: #FFF8EE; font-style: italic; margin-bottom: 20px; }
+    .classes-text p { color: #B0BCCF; font-family: sans-serif; line-height: 1.85; margin-bottom: 16px; font-size: 0.95rem; }
+    .class-list { list-style: none; margin: 24px 0 32px; }
+    .class-list li { color: #C8BBAA; font-family: sans-serif; font-size: 0.9rem; padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; justify-content: space-between; align-items: center; }
+    .class-list li .cl-price { color: var(--gold); font-weight: 700; }
+    @media (max-width: 768px) { .classes-grid { grid-template-columns: 1fr; } .classes-img-ph { min-height: 280px; } }
+
+    /* NEWSLETTER */
+    .newsletter-section { padding: 80px 24px; text-align: center; background: var(--cream2); }
+    .newsletter-inner { max-width: 600px; margin: 0 auto; }
+    .newsletter-inner .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 12px; }
+    .newsletter-inner h2 { font-size: clamp(1.8rem,3vw,2.4rem); color: var(--navy); font-style: italic; margin-bottom: 14px; }
+    .newsletter-inner p { color: #6B5744; font-family: sans-serif; margin-bottom: 32px; }
+    .newsletter-form { display: flex; gap: 12px; max-width: 480px; margin: 0 auto; }
+    .newsletter-form input { flex: 1; padding: 14px 20px; border: 2px solid var(--cream2); border-radius: 4px; font-family: sans-serif; font-size: 0.9rem; background: var(--light); color: var(--text); }
+    .newsletter-form input:focus { outline: none; border-color: var(--gold); }
+    .newsletter-form button { background: var(--navy); color: var(--gold); padding: 14px 28px; border: none; border-radius: 4px; font-family: sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.3s; white-space: nowrap; }
+    .newsletter-form button:hover { background: var(--gold); color: var(--navy); }
+    @media (max-width: 480px) { .newsletter-form { flex-direction: column; } }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html" class="active">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="eyebrow">Événements & Ateliers</p>
+  <h1>Join Us at the Bakery</h1>
+  <div class="divider"></div>
+  <p>Tastings, workshops, pop-ups, and baking classes — experience la Maison Dorée beyond the counter.</p>
+</section>
+
+<!-- FEATURED UPCOMING EVENT -->
+<div class="featured-event">
+  <div class="event-feature-card">
+    <div class="event-img-ph">
+      <div class="ph-icon">🎪</div>
+      <p class="ph-label">Featured Event Banner Image</p>
+      <p class="ph-sub">Recommended: 900 × 700px — atmospheric event or class photo</p>
+    </div>
+    <div class="event-info">
+      <span class="event-badge">⭐ Featured Event</span>
+      <h2>Holiday Bûche de Noël<br>Masterclass</h2>
+      <div class="event-meta">
+        <span class="meta-item"><span class="meta-icon">📅</span>December 14, 2024</span>
+        <span class="meta-item"><span class="meta-icon">⏰</span>10:00 AM – 2:00 PM</span>
+        <span class="meta-item"><span class="meta-icon">👥</span>12 spots only</span>
+      </div>
+      <p>Join head pâtissier Marc Dubois for a four-hour hands-on session creating the iconic French Christmas log cake. You'll take home your own creation, the recipe booklet, and a box of holiday petits fours.</p>
+      <p style="font-size:1.2rem;color:var(--gold);font-weight:700;margin-bottom:20px;">€95 per person · Includes all materials</p>
+      <a href="contact.html" class="btn-gold">Reserve Your Spot</a>
+    </div>
+  </div>
+</div>
+
+<!-- UPCOMING EVENTS GRID -->
+<section class="events-section">
+  <div class="events-inner">
+    <div class="section-header">
+      <p class="eyebrow">À Venir</p>
+      <h2>Upcoming Events</h2>
+      <div class="divider-center"></div>
+    </div>
+    <div class="events-grid">
+      <div class="event-card">
+        <div class="event-card-img">
+          <div class="ph-icon">🥐</div>
+          <p class="ph-label">Event Photo · 600 × 400px</p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">Nov 23 · 9:00 AM</p>
+          <h3>Croissant & Viennoiserie Workshop</h3>
+          <p>Master the art of laminated pastry dough with our head baker. Beginners welcome. Take home 12 croissants.</p>
+          <span class="event-spots few">⚡ 3 spots left</span>
+          <br><a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">Book Now — €75</a>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-card-img">
+          <div class="ph-icon">🍰</div>
+          <p class="ph-label">Event Photo · 600 × 400px</p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">Dec 7 · 2:00 PM</p>
+          <h3>French Macaron Afternoon</h3>
+          <p>Learn to pipe, fill, and flavour perfect macarons in six classic French flavours. Perfect as a gift for the holiday season.</p>
+          <span class="event-spots">8 spots available</span>
+          <br><a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">Book Now — €65</a>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-card-img">
+          <div class="ph-icon">🫖</div>
+          <p class="ph-label">Event Photo · 600 × 400px</p>
+        </div>
+        <div class="event-card-body">
+          <p class="event-date">Dec 21 · 11:00 AM</p>
+          <h3>Holiday Afternoon Tea Tasting</h3>
+          <p>A guided seasonal tasting — four pastry courses paired with curated teas and champagne. No cooking, just pure enjoyment.</p>
+          <span class="event-spots">12 spots available</span>
+          <br><a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:10px 22px;">Book Now — €45</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLASSES SECTION -->
+<section class="classes-section">
+  <div class="classes-inner">
+    <div class="section-header">
+      <p class="eyebrow" style="color:var(--gold2);">Ateliers Réguliers</p>
+      <h2 style="color:#FFF8EE;font-style:italic;font-size:clamp(2rem,4vw,3rem);margin-bottom:16px;">Regular Baking Classes</h2>
+      <div class="divider-center"></div>
+      <p style="color:#B0BCCF;">Run every Saturday morning — book a single session or save with a multi-class pass.</p>
+    </div>
+    <div class="classes-grid">
+      <div class="classes-img-ph">
+        <div class="ph-icon">📸</div>
+        <p class="ph-label">Classes Photo</p>
+        <p style="color:#8A9BB5;font-family:sans-serif;font-size:0.7rem;margin-top:8px;opacity:0.5;">Recommended: 800 × 900px — bakers working in class</p>
+      </div>
+      <div class="classes-text">
+        <p class="eyebrow">Every Saturday · 9:00–12:00</p>
+        <h2>Learn from Our Bakers</h2>
+        <p>Our Saturday morning classes run year-round in our teaching kitchen. Each session focuses on a different technique — from sourdough starters to choux pastry to chocolate tempering.</p>
+        <p>All materials, aprons, and a take-home box are included. Classes are capped at 10 participants to ensure personal attention from our chefs.</p>
+        <ul class="class-list">
+          <li>Sourdough Fundamentals <span class="cl-price">€55</span></li>
+          <li>Choux & Éclairs <span class="cl-price">€65</span></li>
+          <li>Tart & Flan Techniques <span class="cl-price">€60</span></li>
+          <li>Chocolate & Ganache <span class="cl-price">€70</span></li>
+          <li>Children's Baking (ages 8–14) <span class="cl-price">€40</span></li>
+        </ul>
+        <a href="contact.html" class="btn-gold">Browse All Classes</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <p class="eyebrow">Ne Manquez Rien</p>
+    <h2>Stay in the Know</h2>
+    <p>Be first to hear about new events, seasonal workshops, and limited pastry releases. We email once a week — no more.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="your@email.com">
+      <button type="submit">Subscribe</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>

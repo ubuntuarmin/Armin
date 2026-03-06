@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Traiteur - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* FULL BLEED HERO with large image placeholder */
+    .catering-hero {
+      position: relative; min-height: 80vh;
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 50%, #1E3A5F 100%);
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero-bg-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; border: 2px dashed rgba(184,146,42,0.2); }
+    .hero-bg-ph .ph-icon { font-size: 8rem; opacity: 0.08; color: var(--gold2); }
+    .hero-bg-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; opacity: 0.25; }
+    .hero-bg-ph .ph-sub { color: #8A9BB5; font-family: sans-serif; font-size: 0.75rem; margin-top: 6px; opacity: 0.2; }
+
+    .catering-hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto; padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; width: 100%;
+    }
+    .hero-text .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 14px; }
+    .hero-text h1 { font-size: clamp(2.4rem,5vw,4rem); color: #FFF8EE; font-style: italic; margin-bottom: 18px; line-height: 1.2; }
+    .hero-text p { color: #C8BBAA; font-family: sans-serif; font-size: 1.05rem; line-height: 1.8; margin-bottom: 32px; max-width: 460px; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 0 0 28px; border-radius: 2px; }
+    .btn-gold { background: var(--gold); color: var(--navy); padding: 15px 34px; border-radius: 4px; font-weight: 700; font-family: sans-serif; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: background 0.3s; }
+    .btn-gold:hover { background: var(--gold2); }
+    .btn-outline { border: 2px solid var(--gold); color: var(--gold); padding: 13px 32px; border-radius: 4px; font-weight: 600; font-family: sans-serif; font-size: 0.95rem; text-decoration: none; display: inline-block; transition: all 0.3s; margin-left: 12px; }
+    .btn-outline:hover { background: rgba(184,146,42,0.12); }
+    .hero-img-ph { background: rgba(255,255,255,0.06); border: 2px dashed rgba(184,146,42,0.4); border-radius: 12px; min-height: 500px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+    .hero-img-ph .ph-icon { font-size: 5rem; opacity: 0.3; }
+    .hero-img-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 14px; opacity: 0.6; }
+    .hero-img-ph .ph-sub { color: #8A9BB5; font-family: sans-serif; font-size: 0.75rem; margin-top: 8px; }
+    @media (max-width: 768px) { .catering-hero-inner { grid-template-columns: 1fr; } .hero-img-ph { min-height: 280px; } }
+
+    /* SERVICES */
+    .services-section { padding: 100px 24px; }
+    .services-inner { max-width: 1280px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 12px; }
+    .section-header h2 { font-size: clamp(2rem,4vw,3rem); color: var(--navy); font-style: italic; margin-bottom: 16px; }
+    .section-header p { font-size: 1rem; color: #6B5744; max-width: 580px; margin: 0 auto; font-family: sans-serif; }
+    .divider-center { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+    .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+    .service-card { background: var(--light); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+    .service-card:hover { transform: translateY(-5px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .service-img-ph { min-height: 280px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px; border-bottom: 3px solid var(--gold); }
+    .service-img-ph .ph-icon { font-size: 4rem; opacity: 0.3; }
+    .service-img-ph .ph-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 10px; opacity: 0.5; }
+    .service-body { padding: 28px; }
+    .service-body h3 { font-size: 1.25rem; color: var(--navy); margin-bottom: 10px; }
+    .service-body p { font-size: 0.9rem; color: #6B5744; font-family: sans-serif; line-height: 1.7; margin-bottom: 16px; }
+    .service-body ul { list-style: none; margin-bottom: 20px; }
+    .service-body ul li { font-size: 0.85rem; color: #5A4535; font-family: sans-serif; padding: 4px 0; padding-left: 18px; position: relative; }
+    .service-body ul li::before { content: '✦'; position: absolute; left: 0; color: var(--gold); font-size: 0.65rem; top: 7px; }
+    @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* PACKAGES */
+    .packages-section { background: var(--navy); padding: 100px 24px; }
+    .packages-inner { max-width: 1280px; margin: 0 auto; }
+    .packages-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 60px; }
+    .package-card { background: rgba(255,255,255,0.05); border: 1px solid rgba(184,146,42,0.25); border-radius: 12px; padding: 40px 32px; text-align: center; transition: border-color 0.3s, background 0.3s; position: relative; }
+    .package-card.featured { background: rgba(184,146,42,0.1); border-color: var(--gold); }
+    .package-card.featured .feat-badge { position: absolute; top: -14px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); font-family: sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 18px; border-radius: 100px; white-space: nowrap; }
+    .package-card:hover { border-color: var(--gold); background: rgba(184,146,42,0.07); }
+    .package-icon { font-size: 3rem; margin-bottom: 16px; }
+    .package-tier { color: var(--gold2); font-size: 0.85rem; margin-bottom: 6px; font-family: sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+    .package-name { color: #FFF8EE; font-size: 1.5rem; font-style: italic; margin-bottom: 8px; }
+    .package-price { color: var(--gold); font-size: 2.2rem; font-weight: 700; margin-bottom: 24px; font-family: sans-serif; }
+    .package-price span { font-size: 1rem; font-weight: 400; color: #8A9BB5; }
+    .package-features { list-style: none; margin-bottom: 32px; text-align: left; }
+    .package-features li { font-size: 0.85rem; color: #B0BCCF; font-family: sans-serif; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; gap: 10px; align-items: flex-start; }
+    .package-features li .check { color: var(--gold); flex-shrink: 0; }
+    @media (max-width: 900px) { .packages-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; } }
+
+    /* SHOWCASE */
+    .showcase-section { padding: 100px 24px; }
+    .showcase-inner { max-width: 1280px; margin: 0 auto; }
+    .showcase-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px; margin-top: 60px; }
+    .showcase-item { border-radius: 12px; overflow: hidden; position: relative; }
+    .showcase-img-ph { min-height: 400px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; border: 2px dashed rgba(184,146,42,0.3); border-radius: 12px; }
+    .showcase-img-ph .ph-icon { font-size: 4rem; opacity: 0.25; }
+    .showcase-img-ph .ph-label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 12px; opacity: 0.5; }
+    .showcase-img-ph .ph-sub { font-size: 0.7rem; color: #999; font-family: sans-serif; margin-top: 6px; }
+    .showcase-info { padding: 24px 0; }
+    .showcase-info .tag { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 8px; }
+    .showcase-info h3 { font-size: 1.3rem; color: var(--navy); margin-bottom: 8px; }
+    .showcase-info p { font-size: 0.9rem; color: #6B5744; font-family: sans-serif; line-height: 1.7; }
+    @media (max-width: 768px) { .showcase-grid { grid-template-columns: 1fr; } .showcase-img-ph { min-height: 280px; } }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html" class="active">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="catering-hero">
+  <div class="hero-bg-ph">
+    <div class="ph-icon">🍽️</div>
+    <p class="ph-label">Full-Page Background Image</p>
+    <p class="ph-sub">Recommended: 1920 × 1080px — elegant catering spread or event table setup</p>
+  </div>
+  <div class="catering-hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Services Traiteur</p>
+      <h1>French Elegance<br>for Every Occasion</h1>
+      <div class="divider"></div>
+      <p>From intimate dinner parties to grand corporate galas, our catering team delivers the full La Maison Dorée experience wherever you celebrate.</p>
+      <div>
+        <a href="contact.html" class="btn-gold">Request a Quote</a>
+        <a href="#packages" class="btn-outline">View Packages</a>
+      </div>
+    </div>
+    <div class="hero-img-ph">
+      <div class="ph-icon">🥂</div>
+      <p class="ph-label">Catering Spread Photo</p>
+      <p class="ph-sub">Recommended: 800 × 700px — table spread or pastry display</p>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-section">
+  <div class="services-inner">
+    <div class="section-header">
+      <p class="eyebrow">Ce Que Nous Offrons</p>
+      <h2>Our Catering Services</h2>
+      <div class="divider-center"></div>
+      <p>We design bespoke menus for every type of event, working closely with you from first consultation to final crumb.</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-img-ph">
+          <div class="ph-icon">💒</div>
+          <p class="ph-label">Wedding Setup Photo · 600 × 400px</p>
+        </div>
+        <div class="service-body">
+          <h3>Wedding Catering</h3>
+          <p>Your perfect day deserves perfection on the table. We craft custom wedding cakes, macaron towers, and full pastry buffets.</p>
+          <ul>
+            <li>Custom tiered wedding cakes</li>
+            <li>Macaron towers & bonbon stations</li>
+            <li>Full viennoiserie breakfast spreads</li>
+            <li>Dessert buffet design & setup</li>
+          </ul>
+          <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:11px 24px;">Enquire Now</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img-ph">
+          <div class="ph-icon">🏢</div>
+          <p class="ph-label">Corporate Event Photo · 600 × 400px</p>
+        </div>
+        <div class="service-body">
+          <h3>Corporate Events</h3>
+          <p>Impress clients and reward your team with artisan pastry platters, branded macarons, and luxury breakfast meetings.</p>
+          <ul>
+            <li>Morning pastry & coffee deliveries</li>
+            <li>Branded macaron collections</li>
+            <li>Lunch sandwiches & quiche platters</li>
+            <li>End-of-year celebration cakes</li>
+          </ul>
+          <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:11px 24px;">Enquire Now</a>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-img-ph">
+          <div class="ph-icon">🎉</div>
+          <p class="ph-label">Private Party Photo · 600 × 400px</p>
+        </div>
+        <div class="service-body">
+          <h3>Private Celebrations</h3>
+          <p>Birthdays, anniversaries, baby showers — we create bespoke confections that make every milestone unforgettable.</p>
+          <ul>
+            <li>Custom celebration cakes</li>
+            <li>Petit four & mignon trays</li>
+            <li>Afternoon tea sets for any size</li>
+            <li>Gift hampers & gift boxes</li>
+          </ul>
+          <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:11px 24px;">Enquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages-section" id="packages">
+  <div class="packages-inner">
+    <div class="section-header">
+      <p class="eyebrow" style="color:var(--gold2);">Forfaits</p>
+      <h2 style="color:#FFF8EE;">Catering Packages</h2>
+      <div class="divider-center"></div>
+      <p style="color:#B0BCCF;">Choose a package as a starting point — we can customise every detail to match your event.</p>
+    </div>
+    <div class="packages-grid">
+      <div class="package-card">
+        <div class="package-icon">🥐</div>
+        <p class="package-tier">Entrée</p>
+        <p class="package-name">La Petite Table</p>
+        <p class="package-price">€8<span> / person</span></p>
+        <ul class="package-features">
+          <li><span class="check">✦</span>Selection of 3 viennoiseries per person</li>
+          <li><span class="check">✦</span>Fresh orange juice & coffee station</li>
+          <li><span class="check">✦</span>Minimum 20 guests</li>
+          <li><span class="check">✦</span>Delivery & setup included</li>
+        </ul>
+        <a href="contact.html" class="btn-gold" style="display:block;text-align:center;">Get Started</a>
+      </div>
+      <div class="package-card featured">
+        <span class="feat-badge">Most Popular</span>
+        <div class="package-icon">🎂</div>
+        <p class="package-tier">Signature</p>
+        <p class="package-name">La Grand Table</p>
+        <p class="package-price">€18<span> / person</span></p>
+        <ul class="package-features">
+          <li><span class="check">✦</span>Full pastry buffet — 6 varieties</li>
+          <li><span class="check">✦</span>Custom dessert centrepiece</li>
+          <li><span class="check">✦</span>Champagne toast coordination</li>
+          <li><span class="check">✦</span>On-site pâtissier for 3 hours</li>
+          <li><span class="check">✦</span>Minimum 30 guests</li>
+        </ul>
+        <a href="contact.html" class="btn-gold" style="display:block;text-align:center;">Get Started</a>
+      </div>
+      <div class="package-card">
+        <div class="package-icon">👑</div>
+        <p class="package-tier">Prestige</p>
+        <p class="package-name">La Maison Entière</p>
+        <p class="package-price">Custom<span></span></p>
+        <ul class="package-features">
+          <li><span class="check">✦</span>Fully bespoke menu design</li>
+          <li><span class="check">✦</span>Dedicated event pâtissier & team</li>
+          <li><span class="check">✦</span>Live pastry station</li>
+          <li><span class="check">✦</span>Décor & table styling</li>
+          <li><span class="check">✦</span>Any size, any location</li>
+        </ul>
+        <a href="contact.html" class="btn-gold" style="display:block;text-align:center;">Request Quote</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOWCASE -->
+<section class="showcase-section">
+  <div class="showcase-inner">
+    <div class="section-header">
+      <p class="eyebrow">Réalisations</p>
+      <h2>Recent Catering Highlights</h2>
+      <div class="divider-center"></div>
+      <p>A glimpse at some of the events we've had the honour of creating for.</p>
+    </div>
+    <div class="showcase-grid">
+      <div class="showcase-item">
+        <div class="showcase-img-ph">
+          <div class="ph-icon">💒</div>
+          <p class="ph-label">Wedding Event Photo</p>
+          <p class="ph-sub">Recommended: 900 × 600px — reception table or cake</p>
+        </div>
+        <div class="showcase-info">
+          <p class="tag">Wedding · June 2024</p>
+          <h3>Château Villeneuve — 120 Guests</h3>
+          <p>Five-tier wedding cake, macaron tower of 400, and a full patisserie buffet for an evening celebration in the Loire Valley.</p>
+        </div>
+      </div>
+      <div class="showcase-item">
+        <div class="showcase-img-ph">
+          <div class="ph-icon">🏢</div>
+          <p class="ph-label">Corporate Event Photo</p>
+          <p class="ph-sub">Recommended: 900 × 600px — table spread or branding</p>
+        </div>
+        <div class="showcase-info">
+          <p class="tag">Corporate · April 2024</p>
+          <h3>LVMH Annual Leadership Summit</h3>
+          <p>Three-day breakfast delivery for 80 executives — branded macarons, seasonal viennoiseries, and afternoon petit four trays.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>

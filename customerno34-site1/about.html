@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notre Histoire - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* CINEMATIC PAGE HERO */
+    .page-hero {
+      position: relative;
+      min-height: 75vh;
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%);
+      display: flex; align-items: flex-end;
+      overflow: hidden;
+    }
+    /* Giant image placeholder spanning full hero */
+    .hero-bg-ph {
+      position: absolute; inset: 0;
+      background: rgba(255,255,255,0.03);
+      border: 2px dashed rgba(184,146,42,0.25);
+      display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+    }
+    .hero-bg-ph .ph-icon { font-size: 6rem; opacity: 0.15; color: var(--gold2); }
+    .hero-bg-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.85rem; letter-spacing: 3px; text-transform: uppercase; margin-top: 12px; opacity: 0.35; }
+    .hero-bg-ph .ph-sub { color: #8A9BB5; font-family: sans-serif; font-size: 0.75rem; margin-top: 6px; opacity: 0.4; }
+
+    .page-hero-content {
+      position: relative; z-index: 2;
+      max-width: 1280px; margin: 0 auto; padding: 0 24px 80px;
+      width: 100%;
+    }
+    .page-hero-content .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .page-hero-content h1 { font-size: clamp(2.6rem,6vw,5rem); color: #FFF8EE; font-style: italic; margin-bottom: 16px; text-shadow: 0 4px 30px rgba(0,0,0,0.5); }
+    .page-hero-content p { color: #C8BBAA; font-family: sans-serif; font-size: 1.1rem; max-width: 500px; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 20px 0 0; border-radius: 2px; }
+
+    /* STORY TIMELINE */
+    .story-body { max-width: 1280px; margin: 0 auto; padding: 100px 24px; }
+
+    .intro-block {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 100px;
+    }
+    .intro-text .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 12px; }
+    .intro-text h2 { font-size: clamp(2rem,3.5vw,3rem); color: var(--navy); font-style: italic; margin-bottom: 22px; }
+    .intro-text p { font-size: 1rem; color: #5A4535; font-family: sans-serif; line-height: 1.85; margin-bottom: 16px; }
+    .intro-img-ph {
+      background: var(--cream2);
+      border-radius: 12px; min-height: 560px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+      border: 2px dashed rgba(184,146,42,0.3);
+    }
+    .intro-img-ph .ph-icon { font-size: 5rem; opacity: 0.25; }
+    .intro-img-ph .ph-label { font-family: sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); margin-top: 14px; opacity: 0.5; }
+    .intro-img-ph .ph-sub { font-family: sans-serif; font-size: 0.72rem; color: #999; margin-top: 8px; }
+    @media (max-width: 768px) { .intro-block { grid-template-columns: 1fr; gap: 40px; } .intro-img-ph { min-height: 300px; } }
+
+    /* TIMELINE */
+    .timeline-title { font-size: clamp(1.6rem,3vw,2.4rem); color: var(--navy); font-style: italic; text-align: center; margin-bottom: 60px; }
+    .timeline { position: relative; padding: 0 0 40px; }
+    .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--gold2), transparent); transform: translateX(-50%); }
+    .timeline-item { display: grid; grid-template-columns: 1fr 80px 1fr; gap: 0; margin-bottom: 60px; align-items: start; }
+    .timeline-item:nth-child(odd) .timeline-content { grid-column: 1; text-align: right; padding-right: 40px; }
+    .timeline-item:nth-child(odd) .timeline-img { grid-column: 3; }
+    .timeline-item:nth-child(even) .timeline-content { grid-column: 3; text-align: left; padding-left: 40px; }
+    .timeline-item:nth-child(even) .timeline-img { grid-column: 1; grid-row: 1; }
+    .timeline-dot { grid-column: 2; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .timeline-dot .dot { width: 18px; height: 18px; border-radius: 50%; background: var(--gold); border: 3px solid var(--cream); box-shadow: 0 0 0 3px var(--gold); margin-top: 8px; }
+    .timeline-dot .year { font-size: 0.75rem; letter-spacing: 2px; color: var(--gold); font-family: sans-serif; font-weight: 700; white-space: nowrap; }
+    .timeline-content h3 { font-size: 1.25rem; color: var(--navy); margin-bottom: 8px; }
+    .timeline-content p { font-size: 0.9rem; color: #6B5744; font-family: sans-serif; line-height: 1.75; }
+    .timeline-img-ph { background: var(--cream2); border-radius: 8px; min-height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px; border: 2px dashed rgba(184,146,42,0.25); }
+    .timeline-img-ph .ph-icon { font-size: 2.5rem; opacity: 0.3; }
+    .timeline-img-ph .ph-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 8px; opacity: 0.5; }
+    @media (max-width: 768px) {
+      .timeline::before { left: 20px; }
+      .timeline-item { grid-template-columns: 40px 1fr; }
+      .timeline-item:nth-child(odd) .timeline-content,
+      .timeline-item:nth-child(even) .timeline-content { grid-column: 2; text-align: left; padding: 0 0 0 20px; }
+      .timeline-item:nth-child(odd) .timeline-img,
+      .timeline-item:nth-child(even) .timeline-img { display: none; }
+      .timeline-dot { grid-column: 1; }
+    }
+
+    /* TEAM */
+    .team-section { background: var(--navy); padding: 100px 24px; }
+    .team-inner { max-width: 1280px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .section-header .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .section-header h2 { font-size: clamp(2rem,4vw,3rem); color: #FFF8EE; font-style: italic; margin-bottom: 16px; }
+    .divider-light { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+    .team-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+    .team-card { text-align: center; }
+    .team-portrait-ph {
+      width: 100%; aspect-ratio: 3/4; background: rgba(255,255,255,0.05);
+      border: 2px dashed rgba(184,146,42,0.3);
+      border-radius: 12px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; margin-bottom: 20px;
+      padding: 20px;
+    }
+    .team-portrait-ph .ph-icon { font-size: 3.5rem; opacity: 0.25; color: var(--gold2); }
+    .team-portrait-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 10px; opacity: 0.5; }
+    .team-card h3 { color: #FFF8EE; font-size: 1.05rem; margin-bottom: 4px; }
+    .team-card p { color: var(--gold2); font-family: sans-serif; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; }
+    @media (max-width: 900px) { .team-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .team-grid { grid-template-columns: 1fr 1fr; } }
+
+    /* VALUES */
+    .values-section { padding: 100px 24px; }
+    .values-inner { max-width: 1280px; margin: 0 auto; }
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 60px; }
+    .value-card { background: var(--light); border-radius: 12px; padding: 40px 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-left: 4px solid var(--gold); }
+    .value-card .v-icon { font-size: 2.8rem; margin-bottom: 16px; }
+    .value-card h3 { font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+    .value-card p { font-size: 0.9rem; color: #6B5744; font-family: sans-serif; line-height: 1.75; }
+    @media (max-width: 768px) { .values-grid { grid-template-columns: 1fr; } }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html" class="active">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- CINEMATIC PAGE HERO -->
+<section class="page-hero">
+  <div class="hero-bg-ph">
+    <div class="ph-icon">📸</div>
+    <p class="ph-label">Full-Page Background Image</p>
+    <p class="ph-sub">Recommended: 1920 × 1080px — bakery interior, team, or heritage photo</p>
+  </div>
+  <div class="page-hero-content">
+    <p class="eyebrow">Notre Histoire</p>
+    <h1>Three Generations<br>of Passion</h1>
+    <p>From a small oven in Paris to a beloved institution — our story is baked into every loaf.</p>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- INTRO -->
+<div class="story-body">
+  <div class="intro-block">
+    <div class="intro-text">
+      <p class="eyebrow">Le Fondateur</p>
+      <h2>Henri Leclerc &<br>the First Stone Oven</h2>
+      <p>In the autumn of 1987, a young Henri Leclerc apprenticed for six years under the legendary Pierre Hermé, left his master's Parisian atelier with a notebook full of recipes, a small inheritance, and an unshakeable belief that bread could be art.</p>
+      <p>He found a derelict 19th-century bakehouse on Rue des Martyrs, restored the original stone deck oven by hand, and opened his doors at 5 AM on a rainy Tuesday morning to a queue that stretched around the block.</p>
+      <p>That first baguette — still made to the same recipe today — sold out in forty minutes. La Maison Dorée was born.</p>
+    </div>
+    <div class="intro-img-ph">
+      <div class="ph-icon">👨‍🍳</div>
+      <p class="ph-label">Founder Portrait or Heritage Photo</p>
+      <p class="ph-sub">Recommended: 700 × 900px portrait orientation</p>
+    </div>
+  </div>
+
+  <!-- TIMELINE -->
+  <h2 class="timeline-title">Our Journey Through the Years</h2>
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>The First Loaf</h3>
+        <p>Henri opens the original Rue des Martyrs bakehouse. The stone oven, restored by hand, produces 80 baguettes per hour. The queue on day one stretches 40 metres.</p>
+      </div>
+      <div class="timeline-dot"><div class="dot"></div><span class="year">1987</span></div>
+      <div class="timeline-img">
+        <div class="timeline-img-ph"><div class="ph-icon">🏠</div><p class="ph-label">Archive Photo · 500 × 350px</p></div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-img">
+        <div class="timeline-img-ph"><div class="ph-icon">🏆</div><p class="ph-label">Award Photo · 500 × 350px</p></div>
+      </div>
+      <div class="timeline-dot"><div class="dot"></div><span class="year">1994</span></div>
+      <div class="timeline-content">
+        <h3>First Meilleur Ouvrier Nomination</h3>
+        <p>Henri is nominated for the prestigious MOF award. The recognition brings a wave of press attention and doubles our capacity with a second oven.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>Second Generation Takes Over</h3>
+        <p>Henri's daughter Claire, who trained at the Institut Paul Bocuse, joins as head pâtissière. She introduces the now-legendary Opéra cake and expands the pastry offering.</p>
+      </div>
+      <div class="timeline-dot"><div class="dot"></div><span class="year">2003</span></div>
+      <div class="timeline-img">
+        <div class="timeline-img-ph"><div class="ph-icon">👩‍🍳</div><p class="ph-label">Team Photo · 500 × 350px</p></div>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-img">
+        <div class="timeline-img-ph"><div class="ph-icon">🌿</div><p class="ph-label">Farm Photo · 500 × 350px</p></div>
+      </div>
+      <div class="timeline-dot"><div class="dot"></div><span class="year">2015</span></div>
+      <div class="timeline-content">
+        <h3>Farm-to-Oven Partnership</h3>
+        <p>We partner with Ferme des Quatre Vents in Normandy for exclusive heritage wheat and begin milling our own flour on premises — a first for any Paris bakery.</p>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-content">
+        <h3>Third Generation — Sophie's Vision</h3>
+        <p>Sophie Leclerc, Henri's granddaughter, takes over as head baker. She brings a modern eye to tradition — sustainable sourcing, digital ordering, and a guest chef series.</p>
+      </div>
+      <div class="timeline-dot"><div class="dot"></div><span class="year">2022</span></div>
+      <div class="timeline-img">
+        <div class="timeline-img-ph"><div class="ph-icon">✨</div><p class="ph-label">Current Team Photo · 500 × 350px</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM -->
+<section class="team-section">
+  <div class="team-inner">
+    <div class="section-header">
+      <p class="eyebrow">Notre Équipe</p>
+      <h2>The Hands Behind Every Loaf</h2>
+      <div class="divider-light"></div>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-portrait-ph">
+          <div class="ph-icon">👩‍🍳</div>
+          <p class="ph-label">Portrait Photo<br><span style="opacity:0.4;font-size:0.65rem;">400 × 530px</span></p>
+        </div>
+        <h3>Sophie Leclerc</h3>
+        <p>Head Baker & Owner</p>
+      </div>
+      <div class="team-card">
+        <div class="team-portrait-ph">
+          <div class="ph-icon">👨‍🍳</div>
+          <p class="ph-label">Portrait Photo<br><span style="opacity:0.4;font-size:0.65rem;">400 × 530px</span></p>
+        </div>
+        <h3>Marc Dubois</h3>
+        <p>Chef Pâtissier</p>
+      </div>
+      <div class="team-card">
+        <div class="team-portrait-ph">
+          <div class="ph-icon">👩‍🍳</div>
+          <p class="ph-label">Portrait Photo<br><span style="opacity:0.4;font-size:0.65rem;">400 × 530px</span></p>
+        </div>
+        <h3>Isabelle Martin</h3>
+        <p>Artisan Boulangère</p>
+      </div>
+      <div class="team-card">
+        <div class="team-portrait-ph">
+          <div class="ph-icon">👨‍🍳</div>
+          <p class="ph-label">Portrait Photo<br><span style="opacity:0.4;font-size:0.65rem;">400 × 530px</span></p>
+        </div>
+        <h3>Antoine Bernard</h3>
+        <p>Confiseur</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section">
+  <div class="values-inner">
+    <div class="section-header" style="text-align:center;margin-bottom:0;">
+      <p class="eyebrow" style="color:var(--gold);">Ce Que Nous Croyons</p>
+      <h2 style="color:var(--navy);font-style:italic;font-size:clamp(2rem,4vw,3rem);margin-bottom:16px;">Our Values</h2>
+      <div class="divider-light" style="background:linear-gradient(90deg,var(--gold),var(--gold2));"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="v-icon">🌾</div>
+        <h3>Quality Over Quantity</h3>
+        <p>We source heritage wheat from a single farm in Normandy, mill it fresh on site, and never compromise with inferior substitutes. Every batch is small, every loaf is accountable.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">⏳</div>
+        <h3>Time as an Ingredient</h3>
+        <p>Our sourdoughs ferment for 18–36 hours. Our croissant dough is folded over three days. Patience is not a constraint — it is the secret of our flavour.</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">♻️</div>
+        <h3>Sustainable by Design</h3>
+        <p>Zero food waste before 6 PM. Unsold bread becomes the next day's croutons, crumbs, or pain perdu. Our packaging is fully compostable since 2020.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>
