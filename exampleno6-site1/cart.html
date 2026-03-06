@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart — Scoops & Dreams | Artisan Ice Cream</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink:       #FF6B9D;
+      --pink-dark:  #E8457A;
+      --purple:     #9B59B6;
+      --purple-dark:#7D3C98;
+      --teal:       #1ABC9C;
+      --teal-dark:  #148F77;
+      --yellow:     #F7DC6F;
+      --cream:      #FFF8F0;
+      --coral:      #FF6B6B;
+      --dark:       #1A0A2E;
+      --dark2:      #2D1B4E;
+      --white:      #FFFFFF;
+      --text-muted: #A09CB0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--cream);
+      color: var(--dark);
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ── FLOATING BG ── */
+    .bg-bubbles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .bubble {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.06;
+      animation: floatBubble linear infinite;
+    }
+    .bubble:nth-child(1) { width: 80px;  height: 80px;  background: var(--pink);   left: 8%;  animation-duration: 18s; }
+    .bubble:nth-child(2) { width: 120px; height: 120px; background: var(--purple); left: 30%; animation-duration: 24s; animation-delay: 4s; }
+    .bubble:nth-child(3) { width: 60px;  height: 60px;  background: var(--teal);   left: 55%; animation-duration: 15s; animation-delay: 2s; }
+    .bubble:nth-child(4) { width: 90px;  height: 90px;  background: var(--coral);  left: 75%; animation-duration: 20s; animation-delay: 7s; }
+    @keyframes floatBubble {
+      0%   { transform: translateY(110vh); opacity: 0; }
+      10%  { opacity: 0.06; }
+      90%  { opacity: 0.06; }
+      100% { transform: translateY(-20vh); opacity: 0; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(26, 10, 46, 0.97);
+      backdrop-filter: blur(12px);
+      border-bottom: 3px solid var(--pink);
+      box-shadow: 0 4px 30px rgba(255,107,157,0.2);
+    }
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 50px; height: 50px;
+      border: 3px solid var(--pink);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(255,107,157,0.15);
+    }
+    .logo-name     { font-size: 1.3rem; font-weight: 800; color: var(--white); }
+    .logo-name span{ color: var(--pink); }
+    .logo-tagline  { font-size: 0.65rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-links {
+      display: flex;
+      gap: 8px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      padding: 8px 18px;
+      border-radius: 25px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      background: var(--pink);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(255,107,157,0.5);
+      transform: translateY(-2px);
+    }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--pink), var(--coral)) !important;
+      color: var(--white) !important;
+      font-weight: 700 !important;
+    }
+    .nav-cart {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 1.3rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,107,157,0.15);
+      border: 1px solid rgba(255,107,157,0.35);
+      transition: all 0.3s;
+      flex-shrink: 0;
+    }
+    .nav-cart:hover { background: rgba(255,107,157,0.3); transform: scale(1.08); }
+    .nav-cart.active-page { background: rgba(255,107,157,0.35); border-color: var(--pink); }
+    .cart-badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 800;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px;
+      border: none;
+      background: none;
+    }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--pink); border-radius: 3px; }
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0; right: -100%;
+      width: 70%; height: 100%;
+      background: rgba(26,10,46,0.98);
+      z-index: 2000;
+      flex-direction: column;
+      padding: 80px 32px 32px;
+      gap: 8px;
+      transition: right 0.4s cubic-bezier(0.25,0.8,0.25,1);
+      border-left: 3px solid var(--pink);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a {
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      padding: 14px 20px;
+      border-radius: 12px;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+    .mobile-menu a:hover { background: rgba(255,107,157,0.15); border-left-color: var(--pink); color: var(--pink); }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+    .close-btn { position: absolute; top: 24px; right: 24px; background: none; border: none; color: var(--pink); font-size: 1.8rem; cursor: pointer; }
+
+    /* ── PAGE LAYOUT ── */
+    .page-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .page-title-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .page-title-row h1 {
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: var(--dark);
+    }
+    .page-title-row h1 span { color: var(--pink); }
+    .cart-item-count {
+      background: var(--pink);
+      color: white;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 50px;
+    }
+
+    /* ── CART LAYOUT ── */
+    .cart-layout {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
+      align-items: start;
+    }
+
+    /* ── CART ITEMS ── */
+    .cart-items-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .cart-item {
+      background: white;
+      border-radius: 20px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+      border: 1px solid rgba(255,107,157,0.12);
+      transition: all 0.3s;
+      animation: slideIn 0.35s ease both;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-20px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    .cart-item:hover { border-color: rgba(255,107,157,0.3); box-shadow: 0 8px 30px rgba(255,107,157,0.12); }
+
+    .item-emoji {
+      font-size: 2.8rem;
+      flex-shrink: 0;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--cream);
+      border-radius: 16px;
+    }
+    .item-details { flex: 1; min-width: 0; }
+    .item-name { font-size: 1rem; font-weight: 800; color: var(--dark); margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-unit-price { font-size: 0.82rem; color: #9CA3AF; }
+
+    .item-qty-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .qty-btn {
+      width: 34px; height: 34px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,107,157,0.3);
+      background: transparent;
+      color: var(--pink);
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    .qty-btn:hover { background: var(--pink); color: white; border-color: var(--pink); transform: scale(1.1); }
+    .qty-value { font-size: 1rem; font-weight: 800; color: var(--dark); min-width: 24px; text-align: center; }
+    .item-line-price { font-size: 1.1rem; font-weight: 900; color: var(--pink); min-width: 56px; text-align: right; flex-shrink: 0; }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #D1D5DB;
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 4px;
+      transition: color 0.2s, transform 0.2s;
+      flex-shrink: 0;
+    }
+    .remove-btn:hover { color: var(--coral); transform: scale(1.15); }
+
+    /* Empty cart */
+    .empty-cart {
+      text-align: center;
+      padding: 80px 24px;
+      display: none;
+    }
+    .empty-cart-icon { font-size: 5rem; margin-bottom: 24px; }
+    .empty-cart h2 { font-size: 1.6rem; font-weight: 800; color: var(--dark); margin-bottom: 12px; }
+    .empty-cart p { color: #6B7280; font-size: 1rem; margin-bottom: 32px; }
+    .btn-to-menu {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      color: white;
+      text-decoration: none;
+      padding: 14px 32px;
+      border-radius: 50px;
+      font-size: 1rem;
+      font-weight: 700;
+      box-shadow: 0 8px 25px rgba(255,107,157,0.4);
+      transition: all 0.3s;
+    }
+    .btn-to-menu:hover { transform: translateY(-3px); box-shadow: 0 12px 35px rgba(255,107,157,0.5); }
+
+    /* ── ORDER SUMMARY ── */
+    .order-summary {
+      background: white;
+      border-radius: 24px;
+      padding: 28px 28px 32px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+      border: 1px solid rgba(255,107,157,0.12);
+      position: sticky;
+      top: 92px;
+    }
+    .summary-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid rgba(255,107,157,0.15);
+    }
+    .summary-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.9rem;
+      color: #4B5563;
+      margin-bottom: 12px;
+    }
+    .summary-line.total {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--dark);
+      padding-top: 14px;
+      border-top: 2px solid rgba(255,107,157,0.15);
+      margin-top: 8px;
+    }
+    .summary-line.total span:last-child { color: var(--pink); font-size: 1.3rem; }
+
+    /* ── CHECKOUT FORM ── */
+    .checkout-divider {
+      margin: 28px 0 24px;
+      border: none;
+      border-top: 2px dashed rgba(255,107,157,0.2);
+    }
+    .checkout-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--dark);
+      margin-bottom: 18px;
+    }
+    .form-field {
+      margin-bottom: 14px;
+    }
+    .form-field label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: #4B5563;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      padding: 11px 14px;
+      border: 1.5px solid rgba(255,107,157,0.25);
+      border-radius: 12px;
+      font-size: 0.9rem;
+      font-family: inherit;
+      color: var(--dark);
+      background: var(--cream);
+      transition: border-color 0.3s, box-shadow 0.3s;
+      outline: none;
+    }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--pink);
+      box-shadow: 0 0 0 3px rgba(255,107,157,0.12);
+    }
+    .form-field textarea { resize: vertical; min-height: 72px; }
+
+    .btn-place-order {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--pink), var(--coral));
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 8px 25px rgba(255,107,157,0.4);
+      margin-top: 20px;
+      letter-spacing: 0.3px;
+    }
+    .btn-place-order:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 12px 35px rgba(255,107,157,0.55); }
+    .btn-place-order:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-clear {
+      width: 100%;
+      padding: 10px;
+      background: transparent;
+      color: #9CA3AF;
+      border: 1.5px solid #E5E7EB;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+    .btn-clear:hover { color: var(--coral); border-color: var(--coral); }
+
+    /* ── SUCCESS STATE ── */
+    .order-success {
+      display: none;
+      text-align: center;
+      padding: 48px 24px;
+      animation: fadeIn 0.5s ease;
+    }
+    @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+    .success-icon { font-size: 4rem; margin-bottom: 20px; }
+    .order-success h2 { font-size: 1.4rem; font-weight: 900; color: var(--dark); margin-bottom: 10px; }
+    .order-success p { color: #6B7280; font-size: 0.9rem; line-height: 1.7; margin-bottom: 28px; }
+    .order-ref { display: inline-block; background: rgba(26,188,156,0.1); border: 1px solid rgba(26,188,156,0.3); color: var(--teal-dark); font-size: 0.85rem; font-weight: 700; padding: 8px 20px; border-radius: 50px; margin-bottom: 28px; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 40px 24px 24px;
+      border-top: 3px solid var(--pink);
+      position: relative;
+      z-index: 1;
+    }
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-brand { color: white; font-size: 1rem; font-weight: 700; }
+    .footer-brand span { color: var(--pink); }
+    .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--pink); }
+    .footer-bottom { max-width: 1200px; margin: 20px auto 0; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; }
+    .footer-bottom p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .cart-layout { grid-template-columns: 1fr; }
+      .order-summary { position: static; }
+    }
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .page-wrap { padding: 36px 16px 60px; }
+    }
+    @media (max-width: 520px) {
+      .cart-item { padding: 16px; gap: 12px; }
+      .item-emoji { width: 48px; height: 48px; font-size: 2.2rem; border-radius: 12px; }
+      .item-line-price { min-width: 44px; font-size: 0.95rem; }
+      .qty-btn { width: 30px; height: 30px; font-size: 1rem; }
+      .page-title-row { flex-wrap: wrap; }
+      .order-summary { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="bg-bubbles" aria-hidden="true">
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+  <div class="bubble"></div>
+</div>
+
+<!-- Mobile overlay -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+
+<!-- Mobile menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="menu.html">🍦 Menu</a>
+  <a href="cart.html">🛒 My Cart <span id="mobileCartCount" style="background:var(--pink);color:#fff;border-radius:50px;padding:2px 8px;font-size:0.75rem;margin-left:4px;display:none;"></span></a>
+  <a href="contact.html">📍 Find Us</a>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-icon">🍦</div>
+      <div>
+        <div class="logo-name">Scoops<span> & Dreams</span></div>
+        <div class="logo-tagline">Artisan Ice Cream</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="contact.html">Find Us</a></li>
+      <li><a href="menu.html" class="nav-cta">+ Add More</a></li>
+    </ul>
+    <a href="cart.html" class="nav-cart active-page" aria-label="View Cart">
+      🛒
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page content -->
+<div class="page-wrap">
+  <div class="page-title-row">
+    <h1>My <span>Cart</span></h1>
+    <span class="cart-item-count" id="cartItemCount">0 items</span>
+  </div>
+
+  <!-- Empty state -->
+  <div class="empty-cart" id="emptyCart">
+    <div class="empty-cart-icon">🛒</div>
+    <h2>Your cart is empty</h2>
+    <p>Looks like you haven't added anything yet.<br>Browse our menu and pick your favorites!</p>
+    <a href="menu.html" class="btn-to-menu">🍦 Browse the Menu</a>
+  </div>
+
+  <!-- Cart + summary layout -->
+  <div class="cart-layout" id="cartLayout">
+    <!-- Cart items -->
+    <div class="cart-items-panel" id="cartItemsList"></div>
+
+    <!-- Order summary & checkout -->
+    <div class="order-summary" id="orderSummary">
+      <!-- Summary numbers -->
+      <div id="summaryContent">
+        <div class="summary-title">Order Summary</div>
+        <div class="summary-line"><span>Subtotal</span><span id="summarySubtotal">$0.00</span></div>
+        <div class="summary-line"><span>Tax (8%)</span><span id="summaryTax">$0.00</span></div>
+        <div class="summary-line total"><span>Total</span><span id="summaryTotal">$0.00</span></div>
+
+        <hr class="checkout-divider">
+        <div class="checkout-title">📋 Your Details</div>
+
+        <form id="checkoutForm" onsubmit="placeOrder(event)" novalidate>
+          <div class="form-field">
+            <label for="cf-name">Full Name *</label>
+            <input type="text" id="cf-name" placeholder="Jane Doe" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="cf-phone">Phone Number *</label>
+            <input type="tel" id="cf-phone" placeholder="(555) 123-4567" required autocomplete="tel">
+          </div>
+          <div class="form-field">
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" placeholder="jane@example.com" autocomplete="email">
+          </div>
+          <div class="form-field">
+            <label for="cf-pickup">Pickup Time *</label>
+            <select id="cf-pickup" required>
+              <option value="">Select a time…</option>
+              <option>ASAP (~15 min)</option>
+              <option>30 minutes</option>
+              <option>1 hour</option>
+              <option>2 hours</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="cf-notes">Special Requests</label>
+            <textarea id="cf-notes" placeholder="Allergy info, flavor swaps, extra toppings…"></textarea>
+          </div>
+
+          <button type="submit" class="btn-place-order" id="placeOrderBtn">🍦 Place Order</button>
+        </form>
+
+        <button class="btn-clear" onclick="clearCart()">🗑 Clear Cart</button>
+      </div>
+
+      <!-- Success state -->
+      <div class="order-success" id="orderSuccess">
+        <div class="success-icon">🎉</div>
+        <h2>Order Placed!</h2>
+        <p>Thanks! Your order has been received. We'll have it ready for pickup at your chosen time. You'll get a confirmation shortly.</p>
+        <div class="order-ref" id="orderRef"></div>
+        <a href="menu.html" class="btn-to-menu">🍦 Order More</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">Scoops<span> & Dreams</span></div>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="menu.html">Menu</a>
+      <a href="contact.html">Find Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Scoops & Dreams. All rights reserved.</p>
+  </div>
+</footer>
+
+<script>
+  // ── Cart helpers ──
+  function getCart() { return JSON.parse(localStorage.getItem('scoopCart') || '[]'); }
+  function saveCart(cart) { localStorage.setItem('scoopCart', JSON.stringify(cart)); renderCart(); }
+
+  function updateCartBadge() {
+    const count = getCart().reduce((s, i) => s + i.qty, 0);
+    const badge = document.getElementById('cartBadge');
+    const mob   = document.getElementById('mobileCartCount');
+    if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+    if (mob)   { mob.textContent   = count; mob.style.display   = count > 0 ? 'inline' : 'none'; }
+  }
+
+  function changeQtyByIdx(idx, delta) {
+    const cart = getCart();
+    if (idx < 0 || idx >= cart.length) return;
+    cart[idx].qty += delta;
+    if (cart[idx].qty <= 0) cart.splice(idx, 1);
+    saveCart(cart);
+  }
+
+  function removeItemByIdx(idx) {
+    const cart = getCart();
+    if (idx < 0 || idx >= cart.length) return;
+    cart.splice(idx, 1);
+    saveCart(cart);
+  }
+
+  function changeQty(name, delta) {
+    const cart = getCart();
+    const item = cart.find(i => i.name === name);
+    if (!item) return;
+    item.qty += delta;
+    if (item.qty <= 0) cart.splice(cart.indexOf(item), 1);
+    saveCart(cart);
+  }
+
+  function removeItem(name) {
+    const cart = getCart().filter(i => i.name !== name);
+    saveCart(cart);
+  }
+
+  function clearCart() {
+    if (!confirm('Remove all items from your cart?')) return;
+    localStorage.removeItem('scoopCart');
+    renderCart();
+  }
+
+  // ── Render cart ──
+  function renderCart() {
+    const cart   = getCart();
+    const list   = document.getElementById('cartItemsList');
+    const empty  = document.getElementById('emptyCart');
+    const layout = document.getElementById('cartLayout');
+    const count  = document.getElementById('cartItemCount');
+    const placeBtn = document.getElementById('placeOrderBtn');
+
+    updateCartBadge();
+
+    const totalItems = cart.reduce((s, i) => s + i.qty, 0);
+    count.textContent = totalItems === 1 ? '1 item' : `${totalItems} items`;
+
+    if (cart.length === 0) {
+      empty.style.display = 'block';
+      layout.style.display = 'none';
+      return;
+    }
+    empty.style.display = 'none';
+    layout.style.display = 'grid';
+
+    // Render items
+    list.innerHTML = cart.map((item, idx) => {
+      const lineTotal = (item.price * item.qty).toFixed(2);
+      const unitPrice = Number(item.price).toFixed(2);
+      return `
+        <div class="cart-item">
+          <div class="item-emoji">${item.emoji || '🍦'}</div>
+          <div class="item-details">
+            <div class="item-name" title="${item.name}">${item.name}</div>
+            <div class="item-unit-price">$${unitPrice} each</div>
+          </div>
+          <div class="item-qty-row">
+            <button class="qty-btn" data-idx="${idx}" data-delta="-1" aria-label="Decrease quantity">−</button>
+            <span class="qty-value">${item.qty}</span>
+            <button class="qty-btn" data-idx="${idx}" data-delta="1" aria-label="Increase quantity">+</button>
+          </div>
+          <div class="item-line-price">$${lineTotal}</div>
+          <button class="remove-btn" data-idx="${idx}" aria-label="Remove ${item.name}">✕</button>
+        </div>
+      `;
+    }).join('');
+
+    // Event delegation for qty/remove buttons
+    list.onclick = function(e) {
+      const btn = e.target.closest('[data-idx]');
+      if (!btn) return;
+      const idx = parseInt(btn.dataset.idx);
+      if (btn.classList.contains('remove-btn')) {
+        removeItemByIdx(idx);
+      } else if (btn.classList.contains('qty-btn')) {
+        changeQtyByIdx(idx, parseInt(btn.dataset.delta));
+      }
+    };
+
+    // Summary
+    const subtotal = cart.reduce((s, i) => s + i.price * i.qty, 0);
+    const tax      = subtotal * 0.08;
+    const total    = subtotal + tax;
+    document.getElementById('summarySubtotal').textContent = `$${subtotal.toFixed(2)}`;
+    document.getElementById('summaryTax').textContent      = `$${tax.toFixed(2)}`;
+    document.getElementById('summaryTotal').textContent    = `$${total.toFixed(2)}`;
+
+    if (placeBtn) placeBtn.disabled = cart.length === 0;
+  }
+
+  // ── Place order ──
+  function placeOrder(e) {
+    e.preventDefault();
+    const name   = document.getElementById('cf-name').value.trim();
+    const phone  = document.getElementById('cf-phone').value.trim();
+    const pickup = document.getElementById('cf-pickup').value;
+    if (!name || !phone || !pickup) {
+      alert('Please fill in your name, phone number, and pickup time.');
+      return;
+    }
+    // Generate order ref
+    const ref = 'SD-' + Date.now().toString(36).toUpperCase();
+    document.getElementById('orderRef').textContent = '📋 Order #' + ref;
+    // Clear cart
+    localStorage.removeItem('scoopCart');
+    updateCartBadge();
+    // Show success
+    document.getElementById('summaryContent').style.display = 'none';
+    document.getElementById('orderSuccess').style.display  = 'block';
+    document.getElementById('cartItemsList').innerHTML = '';
+    document.getElementById('cartItemCount').textContent = '0 items';
+  }
+
+  // Mobile menu
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  // Init
+  renderCart();
+</script>
+</body>
+</html>

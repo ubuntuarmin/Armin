@@ -120,6 +120,37 @@
       color: white !important;
       font-weight: 700 !important;
     }
+    .nav-cart {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 1.3rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,107,157,0.15);
+      border: 1px solid rgba(255,107,157,0.35);
+      transition: all 0.3s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-cart:hover { background: rgba(255,107,157,0.3); transform: scale(1.08); }
+    .cart-badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 800;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
     .hamburger {
       display: none;
       flex-direction: column;
@@ -744,6 +775,12 @@
       .shakes-grid  { grid-template-columns: 1fr; }
       .toppings-grid{ grid-template-columns: 1fr; }
       .specialty-card { flex-direction: column; text-align: center; }
+      .menu-section { padding: 48px 16px; }
+      .menu-main { padding: 24px 16px; }
+      .page-hero { padding: 72px 16px 56px; }
+      .menu-section-header { flex-direction: column; text-align: center; gap: 12px; }
+      .section-count { align-self: center; }
+      .legend { gap: 10px; }
     }
   </style>
 </head>
@@ -760,6 +797,7 @@
   <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
   <a href="index.html">🏠 Home</a>
   <a href="menu.html">🍦 Menu</a>
+  <a href="cart.html">🛒 My Cart <span id="mobileCartCount" style="background:var(--pink);color:#fff;border-radius:50px;padding:2px 8px;font-size:0.75rem;margin-left:4px;display:none;"></span></a>
   <a href="contact.html">📍 Find Us</a>
 </div>
 
@@ -777,8 +815,12 @@
       <li><a href="index.html">Home</a></li>
       <li><a href="menu.html" class="active">Menu</a></li>
       <li><a href="contact.html">Find Us</a></li>
-      <li><a href="contact.html" class="nav-cta">Visit Us</a></li>
+      <li><a href="cart.html" class="nav-cta">🛒 View Cart</a></li>
     </ul>
+    <a href="cart.html" class="nav-cart" aria-label="View Cart">
+      🛒
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -1280,9 +1322,27 @@
   transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1);
   z-index:9999;
   pointer-events:none;
-">✓ Added to your order!</div>
+  max-width:280px;
+"></div>
 
 <script>
+  // ── Cart helpers ──
+  function getCart() { return JSON.parse(localStorage.getItem('scoopCart') || '[]'); }
+  function saveCart(cart) { localStorage.setItem('scoopCart', JSON.stringify(cart)); updateCartBadge(); }
+  function updateCartBadge() {
+    const count = getCart().reduce((s, i) => s + i.qty, 0);
+    const badge = document.getElementById('cartBadge');
+    const mob   = document.getElementById('mobileCartCount');
+    if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+    if (mob)   { mob.textContent   = count; mob.style.display   = count > 0 ? 'inline' : 'none'; }
+  }
+  function addToCart(name, price, emoji) {
+    const cart = getCart();
+    const hit  = cart.find(i => i.name === name);
+    if (hit) hit.qty++; else cart.push({ name, price, emoji, qty: 1 });
+    saveCart(cart);
+  }
+
   // Mobile menu
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
@@ -1303,9 +1363,30 @@
   }, { threshold: 0.08 });
   reveals.forEach(el => obs.observe(el));
 
-  // Add to order
+  // Price lookup (for items without explicit prices in onclick)
+  const itemPrices = {
+    'Strawberry Dream': { price: 5.50, emoji: '🍓' },
+    'Lavender Honey': { price: 6.00, emoji: '🌸' },
+    'Mint Chip Bliss': { price: 5.50, emoji: '🍃' },
+    'Dark Chocolate Fudge': { price: 6.00, emoji: '🍫' },
+    'Mango Tango': { price: 5.50, emoji: '🥭' },
+    'Cookie & Cream': { price: 5.50, emoji: '🍪' },
+    'Lemon Sorbet': { price: 5.00, emoji: '🍋' },
+    'Wild Blueberry': { price: 6.00, emoji: '🫐' },
+    'Peach Bellini': { price: 6.50, emoji: '🍑' },
+    'Banana Split': { price: 12.00, emoji: '🍨' },
+    'Rainbow Sundae': { price: 14.00, emoji: '🌈' },
+    'Hot Fudge Brownie': { price: 13.00, emoji: '🍫' },
+    'Peach Melba Sundae': { price: 11.00, emoji: '🍑' },
+    'Cotton Candy Cloud': { price: 8.50, emoji: '🩷' },
+    'Garden Party': { price: 9.00, emoji: '🌸' },
+  };
+
+  // Add to order (with localStorage)
   let toastTimer;
   function addToOrder(btn, name) {
+    const info  = itemPrices[name] || { price: 0, emoji: '🍦' };
+    addToCart(name, info.price, info.emoji);
     btn.textContent = '✓ Added';
     btn.style.background = 'linear-gradient(135deg, var(--teal), var(--teal-dark))';
     setTimeout(() => {
@@ -1313,14 +1394,14 @@
       btn.style.background = '';
     }, 2000);
     const toast = document.getElementById('orderToast');
-    toast.textContent = `✓ ${name} added!`;
+    toast.innerHTML = `✓ ${info.emoji} ${name} added! <a href="cart.html" style="color:#fff;text-decoration:underline;margin-left:6px;">View Cart →</a>`;
     toast.style.transform = 'translateY(0)';
     toast.style.opacity = '1';
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => {
       toast.style.transform = 'translateY(100px)';
       toast.style.opacity = '0';
-    }, 2500);
+    }, 3000);
   }
 
   // Generate particles
@@ -1357,6 +1438,8 @@
       btn.classList.toggle('active', sections[i] === current);
     });
   });
+
+  updateCartBadge();
 </script>
 </body>
 </html>
