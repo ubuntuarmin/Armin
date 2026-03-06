@@ -782,6 +782,40 @@
       .section-count { align-self: center; }
       .legend { gap: 10px; }
     }
+
+    /* ===== ENHANCED MOBILE OPTIMIZATIONS ===== */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    a, button, [role="button"] { min-height: 44px; }
+    .btn-primary, .btn-secondary, .add-to-cart, .quantity-btn, .filter-btn {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+    .hamburger { min-height: 44px; min-width: 44px; touch-action: manipulation; }
+    .mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+
+    @media (max-width: 480px) {
+      .page-hero { padding: 100px 12px 50px; }
+      .page-hero h1 { font-size: clamp(1.8rem, 8vw, 2.5rem); }
+      .page-hero p  { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+
+      h2, .section-title { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+      h3 { font-size: clamp(1rem, 4.5vw, 1.3rem); }
+
+      .menu-section { padding: 60px 12px; }
+      .filter-bar   { gap: 8px; flex-wrap: wrap; padding: 0 12px; }
+      .filter-btn   { padding: 8px 14px; font-size: 0.85rem; }
+
+      .menu-grid { grid-template-columns: 1fr; gap: 16px; }
+      .menu-card { padding: 16px 12px; }
+      .menu-card-actions { flex-direction: row; gap: 8px; flex-wrap: wrap; }
+      .add-to-cart { width: 100%; justify-content: center; }
+
+      .quantity-controls { gap: 8px; }
+      .quantity-btn { width: 44px; height: 44px; }
+    }
   </style>
 </head>
 <body>

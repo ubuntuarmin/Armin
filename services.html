@@ -273,6 +273,9 @@
     ]
   }
   </script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <div class="site-header">
@@ -934,6 +937,55 @@
         closeCalculatorModal();
       }
     });
+  </script>
+
+  <!-- React Services FAQ -->
+  <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
+    <div style="max-width:760px;margin:0 auto;">
+      <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
+      <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Common questions about our services</p>
+      <div id="react-services-faq"></div>
+    </div>
+  </section>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function ServicesFAQ() {
+      const [openIndex, setOpenIndex] = useState(null);
+      const faqs = [
+        { q: "What web design services do you offer?", a: "We offer a comprehensive range of web design services including custom website design, landing page design, e-commerce store design, UI/UX design, and redesigns of existing websites. Each project is tailored to your brand and business goals." },
+        { q: "Do you build websites from scratch or use templates?", a: "We do both, depending on your budget and needs. Custom-designed websites are built from scratch for a unique look and feel. We also work with premium templates for clients seeking faster turnaround at a lower cost, always customizing them to match your brand." },
+        { q: "Do you provide SEO services?", a: "Yes. We offer on-page SEO optimization as part of our website builds, including meta tags, structured data, site speed optimization, and mobile-friendliness. We also offer ongoing SEO packages for content strategy, link building, and analytics reporting." },
+        { q: "What e-commerce platforms do you work with?", a: "We build e-commerce solutions on Shopify, WooCommerce, and custom platforms depending on your requirements. We handle everything from product setup and payment gateway integration to inventory management and checkout optimization." },
+        { q: "Can you help with branding and logo design?", a: "Absolutely. Our design team provides full branding services including logo design, brand identity systems, color palettes, typography selection, and brand guidelines documents. A strong brand identity forms the foundation of great web design." },
+        { q: "Do you offer hosting and domain registration?", a: "Yes, we can manage hosting and domain registration on your behalf. We work with reliable hosting providers to ensure your website is fast, secure, and always online. We also handle SSL certificates, backups, and server maintenance." },
+        { q: "What is your design and development process?", a: "Our process has 5 phases: Discovery (understanding your goals and audience), Design (wireframes and visual mockups), Development (building the site), Testing (cross-browser and device testing), and Launch (going live with post-launch support)." },
+      ];
+      return (
+        <div>
+          <style>{`
+            .svc-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; cursor:pointer; transition:box-shadow 0.2s,border-color 0.2s; }
+            .svc-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,0.1); border-color:#bfdbfe; }
+            .svc-faq-q { padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:0.97rem; line-height:1.5; }
+            .svc-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:0.95rem; }
+            .svc-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:#1d4ed8; transition:background 0.2s; }
+            .svc-faq-item.open .svc-faq-icon { background:#1d4ed8; color:#fff; }
+          `}</style>
+          {faqs.map((faq, i) => (
+            <div key={i} className={`svc-faq-item${openIndex === i ? ' open' : ''}`} onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+              <div className="svc-faq-q">
+                <span>{faq.q}</span>
+                <span className="svc-faq-icon">{openIndex === i ? '▲' : '▼'}</span>
+              </div>
+              {openIndex === i && <div className="svc-faq-a">{faq.a}</div>}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-services-faq')).render(<ServicesFAQ />);
   </script>
 </body>
 </html>

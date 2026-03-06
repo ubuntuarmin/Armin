@@ -1220,6 +1220,55 @@
       .cta-buttons { flex-direction: column; align-items: center; gap: 12px; }
       .cta-buttons a { width: 100%; text-align: center; justify-content: center; }
     }
+
+    /* ===== ENHANCED MOBILE OPTIMIZATIONS ===== */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    /* Touch-friendly tap targets */
+    a, button, [role="button"] { min-height: 44px; }
+    .btn-primary, .btn-secondary, .btn-outline, .add-to-cart-btn, .buy-btn {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+    .hamburger { min-height: 44px; min-width: 44px; touch-action: manipulation; }
+    .mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+
+    @media (max-width: 480px) {
+      /* Hero typography clamp */
+      .hero-title { font-size: clamp(1.8rem, 8vw, 2.8rem); line-height: 1.2; }
+      .hero-desc  { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+      .hero-inner { padding-top: 40px; gap: 32px; }
+
+      /* Section headings */
+      h2 { font-size: clamp(1.5rem, 6vw, 2rem); }
+      h3 { font-size: clamp(1.1rem, 4.5vw, 1.4rem); }
+
+      /* Nav */
+      .nav-inner { padding: 0 12px; height: 60px; }
+      .nav-logo   { font-size: clamp(1.1rem, 5vw, 1.4rem); }
+
+      /* Sections padding */
+      .menu-preview-section,
+      .flavors-section,
+      .about-section,
+      .testimonials-section,
+      .cta-section { padding: 60px 12px; }
+
+      /* CTA buttons full-width */
+      .cta-buttons a,
+      .hero-buttons a { width: 100%; max-width: 320px; padding: 14px 20px; font-size: 0.95rem; }
+
+      /* Card spacing */
+      .flavor-card  { padding: 20px 14px; }
+      .menu-item-card { padding: 16px 12px; }
+      .testimonial-card { padding: 20px 14px; }
+
+      /* Footer */
+      .footer-inner { gap: 24px; padding: 40px 12px 20px; }
+      .footer-col { text-align: center; }
+    }
   </style>
 </head>
 <body>

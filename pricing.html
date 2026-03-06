@@ -599,6 +599,9 @@
     ]
   }
   </script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 
@@ -664,6 +667,8 @@
       <section class="animate-svg" style="text-align:center;margin:40px 0 60px;">
         <img src="images/animated-value-proposition.svg" alt="Animated value proposition - From idea to perfect website" style="max-width:100%;height:auto;max-height:350px;margin:0 auto;display:block;" />
       </section>
+
+      <div id="react-billing-toggle" style="text-align:center;padding:20px 0;"></div>
 
       <!-- ONE‑PAGE PRICING -->
       <section class="fade-in-up">
@@ -994,6 +999,51 @@
     }
 
     window.addEventListener("load",()=>{ setTimeout(typeLoop,450); });
+  </script>
+
+  <!-- React Billing Toggle -->
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    function BillingToggle() {
+      const [isAnnual, setIsAnnual] = useState(false);
+
+      useEffect(() => {
+        const event = new CustomEvent('billingModeChange', { detail: { isAnnual } });
+        window.dispatchEvent(event);
+        document.querySelectorAll('[data-monthly][data-annual]').forEach(el => {
+          el.textContent = isAnnual ? el.dataset.annual : el.dataset.monthly;
+        });
+      }, [isAnnual]);
+
+      return (
+        <div style={{display:'inline-flex',flexDirection:'column',alignItems:'center',gap:'12px',padding:'24px 32px',background:'#fff',borderRadius:'16px',boxShadow:'0 4px 24px rgba(29,78,216,0.1)',border:'1px solid #e5e7eb',marginBottom:'8px'}}>
+          <div style={{display:'flex',alignItems:'center',gap:'14px'}}>
+            <span style={{fontWeight: isAnnual ? '400' : '700', color: isAnnual ? '#6b7280' : '#1a2e4a', fontSize:'0.95rem', transition:'all 0.2s'}}>Monthly</span>
+            <button
+              onClick={() => setIsAnnual(a => !a)}
+              style={{position:'relative', width:'52px', height:'28px', borderRadius:'50px', border:'none', background: isAnnual ? '#1d4ed8' : '#d1d5db', cursor:'pointer', transition:'background 0.25s', padding:0, flexShrink:0}}
+              aria-label={isAnnual ? 'Switch to monthly billing' : 'Switch to annual billing'}
+            >
+              <span style={{position:'absolute', top:'3px', left: isAnnual ? '27px' : '3px', width:'22px', height:'22px', borderRadius:'50%', background:'#fff', boxShadow:'0 1px 4px rgba(0,0,0,0.2)', transition:'left 0.25s'}} />
+            </button>
+            <span style={{fontWeight: isAnnual ? '700' : '400', color: isAnnual ? '#1a2e4a' : '#6b7280', fontSize:'0.95rem', transition:'all 0.2s'}}>Annual</span>
+            {isAnnual && (
+              <span style={{background:'linear-gradient(135deg,#1d4ed8,#3b82f6)', color:'#fff', padding:'3px 10px', borderRadius:'50px', fontSize:'0.75rem', fontWeight:'700', letterSpacing:'0.03em', animation:'fadeIn 0.2s ease'}}>
+                Save 20% 🎉
+              </span>
+            )}
+          </div>
+          {isAnnual && (
+            <p style={{color:'#3b82f6',fontSize:'0.85rem',fontWeight:'600',margin:0}}>
+              🏷️ Annual plans billed yearly — you save up to 20% vs monthly
+            </p>
+          )}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-billing-toggle')).render(<BillingToggle />);
   </script>
 </body>
 </html>

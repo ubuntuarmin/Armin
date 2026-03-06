@@ -744,6 +744,9 @@
       }
     }
   </style>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <!-- GLOBAL HEADER -->
@@ -1352,5 +1355,88 @@
       </div>
     </div>
   </footer>
+
+  <!-- React FAQ & Contact Components -->
+  <section style="padding:80px 20px;background:#f7f9fc;">
+    <h2 style="text-align:center;color:#1b4b8a;font-size:2rem;font-weight:700;margin-bottom:8px;">Frequently Asked Questions</h2>
+    <p style="text-align:center;color:#555;margin-bottom:40px;">Common questions about our services and process</p>
+    <div id="react-corp-faq" style="max-width:800px;margin:0 auto;"></div>
+  </section>
+
+  <section style="padding:80px 20px;background:#fff;">
+    <h2 style="text-align:center;color:#1b4b8a;font-size:2rem;font-weight:700;margin-bottom:8px;">Request a Consultation</h2>
+    <p style="text-align:center;color:#555;margin-bottom:40px;">Let's discuss how we can help your business grow</p>
+    <div id="react-corp-contact" style="max-width:680px;margin:0 auto;"></div>
+  </section>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function CorporateFAQ() {
+      const [openIndex, setOpenIndex] = useState(null);
+      const faqs = [
+        { q: "What industries do you specialize in?", a: "We work across a broad range of industries including technology, finance, healthcare, retail, manufacturing, and professional services. Our consultants bring deep domain expertise combined with proven methodologies that deliver measurable results regardless of industry vertical." },
+        { q: "How long does a typical consulting engagement last?", a: "Engagement length varies based on scope and complexity. A focused strategy project may take 4–8 weeks, while a full transformation program can span 6–18 months. We tailor our approach to your timeline and business objectives, always with clear milestones and deliverables." },
+        { q: "Do you offer ongoing support after project completion?", a: "Yes. We offer flexible post-engagement support including implementation monitoring, quarterly business reviews, and retained advisory services. Many clients choose to maintain an ongoing relationship to continuously optimize their operations." },
+        { q: "How do you measure and report on project success?", a: "We define KPIs at the start of every engagement and provide regular progress reports. Our reporting dashboards give you real-time visibility into project status, financial impact, and risk indicators, ensuring full transparency throughout the engagement." },
+        { q: "What is your pricing model?", a: "We offer several flexible pricing models: fixed-fee project pricing, monthly retainers, and performance-based arrangements tied to measurable outcomes. During our initial consultation, we'll recommend the model that best aligns with your goals and budget." },
+      ];
+      return (
+        <div>
+          <style>{`
+            .corp-faq-item { border:1px solid #e0e8f0; border-radius:8px; margin-bottom:12px; background:#fff; cursor:pointer; transition:box-shadow 0.2s; }
+            .corp-faq-item:hover { box-shadow:0 4px 20px rgba(27,75,138,0.12); }
+            .corp-faq-q { padding:20px 22px; font-weight:600; color:#1b4b8a; display:flex; justify-content:space-between; align-items:center; font-size:1rem; line-height:1.5; }
+            .corp-faq-a { padding:0 22px 20px; color:#444; line-height:1.75; }
+          `}</style>
+          {faqs.map((faq, i) => (
+            <div key={i} className="corp-faq-item" onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+              <div className="corp-faq-q">{faq.q} <span style={{flexShrink:0,marginLeft:'12px',fontSize:'1rem',color:'#f7b500'}}>{openIndex === i ? '▲' : '▼'}</span></div>
+              {openIndex === i && <div className="corp-faq-a">{faq.a}</div>}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    function CorporateContact() {
+      const services = ['Strategy Consulting','Digital Transformation','Operations Optimization','Financial Advisory','HR & Talent','Technology Implementation','Other'];
+      const [form, setForm] = useState({ company:'', contact:'', email:'', phone:'', service:'', message:'' });
+      const [submitted, setSubmitted] = useState(false);
+      const update = (k, v) => setForm(f=>({...f,[k]:v}));
+      const handleSubmit = (e) => { e.preventDefault(); setSubmitted(true); };
+      const inputStyle = { width:'100%', padding:'13px 14px', border:'1px solid #d0dce8', borderRadius:'6px', fontSize:'0.95rem', boxSizing:'border-box', color:'#222', outline:'none', transition:'border-color 0.2s' };
+      const labelStyle = { display:'block', fontWeight:'600', color:'#1b4b8a', marginBottom:'6px', fontSize:'0.88rem' };
+      if (submitted) return (
+        <div style={{textAlign:'center',padding:'48px 24px',background:'#f0f7ff',border:'1px solid #c5d8f0',borderRadius:'12px'}}>
+          <div style={{fontSize:'3rem',marginBottom:'16px'}}>✅</div>
+          <h3 style={{color:'#1b4b8a',fontWeight:'700',marginBottom:'8px'}}>Inquiry Received</h3>
+          <p style={{color:'#444'}}>Thank you, {form.contact} from <strong>{form.company}</strong>. A consultant will reach out within one business day.</p>
+          <button onClick={()=>{setForm({company:'',contact:'',email:'',phone:'',service:'',message:''});setSubmitted(false);}} style={{marginTop:'24px',padding:'12px 28px',background:'#1b4b8a',color:'#fff',border:'none',borderRadius:'6px',cursor:'pointer',fontWeight:'600',fontSize:'0.95rem'}}>Submit Another Inquiry</button>
+        </div>
+      );
+      return (
+        <form onSubmit={handleSubmit} style={{background:'#fff',padding:'36px 32px',border:'1px solid #d0dce8',borderRadius:'12px',boxShadow:'0 4px 24px rgba(27,75,138,0.08)'}}>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px',marginBottom:'16px'}}>
+            <div><label style={labelStyle}>Company Name *</label><input required value={form.company} onChange={e=>update('company',e.target.value)} placeholder="Acme Corporation" style={inputStyle} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'} /></div>
+            <div><label style={labelStyle}>Contact Person *</label><input required value={form.contact} onChange={e=>update('contact',e.target.value)} placeholder="Jane Smith" style={inputStyle} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'} /></div>
+            <div><label style={labelStyle}>Email *</label><input required type="email" value={form.email} onChange={e=>update('email',e.target.value)} placeholder="jane@acme.com" style={inputStyle} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'} /></div>
+            <div><label style={labelStyle}>Phone</label><input type="tel" value={form.phone} onChange={e=>update('phone',e.target.value)} placeholder="(555) 000-0000" style={inputStyle} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'} /></div>
+          </div>
+          <div style={{marginBottom:'16px'}}><label style={labelStyle}>Service Interested In *</label>
+            <select required value={form.service} onChange={e=>update('service',e.target.value)} style={inputStyle} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'}>
+              <option value="">Select a service...</option>
+              {services.map(s=><option key={s} value={s}>{s}</option>)}
+            </select>
+          </div>
+          <div style={{marginBottom:'24px'}}><label style={labelStyle}>Message *</label><textarea required rows={4} value={form.message} onChange={e=>update('message',e.target.value)} placeholder="Tell us about your business challenge or project..." style={{...inputStyle,resize:'vertical'}} onFocus={e=>e.target.style.borderColor='#1b4b8a'} onBlur={e=>e.target.style.borderColor='#d0dce8'} /></div>
+          <button type="submit" style={{width:'100%',padding:'15px',background:'#1b4b8a',color:'#fff',border:'none',borderRadius:'6px',fontWeight:'700',cursor:'pointer',fontSize:'1rem',letterSpacing:'0.02em',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#153b6e'} onMouseOut={e=>e.target.style.background='#1b4b8a'}>Request Consultation →</button>
+        </form>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-corp-faq')).render(<CorporateFAQ />);
+    ReactDOM.createRoot(document.getElementById('react-corp-contact')).render(<CorporateContact />);
+  </script>
 </body>
 </html>

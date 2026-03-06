@@ -511,6 +511,9 @@
     ]
   }
   </script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <div class="site-header">
@@ -730,6 +733,117 @@
       {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
     document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-up").forEach((el)=>observer.observe(el));
+  </script>
+
+  <!-- React Contact Form with Validation -->
+  <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
+    <div style="max-width:640px;margin:0 auto;">
+      <h2 style="font-size:1.8rem;font-weight:700;color:#1a2e4a;margin-bottom:8px;text-align:center;">Send Us a Message</h2>
+      <p style="color:#6b7280;text-align:center;margin-bottom:36px;">Fill out the form below and we'll get back to you within one business day.</p>
+      <div id="react-contact-form"></div>
+    </div>
+  </section>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function ContactForm() {
+      const [form, setForm] = useState({ name:'', email:'', phone:'', subject:'', message:'' });
+      const [errors, setErrors] = useState({});
+      const [touched, setTouched] = useState({});
+      const [submitted, setSubmitted] = useState(false);
+
+      const validate = (f) => {
+        const e = {};
+        if (!f.name.trim()) e.name = 'Name is required';
+        else if (f.name.trim().length < 2) e.name = 'Name must be at least 2 characters';
+        if (!f.email.trim()) e.email = 'Email is required';
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Please enter a valid email';
+        if (f.phone && !/^[\d\s\-\+\(\)\.]{6,20}$/.test(f.phone.trim())) e.phone = 'Please enter a valid phone number';
+        if (!f.subject.trim()) e.subject = 'Subject is required';
+        if (!f.message.trim()) e.message = 'Message is required';
+        else if (f.message.trim().length < 10) e.message = 'Message must be at least 10 characters';
+        return e;
+      };
+
+      const update = (k, v) => {
+        const newForm = { ...form, [k]: v };
+        setForm(newForm);
+        if (touched[k]) setErrors(validate(newForm));
+      };
+
+      const blur = (k) => {
+        setTouched(t => ({ ...t, [k]: true }));
+        setErrors(validate(form));
+      };
+
+      const handleSubmit = (e) => {
+        e.preventDefault();
+        const allTouched = { name:true, email:true, phone:true, subject:true, message:true };
+        setTouched(allTouched);
+        const e2 = validate(form);
+        setErrors(e2);
+        if (Object.keys(e2).length === 0) setSubmitted(true);
+      };
+
+      const inputBase = { width:'100%', padding:'13px 14px', border:'2px solid', borderRadius:'8px', fontSize:'0.95rem', boxSizing:'border-box', color:'#1f2937', outline:'none', transition:'border-color 0.2s', background:'#fff', fontFamily:'inherit' };
+      const getInputStyle = (k) => ({ ...inputBase, borderColor: errors[k] && touched[k] ? '#ef4444' : touched[k] && !errors[k] ? '#22c55e' : '#e5e7eb' });
+      const labelStyle = { display:'block', fontWeight:'600', color:'#1a2e4a', marginBottom:'6px', fontSize:'0.88rem' };
+      const errStyle = { color:'#ef4444', fontSize:'0.8rem', marginTop:'4px' };
+      const okStyle = { color:'#22c55e', fontSize:'0.8rem', marginTop:'4px' };
+
+      if (submitted) return (
+        <div style={{textAlign:'center',padding:'48px 24px',background:'#fff',borderRadius:'12px',border:'1px solid #e5e7eb',boxShadow:'0 4px 24px rgba(0,0,0,0.06)'}}>
+          <div style={{fontSize:'3.5rem',marginBottom:'16px'}}>✅</div>
+          <h3 style={{color:'#1a2e4a',fontSize:'1.5rem',fontWeight:'700',marginBottom:'10px'}}>Message Sent!</h3>
+          <p style={{color:'#6b7280',marginBottom:'6px'}}>Thank you, <strong>{form.name}</strong>! We've received your message.</p>
+          <p style={{color:'#6b7280',fontSize:'0.9rem'}}>We'll reply to <strong>{form.email}</strong> within one business day.</p>
+          <button onClick={()=>{setForm({name:'',email:'',phone:'',subject:'',message:''});setErrors({});setTouched({});setSubmitted(false);}} style={{marginTop:'24px',padding:'12px 28px',background:'#1d4ed8',color:'#fff',border:'none',borderRadius:'8px',cursor:'pointer',fontWeight:'600',fontSize:'0.95rem',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#1a45c4'} onMouseOut={e=>e.target.style.background='#1d4ed8'}>Send Another Message</button>
+        </div>
+      );
+
+      return (
+        <form onSubmit={handleSubmit} noValidate style={{background:'#fff',padding:'36px 32px',borderRadius:'12px',border:'1px solid #e5e7eb',boxShadow:'0 4px 24px rgba(0,0,0,0.06)'}}>
+          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px',marginBottom:'16px'}}>
+            <div>
+              <label style={labelStyle}>Full Name *</label>
+              <input value={form.name} onChange={e=>update('name',e.target.value)} onBlur={()=>blur('name')} placeholder="John Smith" style={getInputStyle('name')} />
+              {touched.name && errors.name && <div style={errStyle}>⚠ {errors.name}</div>}
+              {touched.name && !errors.name && form.name && <div style={okStyle}>✓ Looks good</div>}
+            </div>
+            <div>
+              <label style={labelStyle}>Email Address *</label>
+              <input type="email" value={form.email} onChange={e=>update('email',e.target.value)} onBlur={()=>blur('email')} placeholder="john@example.com" style={getInputStyle('email')} />
+              {touched.email && errors.email && <div style={errStyle}>⚠ {errors.email}</div>}
+              {touched.email && !errors.email && form.email && <div style={okStyle}>✓ Valid email</div>}
+            </div>
+            <div>
+              <label style={labelStyle}>Phone Number</label>
+              <input type="tel" value={form.phone} onChange={e=>update('phone',e.target.value)} onBlur={()=>blur('phone')} placeholder="(555) 000-0000" style={getInputStyle('phone')} />
+              {touched.phone && errors.phone && <div style={errStyle}>⚠ {errors.phone}</div>}
+              {touched.phone && !errors.phone && form.phone && <div style={okStyle}>✓ Valid number</div>}
+            </div>
+            <div>
+              <label style={labelStyle}>Subject *</label>
+              <input value={form.subject} onChange={e=>update('subject',e.target.value)} onBlur={()=>blur('subject')} placeholder="How can we help?" style={getInputStyle('subject')} />
+              {touched.subject && errors.subject && <div style={errStyle}>⚠ {errors.subject}</div>}
+              {touched.subject && !errors.subject && form.subject && <div style={okStyle}>✓ Got it</div>}
+            </div>
+          </div>
+          <div style={{marginBottom:'24px'}}>
+            <label style={labelStyle}>Message *</label>
+            <textarea rows={5} value={form.message} onChange={e=>update('message',e.target.value)} onBlur={()=>blur('message')} placeholder="Tell us about your project or question..." style={{...getInputStyle('message'),resize:'vertical',fontFamily:'inherit'}} />
+            {touched.message && errors.message && <div style={errStyle}>⚠ {errors.message}</div>}
+            {touched.message && !errors.message && form.message && <div style={okStyle}>✓ Message ready</div>}
+            <div style={{textAlign:'right',color:'#9ca3af',fontSize:'0.8rem',marginTop:'4px'}}>{form.message.length} characters</div>
+          </div>
+          <button type="submit" style={{width:'100%',padding:'15px',background:'#1d4ed8',color:'#fff',border:'none',borderRadius:'8px',fontWeight:'700',cursor:'pointer',fontSize:'1rem',letterSpacing:'0.02em',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#1a45c4'} onMouseOut={e=>e.target.style.background='#1d4ed8'}>Send Message →</button>
+          {Object.keys(errors).length > 0 && Object.keys(touched).length > 0 && <p style={{textAlign:'center',color:'#ef4444',fontSize:'0.85rem',marginTop:'12px'}}>Please fix the errors above before submitting.</p>}
+        </form>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-contact-form')).render(<ContactForm />);
   </script>
 </body>
 </html>

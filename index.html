@@ -705,6 +705,9 @@
     ]
   }
   </script>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 
@@ -864,6 +867,54 @@
       const isOpen = navMobile.style.display === "flex";
       navMobile.style.display = isOpen ? "none" : "flex";
     });
+  </script>
+
+  <!-- React FAQ Accordion -->
+  <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
+    <div style="max-width:760px;margin:0 auto;">
+      <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
+      <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Everything you need to know about working with Armin Studio</p>
+      <div id="react-faq-main"></div>
+    </div>
+  </section>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function MainFAQ() {
+      const [openIndex, setOpenIndex] = useState(null);
+      const faqs = [
+        { q: "How long does it take to build a website?", a: "Timelines vary by complexity. A standard business website typically takes 2–4 weeks from kickoff to launch. E-commerce stores and custom web applications may take 6–12 weeks. We'll give you a detailed timeline estimate during our initial consultation." },
+        { q: "Do you offer ongoing website maintenance?", a: "Yes! We offer monthly maintenance plans that include security updates, content edits, performance monitoring, and priority support. Plans start at an affordable monthly rate and can be tailored to your specific needs." },
+        { q: "Will my website be mobile-friendly?", a: "Absolutely. Every website we build is fully responsive and tested on smartphones, tablets, and desktops. We follow mobile-first design principles to ensure a great experience on all devices and screen sizes." },
+        { q: "Can I update my website content myself?", a: "Yes. Most of our websites include a content management system (CMS) that lets you easily edit text, images, and other content without any technical knowledge. We also provide training and documentation." },
+        { q: "What happens after my website launches?", a: "We provide 30 days of complimentary post-launch support to address any issues or questions. We also offer SEO setup, Google Analytics integration, and ongoing marketing services to help you grow your online presence." },
+        { q: "How much does a website cost?", a: "Pricing depends on the scope and features required. Basic websites start from a few hundred dollars, while custom projects with advanced features are priced accordingly. We provide transparent, itemized quotes with no hidden fees. Contact us for a free estimate!" },
+      ];
+      return (
+        <div>
+          <style>{`
+            .armin-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; cursor:pointer; transition:box-shadow 0.2s,border-color 0.2s; }
+            .armin-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,0.1); border-color:#bfdbfe; }
+            .armin-faq-q { padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:0.97rem; line-height:1.5; }
+            .armin-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:0.95rem; }
+            .armin-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:#1d4ed8; transition:background 0.2s; }
+            .armin-faq-item.open .armin-faq-icon { background:#1d4ed8; color:#fff; }
+          `}</style>
+          {faqs.map((faq, i) => (
+            <div key={i} className={`armin-faq-item${openIndex === i ? ' open' : ''}`} onClick={() => setOpenIndex(openIndex === i ? null : i)}>
+              <div className="armin-faq-q">
+                <span>{faq.q}</span>
+                <span className="armin-faq-icon">{openIndex === i ? '▲' : '▼'}</span>
+              </div>
+              {openIndex === i && <div className="armin-faq-a">{faq.a}</div>}
+            </div>
+          ))}
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('react-faq-main')).render(<MainFAQ />);
   </script>
 </body>
 </html>

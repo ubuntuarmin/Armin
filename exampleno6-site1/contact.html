@@ -758,6 +758,42 @@
     @media (max-width:640px) {
       .perks-grid { grid-template-columns:1fr 1fr; }
     }
+
+    /* ===== ENHANCED MOBILE OPTIMIZATIONS ===== */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    a, button, [role="button"] { min-height: 44px; }
+    .btn-primary, .btn-submit, .submit-btn, input[type="submit"] {
+      min-height: 44px;
+      touch-action: manipulation;
+    }
+    .hamburger { min-height: 44px; min-width: 44px; touch-action: manipulation; }
+    .mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+
+    input, select, textarea {
+      font-size: 16px; /* Prevents iOS zoom on focus */
+    }
+
+    @media (max-width: 480px) {
+      .page-hero { padding: 100px 12px 50px; }
+      .page-hero h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+      .page-hero p  { font-size: clamp(0.9rem, 3.5vw, 1.1rem); }
+
+      .contact-section { padding: 60px 12px; }
+      .contact-grid { grid-template-columns: 1fr; gap: 20px; }
+      .contact-form { padding: 24px 16px; }
+
+      .form-row { grid-template-columns: 1fr; }
+      .form-group input,
+      .form-group select,
+      .form-group textarea { padding: 12px; }
+
+      .submit-btn, .btn-submit { width: 100%; padding: 16px; font-size: 1rem; }
+
+      .info-card { padding: 20px 16px; }
+      .map-container { height: 220px; }
+    }
   </style>
 </head>
 <body>
