@@ -482,7 +482,39 @@
         padding: 14px 20px;
       }
     }
-  </style>
+      /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+    /* Testimonial Carousel */
+    .testimonial-carousel-wrap { overflow:hidden; position:relative; }
+    .testimonial-track { display:flex; transition:transform 0.5s ease; }
+    .testimonial-card.carousel-slide { min-width:100%; box-sizing:border-box; }
+    .carousel-nav { display:flex; justify-content:center; align-items:center; gap:15px; margin-top:25px; }
+    .car-btn {
+      background:#dc2626; color:#fff; border:none;
+      width:42px; height:42px; border-radius:50%; font-size:1.2rem;
+      cursor:pointer; transition:background 0.2s; display:flex; align-items:center; justify-content:center;
+    }
+    .car-btn:hover { background:#b91c1c; }
+    .car-dots { display:flex; gap:8px; align-items:center; }
+    .car-dot { width:10px; height:10px; border-radius:50%; background:#555; cursor:pointer; transition:background 0.3s; }
+    .car-dot.active { background:#dc2626; }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -711,6 +743,70 @@
         document.getElementById('navLinks').classList.remove('active');
       });
     });
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Testimonial Carousel
+    (function(){
+      var cards=Array.from(document.querySelectorAll(".testimonial-card"));
+      if(cards.length<2)return;
+      // Build carousel DOM
+      var parent=cards[0].parentNode;
+      var wrap=document.createElement("div"); wrap.className="testimonial-carousel-wrap";
+      var track=document.createElement("div"); track.className="testimonial-track";
+      cards.forEach(function(c){ c.classList.add("carousel-slide"); track.appendChild(c); });
+      wrap.appendChild(track); parent.appendChild(wrap);
+      // Nav
+      var nav=document.createElement("div"); nav.className="carousel-nav";
+      var prev=document.createElement("button"); prev.className="car-btn"; prev.innerHTML="&#8592;"; prev.setAttribute("aria-label","Previous");
+      var next=document.createElement("button"); next.className="car-btn"; next.innerHTML="&#8594;"; next.setAttribute("aria-label","Next");
+      var dotsWrap=document.createElement("div"); dotsWrap.className="car-dots";
+      var dots=cards.map(function(_,i){
+        var d=document.createElement("span"); d.className="car-dot"+(i===0?" active":"");
+        d.addEventListener("click",function(){goTo(i);}); dotsWrap.appendChild(d); return d;
+      });
+      nav.appendChild(prev); nav.appendChild(dotsWrap); nav.appendChild(next); parent.appendChild(nav);
+      var current=0, timer;
+      function goTo(i){
+        current=(i+cards.length)%cards.length;
+        track.style.transform="translateX(-"+(current*100)+"%)";
+        dots.forEach(function(d,j){d.classList.toggle("active",j===current);});
+        resetTimer();
+      }
+      function resetTimer(){ clearInterval(timer); timer=setInterval(function(){goTo(current+1);},4500); }
+      prev.addEventListener("click",function(){goTo(current-1);});
+      next.addEventListener("click",function(){goTo(current+1);});
+      resetTimer();
+    })();
+</script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>
