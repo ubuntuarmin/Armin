@@ -146,6 +146,39 @@
       box-shadow: 0 4px 20px rgba(255,107,157,0.4) !important;
     }
 
+    /* Cart icon */
+    .nav-cart {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--white);
+      font-size: 1.3rem;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: rgba(255,107,157,0.15);
+      border: 1px solid rgba(255,107,157,0.35);
+      transition: all 0.3s;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .nav-cart:hover { background: rgba(255,107,157,0.3); transform: scale(1.08); }
+    .cart-badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      background: var(--pink);
+      color: white;
+      font-size: 0.6rem;
+      font-weight: 800;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--dark);
+    }
+
     /* Hamburger */
     .hamburger {
       display: none;
@@ -1174,6 +1207,18 @@
     @media (max-width: 640px) {
       .flavors-grid { grid-template-columns: 1fr; }
       .hero-stats { gap: 24px; }
+      .hero-buttons { flex-direction: column; align-items: center; }
+      .hero-buttons a { width: 100%; justify-content: center; }
+      .ice-cream-main { width: 200px; height: 260px; }
+      .orbit-scoop { width: 50px; height: 50px; font-size: 1.4rem; }
+      .menu-items-grid { grid-template-columns: 1fr; }
+      .menu-preview-section { padding: 80px 16px; }
+      .flavors-section { padding: 80px 16px; }
+      .about-section  { padding: 80px 16px; }
+      .testimonials-section { padding: 80px 16px; }
+      .cta-section { padding: 80px 16px; }
+      .cta-buttons { flex-direction: column; align-items: center; gap: 12px; }
+      .cta-buttons a { width: 100%; text-align: center; justify-content: center; }
     }
   </style>
 </head>
@@ -1199,6 +1244,7 @@
   <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
   <a href="index.html">🏠 Home</a>
   <a href="menu.html">🍦 Menu</a>
+  <a href="cart.html">🛒 My Cart <span id="mobileCartCount" style="background:var(--pink);color:#fff;border-radius:50px;padding:2px 8px;font-size:0.75rem;margin-left:4px;display:none;"></span></a>
   <a href="contact.html">📍 Find Us</a>
 </div>
 
@@ -1218,6 +1264,10 @@
       <li><a href="contact.html">Find Us</a></li>
       <li><a href="menu.html" class="nav-cta">Order Now</a></li>
     </ul>
+    <a href="cart.html" class="nav-cart" aria-label="View Cart">
+      🛒
+      <span class="cart-badge" id="cartBadge"></span>
+    </a>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
       <span></span><span></span><span></span>
     </button>
@@ -1402,7 +1452,7 @@
         <div class="flavor-desc">Real California strawberries blended with sweet cream and a hint of rose water. Pure summer in every bite.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$5.50 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Strawberry Dream">+</button>
+          <button class="add-btn" data-name="Strawberry Dream" data-price="5.50" data-emoji="🍓" aria-label="Add Strawberry Dream to cart">+</button>
         </div>
       </div>
     </div>
@@ -1417,7 +1467,7 @@
         <div class="flavor-desc">Fragrant lavender from local farms paired with wildflower honey and floral undertones. Luxuriously unique.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$6.00 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Lavender Honey">+</button>
+          <button class="add-btn" data-name="Lavender Honey" data-price="6.00" data-emoji="🌸" aria-label="Add Lavender Honey to cart">+</button>
         </div>
       </div>
     </div>
@@ -1432,7 +1482,7 @@
         <div class="flavor-desc">Cool garden mint with handmade dark chocolate chips. So refreshing it feels like a breeze on a summer afternoon.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$5.50 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Mint Chip Bliss">+</button>
+          <button class="add-btn" data-name="Mint Chip Bliss" data-price="5.50" data-emoji="🍃" aria-label="Add Mint Chip Bliss to cart">+</button>
         </div>
       </div>
     </div>
@@ -1446,7 +1496,7 @@
         <div class="flavor-desc">72% Belgian dark chocolate with ribbons of homemade fudge swirl. Deeply rich, intensely satisfying.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$6.00 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Dark Chocolate Fudge">+</button>
+          <button class="add-btn" data-name="Dark Chocolate Fudge" data-price="6.00" data-emoji="🍫" aria-label="Add Dark Chocolate Fudge to cart">+</button>
         </div>
       </div>
     </div>
@@ -1461,7 +1511,7 @@
         <div class="flavor-desc">Sweet Alphonso mangoes with a secret kick of tajín and lime. Tropical, tangy, and totally addictive.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$5.50 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Mango Tango">+</button>
+          <button class="add-btn" data-name="Mango Tango" data-price="5.50" data-emoji="🥭" aria-label="Add Mango Tango to cart">+</button>
         </div>
       </div>
     </div>
@@ -1475,7 +1525,7 @@
         <div class="flavor-desc">Creamy vanilla base loaded with crushed homemade chocolate sandwich cookies. A classic reinvented.</div>
         <div class="flavor-footer">
           <div class="flavor-price">$5.50 <span>/ scoop</span></div>
-          <button class="add-btn" aria-label="Add Cookie and Cream">+</button>
+          <button class="add-btn" data-name="Cookie &amp; Cream" data-price="5.50" data-emoji="🍪" aria-label="Add Cookie and Cream to cart">+</button>
         </div>
       </div>
     </div>
@@ -1677,6 +1727,24 @@
 </footer>
 
 <script>
+  // ── Cart helpers ──
+  function getCart() { return JSON.parse(localStorage.getItem('scoopCart') || '[]'); }
+  function saveCart(cart) { localStorage.setItem('scoopCart', JSON.stringify(cart)); updateCartBadge(); }
+  function updateCartBadge() {
+    const count = getCart().reduce((s, i) => s + i.qty, 0);
+    const badge = document.getElementById('cartBadge');
+    const mob   = document.getElementById('mobileCartCount');
+    if (badge) { badge.textContent = count; badge.style.display = count > 0 ? 'flex' : 'none'; }
+    if (mob)   { mob.textContent   = count; mob.style.display   = count > 0 ? 'inline' : 'none'; }
+  }
+  function addToCart(name, price, emoji) {
+    const cart = getCart();
+    const hit  = cart.find(i => i.name === name);
+    const numPrice = parseFloat(price) || 0;
+    if (hit) hit.qty++; else cart.push({ name, price: numPrice, emoji, qty: 1 });
+    saveCart(cart);
+  }
+
   // Mobile menu
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
@@ -1693,24 +1761,24 @@
   // Menu tab data
   const menuData = {
     scoops: [
-      { icon:'🍓', name:'Strawberry Dream',    desc:'Real California strawberries',    price:'$5.50' },
-      { icon:'🌸', name:'Lavender Honey',       desc:'Floral & wildflower honey',       price:'$6.00' },
-      { icon:'🍃', name:'Mint Chip Bliss',      desc:'Cool mint & dark chocolate chips',price:'$5.50' },
-      { icon:'🍫', name:'Dark Chocolate Fudge', desc:'72% Belgian chocolate',           price:'$6.00' },
-      { icon:'🥭', name:'Mango Tango',          desc:'Alphonso mango with tajín',       price:'$5.50' },
-      { icon:'🍪', name:'Cookie & Cream',       desc:'Vanilla with crushed cookies',    price:'$5.50' },
+      { icon:'🍓', name:'Strawberry Dream',    desc:'Real California strawberries',    price: 5.50 },
+      { icon:'🌸', name:'Lavender Honey',       desc:'Floral & wildflower honey',       price: 6.00 },
+      { icon:'🍃', name:'Mint Chip Bliss',      desc:'Cool mint & dark chocolate chips',price: 5.50 },
+      { icon:'🍫', name:'Dark Chocolate Fudge', desc:'72% Belgian chocolate',           price: 6.00 },
+      { icon:'🥭', name:'Mango Tango',          desc:'Alphonso mango with tajín',       price: 5.50 },
+      { icon:'🍪', name:'Cookie & Cream',       desc:'Vanilla with crushed cookies',    price: 5.50 },
     ],
     sundaes: [
-      { icon:'🍨', name:'Classic Banana Split',    desc:'3 scoops, banana, toppings',      price:'$12.00' },
-      { icon:'🌈', name:'Rainbow Sundae',           desc:'5 flavors with rainbow toppings', price:'$14.00' },
-      { icon:'🍫', name:'Hot Fudge Brownie',        desc:'Warm brownie & hot fudge drizzle',price:'$13.00' },
-      { icon:'🍑', name:'Peach Melba Sundae',       desc:'Peach sorbet & raspberry coulis', price:'$11.00' },
+      { icon:'🍨', name:'Classic Banana Split',    desc:'3 scoops, banana, toppings',      price: 12.00 },
+      { icon:'🌈', name:'Rainbow Sundae',           desc:'5 flavors with rainbow toppings', price: 14.00 },
+      { icon:'🍫', name:'Hot Fudge Brownie',        desc:'Warm brownie & hot fudge drizzle',price: 13.00 },
+      { icon:'🍑', name:'Peach Melba Sundae',       desc:'Peach sorbet & raspberry coulis', price: 11.00 },
     ],
     shakes: [
-      { icon:'🥤', name:'Strawberry Cloud Shake',  desc:'Thick strawberry milkshake',        price:'$8.00' },
-      { icon:'🍫', name:'Triple Chocolate Shake',  desc:'Dark, milk & white chocolate',       price:'$9.00' },
-      { icon:'🌸', name:'Lavender Dreamsicle',     desc:'Lavender honey shake with vanilla',  price:'$9.50' },
-      { icon:'🥭', name:'Tropical Mango Freeze',   desc:'Mango sorbet blended smooth',        price:'$8.50' },
+      { icon:'🥤', name:'Strawberry Cloud Shake',  desc:'Thick strawberry milkshake',        price: 8.00 },
+      { icon:'🍫', name:'Triple Chocolate Shake',  desc:'Dark, milk & white chocolate',       price: 9.00 },
+      { icon:'🌸', name:'Lavender Dreamsicle',     desc:'Lavender honey shake with vanilla',  price: 9.50 },
+      { icon:'🥭', name:'Tropical Mango Freeze',   desc:'Mango sorbet blended smooth',        price: 8.50 },
     ],
   };
 
@@ -1730,25 +1798,56 @@
           <div class="menu-item-name">${item.name}</div>
           <div class="menu-item-desc">${item.desc}</div>
         </div>
-        <div class="menu-item-price">${item.price}</div>
+        <div class="menu-item-price">$${item.price.toFixed(2)}</div>
+        <button class="add-btn" onclick="handleAddBtn(this,'${item.name}',${item.price},'${item.icon}')" aria-label="Add ${item.name} to cart">+</button>
       </div>
     `).join('');
   }
 
-  renderMenu('scoops');
+  function handleAddBtn(btn, name, price, emoji) {
+    addToCart(name, price, emoji);
+    btn.style.background = 'linear-gradient(135deg, #1ABC9C, #148F77)';
+    btn.textContent = '✓';
+    setTimeout(() => {
+      btn.style.background = '';
+      btn.textContent = '+';
+    }, 1200);
+    showToast(`${emoji} ${name} added to cart!`);
+  }
 
-  // Add scoop button animation feedback
+  // Flavour add-btn clicks (for the featured flavors section)
   document.addEventListener('click', e => {
-    if (e.target.classList.contains('add-btn')) {
-      const btn = e.target;
+    if (e.target.classList.contains('add-btn') && e.target.dataset.name) {
+      const btn   = e.target;
+      const name  = btn.dataset.name;
+      const price = parseFloat(btn.dataset.price);
+      const emoji = btn.dataset.emoji;
+      addToCart(name, price, emoji);
       btn.style.background = 'linear-gradient(135deg, #1ABC9C, #148F77)';
       btn.textContent = '✓';
-      setTimeout(() => {
-        btn.style.background = 'linear-gradient(135deg, var(--pink), var(--coral))';
-        btn.textContent = '+';
-      }, 1200);
+      setTimeout(() => { btn.style.background = ''; btn.textContent = '+'; }, 1200);
+      showToast(`${emoji} ${name} added to cart!`);
     }
   });
+
+  let toastTimer;
+  function showToast(msg) {
+    let toast = document.getElementById('cartToast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'cartToast';
+      toast.style.cssText = 'position:fixed;bottom:28px;right:28px;background:linear-gradient(135deg,#1ABC9C,#148F77);color:#fff;padding:14px 22px;border-radius:14px;font-weight:700;font-size:0.88rem;box-shadow:0 8px 30px rgba(0,0,0,0.2);transform:translateY(100px);opacity:0;transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1);z-index:9999;pointer-events:none;max-width:280px;';
+      document.body.appendChild(toast);
+    }
+    toast.innerHTML = `${msg} <a href="cart.html" style="color:#fff;text-decoration:underline;margin-left:6px;">View Cart →</a>`;
+    toast.style.transform = 'translateY(0)';
+    toast.style.opacity = '1';
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { toast.style.transform = 'translateY(100px)'; toast.style.opacity = '0'; }, 3000);
+  }
+
+  renderMenu('scoops');
+  updateCartBadge();
 </script>
 </body>
 </html>
