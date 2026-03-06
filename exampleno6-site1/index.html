@@ -1740,7 +1740,8 @@
   function addToCart(name, price, emoji) {
     const cart = getCart();
     const hit  = cart.find(i => i.name === name);
-    if (hit) hit.qty++; else cart.push({ name, price, emoji, qty: 1 });
+    const numPrice = parseFloat(price) || 0;
+    if (hit) hit.qty++; else cart.push({ name, price: numPrice, emoji, qty: 1 });
     saveCart(cart);
   }
 

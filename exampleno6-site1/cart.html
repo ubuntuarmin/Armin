@@ -768,7 +768,7 @@
       return;
     }
     // Generate order ref
-    const ref = 'SD-' + Date.now().toString(36).toUpperCase();
+    const ref = 'SD-' + Date.now().toString(36).toUpperCase() + Math.random().toString(36).slice(2, 5).toUpperCase();
     document.getElementById('orderRef').textContent = '📋 Order #' + ref;
     // Clear cart
     localStorage.removeItem('scoopCart');
