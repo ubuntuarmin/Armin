@@ -616,7 +616,25 @@
         padding: 60px 15px;
       }
     }
-  </style>
+      /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -659,22 +677,22 @@
       <h2 class="section-title">Our Services</h2>
       <p class="section-subtitle">Comprehensive construction and remodeling solutions</p>
       <div class="services-grid">
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-icon" aria-label="Home icon">🏠</div>
           <h3>Home Remodeling</h3>
           <p>Transform your home with our expert remodeling services. From kitchens to bathrooms, we do it all.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-icon" aria-label="Building icon">🏢</div>
           <h3>Commercial Build</h3>
           <p>Professional commercial construction services tailored to your business needs.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-icon" aria-label="Hammer icon">🔨</div>
           <h3>Renovation</h3>
           <p>Breathe new life into old spaces with our comprehensive renovation services.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card reveal">
           <div class="service-icon" aria-label="Design icon">🎨</div>
           <h3>Interior Design</h3>
           <p>Complete interior design services to make your vision a reality.</p>
@@ -689,21 +707,21 @@
       <h2 class="section-title">Featured Projects</h2>
       <p class="section-subtitle">See what we've built for our satisfied clients</p>
       <div class="portfolio-grid">
-        <div class="portfolio-item">
+        <div class="portfolio-item reveal">
           <div class="portfolio-bg">🏡</div>
           <div class="portfolio-info">
             <h3>Modern Kitchen Remodel</h3>
             <p>Complete kitchen transformation in suburban home</p>
           </div>
         </div>
-        <div class="portfolio-item">
+        <div class="portfolio-item reveal">
           <div class="portfolio-bg">🏢</div>
           <div class="portfolio-info">
             <h3>Office Building Renovation</h3>
             <p>5,000 sq ft commercial space modernization</p>
           </div>
         </div>
-        <div class="portfolio-item">
+        <div class="portfolio-item reveal">
           <div class="portfolio-bg">🏠</div>
           <div class="portfolio-info">
             <h3>Home Addition Project</h3>
@@ -719,22 +737,22 @@
     <div class="container">
       <h2 class="section-title">Why Choose Total Power?</h2>
       <div class="features-grid">
-        <div class="feature-item">
+        <div class="feature-item reveal">
           <div class="feature-icon" aria-label="Star icon">⭐</div>
           <h3>25+ Years Experience</h3>
           <p>Decades of expertise in construction and remodeling</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item reveal">
           <div class="feature-icon" aria-label="Check icon">✓</div>
           <h3>Licensed & Insured</h3>
           <p>Fully licensed contractors with comprehensive insurance</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item reveal">
           <div class="feature-icon" aria-label="Money icon">💰</div>
           <h3>Fair Pricing</h3>
           <p>Competitive rates with no hidden fees</p>
         </div>
-        <div class="feature-item">
+        <div class="feature-item reveal">
           <div class="feature-icon" aria-label="Trophy icon">🏆</div>
           <h3>Quality Guarantee</h3>
           <p>100% satisfaction guarantee on all our work</p>
@@ -818,6 +836,68 @@
         document.getElementById('navLinks').classList.remove('active');
       });
     });
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Counter Animation
+    (function(){
+      function animateNum(el,target,dur){
+        var start=performance.now();
+        var suffix=el.getAttribute("data-suffix")||"";
+        function step(now){
+          var p=Math.min((now-start)/dur,1);
+          el.textContent=Math.floor(p*target)+suffix;
+          if(p<1)requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+      }
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(!e.isIntersecting)return;
+          var el=e.target;
+          var raw=(el.textContent||"").trim();
+          var num=parseInt(raw.replace(/[^0-9]/g,""),10);
+          if(!isNaN(num)&&num>0){
+            var suffix=raw.replace(/[0-9,]/g,"").trim();
+            el.setAttribute("data-suffix",suffix);
+            animateNum(el,num,1500);
+          }
+          io.unobserve(el);
+        });
+      },{threshold:0.6});
+      document.querySelectorAll(".stat-number,.counter,[class*=stat] h2,[class*=stat] h3").forEach(function(el){
+        if(/^\d/.test((el.textContent||"").trim()))io.observe(el);
+      });
+    })();
+</script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>

@@ -461,7 +461,33 @@
         padding: 15px;
       }
     }
-  </style>
+      /* Schedule Filter */
+    .schedule-filter-bar { display:flex; gap:10px; flex-wrap:wrap; margin-bottom:25px; }
+    .sched-filter-btn {
+      padding:8px 20px; border:2px solid #dc2626; background:transparent;
+      color:#fff; border-radius:20px; cursor:pointer; font-weight:600; transition:all 0.3s;
+    }
+    .sched-filter-btn.active, .sched-filter-btn:hover { background:#dc2626; color:#fff; }
+    .game-card.sched-hidden { display:none; }
+    /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -513,8 +539,14 @@
     <!-- Upcoming Games -->
     <div class="schedule-section">
       <h2 class="section-title">⚡ Upcoming Games</h2>
-      <div class="games-list">
-        <div class="game-card upcoming">
+            <div class="schedule-filter-bar" id="schedFilterBar">
+        <button class="sched-filter-btn active" data-filter="all">All</button>
+        <button class="sched-filter-btn" data-filter="home">Home</button>
+        <button class="sched-filter-btn" data-filter="away">Away</button>
+        <button class="sched-filter-btn" data-filter="tournament">Tournament</button>
+      </div>
+<div class="games-list">
+        <div class="game-card upcoming reveal">
           <div class="game-date">
             <div class="date-day">22</div>
             <div class="date-month">FEB</div>
@@ -532,7 +564,7 @@
           </div>
         </div>
 
-        <div class="game-card upcoming">
+        <div class="game-card upcoming reveal">
           <div class="game-date">
             <div class="date-day">25</div>
             <div class="date-month">FEB</div>
@@ -550,7 +582,7 @@
           </div>
         </div>
 
-        <div class="game-card upcoming">
+        <div class="game-card upcoming reveal">
           <div class="game-date">
             <div class="date-day">28</div>
             <div class="date-month">FEB</div>
@@ -574,7 +606,7 @@
     <div class="schedule-section">
       <h2 class="section-title">🏆 Recent Results</h2>
       <div class="games-list">
-        <div class="game-card completed win">
+        <div class="game-card completed win reveal">
           <div class="game-date">
             <div class="date-day">18</div>
             <div class="date-month">FEB</div>
@@ -591,7 +623,7 @@
           </div>
         </div>
 
-        <div class="game-card completed win">
+        <div class="game-card completed win reveal">
           <div class="game-date">
             <div class="date-day">15</div>
             <div class="date-month">FEB</div>
@@ -608,7 +640,7 @@
           </div>
         </div>
 
-        <div class="game-card completed loss">
+        <div class="game-card completed loss reveal">
           <div class="game-date">
             <div class="date-day">12</div>
             <div class="date-month">FEB</div>
@@ -625,7 +657,7 @@
           </div>
         </div>
 
-        <div class="game-card completed win">
+        <div class="game-card completed win reveal">
           <div class="game-date">
             <div class="date-day">08</div>
             <div class="date-month">FEB</div>
@@ -642,7 +674,7 @@
           </div>
         </div>
 
-        <div class="game-card completed win">
+        <div class="game-card completed win reveal">
           <div class="game-date">
             <div class="date-day">05</div>
             <div class="date-month">FEB</div>
@@ -659,7 +691,7 @@
           </div>
         </div>
 
-        <div class="game-card completed win">
+        <div class="game-card completed win reveal">
           <div class="game-date">
             <div class="date-day">01</div>
             <div class="date-month">FEB</div>
@@ -708,6 +740,59 @@
         navLinks.classList.remove('active');
       }
     });
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Schedule filter
+    (function(){
+      var bar=document.getElementById("schedFilterBar");
+      if(!bar)return;
+      document.querySelectorAll(".game-card").forEach(function(card){
+        var txt=(card.innerText||card.textContent).toLowerCase();
+        if(txt.includes("tournament")||txt.includes("tourney")) card.setAttribute("data-type","tournament");
+        else if(txt.includes(" vs ")||!/ @ /.test(txt)) card.setAttribute("data-type","home");
+        else card.setAttribute("data-type","away");
+      });
+      bar.addEventListener("click",function(e){
+        var btn=e.target.closest(".sched-filter-btn");
+        if(!btn)return;
+        bar.querySelectorAll(".sched-filter-btn").forEach(function(b){b.classList.remove("active");});
+        btn.classList.add("active");
+        var filter=btn.getAttribute("data-filter");
+        document.querySelectorAll(".game-card").forEach(function(card){
+          card.classList.toggle("sched-hidden",filter!=="all"&&card.getAttribute("data-type")!==filter);
+        });
+      });
+    })();
+</script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>

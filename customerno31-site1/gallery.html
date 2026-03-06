@@ -325,7 +325,52 @@
         font-size: 0.8rem;
       }
     }
-  </style>
+      /* Lightbox */
+    .lightbox-overlay {
+      display:none; position:fixed; inset:0; background:rgba(0,0,0,0.92);
+      z-index:10000; align-items:center; justify-content:center; flex-direction:column;
+    }
+    .lightbox-overlay.open { display:flex; }
+    .lb-content-box {
+      min-width:280px; min-height:280px; max-width:85vw; max-height:75vh;
+      background:linear-gradient(135deg,#1a1a2e,#dc2626);
+      display:flex; align-items:center; justify-content:center;
+      font-size:1.2rem; color:#fff; border-radius:10px;
+      position:relative; padding:20px; text-align:center;
+    }
+    .lb-close {
+      position:absolute; top:-45px; right:0; background:none; border:none;
+      color:#fff; font-size:2.2rem; cursor:pointer; line-height:1;
+    }
+    .lb-prev, .lb-next {
+      position:fixed; top:50%; transform:translateY(-50%);
+      background:rgba(220,38,38,0.7); border:none; color:#fff;
+      font-size:2rem; padding:10px 16px; cursor:pointer; border-radius:5px;
+      z-index:10001; transition:background 0.2s;
+    }
+    .lb-prev { left:15px; }
+    .lb-next { right:15px; }
+    .lb-prev:hover, .lb-next:hover { background:#dc2626; }
+    .lb-caption { color:#ccc; margin-top:14px; font-size:0.9rem; }
+    /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+</style>
 </head>
 <body>
   <!-- Navigation -->
@@ -497,6 +542,81 @@
         // Filter logic would go here
       });
     });
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Gallery Lightbox
+    (function(){
+      var items=Array.from(document.querySelectorAll(".gallery-item"));
+      var overlay=document.getElementById("lightboxOverlay");
+      var lbText=document.getElementById("lbText");
+      var caption=document.getElementById("lbCaption");
+      if(!items.length||!overlay)return;
+      var current=0;
+      function open(i){
+        current=i;
+        lbText.textContent="Photo "+(i+1);
+        caption.textContent="Image "+(i+1)+" of "+items.length;
+        overlay.classList.add("open");
+        document.body.style.overflow="hidden";
+      }
+      function close(){
+        overlay.classList.remove("open");
+        document.body.style.overflow="";
+      }
+      items.forEach(function(item,i){
+        item.style.cursor="pointer";
+        item.addEventListener("click",function(){open(i);});
+      });
+      document.getElementById("lbClose").addEventListener("click",close);
+      document.getElementById("lbPrev").addEventListener("click",function(){open((current-1+items.length)%items.length);});
+      document.getElementById("lbNext").addEventListener("click",function(){open((current+1)%items.length);});
+      overlay.addEventListener("click",function(e){if(e.target===overlay)close();});
+      document.addEventListener("keydown",function(e){
+        if(!overlay.classList.contains("open"))return;
+        if(e.key==="Escape")close();
+        if(e.key==="ArrowLeft")open((current-1+items.length)%items.length);
+        if(e.key==="ArrowRight")open((current+1)%items.length);
+      });
+    })();
+</script>
+  <div class="lightbox-overlay" id="lightboxOverlay" role="dialog" aria-modal="true">
+    <div class="lb-content-box" id="lbContent">
+      <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+      <span id="lbText">Image</span>
+    </div>
+    <p class="lb-caption" id="lbCaption"></p>
+    <button class="lb-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+    <button class="lb-next" id="lbNext" aria-label="Next">&#8594;</button>
+  </div>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>

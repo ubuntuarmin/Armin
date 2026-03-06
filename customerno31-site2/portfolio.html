@@ -543,9 +543,15 @@
 
   <!-- Portfolio Content -->
   <div class="container">
+        <div class="portfolio-filter-bar" id="portFilterBar">
+          <button class="port-filter-btn active" data-cat="all">All</button>
+          <button class="port-filter-btn" data-cat="commercial">Commercial</button>
+          <button class="port-filter-btn" data-cat="residential">Residential</button>
+          <button class="port-filter-btn" data-cat="industrial">Industrial</button>
+        </div>
     <div class="portfolio-grid">
       <!-- Project 1 -->
-      <div class="project-card" data-category="residential">
+      <div class="project-card reveal" data-category="residential">
         <div class="project-image">🏠</div>
         <div class="project-info">
           <div class="project-category">Residential Remodel</div>
@@ -565,7 +571,7 @@
       </div>
 
       <!-- Project 2 -->
-      <div class="project-card" data-category="commercial">
+      <div class="project-card reveal" data-category="commercial">
         <div class="project-image">🏢</div>
         <div class="project-info">
           <div class="project-category">Commercial Build</div>
@@ -585,7 +591,7 @@
       </div>
 
       <!-- Project 3 -->
-      <div class="project-card" data-category="residential">
+      <div class="project-card reveal" data-category="residential">
         <div class="project-image">🏡</div>
         <div class="project-info">
           <div class="project-category">Home Addition</div>
@@ -605,7 +611,7 @@
       </div>
 
       <!-- Project 4 -->
-      <div class="project-card" data-category="commercial renovation">
+      <div class="project-card reveal" data-category="commercial renovation">
         <div class="project-image">🏪</div>
         <div class="project-info">
           <div class="project-category">Commercial Renovation</div>
@@ -625,7 +631,7 @@
       </div>
 
       <!-- Project 5 -->
-      <div class="project-card" data-category="residential renovation">
+      <div class="project-card reveal" data-category="residential renovation">
         <div class="project-image">🏠</div>
         <div class="project-info">
           <div class="project-category">Bathroom Remodel</div>
@@ -645,7 +651,7 @@
       </div>
 
       <!-- Project 6 -->
-      <div class="project-card" data-category="residential renovation">
+      <div class="project-card reveal" data-category="residential renovation">
         <div class="project-image">🏘️</div>
         <div class="project-info">
           <div class="project-category">Historic Renovation</div>
@@ -665,7 +671,7 @@
       </div>
 
       <!-- Project 7 -->
-      <div class="project-card" data-category="new-construction residential">
+      <div class="project-card reveal" data-category="new-construction residential">
         <div class="project-image">🏗️</div>
         <div class="project-info">
           <div class="project-category">New Construction</div>
@@ -685,7 +691,7 @@
       </div>
 
       <!-- Project 8 -->
-      <div class="project-card" data-category="commercial new-construction">
+      <div class="project-card reveal" data-category="commercial new-construction">
         <div class="project-image">🍽️</div>
         <div class="project-info">
           <div class="project-category">Restaurant Build</div>
@@ -705,7 +711,7 @@
       </div>
 
       <!-- Project 9 -->
-      <div class="project-card" data-category="residential renovation">
+      <div class="project-card reveal" data-category="residential renovation">
         <div class="project-image">🏠</div>
         <div class="project-info">
           <div class="project-category">Basement Finish</div>
@@ -729,19 +735,19 @@
   <!-- Stats Section -->
   <section class="stats-section">
     <div class="stats-grid">
-      <div class="stat-item">
+      <div class="stat-item reveal">
         <div class="stat-number" data-target="500" data-suffix="+">0</div>
         <div class="stat-label-main">Projects Completed</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item reveal">
         <div class="stat-number" data-target="25" data-suffix="+">0</div>
         <div class="stat-label-main">Years Experience</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item reveal">
         <div class="stat-number" data-target="98" data-suffix="%">0</div>
         <div class="stat-label-main">Client Satisfaction</div>
       </div>
-      <div class="stat-item">
+      <div class="stat-item reveal">
         <div class="stat-number" data-target="50" data-suffix="+">0</div>
         <div class="stat-label-main">Team Members</div>
       </div>
@@ -864,12 +870,89 @@
     if (statsSection) {
       statsObserver.observe(statsSection);
     }
-  </script>
+      /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+    // Portfolio Filter
+    (function(){
+      var bar=document.getElementById("portFilterBar");
+      if(!bar)return;
+      var cats=["commercial","residential","industrial"];
+      document.querySelectorAll(".portfolio-item,.portfolio-card").forEach(function(card,i){
+        if(!card.getAttribute("data-cat"))card.setAttribute("data-cat",cats[i%cats.length]);
+      });
+      bar.addEventListener("click",function(e){
+        var btn=e.target.closest(".port-filter-btn");
+        if(!btn)return;
+        bar.querySelectorAll(".port-filter-btn").forEach(function(b){b.classList.remove("active");});
+        btn.classList.add("active");
+        var cat=btn.getAttribute("data-cat");
+        document.querySelectorAll(".portfolio-item,.portfolio-card").forEach(function(card){
+          card.classList.toggle("port-hidden",cat!=="all"&&card.getAttribute("data-cat")!==cat);
+        });
+      });
+    })();
+</script>
   <style>
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
-  </style>
+      /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#dc2626; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.35);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(0,0,0,.45)!important; }
+    .nav-links a.active-page { color:#dc2626!important; border-bottom:2px solid #dc2626; padding-bottom:2px; }
+    /* Portfolio Filter */
+    .portfolio-filter-bar { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px; justify-content:center; }
+    .port-filter-btn {
+      padding:9px 22px; border:2px solid #dc2626; background:transparent;
+      color:#fff; border-radius:20px; cursor:pointer; font-weight:600; transition:all 0.3s;
+    }
+    .port-filter-btn.active, .port-filter-btn:hover { background:#dc2626; }
+    .portfolio-item.port-hidden, .portfolio-card.port-hidden { display:none!important; }
+</style>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>
