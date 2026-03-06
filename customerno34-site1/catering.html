@@ -128,7 +128,26 @@
     .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
     @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
-  </style>
+  
+    /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#B8922A; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.25);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); background:#9a7820; }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(26,39,68,0.18)!important; }
+    .nav-links a.active-page { color:#B8922A!important; border-bottom:2px solid #B8922A; padding-bottom:2px; }
+</style>
 </head>
 <body>
 
@@ -188,7 +207,7 @@
       <p>We design bespoke menus for every type of event, working closely with you from first consultation to final crumb.</p>
     </div>
     <div class="services-grid">
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-img-ph">
           <div class="ph-icon">💒</div>
           <p class="ph-label">Wedding Setup Photo · 600 × 400px</p>
@@ -205,7 +224,7 @@
           <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:11px 24px;">Enquire Now</a>
         </div>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-img-ph">
           <div class="ph-icon">🏢</div>
           <p class="ph-label">Corporate Event Photo · 600 × 400px</p>
@@ -222,7 +241,7 @@
           <a href="contact.html" class="btn-gold" style="font-size:0.85rem;padding:11px 24px;">Enquire Now</a>
         </div>
       </div>
-      <div class="service-card">
+      <div class="service-card reveal">
         <div class="service-img-ph">
           <div class="ph-icon">🎉</div>
           <p class="ph-label">Private Party Photo · 600 × 400px</p>
@@ -366,6 +385,39 @@
     const hamburger = document.querySelector('.hamburger');
     if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
   });
+
+    /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
 </script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>

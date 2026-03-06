@@ -120,7 +120,34 @@
     .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
     @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
     @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
-  </style>
+  
+    /* -- Universal JS Enhancements -- */
+    @keyframes fadeInUp {
+      from { opacity:0; transform:translateY(30px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.6s ease,transform 0.6s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    #backToTop {
+      position:fixed; bottom:30px; right:30px; width:48px; height:48px;
+      background:#B8922A; color:#fff; border:none; border-radius:50%;
+      font-size:1.5rem; cursor:pointer; display:none; align-items:center;
+      justify-content:center; z-index:9999; box-shadow:0 4px 14px rgba(0,0,0,.25);
+      transition:background .3s,transform .2s;
+    }
+    #backToTop:hover { transform:translateY(-3px); background:#9a7820; }
+    #backToTop.visible { display:flex; }
+    nav.scrolled { box-shadow:0 4px 20px rgba(26,39,68,0.18)!important; }
+    .nav-links a.active-page { color:#B8922A!important; border-bottom:2px solid #B8922A; padding-bottom:2px; }
+
+    /* Form Validation */
+    .field-error { color:#c0392b; font-size:0.82rem; margin-top:4px; display:none; }
+    .field-error.show { display:block; }
+    input.invalid, textarea.invalid, select.invalid { border-color:#c0392b!important; }
+    input.valid, textarea.valid, select.valid { border-color:#27ae60!important; }
+    .form-success-msg { display:none; background:#d4edda; color:#155724; padding:16px 20px; border-radius:8px; margin-top:15px; font-weight:600; border:1px solid #c3e6cb; }
+    .form-success-msg.show { display:block; }
+</style>
 </head>
 <body>
 
@@ -157,6 +184,7 @@
   <div class="contact-form-wrap">
     <p class="form-eyebrow">Envoyer un Message</p>
     <h2 class="form-title">Get in Touch</h2>
+    <form>
     <div class="form-row">
       <div class="form-group">
         <label for="fname">First Name</label>
@@ -193,6 +221,7 @@
     </div>
     <button type="submit" class="submit-btn">Send Message →</button>
     <p class="form-note">We typically respond within one business day.</p>
+    </form>
   </div>
 
   <!-- INFO -->
@@ -316,6 +345,73 @@
     const hamburger = document.querySelector('.hamburger');
     if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
   });
+
+    /* -- Universal JS Enhancements -- */
+    // Scroll Reveal
+    (function(){
+      var els=document.querySelectorAll(".reveal");
+      if(!els.length)return;
+      var io=new IntersectionObserver(function(en){
+        en.forEach(function(e){ if(e.isIntersecting){e.target.classList.add("visible");io.unobserve(e.target);} });
+      },{threshold:0.12});
+      els.forEach(function(el){io.observe(el);});
+    })();
+    // Back-to-top
+    (function(){
+      var btn=document.getElementById("backToTop");
+      if(!btn)return;
+      window.addEventListener("scroll",function(){ btn.classList.toggle("visible",window.scrollY>300); });
+      btn.addEventListener("click",function(){ window.scrollTo({top:0,behavior:"smooth"}); });
+    })();
+    // Sticky header
+    (function(){
+      var nav=document.querySelector("nav")||document.querySelector("header");
+      if(!nav)return;
+      window.addEventListener("scroll",function(){ nav.classList.toggle("scrolled",window.scrollY>50); });
+    })();
+    // Active nav link
+    (function(){
+      var page=window.location.pathname.split("/").pop()||"index.html";
+      document.querySelectorAll(".nav-links a").forEach(function(a){
+        var href=(a.getAttribute("href")||"").split("/").pop();
+        if(href===page||(page===""&&href==="index.html")) a.classList.add("active-page");
+      });
+    })();
+
+    // Form Validation
+    (function(){
+      document.querySelectorAll("form").forEach(function(form){
+        var msg=document.createElement("div"); msg.className="form-success-msg";
+        msg.textContent="\u2713 Message sent! We'll contact you soon."; form.appendChild(msg);
+        function validate(field){
+          var err=field.parentNode.querySelector(".field-error");
+          var val=field.value.trim(); var ok=true; var errMsg="";
+          if(field.required&&!val){ok=false;errMsg="This field is required.";}
+          else if(field.type==="email"&&val&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){ok=false;errMsg="Enter a valid email address.";}
+          else if(field.type==="tel"&&val&&!/^[\d\s\-\+\(\)]{7,}$/.test(val)){ok=false;errMsg="Enter a valid phone number.";}
+          field.classList.toggle("invalid",!ok); field.classList.toggle("valid",ok&&val.length>0);
+          if(err){err.textContent=errMsg;err.classList.toggle("show",!ok);}
+          return ok;
+        }
+        form.querySelectorAll("input,textarea,select").forEach(function(field){
+          if(!field.parentNode.querySelector(".field-error")){
+            var s=document.createElement("span"); s.className="field-error"; field.parentNode.appendChild(s);
+          }
+          field.addEventListener("blur",function(){validate(field);});
+          field.addEventListener("input",function(){if(field.classList.contains("invalid"))validate(field);});
+        });
+        form.addEventListener("submit",function(e){
+          e.preventDefault(); var allOk=true;
+          form.querySelectorAll("input,textarea,select").forEach(function(f){if(!validate(f))allOk=false;});
+          if(allOk){
+            msg.classList.add("show"); form.reset();
+            form.querySelectorAll("input,textarea,select").forEach(function(f){f.classList.remove("valid","invalid");});
+            setTimeout(function(){msg.classList.remove("show");},5000);
+          }
+        });
+      });
+    })();
 </script>
+  <button id="backToTop" aria-label="Back to top">&#8679;</button>
 </body>
 </html>
