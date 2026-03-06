@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Journal - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%); padding: 80px 24px; text-align: center; }
+    .page-hero .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .page-hero h1 { font-size: clamp(2.4rem,5vw,3.8rem); color: #FFF8EE; font-style: italic; margin-bottom: 14px; }
+    .page-hero p { color: #B0BCCF; font-family: sans-serif; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+
+    /* BODY */
+    .blog-body { max-width: 1280px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1fr 320px; gap: 60px; align-items: start; }
+    @media (max-width: 1024px) { .blog-body { grid-template-columns: 1fr; } .sidebar { order: -1; } }
+
+    /* FEATURED ARTICLE */
+    .featured-article {
+      background: var(--light); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.07); margin-bottom: 48px;
+    }
+    .article-hero-ph { min-height: 480px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; border-bottom: 4px solid var(--gold); }
+    .article-hero-ph .ph-icon { font-size: 5rem; opacity: 0.25; }
+    .article-hero-ph .ph-label { font-family: sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); margin-top: 14px; opacity: 0.5; }
+    .article-hero-ph .ph-sub { font-family: sans-serif; font-size: 0.7rem; color: #999; margin-top: 8px; }
+    .article-content { padding: 40px 48px; }
+    .article-meta { display: flex; gap: 20px; align-items: center; margin-bottom: 16px; flex-wrap: wrap; }
+    .article-tag { background: var(--navy); color: var(--gold); font-family: sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 5px 14px; border-radius: 100px; }
+    .article-date { font-family: sans-serif; font-size: 0.8rem; color: #8A9BB5; }
+    .article-content h2 { font-size: 2rem; color: var(--navy); font-style: italic; margin-bottom: 16px; line-height: 1.3; }
+    .article-content p { font-size: 0.95rem; color: #5A4535; font-family: sans-serif; line-height: 1.85; margin-bottom: 16px; }
+    .article-author { display: flex; align-items: center; gap: 14px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--cream2); }
+    .author-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--cream2); border: 2px solid var(--gold2); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .author-name { font-weight: 700; font-family: sans-serif; font-size: 0.9rem; color: var(--navy); }
+    .author-role { font-family: sans-serif; font-size: 0.75rem; color: #8A9BB5; }
+    .read-more { display: inline-block; color: var(--gold); font-family: sans-serif; font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--gold); padding-bottom: 2px; margin-top: 20px; }
+    @media (max-width: 768px) { .article-content { padding: 28px 24px; } .article-hero-ph { min-height: 280px; } }
+
+    /* BLOG GRID */
+    .blog-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    .blog-card { background: var(--light); border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); transition: transform 0.3s, box-shadow 0.3s; }
+    .blog-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+    .blog-img-ph { min-height: 220px; background: var(--cream2); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; border-bottom: 3px solid var(--gold); }
+    .blog-img-ph .ph-icon { font-size: 3rem; opacity: 0.3; }
+    .blog-img-ph .ph-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 8px; opacity: 0.5; }
+    .blog-card-body { padding: 22px; }
+    .blog-tag { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 8px; }
+    .blog-card-body h3 { font-size: 1.1rem; color: var(--navy); margin-bottom: 8px; line-height: 1.4; }
+    .blog-card-body p { font-size: 0.85rem; color: #6B5744; font-family: sans-serif; line-height: 1.65; margin-bottom: 14px; }
+    .blog-footer { display: flex; justify-content: space-between; align-items: center; }
+    .blog-date { font-size: 0.75rem; color: #8A9BB5; font-family: sans-serif; }
+    .blog-read { font-size: 0.8rem; color: var(--gold); font-family: sans-serif; font-weight: 600; text-decoration: none; }
+    @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } }
+
+    /* SIDEBAR */
+    .sidebar { position: sticky; top: 90px; }
+    .sidebar-widget { background: var(--light); border-radius: 12px; padding: 28px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 28px; }
+    .widget-title { font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 20px; border-bottom: 2px solid var(--cream2); padding-bottom: 12px; }
+    /* Category list */
+    .cat-list { list-style: none; }
+    .cat-list li { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--cream2); font-family: sans-serif; font-size: 0.85rem; }
+    .cat-list li a { color: var(--brown); text-decoration: none; transition: color 0.3s; }
+    .cat-list li a:hover { color: var(--gold); }
+    .cat-count { color: #8A9BB5; font-size: 0.8rem; }
+    /* Recent posts */
+    .recent-post { display: flex; gap: 12px; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--cream2); }
+    .recent-post:last-child { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
+    .recent-img-ph { width: 64px; height: 64px; border-radius: 6px; background: var(--cream2); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; border: 1px dashed rgba(184,146,42,0.3); }
+    .recent-info h4 { font-size: 0.85rem; color: var(--navy); margin-bottom: 4px; line-height: 1.4; }
+    .recent-info p { font-size: 0.75rem; color: #8A9BB5; font-family: sans-serif; }
+    /* Newsletter widget */
+    .widget-newsletter input { width: 100%; padding: 11px 14px; border: 2px solid var(--cream2); border-radius: 4px; font-family: sans-serif; font-size: 0.85rem; margin-bottom: 10px; }
+    .widget-newsletter input:focus { outline: none; border-color: var(--gold); }
+    .widget-newsletter button { width: 100%; background: var(--navy); color: var(--gold); padding: 12px; border: none; border-radius: 4px; font-family: sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background 0.3s; }
+    .widget-newsletter button:hover { background: var(--gold); color: var(--navy); }
+    .widget-newsletter p { font-family: sans-serif; font-size: 0.8rem; color: #8A9BB5; margin-bottom: 14px; }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html" class="active">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="eyebrow">Le Journal</p>
+  <h1>From Our Kitchen</h1>
+  <div class="divider"></div>
+  <p>Recipes, techniques, stories, and seasonal inspiration from the bakers of La Maison Dorée.</p>
+</section>
+
+<div class="blog-body">
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- FEATURED ARTICLE -->
+    <div class="featured-article">
+      <div class="article-hero-ph">
+        <div class="ph-icon">📖</div>
+        <p class="ph-label">Featured Article Hero Image</p>
+        <p class="ph-sub">Recommended: 1200 × 680px — food photography or process shot</p>
+      </div>
+      <div class="article-content">
+        <div class="article-meta">
+          <span class="article-tag">Technique</span>
+          <span class="article-date">November 12, 2024</span>
+        </div>
+        <h2>The Secret of the Perfect Croissant: 27 Layers and Infinite Patience</h2>
+        <p>Every morning at 3 AM, our boulangers begin the most meditative task in French baking — the lamination of croissant dough. What looks like a simple roll of buttery pastry is actually the result of 72 hours of preparation, three days of folding, resting, and temperature control that most bakeries have long since abandoned in favour of frozen pre-made dough.</p>
+        <p>In this article, head baker Sophie Leclerc walks us through every step of our traditional method — from the initial détrempe (the base dough) to the beurrage (butter block) to the three double folds that create those iconic 27 layers — and explains why the temperature of your kitchen is as important as any ingredient.</p>
+        <a href="#" class="read-more">Read Full Article →</a>
+        <div class="article-author">
+          <div class="author-avatar">👩‍🍳</div>
+          <div>
+            <p class="author-name">Sophie Leclerc</p>
+            <p class="author-role">Head Baker & Owner · La Maison Dorée</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOG GRID -->
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-img-ph">
+          <div class="ph-icon">🍞</div>
+          <p class="ph-label">Blog Image · 700 × 440px</p>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-tag">Recipe</p>
+          <h3>Pain de Campagne: A Sourdough Story Begun in 1987</h3>
+          <p>We share the story — and the recipe — behind our original country sourdough, still made with the same 40-year-old starter every single day.</p>
+          <div class="blog-footer">
+            <span class="blog-date">Oct 28, 2024</span>
+            <a href="#" class="blog-read">Read →</a>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img-ph">
+          <div class="ph-icon">🎂</div>
+          <p class="ph-label">Blog Image · 700 × 440px</p>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-tag">Seasonal</p>
+          <h3>Autumn at La Maison Dorée: Chestnut, Pear & Dark Chocolate</h3>
+          <p>As the leaves turn gold, so do our pastry counters. Meet the three flavour heroes that define our autumn 2024 seasonal collection.</p>
+          <div class="blog-footer">
+            <span class="blog-date">Oct 14, 2024</span>
+            <a href="#" class="blog-read">Read →</a>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img-ph">
+          <div class="ph-icon">🧑‍🍳</div>
+          <p class="ph-label">Blog Image · 700 × 440px</p>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-tag">Behind the Scenes</p>
+          <h3>Meet Marc: The Pâtissier Behind Our Mille-Feuille</h3>
+          <p>Marc Dubois trained under three Michelin-starred chefs before joining La Maison Dorée. We sit down with him to talk craft, career, and custard.</p>
+          <div class="blog-footer">
+            <span class="blog-date">Sep 30, 2024</span>
+            <a href="#" class="blog-read">Read →</a>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card">
+        <div class="blog-img-ph">
+          <div class="ph-icon">🌿</div>
+          <p class="ph-label">Blog Image · 700 × 440px</p>
+        </div>
+        <div class="blog-card-body">
+          <p class="blog-tag">Sustainability</p>
+          <h3>From Farm to Oven: How We Source Our Heritage Wheat</h3>
+          <p>A visit to Ferme des Quatre Vents in Normandy — the family farm that has grown our single-variety wheat since 2015 and why it matters.</p>
+          <div class="blog-footer">
+            <span class="blog-date">Sep 10, 2024</span>
+            <a href="#" class="blog-read">Read →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOAD MORE -->
+    <div style="text-align:center;margin-top:48px;">
+      <button style="background:transparent;border:2px solid var(--navy);color:var(--navy);padding:14px 40px;border-radius:4px;font-family:sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:all 0.3s;" onmouseover="this.style.background='var(--navy)';this.style.color='var(--gold)'" onmouseout="this.style.background='transparent';this.style.color='var(--navy)'">Load More Articles</button>
+    </div>
+  </main>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-widget">
+      <p class="widget-title">Categories</p>
+      <ul class="cat-list">
+        <li><a href="#">Recipes</a><span class="cat-count">12</span></li>
+        <li><a href="#">Techniques</a><span class="cat-count">8</span></li>
+        <li><a href="#">Seasonal</a><span class="cat-count">15</span></li>
+        <li><a href="#">Behind the Scenes</a><span class="cat-count">6</span></li>
+        <li><a href="#">Sustainability</a><span class="cat-count">4</span></li>
+        <li><a href="#">Events</a><span class="cat-count">9</span></li>
+      </ul>
+    </div>
+
+    <div class="sidebar-widget">
+      <p class="widget-title">Recent Posts</p>
+      <div class="recent-post">
+        <div class="recent-img-ph">🥐</div>
+        <div class="recent-info">
+          <h4>The Perfect Croissant: 27 Layers</h4>
+          <p>Nov 12, 2024</p>
+        </div>
+      </div>
+      <div class="recent-post">
+        <div class="recent-img-ph">🍞</div>
+        <div class="recent-info">
+          <h4>Pain de Campagne: A Sourdough Story</h4>
+          <p>Oct 28, 2024</p>
+        </div>
+      </div>
+      <div class="recent-post">
+        <div class="recent-img-ph">🎂</div>
+        <div class="recent-info">
+          <h4>Autumn at La Maison Dorée</h4>
+          <p>Oct 14, 2024</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-widget widget-newsletter">
+      <p class="widget-title">Newsletter</p>
+      <p>Get fresh recipes and bakery news every week.</p>
+      <input type="email" placeholder="your@email.com">
+      <button>Subscribe</button>
+    </div>
+  </aside>
+
+</div><!-- blog-body -->
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>

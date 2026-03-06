@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - La Maison Dorée</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --gold: #B8922A; --gold2: #D4AF6A; --navy: #1A2744; --navy2: #243358;
+      --cream: #FAF6EF; --cream2: #F2EBD9; --brown: #4A3728; --text: #2C1E14;
+      --light: #FFFFFF; --shadow: rgba(26,39,68,0.18);
+    }
+    body { font-family: 'Georgia','Times New Roman',serif; background: var(--cream); color: var(--text); line-height: 1.7; }
+
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px var(--shadow); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(184,146,42,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #E8DFC8; text-decoration: none; font-size: 0.9rem; font-weight: 600; font-family: sans-serif; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* HERO */
+    .page-hero { background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 60%, #1E3A5F 100%); padding: 80px 24px; text-align: center; }
+    .page-hero .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .page-hero h1 { font-size: clamp(2.4rem,5vw,3.8rem); color: #FFF8EE; font-style: italic; margin-bottom: 14px; }
+    .page-hero p { color: #B0BCCF; font-family: sans-serif; font-size: 1.05rem; max-width: 560px; margin: 0 auto; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+
+    /* CONTACT BODY */
+    .contact-body { max-width: 1280px; margin: 0 auto; padding: 80px 24px; display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: start; }
+    @media (max-width: 900px) { .contact-body { grid-template-columns: 1fr; gap: 48px; } }
+
+    /* CONTACT FORM */
+    .contact-form-wrap { background: var(--light); border-radius: 16px; padding: 48px; box-shadow: 0 6px 30px rgba(0,0,0,0.07); border-top: 4px solid var(--gold); }
+    .form-eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 10px; }
+    .form-title { font-size: 1.8rem; color: var(--navy); font-style: italic; margin-bottom: 28px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-family: sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: var(--brown); margin-bottom: 8px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 14px 16px;
+      border: 2px solid var(--cream2); border-radius: 6px;
+      font-family: sans-serif; font-size: 0.9rem; color: var(--text);
+      background: var(--cream); transition: border-color 0.3s;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { outline: none; border-color: var(--gold); background: var(--light); }
+    .form-group textarea { resize: vertical; min-height: 160px; }
+    .form-group select { cursor: pointer; }
+    .submit-btn { width: 100%; background: var(--navy); color: var(--gold); padding: 16px; border: none; border-radius: 6px; font-family: sans-serif; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s; letter-spacing: 0.5px; margin-top: 8px; }
+    .submit-btn:hover { background: var(--gold); color: var(--navy); }
+    .form-note { font-family: sans-serif; font-size: 0.78rem; color: #8A9BB5; text-align: center; margin-top: 14px; }
+    @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } .contact-form-wrap { padding: 28px 20px; } }
+
+    /* CONTACT INFO */
+    .contact-info { }
+    .info-card { background: var(--light); border-radius: 12px; padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.06); margin-bottom: 28px; }
+    .info-card .eyebrow { font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-family: sans-serif; margin-bottom: 16px; }
+    .info-item { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 18px; }
+    .info-item:last-child { margin-bottom: 0; }
+    .info-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+    .info-label { font-family: sans-serif; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #8A9BB5; margin-bottom: 2px; }
+    .info-value { font-family: sans-serif; font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+    .info-value a { color: var(--gold); text-decoration: none; }
+
+    /* Opening hours table */
+    .hours-table { width: 100%; border-collapse: collapse; font-family: sans-serif; }
+    .hours-table tr { border-bottom: 1px solid var(--cream2); }
+    .hours-table tr:last-child { border-bottom: none; }
+    .hours-table td { padding: 9px 0; font-size: 0.85rem; }
+    .hours-table td:first-child { color: var(--brown); font-weight: 600; }
+    .hours-table td:last-child { text-align: right; color: #5A4535; }
+    .hours-table .closed { color: #C0392B !important; }
+    .hours-table .today { background: rgba(184,146,42,0.07); font-weight: 700; }
+    .hours-table .today td { color: var(--navy); }
+
+    /* MAP placeholder */
+    .map-ph { background: var(--cream2); border-radius: 12px; min-height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; border: 2px dashed rgba(184,146,42,0.3); margin-bottom: 28px; }
+    .map-ph .ph-icon { font-size: 4rem; opacity: 0.3; }
+    .map-ph .ph-label { font-family: sans-serif; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); margin-top: 14px; opacity: 0.5; }
+    .map-ph .ph-sub { font-family: sans-serif; font-size: 0.72rem; color: #999; margin-top: 8px; }
+
+    /* Social links */
+    .social-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .social-link { background: var(--navy); color: var(--gold2); padding: 10px 20px; border-radius: 100px; font-family: sans-serif; font-size: 0.8rem; font-weight: 600; text-decoration: none; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+    .social-link:hover { background: var(--gold); color: var(--navy); }
+
+    /* FAQ */
+    .faq-section { background: var(--navy); padding: 80px 24px; }
+    .faq-inner { max-width: 1280px; margin: 0 auto; }
+    .faq-header { text-align: center; margin-bottom: 56px; }
+    .faq-header .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 12px; }
+    .faq-header h2 { font-size: clamp(2rem,4vw,3rem); color: #FFF8EE; font-style: italic; }
+    .divider-center { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .faq-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(184,146,42,0.2); border-radius: 10px; padding: 28px; }
+    .faq-item h3 { font-size: 1rem; color: var(--gold2); font-family: sans-serif; margin-bottom: 10px; }
+    .faq-item p { font-size: 0.85rem; color: #B0BCCF; font-family: sans-serif; line-height: 1.75; }
+    @media (max-width: 768px) { .faq-grid { grid-template-columns: 1fr; } }
+
+    /* FOOTER */
+    footer { background: #111922; color: #8A9BB5; padding: 60px 24px 30px; font-family: sans-serif; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <p class="eyebrow">Contactez-nous</p>
+  <h1>We'd Love to Hear<br>from You</h1>
+  <div class="divider"></div>
+  <p>Whether you're planning an event, have a question about an order, or just want to say bonjour — drop us a line.</p>
+</section>
+
+<div class="contact-body">
+
+  <!-- FORM -->
+  <div class="contact-form-wrap">
+    <p class="form-eyebrow">Envoyer un Message</p>
+    <h2 class="form-title">Get in Touch</h2>
+    <div class="form-row">
+      <div class="form-group">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" placeholder="Marie">
+      </div>
+      <div class="form-group">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" placeholder="Dupont">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="email">Email Address</label>
+      <input type="email" id="email" placeholder="marie@example.com">
+    </div>
+    <div class="form-group">
+      <label for="phone">Phone (optional)</label>
+      <input type="tel" id="phone" placeholder="+33 6 00 00 00 00">
+    </div>
+    <div class="form-group">
+      <label for="subject">Subject</label>
+      <select id="subject">
+        <option value="">Select a topic...</option>
+        <option>General Enquiry</option>
+        <option>Custom Order / Wedding Cake</option>
+        <option>Catering Quote</option>
+        <option>Event or Workshop</option>
+        <option>Wholesale / Supplier</option>
+        <option>Feedback</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="message">Message</label>
+      <textarea id="message" placeholder="Tell us what you have in mind..."></textarea>
+    </div>
+    <button type="submit" class="submit-btn">Send Message →</button>
+    <p class="form-note">We typically respond within one business day.</p>
+  </div>
+
+  <!-- INFO -->
+  <div class="contact-info">
+
+    <!-- MAP -->
+    <div class="map-ph">
+      <div class="ph-icon">🗺️</div>
+      <p class="ph-label">Map Embed Placeholder</p>
+      <p class="ph-sub">Replace with Google Maps iframe or interactive map — Recommended: full-width, 320px height</p>
+    </div>
+
+    <!-- ADDRESS & CONTACT -->
+    <div class="info-card">
+      <p class="eyebrow">Adresse & Contact</p>
+      <div class="info-item">
+        <span class="info-icon">📍</span>
+        <div>
+          <p class="info-label">Address</p>
+          <p class="info-value">12 Rue des Martyrs<br>75009 Paris, France</p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">📞</span>
+        <div>
+          <p class="info-label">Phone</p>
+          <p class="info-value"><a href="tel:+33100000000">+33 1 00 00 00 00</a></p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">✉️</span>
+        <div>
+          <p class="info-label">Email</p>
+          <p class="info-value"><a href="mailto:bonjour@lamaisondoree.fr">bonjour@lamaisondoree.fr</a></p>
+        </div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🌐</span>
+        <div>
+          <p class="info-label">Follow Us</p>
+          <div class="social-links" style="margin-top:8px;">
+            <a href="#" class="social-link">📸 Instagram</a>
+            <a href="#" class="social-link">👍 Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HOURS -->
+    <div class="info-card">
+      <p class="eyebrow">Horaires d'Ouverture</p>
+      <table class="hours-table">
+        <tr><td>Monday</td><td>7:00 – 19:00</td></tr>
+        <tr class="closed"><td>Tuesday</td><td class="closed">Closed</td></tr>
+        <tr><td>Wednesday</td><td>7:00 – 19:00</td></tr>
+        <tr><td>Thursday</td><td>7:00 – 19:00</td></tr>
+        <tr class="today"><td>Friday</td><td>7:00 – 19:00</td></tr>
+        <tr><td>Saturday</td><td>6:00 – 18:00</td></tr>
+        <tr><td>Sunday</td><td>6:00 – 18:00</td></tr>
+      </table>
+    </div>
+
+  </div>
+</div><!-- contact-body -->
+
+<!-- FAQ -->
+<section class="faq-section">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <p class="eyebrow">Questions Fréquentes</p>
+      <h2>Frequently Asked Questions</h2>
+      <div class="divider-center"></div>
+    </div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <h3>How far in advance should I order a custom cake?</h3>
+        <p>We recommend contacting us at least 4 weeks in advance for custom wedding cakes and at least 2 weeks for celebration cakes. For large orders, 6 weeks is preferred during peak season (May–June, November–December).</p>
+      </div>
+      <div class="faq-item">
+        <h3>Do you offer gluten-free or vegan options?</h3>
+        <p>Yes — we have a small but growing selection of gluten-free pastries and fully plant-based items. Please let us know your dietary requirements when ordering and we'll do our best to accommodate you.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Can I book a baking class as a gift?</h3>
+        <p>Absolutely. We offer gift vouchers for all our workshops and baking classes. Simply contact us by email or in the form above and we'll send you a beautiful printed or digital gift certificate within 24 hours.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What is your delivery radius for catering?</h3>
+        <p>We deliver within central Paris (arrondissements 1–20) and the inner suburbs (Île-de-France). For events beyond this zone, please contact us directly — we regularly travel for weddings and large events across France.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a><a href="menu.html">Menu</a><a href="about.html">Notre Histoire</a><a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a><a href="events.html">Événements</a><a href="blog.html">Journal</a><a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a><a href="#">Sam–Dim: 6h–18h</a><a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom"><p>© 2024 La Maison Dorée · Template by Armin Studio</p></div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) nav.classList.remove('active');
+  });
+</script>
+</body>
+</html>

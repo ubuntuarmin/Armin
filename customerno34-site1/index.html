@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Maison Dorée - Boulangerie & Pâtisserie Française</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:   #B8922A;
+      --gold2:  #D4AF6A;
+      --navy:   #1A2744;
+      --navy2:  #243358;
+      --cream:  #FAF6EF;
+      --cream2: #F2EBD9;
+      --brown:  #4A3728;
+      --text:   #2C1E14;
+      --light:  #FFFFFF;
+      --shadow: rgba(26,39,68,0.18);
+    }
+
+    body {
+      font-family: 'Georgia', 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder {
+      width: 50px; height: 50px;
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700;
+      color: var(--gold);
+      background: rgba(184,146,42,0.1);
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .logo-text { color: var(--gold); font-size: 1.5rem; font-weight: 700; letter-spacing: 1px; }
+    .logo-text span { display: block; font-size: 0.7rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; font-family: sans-serif; }
+
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: #E8DFC8; text-decoration: none;
+      font-size: 0.9rem; font-weight: 600; letter-spacing: 0.5px;
+      font-family: sans-serif; transition: color 0.3s;
+      min-height: 44px; display: flex; align-items: center;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed; top: 0; right: -100%;
+        height: 100vh; width: 70%;
+        background: var(--navy2);
+        flex-direction: column;
+        padding: 90px 30px 40px;
+        gap: 20px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.4);
+      }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 92vh;
+      background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 55%, #1E3A5F 100%);
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 140px;
+      background: linear-gradient(to top, var(--cream), transparent);
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center; position: relative; z-index: 1;
+      width: 100%;
+    }
+    .hero-text .eyebrow {
+      font-size: 0.8rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold2); font-family: sans-serif; margin-bottom: 18px;
+    }
+    .hero-text h1 {
+      font-size: clamp(2.6rem, 5vw, 4.2rem);
+      color: #FFF8EE; line-height: 1.2; margin-bottom: 22px;
+      font-style: italic;
+    }
+    .hero-text h1 em { color: var(--gold); font-style: normal; }
+    .hero-text p {
+      font-size: 1.15rem; color: #C8BBAA; max-width: 480px;
+      margin-bottom: 38px; font-family: sans-serif; line-height: 1.8;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 15px 34px; border-radius: 4px;
+      font-weight: 700; font-family: sans-serif; font-size: 0.95rem;
+      letter-spacing: 0.5px; text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid var(--gold); color: var(--gold);
+      padding: 13px 32px; border-radius: 4px;
+      font-weight: 600; font-family: sans-serif; font-size: 0.95rem;
+      text-decoration: none; transition: all 0.3s; display: inline-block;
+    }
+    .btn-outline:hover { background: rgba(184,146,42,0.12); }
+
+    /* Large hero image placeholder */
+    .hero-image-block {
+      background: rgba(255,255,255,0.06);
+      border: 2px dashed rgba(184,146,42,0.4);
+      border-radius: 12px;
+      min-height: 480px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 30px;
+      position: relative;
+    }
+    .hero-image-block .ph-icon { font-size: 4rem; margin-bottom: 16px; opacity: 0.5; }
+    .hero-image-block .ph-label {
+      color: var(--gold2); font-family: sans-serif;
+      font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.7;
+    }
+    .hero-image-block .ph-sub { color: #8A9BB5; font-family: sans-serif; font-size: 0.75rem; margin-top: 8px; }
+
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; padding-top: 60px; }
+      .hero-image-block { min-height: 260px; }
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .eyebrow {
+      font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); font-family: sans-serif; margin-bottom: 12px;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3rem); color: var(--navy);
+      font-style: italic; margin-bottom: 16px;
+    }
+    .section-header p { font-size: 1.05rem; color: #6B5744; max-width: 580px; margin: 0 auto; font-family: sans-serif; }
+    .divider { width: 80px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 18px auto 0; border-radius: 2px; }
+
+    /* ── FEATURES STRIP ── */
+    .features-strip {
+      background: var(--navy);
+      padding: 48px 24px;
+    }
+    .features-grid {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 32px;
+    }
+    .feature-item { text-align: center; }
+    .feature-icon { font-size: 2.4rem; margin-bottom: 12px; }
+    .feature-item h3 { color: var(--gold); font-size: 1rem; margin-bottom: 8px; font-family: sans-serif; }
+    .feature-item p { color: #B0BCCF; font-size: 0.85rem; font-family: sans-serif; }
+    @media (max-width: 768px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* ── SIGNATURE SECTION ── */
+    .signature-section { padding: 100px 24px; }
+    .signature-inner { max-width: 1280px; margin: 0 auto; }
+    .signature-grid {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; margin-top: 56px;
+    }
+    .signature-card {
+      background: var(--light); border-radius: 12px;
+      overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,0.07);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .signature-card:hover { transform: translateY(-6px); box-shadow: 0 16px 50px rgba(0,0,0,0.13); }
+
+    /* Tall image placeholder inside card */
+    .card-img-ph {
+      background: var(--cream2);
+      min-height: 280px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      border-bottom: 3px solid var(--gold);
+      position: relative;
+    }
+    .card-img-ph .ph-icon { font-size: 3.5rem; opacity: 0.35; }
+    .card-img-ph .ph-label {
+      font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--brown); font-family: sans-serif; margin-top: 10px; opacity: 0.6;
+    }
+    .card-body { padding: 28px; }
+    .card-tag {
+      font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); font-family: sans-serif; margin-bottom: 10px;
+    }
+    .card-body h3 { font-size: 1.35rem; color: var(--navy); margin-bottom: 10px; }
+    .card-body p { font-size: 0.9rem; color: #6B5744; font-family: sans-serif; line-height: 1.7; margin-bottom: 18px; }
+    .card-price { font-size: 1.3rem; color: var(--gold); font-weight: 700; }
+    @media (max-width: 900px) { .signature-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .signature-grid { grid-template-columns: 1fr; } }
+
+    /* ── STORY TEASER ── */
+    .story-section {
+      background: var(--navy);
+      padding: 100px 24px;
+    }
+    .story-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .story-img-ph {
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed rgba(184,146,42,0.35);
+      border-radius: 12px; min-height: 520px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center; padding: 40px;
+    }
+    .story-img-ph .ph-icon { font-size: 5rem; opacity: 0.3; color: var(--gold2); }
+    .story-img-ph .ph-label { color: var(--gold2); font-family: sans-serif; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 16px; opacity: 0.6; }
+    .story-text .eyebrow { font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-family: sans-serif; margin-bottom: 14px; }
+    .story-text h2 { font-size: clamp(1.8rem,3vw,2.8rem); color: #FFF8EE; font-style: italic; margin-bottom: 22px; }
+    .story-text p { color: #B0BCCF; font-size: 1rem; font-family: sans-serif; line-height: 1.85; margin-bottom: 18px; }
+    .story-text a { color: var(--gold); font-family: sans-serif; font-weight: 600; text-decoration: none; border-bottom: 1px solid var(--gold); padding-bottom: 2px; }
+    @media (max-width: 768px) { .story-inner { grid-template-columns: 1fr; gap: 40px; } .story-img-ph { min-height: 280px; } }
+
+    /* ── GALLERY PREVIEW ── */
+    .gallery-preview { padding: 100px 24px; background: var(--cream2); }
+    .gallery-preview .section-inner { max-width: 1280px; margin: 0 auto; }
+    .gallery-mosaic {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto;
+      gap: 16px; margin-top: 56px;
+    }
+    .mosaic-ph {
+      background: var(--cream);
+      border-radius: 8px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 20px;
+      min-height: 220px;
+      border: 2px dashed rgba(184,146,42,0.3);
+      transition: border-color 0.3s;
+    }
+    .mosaic-ph:hover { border-color: var(--gold); }
+    .mosaic-ph.tall { grid-row: span 2; min-height: 456px; }
+    .mosaic-ph.wide { grid-column: span 2; }
+    .mosaic-ph .ph-icon { font-size: 2.8rem; opacity: 0.3; }
+    .mosaic-ph .ph-label { font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--brown); font-family: sans-serif; margin-top: 10px; opacity: 0.5; }
+    @media (max-width: 900px) {
+      .gallery-mosaic { grid-template-columns: repeat(2,1fr); }
+      .mosaic-ph.tall { grid-row: span 1; min-height: 220px; }
+      .mosaic-ph.wide { grid-column: span 1; }
+    }
+    @media (max-width: 480px) { .gallery-mosaic { grid-template-columns: 1fr; } }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { padding: 100px 24px; }
+    .testimonials .section-inner { max-width: 1280px; margin: 0 auto; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; margin-top: 56px; }
+    .testimonial-card {
+      background: var(--light); border-radius: 10px;
+      padding: 36px 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border-top: 4px solid var(--gold); position: relative;
+    }
+    .testimonial-card::before { content: '"'; font-size: 5rem; color: var(--gold2); opacity: 0.2; position: absolute; top: 10px; left: 20px; line-height: 1; font-family: Georgia, serif; }
+    .testimonial-card p { font-size: 0.95rem; color: #5A4535; font-family: sans-serif; line-height: 1.8; margin-bottom: 24px; font-style: italic; }
+    .reviewer { display: flex; align-items: center; gap: 14px; }
+    .reviewer-avatar { width: 50px; height: 50px; border-radius: 50%; background: var(--cream2); border: 2px solid var(--gold2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; }
+    .reviewer-name { font-weight: 700; font-size: 0.9rem; color: var(--navy); font-family: sans-serif; }
+    .reviewer-stars { color: var(--gold); font-size: 0.85rem; }
+    @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 80px 24px; text-align: center;
+      border-top: 4px solid var(--gold);
+    }
+    .cta-banner h2 { font-size: clamp(2rem,4vw,3rem); color: #FFF8EE; font-style: italic; margin-bottom: 16px; }
+    .cta-banner p { color: #B0BCCF; font-family: sans-serif; font-size: 1.05rem; margin-bottom: 36px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #111922; color: #8A9BB5;
+      padding: 60px 24px 30px;
+      font-family: sans-serif;
+    }
+    .footer-inner {
+      max-width: 1280px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 40px;
+    }
+    .footer-brand .logo-text { color: var(--gold); font-size: 1.3rem; font-family: Georgia, serif; margin-bottom: 14px; }
+    .footer-brand p { font-size: 0.85rem; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { color: var(--gold2); font-size: 0.75rem; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: #8A9BB5; text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color 0.3s; }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #243358; padding-top: 24px; text-align: center; font-size: 0.8rem; }
+    @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .footer-inner { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">La Maison Dorée<span>BOULANGERIE · PÂTISSERIE</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Accueil</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="about.html">Notre Histoire</a></li>
+      <li><a href="gallery.html">Galerie</a></li>
+      <li><a href="catering.html">Traiteur</a></li>
+      <li><a href="events.html">Événements</a></li>
+      <li><a href="blog.html">Journal</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow">Depuis 1987 · Paris, France</p>
+      <h1>L'Art de la<br><em>Boulangerie</em><br>Française</h1>
+      <p>Handcrafted breads, pastries, and confections made daily with the finest ingredients, following traditional French recipes passed down through generations.</p>
+      <div class="hero-btns">
+        <a href="menu.html" class="btn-primary">Voir le Menu</a>
+        <a href="about.html" class="btn-outline">Notre Histoire</a>
+      </div>
+    </div>
+    <div class="hero-image-block">
+      <div class="ph-icon">🥐</div>
+      <p class="ph-label">Hero Image Placeholder</p>
+      <p class="ph-sub">Recommended: 800 × 600 px · High-resolution bakery photo</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<section class="features-strip">
+  <div class="features-grid">
+    <div class="feature-item">
+      <div class="feature-icon">🌾</div>
+      <h3>Artisan Craftsmanship</h3>
+      <p>Every item made by hand with organic flours and natural fermentation.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🧑‍🍳</div>
+      <h3>Master Bakers</h3>
+      <p>Trained in Lyon and Paris — a team passionate about excellence.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🚚</div>
+      <h3>Fresh Daily Delivery</h3>
+      <p>Baked before dawn, delivered to your door by 8 AM.</p>
+    </div>
+    <div class="feature-item">
+      <div class="feature-icon">🎂</div>
+      <h3>Custom Orders</h3>
+      <p>Bespoke cakes and pastries for weddings, events, and celebrations.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE ITEMS -->
+<section class="signature-section">
+  <div class="signature-inner">
+    <div class="section-header">
+      <p class="eyebrow">Nos Spécialités</p>
+      <h2>Signature Creations</h2>
+      <div class="divider"></div>
+      <p>Each item in our collection is a small masterpiece — from our flaky croissants to our layered mille-feuille.</p>
+    </div>
+    <div class="signature-grid">
+      <div class="signature-card">
+        <div class="card-img-ph">
+          <div class="ph-icon">🥐</div>
+          <p class="ph-label">Product Image · 600 × 400px</p>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Viennoiserie</p>
+          <h3>Croissant au Beurre</h3>
+          <p>Pure butter croissant with 27 layers of laminated dough, baked to golden perfection every morning.</p>
+          <p class="card-price">€3.50</p>
+        </div>
+      </div>
+      <div class="signature-card">
+        <div class="card-img-ph">
+          <div class="ph-icon">🎂</div>
+          <p class="ph-label">Product Image · 600 × 400px</p>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Pâtisserie</p>
+          <h3>Mille-Feuille Vanille</h3>
+          <p>Layers of crisp puff pastry filled with silky vanilla custard cream and glazed with fondant icing.</p>
+          <p class="card-price">€5.90</p>
+        </div>
+      </div>
+      <div class="signature-card">
+        <div class="card-img-ph">
+          <div class="ph-icon">🍞</div>
+          <p class="ph-label">Product Image · 600 × 400px</p>
+        </div>
+        <div class="card-body">
+          <p class="card-tag">Boulangerie</p>
+          <h3>Baguette Tradition</h3>
+          <p>Our signature baguette — 18-hour slow fermentation, crispy crust, open crumb — an everyday luxury.</p>
+          <p class="card-price">€1.80</p>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="menu.html" class="btn-primary">See Full Menu</a>
+    </div>
+  </div>
+</section>
+
+<!-- STORY TEASER -->
+<section class="story-section">
+  <div class="story-inner">
+    <div class="story-img-ph">
+      <div class="ph-icon">📸</div>
+      <p class="ph-label">Full-Height Story Image<br><span style="font-size:0.7rem;opacity:0.5;">Recommended: 700 × 900px portrait</span></p>
+    </div>
+    <div class="story-text">
+      <p class="eyebrow">Notre Histoire</p>
+      <h2>A Family Recipe,<br>Three Generations Deep</h2>
+      <p>La Maison Dorée was born in a small Parisian arrondissement in 1987, when master baker Henri Leclerc opened his first shop with nothing but a stone oven and a dream of sharing true French baking with the world.</p>
+      <p>Today, his granddaughter Sophie carries that torch — sourcing heritage wheat from local farms, fermenting doughs with 40-year-old starters, and training a new generation to keep every tradition alive.</p>
+      <a href="about.html">Discover our full story →</a>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY PREVIEW -->
+<section class="gallery-preview">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Galerie</p>
+      <h2>From Our Kitchen to Yours</h2>
+      <div class="divider"></div>
+      <p>A glimpse into the warmth, craft, and beauty that fills our bakery every day.</p>
+    </div>
+    <div class="gallery-mosaic">
+      <div class="mosaic-ph tall">
+        <div class="ph-icon">🖼️</div>
+        <p class="ph-label">Portrait Image<br>800 × 1200px</p>
+      </div>
+      <div class="mosaic-ph">
+        <div class="ph-icon">🖼️</div>
+        <p class="ph-label">Square Image<br>600 × 600px</p>
+      </div>
+      <div class="mosaic-ph wide">
+        <div class="ph-icon">🖼️</div>
+        <p class="ph-label">Landscape Image · 1200 × 600px</p>
+      </div>
+      <div class="mosaic-ph">
+        <div class="ph-icon">🖼️</div>
+        <p class="ph-label">Square Image<br>600 × 600px</p>
+      </div>
+      <div class="mosaic-ph">
+        <div class="ph-icon">🖼️</div>
+        <p class="ph-label">Square Image<br>600 × 600px</p>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:48px;">
+      <a href="gallery.html" class="btn-primary">View Full Gallery</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="section-inner">
+    <div class="section-header">
+      <p class="eyebrow">Avis Clients</p>
+      <h2>What Our Guests Say</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p>"The croissants here transport me straight to Paris. Perfectly flaky, buttery, and absolutely divine. I come every single Saturday morning."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👩</div>
+          <div>
+            <p class="reviewer-name">Marie Beaumont</p>
+            <p class="reviewer-stars">★★★★★</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"We ordered a custom wedding cake and it was beyond our wildest expectations. The team was professional, creative, and delivered perfection."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👨</div>
+          <div>
+            <p class="reviewer-name">Jean-Paul Moreau</p>
+            <p class="reviewer-stars">★★★★★</p>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p>"La Maison Dorée has catered three of our corporate events. The pastry platters are always stunning, fresh, and gone within minutes!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">👩</div>
+          <div>
+            <p class="reviewer-name">Sophie Villeneuve</p>
+            <p class="reviewer-stars">★★★★★</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA BANNER -->
+<section class="cta-banner">
+  <h2>Ready to Place a Custom Order?</h2>
+  <p>Weddings, corporate events, or a Sunday treat — we craft every order with the same love and precision.</p>
+  <a href="contact.html" class="btn-primary">Get in Touch</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo-text">La Maison Dorée</div>
+      <p>Artisan boulangerie &amp; pâtisserie. Crafting authentic French breads and pastries with passion since 1987.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Pages</h4>
+      <a href="index.html">Accueil</a>
+      <a href="menu.html">Menu</a>
+      <a href="about.html">Notre Histoire</a>
+      <a href="gallery.html">Galerie</a>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a href="catering.html">Traiteur</a>
+      <a href="events.html">Événements</a>
+      <a href="blog.html">Journal</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Horaires</h4>
+      <a href="#">Lun–Ven: 7h–19h</a>
+      <a href="#">Sam–Dim: 6h–18h</a>
+      <a href="#">Fermé le Mardi</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 La Maison Dorée · Template by Armin Studio</p>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
+  document.addEventListener('click', function(e) {
+    const nav = document.getElementById('navLinks');
+    const hamburger = document.querySelector('.hamburger');
+    if (nav.classList.contains('active') && !nav.contains(e.target) && !hamburger.contains(e.target)) {
+      nav.classList.remove('active');
+    }
+  });
+</script>
+</body>
+</html>
