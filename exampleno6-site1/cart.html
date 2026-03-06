@@ -500,6 +500,40 @@
       .page-title-row { flex-wrap: wrap; }
       .order-summary { padding: 20px; }
     }
+
+    /* ===== ENHANCED MOBILE OPTIMIZATIONS ===== */
+    html { scroll-behavior: smooth; }
+    body { overflow-x: hidden; }
+
+    a, button, [role="button"] { min-height: 44px; }
+    .btn-primary, .btn-checkout, .btn-remove, .quantity-btn, .coupon-btn {
+      min-height: 44px;
+      min-width: 44px;
+      touch-action: manipulation;
+    }
+    .hamburger { min-height: 44px; min-width: 44px; touch-action: manipulation; }
+    .mobile-menu a { min-height: 48px; display: flex; align-items: center; }
+
+    @media (max-width: 480px) {
+      .page-hero { padding: 100px 12px 50px; }
+      .page-hero h1 { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+
+      .cart-section { padding: 40px 12px; }
+      .cart-layout  { grid-template-columns: 1fr; gap: 20px; }
+
+      .cart-item  { flex-direction: column; align-items: flex-start; gap: 12px; padding: 16px 12px; }
+      .cart-item-img { width: 80px; height: 80px; }
+      .cart-item-actions { width: 100%; flex-direction: row; justify-content: space-between; align-items: center; }
+
+      .quantity-btn { width: 44px; height: 44px; font-size: 1.1rem; }
+      .btn-remove   { width: 44px; height: 44px; padding: 0; display: flex; align-items: center; justify-content: center; }
+
+      .order-summary { padding: 20px 16px; }
+      .btn-checkout  { width: 100%; padding: 16px; font-size: 1rem; }
+
+      .coupon-form { flex-direction: column; gap: 10px; }
+      .coupon-input, .coupon-btn { width: 100%; }
+    }
   </style>
 </head>
 <body>
