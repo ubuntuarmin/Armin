@@ -59,6 +59,10 @@
 
     * { box-sizing: border-box; }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     html, body {
       margin: 0;
       padding: 0;
@@ -95,6 +99,10 @@
     .site-header {
       background: var(--navy);
       border-bottom: 3px solid var(--blue);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: box-shadow 0.3s ease;
     }
 
     .nav {
@@ -157,7 +165,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       transition: background 0.15s;
@@ -277,7 +285,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 15px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       transition: background 0.15s;
@@ -292,7 +300,7 @@
       color: #cbd5e1;
       font-weight: 500;
       font-size: 15px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.25);
       cursor: pointer;
       transition: border-color 0.15s, color 0.15s;
@@ -366,7 +374,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
       transition: background 0.15s;
     }
@@ -424,12 +432,13 @@
       border-radius: 6px;
       padding: 20px;
       cursor: pointer;
-      transition: border-color 0.15s, box-shadow 0.15s;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.3s;
     }
 
     .nav-card:hover {
       border-color: var(--blue-light);
       box-shadow: var(--shadow);
+      transform: translateY(-2px);
     }
 
     .nav-card h3 {
@@ -468,6 +477,12 @@
       border: 1px solid var(--border);
       border-radius: 6px;
       padding: 20px;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .who-item:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-2px);
     }
 
     .who-item h4 {
@@ -520,6 +535,374 @@
       display: block;
       color: inherit;
     }
+
+    /* ANIMATIONS */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .animate-on-scroll.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* STICKY HEADER SCROLLED STATE */
+    .site-header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* STATS SECTION */
+    .stats-section {
+      background: linear-gradient(135deg, #1a2e4a 0%, #1e3a5f 50%, #1a2e4a 100%);
+      padding: 64px 0;
+    }
+
+    .stats-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .stats-grid { grid-template-columns: repeat(4, 1fr); padding: 0 32px; }
+    }
+
+    .stat-item { color: #ffffff; }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: #60a5fa;
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      font-weight: 500;
+    }
+
+    /* HOW IT WORKS */
+    .how-it-works-section {
+      background: var(--white);
+      padding: 72px 0;
+    }
+
+    .how-it-works-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media (min-width: 768px) {
+      .how-it-works-inner { padding: 0 32px; }
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+      margin-top: 40px;
+      position: relative;
+    }
+
+    @media (min-width: 768px) {
+      .steps-grid { grid-template-columns: repeat(3, 1fr); gap: 48px; }
+    }
+
+    .step-card {
+      text-align: center;
+      position: relative;
+      padding: 32px 24px;
+      background: var(--bg);
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .step-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .step-number {
+      width: 56px;
+      height: 56px;
+      background: var(--blue);
+      color: #ffffff;
+      font-size: 1.4rem;
+      font-weight: 700;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step-card h3 {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--navy);
+      margin: 0 0 12px;
+    }
+
+    .step-card p {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    @media (min-width: 768px) {
+      .step-card:not(:last-child)::after {
+        content: '';
+        position: absolute;
+        top: 52px;
+        right: -28px;
+        width: 48px;
+        height: 2px;
+        background: linear-gradient(90deg, var(--blue), var(--blue-light));
+        z-index: 0;
+      }
+    }
+
+    /* TESTIMONIALS */
+    .testimonials-section {
+      background: var(--bg);
+      padding: 72px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .testimonials-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    @media (min-width: 768px) {
+      .testimonials-inner { padding: 0 32px; }
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 40px;
+    }
+
+    @media (min-width: 768px) {
+      .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .testimonial-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 32px 28px;
+      position: relative;
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+
+    .testimonial-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .testimonial-quote-icon {
+      font-size: 2.5rem;
+      color: var(--blue-light);
+      line-height: 1;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .testimonial-stars {
+      color: #f59e0b;
+      font-size: 1rem;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+      color: var(--text);
+      line-height: 1.7;
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .testimonial-author {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+
+    .testimonial-role {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* CTA BANNER */
+    .cta-banner {
+      background: linear-gradient(135deg, #1a2e4a 0%, #1e3a5f 50%, #1a2e4a 100%);
+      padding: 72px 0;
+      text-align: center;
+    }
+
+    .cta-banner-inner {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .cta-banner h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0 0 16px;
+    }
+
+    .cta-banner p {
+      font-size: 1.05rem;
+      color: #94a3b8;
+      margin: 0 0 32px;
+      line-height: 1.7;
+    }
+
+    .cta-banner-actions {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* FAQ SECTION */
+    .faq-section {
+      padding: 80px 20px;
+      background: #f9fafb;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    /* NEW FOOTER */
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 32px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 600px) {
+      .footer-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 960px) {
+      .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; padding: 48px 32px 32px; }
+    }
+
+    .footer-col h4 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #ffffff;
+      margin: 0 0 16px;
+    }
+
+    .footer-col p {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .footer-col-brand {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 12px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .footer-col ul li { margin-bottom: 10px; }
+
+    .footer-col ul a {
+      font-size: 0.88rem;
+      color: #94a3b8;
+      transition: color 0.15s;
+    }
+
+    .footer-col ul a:hover { color: #ffffff; }
+
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 20px 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.82rem;
+      color: #64748b;
+    }
+
+    @media (min-width: 768px) {
+      .footer-bottom { padding: 20px 32px 24px; }
+    }
+
+    /* BACK TO TOP */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: var(--navy);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 999;
+    }
+
+    .back-to-top:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+    }
+
+    .back-to-top.show { display: flex; }
   </style>
   <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
   
@@ -790,7 +1173,7 @@
       <div class="page">
 
         <!-- WHO WE WORK WITH -->
-        <section aria-labelledby="who-title">
+        <section aria-labelledby="who-title" class="animate-on-scroll">
           <div class="section-label">Who We Work With</div>
           <h2 id="who-title" class="section-title">Built for Small &amp; Growing Businesses</h2>
           <p class="section-desc">We work with businesses that need a professional online presence without the agency price tag.</p>
@@ -810,8 +1193,93 @@
           </div>
         </section>
 
-        <!-- NEXT STEPS -->
-        <section aria-labelledby="next-steps">
+      </div>
+    </div>
+
+    <!-- STATISTICS -->
+    <section class="stats-section animate-on-scroll" aria-label="Statistics">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Projects Delivered</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">Client Satisfaction</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24h</div>
+          <div class="stat-label">Average Response Time</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">&infin;</div>
+          <div class="stat-label">Unlimited Revisions</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="how-it-works-section animate-on-scroll" aria-labelledby="how-it-works-title">
+      <div class="how-it-works-inner">
+        <div class="section-label" style="text-align:center;">How It Works</div>
+        <h2 id="how-it-works-title" class="section-title" style="text-align:center;">Three Simple Steps to Your New Website</h2>
+        <p class="section-desc" style="text-align:center;">From idea to launch — we make the process easy and transparent.</p>
+        <div class="steps-grid">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Share Your Vision</h3>
+            <p>Tell us about your business, your goals, and the kind of website you need. We listen carefully.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>We Design &amp; Build</h3>
+            <p>Our team creates a custom website tailored to your brand. Review, revise, repeat &mdash; until it's perfect.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Launch &amp; Grow</h3>
+            <p>Your new site goes live. We provide support, SEO guidance, and help you make a great first impression online.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="testimonials-section animate-on-scroll" aria-labelledby="testimonials-title">
+      <div class="testimonials-inner">
+        <div class="section-label" style="text-align:center;">Testimonials</div>
+        <h2 id="testimonials-title" class="section-title" style="text-align:center;">What Our Clients Say</h2>
+        <p class="section-desc" style="text-align:center;">Real feedback from real businesses we've helped grow online.</p>
+        <div class="testimonials-grid">
+          <div class="testimonial-card">
+            <span class="testimonial-quote-icon">&#10077;</span>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">Armin Studio built our restaurant website and it exceeded all expectations. Professional, fast, and incredibly affordable.</p>
+            <div class="testimonial-author">&mdash; Maria S.</div>
+            <div class="testimonial-role">Restaurant Owner</div>
+          </div>
+          <div class="testimonial-card">
+            <span class="testimonial-quote-icon">&#10077;</span>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">The unlimited revisions policy made all the difference. They kept refining until our site was exactly what we envisioned.</p>
+            <div class="testimonial-author">&mdash; James T.</div>
+            <div class="testimonial-role">Startup Founder</div>
+          </div>
+          <div class="testimonial-card">
+            <span class="testimonial-quote-icon">&#10077;</span>
+            <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="testimonial-text">As a non-profit, budget was tight. Armin Studio delivered a stunning site at a fraction of what others quoted.</p>
+            <div class="testimonial-author">&mdash; Sarah K.</div>
+            <div class="testimonial-role">Non-Profit Director</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEXT STEPS -->
+    <div class="content-area">
+      <div class="page">
+        <section aria-labelledby="next-steps" class="animate-on-scroll">
           <div class="section-label">Explore</div>
           <h2 id="next-steps" class="section-title">Learn More About Our Services</h2>
           <p class="section-desc">Everything you need to get started with your new website.</p>
@@ -839,24 +1307,73 @@
             </a>
           </div>
         </section>
-
       </div>
     </div>
+
+    <!-- FAQ SECTION -->
+    <section class="faq-section animate-on-scroll" aria-labelledby="faq-title">
+      <div style="max-width:760px;margin:0 auto;">
+        <h2 id="faq-title" style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
+        <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Everything you need to know about working with Armin Studio</p>
+        <div id="react-faq-main"></div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="cta-banner animate-on-scroll" aria-label="Call to action">
+      <div class="cta-banner-inner">
+        <h2>Ready to Build Your Dream Website?</h2>
+        <p>Let's create something amazing together. No upfront payment required.</p>
+        <div class="cta-banner-actions">
+          <a href="contact.html" class="btn-primary">Get Started Today</a>
+          <a href="pricing.html" class="btn-outline">View Pricing</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
+  <!-- FOOTER -->
   <footer role="contentinfo">
-    <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-brand">Armin Studio</div>
+        <p>We design and develop modern, affordable websites for small businesses, startups, and non-profits. Your online presence, done right.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="services.html">Services</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li><a href="examples.html">Examples</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul>
+          <li><a href="guide.html">Estimate Tool</a></li>
+          <li><a href="customization.html">Customization</a></li>
+          <li><a href="domain.html">Domain Guide</a></li>
+          <li><a href="host.html">Hosting Guide</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <ul>
+          <li><a href="contact.html">Contact Us</a></li>
+        </ul>
+        <p style="margin-top:12px;">Ready to get started? Reach out and let's build something great together.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <div>&copy; <span id="year"></span> Armin Studio. All rights reserved.</div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="guide.html">Estimate</a>
-        <a href="contact.html">Contact</a>
-        <a href="examples.html">Examples</a>
-      </nav>
+      <div>Designed with care by Armin Studio</div>
     </div>
   </footer>
+
+  <!-- BACK TO TOP BUTTON -->
+  <button id="backToTop" class="back-to-top" aria-label="Back to top">&uarr;</button>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
@@ -867,17 +1384,45 @@
       const isOpen = navMobile.style.display === "flex";
       navMobile.style.display = isOpen ? "none" : "flex";
     });
+
+    // Intersection Observer for scroll animations
+    const scrollElements = document.querySelectorAll('.animate-on-scroll');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    scrollElements.forEach(el => observer.observe(el));
+
+    // Sticky header scroll effect
+    const siteHeader = document.querySelector('.site-header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+    });
+
+    // Back to top button
+    const backToTopBtn = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 
   <!-- React FAQ Accordion -->
-  <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
-    <div style="max-width:760px;margin:0 auto;">
-      <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
-      <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Everything you need to know about working with Armin Studio</p>
-      <div id="react-faq-main"></div>
-    </div>
-  </section>
-
   <script type="text/babel">
     const { useState } = React;
 
