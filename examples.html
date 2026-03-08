@@ -154,10 +154,33 @@
       .stagger-1,.stagger-2,.stagger-3,.stagger-4,.stagger-5 { transition-delay: 0s; }
     }
 
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-on-scroll {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animate-on-scroll { transform: none; transition: opacity 0.3s ease; }
+      .animate-on-scroll.visible { transform: none; }
+    }
+
     /* NAV */
     .site-header {
       background: var(--navy);
       border-bottom: 3px solid var(--blue);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: box-shadow 0.3s;
+    }
+    .site-header.scrolled {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
     }
 
     .nav {
@@ -203,7 +226,7 @@
       font-size: 14px;
       font-weight: 500;
       padding: 8px 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: background 0.15s, color 0.15s;
     }
 
@@ -220,7 +243,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       transition: background 0.15s;
@@ -236,7 +259,7 @@
       padding: 8px;
       background: none;
       border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
@@ -352,7 +375,7 @@
       padding: 8px 16px;
       background: var(--blue);
       color: #ffffff;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 0.88rem;
       font-weight: 600;
       text-decoration: none;
@@ -369,7 +392,7 @@
       padding: 8px 16px;
       background: var(--bg);
       color: var(--text-muted);
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 0.88rem;
       font-weight: 600;
       border: 1px solid var(--border);
@@ -378,7 +401,7 @@
     .example-type {
       display: inline-block;
       padding: 4px 10px;
-      border-radius: 4px;
+      border-radius: 6px;
       font-size: 11px;
       text-transform: uppercase;
       letter-spacing: 0.12em;
@@ -434,7 +457,7 @@
 
     .pill-tag {
       padding: 7px 13px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: 1px solid var(--border);
       background: var(--bg);
       color: var(--text);
@@ -453,7 +476,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 15px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       transition: background 0.15s;
@@ -467,31 +490,91 @@
       margin-top: auto;
     }
 
-    .footer-inner {
+    .footer-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 48px 20px 32px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 768px) {
+      .footer-grid {
+        grid-template-columns: 1.5fr 1fr 1fr 1fr;
+        padding: 48px 32px 32px;
+      }
+    }
+
+    .footer-col { color: #94a3b8; font-size: 0.9rem; line-height: 1.7; }
+    .footer-col-brand {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 10px;
+    }
+    .footer-col h4 {
+      color: #ffffff;
+      font-size: 1rem;
+      margin: 0 0 12px;
+      font-weight: 600;
+    }
+    .footer-col ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul li a {
+      color: #94a3b8;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-col ul li a:hover { color: #ffffff; }
+
+    .footer-bottom {
       max-width: 1100px;
       margin: 0 auto;
       padding: 20px 20px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
       gap: 12px;
-      font-size: 0.875rem;
+      font-size: 0.85rem;
       color: #64748b;
     }
 
     @media (min-width: 768px) {
-      .footer-inner { padding: 20px 32px 24px; }
+      .footer-bottom { padding: 20px 32px 24px; }
     }
 
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 16px;
+    /* BACK TO TOP */
+    .back-to-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: var(--navy);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      transition: background 0.2s, transform 0.2s;
+      z-index: 999;
     }
-
-    .footer-links a { color: #64748b; }
-    .footer-links a:hover { color: #94a3b8; }
+    .back-to-top:hover {
+      background: var(--blue);
+      transform: translateY(-2px);
+    }
+    .back-to-top.show { display: flex; }
 
     .example-preview {
       margin-bottom: 15px;
@@ -622,7 +705,7 @@
     <div class="page">
 
       <!-- INTRO STRIP -->
-      <section class="fade-in-up" aria-labelledby="examples-title">
+      <section class="fade-in-up animate-on-scroll" aria-labelledby="examples-title">
         <article class="strip hover-lift">
           <div class="section-label">WEBSITE EXAMPLES</div>
           <h1 id="examples-title" class="page-title">Here are some examples of what our dev team can build</h1>
@@ -644,7 +727,7 @@
       </section>
 
       <!-- ONE-PAGE WEBSITES -->
-      <section class="fade-in-up" aria-labelledby="one-page-title">
+      <section class="fade-in-up animate-on-scroll" aria-labelledby="one-page-title">
         <article class="strip hover-lift">
           <h2 id="one-page-title" class="strip-title"><img src="images/mockups/one-page-layout.svg" alt="One-Page Sites" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" />One-Page Websites</h2>
           <p class="strip-sub">
@@ -714,7 +797,7 @@
       </section>
 
       <!-- MULTI-PAGE WEBSITES -->
-      <section class="fade-in-up" aria-labelledby="multi-page-title">
+      <section class="fade-in-up animate-on-scroll" aria-labelledby="multi-page-title">
         <article class="strip hover-lift">
           <h2 id="multi-page-title" class="strip-title"><img src="images/mockups/multi-page-layout.svg" alt="Multi-Page Sites" style="width:32px;height:32px;display:inline-block;vertical-align:middle;margin-right:10px;" onerror="this.style.display='none'" />Multi-Page Websites</h2>
           <p class="strip-sub">
@@ -793,7 +876,7 @@
       </section>
 
       <!-- CLIENT EXAMPLE TEMPLATES -->
-      <section class="fade-in-up" aria-labelledby="client-examples-title">
+      <section class="fade-in-up animate-on-scroll" aria-labelledby="client-examples-title">
         <article class="strip hover-lift">
           <h2 id="client-examples-title" class="strip-title">Example Templates — See What We've Built</h2>
           <p class="strip-sub">
@@ -859,7 +942,7 @@
       </section>
 
       <!-- CUSTOM SOLUTIONS -->
-      <section class="fade-in-up">
+      <section class="fade-in-up animate-on-scroll">
         <article class="strip hover-lift">
           <h2 class="strip-title">Need something different?</h2>
           <p class="strip-sub">
@@ -894,18 +977,33 @@
   </main>
 
   <footer role="contentinfo">
-    <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-brand">Armin Studio</div>
+        <p>We design and develop modern, affordable websites for small businesses, startups, and non-profits. Your online presence, done right.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="examples.html">Examples</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul><li><a href="guide.html">Estimate Tool</a></li><li><a href="customization.html">Customization</a></li><li><a href="domain.html">Domain Guide</a></li><li><a href="host.html">Hosting Guide</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <ul><li><a href="contact.html">Contact Us</a></li></ul>
+        <p style="margin-top:12px;">Ready to get started? Reach out and let's build something great together.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <div>&copy; <span id="year"></span> Armin Studio. All rights reserved.</div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="guide.html">Estimate</a>
-        <a href="contact.html">Contact</a>
-        <a href="examples.html">Examples</a>
-      </nav>
+      <div>Designed with care by Armin Studio</div>
     </div>
   </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
   <script>
         // Mark active page in navigation
@@ -930,7 +1028,7 @@
       navMobile.style.display = open ? "none" : "flex";
     });
 
-    // Multi-step scroll animations
+    // Multi-step scroll animations (including animate-on-scroll)
     const observer = new IntersectionObserver(
       (entries)=>{
         entries.forEach((entry)=>{
@@ -942,7 +1040,30 @@
       },
       {threshold:0.08,rootMargin:"0px 0px -50px 0px"}
     );
-    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .animate-on-scroll, .image-zoom, .image-slide-left, .image-slide-right, .image-slide-up, .image-fade-rotate").forEach((el)=>observer.observe(el));
+
+    // Sticky header scroll effect
+    const siteHeader = document.querySelector('.site-header');
+    const backToTopBtn = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        siteHeader.classList.add('scrolled');
+      } else {
+        siteHeader.classList.remove('scrolled');
+      }
+
+      if (window.scrollY > 300) {
+        backToTopBtn.classList.add('show');
+      } else {
+        backToTopBtn.classList.remove('show');
+      }
+    }, { passive: true });
+
+    // Back to top button
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>
