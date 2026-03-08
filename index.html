@@ -1255,21 +1255,21 @@
             <span class="testimonial-quote-icon">&#10077;</span>
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <p class="testimonial-text">Armin Studio built our restaurant website and it exceeded all expectations. Professional, fast, and incredibly affordable.</p>
-            <div class="testimonial-author">&mdash; Maria S.</div>
+            <div class="testimonial-author">— Maria S.</div>
             <div class="testimonial-role">Restaurant Owner</div>
           </div>
           <div class="testimonial-card">
             <span class="testimonial-quote-icon">&#10077;</span>
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <p class="testimonial-text">The unlimited revisions policy made all the difference. They kept refining until our site was exactly what we envisioned.</p>
-            <div class="testimonial-author">&mdash; James T.</div>
+            <div class="testimonial-author">— James T.</div>
             <div class="testimonial-role">Startup Founder</div>
           </div>
           <div class="testimonial-card">
             <span class="testimonial-quote-icon">&#10077;</span>
             <div class="testimonial-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
             <p class="testimonial-text">As a non-profit, budget was tight. Armin Studio delivered a stunning site at a fraction of what others quoted.</p>
-            <div class="testimonial-author">&mdash; Sarah K.</div>
+            <div class="testimonial-author">— Sarah K.</div>
             <div class="testimonial-role">Non-Profit Director</div>
           </div>
         </div>
@@ -1397,20 +1397,17 @@
 
     scrollElements.forEach(el => observer.observe(el));
 
-    // Sticky header scroll effect
+    // Sticky header scroll effect + Back to top button
     const siteHeader = document.querySelector('.site-header');
+    const backToTopBtn = document.getElementById('backToTop');
     window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
+      const scrollY = window.scrollY;
+      if (scrollY > 50) {
         siteHeader.classList.add('scrolled');
       } else {
         siteHeader.classList.remove('scrolled');
       }
-    });
-
-    // Back to top button
-    const backToTopBtn = document.getElementById('backToTop');
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 300) {
+      if (scrollY > 300) {
         backToTopBtn.classList.add('show');
       } else {
         backToTopBtn.classList.remove('show');
