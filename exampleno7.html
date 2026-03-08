@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Art Studio Template — Example No. 7 | Armin Studio</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(145deg, #1C1C1C 0%, #2A1810 40%, #1C1C1C 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Paint splash background */
+    .bg-splashes {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .splash {
+      position: absolute;
+      border-radius: 50%;
+      opacity: 0.06;
+      animation: driftSplash ease-in-out infinite;
+    }
+
+    .splash:nth-child(1) { width: 500px; height: 500px; background: #C4622D; top: -100px; right: -100px; animation-duration: 18s; }
+    .splash:nth-child(2) { width: 350px; height: 350px; background: #D4A843; bottom: -80px; left: -60px; animation-duration: 24s; animation-delay: 4s; }
+    .splash:nth-child(3) { width: 250px; height: 250px; background: #7A9E7E; top: 40%; left: 20%; animation-duration: 15s; animation-delay: 2s; }
+    .splash:nth-child(4) { width: 180px; height: 180px; background: #C4622D; bottom: 30%; right: 15%; animation-duration: 20s; animation-delay: 7s; }
+
+    @keyframes driftSplash {
+      0%,100% { transform: scale(1) translate(0,0); }
+      50%      { transform: scale(1.1) translate(15px,-15px); }
+    }
+
+    .container {
+      max-width: 900px;
+      width: 100%;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin-bottom: 44px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(196,98,45,0.2);
+      border: 1px solid rgba(196,98,45,0.45);
+      color: #E8A070;
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .hero-emoji {
+      font-size: 4rem;
+      display: block;
+      margin: 0 auto 16px;
+      animation: paintBrush 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 8px 20px rgba(196,98,45,0.5));
+    }
+
+    @keyframes paintBrush {
+      0%,100% { transform: rotate(-8deg) translateY(0); }
+      50%      { transform: rotate(8deg) translateY(-14px); }
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      margin-bottom: 12px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #E8A070, #D4A843, #C4622D, #E8A070);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      background-size: 200%;
+      animation: gradientShift 5s ease-in-out infinite alternate;
+      font-family: Georgia, serif;
+    }
+
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-size: 1.05rem;
+      opacity: 0.7;
+      font-weight: 300;
+      color: #D4C8B8;
+      letter-spacing: 0.5px;
+    }
+
+    /* Card */
+    .template-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.55);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: fadeInUp 0.8s ease both;
+      animation-delay: 0.2s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 36px 100px rgba(0,0,0,0.65), 0 0 60px rgba(196,98,45,0.18);
+    }
+
+    /* Template header */
+    .template-header {
+      padding: 48px;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(140deg, #1C1C1C 0%, #2A1408 40%, #C4622D 100%);
+    }
+
+    .template-header::before {
+      content: '';
+      position: absolute;
+      width: 450px; height: 450px;
+      background: radial-gradient(circle, rgba(212,168,67,0.15) 0%, transparent 70%);
+      top: -180px; right: -80px;
+      border-radius: 50%;
+    }
+
+    .template-header::after {
+      content: '';
+      position: absolute;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(196,98,45,0.25) 0%, transparent 70%);
+      bottom: -100px; left: -60px;
+      border-radius: 50%;
+    }
+
+    .template-header > * { position: relative; z-index: 2; }
+
+    .template-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      color: white;
+      padding: 5px 14px;
+      border-radius: 50px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .template-title {
+      font-size: 2.3rem;
+      font-weight: 900;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+      font-family: Georgia, serif;
+    }
+
+    .template-subtitle {
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+
+    /* Floating art icons in header */
+    .header-floaters {
+      position: absolute;
+      right: 44px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .float-icon {
+      font-size: 2.4rem;
+      animation: floatArt ease-in-out infinite;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
+    }
+
+    .float-icon:nth-child(1) { animation-duration: 3.2s; animation-delay: 0s; }
+    .float-icon:nth-child(2) { animation-duration: 3.8s; animation-delay: 0.7s; }
+    .float-icon:nth-child(3) { animation-duration: 2.9s; animation-delay: 1.4s; }
+
+    @keyframes floatArt {
+      0%,100% { transform: translateY(0) rotate(-5deg); }
+      50%      { transform: translateY(-12px) rotate(5deg); }
+    }
+
+    /* Body */
+    .template-body {
+      padding: 48px;
+      color: #333;
+    }
+
+    .template-description {
+      font-size: 1.03rem;
+      line-height: 1.85;
+      margin-bottom: 28px;
+      color: #555;
+    }
+
+    /* Pages pills */
+    .pages-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+
+    .pill {
+      background: linear-gradient(135deg, rgba(196,98,45,0.1), rgba(212,168,67,0.1));
+      border: 1px solid rgba(196,98,45,0.25);
+      color: #A04E22;
+      padding: 7px 16px;
+      border-radius: 50px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Highlight strip */
+    .highlight-strip {
+      background: linear-gradient(135deg, rgba(196,98,45,0.07), rgba(212,168,67,0.07));
+      border: 1px solid rgba(196,98,45,0.2);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .highlight-strip .icon { font-size: 2rem; flex-shrink: 0; }
+    .highlight-strip p { font-size: 0.9rem; color: #555; line-height: 1.65; }
+    .highlight-strip p strong { color: #C4622D; }
+
+    /* Features list */
+    .features-list {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+
+    .features-list li {
+      padding: 13px 0;
+      padding-left: 40px;
+      position: relative;
+      color: #444;
+      font-size: 0.97rem;
+      border-bottom: 1px solid #F5F0EA;
+      line-height: 1.5;
+    }
+
+    .features-list li:last-child { border-bottom: none; }
+
+    .features-list li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: #C4622D;
+      font-weight: bold;
+      font-size: 1rem;
+      width: 26px; height: 26px;
+      background: rgba(196,98,45,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      top: 12px;
+    }
+
+    /* CTA */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #C4622D 0%, #A04E22 100%);
+      color: white;
+      text-decoration: none;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 1.05rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 6px 25px rgba(196,98,45,0.45);
+      letter-spacing: 0.3px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 35px rgba(196,98,45,0.65);
+      background: linear-gradient(135deg, #D4722D 0%, #B05E2A 100%);
+    }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 36px;
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: #C4622D; }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.9rem; }
+      .template-title { font-size: 1.6rem; }
+      .template-header, .template-body { padding: 28px 22px; }
+      .header-floaters { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background splashes -->
+  <div class="bg-splashes" aria-hidden="true">
+    <div class="splash"></div>
+    <div class="splash"></div>
+    <div class="splash"></div>
+    <div class="splash"></div>
+  </div>
+
+  <div class="container">
+    <header>
+      <div class="header-badge">🎨 Art Studio Template</div>
+      <span class="hero-emoji">🖌️</span>
+      <h1>Canvas & Clay Studio</h1>
+      <p class="subtitle">Example No. 7 — Art Studio Website with Classes, Gallery & Booking</p>
+    </header>
+
+    <div class="template-card">
+      <div class="template-header">
+        <div class="template-badge">6-Page Website</div>
+        <h2 class="template-title">Canvas & Clay Studio</h2>
+        <p class="template-subtitle">Warm, gallery-style website for an art studio offering classes</p>
+
+        <!-- Floating art icons -->
+        <div class="header-floaters">
+          <span class="float-icon">🖌️</span>
+          <span class="float-icon">🏺</span>
+          <span class="float-icon">🎨</span>
+        </div>
+      </div>
+
+      <div class="template-body">
+        <p class="template-description">
+          A beautifully crafted 6-page website for "Canvas & Clay Studio" — a fictional art studio offering painting, ceramics, drawing, and mixed media classes. The design uses a warm terracotta and gold palette on rich charcoal backgrounds to evoke creativity and craft. It's elegant, gallery-inspired, and fully responsive — built to convert curious visitors into enrolled students.
+        </p>
+
+        <div class="pages-pills">
+          <span class="pill">🏠 Home</span>
+          <span class="pill">🎨 Classes</span>
+          <span class="pill">🖼️ Gallery</span>
+          <span class="pill">👩‍🎨 Instructors</span>
+          <span class="pill">📖 About</span>
+          <span class="pill">📋 Contact & Book</span>
+        </div>
+
+        <div class="highlight-strip">
+          <div class="icon">🏺</div>
+          <p>This template is designed for <strong>any creative studio, workshop, or class-based business</strong>. It includes a full class schedule with filtering, a student gallery with lightbox, instructor profiles, a studio history & values page, and a booking enquiry form with FAQ — everything a real art studio needs online.</p>
+        </div>
+
+        <ul class="features-list">
+          <li>Animated hero with floating paint canvas, brushstroke effects, and live stats — makes a stunning first impression</li>
+          <li>Full class schedule page with category filtering (Painting / Ceramics / Drawing / Mixed Media / Kids) and session timeslots</li>
+          <li>Private & group events section with pricing packages for parties, team building, and date nights</li>
+          <li>Student gallery with mosaic grid layout and interactive lightbox viewer</li>
+          <li>Six detailed instructor profiles with teaching philosophy, schedules, and credentials</li>
+          <li>Studio history timeline, values section, and community stats on the About page</li>
+          <li>Full contact & booking form with class selection, experience level, preferred day, and FAQ accordion</li>
+          <li>Scrolling marquee, scroll-reveal animations, and hover effects throughout all pages</li>
+          <li>Fully responsive with mobile hamburger menu — consistent across all 6 pages</li>
+        </ul>
+
+        <a href="exampleno7-site1/index.html" class="cta-button">
+          <span>🎨</span>
+          <span>View Art Studio Template</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="examples.html" class="back-link">← Back to all examples</a>
+  </div>
+
+</body>
+</html>

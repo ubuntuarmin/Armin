@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Book — Canvas & Clay Studio</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --charcoal:   #1C1C1C;
+      --terra:      #C4622D;
+      --terra-dark: #A04E22;
+      --gold:       #D4A843;
+      --gold-light: #E8C46A;
+      --cream:      #FAF7F2;
+      --cream2:     #F0EBE3;
+      --sage:       #7A9E7E;
+      --white:      #FFFFFF;
+      --text-dark:  #1C1C1C;
+      --text-mid:   #4A4A4A;
+      --text-muted: #7A7A7A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 1000; background: var(--charcoal); border-bottom: 3px solid var(--terra); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .logo-mark { width: 50px; height: 50px; border: 3px solid var(--terra); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: var(--terra); background: rgba(196,98,45,0.1); text-align: center; line-height: 1.3; }
+    .logo-name { font-size: 1.25rem; font-weight: 700; color: var(--white); font-family: Georgia, serif; }
+    .logo-name span { color: var(--terra); }
+    .logo-tagline { font-size: 0.62rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 0.88rem; font-weight: 500; transition: all 0.25s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--terra); color: var(--white); }
+    .nav-cta { background: var(--terra) !important; color: var(--white) !important; font-weight: 700 !important; padding: 9px 20px !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--terra); border-radius: 3px; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--charcoal); z-index: 2000; flex-direction: column; padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left: 3px solid var(--terra); }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a:hover { background: rgba(196,98,45,0.15); border-left-color: var(--terra); color: var(--terra); }
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--terra); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--charcoal); padding: 76px 24px 88px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 50% 50%, rgba(196,98,45,0.13) 0%, transparent 70%); }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .page-label { display: inline-block; color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+    .page-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; line-height: 1.15; margin-bottom: 16px; }
+    .page-title em { color: var(--terra); font-style: italic; }
+    .page-desc { font-size: 1.05rem; color: rgba(255,255,255,0.58); line-height: 1.8; }
+
+    /* MAIN */
+    .contact-main { max-width: 1200px; margin: 0 auto; padding: 72px 24px 80px; display: grid; grid-template-columns: 1.15fr 1fr; gap: 60px; align-items: start; }
+
+    /* FORM */
+    .form-section {}
+    .form-title { font-size: 1.4rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 8px; }
+    .form-subtitle { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 32px; }
+
+    .form-group { margin-bottom: 20px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 16px;
+      background: var(--white);
+      border: 2px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      font-size: 0.93rem;
+      color: var(--text-dark);
+      font-family: inherit;
+      transition: all 0.25s;
+      outline: none;
+      appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(196,98,45,0.12); }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5z' fill='%237A7A7A'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; background-size: 20px; padding-right: 40px; cursor: pointer; }
+
+    .preferred-row { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+    .radio-btn { position: relative; }
+    .radio-btn input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+
+    .radio-label {
+      display: inline-block;
+      padding: 8px 18px;
+      border-radius: 50px;
+      border: 2px solid rgba(0,0,0,0.1);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      background: var(--white);
+    }
+
+    .radio-btn input[type="radio"]:checked + .radio-label {
+      background: var(--terra);
+      border-color: var(--terra);
+      color: var(--white);
+    }
+
+    .radio-label:hover { border-color: var(--terra); color: var(--terra); }
+
+    .checkbox-group { display: flex; align-items: flex-start; gap: 12px; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--terra); flex-shrink: 0; cursor: pointer; }
+    .checkbox-group label { font-size: 0.85rem; font-weight: 400; text-transform: none; letter-spacing: 0; color: var(--text-muted); cursor: pointer; line-height: 1.5; }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--terra);
+      color: var(--white);
+      border: none;
+      padding: 16px 24px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+
+    .submit-btn:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.4); }
+
+    /* Success message */
+    .success-msg {
+      display: none;
+      background: linear-gradient(135deg, #E8F5E9, #F1F8E9);
+      border: 2px solid #66BB6A;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .success-msg.show { display: block; }
+    .success-icon { font-size: 2.8rem; display: block; margin-bottom: 12px; }
+    .success-msg h4 { font-size: 1.15rem; color: #2E7D32; font-weight: 700; margin-bottom: 6px; }
+    .success-msg p  { font-size: 0.9rem; color: #388E3C; }
+
+    /* INFO SIDEBAR */
+    .info-sidebar {}
+
+    .info-card {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 28px;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+      margin-bottom: 20px;
+      border-left: 4px solid var(--terra);
+    }
+
+    .info-card-title { font-size: 0.78rem; font-weight: 700; color: var(--terra); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+
+    .info-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; font-size: 0.9rem; }
+    .info-row:last-child { margin-bottom: 0; }
+    .info-icon { font-size: 1.1rem; flex-shrink: 0; width: 22px; }
+    .info-label { font-weight: 600; color: var(--text-dark); margin-bottom: 2px; font-size: 0.88rem; }
+    .info-val   { color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; }
+
+    /* Hours table */
+    .hours-table { width: 100%; }
+
+    .hours-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px dashed rgba(0,0,0,0.08); font-size: 0.87rem; }
+    .hours-row:last-child { border-bottom: none; }
+    .hours-day  { font-weight: 600; color: var(--text-dark); }
+    .hours-time { color: var(--text-muted); }
+    .hours-closed { color: #EF5350; }
+
+    /* Map placeholder */
+    .map-placeholder {
+      background: linear-gradient(135deg, #E8E0D4, #D4C8B8);
+      border-radius: 14px;
+      height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+      border: 2px dashed rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+
+    .map-placeholder:hover { border-color: var(--terra); background: linear-gradient(135deg, #EDE5D8, #DCCEBA); }
+    .map-placeholder .map-pin { font-size: 2.4rem; }
+    .map-placeholder .map-text { font-weight: 600; color: var(--text-dark); }
+    .map-placeholder .map-sub  { font-size: 0.78rem; }
+
+    /* Social links */
+    .social-row { display: flex; gap: 10px; }
+    .soc-btn { display: flex; align-items: center; gap: 8px; background: var(--cream2); border: 1px solid rgba(0,0,0,0.08); padding: 10px 16px; border-radius: 8px; font-size: 0.82rem; font-weight: 600; color: var(--text-mid); text-decoration: none; transition: all 0.25s; }
+    .soc-btn:hover { background: var(--terra); color: var(--white); border-color: var(--terra); }
+
+    /* FAQ */
+    .faq-section { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+    .faq-title { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; text-align: center; margin-bottom: 8px; }
+    .faq-sub { text-align: center; color: var(--text-muted); font-size: 0.95rem; margin-bottom: 44px; }
+
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .faq-item {
+      background: var(--white);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 18px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      text-align: left;
+      font-size: 0.93rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      transition: color 0.2s;
+      font-family: inherit;
+    }
+
+    .faq-question:hover { color: var(--terra); }
+
+    .faq-arrow {
+      width: 28px; height: 28px;
+      background: var(--cream2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 0.75rem;
+      color: var(--terra);
+      transition: transform 0.3s;
+      font-weight: 800;
+    }
+
+    .faq-item.open .faq-arrow { transform: rotate(45deg); }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+      padding: 0 22px;
+    }
+
+    .faq-item.open .faq-answer { max-height: 200px; padding-bottom: 18px; }
+
+    .faq-answer p { font-size: 0.88rem; color: var(--text-muted); line-height: 1.75; }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); border-top: 3px solid var(--terra); padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+    .footer-brand .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; display: block; font-family: Georgia, serif; }
+    .footer-brand .logo-name span { color: var(--terra); }
+    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 240px; }
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.25s; }
+    .footer-col a:hover { color: var(--terra); transform: translateX(5px); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    .social-links { display: flex; gap: 10px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
+    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-2px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .contact-main { grid-template-columns: 1fr; gap: 48px; }
+      .faq-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .form-row { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="instructors.html">Instructors</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact & Book</a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">LOGO</div>
+      <div>
+        <div class="logo-name">Canvas<span> & Clay</span></div>
+        <div class="logo-tagline">Art Studio</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html">Classes</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="instructors.html">Instructors</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta active">Book a Class</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Get in Touch</div>
+    <h1 class="page-title">Book a Class or <em>Ask Us Anything</em></h1>
+    <p class="page-desc">Ready to start making? Fill out the form below to book a class, enquire about private events, or just say hello. We respond to all enquiries within one business day.</p>
+  </div>
+</div>
+
+<!-- Contact + Info -->
+<div class="contact-main">
+
+  <!-- Form -->
+  <div class="form-section">
+    <div class="form-title">Send Us a Message</div>
+    <p class="form-subtitle">Fill in the form and we'll be in touch within one business day.</p>
+
+    <form id="contactForm" onsubmit="handleSubmit(event)" novalidate>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fname">First Name *</label>
+          <input type="text" id="fname" name="fname" placeholder="Your first name" required>
+        </div>
+        <div class="form-group">
+          <label for="lname">Last Name *</label>
+          <input type="text" id="lname" name="lname" placeholder="Your last name" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address *</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" placeholder="(555) 000-0000">
+      </div>
+
+      <div class="form-group">
+        <label for="interest">I'm Interested In *</label>
+        <select id="interest" name="interest" required>
+          <option value="" disabled selected>— Select a class or enquiry type —</option>
+          <optgroup label="Painting Classes">
+            <option>Oil Painting Fundamentals</option>
+            <option>Portrait Painting in Oils</option>
+            <option>Watercolour Landscapes</option>
+          </optgroup>
+          <optgroup label="Ceramics Classes">
+            <option>Pottery & Wheel Throwing</option>
+            <option>Hand-Building & Sculpture</option>
+            <option>Glaze & Fire Workshop</option>
+          </optgroup>
+          <optgroup label="Drawing & Illustration">
+            <option>Figure Drawing</option>
+            <option>Ink & Illustration</option>
+            <option>Young Artists Drawing Club</option>
+          </optgroup>
+          <optgroup label="Mixed Media">
+            <option>Mixed Media & Collage</option>
+            <option>Botanical Illustration</option>
+            <option>Little Makers (Kids)</option>
+          </optgroup>
+          <optgroup label="Events">
+            <option>Private Event / Party</option>
+            <option>Corporate Team Building</option>
+            <option>Date Night Experience</option>
+          </optgroup>
+          <option value="General">General Enquiry</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Experience Level</label>
+        <div class="preferred-row">
+          <div class="radio-btn">
+            <input type="radio" name="level" id="lvl1" value="Complete beginner">
+            <label class="radio-label" for="lvl1">Complete Beginner</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="level" id="lvl2" value="Some experience">
+            <label class="radio-label" for="lvl2">Some Experience</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="level" id="lvl3" value="Intermediate">
+            <label class="radio-label" for="lvl3">Intermediate</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="level" id="lvl4" value="Advanced">
+            <label class="radio-label" for="lvl4">Advanced</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Preferred Day(s)</label>
+        <div class="preferred-row">
+          <div class="radio-btn">
+            <input type="radio" name="day" id="d1" value="Weekday morning">
+            <label class="radio-label" for="d1">Weekday Morning</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="day" id="d2" value="Weekday evening">
+            <label class="radio-label" for="d2">Weekday Evening</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="day" id="d3" value="Saturday">
+            <label class="radio-label" for="d3">Saturday</label>
+          </div>
+          <div class="radio-btn">
+            <input type="radio" name="day" id="d4" value="Sunday">
+            <label class="radio-label" for="d4">Sunday</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us a bit about what you're looking for, or ask us anything..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <div class="checkbox-group">
+          <input type="checkbox" id="newsletter" name="newsletter">
+          <label for="newsletter">Yes, I'd like to receive news about upcoming classes, new courses, and studio events.</label>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">🎨 Send My Enquiry</button>
+    </form>
+
+    <div class="success-msg" id="successMsg">
+      <span class="success-icon">🎉</span>
+      <h4>Message Received!</h4>
+      <p>Thank you for getting in touch. We'll respond to your enquiry within one business day. In the meantime, feel free to browse our <a href="classes.html" style="color:var(--terra);">full class schedule</a>.</p>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div class="info-sidebar">
+
+    <div class="map-placeholder">
+      <span class="map-pin">📍</span>
+      <span class="map-text">Canvas & Clay Studio</span>
+      <span class="map-sub">42 Artisan Lane, Arts District</span>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Studio Info</div>
+      <div class="info-row">
+        <div class="info-icon">📍</div>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-val">42 Artisan Lane, Arts District<br>Portland, OR 97205</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">📞</div>
+        <div>
+          <div class="info-label">Phone</div>
+          <div class="info-val">(555) 847-2910</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">✉️</div>
+        <div>
+          <div class="info-label">Email</div>
+          <div class="info-val">hello@canvasandclay.studio</div>
+        </div>
+      </div>
+      <div class="info-row">
+        <div class="info-icon">🚗</div>
+        <div>
+          <div class="info-label">Parking</div>
+          <div class="info-val">Free street parking on Artisan Lane and Maker's Alley. Bike racks at the entrance.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Studio Hours</div>
+      <div class="hours-table">
+        <div class="hours-row"><span class="hours-day">Monday – Friday</span><span class="hours-time">10:00 am – 8:00 pm</span></div>
+        <div class="hours-row"><span class="hours-day">Saturday</span><span class="hours-time">9:00 am – 6:00 pm</span></div>
+        <div class="hours-row"><span class="hours-day">Sunday</span><span class="hours-time">11:00 am – 5:00 pm</span></div>
+        <div class="hours-row"><span class="hours-day">Public Holidays</span><span class="hours-time hours-closed">Closed</span></div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <div class="info-card-title">Follow Us</div>
+      <div class="social-row">
+        <a href="#" class="soc-btn">📸 Instagram</a>
+        <a href="#" class="soc-btn">📘 Facebook</a>
+        <a href="#" class="soc-btn">📌 Pinterest</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section">
+  <div class="faq-title">Frequently Asked Questions</div>
+  <p class="faq-sub">Everything you need to know before your first session.</p>
+
+  <div class="faq-grid">
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do I need any prior experience?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Absolutely not. Most of our classes are designed for complete beginners, and all are open to all skill levels unless otherwise stated. Our instructors are experienced at teaching from scratch, and you'll be in good company.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What do I need to bring?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Just yourself! All materials — paints, brushes, clay, canvas, paper, tools, and aprons — are included in your class fee. You may want to wear old clothes or bring a change of top, especially for ceramics sessions.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Can I buy a block of sessions or gift a class?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes! We offer 4-session and 8-session packs for regular students at a discounted rate. We also sell gift vouchers in any denomination — perfect for birthdays, anniversaries, or a thoughtful treat. Email us for details.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        What's your cancellation policy?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We ask for at least 48 hours' notice to cancel a booked session for a full credit or refund. Cancellations within 48 hours are not eligible for a refund, but may be transferred to another session at our discretion.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Can I take my finished work home?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes — your work is yours. Paintings can usually be taken home on the day. Ceramic pieces require kiln firing, which takes 7–10 days; we'll notify you when your piece is ready for collection.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Do you offer kids' classes?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>We do! We offer Little Makers (ages 5–10) on Sunday mornings and the Young Artists Drawing Club (ages 8–16) on Saturday mornings. Both are guided, structured, and great fun. Parental consent forms are required for under-16s.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        Is the studio wheelchair accessible?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Yes. The studio is on the ground floor with a step-free entrance, wide doorways, accessible bathrooms, and height-adjustable worktables available on request. Please let us know in advance so we can make any additional arrangements.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-question" onclick="toggleFaq(this)">
+        How do I book a private event?
+        <span class="faq-arrow">+</span>
+      </button>
+      <div class="faq-answer">
+        <p>Use the form above and select "Private Event / Party" or "Corporate Team Building". We'll follow up to discuss your group size, preferred date, activity, and any special requirements. Bookings are confirmed once a deposit is received.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-name">Canvas<span> & Clay</span></span>
+      <p>A welcoming art studio offering painting, ceramics, drawing, and mixed media classes for all skill levels.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Classes</h4>
+      <a href="classes.html">Oil Painting</a>
+      <a href="classes.html">Pottery</a>
+      <a href="classes.html">Watercolour</a>
+      <a href="classes.html">Figure Drawing</a>
+      <a href="classes.html">Mixed Media</a>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <a href="contact.html">Mon–Fri: 10am – 8pm</a>
+      <a href="contact.html">Saturday: 9am – 6pm</a>
+      <a href="contact.html">Sunday: 11am – 5pm</a>
+      <a href="contact.html">📞 (555) 847-2910</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Canvas & Clay Studio. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" aria-label="Instagram">📸</a>
+      <a class="social-link" href="#" aria-label="Facebook">📘</a>
+      <a class="social-link" href="#" aria-label="Pinterest">📌</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const form = document.getElementById('contactForm');
+    const msg  = document.getElementById('successMsg');
+    form.style.display = 'none';
+    msg.classList.add('show');
+    window.scrollTo({ top: document.querySelector('.form-section').offsetTop - 100, behavior: 'smooth' });
+  }
+
+  function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+  }
+</script>
+</body>
+</html>
