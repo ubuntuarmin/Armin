@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classes & Schedule — Canvas & Clay Studio</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --charcoal:    #1C1C1C;
+      --charcoal2:   #2E2E2E;
+      --terra:       #C4622D;
+      --terra-dark:  #A04E22;
+      --gold:        #D4A843;
+      --gold-light:  #E8C46A;
+      --cream:       #FAF7F2;
+      --cream2:      #F0EBE3;
+      --sage:        #7A9E7E;
+      --white:       #FFFFFF;
+      --text-dark:   #1C1C1C;
+      --text-mid:    #4A4A4A;
+      --text-muted:  #7A7A7A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--charcoal);
+      border-bottom: 3px solid var(--terra);
+      box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    }
+
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      height: 72px; display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+
+    .logo-mark {
+      width: 50px; height: 50px; border: 3px solid var(--terra); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.5rem; font-weight: 700; color: var(--terra);
+      background: rgba(196,98,45,0.1); letter-spacing: 0.5px; text-align: center; line-height: 1.3;
+    }
+
+    .logo-name { font-size: 1.25rem; font-weight: 700; color: var(--white); letter-spacing: 0.5px; font-family: Georgia, serif; }
+    .logo-name span { color: var(--terra); }
+    .logo-tagline { font-size: 0.62rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+
+    .nav-links a {
+      color: rgba(255,255,255,0.82); text-decoration: none;
+      padding: 8px 16px; border-radius: 6px; font-size: 0.88rem; font-weight: 500; transition: all 0.25s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { background: var(--terra); color: var(--white); }
+
+    .nav-cta { background: var(--terra) !important; color: var(--white) !important; font-weight: 700 !important; padding: 9px 20px !important; box-shadow: 0 3px 12px rgba(196,98,45,0.4) !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--terra); border-radius: 3px; transition: all 0.3s; }
+
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+
+    .mobile-menu {
+      display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%;
+      background: var(--charcoal); z-index: 2000; flex-direction: column;
+      padding: 80px 28px 32px; gap: 6px;
+      transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1);
+      border-left: 3px solid var(--terra);
+    }
+
+    .mobile-menu.open { right: 0; }
+
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a:hover { background: rgba(196,98,45,0.15); border-left-color: var(--terra); color: var(--terra); }
+
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--terra); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: var(--charcoal);
+      padding: 80px 24px 90px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 50% 70% at 80% 50%, rgba(196,98,45,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 20% 50%, rgba(212,168,67,0.1) 0%, transparent 70%);
+    }
+
+    .page-hero-inner { position: relative; z-index: 1; max-width: 760px; margin: 0 auto; }
+
+    .page-label {
+      display: inline-block; color: var(--gold); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    .page-title {
+      font-size: clamp(2.2rem, 5vw, 3.4rem); font-weight: 800; color: var(--white);
+      font-family: Georgia, serif; line-height: 1.15; margin-bottom: 16px;
+    }
+
+    .page-title em { color: var(--terra); font-style: italic; }
+
+    .page-desc { font-size: 1.08rem; color: rgba(255,255,255,0.65); line-height: 1.8; }
+
+    /* FILTER TABS */
+    .filter-bar {
+      background: var(--white);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      padding: 0 24px;
+      position: sticky;
+      top: 72px;
+      z-index: 900;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    }
+
+    .filter-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 0;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .filter-inner::-webkit-scrollbar { display: none; }
+
+    .filter-btn {
+      background: none;
+      border: none;
+      padding: 18px 22px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -1px;
+      transition: all 0.25s;
+    }
+
+    .filter-btn:hover { color: var(--terra); }
+    .filter-btn.active { color: var(--terra); border-bottom-color: var(--terra); }
+
+    /* CONTENT */
+    .classes-content { max-width: 1200px; margin: 0 auto; padding: 64px 24px 80px; }
+
+    /* Schedule Banner */
+    .schedule-banner {
+      background: linear-gradient(135deg, var(--charcoal), var(--charcoal2));
+      border: 1px solid rgba(196,98,45,0.25);
+      border-radius: 16px;
+      padding: 28px 36px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+
+    .schedule-banner-text h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .schedule-banner-text p  { font-size: 0.88rem; color: rgba(255,255,255,0.5); }
+
+    .schedule-banner-badges { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .day-badge {
+      background: rgba(196,98,45,0.15);
+      border: 1px solid rgba(196,98,45,0.3);
+      color: var(--terra);
+      padding: 6px 14px;
+      border-radius: 50px;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    /* Section headings */
+    .category-heading {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .category-heading h2 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      font-family: Georgia, serif;
+    }
+
+    .category-line { flex: 1; height: 1px; background: rgba(0,0,0,0.1); }
+
+    .category-icon { font-size: 1.6rem; }
+
+    /* Classes grid */
+    .classes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 64px; }
+
+    .class-card {
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 3px 16px rgba(0,0,0,0.07);
+      transition: all 0.35s;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .class-card:hover { transform: translateY(-6px); box-shadow: 0 16px 45px rgba(0,0,0,0.12); }
+
+    .card-header {
+      padding: 20px 22px 16px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .card-emoji { font-size: 2.4rem; flex-shrink: 0; }
+
+    .level-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .level-beginner  { background: #E8F5E9; color: #2E7D32; }
+    .level-all       { background: #FFF3E0; color: #E65100; }
+    .level-inter     { background: #E3F2FD; color: #1565C0; }
+    .level-advanced  { background: #F3E5F5; color: #6A1B9A; }
+
+    .card-body { padding: 0 22px 22px; }
+
+    .card-name { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; font-family: Georgia, serif; }
+
+    .card-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 12px; }
+    .meta-pill { display: flex; align-items: center; gap: 5px; font-size: 0.75rem; color: var(--text-muted); background: var(--cream2); padding: 4px 10px; border-radius: 50px; }
+
+    .card-desc { font-size: 0.87rem; color: var(--text-mid); line-height: 1.65; margin-bottom: 16px; }
+
+    .schedule-row {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 12px 14px;
+      background: var(--cream);
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+
+    .schedule-time {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.8rem;
+    }
+
+    .schedule-time .day  { font-weight: 700; color: var(--text-dark); }
+    .schedule-time .time { color: var(--text-muted); }
+    .spots-left { font-size: 0.72rem; color: var(--terra); font-weight: 700; }
+    .spots-full { color: var(--text-muted) !important; text-decoration: line-through; }
+
+    .card-footer { display: flex; align-items: center; justify-content: space-between; }
+
+    .card-price { font-size: 1.3rem; font-weight: 800; color: var(--terra); font-family: Georgia, serif; }
+    .card-price span { font-size: 0.78rem; color: var(--text-muted); font-weight: 400; font-family: inherit; }
+
+    .btn-enrol {
+      background: var(--terra);
+      color: var(--white);
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      transition: all 0.25s;
+      white-space: nowrap;
+    }
+
+    .btn-enrol:hover { background: var(--terra-dark); transform: translateY(-1px); }
+
+    /* Info strip */
+    .info-strip {
+      background: linear-gradient(135deg, var(--terra), var(--terra-dark));
+      border-radius: 16px;
+      padding: 44px 48px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+      text-align: center;
+      margin-bottom: 48px;
+    }
+
+    .info-item {}
+    .info-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+    .info-num  { font-size: 1.5rem; font-weight: 800; color: var(--white); font-family: Georgia, serif; }
+    .info-lbl  { font-size: 0.75rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 4px; }
+
+    /* Private events */
+    .private-section {
+      background: var(--cream2);
+      border-radius: 18px;
+      padding: 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .private-content h3 { font-size: 1.8rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 14px; }
+    .private-content p  { font-size: 0.95rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 24px; }
+
+    .private-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+    .private-feat {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.9rem;
+      color: var(--text-mid);
+    }
+
+    .private-feat::before { content: '✓'; color: var(--terra); font-weight: 800; flex-shrink: 0; }
+
+    .private-packages { display: flex; flex-direction: column; gap: 14px; }
+
+    .pkg-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 22px;
+      border: 2px solid transparent;
+      transition: all 0.25s;
+    }
+
+    .pkg-card:hover { border-color: var(--terra); }
+
+    .pkg-name  { font-size: 1rem; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+    .pkg-desc  { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 10px; }
+    .pkg-price { font-size: 1.2rem; font-weight: 800; color: var(--terra); }
+
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--terra); color: var(--white); text-decoration: none;
+      padding: 14px 30px; border-radius: 8px; font-size: 0.95rem; font-weight: 700;
+      transition: all 0.3s; box-shadow: 0 5px 18px rgba(196,98,45,0.35);
+    }
+
+    .btn-primary:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 8px 26px rgba(196,98,45,0.5); }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); border-top: 3px solid var(--terra); padding: 64px 24px 32px; }
+
+    .footer-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px;
+    }
+
+    .footer-brand .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; display: block; font-family: Georgia, serif; }
+    .footer-brand .logo-name span { color: var(--terra); }
+    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 240px; }
+
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.25s; }
+    .footer-col a:hover { color: var(--terra); transform: translateX(5px); }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+    .social-links { display: flex; gap: 10px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
+    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-2px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .classes-grid { grid-template-columns: 1fr; }
+      .info-strip { grid-template-columns: 1fr 1fr; }
+      .private-section { grid-template-columns: 1fr; gap: 32px; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+    }
+
+    @media (max-width: 480px) {
+      .info-strip { grid-template-columns: 1fr 1fr; padding: 32px 24px; }
+      .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+      .schedule-banner { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="instructors.html">Instructors</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact & Book</a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">LOGO</div>
+      <div>
+        <div class="logo-name">Canvas<span> & Clay</span></div>
+        <div class="logo-tagline">Art Studio</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html" class="active">Classes</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="instructors.html">Instructors</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book a Class</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Our Offerings</div>
+    <h1 class="page-title">Classes for Every <em>Creative</em></h1>
+    <p class="page-desc">Browse our full range of art classes — from introductory workshops to advanced ongoing courses. All skill levels welcome, all materials provided.</p>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterClasses('all', this)">All Classes</button>
+    <button class="filter-btn" onclick="filterClasses('painting', this)">Painting</button>
+    <button class="filter-btn" onclick="filterClasses('ceramics', this)">Ceramics</button>
+    <button class="filter-btn" onclick="filterClasses('drawing', this)">Drawing</button>
+    <button class="filter-btn" onclick="filterClasses('mixed', this)">Mixed Media</button>
+    <button class="filter-btn" onclick="filterClasses('kids', this)">Kids & Teens</button>
+  </div>
+</div>
+
+<!-- Main Content -->
+<div class="classes-content">
+
+  <!-- Schedule banner -->
+  <div class="schedule-banner">
+    <div class="schedule-banner-text">
+      <h3>🗓️ Weekly Class Schedule</h3>
+      <p>Classes run Monday through Sunday. Book in advance — popular sessions fill quickly.</p>
+    </div>
+    <div class="schedule-banner-badges">
+      <span class="day-badge">Mon</span>
+      <span class="day-badge">Tue</span>
+      <span class="day-badge">Wed</span>
+      <span class="day-badge">Thu</span>
+      <span class="day-badge">Fri</span>
+      <span class="day-badge">Sat</span>
+      <span class="day-badge">Sun</span>
+    </div>
+  </div>
+
+  <!-- Stats Strip -->
+  <div class="info-strip">
+    <div class="info-item">
+      <span class="info-icon">🎨</span>
+      <div class="info-num">12+</div>
+      <div class="info-lbl">Class Types</div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">📅</span>
+      <div class="info-num">40+</div>
+      <div class="info-lbl">Sessions / Month</div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">👤</span>
+      <div class="info-num">8–14</div>
+      <div class="info-lbl">Max Class Size</div>
+    </div>
+    <div class="info-item">
+      <span class="info-icon">🖌️</span>
+      <div class="info-num">100%</div>
+      <div class="info-lbl">Materials Included</div>
+    </div>
+  </div>
+
+  <!-- PAINTING -->
+  <div class="category-heading" data-category="painting">
+    <span class="category-icon">🖌️</span>
+    <h2>Painting</h2>
+    <div class="category-line"></div>
+  </div>
+
+  <div class="classes-grid" id="grid-painting">
+    <div class="class-card" data-category="painting">
+      <div class="card-header">
+        <span class="card-emoji">🖌️</span>
+        <span class="level-badge level-all">All Levels</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Oil Painting Fundamentals</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2 hrs</span>
+          <span class="meta-pill">👤 Max 10</span>
+        </div>
+        <p class="card-desc">Master colour mixing, brushwork, and composition. A thorough introduction covering colour theory, layering (alla prima & glazing), and still-life painting.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Tuesday</span><span class="time">6:00 pm – 8:00 pm</span></div>
+          <div class="spots-left">4 spots left</div>
+          <div class="schedule-time"><span class="day">Saturday</span><span class="time">10:00 am – 12:00 pm</span></div>
+          <div class="spots-left">2 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$65 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="painting">
+      <div class="card-header">
+        <span class="card-emoji">🎨</span>
+        <span class="level-badge level-all">All Levels</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Watercolour Landscapes</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2 hrs</span>
+          <span class="meta-pill">👤 Max 12</span>
+        </div>
+        <p class="card-desc">Capture the luminosity of skies, water, and natural scenes. Learn wet-on-wet, dry-brush, and masking techniques with real reference photography.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Wednesday</span><span class="time">5:30 pm – 7:30 pm</span></div>
+          <div class="spots-left">6 spots left</div>
+          <div class="schedule-time"><span class="day">Sunday</span><span class="time">1:00 pm – 3:00 pm</span></div>
+          <div class="spots-left">8 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$55 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="painting">
+      <div class="card-header">
+        <span class="card-emoji">🖼️</span>
+        <span class="level-badge level-advanced">Advanced</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Portrait Painting in Oils</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 3 hrs</span>
+          <span class="meta-pill">👤 Max 8</span>
+        </div>
+        <p class="card-desc">An intensive portrait course covering facial anatomy, skin tone mixing, and capturing expression. Live model sessions included. Prior oil painting experience required.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Thursday</span><span class="time">6:00 pm – 9:00 pm</span></div>
+          <div class="spots-left">3 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$90 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CERAMICS -->
+  <div class="category-heading" data-category="ceramics">
+    <span class="category-icon">🏺</span>
+    <h2>Ceramics & Sculpture</h2>
+    <div class="category-line"></div>
+  </div>
+
+  <div class="classes-grid" id="grid-ceramics">
+    <div class="class-card" data-category="ceramics">
+      <div class="card-header">
+        <span class="card-emoji">🏺</span>
+        <span class="level-badge level-beginner">Beginner</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Pottery & Wheel Throwing</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 3 hrs</span>
+          <span class="meta-pill">👤 Max 8</span>
+        </div>
+        <p class="card-desc">A hands-on introduction to the pottery wheel. Learn to centre clay, open a floor, and pull walls into cylinders and bowls. Firing and glazing included.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Monday</span><span class="time">6:00 pm – 9:00 pm</span></div>
+          <div class="spots-left">5 spots left</div>
+          <div class="schedule-time"><span class="day">Saturday</span><span class="time">1:00 pm – 4:00 pm</span></div>
+          <div class="spots-left">3 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$85 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="ceramics">
+      <div class="card-header">
+        <span class="card-emoji">🧱</span>
+        <span class="level-badge level-all">All Levels</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Hand-Building & Sculpture</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 3 hrs</span>
+          <span class="meta-pill">👤 Max 10</span>
+        </div>
+        <p class="card-desc">Create vessels and sculptural forms using coil, slab, and pinch techniques — no wheel needed. Glazing workshop and kiln firing included.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Tuesday</span><span class="time">10:00 am – 1:00 pm</span></div>
+          <div class="spots-left">7 spots left</div>
+          <div class="schedule-time"><span class="day">Friday</span><span class="time">6:00 pm – 9:00 pm</span></div>
+          <div class="spots-left">4 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$75 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="ceramics">
+      <div class="card-header">
+        <span class="card-emoji">🎁</span>
+        <span class="level-badge level-beginner">Beginner</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Glaze & Fire Workshop</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2 hrs</span>
+          <span class="meta-pill">👤 Max 12</span>
+        </div>
+        <p class="card-desc">Learn the chemistry of glaze colours and firing temperatures. Paint your own bisque-fired piece and take it home after the kiln opening. Great for beginners and gift-givers.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Sunday</span><span class="time">11:00 am – 1:00 pm</span></div>
+          <div class="spots-left">9 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$55 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DRAWING -->
+  <div class="category-heading" data-category="drawing">
+    <span class="category-icon">✏️</span>
+    <h2>Drawing & Illustration</h2>
+    <div class="category-line"></div>
+  </div>
+
+  <div class="classes-grid" id="grid-drawing">
+    <div class="class-card" data-category="drawing">
+      <div class="card-header">
+        <span class="card-emoji">✏️</span>
+        <span class="level-badge level-beginner">Beginner</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Figure Drawing</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2.5 hrs</span>
+          <span class="meta-pill">👤 Max 14</span>
+        </div>
+        <p class="card-desc">Live model sessions focused on proportion, gesture, and form. Work in charcoal, graphite, and ink. No prior drawing experience required.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Monday</span><span class="time">7:00 pm – 9:30 pm</span></div>
+          <div class="spots-left">6 spots left</div>
+          <div class="schedule-time"><span class="day">Thursday</span><span class="time">10:00 am – 12:30 pm</span></div>
+          <div class="spots-left">10 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$50 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="drawing">
+      <div class="card-header">
+        <span class="card-emoji">🖋️</span>
+        <span class="level-badge level-inter">Intermediate</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Ink & Illustration</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2 hrs</span>
+          <span class="meta-pill">👤 Max 12</span>
+        </div>
+        <p class="card-desc">Explore pen-and-ink, brush pen, and technical pen techniques. Learn to create bold illustrations, intricate patterns, and editorial-style artworks.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Wednesday</span><span class="time">6:00 pm – 8:00 pm</span></div>
+          <div class="spots-left">5 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$55 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="kids">
+      <div class="card-header">
+        <span class="card-emoji">🌈</span>
+        <span class="level-badge level-beginner">Ages 8–16</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Young Artists Drawing Club</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 1.5 hrs</span>
+          <span class="meta-pill">👤 Max 10</span>
+        </div>
+        <p class="card-desc">A fun, structured drawing class for young creators. Projects include comic-style illustration, nature sketching, and imaginative storytelling through art.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Saturday</span><span class="time">10:00 am – 11:30 am</span></div>
+          <div class="spots-left">4 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$40 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MIXED MEDIA -->
+  <div class="category-heading" data-category="mixed">
+    <span class="category-icon">🖼️</span>
+    <h2>Mixed Media & Special Topics</h2>
+    <div class="category-line"></div>
+  </div>
+
+  <div class="classes-grid" id="grid-mixed">
+    <div class="class-card" data-category="mixed">
+      <div class="card-header">
+        <span class="card-emoji">🖼️</span>
+        <span class="level-badge level-inter">Intermediate</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Mixed Media & Collage</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2.5 hrs</span>
+          <span class="meta-pill">👤 Max 10</span>
+        </div>
+        <p class="card-desc">Combine paint, paper, photography, fabric, and found materials. Explore layering, texture, and personal narrative through assemblage and collage.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Friday</span><span class="time">2:00 pm – 4:30 pm</span></div>
+          <div class="spots-left">7 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$60 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="mixed">
+      <div class="card-header">
+        <span class="card-emoji">🌸</span>
+        <span class="level-badge level-all">All Levels</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Botanical Illustration</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 2 hrs</span>
+          <span class="meta-pill">👤 Max 12</span>
+        </div>
+        <p class="card-desc">Draw and paint plants, flowers, and botanical specimens with scientific accuracy and artistic flair. Uses graphite, watercolour, and coloured pencil.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Tuesday</span><span class="time">4:00 pm – 6:00 pm</span></div>
+          <div class="spots-left">8 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$55 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="class-card" data-category="kids">
+      <div class="card-header">
+        <span class="card-emoji">🧒</span>
+        <span class="level-badge level-beginner">Ages 5–10</span>
+      </div>
+      <div class="card-body">
+        <div class="card-name">Little Makers Craft Studio</div>
+        <div class="card-meta">
+          <span class="meta-pill">⏱ 1.5 hrs</span>
+          <span class="meta-pill">👤 Max 10</span>
+        </div>
+        <p class="card-desc">Guided art-making for younger children — painting, collage, and clay. Projects are age-appropriate, mess-friendly, and full of imagination. All supplies provided.</p>
+        <div class="schedule-row">
+          <div class="schedule-time"><span class="day">Sunday</span><span class="time">10:00 am – 11:30 am</span></div>
+          <div class="spots-left">5 spots left</div>
+        </div>
+        <div class="card-footer">
+          <div class="card-price">$38 <span>/ session</span></div>
+          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Private Events -->
+  <div class="private-section">
+    <div class="private-content">
+      <h3>Private & Group Events</h3>
+      <p>Transform your next celebration into a creative experience. We host private events for birthday parties, hen parties, corporate team-building, date nights, and more — all tailored to your group.</p>
+      <div class="private-features">
+        <div class="private-feat">Dedicated studio space exclusively for your group</div>
+        <div class="private-feat">All materials, tools, and aprons provided</div>
+        <div class="private-feat">Personal instruction from a lead artist</div>
+        <div class="private-feat">Choose your own project — pottery, painting, or mixed</div>
+        <div class="private-feat">Option to add refreshments package</div>
+      </div>
+      <a href="contact.html" class="btn-primary">Enquire About Private Events →</a>
+    </div>
+    <div class="private-packages">
+      <div class="pkg-card">
+        <div class="pkg-name">🎂 Celebration Session</div>
+        <div class="pkg-desc">Up to 10 guests · 2 hours · Painting or ceramics</div>
+        <div class="pkg-price">From $420</div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">🏢 Team Building</div>
+        <div class="pkg-desc">10–20 guests · 3 hours · Customisable theme</div>
+        <div class="pkg-price">From $780</div>
+      </div>
+      <div class="pkg-card">
+        <div class="pkg-name">💑 Date Night</div>
+        <div class="pkg-desc">2–6 guests · 2 hours · Pottery or painting</div>
+        <div class="pkg-price">From $180</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-name">Canvas<span> & Clay</span></span>
+      <p>A welcoming art studio offering painting, ceramics, drawing, and mixed media classes for all skill levels.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Classes</h4>
+      <a href="classes.html">Oil Painting</a>
+      <a href="classes.html">Pottery</a>
+      <a href="classes.html">Watercolour</a>
+      <a href="classes.html">Figure Drawing</a>
+      <a href="classes.html">Mixed Media</a>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <a href="contact.html">Mon–Fri: 10am – 8pm</a>
+      <a href="contact.html">Saturday: 9am – 6pm</a>
+      <a href="contact.html">Sunday: 11am – 5pm</a>
+      <a href="contact.html">📞 (555) 847-2910</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Canvas & Clay Studio. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" aria-label="Instagram">📸</a>
+      <a class="social-link" href="#" aria-label="Facebook">📘</a>
+      <a class="social-link" href="#" aria-label="Pinterest">📌</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  function filterClasses(category, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const cards = document.querySelectorAll('.class-card');
+    const headings = document.querySelectorAll('.category-heading');
+    const grids = document.querySelectorAll('.classes-grid');
+
+    if (category === 'all') {
+      cards.forEach(c => c.style.display = '');
+      headings.forEach(h => h.style.display = '');
+      grids.forEach(g => g.style.display = '');
+    } else {
+      headings.forEach(h => {
+        h.style.display = h.dataset.category === category ? '' : 'none';
+      });
+      grids.forEach(g => {
+        const visible = g.querySelectorAll('[data-category="' + category + '"]');
+        if (visible.length) {
+          g.style.display = '';
+          g.querySelectorAll('.class-card').forEach(c => {
+            c.style.display = c.dataset.category === category ? '' : 'none';
+          });
+        } else {
+          g.style.display = 'none';
+        }
+      });
+    }
+  }
+</script>
+</body>
+</html>

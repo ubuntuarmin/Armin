@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gallery — Canvas & Clay Studio</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --charcoal:   #1C1C1C;
+      --terra:      #C4622D;
+      --terra-dark: #A04E22;
+      --gold:       #D4A843;
+      --gold-light: #E8C46A;
+      --cream:      #FAF7F2;
+      --cream2:     #F0EBE3;
+      --sage:       #7A9E7E;
+      --white:      #FFFFFF;
+      --text-dark:  #1C1C1C;
+      --text-mid:   #4A4A4A;
+      --text-muted: #7A7A7A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--charcoal); color: var(--white); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 1000; background: var(--charcoal); border-bottom: 3px solid var(--terra); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+
+    .logo-mark { width: 50px; height: 50px; border: 3px solid var(--terra); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: var(--terra); background: rgba(196,98,45,0.1); text-align: center; line-height: 1.3; }
+
+    .logo-name { font-size: 1.25rem; font-weight: 700; color: var(--white); letter-spacing: 0.5px; font-family: Georgia, serif; }
+    .logo-name span { color: var(--terra); }
+    .logo-tagline { font-size: 0.62rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 0.88rem; font-weight: 500; transition: all 0.25s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--terra); color: var(--white); }
+    .nav-cta { background: var(--terra) !important; color: var(--white) !important; font-weight: 700 !important; padding: 9px 20px !important; }
+
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--terra); border-radius: 3px; }
+
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+
+    .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--charcoal); z-index: 2000; flex-direction: column; padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left: 3px solid var(--terra); }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a:hover { background: rgba(196,98,45,0.15); border-left-color: var(--terra); color: var(--terra); }
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--terra); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+
+    /* PAGE HERO */
+    .page-hero {
+      padding: 80px 24px 72px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(28,28,28,1) 0%, rgba(28,28,28,0.8) 100%);
+    }
+
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(196,98,45,0.14) 0%, transparent 70%);
+    }
+
+    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+
+    .page-label { display: inline-block; color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+
+    .page-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; line-height: 1.15; margin-bottom: 16px; }
+    .page-title em { color: var(--terra); font-style: italic; }
+
+    .page-desc { font-size: 1.05rem; color: rgba(255,255,255,0.58); line-height: 1.8; }
+
+    /* FILTER */
+    .filter-bar { background: rgba(0,0,0,0.3); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0 24px; position: sticky; top: 72px; z-index: 900; backdrop-filter: blur(10px); }
+
+    .filter-inner { max-width: 1200px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
+    .filter-inner::-webkit-scrollbar { display: none; }
+
+    .filter-btn { background: none; border: none; padding: 16px 20px; font-size: 0.86rem; font-weight: 600; color: rgba(255,255,255,0.5); cursor: pointer; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -1px; transition: all 0.25s; }
+    .filter-btn:hover { color: var(--terra); }
+    .filter-btn.active { color: var(--terra); border-bottom-color: var(--terra); }
+
+    /* GALLERY */
+    .gallery-main { max-width: 1400px; margin: 0 auto; padding: 56px 24px 80px; }
+
+    /* Featured / Hero tile */
+    .gallery-featured {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    .gallery-tile {
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.4s;
+      min-height: 280px;
+    }
+
+    .gallery-tile:hover { transform: scale(1.01); box-shadow: 0 20px 55px rgba(0,0,0,0.5); }
+
+    .tile-emoji { font-size: 5rem; z-index: 1; filter: drop-shadow(0 8px 16px rgba(0,0,0,0.35)); }
+
+    .tile-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(28,28,28,0.9) 0%, rgba(28,28,28,0.1) 50%, transparent 100%);
+      opacity: 0;
+      transition: opacity 0.35s;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+    }
+
+    .gallery-tile:hover .tile-overlay { opacity: 1; }
+
+    .tile-title { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .tile-meta  { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+    .tile-badge {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--terra);
+      color: var(--white);
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    /* Main grid */
+    .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 14px; }
+
+    .gallery-grid .gallery-tile { min-height: 220px; }
+
+    .gallery-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 14px; }
+    .gallery-grid-3 .gallery-tile { min-height: 240px; }
+
+    /* Colors for tiles */
+    .t-oil-1  { background: linear-gradient(135deg, #D4B89A, #C4A080, #B08060); }
+    .t-oil-2  { background: linear-gradient(135deg, #B8A0C8, #9880B0, #786090); }
+    .t-oil-3  { background: linear-gradient(135deg, #C8D8A0, #A8C070, #88A050); }
+    .t-oil-4  { background: linear-gradient(135deg, #E8C890, #D0A860, #B88840); }
+    .t-clay-1 { background: linear-gradient(135deg, #D8B090, #C09060, #A87040); }
+    .t-clay-2 { background: linear-gradient(135deg, #C8C0A8, #A8A080, #888060); }
+    .t-clay-3 { background: linear-gradient(135deg, #E0C8A8, #C8A880, #B08860); }
+    .t-wc-1   { background: linear-gradient(135deg, #A8C8E8, #80A8D0, #5888B8); }
+    .t-wc-2   { background: linear-gradient(135deg, #E8C0D0, #D090A8, #C06080); }
+    .t-wc-3   { background: linear-gradient(135deg, #B8E0C0, #88C090, #50A060); }
+    .t-draw-1 { background: linear-gradient(135deg, #D8D0C0, #B0A890, #888060); }
+    .t-draw-2 { background: linear-gradient(135deg, #E0D8D0, #C0B8B0, #A09890); }
+    .t-mix-1  { background: linear-gradient(135deg, #D0B8C8, #A88098, #806070); }
+    .t-mix-2  { background: linear-gradient(135deg, #D8C880, #C0A850, #A88030); }
+
+    /* Lightbox */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.94);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .lightbox-art {
+      width: 100%;
+      max-width: 480px;
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8rem;
+      margin: 0 auto 28px;
+      filter: drop-shadow(0 16px 40px rgba(0,0,0,0.5));
+    }
+
+    .lightbox-title { font-size: 1.4rem; font-weight: 700; color: var(--white); margin-bottom: 6px; font-family: Georgia, serif; }
+    .lightbox-meta  { font-size: 0.9rem; color: rgba(255,255,255,0.5); margin-bottom: 24px; }
+
+    .lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--white);
+      font-size: 1.4rem;
+      padding: 8px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.25s;
+      z-index: 9001;
+    }
+
+    .lightbox-close:hover { background: var(--terra); border-color: var(--terra); }
+
+    /* Submit CTA */
+    .submit-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    .submit-banner {
+      background: linear-gradient(135deg, var(--terra-dark), var(--terra));
+      border-radius: 18px;
+      padding: 56px 48px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .submit-text h3 { font-size: 1.6rem; font-weight: 800; color: var(--white); font-family: Georgia, serif; margin-bottom: 10px; }
+    .submit-text p  { font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.75; }
+
+    .btn-white-sm { display: inline-flex; align-items: center; gap: 10px; background: var(--white); color: var(--terra-dark); text-decoration: none; padding: 14px 30px; border-radius: 8px; font-size: 0.95rem; font-weight: 800; transition: all 0.3s; white-space: nowrap; }
+    .btn-white-sm:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); border-top: 3px solid var(--terra); padding: 64px 24px 32px; }
+
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+
+    .footer-brand .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; display: block; font-family: Georgia, serif; }
+    .footer-brand .logo-name span { color: var(--terra); }
+    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 240px; }
+
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.25s; }
+    .footer-col a:hover { color: var(--terra); transform: translateX(5px); }
+
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+    .social-links { display: flex; gap: 10px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
+    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-2px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .gallery-featured { grid-template-columns: 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-grid-3 { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .submit-banner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-tile { min-height: 160px !important; }
+      .tile-emoji { font-size: 3rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+      .submit-banner { padding: 36px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="instructors.html">Instructors</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact & Book</a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">LOGO</div>
+      <div>
+        <div class="logo-name">Canvas<span> & Clay</span></div>
+        <div class="logo-tagline">Art Studio</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html">Classes</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="instructors.html">Instructors</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book a Class</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Our Gallery</div>
+    <h1 class="page-title">Art Made Here,<br>by <em>You</em></h1>
+    <p class="page-desc">A collection of paintings, ceramics, drawings, and mixed media works created by students of Canvas & Clay Studio. Every piece is a testament to creative courage.</p>
+  </div>
+</div>
+
+<!-- Filter -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active">All Works</button>
+    <button class="filter-btn">Oil Painting</button>
+    <button class="filter-btn">Ceramics</button>
+    <button class="filter-btn">Watercolour</button>
+    <button class="filter-btn">Drawing</button>
+    <button class="filter-btn">Mixed Media</button>
+  </div>
+</div>
+
+<!-- Gallery -->
+<div class="gallery-main">
+
+  <!-- Featured row -->
+  <div class="gallery-featured">
+    <div class="gallery-tile t-oil-1" onclick="openLightbox('🖼️','Autumn Coastline — Oil on Canvas','Beatrice Navarro · Oil Painting Class · October 2024')">
+      <div class="tile-badge">Featured</div>
+      <span class="tile-emoji">🖼️</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Autumn Coastline — Oil on Canvas</div>
+        <div class="tile-meta">Beatrice Navarro · Oil Painting Class</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      <div class="gallery-tile t-clay-1" style="min-height:180px;" onclick="openLightbox('🏺','Stoneware Bowl Series','James Yong · Pottery Class · November 2024')">
+        <span class="tile-emoji" style="font-size:3.5rem;">🏺</span>
+        <div class="tile-overlay">
+          <div class="tile-title">Stoneware Bowl Series</div>
+          <div class="tile-meta">James Yong · Pottery Class</div>
+        </div>
+      </div>
+      <div class="gallery-tile t-wc-1" style="min-height:180px;" onclick="openLightbox('🎨','Morning Mist — Watercolour','Priya Sharma · Watercolour Landscapes')">
+        <span class="tile-emoji" style="font-size:3.5rem;">🎨</span>
+        <div class="tile-overlay">
+          <div class="tile-title">Morning Mist — Watercolour</div>
+          <div class="tile-meta">Priya Sharma · Watercolour Landscapes</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid 1 — 4 columns -->
+  <div class="gallery-grid">
+    <div class="gallery-tile t-draw-1" onclick="openLightbox('✏️','Figure Study in Charcoal','Leo Morrison · Figure Drawing')">
+      <span class="tile-emoji" style="font-size:3.5rem;">✏️</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Figure Study in Charcoal</div>
+        <div class="tile-meta">Leo Morrison · Figure Drawing</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-mix-1" onclick="openLightbox('🖼️','Memory Collage','Carmen Diaz · Mixed Media & Collage')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🖼️</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Memory Collage</div>
+        <div class="tile-meta">Carmen Diaz · Mixed Media</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-clay-2" onclick="openLightbox('🧱','Textured Wall Panel','Sofia Andrews · Hand-Building Class')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🧱</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Textured Wall Panel</div>
+        <div class="tile-meta">Sofia Andrews · Hand-Building</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-oil-2" onclick="openLightbox('🖌️','Still Life with Peonies','Marco Bell · Oil Painting')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🖌️</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Still Life with Peonies</div>
+        <div class="tile-meta">Marco Bell · Oil Painting</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid 2 — 3 columns -->
+  <div class="gallery-grid-3">
+    <div class="gallery-tile t-wc-2" onclick="openLightbox('🌸','Botanical Series — Rose','Nina Patel · Botanical Illustration')">
+      <span class="tile-emoji">🌸</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Botanical Series — Rose</div>
+        <div class="tile-meta">Nina Patel · Botanical Illustration</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-oil-3" onclick="openLightbox('🌿','Garden in Summer','Alicia Chen · Oil Painting')">
+      <span class="tile-emoji">🌿</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Garden in Summer</div>
+        <div class="tile-meta">Alicia Chen · Oil Painting</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-clay-3" onclick="openLightbox('🫙','Celadon Vase','Thomas Kim · Wheel Throwing')">
+      <span class="tile-emoji">🫙</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Celadon Glaze Vase</div>
+        <div class="tile-meta">Thomas Kim · Pottery Class</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Grid 3 — 4 columns -->
+  <div class="gallery-grid">
+    <div class="gallery-tile t-mix-2" onclick="openLightbox('🎭','Portrait in Ink','David Owens · Ink & Illustration')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🎭</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Portrait in Ink</div>
+        <div class="tile-meta">David Owens · Illustration</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-wc-3" onclick="openLightbox('🌊','Seascape Study','Rachel T. · Watercolour Landscapes')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🌊</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Seascape Study</div>
+        <div class="tile-meta">Rachel T. · Watercolour Landscapes</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-oil-4" onclick="openLightbox('🏙️','Urban Light — Portrait','Lena Morse · Portrait in Oils')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🏙️</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Urban Light — Portrait</div>
+        <div class="tile-meta">Lena Morse · Portrait in Oils</div>
+      </div>
+    </div>
+    <div class="gallery-tile t-draw-2" onclick="openLightbox('🌳','Tree Study in Graphite','Chris Park · Figure Drawing')">
+      <span class="tile-emoji" style="font-size:3.5rem;">🌳</span>
+      <div class="tile-overlay">
+        <div class="tile-title">Tree Study in Graphite</div>
+        <div class="tile-meta">Chris Park · Drawing</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Submit your work CTA -->
+<div class="submit-section">
+  <div class="submit-banner">
+    <div class="submit-text">
+      <h3>🎨 Show Your Work</h3>
+      <p>Are you a student of Canvas & Clay? We'd love to feature your artwork in the gallery. Submit your pieces for inclusion in our next gallery update.</p>
+    </div>
+    <a href="contact.html" class="btn-white-sm">Submit Your Artwork →</a>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <button class="lightbox-close" onclick="closeLightbox()">✕ Close</button>
+  <div class="lightbox-inner" onclick="event.stopPropagation()">
+    <div class="lightbox-art t-oil-1" id="lightboxArt"></div>
+    <div class="lightbox-title" id="lightboxTitle"></div>
+    <div class="lightbox-meta" id="lightboxMeta"></div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-name">Canvas<span> & Clay</span></span>
+      <p>A welcoming art studio offering painting, ceramics, drawing, and mixed media classes for all skill levels.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Classes</h4>
+      <a href="classes.html">Oil Painting</a>
+      <a href="classes.html">Pottery</a>
+      <a href="classes.html">Watercolour</a>
+      <a href="classes.html">Figure Drawing</a>
+      <a href="classes.html">Mixed Media</a>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <a href="contact.html">Mon–Fri: 10am – 8pm</a>
+      <a href="contact.html">Saturday: 9am – 6pm</a>
+      <a href="contact.html">Sunday: 11am – 5pm</a>
+      <a href="contact.html">📞 (555) 847-2910</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Canvas & Clay Studio. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" aria-label="Instagram">📸</a>
+      <a class="social-link" href="#" aria-label="Facebook">📘</a>
+      <a class="social-link" href="#" aria-label="Pinterest">📌</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  const tileClasses = ['t-oil-1','t-oil-2','t-oil-3','t-oil-4','t-clay-1','t-clay-2','t-clay-3','t-wc-1','t-wc-2','t-wc-3','t-draw-1','t-draw-2','t-mix-1','t-mix-2'];
+
+  function openLightbox(emoji, title, meta) {
+    const lb    = document.getElementById('lightbox');
+    const art   = document.getElementById('lightboxArt');
+    const t     = document.getElementById('lightboxTitle');
+    const m     = document.getElementById('lightboxMeta');
+    art.textContent = emoji;
+    art.className   = 'lightbox-art ' + tileClasses[Math.floor(Math.random() * tileClasses.length)];
+    t.textContent   = title;
+    m.textContent   = meta;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+</body>
+</html>

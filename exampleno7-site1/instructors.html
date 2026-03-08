@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Instructors — Canvas & Clay Studio</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --charcoal:   #1C1C1C;
+      --terra:      #C4622D;
+      --terra-dark: #A04E22;
+      --gold:       #D4A843;
+      --gold-light: #E8C46A;
+      --cream:      #FAF7F2;
+      --cream2:     #F0EBE3;
+      --sage:       #7A9E7E;
+      --white:      #FFFFFF;
+      --text-dark:  #1C1C1C;
+      --text-mid:   #4A4A4A;
+      --text-muted: #7A7A7A;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+
+    /* NAV */
+    nav { position: sticky; top: 0; z-index: 1000; background: var(--charcoal); border-bottom: 3px solid var(--terra); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .logo-mark { width: 50px; height: 50px; border: 3px solid var(--terra); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: var(--terra); background: rgba(196,98,45,0.1); text-align: center; line-height: 1.3; }
+    .logo-name { font-size: 1.25rem; font-weight: 700; color: var(--white); font-family: Georgia, serif; }
+    .logo-name span { color: var(--terra); }
+    .logo-tagline { font-size: 0.62rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+    .nav-links { display: flex; gap: 4px; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 0.88rem; font-weight: 500; transition: all 0.25s; }
+    .nav-links a:hover, .nav-links a.active { background: var(--terra); color: var(--white); }
+    .nav-cta { background: var(--terra) !important; color: var(--white) !important; font-weight: 700 !important; padding: 9px 20px !important; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--terra); border-radius: 3px; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+    .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--charcoal); z-index: 2000; flex-direction: column; padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left: 3px solid var(--terra); }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a:hover { background: rgba(196,98,45,0.15); border-left-color: var(--terra); color: var(--terra); }
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--terra); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+
+    /* PAGE HERO */
+    .page-hero { background: var(--charcoal); padding: 80px 24px 90px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 50% 50%, rgba(196,98,45,0.13) 0%, transparent 70%); }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+    .page-label { display: inline-block; color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
+    .page-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; line-height: 1.15; margin-bottom: 16px; }
+    .page-title em { color: var(--terra); font-style: italic; }
+    .page-desc { font-size: 1.05rem; color: rgba(255,255,255,0.58); line-height: 1.8; }
+
+    /* INSTRUCTORS */
+    .instructors-section { max-width: 1200px; margin: 0 auto; padding: 72px 24px 80px; }
+
+    .instructors-intro { text-align: center; margin-bottom: 64px; }
+    .instructors-intro p { font-size: 1.05rem; color: var(--text-mid); line-height: 1.8; max-width: 680px; margin: 0 auto; }
+
+    .instructors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; margin-bottom: 80px; }
+
+    .instructor-card {
+      background: var(--white);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+      transition: all 0.35s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .instructor-card:hover { transform: translateY(-8px); box-shadow: 0 20px 55px rgba(0,0,0,0.13); }
+
+    .instructor-avatar-area {
+      padding: 40px 40px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      background: var(--cream2);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .avatar {
+      width: 88px; height: 88px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      flex-shrink: 0;
+      border: 3px solid var(--terra);
+    }
+
+    .avatar-1 { background: linear-gradient(135deg, #E8C8B0, #C8A080); }
+    .avatar-2 { background: linear-gradient(135deg, #C8D8C0, #A8C0A0); }
+    .avatar-3 { background: linear-gradient(135deg, #D0B8D0, #A880B0); }
+    .avatar-4 { background: linear-gradient(135deg, #C8D0E0, #A0B0C8); }
+    .avatar-5 { background: linear-gradient(135deg, #E0C8B0, #C8A080); }
+    .avatar-6 { background: linear-gradient(135deg, #C8E0C0, #A0C080); }
+
+    .instructor-head {}
+    .instructor-name { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 4px; }
+    .instructor-title { font-size: 0.88rem; color: var(--terra); font-weight: 600; margin-bottom: 8px; }
+    .instructor-quals { display: flex; flex-wrap: wrap; gap: 6px; }
+
+    .qual-badge {
+      background: var(--cream);
+      border: 1px solid rgba(0,0,0,0.08);
+      color: var(--text-mid);
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 50px;
+      letter-spacing: 0.3px;
+    }
+
+    .instructor-body { padding: 28px 40px 36px; flex: 1; }
+
+    .instructor-bio { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 22px; }
+
+    .teaches-section {}
+    .teaches-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+
+    .teaches-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+
+    .teaches-pill {
+      background: rgba(196,98,45,0.1);
+      border: 1px solid rgba(196,98,45,0.2);
+      color: var(--terra-dark);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 5px 14px;
+      border-radius: 50px;
+    }
+
+    .instructor-schedule {
+      background: var(--cream);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .schedule-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+
+    .schedule-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-mid); padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.08); }
+    .schedule-row:last-child { border-bottom: none; }
+    .schedule-day  { font-weight: 600; }
+    .schedule-time { color: var(--text-muted); }
+
+    /* Philosophy section */
+    .philosophy-section {
+      background: var(--charcoal);
+      border-radius: 20px;
+      padding: 64px 56px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+      margin-bottom: 64px;
+    }
+
+    .philosophy-content {}
+    .philosophy-label { color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; display: block; }
+    .philosophy-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; margin-bottom: 18px; line-height: 1.25; }
+    .philosophy-title em { color: var(--terra); font-style: italic; }
+    .philosophy-text { font-size: 0.93rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 20px; }
+
+    .philosophy-values { display: flex; flex-direction: column; gap: 14px; }
+
+    .value-item { display: flex; align-items: flex-start; gap: 14px; }
+    .value-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(196,98,45,0.18); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+    .value-title { font-size: 0.92rem; font-weight: 700; color: var(--white); margin-bottom: 2px; }
+    .value-desc  { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
+
+    .philosophy-quote {
+      position: relative;
+      padding: 40px 36px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+    }
+
+    .philosophy-quote::before {
+      content: '\201C';
+      font-size: 7rem;
+      font-family: Georgia, serif;
+      color: rgba(196,98,45,0.25);
+      position: absolute;
+      top: -10px;
+      left: 20px;
+      line-height: 1;
+    }
+
+    .quote-text { font-size: 1.15rem; color: rgba(255,255,255,0.85); font-style: italic; line-height: 1.75; margin-bottom: 20px; padding-top: 32px; font-family: Georgia, serif; }
+    .quote-author { display: flex; align-items: center; gap: 12px; }
+    .quote-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--terra), var(--terra-dark)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .quote-name  { font-size: 0.9rem; font-weight: 700; color: var(--white); }
+    .quote-role  { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+
+    /* Join team CTA */
+    .join-section {
+      background: var(--cream2);
+      border-radius: 18px;
+      padding: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      flex-wrap: wrap;
+    }
+
+    .join-text h3 { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 8px; }
+    .join-text p  { font-size: 0.93rem; color: var(--text-mid); line-height: 1.7; max-width: 500px; }
+
+    .btn-terra { display: inline-flex; align-items: center; gap: 10px; background: var(--terra); color: var(--white); text-decoration: none; padding: 14px 30px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; transition: all 0.3s; white-space: nowrap; }
+    .btn-terra:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.4); }
+
+    /* FOOTER */
+    footer { background: var(--charcoal); border-top: 3px solid var(--terra); padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
+    .footer-brand .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; display: block; font-family: Georgia, serif; }
+    .footer-brand .logo-name span { color: var(--terra); }
+    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 240px; }
+    .footer-col h4 { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.25s; }
+    .footer-col a:hover { color: var(--terra); transform: translateX(5px); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+    .social-links { display: flex; gap: 10px; }
+    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
+    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-2px); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .instructors-grid { grid-template-columns: 1fr; }
+      .philosophy-section { grid-template-columns: 1fr; gap: 40px; padding: 44px 32px; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
+      .instructor-avatar-area { flex-direction: column; gap: 16px; }
+    }
+
+    @media (max-width: 480px) {
+      .footer-inner { grid-template-columns: 1fr; gap: 22px; }
+      .instructor-body { padding: 22px 24px 28px; }
+      .instructor-avatar-area { padding: 28px 24px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <a href="index.html">Home</a>
+  <a href="classes.html">Classes</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="instructors.html">Instructors</a>
+  <a href="about.html">About</a>
+  <a href="contact.html">Contact & Book</a>
+</div>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="logo-mark">LOGO</div>
+      <div>
+        <div class="logo-name">Canvas<span> & Clay</span></div>
+        <div class="logo-tagline">Art Studio</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="classes.html">Classes</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="instructors.html" class="active">Instructors</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Book a Class</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Page Hero -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Our Team</div>
+    <h1 class="page-title">Meet Your <em>Instructors</em></h1>
+    <p class="page-desc">Our instructors are working artists and dedicated teachers who bring both technical mastery and genuine enthusiasm to every class.</p>
+  </div>
+</div>
+
+<!-- Instructors -->
+<div class="instructors-section">
+
+  <div class="instructors-intro">
+    <p>All Canvas & Clay instructors hold fine arts degrees and maintain active creative practices. Small class sizes mean you receive real, personalised guidance — not just a demonstration from the front of the room.</p>
+  </div>
+
+  <div class="instructors-grid">
+
+    <!-- Instructor 1 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-1">👩‍🎨</div>
+        <div class="instructor-head">
+          <div class="instructor-name">Elena Vasquez</div>
+          <div class="instructor-title">Studio Director & Lead Painting Instructor</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">MFA, RISD</span>
+            <span class="qual-badge">12 Years Teaching</span>
+            <span class="qual-badge">Exhibiting Artist</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">Elena founded Canvas & Clay in 2017 after years working as a studio painter and part-time lecturer in New York. Her work focuses on representational oil painting with a contemporary edge — her paintings have been exhibited in galleries across New York, Chicago, and London. In the studio, she's known for her patient, structured approach to teaching that builds real skills without suppressing individual voice.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Oil Painting Fundamentals</span>
+            <span class="teaches-pill">Portrait in Oils</span>
+            <span class="teaches-pill">Still Life</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">6:00 pm – 8:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Thursday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Saturday</span><span class="schedule-time">10:00 am – 12:00 pm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor 2 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-2">🧑‍🏫</div>
+        <div class="instructor-head">
+          <div class="instructor-name">Daniel Park</div>
+          <div class="instructor-title">Head of Ceramics</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">BFA Ceramics, SAIC</span>
+            <span class="qual-badge">9 Years Teaching</span>
+            <span class="qual-badge">Production Potter</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">Daniel is a production potter and ceramics teacher with nearly a decade of experience. He trained at the School of the Art Institute of Chicago and spent two years in residency in Korea studying traditional Korean celadon techniques. His teaching style is deeply hands-on — he'll shape clay alongside you, not just watch. Daniel's pots are sold in craft galleries across the country.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Wheel Throwing</span>
+            <span class="teaches-pill">Hand-Building</span>
+            <span class="teaches-pill">Glaze & Fire</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Monday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">10:00 am – 1:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Saturday</span><span class="schedule-time">1:00 pm – 4:00 pm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor 3 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-3">👩‍🎨</div>
+        <div class="instructor-head">
+          <div class="instructor-name">Aisha Okonkwo</div>
+          <div class="instructor-title">Watercolour & Botanical Illustration</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">BA Fine Arts, UAL</span>
+            <span class="qual-badge">7 Years Teaching</span>
+            <span class="qual-badge">Published Illustrator</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">Aisha studied fine arts in London before relocating to teach and practise in the US. Her specialty is watercolour — particularly botanical and landscape work. She has illustrated two published books and contributes regularly to editorial clients. Aisha is celebrated for her ability to break down the seemingly unpredictable nature of watercolour into clear, learnable steps that build student confidence rapidly.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Watercolour Landscapes</span>
+            <span class="teaches-pill">Botanical Illustration</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">4:00 pm – 6:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Wednesday</span><span class="schedule-time">5:30 pm – 7:30 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">1:00 pm – 3:00 pm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor 4 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-4">🧑‍🎨</div>
+        <div class="instructor-head">
+          <div class="instructor-name">Marcus Webb</div>
+          <div class="instructor-title">Drawing, Figure & Illustration</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">BFA Drawing, VCUarts</span>
+            <span class="qual-badge">6 Years Teaching</span>
+            <span class="qual-badge">Graphic Novelist</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">Marcus comes from a background in comics and graphic narrative, with a strong grounding in traditional drawing. His figure drawing sessions are fast-moving, observational, and fun — he uses timed poses, gesture exercises, and critique sessions to rapidly improve students' observational skills. He also teaches ink illustration, and his graphic novel has been shortlisted for two independent awards.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Figure Drawing</span>
+            <span class="teaches-pill">Ink & Illustration</span>
+            <span class="teaches-pill">Young Artists Club</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Monday</span><span class="schedule-time">7:00 pm – 9:30 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Wednesday</span><span class="schedule-time">6:00 pm – 8:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Thursday</span><span class="schedule-time">10:00 am – 12:30 pm</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor 5 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-5">👩‍🎨</div>
+        <div class="instructor-head">
+          <div class="instructor-name">Priya Mehta</div>
+          <div class="instructor-title">Mixed Media & Collage</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">MFA, CalArts</span>
+            <span class="qual-badge">5 Years Teaching</span>
+            <span class="qual-badge">Installation Artist</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">Priya's practice spans large-scale installation, collage, and textile-based work. Her teaching is experimental and concept-driven — she encourages students to think about why they make art, not just how. Priya's mixed media classes attract students who want to break outside the boundaries of traditional mediums. She has shown internationally and is represented by a gallery in Los Angeles.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Mixed Media & Collage</span>
+            <span class="teaches-pill">Little Makers (Kids)</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Friday</span><span class="schedule-time">2:00 pm – 4:30 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">10:00 am – 11:30 am</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Instructor 6 -->
+    <div class="instructor-card">
+      <div class="instructor-avatar-area">
+        <div class="avatar avatar-6">🧑‍🎨</div>
+        <div class="instructor-head">
+          <div class="instructor-name">James Yong</div>
+          <div class="instructor-title">Ceramics & Glaze Specialist</div>
+          <div class="instructor-quals">
+            <span class="qual-badge">BFA, KCAI</span>
+            <span class="qual-badge">4 Years Teaching</span>
+            <span class="qual-badge">Ceramics Researcher</span>
+          </div>
+        </div>
+      </div>
+      <div class="instructor-body">
+        <p class="instructor-bio">James focuses on the chemistry and craft of glazing — understanding why colours react, how temperature affects surface texture, and how to reliably reproduce results. He assists Daniel in wheel throwing sessions and leads the popular Glaze & Fire Workshop on Sundays. Students find his methodical, science-based approach to ceramics refreshing and demystifying.</p>
+        <div class="teaches-section">
+          <div class="teaches-label">Teaches</div>
+          <div class="teaches-list">
+            <span class="teaches-pill">Glaze & Fire Workshop</span>
+            <span class="teaches-pill">Pottery Assistant</span>
+          </div>
+        </div>
+        <div class="instructor-schedule">
+          <div class="schedule-label">Regular Schedule</div>
+          <div class="schedule-row"><span class="schedule-day">Friday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
+          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">11:00 am – 1:00 pm</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Teaching Philosophy -->
+  <div class="philosophy-section">
+    <div class="philosophy-content">
+      <span class="philosophy-label">Our Approach</span>
+      <h2 class="philosophy-title">Teaching Philosophy:<br><em>Progress Over Perfection</em></h2>
+      <p class="philosophy-text">We believe everyone has creative potential — it just needs space to grow. Our instructors don't teach a single "correct" way to make art. They teach you to see, observe, and respond — and then get out of your way.</p>
+      <div class="philosophy-values">
+        <div class="value-item">
+          <div class="value-icon">👁️</div>
+          <div>
+            <div class="value-title">Learning to See</div>
+            <div class="value-desc">Before you can paint or draw well, you need to truly observe. We slow students down and train their visual perception.</div>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🔄</div>
+          <div>
+            <div class="value-title">Iteration Over Outcome</div>
+            <div class="value-desc">Mistakes are data. We celebrate experiments, encourage iteration, and treat every failure as a lesson.</div>
+          </div>
+        </div>
+        <div class="value-item">
+          <div class="value-icon">🌱</div>
+          <div>
+            <div class="value-title">Nurturing Voice</div>
+            <div class="value-desc">Technical skill is a tool, not a destination. We help students develop a personal artistic identity they can build on forever.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="philosophy-quote">
+      <p class="quote-text">"I've had students who walked in convinced they couldn't draw, and within six weeks they were making work they were genuinely proud of. The human eye is trainable. The hand follows the eye. And confidence follows the hand."</p>
+      <div class="quote-author">
+        <div class="quote-avatar">👩‍🎨</div>
+        <div>
+          <div class="quote-name">Elena Vasquez</div>
+          <div class="quote-role">Studio Director, Canvas & Clay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Join the Team -->
+  <div class="join-section">
+    <div class="join-text">
+      <h3>🎨 Interested in Teaching With Us?</h3>
+      <p>We're always looking for talented working artists who are passionate about teaching. If you're an experienced artist with teaching experience and a love of sharing your craft, we'd love to hear from you.</p>
+    </div>
+    <a href="contact.html" class="btn-terra">Get in Touch →</a>
+  </div>
+
+</div>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="logo-name">Canvas<span> & Clay</span></span>
+      <p>A welcoming art studio offering painting, ceramics, drawing, and mixed media classes for all skill levels.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <a href="index.html">Home</a>
+      <a href="classes.html">Classes</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Instructors</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="footer-col">
+      <h4>Classes</h4>
+      <a href="classes.html">Oil Painting</a>
+      <a href="classes.html">Pottery</a>
+      <a href="classes.html">Watercolour</a>
+      <a href="classes.html">Figure Drawing</a>
+      <a href="classes.html">Mixed Media</a>
+    </div>
+    <div class="footer-col">
+      <h4>Hours</h4>
+      <a href="contact.html">Mon–Fri: 10am – 8pm</a>
+      <a href="contact.html">Saturday: 9am – 6pm</a>
+      <a href="contact.html">Sunday: 11am – 5pm</a>
+      <a href="contact.html">📞 (555) 847-2910</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Canvas & Clay Studio. All rights reserved.</p>
+    <div class="social-links">
+      <a class="social-link" href="#" aria-label="Instagram">📸</a>
+      <a class="social-link" href="#" aria-label="Facebook">📘</a>
+      <a class="social-link" href="#" aria-label="Pinterest">📌</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+    document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+</script>
+</body>
+</html>
