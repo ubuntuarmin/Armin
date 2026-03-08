@@ -84,7 +84,10 @@
     .site-header {
       background: var(--navy);
       border-bottom: 3px solid var(--blue);
+      position: sticky; top: 0; z-index: 1000;
+      transition: box-shadow 0.3s;
     }
+    .site-header.scrolled { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); }
 
     .nav {
       display: flex;
@@ -129,7 +132,7 @@
       font-size: 14px;
       font-weight: 500;
       padding: 8px 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       transition: background 0.15s, color 0.15s;
     }
 
@@ -146,7 +149,7 @@
       color: #ffffff;
       font-weight: 600;
       font-size: 14px;
-      border-radius: 4px;
+      border-radius: 6px;
       border: none;
       cursor: pointer;
       transition: background 0.15s;
@@ -162,7 +165,7 @@
       padding: 8px;
       background: none;
       border: 1px solid rgba(255,255,255,0.3);
-      border-radius: 4px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
@@ -308,41 +311,73 @@
     .legend { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 10px; font-size: 0.92rem; color: var(--text-muted); }
     .legend-item { display: inline-flex; gap: 8px; align-items: center; background: var(--bg); padding: 8px 10px; border-radius: 999px; border: 1px solid var(--border); }
 
-    /* Footer */
+    /* FOOTER */
     footer {
       background: var(--navy);
+      color: #94a3b8;
       margin-top: auto;
+      font-size: 0.95rem;
     }
-
-    .footer-inner {
+    .footer-grid {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 20px 20px 24px;
+      padding: 48px 20px 32px;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+    }
+    @media (min-width: 768px) { .footer-grid { padding: 48px 32px 32px; } }
+    @media (max-width: 860px) { .footer-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+    .footer-col h4 { color: #ffffff; font-size: 1rem; margin: 0 0 14px; }
+    .footer-col ul { list-style: none; margin: 0; padding: 0; }
+    .footer-col ul li { margin-bottom: 8px; }
+    .footer-col ul a { color: #94a3b8; transition: color 0.15s; }
+    .footer-col ul a:hover { color: #ffffff; }
+    .footer-col p { margin: 0; line-height: 1.6; color: #94a3b8; }
+    .footer-col-brand { font-size: 1.2rem; font-weight: 700; color: #ffffff; margin-bottom: 12px; }
+    .footer-bottom {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 20px 28px;
+      border-top: 1px solid rgba(255,255,255,0.1);
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      font-size: 0.875rem;
+      gap: 8px;
+      font-size: 0.85rem;
       color: #64748b;
     }
+    @media (min-width: 768px) { .footer-bottom { padding: 20px 32px 28px; } }
 
-    @media (min-width: 768px) {
-      .footer-inner { padding: 20px 32px 24px; }
+    /* BACK TO TOP */
+    .back-to-top {
+      position: fixed; bottom: 32px; right: 32px;
+      width: 48px; height: 48px;
+      background: var(--blue); color: #fff;
+      border: none; border-radius: 50%; cursor: pointer;
+      font-size: 22px; display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+      z-index: 999; box-shadow: 0 4px 16px rgba(0,0,0,0.18);
     }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px 16px;
-    }
-
-    .footer-links a { color: #64748b; }
-    .footer-links a:hover { color: #94a3b8; }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { background: var(--blue-light); transform: translateY(-3px); }
 
     /* MULTI-STEP SCROLL ANIMATIONS */
     .fade-in-up { opacity: 0; transform: translateY(30px); transition: opacity 0.8s cubic-bezier(0.25,0.46,0.45,0.94), transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94); }
     .fade-in-up.visible { opacity: 1; transform: translateY(0); }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-on-scroll {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    .animate-on-scroll.visible { opacity: 1; transform: none; }
+
     .image-zoom { opacity: 0; transform: scale(0.75) rotateZ(-2deg); filter: blur(4px); transition: opacity 1s cubic-bezier(0.34,1.56,0.64,1), transform 1s cubic-bezier(0.34,1.56,0.64,1), filter 0.8s ease-out; }
     .image-zoom.visible { opacity: 1; transform: scale(1) rotateZ(0deg); filter: blur(0px); }
     .image-slide-up { opacity: 0; transform: translateY(50px) scale(0.92); filter: blur(3px); transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1), filter 0.7s ease-out; }
@@ -476,7 +511,7 @@
       <div class="content-wrap">
 
       <!-- HEADER -->
-      <section>
+      <section class="animate-on-scroll">
         <div class="section-label">Domains</div>
         <h1 class="page-title">Top domain extensions for business — price, purpose & trust</h1>
         <p class="header-sub">
@@ -490,7 +525,7 @@
       </section>
 
       <!-- DOMAIN CHART CARD -->
-      <section class="card fade-in-up" aria-label="Domain comparison">
+      <section class="card fade-in-up animate-on-scroll" aria-label="Domain comparison">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;">
           <div>
             <div style="font-size:0.92rem;color:var(--text-muted);margin-bottom:6px;">At-a-glance</div>
@@ -694,21 +729,34 @@
   </main>
 
   <footer role="contentinfo">
-    <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-col-brand">Armin Studio</div>
+        <p>We design and develop modern, affordable websites for small businesses, startups, and non-profits. Your online presence, done right.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul><li><a href="index.html">Home</a></li><li><a href="services.html">Services</a></li><li><a href="pricing.html">Pricing</a></li><li><a href="examples.html">Examples</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Resources</h4>
+        <ul><li><a href="guide.html">Estimate Tool</a></li><li><a href="customization.html">Customization</a></li><li><a href="domain.html">Domain Guide</a></li><li><a href="host.html">Hosting Guide</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get in Touch</h4>
+        <ul><li><a href="contact.html">Contact Us</a></li></ul>
+        <p style="margin-top:12px;">Ready to get started? Reach out and let's build something great together.</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
       <div>&copy; <span id="year"></span> Armin Studio. All rights reserved.</div>
-      <nav class="footer-links" aria-label="Footer navigation">
-        <a href="index.html">Home</a>
-        <a href="services.html">Services</a>
-        <a href="pricing.html">Pricing</a>
-        <a href="contact.html">Contact</a>
-        <a href="customization.html">Customization</a>
-        <a href="examples.html">Examples</a>
-      </nav>
+      <div>Designed with care by Armin Studio</div>
     </div>
   </footer>
 
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&#8679;</button>
+
   <script>
-    // Footer year
     // Mark active page in navigation
     (function() {
       const currentPage = window.location.pathname.split('/').pop() || 'index.html';
@@ -733,29 +781,46 @@
       });
     }
 
+    // Sticky header shadow on scroll
+    const siteHeader = document.querySelector('.site-header');
+    if (siteHeader) {
+      window.addEventListener('scroll', () => {
+        siteHeader.classList.toggle('scrolled', window.scrollY > 30);
+      });
+    }
+
     // Animate price bars based on data-price normalized to --max-price
     (function animatePriceBars(){
       const fills = document.querySelectorAll('.price-fill');
       const max = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--max-price')) || 120;
       fills.forEach((el, i) => {
         const price = parseFloat(el.getAttribute('data-price')) || 0;
-        // normalize and cap to 100%
         const pct = Math.min(100, Math.round((price / max) * 100));
-        // stagger for subtle effect
         setTimeout(()=> el.style.width = pct + '%', i * 35);
       });
     })();
 
-    // Multi-step scroll animations
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach((entry)=>{
-        if(entry.isIntersecting){
+    // Multi-step scroll animations (fade-in-up + animate-on-scroll)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
           entry.target.classList.add("visible");
           observer.unobserve(entry.target);
         }
       });
     }, { threshold: 0.08, rootMargin: "0px 0px -50px 0px" });
-    document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-up").forEach((el)=>observer.observe(el));
+    document.querySelectorAll(".fade-in-up, .animate-on-scroll, .image-zoom, .image-slide-up").forEach((el) => observer.observe(el));
+
+    // Back to top button
+    const backToTop = document.getElementById('backToTop');
+    if (backToTop) {
+      window.addEventListener('scroll', () => {
+        backToTop.classList.toggle('visible', window.scrollY > 400);
+      });
+      backToTop.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
   </script>
 </body>
 </html>
