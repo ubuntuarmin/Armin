@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Classes & Schedule — Canvas & Clay Studio</title>
+  <title>Classes & Training — Beyond the Canvas Art Studio | Farnaz Amin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -24,14 +27,16 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+    body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
 
     /* NAV */
     nav {
       position: sticky; top: 0; z-index: 1000;
-      background: var(--charcoal);
-      border-bottom: 3px solid var(--terra);
-      box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+      background: rgba(28,28,28,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--terra);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
     }
 
     .nav-inner {
@@ -414,11 +419,11 @@
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
   <a href="index.html">Home</a>
-  <a href="classes.html">Classes</a>
+  <a href="classes.html" class="active">Classes</a>
   <a href="gallery.html">Gallery</a>
-  <a href="instructors.html">Instructors</a>
-  <a href="about.html">About</a>
-  <a href="contact.html">Contact & Book</a>
+  <a href="instructors.html">Book Now</a>
+  <a href="about.html">Biography</a>
+  <a href="contact.html">Contact</a>
 </div>
 
 <nav>
@@ -426,17 +431,17 @@
     <a href="index.html" class="nav-logo">
       <div class="logo-mark">LOGO</div>
       <div>
-        <div class="logo-name">Canvas<span> & Clay</span></div>
-        <div class="logo-tagline">Art Studio</div>
+        <div class="logo-name">Beyond the<span> Canvas</span></div>
+        <div class="logo-tagline">Art Studio · Farnaz Amin</div>
       </div>
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
       <li><a href="classes.html" class="active">Classes</a></li>
       <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="instructors.html">Instructors</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="nav-cta">Book a Class</a></li>
+      <li><a href="instructors.html" class="nav-cta">Book Now</a></li>
+      <li><a href="about.html">Biography</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -537,7 +542,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$65 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -562,7 +567,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$55 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -585,7 +590,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$90 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -619,7 +624,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$85 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -644,7 +649,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$75 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -667,7 +672,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$55 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -701,7 +706,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$50 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -724,7 +729,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$55 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -747,7 +752,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$40 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -779,7 +784,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$60 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -802,7 +807,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$55 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -825,7 +830,7 @@
         </div>
         <div class="card-footer">
           <div class="card-price">$38 <span>/ session</span></div>
-          <a href="contact.html" class="btn-enrol">Enrol Now</a>
+          <a href="instructors.html" class="btn-enrol">Book Now</a>
         </div>
       </div>
     </div>
@@ -843,7 +848,7 @@
         <div class="private-feat">Choose your own project — pottery, painting, or mixed</div>
         <div class="private-feat">Option to add refreshments package</div>
       </div>
-      <a href="contact.html" class="btn-primary">Enquire About Private Events →</a>
+      <a href="instructors.html?class=event" class="btn-primary">Book a Private Event →</a>
     </div>
     <div class="private-packages">
       <div class="pkg-card">
@@ -870,36 +875,36 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
-      <span class="logo-name">Canvas<span> & Clay</span></span>
-      <p>A welcoming art studio offering painting, ceramics, drawing, and mixed media classes for all skill levels.</p>
+      <span class="logo-name">Beyond the<span> Canvas</span></span>
+      <p>A creative space for all ages to explore and grow through Art. From oil painting and drawing to crafts, resin, and fine Art, we offer inspiring classes and art camps.</p>
     </div>
     <div class="footer-col">
-      <h4>Explore</h4>
+      <h4>Navigate</h4>
       <a href="index.html">Home</a>
       <a href="classes.html">Classes</a>
       <a href="gallery.html">Gallery</a>
-      <a href="instructors.html">Instructors</a>
-      <a href="about.html">About</a>
+      <a href="instructors.html">Book Now</a>
+      <a href="about.html">Biography</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="footer-col">
-      <h4>Classes</h4>
-      <a href="classes.html">Oil Painting</a>
-      <a href="classes.html">Pottery</a>
-      <a href="classes.html">Watercolour</a>
-      <a href="classes.html">Figure Drawing</a>
-      <a href="classes.html">Mixed Media</a>
+      <h4>Services</h4>
+      <a href="contact.html">Private Events &amp; Classes</a>
+      <a href="contact.html">Special Party &amp; Meeting</a>
+      <a href="contact.html">Oil Painting Classes</a>
+      <a href="contact.html">Drawing &amp; Fine Art</a>
+      <a href="contact.html">Resin Art</a>
     </div>
     <div class="footer-col">
       <h4>Hours</h4>
       <a href="contact.html">Mon–Fri: 10am – 8pm</a>
       <a href="contact.html">Saturday: 9am – 6pm</a>
       <a href="contact.html">Sunday: 11am – 5pm</a>
-      <a href="contact.html">📞 (555) 847-2910</a>
+      <a href="contact.html">📞 Contact Us</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2025 Canvas & Clay Studio. All rights reserved.</p>
+    <p>Copyright &copy; 2025 Farnaz Art Studio. All rights reserved.</p>
     <div class="social-links">
       <a class="social-link" href="#" aria-label="Instagram">📸</a>
       <a class="social-link" href="#" aria-label="Facebook">📘</a>
