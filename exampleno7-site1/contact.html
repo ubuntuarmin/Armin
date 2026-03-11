@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact — Beyond the Canvas Art Studio | Farnaz Amin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -23,7 +26,7 @@
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+    body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
 
     /* NAV */
     nav { position: sticky; top: 0; z-index: 1000; background: var(--charcoal); border-bottom: 3px solid var(--terra); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
@@ -314,9 +317,11 @@
 <div class="mobile-menu" id="mobileMenu">
   <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
   <a href="index.html">Home</a>
-  <a href="about.html">Biography</a>
+  <a href="classes.html">Classes</a>
   <a href="gallery.html">Gallery</a>
-  <a href="contact.html">Contact</a>
+  <a href="instructors.html">Book Now</a>
+  <a href="about.html">Biography</a>
+  <a href="contact.html" class="active">Contact</a>
 </div>
 
 <nav>
@@ -330,9 +335,11 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">Biography</a></li>
+      <li><a href="classes.html">Classes</a></li>
       <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="contact.html" class="nav-cta active">Contact</a></li>
+      <li><a href="instructors.html" class="nav-cta">Book Now</a></li>
+      <li><a href="about.html">Biography</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -641,8 +648,10 @@
     <div class="footer-col">
       <h4>Navigate</h4>
       <a href="index.html">Home</a>
-      <a href="about.html">Biography</a>
+      <a href="classes.html">Classes</a>
       <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Book Now</a>
+      <a href="about.html">Biography</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="footer-col">

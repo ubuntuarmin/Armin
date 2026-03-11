@@ -3,266 +3,219 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instructors — Beyond the Canvas Art Studio | Farnaz Amin</title>
+  <title>Book a Class — Beyond the Canvas Art Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --charcoal:   #1C1C1C;
-      --terra:      #C4622D;
-      --terra-dark: #A04E22;
-      --gold:       #D4A843;
-      --gold-light: #E8C46A;
-      --cream:      #FAF7F2;
-      --cream2:     #F0EBE3;
-      --sage:       #7A9E7E;
-      --white:      #FFFFFF;
-      --text-dark:  #1C1C1C;
-      --text-mid:   #4A4A4A;
-      --text-muted: #7A7A7A;
+      --charcoal:    #1C1C1C;
+      --charcoal2:   #2A2A2A;
+      --terra:       #C4622D;
+      --terra-dark:  #A04E22;
+      --terra-light: rgba(196,98,45,0.12);
+      --gold:        #D4A843;
+      --gold-light:  #E8C46A;
+      --cream:       #FAF7F2;
+      --cream2:      #F0EBE3;
+      --white:       #FFFFFF;
+      --text-dark:   #1A1A1A;
+      --text-mid:    #4A4A4A;
+      --text-muted:  #888;
+      --success:     #22c55e;
+      --border:      #E5E0D8;
+      --shadow:      0 4px 24px rgba(0,0,0,0.08);
+      --radius:      14px;
     }
 
     html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; }
+    body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--cream); color: var(--text-dark); overflow-x: hidden; line-height: 1.6; }
 
-    /* NAV */
-    nav { position: sticky; top: 0; z-index: 1000; background: var(--charcoal); border-bottom: 3px solid var(--terra); box-shadow: 0 2px 20px rgba(0,0,0,0.35); }
-    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 72px; display: flex; align-items: center; justify-content: space-between; }
+    /* ── NAV ── */
+    nav { position: sticky; top: 0; z-index: 1000; background: rgba(28,28,28,0.97); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-bottom: 2px solid var(--terra); box-shadow: 0 4px 30px rgba(0,0,0,0.3); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; height: 70px; display: flex; align-items: center; justify-content: space-between; }
     .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
-    .logo-mark { width: 50px; height: 50px; border: 3px solid var(--terra); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: var(--terra); background: rgba(196,98,45,0.1); text-align: center; line-height: 1.3; }
-    .logo-name { font-size: 1.25rem; font-weight: 700; color: var(--white); font-family: Georgia, serif; }
+    .logo-mark { width: 46px; height: 46px; border: 2px solid var(--terra); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.48rem; font-weight: 700; color: var(--terra); background: rgba(196,98,45,0.1); letter-spacing: 0.5px; text-align: center; line-height: 1.3; }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name { font-size: 1.15rem; font-weight: 700; color: #fff; letter-spacing: 0.3px; font-family: 'Playfair Display', Georgia, serif; }
     .logo-name span { color: var(--terra); }
-    .logo-tagline { font-size: 0.62rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
-    .nav-links { display: flex; gap: 4px; list-style: none; }
-    .nav-links a { color: rgba(255,255,255,0.82); text-decoration: none; padding: 8px 16px; border-radius: 6px; font-size: 0.88rem; font-weight: 500; transition: all 0.25s; }
-    .nav-links a:hover, .nav-links a.active { background: var(--terra); color: var(--white); }
-    .nav-cta { background: var(--terra) !important; color: var(--white) !important; font-weight: 700 !important; padding: 9px 20px !important; }
-    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
-    .hamburger span { display: block; width: 26px; height: 3px; background: var(--terra); border-radius: 3px; }
-    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .logo-tagline { font-size: 0.58rem; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+    .nav-links { display: flex; gap: 2px; list-style: none; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.78); text-decoration: none; padding: 8px 13px; border-radius: 8px; font-size: 0.84rem; font-weight: 500; transition: all 0.2s; }
+    .nav-links a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+    .nav-links a.active { background: var(--terra); color: #fff; font-weight: 600; }
+    .nav-cta { background: var(--terra) !important; color: #fff !important; font-weight: 600 !important; padding: 9px 18px !important; border-radius: 50px !important; }
+    .nav-cta:hover { background: var(--terra-dark) !important; box-shadow: 0 4px 16px rgba(196,98,45,0.4); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 22px; height: 2px; background: #fff; border-radius: 2px; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 1500; backdrop-filter: blur(4px); }
     .mobile-overlay.open { display: block; }
-    .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--charcoal); z-index: 2000; flex-direction: column; padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left: 3px solid var(--terra); }
+    .mobile-menu { display: none; position: fixed; top: 0; right: -100%; width: 70%; height: 100%; background: var(--charcoal); z-index: 2000; flex-direction: column; padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left: 2px solid var(--terra); }
     .mobile-menu.open { right: 0; }
-    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a { color: #fff; text-decoration: none; font-size: 1rem; padding: 13px 18px; border-radius: 10px; transition: all 0.2s; border-left: 3px solid transparent; display: block; }
     .mobile-menu a:hover { background: rgba(196,98,45,0.15); border-left-color: var(--terra); color: var(--terra); }
-    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--terra); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: rgba(255,255,255,0.6); font-size: 1.2rem; cursor: pointer; }
 
-    /* PAGE HERO */
-    .page-hero { background: var(--charcoal); padding: 80px 24px 90px; text-align: center; position: relative; overflow: hidden; }
-    .page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 55% 70% at 50% 50%, rgba(196,98,45,0.13) 0%, transparent 70%); }
-    .page-hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
-    .page-label { display: inline-block; color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 16px; }
-    .page-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; line-height: 1.15; margin-bottom: 16px; }
+    /* ── PAGE HERO ── */
+    .page-hero { background: linear-gradient(135deg, var(--charcoal) 0%, #2A1810 60%, var(--charcoal2) 100%); padding: 56px 24px 48px; text-align: center; position: relative; overflow: hidden; }
+    .page-hero::before { content: ''; position: absolute; top: -100px; right: -100px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(196,98,45,0.15) 0%, transparent 70%); border-radius: 50%; }
+    .page-hero::after { content: ''; position: absolute; bottom: -80px; left: -80px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(212,168,67,0.1) 0%, transparent 70%); border-radius: 50%; }
+    .page-hero-inner { max-width: 660px; margin: 0 auto; position: relative; z-index: 1; }
+    .page-label { display: inline-block; background: var(--terra-light); border: 1px solid rgba(196,98,45,0.3); color: var(--terra); font-size: 0.72rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; padding: 6px 16px; border-radius: 50px; margin-bottom: 18px; }
+    .page-title { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; color: #fff; line-height: 1.2; margin-bottom: 14px; }
     .page-title em { color: var(--terra); font-style: italic; }
-    .page-desc { font-size: 1.05rem; color: rgba(255,255,255,0.58); line-height: 1.8; }
+    .page-desc { font-size: 1rem; color: rgba(255,255,255,0.65); line-height: 1.8; }
 
-    /* INSTRUCTORS */
-    .instructors-section { max-width: 1200px; margin: 0 auto; padding: 72px 24px 80px; }
+    /* ── PROGRESS STEPS ── */
+    .checkout-steps { background: var(--white); border-bottom: 1px solid var(--border); padding: 0 24px; }
+    .steps-inner { max-width: 780px; margin: 0 auto; display: flex; align-items: center; padding: 20px 0; }
+    .step { display: flex; align-items: center; gap: 10px; }
+    .step-circle { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.78rem; font-weight: 700; flex-shrink: 0; }
+    .step.done .step-circle { background: var(--success); color: #fff; }
+    .step.active .step-circle { background: var(--terra); color: #fff; }
+    .step.pending .step-circle { background: var(--cream2); color: var(--text-muted); border: 2px solid var(--border); }
+    .step-label { font-size: 0.82rem; font-weight: 600; }
+    .step.active .step-label { color: var(--terra); }
+    .step.pending .step-label { color: var(--text-muted); }
+    .step-connector { flex: 1; height: 2px; background: var(--border); margin: 0 12px; border-radius: 2px; min-width: 40px; }
 
-    .instructors-intro { text-align: center; margin-bottom: 64px; }
-    .instructors-intro p { font-size: 1.05rem; color: var(--text-mid); line-height: 1.8; max-width: 680px; margin: 0 auto; }
+    /* ── CHECKOUT MAIN ── */
+    .checkout-main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; display: grid; grid-template-columns: 1fr 400px; gap: 36px; align-items: start; }
 
-    .instructors-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 36px; margin-bottom: 80px; }
+    /* ── ORDER PANEL (left) ── */
+    .order-panel { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; position: sticky; top: 90px; }
+    .panel-header { padding: 22px 26px; background: var(--charcoal); display: flex; align-items: center; gap: 12px; }
+    .panel-header h3 { font-family: 'Playfair Display', Georgia, serif; color: #fff; font-size: 1.1rem; font-weight: 600; }
+    .panel-header-icon { font-size: 1.3rem; }
+    .panel-body { padding: 24px 26px; }
+    .class-picker-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 12px; }
+    .class-options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 22px; }
+    .class-option { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 2px solid var(--border); border-radius: 10px; cursor: pointer; transition: all 0.2s; }
+    .class-option:hover { border-color: rgba(196,98,45,0.4); background: rgba(196,98,45,0.04); }
+    .class-option.selected { border-color: var(--terra); background: rgba(196,98,45,0.06); }
+    .class-option input[type="radio"] { width: 18px; height: 18px; accent-color: var(--terra); cursor: pointer; flex-shrink: 0; }
+    .class-option-info { flex: 1; }
+    .class-option-name { font-size: 0.87rem; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+    .class-option-meta { font-size: 0.74rem; color: var(--text-muted); }
+    .class-option-price { font-size: 0.95rem; font-weight: 700; color: var(--terra); white-space: nowrap; }
 
-    .instructor-card {
-      background: var(--white);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-      transition: all 0.35s;
-      display: flex;
-      flex-direction: column;
-    }
+    .qty-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+    .qty-label { font-size: 0.85rem; font-weight: 600; color: var(--text-dark); }
+    .qty-control { display: flex; align-items: center; border: 2px solid var(--border); border-radius: 8px; overflow: hidden; }
+    .qty-btn { width: 36px; height: 36px; background: var(--cream2); border: none; cursor: pointer; font-size: 1.1rem; color: var(--text-dark); transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+    .qty-btn:hover { background: var(--terra); color: #fff; }
+    .qty-num { width: 42px; height: 36px; border: none; text-align: center; font-size: 0.95rem; font-weight: 700; background: #fff; color: var(--text-dark); font-family: 'Inter', sans-serif; }
+    .qty-num::-webkit-outer-spin-button, .qty-num::-webkit-inner-spin-button { -webkit-appearance: none; }
 
-    .instructor-card:hover { transform: translateY(-8px); box-shadow: 0 20px 55px rgba(0,0,0,0.13); }
+    .order-line { display: flex; justify-content: space-between; align-items: center; padding: 9px 0; border-bottom: 1px dashed var(--border); font-size: 0.88rem; }
+    .order-line:last-child { border: none; }
+    .order-line-label { color: var(--text-mid); }
+    .order-line-value { font-weight: 600; color: var(--text-dark); }
+    .order-total-row { display: flex; justify-content: space-between; align-items: center; padding: 16px 0 0; margin-top: 4px; border-top: 2px solid var(--text-dark); }
+    .order-total-label { font-size: 1rem; font-weight: 700; }
+    .order-total-amount { font-size: 1.5rem; font-weight: 800; color: var(--terra); font-family: 'Playfair Display', Georgia, serif; }
+    .security-badges { display: flex; gap: 10px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+    .security-badge { font-size: 0.72rem; color: var(--text-muted); }
 
-    .instructor-avatar-area {
-      padding: 40px 40px 28px;
-      display: flex;
-      align-items: flex-start;
-      gap: 24px;
-      background: var(--cream2);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
-    }
+    /* ── CHECKOUT FORM PANEL (right) ── */
+    .checkout-form-panel { display: flex; flex-direction: column; gap: 22px; }
+    .form-card { background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .form-card-header { padding: 18px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .form-card-header h3 { font-size: 1rem; font-weight: 700; color: var(--text-dark); }
+    .form-card-num { width: 28px; height: 28px; border-radius: 50%; background: var(--terra); color: #fff; font-size: 0.78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .form-card-body { padding: 22px 24px; }
 
-    .avatar {
-      width: 88px; height: 88px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.4rem;
-      flex-shrink: 0;
-      border: 3px solid var(--terra);
-    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group:last-child { margin-bottom: 0; }
+    .form-group label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-dark); margin-bottom: 6px; letter-spacing: 0.3px; }
+    .form-group label .req { color: var(--terra); margin-left: 2px; }
+    .form-input { width: 100%; padding: 11px 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 0.9rem; font-family: 'Inter', sans-serif; color: var(--text-dark); background: #fff; transition: all 0.2s; outline: none; }
+    .form-input:focus { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(196,98,45,0.1); }
+    .form-input::placeholder { color: var(--text-muted); }
+    .form-select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 38px; }
+    .datetime-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-textarea { resize: vertical; min-height: 78px; }
 
-    .avatar-1 { background: linear-gradient(135deg, #E8C8B0, #C8A080); }
-    .avatar-2 { background: linear-gradient(135deg, #C8D8C0, #A8C0A0); }
-    .avatar-3 { background: linear-gradient(135deg, #D0B8D0, #A880B0); }
-    .avatar-4 { background: linear-gradient(135deg, #C8D0E0, #A0B0C8); }
-    .avatar-5 { background: linear-gradient(135deg, #E0C8B0, #C8A080); }
-    .avatar-6 { background: linear-gradient(135deg, #C8E0C0, #A0C080); }
+    /* ── PAYMENT ── */
+    .payment-info-bar { display: flex; align-items: center; gap: 8px; background: #F0FDF4; border: 1px solid #86EFAC; border-radius: 8px; padding: 10px 14px; margin-bottom: 16px; font-size: 0.82rem; color: #166534; font-weight: 500; }
+    #card-element { padding: 13px 14px; border: 2px solid var(--border); border-radius: 10px; background: #fff; transition: border-color 0.2s; min-height: 48px; display: flex; align-items: center; }
+    #card-element.StripeElement--focus { border-color: var(--terra); box-shadow: 0 0 0 3px rgba(196,98,45,0.1); }
+    #card-element.StripeElement--invalid { border-color: #e53e3e; }
+    #card-errors { color: #e53e3e; font-size: 0.82rem; margin-top: 6px; min-height: 20px; }
+    .stripe-card-mock { display: flex; align-items: center; gap: 12px; width: 100%; }
+    .stripe-card-mock-num { flex: 1; font-size: 0.88rem; color: var(--text-muted); letter-spacing: 2px; }
+    .stripe-card-mock-icons { display: flex; gap: 5px; }
+    .card-icon { width: 30px; height: 19px; border-radius: 3px; background: var(--cream2); border: 1px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.5rem; font-weight: 700; color: var(--text-muted); }
+    .stripe-badge { display: flex; align-items: center; gap: 6px; margin-top: 10px; font-size: 0.72rem; color: var(--text-muted); }
+    .stripe-badge strong { color: #6772e5; }
 
-    .instructor-head {}
-    .instructor-name { font-size: 1.3rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 4px; }
-    .instructor-title { font-size: 0.88rem; color: var(--terra); font-weight: 600; margin-bottom: 8px; }
-    .instructor-quals { display: flex; flex-wrap: wrap; gap: 6px; }
+    /* ── SUBMIT ── */
+    .submit-btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 17px 24px; border-radius: 50px; background: linear-gradient(135deg, var(--terra), var(--terra-dark)); color: #fff; font-size: 1.05rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.3s; letter-spacing: 0.3px; box-shadow: 0 8px 30px rgba(196,98,45,0.35); font-family: 'Inter', sans-serif; }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(196,98,45,0.5); }
+    .submit-btn.loading { opacity: 0.7; cursor: not-allowed; pointer-events: none; }
+    .btn-spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-top-color: #fff; border-radius: 50%; animation: spin 0.8s linear infinite; display: none; }
+    .submit-btn.loading .btn-spinner { display: block; }
+    .submit-btn.loading .btn-icon { display: none; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .submit-note { text-align: center; font-size: 0.76rem; color: var(--text-muted); margin-top: 10px; }
 
-    .qual-badge {
-      background: var(--cream);
-      border: 1px solid rgba(0,0,0,0.08);
-      color: var(--text-mid);
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 50px;
-      letter-spacing: 0.3px;
-    }
+    /* ── SUCCESS OVERLAY ── */
+    .success-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 4000; align-items: center; justify-content: center; padding: 24px; backdrop-filter: blur(8px); }
+    .success-overlay.show { display: flex; }
+    .success-box { background: #fff; border-radius: 20px; padding: 56px 48px; text-align: center; max-width: 460px; width: 100%; box-shadow: 0 30px 100px rgba(0,0,0,0.25); animation: popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn { from { opacity:0; transform: scale(0.85); } to { opacity:1; transform: scale(1); } }
+    .success-check { width: 72px; height: 72px; background: #F0FDF4; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 24px; font-size: 2rem; }
+    .success-title { font-family: 'Playfair Display', Georgia, serif; font-size: 1.8rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; }
+    .success-desc { font-size: 0.95rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 20px; }
+    .success-ref { background: var(--cream); border-radius: 8px; padding: 10px 16px; font-size: 0.85rem; color: var(--text-mid); margin-bottom: 24px; }
+    .success-back { display: inline-flex; align-items: center; gap: 8px; padding: 13px 30px; border-radius: 50px; background: var(--terra); color: #fff; font-weight: 700; text-decoration: none; font-size: 0.92rem; transition: all 0.2s; }
+    .success-back:hover { background: var(--terra-dark); }
 
-    .instructor-body { padding: 28px 40px 36px; flex: 1; }
+    /* ── FAQ ── */
+    .faq-strip { background: var(--charcoal); padding: 56px 24px; }
+    .faq-inner { max-width: 900px; margin: 0 auto; }
+    .faq-heading { font-family: 'Playfair Display', Georgia, serif; font-size: 1.7rem; font-weight: 700; color: #fff; margin-bottom: 32px; text-align: center; }
+    .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .faq-item { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 22px; transition: all 0.2s; }
+    .faq-item:hover { background: rgba(196,98,45,0.1); border-color: rgba(196,98,45,0.3); }
+    .faq-q { font-size: 0.9rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .faq-a { font-size: 0.83rem; color: rgba(255,255,255,0.55); line-height: 1.7; }
 
-    .instructor-bio { font-size: 0.92rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 22px; }
-
-    .teaches-section {}
-    .teaches-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
-
-    .teaches-list { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-
-    .teaches-pill {
-      background: rgba(196,98,45,0.1);
-      border: 1px solid rgba(196,98,45,0.2);
-      color: var(--terra-dark);
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 5px 14px;
-      border-radius: 50px;
-    }
-
-    .instructor-schedule {
-      background: var(--cream);
-      border-radius: 10px;
-      padding: 14px 16px;
-    }
-
-    .schedule-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
-
-    .schedule-row { display: flex; justify-content: space-between; font-size: 0.82rem; color: var(--text-mid); padding: 4px 0; border-bottom: 1px dashed rgba(0,0,0,0.08); }
-    .schedule-row:last-child { border-bottom: none; }
-    .schedule-day  { font-weight: 600; }
-    .schedule-time { color: var(--text-muted); }
-
-    /* Philosophy section */
-    .philosophy-section {
-      background: var(--charcoal);
-      border-radius: 20px;
-      padding: 64px 56px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 64px;
-      align-items: center;
-      margin-bottom: 64px;
-    }
-
-    .philosophy-content {}
-    .philosophy-label { color: var(--gold); font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 14px; display: block; }
-    .philosophy-title { font-size: clamp(1.6rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); font-family: Georgia, serif; margin-bottom: 18px; line-height: 1.25; }
-    .philosophy-title em { color: var(--terra); font-style: italic; }
-    .philosophy-text { font-size: 0.93rem; color: rgba(255,255,255,0.6); line-height: 1.8; margin-bottom: 20px; }
-
-    .philosophy-values { display: flex; flex-direction: column; gap: 14px; }
-
-    .value-item { display: flex; align-items: flex-start; gap: 14px; }
-    .value-icon { width: 44px; height: 44px; border-radius: 10px; background: rgba(196,98,45,0.18); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
-    .value-title { font-size: 0.92rem; font-weight: 700; color: var(--white); margin-bottom: 2px; }
-    .value-desc  { font-size: 0.82rem; color: rgba(255,255,255,0.45); }
-
-    .philosophy-quote {
-      position: relative;
-      padding: 40px 36px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-    }
-
-    .philosophy-quote::before {
-      content: '\201C';
-      font-size: 7rem;
-      font-family: Georgia, serif;
-      color: rgba(196,98,45,0.25);
-      position: absolute;
-      top: -10px;
-      left: 20px;
-      line-height: 1;
-    }
-
-    .quote-text { font-size: 1.15rem; color: rgba(255,255,255,0.85); font-style: italic; line-height: 1.75; margin-bottom: 20px; padding-top: 32px; font-family: Georgia, serif; }
-    .quote-author { display: flex; align-items: center; gap: 12px; }
-    .quote-avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--terra), var(--terra-dark)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
-    .quote-name  { font-size: 0.9rem; font-weight: 700; color: var(--white); }
-    .quote-role  { font-size: 0.75rem; color: rgba(255,255,255,0.45); }
-
-    /* Join team CTA */
-    .join-section {
-      background: var(--cream2);
-      border-radius: 18px;
-      padding: 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 28px;
-      flex-wrap: wrap;
-    }
-
-    .join-text h3 { font-size: 1.5rem; font-weight: 800; color: var(--text-dark); font-family: Georgia, serif; margin-bottom: 8px; }
-    .join-text p  { font-size: 0.93rem; color: var(--text-mid); line-height: 1.7; max-width: 500px; }
-
-    .btn-terra { display: inline-flex; align-items: center; gap: 10px; background: var(--terra); color: var(--white); text-decoration: none; padding: 14px 30px; border-radius: 8px; font-size: 0.95rem; font-weight: 700; transition: all 0.3s; white-space: nowrap; }
-    .btn-terra:hover { background: var(--terra-dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(196,98,45,0.4); }
-
-    /* FOOTER */
-    footer { background: var(--charcoal); border-top: 3px solid var(--terra); padding: 64px 24px 32px; }
+    /* ── FOOTER ── */
+    footer { background: var(--charcoal); border-top: 2px solid var(--terra); padding: 64px 24px 32px; }
     .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 56px; margin-bottom: 48px; }
-    .footer-brand .logo-name { font-size: 1.3rem; font-weight: 700; color: var(--white); margin-bottom: 12px; display: block; font-family: Georgia, serif; }
+    .footer-brand .logo-name { font-family: 'Playfair Display', Georgia, serif; font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 14px; display: block; }
     .footer-brand .logo-name span { color: var(--terra); }
-    .footer-brand p { font-size: 0.87rem; color: rgba(255,255,255,0.4); line-height: 1.8; max-width: 240px; }
-    .footer-col h4 { font-size: 0.75rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
-    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.25s; }
-    .footer-col a:hover { color: var(--terra); transform: translateX(5px); }
-    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
+    .footer-brand p { font-size: 0.86rem; color: rgba(255,255,255,0.42); line-height: 1.8; max-width: 250px; }
+    .footer-col h4 { font-size: 0.72rem; font-weight: 700; color: var(--gold); letter-spacing: 2.5px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.42); text-decoration: none; font-size: 0.86rem; margin-bottom: 10px; transition: all 0.2s; }
+    .footer-col a:hover { color: var(--terra); transform: translateX(4px); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.1); padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; }
     .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
     .social-links { display: flex; gap: 10px; }
-    .social-link { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; }
-    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-2px); }
+    .social-link { width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; font-size: 0.95rem; text-decoration: none; transition: all 0.3s; }
+    .social-link:hover { background: var(--terra); border-color: var(--terra); transform: translateY(-3px); }
 
-    /* RESPONSIVE */
-    @media (max-width: 900px) {
-      .instructors-grid { grid-template-columns: 1fr; }
-      .philosophy-section { grid-template-columns: 1fr; gap: 40px; padding: 44px 32px; }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .hamburger { display: flex; }
-      .mobile-menu { display: flex; }
-      .footer-inner { grid-template-columns: 1fr 1fr; gap: 28px; }
-      .instructor-avatar-area { flex-direction: column; gap: 16px; }
-    }
-
-    @media (max-width: 480px) {
-      .footer-inner { grid-template-columns: 1fr; gap: 22px; }
-      .instructor-body { padding: 22px 24px 28px; }
-      .instructor-avatar-area { padding: 28px 24px 20px; }
-    }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) { .checkout-main { grid-template-columns: 1fr; } .order-panel { position: static; } .faq-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 768px) { .nav-links { display: none; } .hamburger { display: flex; } .mobile-menu { display: flex; } .form-row { grid-template-columns: 1fr; } .datetime-grid { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; gap: 32px; } }
+    @media (max-width: 500px) { .footer-inner { grid-template-columns: 1fr; gap: 22px; } .step-label { display: none; } .success-box { padding: 36px 24px; } }
   </style>
 </head>
 <body>
 
+<!-- Mobile -->
 <div class="mobile-overlay" id="mobileOverlay" onclick="toggleMenu()"></div>
 <div class="mobile-menu" id="mobileMenu">
-  <button class="close-btn" onclick="toggleMenu()" aria-label="Close menu">✕</button>
+  <button class="close-btn" onclick="toggleMenu()" aria-label="Close">✕</button>
   <a href="index.html">Home</a>
-  <a href="about.html">Biography</a>
+  <a href="classes.html">Classes</a>
   <a href="gallery.html">Gallery</a>
+  <a href="instructors.html" style="color:var(--terra);font-weight:600;">Book Now</a>
+  <a href="about.html">Biography</a>
   <a href="contact.html">Contact</a>
 </div>
 
@@ -270,16 +223,18 @@
   <div class="nav-inner">
     <a href="index.html" class="nav-logo">
       <div class="logo-mark">LOGO</div>
-      <div>
+      <div class="logo-text">
         <div class="logo-name">Beyond the<span> Canvas</span></div>
         <div class="logo-tagline">Art Studio · Farnaz Amin</div>
       </div>
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">Biography</a></li>
+      <li><a href="classes.html">Classes</a></li>
       <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="contact.html" class="nav-cta">Contact</a></li>
+      <li><a href="instructors.html" class="nav-cta active">Book Now</a></li>
+      <li><a href="about.html">Biography</a></li>
+      <li><a href="contact.html">Contact</a></li>
     </ul>
     <button class="hamburger" onclick="toggleMenu()" aria-label="Open menu">
       <span></span><span></span><span></span>
@@ -287,271 +242,311 @@
   </div>
 </nav>
 
-<!-- Page Hero -->
+<!-- Hero -->
 <div class="page-hero">
   <div class="page-hero-inner">
-    <div class="page-label">Our Team</div>
-    <h1 class="page-title">Meet Your <em>Instructors</em></h1>
-    <p class="page-desc">Our instructors are working artists and dedicated teachers who bring both technical mastery and genuine enthusiasm to every class.</p>
+    <div class="page-label">Secure Booking</div>
+    <h1 class="page-title">Book Your <em>Experience</em></h1>
+    <p class="page-desc">Choose your class, pick your date, and complete your booking securely. All materials included — just bring your creativity.</p>
   </div>
 </div>
 
-<!-- Instructors -->
-<div class="instructors-section">
-
-  <div class="instructors-intro">
-    <p>At Beyond the Canvas Art Studio, Farnaz Amin brings over 25 years of teaching experience to every class. Small class sizes mean you receive real, personalised guidance — not just a demonstration from the front of the room.</p>
+<!-- Progress Steps -->
+<div class="checkout-steps">
+  <div class="steps-inner">
+    <div class="step active">
+      <div class="step-circle">1</div>
+      <div class="step-label">Select Class</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step active">
+      <div class="step-circle">2</div>
+      <div class="step-label">Your Details</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step pending">
+      <div class="step-circle">3</div>
+      <div class="step-label">Payment</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step pending">
+      <div class="step-circle">✓</div>
+      <div class="step-label">Confirmed</div>
+    </div>
   </div>
+</div>
 
-  <div class="instructors-grid">
+<!-- Main Layout -->
+<div class="checkout-main">
 
-      <!-- Instructor 1 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-1">👩‍🎨</div>
-        <div class="instructor-head">
-          <div class="instructor-name">Farnaz Amin</div>
-          <div class="instructor-title">Studio Founder &amp; Lead Art Instructor</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">Art School Graduate</span>
-            <span class="qual-badge">25+ Years Teaching</span>
-            <span class="qual-badge">International Exhibiting Artist</span>
-          </div>
-        </div>
-      </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">Born in Los Angeles to an Iranian family, Farnaz Amin has been immersed in Art since childhood. Trained in multiple countries and a graduate of Art school, she has exhibited her work internationally and won several awards. She founded Beyond the Canvas Art Studio &amp; Gallery to share her passion for Art with all ages — creating a space where anyone can explore, grow, and find their creative voice.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Oil Painting</span>
-            <span class="teaches-pill">Drawing &amp; Fine Art</span>
-            <span class="teaches-pill">Resin Art</span>
-            <span class="teaches-pill">Watercolor &amp; Acrylic</span>
-          </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">6:00 pm – 8:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Thursday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Saturday</span><span class="schedule-time">10:00 am – 12:00 pm</span></div>
-        </div>
-      </div>
+  <!-- Left: Order Summary -->
+  <div class="order-panel">
+    <div class="panel-header">
+      <span class="panel-header-icon">🛒</span>
+      <h3>Your Booking</h3>
     </div>
+    <div class="panel-body">
 
-    <!-- Instructor 2 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-2">🧑‍🏫</div>
-        <div class="instructor-head">
-          <div class="instructor-name">Daniel Park</div>
-          <div class="instructor-title">Head of Ceramics</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">BFA Ceramics, SAIC</span>
-            <span class="qual-badge">9 Years Teaching</span>
-            <span class="qual-badge">Production Potter</span>
+      <div class="class-picker-label">Choose Your Class</div>
+      <div class="class-options">
+        <label class="class-option selected">
+          <input type="radio" name="classSelect" value="oil" data-price="65" data-name="Oil Painting Fundamentals" checked onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🖌️ Oil Painting Fundamentals</div>
+            <div class="class-option-meta">2 hrs · All Levels · Materials included</div>
           </div>
-        </div>
-      </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">Daniel is a production potter and ceramics teacher with nearly a decade of experience. He trained at the School of the Art Institute of Chicago and spent two years in residency in Korea studying traditional Korean celadon techniques. His teaching style is deeply hands-on — he'll shape clay alongside you, not just watch. Daniel's pots are sold in craft galleries across the country.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Wheel Throwing</span>
-            <span class="teaches-pill">Hand-Building</span>
-            <span class="teaches-pill">Glaze & Fire</span>
+          <div class="class-option-price">$65</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="classSelect" value="watercolor" data-price="55" data-name="Watercolour Landscapes" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🎨 Watercolour Landscapes</div>
+            <div class="class-option-meta">2 hrs · All Levels · Materials included</div>
           </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Monday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">10:00 am – 1:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Saturday</span><span class="schedule-time">1:00 pm – 4:00 pm</span></div>
-        </div>
+          <div class="class-option-price">$55</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="classSelect" value="portrait" data-price="90" data-name="Portrait Painting in Oils" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🖼️ Portrait Painting in Oils</div>
+            <div class="class-option-meta">3 hrs · Advanced · Live model</div>
+          </div>
+          <div class="class-option-price">$90</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="classSelect" value="resin" data-price="75" data-name="Resin Art Workshop" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">✨ Resin Art Workshop</div>
+            <div class="class-option-meta">2.5 hrs · All Levels · Kit included</div>
+          </div>
+          <div class="class-option-price">$75</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="classSelect" value="pottery" data-price="85" data-name="Pottery &amp; Wheel Throwing" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🏺 Pottery &amp; Wheel Throwing</div>
+            <div class="class-option-meta">3 hrs · Beginner · Firing included</div>
+          </div>
+          <div class="class-option-price">$85</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="classSelect" value="event" data-price="200" data-name="Private Event / Party" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🎉 Private Event / Party</div>
+            <div class="class-option-meta">2–3 hrs · Custom · Up to 15 guests</div>
+          </div>
+          <div class="class-option-price">$200+</div>
+        </label>
       </div>
-    </div>
 
-    <!-- Instructor 3 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-3">👩‍🎨</div>
-        <div class="instructor-head">
-          <div class="instructor-name">Aisha Okonkwo</div>
-          <div class="instructor-title">Watercolour & Botanical Illustration</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">BA Fine Arts, UAL</span>
-            <span class="qual-badge">7 Years Teaching</span>
-            <span class="qual-badge">Published Illustrator</span>
-          </div>
+      <div class="qty-row">
+        <div class="qty-label">Number of Spots</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease">−</button>
+          <input type="number" class="qty-num" id="qtyInput" value="1" min="1" max="14" onchange="recalcTotal()" aria-label="Quantity">
+          <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase">+</button>
         </div>
       </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">Aisha studied fine arts in London before relocating to teach and practise in the US. Her specialty is watercolour — particularly botanical and landscape work. She has illustrated two published books and contributes regularly to editorial clients. Aisha is celebrated for her ability to break down the seemingly unpredictable nature of watercolour into clear, learnable steps that build student confidence rapidly.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Watercolour Landscapes</span>
-            <span class="teaches-pill">Botanical Illustration</span>
-          </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Tuesday</span><span class="schedule-time">4:00 pm – 6:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Wednesday</span><span class="schedule-time">5:30 pm – 7:30 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">1:00 pm – 3:00 pm</span></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Instructor 4 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-4">🧑‍🎨</div>
-        <div class="instructor-head">
-          <div class="instructor-name">Marcus Webb</div>
-          <div class="instructor-title">Drawing, Figure & Illustration</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">BFA Drawing, VCUarts</span>
-            <span class="qual-badge">6 Years Teaching</span>
-            <span class="qual-badge">Graphic Novelist</span>
-          </div>
-        </div>
+      <div class="order-line">
+        <span class="order-line-label" id="orderLineName">Oil Painting Fundamentals × 1</span>
+        <span class="order-line-value" id="orderLinePrice">$65.00</span>
       </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">Marcus comes from a background in comics and graphic narrative, with a strong grounding in traditional drawing. His figure drawing sessions are fast-moving, observational, and fun — he uses timed poses, gesture exercises, and critique sessions to rapidly improve students' observational skills. He also teaches ink illustration, and his graphic novel has been shortlisted for two independent awards.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Figure Drawing</span>
-            <span class="teaches-pill">Ink & Illustration</span>
-            <span class="teaches-pill">Young Artists Club</span>
-          </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Monday</span><span class="schedule-time">7:00 pm – 9:30 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Wednesday</span><span class="schedule-time">6:00 pm – 8:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Thursday</span><span class="schedule-time">10:00 am – 12:30 pm</span></div>
-        </div>
+      <div class="order-line">
+        <span class="order-line-label">Materials fee</span>
+        <span class="order-line-value" style="color:var(--success);">Included</span>
       </div>
-    </div>
+      <div class="order-line">
+        <span class="order-line-label">Booking fee</span>
+        <span class="order-line-value">$0.00</span>
+      </div>
 
-    <!-- Instructor 5 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-5">👩‍🎨</div>
-        <div class="instructor-head">
-          <div class="instructor-name">Priya Mehta</div>
-          <div class="instructor-title">Mixed Media & Collage</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">MFA, CalArts</span>
-            <span class="qual-badge">5 Years Teaching</span>
-            <span class="qual-badge">Installation Artist</span>
-          </div>
-        </div>
+      <div class="order-total-row">
+        <div class="order-total-label">Total Due</div>
+        <div class="order-total-amount" id="orderTotal">$65.00</div>
       </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">Priya's practice spans large-scale installation, collage, and textile-based work. Her teaching is experimental and concept-driven — she encourages students to think about why they make art, not just how. Priya's mixed media classes attract students who want to break outside the boundaries of traditional mediums. She has shown internationally and is represented by a gallery in Los Angeles.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Mixed Media & Collage</span>
-            <span class="teaches-pill">Little Makers (Kids)</span>
-          </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Friday</span><span class="schedule-time">2:00 pm – 4:30 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">10:00 am – 11:30 am</span></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- Instructor 6 -->
-    <div class="instructor-card">
-      <div class="instructor-avatar-area">
-        <div class="avatar avatar-6">🧑‍🎨</div>
-        <div class="instructor-head">
-          <div class="instructor-name">James Yong</div>
-          <div class="instructor-title">Ceramics & Glaze Specialist</div>
-          <div class="instructor-quals">
-            <span class="qual-badge">BFA, KCAI</span>
-            <span class="qual-badge">4 Years Teaching</span>
-            <span class="qual-badge">Ceramics Researcher</span>
-          </div>
-        </div>
-      </div>
-      <div class="instructor-body">
-        <p class="instructor-bio">James focuses on the chemistry and craft of glazing — understanding why colours react, how temperature affects surface texture, and how to reliably reproduce results. He assists Daniel in wheel throwing sessions and leads the popular Glaze & Fire Workshop on Sundays. Students find his methodical, science-based approach to ceramics refreshing and demystifying.</p>
-        <div class="teaches-section">
-          <div class="teaches-label">Teaches</div>
-          <div class="teaches-list">
-            <span class="teaches-pill">Glaze & Fire Workshop</span>
-            <span class="teaches-pill">Pottery Assistant</span>
-          </div>
-        </div>
-        <div class="instructor-schedule">
-          <div class="schedule-label">Regular Schedule</div>
-          <div class="schedule-row"><span class="schedule-day">Friday</span><span class="schedule-time">6:00 pm – 9:00 pm</span></div>
-          <div class="schedule-row"><span class="schedule-day">Sunday</span><span class="schedule-time">11:00 am – 1:00 pm</span></div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- Teaching Philosophy -->
-  <div class="philosophy-section">
-    <div class="philosophy-content">
-      <span class="philosophy-label">Our Approach</span>
-      <h2 class="philosophy-title">Teaching Philosophy:<br><em>Progress Over Perfection</em></h2>
-      <p class="philosophy-text">We believe everyone has creative potential — it just needs space to grow. Our instructors don't teach a single "correct" way to make art. They teach you to see, observe, and respond — and then get out of your way.</p>
-      <div class="philosophy-values">
-        <div class="value-item">
-          <div class="value-icon">👁️</div>
-          <div>
-            <div class="value-title">Learning to See</div>
-            <div class="value-desc">Before you can paint or draw well, you need to truly observe. We slow students down and train their visual perception.</div>
-          </div>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">🔄</div>
-          <div>
-            <div class="value-title">Iteration Over Outcome</div>
-            <div class="value-desc">Mistakes are data. We celebrate experiments, encourage iteration, and treat every failure as a lesson.</div>
-          </div>
-        </div>
-        <div class="value-item">
-          <div class="value-icon">🌱</div>
-          <div>
-            <div class="value-title">Nurturing Voice</div>
-            <div class="value-desc">Technical skill is a tool, not a destination. We help students develop a personal artistic identity they can build on forever.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="philosophy-quote">
-      <p class="quote-text">"Art isn't just a skill — it's a way of life. I've had students who walked in convinced they couldn't draw, and within a few weeks they were making work they were genuinely proud of. The hand follows the eye, and confidence follows the hand."</p>
-      <div class="quote-author">
-        <div class="quote-avatar">👩‍🎨</div>
-        <div>
-          <div class="quote-name">Farnaz Amin</div>
-          <div class="quote-role">Founder &amp; Studio Director, Beyond the Canvas</div>
-        </div>
+      <div class="security-badges">
+        <div class="security-badge">🔒 SSL Secured</div>
+        &nbsp;·&nbsp;
+        <div class="security-badge">✅ Instant Confirmation</div>
+        &nbsp;·&nbsp;
+        <div class="security-badge">↩️ Free Cancellation</div>
       </div>
     </div>
   </div>
 
-  <!-- Join the Team -->
-  <div class="join-section">
-    <div class="join-text">
-      <h3>🎨 Interested in Teaching With Us?</h3>
-      <p>We're always looking for talented working artists who are passionate about teaching. If you're an experienced artist with teaching experience and a love of sharing your craft, we'd love to hear from you.</p>
-    </div>
-    <a href="contact.html" class="btn-terra">Get in Touch →</a>
-  </div>
+  <!-- Right: Checkout Form -->
+  <div class="checkout-form-panel">
 
+    <!-- Step 1: Your Details -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">1</div>
+        <h3>Your Details</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Jane" required autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Smith" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="jane@example.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="(555) 000-0000" autocomplete="tel">
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2: Schedule -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">2</div>
+        <h3>Choose Your Date &amp; Time</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="datetime-grid">
+          <div class="form-group">
+            <label for="sessionDate">Preferred Date <span class="req">*</span></label>
+            <input type="date" id="sessionDate" name="sessionDate" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="sessionTime">Session Time <span class="req">*</span></label>
+            <select id="sessionTime" name="sessionTime" class="form-input form-select" required>
+              <option value="" disabled selected>— Select time —</option>
+              <option>10:00 am – 12:00 pm</option>
+              <option>12:30 pm – 2:30 pm</option>
+              <option>3:00 pm – 5:00 pm</option>
+              <option>5:30 pm – 7:30 pm</option>
+              <option>6:00 pm – 8:00 pm</option>
+              <option>6:00 pm – 9:00 pm</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="experience">Experience Level</label>
+          <select id="experience" name="experience" class="form-input form-select">
+            <option value="" disabled selected>— How would you describe yourself? —</option>
+            <option>Complete beginner</option>
+            <option>Some experience</option>
+            <option>Intermediate</option>
+            <option>Advanced / returning student</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="notes">Special Requests or Notes</label>
+          <textarea id="notes" name="notes" class="form-input form-textarea" placeholder="Allergies, accessibility needs, gift booking, etc."></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Payment -->
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">3</div>
+        <h3>Payment</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="payment-info-bar">🔒 Your payment is secured with 256-bit SSL encryption</div>
+        <div class="form-group">
+          <label>Card Details <span class="req">*</span></label>
+          <!--
+          ══════════════════════════════════════════════
+          STRIPE INTEGRATION — Ready to connect
+          ══════════════════════════════════════════════
+          1. Add before </body>:
+             <script src="https://js.stripe.com/v3/"></script>
+
+          2. Initialize (add your key via environment variable, never hardcode live keys):
+             const stripe = Stripe(window.STRIPE_PK /* set from server-rendered config */);
+             const elements = stripe.elements();
+             const cardElement = elements.create('card', {
+               style: { base: { fontFamily: 'Inter, sans-serif', fontSize: '15px', color: '#1A1A1A' } }
+             });
+             cardElement.mount('#card-element');
+             cardElement.on('change', ({error}) => {
+               document.getElementById('card-errors').textContent = error ? error.message : '';
+             });
+
+          3. On submit:
+             const { paymentMethod, error } = await stripe.createPaymentMethod({
+               type: 'card', card: cardElement,
+               billing_details: { name: firstName + ' ' + lastName, email }
+             });
+             // POST paymentMethod.id + amount to your backend
+          ══════════════════════════════════════════════
+          -->
+          <div id="card-element">
+            <!-- Stripe Elements mounts here. Remove mock below when connected. -->
+            <div class="stripe-card-mock">
+              <span class="stripe-card-mock-num">•••• •••• •••• ••••</span>
+              <div class="stripe-card-mock-icons">
+                <div class="card-icon">VISA</div>
+                <div class="card-icon">MC</div>
+                <div class="card-icon">AMEX</div>
+              </div>
+            </div>
+          </div>
+          <div id="card-errors" role="alert"></div>
+          <div class="stripe-badge">🔒 Powered by <strong>Stripe</strong> — Card details never stored on our servers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit -->
+    <button class="submit-btn" id="submitBtn" onclick="handleCheckout(event)" type="button">
+      <span class="btn-icon">🎨</span>
+      <span>Complete Booking — <span id="btnTotal">$65.00</span></span>
+      <div class="btn-spinner"></div>
+    </button>
+    <p class="submit-note">🔒 Secure checkout · Confirmation email sent instantly</p>
+
+  </div>
+</div>
+
+<!-- Success Overlay -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-check">✅</div>
+    <h2 class="success-title">Booking Confirmed!</h2>
+    <p class="success-desc">Thank you! Your class has been booked. We can't wait to see you in the studio.</p>
+    <div class="success-ref" id="successRef">A confirmation has been sent to your email address.</div>
+    <a href="index.html" class="success-back">🏠 Back to Home</a>
+  </div>
+</div>
+
+<!-- FAQ Strip -->
+<div class="faq-strip">
+  <div class="faq-inner">
+    <div class="faq-heading">Frequently Asked Questions</div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">Do I need to bring anything?</div>
+        <div class="faq-a">Nothing at all — all materials, tools, and aprons are provided. Just wear something you don't mind getting paint on.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">What is your cancellation policy?</div>
+        <div class="faq-a">Full refunds up to 48 hours before your class. Within 48 hours, you can reschedule to another date at no charge.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I book as a gift?</div>
+        <div class="faq-a">Absolutely! Add a note in "Special Requests" and we'll email you a printable gift card to present to the recipient.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are private events available?</div>
+        <div class="faq-a">Yes! Select "Private Event / Party" above and include your event details in the notes. We'll follow up to customise.</div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Footer -->
@@ -559,25 +554,26 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <span class="logo-name">Beyond the<span> Canvas</span></span>
-      <p>A creative space for all ages to explore and grow through Art. From oil painting and drawing to crafts, resin, and fine Art, we offer inspiring classes and art camps.</p>
+      <p>A creative space for all ages to explore and grow through Art. From oil painting and drawing to crafts, resin, and fine Art.</p>
     </div>
     <div class="footer-col">
       <h4>Navigate</h4>
       <a href="index.html">Home</a>
-      <a href="about.html">Biography</a>
+      <a href="classes.html">Classes</a>
       <a href="gallery.html">Gallery</a>
+      <a href="instructors.html">Book Now</a>
+      <a href="about.html">Biography</a>
       <a href="contact.html">Contact</a>
     </div>
     <div class="footer-col">
       <h4>Services</h4>
-      <a href="contact.html">Private Events &amp; Classes</a>
-      <a href="contact.html">Special Party &amp; Meeting</a>
-      <a href="contact.html">Oil Painting Classes</a>
-      <a href="contact.html">Drawing &amp; Fine Art</a>
-      <a href="contact.html">Resin Art</a>
+      <a href="instructors.html">Private Events &amp; Classes</a>
+      <a href="instructors.html">Birthday Parties</a>
+      <a href="instructors.html">Oil Painting Classes</a>
+      <a href="instructors.html">Resin Art</a>
     </div>
     <div class="footer-col">
-      <h4>Hours</h4>
+      <h4>Studio Hours</h4>
       <a href="contact.html">Mon–Fri: 10am – 8pm</a>
       <a href="contact.html">Saturday: 9am – 6pm</a>
       <a href="contact.html">Sunday: 11am – 5pm</a>
@@ -598,6 +594,89 @@
   function toggleMenu() {
     document.getElementById('mobileMenu').classList.toggle('open');
     document.getElementById('mobileOverlay').classList.toggle('open');
+  }
+
+  let currentPrice = 65;
+  let currentName  = 'Oil Painting Fundamentals';
+
+  function updateOrder(radio) {
+    currentPrice = parseFloat(radio.dataset.price);
+    currentName  = radio.dataset.name;
+    document.querySelectorAll('.class-option').forEach(opt => opt.classList.remove('selected'));
+    radio.closest('.class-option').classList.add('selected');
+    recalcTotal();
+  }
+
+  function changeQty(delta) {
+    const inp = document.getElementById('qtyInput');
+    inp.value = Math.min(14, Math.max(1, parseInt(inp.value || 1) + delta));
+    recalcTotal();
+  }
+
+  function recalcTotal() {
+    const qty   = parseInt(document.getElementById('qtyInput').value) || 1;
+    const total = currentPrice * qty;
+    const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const formatPrice = n => '$' + n.toFixed(2).replace(/\.00$/, '');
+    document.getElementById('orderLineName').textContent  = `${currentName} \u00d7 ${qty}`;
+    document.getElementById('orderLinePrice').textContent = formatPrice(total);
+    document.getElementById('orderTotal').textContent     = formatPrice(total);
+    document.getElementById('btnTotal').textContent       = formatPrice(total);
+  }
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function handleCheckout(e) {
+    e.preventDefault();
+    const fname = document.getElementById('firstName').value.trim();
+    const lname = document.getElementById('lastName').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const date  = document.getElementById('sessionDate').value;
+    const time  = document.getElementById('sessionTime').value;
+
+    if (!fname || !lname || !email || !date || !time) {
+      alert('Please fill in all required fields (marked with *).');
+      return;
+    }
+    if (!EMAIL_REGEX.test(email)) {
+      alert('Please enter a valid email address.');
+      return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+
+    /*
+    STRIPE — Replace timeout with real payment:
+    const { paymentMethod, error } = await stripe.createPaymentMethod({
+      type: 'card', card: cardElement,
+      billing_details: { name: fname + ' ' + lname, email }
+    });
+    if (error) { document.getElementById('card-errors').textContent = error.message; btn.classList.remove('loading'); return; }
+    // POST { paymentMethodId: paymentMethod.id, amount: currentPrice * qty, class: currentName } to backend
+    */
+
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.getElementById('successRef').textContent = 'Confirmation sent to ' + email;
+      document.getElementById('successOverlay').classList.add('show');
+    }, 2000);
+  }
+
+  document.getElementById('successOverlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  // Set min date to today
+  const dateInput = document.getElementById('sessionDate');
+  dateInput.min = new Date().toISOString().split('T')[0];
+  dateInput.value = dateInput.min;
+
+  // Pre-select class from URL ?class=oil etc.
+  const preselect = new URLSearchParams(window.location.search).get('class');
+  if (preselect) {
+    const radio = document.querySelector('input[value="' + preselect + '"]');
+    if (radio) { radio.checked = true; updateOrder(radio); }
   }
 </script>
 </body>
