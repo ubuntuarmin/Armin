@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expertise - Firoozeh Behnia Business Management</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #0F2040; --navy2: #162B50; --gold: #C9A84C; --gold2: #D4B870;
+      --teal: #1A8870; --teal2: #22A88A; --light: #F4F7FB; --light2: #EBF0F8;
+      --text: #1C2B3A; --muted: #5A6E85; --white: #FFFFFF;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+    /* NAV */
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px rgba(15,32,64,0.15); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(201,168,76,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.3rem; font-weight: 700; }
+    .logo-text span { display: block; font-size: 0.65rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; text-transform: uppercase; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #C8D8EC; text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); z-index: 1000; }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); padding: 80px 24px; }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.78rem; color: #5A7A9A; margin-bottom: 18px; }
+    .breadcrumb a { color: var(--gold2); text-decoration: none; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: #EEF3FF; font-family: Georgia, serif; margin-bottom: 12px; }
+    .page-hero p { font-size: 1rem; color: #8AAACA; max-width: 600px; }
+
+    /* SECTION */
+    .section { padding: 80px 24px; }
+    .section-alt { background: var(--light); }
+    .section-dark { background: var(--navy); }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-header .eyebrow { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
+    .section-header h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); color: var(--navy); font-family: Georgia, serif; margin-bottom: 14px; }
+    .section-dark .section-header h2 { color: #EEF3FF; }
+    .section-header p { font-size: 0.95rem; color: var(--muted); max-width: 640px; margin: 0 auto; }
+    .section-dark .section-header p { color: #8AAACA; }
+    .divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin: 14px auto 0; }
+
+    /* SKILL BARS */
+    .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+    .skill-category h3 { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 24px; }
+    .skill-item { margin-bottom: 20px; }
+    .skill-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .skill-name { font-size: 0.9rem; color: var(--navy); font-weight: 600; }
+    .skill-percent { font-size: 0.8rem; color: var(--teal); font-weight: 700; }
+    .skill-bar { height: 8px; background: var(--light2); border-radius: 100px; overflow: hidden; }
+    .skill-fill { height: 100%; border-radius: 100px; background: linear-gradient(90deg, var(--navy), var(--teal)); transition: width 1.2s ease; }
+    @media (max-width: 768px) { .skills-grid { grid-template-columns: 1fr; } }
+
+    /* EXPERTISE AREAS */
+    .expertise-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .expertise-card { background: var(--white); border: 1px solid var(--light2); border-radius: 14px; padding: 32px 24px; transition: all 0.3s; }
+    .expertise-card:hover { box-shadow: 0 12px 40px rgba(15,32,64,0.1); transform: translateY(-4px); border-color: var(--gold); }
+    .expertise-icon { font-size: 2.4rem; margin-bottom: 16px; }
+    .expertise-card h3 { font-size: 1rem; color: var(--navy); font-weight: 700; margin-bottom: 10px; }
+    .expertise-card p { font-size: 0.85rem; color: var(--muted); line-height: 1.75; margin-bottom: 16px; }
+    .expertise-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .exp-tag { background: var(--light2); color: var(--navy2); font-size: 0.68rem; font-weight: 600; padding: 4px 10px; border-radius: 100px; letter-spacing: 0.3px; }
+    @media (max-width: 900px) { .expertise-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .expertise-grid { grid-template-columns: 1fr; } }
+
+    /* TOOLS & FRAMEWORKS */
+    .tools-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .tool-card { background: var(--white); border: 1px solid var(--light2); border-radius: 10px; padding: 20px 16px; text-align: center; transition: all 0.2s; }
+    .tool-card:hover { border-color: var(--gold); box-shadow: 0 6px 20px rgba(15,32,64,0.08); }
+    .tool-icon { font-size: 1.8rem; margin-bottom: 8px; }
+    .tool-name { font-size: 0.8rem; color: var(--navy); font-weight: 700; }
+    .tool-type { font-size: 0.7rem; color: var(--muted); margin-top: 3px; }
+    @media (max-width: 768px) { .tools-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 480px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+
+    /* CERTIFICATIONS */
+    .certs-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .cert-card { background: var(--white); border: 1px solid var(--light2); border-radius: 14px; padding: 28px 22px; display: flex; gap: 16px; align-items: flex-start; transition: all 0.3s; }
+    .cert-card:hover { box-shadow: 0 8px 28px rgba(15,32,64,0.08); border-color: var(--gold); }
+    .cert-badge { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), var(--navy2)); border: 3px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+    .cert-name { font-size: 0.95rem; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+    .cert-body { font-size: 0.8rem; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
+    .cert-year { font-size: 0.75rem; color: var(--muted); }
+    @media (max-width: 768px) { .certs-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .certs-grid { grid-template-columns: 1fr; } }
+
+    /* LANGUAGES */
+    .lang-grid { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+    .lang-card { background: var(--white); border: 1px solid var(--light2); border-radius: 12px; padding: 24px 28px; text-align: center; min-width: 140px; }
+    .lang-flag { font-size: 2rem; margin-bottom: 8px; }
+    .lang-name { font-size: 0.9rem; font-weight: 700; color: var(--navy); }
+    .lang-level { font-size: 0.75rem; color: var(--teal); font-weight: 600; margin-top: 4px; }
+
+    /* FOOTER */
+    footer { background: #080F1E; padding: 40px 24px 28px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: #3A5070; }
+    .footer-bottom a { color: #3A5070; text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-bottom a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">Firoozeh Behnia<span>Business Consultant</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="expertise.html" class="active">Expertise</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Expertise</div>
+    <h1>Areas of Expertise</h1>
+    <p>Deep functional knowledge, proven frameworks, and a cross-industry perspective built over 18 years of executive consulting work.</p>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Core Competencies</span>
+      <h2>Professional Skills</h2>
+      <p>A blend of analytical rigour, leadership capability, and domain knowledge across management disciplines.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-category">
+        <h3>Management Consulting</h3>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Strategic Planning & Execution</span><span class="skill-percent">96%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:96%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Organizational Design</span><span class="skill-percent">92%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:92%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Change Management</span><span class="skill-percent">95%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:95%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Performance Management</span><span class="skill-percent">90%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:90%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Business Process Improvement</span><span class="skill-percent">88%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:88%;"></div></div>
+        </div>
+      </div>
+      <div class="skill-category">
+        <h3>Leadership & People</h3>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Executive Coaching</span><span class="skill-percent">93%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:93%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Stakeholder Management</span><span class="skill-percent">97%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:97%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Cross-Cultural Leadership</span><span class="skill-percent">94%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:94%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Workshop Facilitation</span><span class="skill-percent">91%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:91%;"></div></div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header"><span class="skill-name">Team Building & Development</span><span class="skill-percent">89%</span></div>
+          <div class="skill-bar"><div class="skill-fill" style="width:89%;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERTISE AREAS -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Deep Specializations</span>
+      <h2>Functional Expertise Areas</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="expertise-grid">
+      <div class="expertise-card">
+        <div class="expertise-icon">🧭</div>
+        <h3>Corporate Strategy</h3>
+        <p>Portfolio strategy, market entry, competitive positioning, M&A integration, and business model innovation across diverse sectors and geographies.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">Porter's Five Forces</span>
+          <span class="exp-tag">Blue Ocean</span>
+          <span class="exp-tag">Ansoff Matrix</span>
+          <span class="exp-tag">BCG Matrix</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🔄</div>
+        <h3>Transformation & Change</h3>
+        <p>Managing and sustaining organizational change through structured methodologies — from readiness assessment to full adoption and embedment.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">Kotter 8-Step</span>
+          <span class="exp-tag">Prosci ADKAR</span>
+          <span class="exp-tag">McKinsey 7-S</span>
+          <span class="exp-tag">Agile</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">⚙️</div>
+        <h3>Operations & Process</h3>
+        <p>End-to-end process redesign, efficiency improvement, and lean management to eliminate waste and build high-performance operating systems.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">Lean Management</span>
+          <span class="exp-tag">Six Sigma</span>
+          <span class="exp-tag">Value Stream Mapping</span>
+          <span class="exp-tag">Kaizen</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">🏛️</div>
+        <h3>Governance & Risk</h3>
+        <p>Board effectiveness, corporate governance frameworks, risk management systems, and accountability structures for sustainable organizational performance.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">COSO Framework</span>
+          <span class="exp-tag">ISO 31000</span>
+          <span class="exp-tag">Board Advisory</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">👥</div>
+        <h3>Human Capital Management</h3>
+        <p>Talent strategy, competency frameworks, succession planning, and employee engagement design to build high-performing organizations.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">9-Box Talent Grid</span>
+          <span class="exp-tag">Competency Models</span>
+          <span class="exp-tag">Succession Planning</span>
+        </div>
+      </div>
+      <div class="expertise-card">
+        <div class="expertise-icon">📊</div>
+        <h3>Data-Driven Decision Making</h3>
+        <p>Building analytical cultures, KPI frameworks, OKR systems, and executive reporting infrastructure that enable confident, evidence-based leadership.</p>
+        <div class="expertise-tags">
+          <span class="exp-tag">OKRs</span>
+          <span class="exp-tag">Balanced Scorecard</span>
+          <span class="exp-tag">KPI Design</span>
+          <span class="exp-tag">Dashboards</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS & FRAMEWORKS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Methodologies & Frameworks</span>
+      <h2>Tools I Work With</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="tools-grid">
+      <div class="tool-card"><div class="tool-icon">🎯</div><div class="tool-name">OKRs</div><div class="tool-type">Goal Framework</div></div>
+      <div class="tool-card"><div class="tool-icon">📉</div><div class="tool-name">Lean Six Sigma</div><div class="tool-type">Process Excellence</div></div>
+      <div class="tool-card"><div class="tool-icon">🔁</div><div class="tool-name">Agile / Scrum</div><div class="tool-type">Project Method</div></div>
+      <div class="tool-card"><div class="tool-icon">📋</div><div class="tool-name">Balanced Scorecard</div><div class="tool-type">Performance</div></div>
+      <div class="tool-card"><div class="tool-icon">🗺️</div><div class="tool-name">Design Thinking</div><div class="tool-type">Innovation</div></div>
+      <div class="tool-card"><div class="tool-icon">🔺</div><div class="tool-name">McKinsey 7-S</div><div class="tool-type">Org Alignment</div></div>
+      <div class="tool-card"><div class="tool-icon">🧩</div><div class="tool-name">Business Model Canvas</div><div class="tool-type">Strategy</div></div>
+      <div class="tool-card"><div class="tool-icon">📊</div><div class="tool-name">ADKAR</div><div class="tool-type">Change Management</div></div>
+      <div class="tool-card"><div class="tool-icon">🏗️</div><div class="tool-name">PRINCE2</div><div class="tool-type">Project Management</div></div>
+      <div class="tool-card"><div class="tool-icon">🌊</div><div class="tool-name">Kotter 8-Step</div><div class="tool-type">Change Leadership</div></div>
+      <div class="tool-card"><div class="tool-icon">🔍</div><div class="tool-name">SWOT / PESTLE</div><div class="tool-type">Analysis</div></div>
+      <div class="tool-card"><div class="tool-icon">⚖️</div><div class="tool-name">Porter's Framework</div><div class="tool-type">Competitive Analysis</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Credentials</span>
+      <h2>Certifications & Qualifications</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-badge">🎓</div>
+        <div>
+          <div class="cert-name">MBA – Master of Business Administration</div>
+          <div class="cert-body">INSEAD, Fontainebleau, France</div>
+          <div class="cert-year">Awarded 2006 · Dean's List</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">📋</div>
+        <div>
+          <div class="cert-name">Project Management Professional (PMP)</div>
+          <div class="cert-body">Project Management Institute (PMI)</div>
+          <div class="cert-year">Certified 2009 · Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🏅</div>
+        <div>
+          <div class="cert-name">Certified Management Consultant (CMC)</div>
+          <div class="cert-body">Institute of Management Consultants</div>
+          <div class="cert-year">Certified 2012 · Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">⚙️</div>
+        <div>
+          <div class="cert-name">Lean Six Sigma Black Belt</div>
+          <div class="cert-body">American Society for Quality (ASQ)</div>
+          <div class="cert-year">Certified 2010 · Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🤝</div>
+        <div>
+          <div class="cert-name">Associate Certified Coach (ACC)</div>
+          <div class="cert-body">International Coaching Federation (ICF)</div>
+          <div class="cert-year">Certified 2015 · Active</div>
+        </div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-badge">🏛️</div>
+        <div>
+          <div class="cert-name">Executive Leadership Program</div>
+          <div class="cert-body">Harvard Kennedy School, Boston</div>
+          <div class="cert-year">Completed 2019</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Communication</span>
+      <h2>Languages</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="lang-grid">
+      <div class="lang-card"><div class="lang-flag">🇬🇧</div><div class="lang-name">English</div><div class="lang-level">Native / Full Professional</div></div>
+      <div class="lang-card"><div class="lang-flag">🇮🇷</div><div class="lang-name">Persian (Farsi)</div><div class="lang-level">Native</div></div>
+      <div class="lang-card"><div class="lang-flag">🇫🇷</div><div class="lang-name">French</div><div class="lang-level">Professional Working</div></div>
+      <div class="lang-card"><div class="lang-flag">🇩🇪</div><div class="lang-name">German</div><div class="lang-level">Conversational</div></div>
+      <div class="lang-card"><div class="lang-flag">🇦🇪</div><div class="lang-name">Arabic</div><div class="lang-level">Elementary</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>© 2025 Firoozeh Behnia. All rights reserved.</p>
+      <a href="../customerno35.html">← Back to Template Preview</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+</script>
+</body>
+</html>

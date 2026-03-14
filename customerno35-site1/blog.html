@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Business Insights Blog - Firoozeh Behnia</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #0F2040; --navy2: #162B50; --gold: #C9A84C; --gold2: #D4B870;
+      --teal: #1A8870; --light: #F4F7FB; --light2: #EBF0F8;
+      --text: #1C2B3A; --muted: #5A6E85; --white: #FFFFFF;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+    /* NAV */
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px rgba(15,32,64,0.15); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(201,168,76,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.3rem; font-weight: 700; }
+    .logo-text span { display: block; font-size: 0.65rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; text-transform: uppercase; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #C8D8EC; text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); z-index: 1000; }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); padding: 80px 24px; }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.78rem; color: #5A7A9A; margin-bottom: 18px; }
+    .breadcrumb a { color: var(--gold2); text-decoration: none; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: #EEF3FF; font-family: Georgia, serif; margin-bottom: 12px; }
+    .page-hero p { font-size: 1rem; color: #8AAACA; max-width: 600px; }
+
+    /* BLOG LAYOUT */
+    .blog-layout { padding: 72px 24px; }
+    .blog-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 340px; gap: 60px; }
+    @media (max-width: 1000px) { .blog-inner { grid-template-columns: 1fr; } }
+
+    /* FILTERS */
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+    .filter-btn { padding: 7px 18px; border-radius: 100px; border: 1px solid var(--light2); background: var(--white); color: var(--muted); font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+    .filter-btn.active, .filter-btn:hover { background: var(--navy); color: var(--gold); border-color: var(--navy); }
+
+    /* BLOG CARDS */
+    .featured-post { border: 1px solid var(--light2); border-radius: 16px; overflow: hidden; margin-bottom: 32px; transition: all 0.3s; }
+    .featured-post:hover { box-shadow: 0 12px 40px rgba(15,32,64,0.1); transform: translateY(-3px); }
+    .featured-img { background: var(--light2); border-bottom: 2px dashed #C0CDE0; min-height: 280px; display: flex; align-items: center; justify-content: center; flex-direction: column; gap: 10px; }
+    .featured-img .ph-icon { font-size: 4rem; opacity: 0.3; }
+    .featured-img .ph-label { color: var(--muted); font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; }
+    .featured-body { padding: 32px 28px; }
+    .post-meta { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; flex-wrap: wrap; }
+    .post-category { background: var(--navy); color: var(--gold); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 12px; border-radius: 100px; }
+    .post-date { font-size: 0.78rem; color: var(--muted); }
+    .post-read { font-size: 0.78rem; color: var(--muted); }
+    .featured-body h2 { font-size: 1.5rem; color: var(--navy); font-family: Georgia, serif; margin-bottom: 12px; line-height: 1.35; }
+    .featured-body p { font-size: 0.9rem; color: var(--muted); line-height: 1.8; margin-bottom: 20px; }
+    .read-more { display: inline-flex; align-items: center; gap: 6px; color: var(--gold); font-size: 0.85rem; font-weight: 700; text-decoration: none; transition: gap 0.2s; }
+    .read-more:hover { gap: 10px; }
+
+    .posts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .post-card { border: 1px solid var(--light2); border-radius: 14px; overflow: hidden; transition: all 0.3s; }
+    .post-card:hover { box-shadow: 0 8px 28px rgba(15,32,64,0.08); transform: translateY(-3px); }
+    .post-img { background: var(--light2); border-bottom: 2px dashed #C0CDE0; min-height: 160px; display: flex; align-items: center; justify-content: center; }
+    .post-img .ph-icon { font-size: 2.5rem; opacity: 0.3; }
+    .post-body { padding: 20px 18px; }
+    .post-body h3 { font-size: 0.98rem; color: var(--navy); font-family: Georgia, serif; margin-bottom: 8px; line-height: 1.4; font-weight: 700; }
+    .post-body p { font-size: 0.83rem; color: var(--muted); line-height: 1.7; margin-bottom: 12px; }
+    @media (max-width: 640px) { .posts-grid { grid-template-columns: 1fr; } }
+
+    /* SIDEBAR */
+    .sidebar {}
+    .sidebar-widget { background: var(--light); border-radius: 14px; padding: 28px 22px; margin-bottom: 28px; }
+    .sidebar-widget h4 { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 18px; }
+    .sidebar-bio { display: flex; flex-direction: column; align-items: center; text-align: center; }
+    .sidebar-avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--light2); border: 2px dashed #C0CDE0; display: flex; align-items: center; justify-content: center; font-size: 2rem; margin-bottom: 12px; }
+    .sidebar-name { font-size: 0.95rem; font-weight: 700; color: var(--navy); }
+    .sidebar-role { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
+    .sidebar-bio p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    .cat-list { list-style: none; }
+    .cat-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--light2); }
+    .cat-list li:last-child { border-bottom: none; }
+    .cat-list a { font-size: 0.85rem; color: var(--text); text-decoration: none; transition: color 0.2s; }
+    .cat-list a:hover { color: var(--gold); }
+    .cat-count { background: var(--light2); color: var(--muted); font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+    .tags-cloud { display: flex; gap: 6px; flex-wrap: wrap; }
+    .tag { background: var(--light2); color: var(--navy2); font-size: 0.72rem; font-weight: 600; padding: 5px 12px; border-radius: 100px; text-decoration: none; transition: all 0.2s; }
+    .tag:hover { background: var(--navy); color: var(--gold); }
+    .newsletter-form { display: flex; flex-direction: column; gap: 10px; }
+    .newsletter-form input { padding: 10px 14px; border: 1px solid var(--light2); border-radius: 6px; font-size: 0.85rem; background: var(--white); color: var(--text); }
+    .newsletter-form button { background: var(--gold); color: var(--navy); padding: 10px; border: none; border-radius: 6px; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background 0.3s; }
+    .newsletter-form button:hover { background: var(--gold2); }
+
+    /* FOOTER */
+    footer { background: #080F1E; padding: 40px 24px 28px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: #3A5070; }
+    .footer-bottom a { color: #3A5070; text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-bottom a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">Firoozeh Behnia<span>Business Consultant</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="expertise.html">Expertise</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> / Blog</div>
+    <h1>Business Insights</h1>
+    <p>Thought leadership on strategy, leadership, change management, and organizational performance — drawn from 18 years at the frontlines of business transformation.</p>
+  </div>
+</div>
+
+<!-- BLOG LAYOUT -->
+<div class="blog-layout">
+  <div class="blog-inner">
+
+    <!-- MAIN CONTENT -->
+    <div class="blog-main">
+      <div class="filters">
+        <button class="filter-btn active">All Topics</button>
+        <button class="filter-btn">Strategy</button>
+        <button class="filter-btn">Leadership</button>
+        <button class="filter-btn">Change Management</button>
+        <button class="filter-btn">Operations</button>
+        <button class="filter-btn">Coaching</button>
+      </div>
+
+      <!-- FEATURED ARTICLE -->
+      <div class="featured-post">
+        <div class="featured-img">
+          <div class="ph-icon">📰</div>
+          <div class="ph-label">Featured Article Image · 1200 × 600 px</div>
+        </div>
+        <div class="featured-body">
+          <div class="post-meta">
+            <span class="post-category">Strategy</span>
+            <span class="post-date">March 8, 2025</span>
+            <span class="post-read">12 min read</span>
+          </div>
+          <h2>The Five Strategic Blindspots That Derail Organizational Transformation</h2>
+          <p>After more than 45 transformation engagements across five continents, I have identified five recurring patterns — strategic blindspots — that consistently derail even the most well-resourced change initiatives. Understanding these patterns is the first step toward leading transformation that actually sticks...</p>
+          <a href="#" class="read-more">Read Full Article →</a>
+        </div>
+      </div>
+
+      <!-- POST GRID -->
+      <div class="posts-grid">
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">🤝</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Leadership</span><span class="post-date">Feb 22, 2025</span></div>
+            <h3>Why Psychological Safety Is the Most Underrated Leadership Skill in 2025</h3>
+            <p>Leaders who create environments of genuine psychological safety consistently outperform their peers across every measurable dimension of organizational performance.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">📊</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Operations</span><span class="post-date">Feb 10, 2025</span></div>
+            <h3>OKRs vs. Balanced Scorecard: Which Performance Framework Is Right for Your Organization?</h3>
+            <p>A practical comparison of two of the most widely adopted performance management frameworks, with guidance on selecting the right fit for your organizational context.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">🔄</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Change Management</span><span class="post-date">Jan 28, 2025</span></div>
+            <h3>Change Fatigue Is Real — Here's How to Combat It Without Losing Momentum</h3>
+            <p>Organizations undergoing multiple simultaneous changes face a silent killer: change fatigue. Learn the evidence-based strategies to sustain momentum and engagement.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">🏆</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Coaching</span><span class="post-date">Jan 14, 2025</span></div>
+            <h3>The Executive Derailment Paradox: Why High Performers Fail When Promoted to Senior Leadership</h3>
+            <p>The skills that make someone exceptional as a manager often become liabilities at the executive level. Understanding why — and how to course-correct — is essential leadership knowledge.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">🌐</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Strategy</span><span class="post-date">Dec 20, 2024</span></div>
+            <h3>How to Build a Truly Resilient Business Strategy in an Era of Radical Uncertainty</h3>
+            <p>Traditional five-year strategic plans are increasingly obsolete. Here's a modern framework for building a dynamic strategy that flexes without losing direction.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+        <div class="post-card">
+          <div class="post-img"><div class="ph-icon">🏗️</div></div>
+          <div class="post-body">
+            <div class="post-meta"><span class="post-category">Leadership</span><span class="post-date">Dec 5, 2024</span></div>
+            <h3>The Organizational Design Mistakes That Cost Companies Millions</h3>
+            <p>Poor organizational design is one of the most expensive and least discussed business problems. These are the most common design failures I encounter — and how to avoid them.</p>
+            <a href="#" class="read-more">Read More →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-widget">
+        <h4>About the Author</h4>
+        <div class="sidebar-bio">
+          <div class="sidebar-avatar">👤</div>
+          <div class="sidebar-name">Firoozeh Behnia</div>
+          <div class="sidebar-role">Business Management Consultant</div>
+          <p>18 years of experience in strategy, change management, and executive coaching across 12 countries and 15 industries.</p>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h4>Newsletter</h4>
+        <p style="font-size:0.83rem;color:#5A6E85;margin-bottom:14px;">Get my latest insights on strategy and leadership delivered monthly to your inbox.</p>
+        <div class="newsletter-form">
+          <input type="text" placeholder="Your Name">
+          <input type="email" placeholder="Your Email">
+          <button type="submit">Subscribe →</button>
+        </div>
+      </div>
+      <div class="sidebar-widget">
+        <h4>Categories</h4>
+        <ul class="cat-list">
+          <li><a href="#">Strategy</a><span class="cat-count">14</span></li>
+          <li><a href="#">Leadership</a><span class="cat-count">11</span></li>
+          <li><a href="#">Change Management</a><span class="cat-count">9</span></li>
+          <li><a href="#">Operations</a><span class="cat-count">8</span></li>
+          <li><a href="#">Executive Coaching</a><span class="cat-count">7</span></li>
+          <li><a href="#">Organizational Design</a><span class="cat-count">5</span></li>
+        </ul>
+      </div>
+      <div class="sidebar-widget">
+        <h4>Topics</h4>
+        <div class="tags-cloud">
+          <a href="#" class="tag">Strategy</a>
+          <a href="#" class="tag">OKRs</a>
+          <a href="#" class="tag">Change</a>
+          <a href="#" class="tag">Leadership</a>
+          <a href="#" class="tag">Coaching</a>
+          <a href="#" class="tag">Culture</a>
+          <a href="#" class="tag">Innovation</a>
+          <a href="#" class="tag">KPIs</a>
+          <a href="#" class="tag">Agile</a>
+          <a href="#" class="tag">Teams</a>
+          <a href="#" class="tag">Finance</a>
+          <a href="#" class="tag">Growth</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>© 2025 Firoozeh Behnia. All rights reserved.</p>
+      <a href="../customerno35.html">← Back to Template Preview</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>

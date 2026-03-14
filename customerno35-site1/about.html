@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Firoozeh Behnia - Business Management Consultant</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --navy: #0F2040; --navy2: #162B50; --navy3: #1E3A6E;
+      --gold: #C9A84C; --gold2: #D4B870; --teal: #1A8870; --teal2: #22A88A;
+      --light: #F4F7FB; --light2: #EBF0F8; --text: #1C2B3A; --muted: #5A6E85; --white: #FFFFFF;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--white); color: var(--text); line-height: 1.7; }
+
+    /* NAV */
+    nav { background: var(--navy); padding: 16px 0; position: sticky; top: 0; z-index: 1000; border-bottom: 3px solid var(--gold); box-shadow: 0 2px 20px rgba(15,32,64,0.15); }
+    .nav-container { max-width: 1280px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder { width: 50px; height: 50px; border: 3px solid var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.55rem; font-weight: 700; color: var(--gold); background: rgba(201,168,76,0.1); text-align: center; }
+    .logo-text { color: var(--gold); font-size: 1.3rem; font-weight: 700; }
+    .logo-text span { display: block; font-size: 0.65rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; text-transform: uppercase; }
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: #C8D8EC; text-decoration: none; font-size: 0.88rem; font-weight: 600; transition: color 0.3s; min-height: 44px; display: flex; align-items: center; }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-links { position: fixed; top: 0; right: -100%; height: 100vh; width: 70%; background: var(--navy2); flex-direction: column; padding: 90px 30px 40px; gap: 20px; transition: right 0.3s ease; box-shadow: -5px 0 30px rgba(0,0,0,0.4); z-index: 1000; }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* PAGE HERO */
+    .page-hero { background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%); padding: 80px 24px; }
+    .page-hero-inner { max-width: 1280px; margin: 0 auto; }
+    .breadcrumb { font-size: 0.78rem; color: #5A7A9A; margin-bottom: 18px; }
+    .breadcrumb a { color: var(--gold2); text-decoration: none; }
+    .page-hero h1 { font-size: clamp(2rem, 4vw, 3rem); color: #EEF3FF; font-family: Georgia, serif; margin-bottom: 12px; }
+    .page-hero p { font-size: 1rem; color: #8AAACA; max-width: 600px; }
+
+    /* SECTIONS */
+    .section { padding: 80px 24px; }
+    .section-alt { background: var(--light); }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+    .section-header { margin-bottom: 56px; }
+    .section-header .eyebrow { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
+    .section-header h2 { font-size: clamp(1.7rem, 3vw, 2.4rem); color: var(--navy); font-family: Georgia, serif; margin-bottom: 14px; }
+    .section-header p { font-size: 0.95rem; color: var(--muted); max-width: 640px; }
+    .divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); border-radius: 2px; margin-top: 14px; }
+
+    /* BIO SECTION */
+    .bio-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 64px; align-items: start; }
+    .bio-image-block { background: var(--light2); border: 2px dashed #C0CDE0; border-radius: 14px; min-height: 460px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 40px; }
+    .bio-image-block .ph-icon { font-size: 5rem; opacity: 0.35; margin-bottom: 12px; }
+    .bio-image-block .ph-label { color: var(--muted); font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; }
+    .bio-image-block .ph-size { color: #8AAACA; font-size: 0.72rem; margin-top: 6px; }
+    .credentials-row { display: flex; gap: 10px; flex-wrap: wrap; margin: 20px 0; }
+    .cred-badge { background: var(--light2); color: var(--navy2); font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; padding: 6px 14px; border-radius: 100px; border: 1px solid #C8D8EC; text-transform: uppercase; }
+    .bio-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 16px; }
+    .btn-primary { background: var(--navy); color: var(--gold); padding: 13px 28px; border-radius: 5px; font-weight: 700; font-size: 0.9rem; text-decoration: none; transition: all 0.3s; display: inline-block; }
+    .btn-primary:hover { background: var(--gold); color: var(--navy); }
+    @media (max-width: 768px) { .bio-grid { grid-template-columns: 1fr; gap: 36px; } }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 32px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--gold), var(--teal)); border-radius: 2px; }
+    .timeline-item { position: relative; margin-bottom: 40px; }
+    .timeline-dot { position: absolute; left: -28px; top: 6px; width: 16px; height: 16px; border-radius: 50%; background: var(--gold); border: 3px solid var(--white); box-shadow: 0 0 0 3px var(--gold); }
+    .timeline-year { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 4px; }
+    .timeline-title { font-size: 1.05rem; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+    .timeline-org { font-size: 0.85rem; color: var(--teal); font-weight: 600; margin-bottom: 8px; }
+    .timeline-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+
+    /* EDUCATION CARDS */
+    .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .edu-card { background: var(--white); border: 1px solid var(--light2); border-radius: 12px; padding: 28px 22px; border-top: 4px solid var(--gold); }
+    .edu-icon { font-size: 2rem; margin-bottom: 12px; }
+    .edu-degree { font-size: 1rem; color: var(--navy); font-weight: 700; margin-bottom: 4px; }
+    .edu-school { font-size: 0.85rem; color: var(--teal); font-weight: 600; margin-bottom: 4px; }
+    .edu-year { font-size: 0.78rem; color: var(--muted); }
+    .edu-desc { font-size: 0.83rem; color: var(--muted); line-height: 1.7; margin-top: 10px; }
+    @media (max-width: 768px) { .edu-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 480px) { .edu-grid { grid-template-columns: 1fr; } }
+
+    /* VALUES */
+    .values-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+    .value-card { text-align: center; padding: 36px 20px; background: var(--white); border: 1px solid var(--light2); border-radius: 14px; transition: all 0.3s; }
+    .value-card:hover { box-shadow: 0 12px 40px rgba(15,32,64,0.1); transform: translateY(-4px); }
+    .value-icon { font-size: 2.4rem; margin-bottom: 14px; }
+    .value-card h3 { font-size: 0.95rem; color: var(--navy); font-weight: 700; margin-bottom: 8px; }
+    .value-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+    @media (max-width: 768px) { .values-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px) { .values-grid { grid-template-columns: 1fr; } }
+
+    /* FOOTER */
+    footer { background: #080F1E; padding: 48px 24px 28px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: #3A5070; }
+    .footer-bottom a { color: #3A5070; text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-bottom a:hover { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">Firoozeh Behnia<span>Business Consultant</span></div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="expertise.html">Expertise</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> / About</div>
+    <h1>About Firoozeh Behnia</h1>
+    <p>A career defined by transformational leadership, strategic clarity, and a relentless commitment to client success across industries and continents.</p>
+  </div>
+</div>
+
+<!-- BIO -->
+<section class="section">
+  <div class="section-inner">
+    <div class="bio-grid">
+      <div class="bio-image-block">
+        <div class="ph-icon">👤</div>
+        <div class="ph-label">Professional Photo</div>
+        <div class="ph-size">Recommended: 500 × 600 px</div>
+      </div>
+      <div class="bio-text">
+        <div class="section-header" style="margin-bottom:24px;">
+          <span class="eyebrow">My Story</span>
+          <h2>Business Strategist. Change Catalyst. Executive Coach.</h2>
+          <div class="divider"></div>
+        </div>
+        <p>Firoozeh Behnia is a senior business management consultant with over 18 years of experience helping organizations navigate complexity, lead transformation, and achieve sustainable growth. Her work spans strategic planning, organizational design, change management, and executive leadership development.</p>
+        <p>Born and educated in Tehran, Firoozeh pursued her postgraduate studies at INSEAD, one of the world's leading business schools, before building a distinguished career with global management consulting firms. She has led high-impact engagements across the financial services, healthcare, manufacturing, technology, and public sectors.</p>
+        <p>Firoozeh is known for combining rigorous analytical thinking with a deeply human approach to leadership — creating environments where executives and teams can do their best work and deliver results that endure long after the engagement ends.</p>
+        <div class="credentials-row">
+          <span class="cred-badge">MBA – INSEAD</span>
+          <span class="cred-badge">PMP Certified</span>
+          <span class="cred-badge">CMC Certified</span>
+          <span class="cred-badge">Lean Six Sigma Black Belt</span>
+          <span class="cred-badge">ICF Coaching</span>
+        </div>
+        <a href="contact.html" class="btn-primary">Book a Consultation</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREER TIMELINE -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Career Journey</span>
+      <h2>Professional Timeline</h2>
+      <p>Key milestones in a career built on strategy, leadership, and global impact.</p>
+      <div class="divider"></div>
+    </div>
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:48px;">
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2018 – Present</div>
+          <div class="timeline-title">Principal Consultant & Founder</div>
+          <div class="timeline-org">Behnia Strategy Group</div>
+          <div class="timeline-desc">Founded independent consulting practice specializing in C-suite advisory, strategic transformation, and executive coaching for global clients across 12 countries.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--teal);box-shadow:0 0 0 3px var(--teal);"></div>
+          <div class="timeline-year">2013 – 2018</div>
+          <div class="timeline-title">Senior Manager, Strategy & Operations</div>
+          <div class="timeline-org">McKinsey & Company – Dubai & Toronto</div>
+          <div class="timeline-desc">Led strategy and operations engagements for Fortune 500 clients in MENA and North America. Specialization in organizational transformation and performance management.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2009 – 2013</div>
+          <div class="timeline-title">Manager, Change Management Practice</div>
+          <div class="timeline-org">Deloitte Consulting – London</div>
+          <div class="timeline-desc">Designed and delivered large-scale change programs for financial services and public sector clients across Europe, with teams of up to 40 consultants.</div>
+        </div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--teal);box-shadow:0 0 0 3px var(--teal);"></div>
+          <div class="timeline-year">2006 – 2009</div>
+          <div class="timeline-title">Business Analyst & Project Lead</div>
+          <div class="timeline-org">PricewaterhouseCoopers – Paris</div>
+          <div class="timeline-desc">Supported strategic planning and post-merger integration projects for European mid-cap and large-cap clients in manufacturing and retail industries.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-year">2004 – 2006</div>
+          <div class="timeline-title">MBA Studies</div>
+          <div class="timeline-org">INSEAD – Fontainebleau, France</div>
+          <div class="timeline-desc">Full-time MBA with concentrations in Strategy and Organizational Behaviour. Dean's List. Thesis on cross-cultural leadership effectiveness in multinational firms.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-dot" style="background:var(--teal);box-shadow:0 0 0 3px var(--teal);"></div>
+          <div class="timeline-year">2000 – 2004</div>
+          <div class="timeline-title">BSc Industrial Engineering</div>
+          <div class="timeline-org">Sharif University of Technology – Tehran</div>
+          <div class="timeline-desc">First-class honours degree with specialization in operations research and systems optimization. Graduated top of class.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Academic Background</span>
+      <h2>Education & Qualifications</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-icon">🎓</div>
+        <div class="edu-degree">Master of Business Administration</div>
+        <div class="edu-school">INSEAD, Fontainebleau</div>
+        <div class="edu-year">2004 – 2006 · Dean's List</div>
+        <div class="edu-desc">Strategy, Organizational Behaviour, Finance. Cross-cultural leadership thesis. Participated in exchange at Wharton School of Business.</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">⚙️</div>
+        <div class="edu-degree">BSc Industrial Engineering</div>
+        <div class="edu-school">Sharif University of Technology</div>
+        <div class="edu-year">2000 – 2004 · First-Class Honours</div>
+        <div class="edu-desc">Operations research, systems optimization, quality management. Graduated top 2% of cohort. Engineering excellence award recipient.</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-icon">📜</div>
+        <div class="edu-degree">Executive Certifications</div>
+        <div class="edu-school">Multiple Global Institutes</div>
+        <div class="edu-year">2007 – 2022 · Ongoing CPD</div>
+        <div class="edu-desc">PMP (PMI), CMC (IMC), Lean Six Sigma Black Belt, ICF Associate Certified Coach, Harvard Kennedy School Executive Leadership Program.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE VALUES -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="section-header" style="text-align:center;">
+      <span class="eyebrow">My Philosophy</span>
+      <h2>Guiding Values</h2>
+      <p>The principles that drive every engagement and every relationship.</p>
+      <div class="divider" style="margin:14px auto 0;"></div>
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🎯</div>
+        <h3>Impact First</h3>
+        <p>Every recommendation is made with measurable, lasting business outcomes in mind — not theoretical models or generic frameworks.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Partnership</h3>
+        <p>I work alongside your team as a true partner, building internal capability so that results endure long after the engagement ends.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌐</div>
+        <h3>Global Perspective</h3>
+        <p>Drawing on experience across 12 countries and diverse cultural contexts to deliver nuanced, context-sensitive solutions.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🔍</div>
+        <h3>Intellectual Rigour</h3>
+        <p>Deep analytical thinking combined with pragmatic judgement — getting to the root of the problem before proposing solutions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-bottom">
+      <p>© 2025 Firoozeh Behnia. All rights reserved.</p>
+      <a href="../customerno35.html">← Back to Template Preview</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() { document.getElementById('navLinks').classList.toggle('active'); }
+</script>
+</body>
+</html>

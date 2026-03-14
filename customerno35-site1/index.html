@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firoozeh Behnia - Business Management Consultant</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:   #0F2040;
+      --navy2:  #162B50;
+      --navy3:  #1E3A6E;
+      --gold:   #C9A84C;
+      --gold2:  #D4B870;
+      --teal:   #1A8870;
+      --teal2:  #22A88A;
+      --light:  #F4F7FB;
+      --light2: #EBF0F8;
+      --text:   #1C2B3A;
+      --muted:  #5A6E85;
+      --white:  #FFFFFF;
+      --shadow: rgba(15,32,64,0.15);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 2px 20px var(--shadow);
+    }
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .logo-wrap { display: flex; align-items: center; gap: 14px; }
+    .logo-placeholder {
+      width: 50px; height: 50px;
+      border: 3px solid var(--gold);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.55rem; font-weight: 700;
+      color: var(--gold);
+      background: rgba(201,168,76,0.1);
+      letter-spacing: 0.5px;
+      text-align: center;
+    }
+    .logo-text { color: var(--gold); font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
+    .logo-text span { display: block; font-size: 0.65rem; color: var(--gold2); letter-spacing: 3px; font-weight: 400; text-transform: uppercase; }
+
+    .hamburger { display: none; flex-direction: column; cursor: pointer; gap: 5px; z-index: 1001; }
+    .hamburger span { width: 28px; height: 3px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      color: #C8D8EC; text-decoration: none;
+      font-size: 0.88rem; font-weight: 600; letter-spacing: 0.3px;
+      transition: color 0.3s;
+      min-height: 44px; display: flex; align-items: center;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+    @media (max-width: 900px) {
+      .hamburger { display: flex; }
+      .nav-links {
+        position: fixed; top: 0; right: -100%;
+        height: 100vh; width: 70%;
+        background: var(--navy2);
+        flex-direction: column;
+        padding: 90px 30px 40px;
+        gap: 20px;
+        transition: right 0.3s ease;
+        box-shadow: -5px 0 30px rgba(0,0,0,0.4);
+        z-index: 1000;
+      }
+      .nav-links.active { right: 0; }
+      .logo-placeholder { width: 40px; height: 40px; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 94vh;
+      background: linear-gradient(150deg, var(--navy) 0%, var(--navy2) 55%, #1A3A70 100%);
+      display: flex; align-items: center;
+      overflow: hidden;
+      position: relative;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: 45%;
+      background: linear-gradient(160deg, rgba(201,168,76,0.06) 0%, rgba(26,136,112,0.08) 100%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 100px;
+      background: linear-gradient(to top, var(--white), transparent);
+    }
+    .hero-inner {
+      max-width: 1280px; margin: 0 auto; padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px;
+      align-items: center; position: relative; z-index: 1; width: 100%;
+    }
+    .hero-text .eyebrow {
+      font-size: 0.75rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold2); margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
+    }
+    .eyebrow-line { width: 40px; height: 2px; background: var(--gold); }
+    .hero-text h1 {
+      font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+      color: #EEF3FF; line-height: 1.15; margin-bottom: 8px;
+      font-family: Georgia, serif;
+      font-weight: 700;
+    }
+    .hero-text h1 .name-accent { color: var(--gold); }
+    .hero-role {
+      font-size: 1.1rem; color: var(--gold2);
+      letter-spacing: 2px; text-transform: uppercase;
+      font-size: 0.9rem; font-weight: 600;
+      margin-bottom: 20px;
+    }
+    .hero-text p {
+      font-size: 1.05rem; color: #A8BFDA; max-width: 500px;
+      margin-bottom: 36px; line-height: 1.85;
+    }
+    .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: 14px 32px; border-radius: 5px;
+      font-weight: 700; font-size: 0.92rem;
+      letter-spacing: 0.3px; text-decoration: none;
+      transition: all 0.3s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid var(--gold); color: var(--gold);
+      padding: 12px 30px; border-radius: 5px;
+      font-weight: 600; font-size: 0.92rem;
+      text-decoration: none; transition: all 0.3s; display: inline-block;
+    }
+    .btn-outline:hover { background: rgba(201,168,76,0.12); transform: translateY(-2px); }
+
+    /* Hero stats */
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 44px;
+      padding-top: 36px;
+      border-top: 1px solid rgba(201,168,76,0.25);
+    }
+    .stat-item { text-align: center; }
+    .stat-number { font-size: 2rem; font-weight: 800; color: var(--gold); font-family: Georgia, serif; line-height: 1; }
+    .stat-label { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: #8AAACA; margin-top: 4px; }
+
+    /* Hero image block */
+    .hero-image-block {
+      background: rgba(255,255,255,0.05);
+      border: 2px dashed rgba(201,168,76,0.35);
+      border-radius: 16px;
+      min-height: 520px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+      position: relative;
+    }
+    .hero-image-block .ph-icon { font-size: 5rem; margin-bottom: 16px; opacity: 0.4; }
+    .hero-image-block .ph-label {
+      color: var(--gold2); font-size: 0.82rem;
+      letter-spacing: 3px; text-transform: uppercase; opacity: 0.7;
+    }
+    .hero-image-block .ph-size { color: #6A88A8; font-size: 0.72rem; margin-top: 8px; }
+    .hero-badge {
+      position: absolute; bottom: 24px; right: 24px;
+      background: var(--gold); color: var(--navy);
+      font-size: 0.7rem; font-weight: 800;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 8px 16px; border-radius: 100px;
+    }
+
+    @media (max-width: 768px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; padding-top: 60px; }
+      .hero-image-block { min-height: 280px; }
+      .hero-stats { gap: 20px; }
+    }
+
+    /* ── SECTION SHARED ── */
+    .section { padding: 96px 24px; }
+    .section-alt { background: var(--light); }
+    .section-dark { background: var(--navy); }
+    .section-inner { max-width: 1280px; margin: 0 auto; }
+
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-header .eyebrow {
+      font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 12px; display: block;
+    }
+    .section-header h2 {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem); color: var(--navy);
+      font-family: Georgia, serif; margin-bottom: 16px; font-weight: 700;
+    }
+    .section-dark .section-header h2 { color: #EEF3FF; }
+    .section-header p { font-size: 1rem; color: var(--muted); max-width: 580px; margin: 0 auto; }
+    .section-dark .section-header p { color: #8AAACA; }
+    .divider { width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 16px auto 0; border-radius: 2px; }
+
+    /* ── SERVICES PREVIEW ── */
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px;
+    }
+    .service-card {
+      background: var(--white);
+      border: 1px solid var(--light2);
+      border-radius: 14px;
+      padding: 36px 28px;
+      transition: all 0.3s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 4px; background: linear-gradient(90deg, var(--gold), var(--teal));
+      transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+    }
+    .service-card:hover { box-shadow: 0 16px 48px rgba(15,32,64,0.12); transform: translateY(-4px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon { font-size: 2.6rem; margin-bottom: 18px; }
+    .service-card h3 { font-size: 1.15rem; color: var(--navy); margin-bottom: 10px; font-weight: 700; }
+    .service-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.75; }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--gold); font-size: 0.82rem; font-weight: 700;
+      text-decoration: none; margin-top: 18px;
+      letter-spacing: 0.3px; transition: gap 0.2s;
+    }
+    .service-link:hover { gap: 10px; }
+
+    @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .services-grid { grid-template-columns: 1fr; } }
+
+    /* ── ABOUT STRIP ── */
+    .about-strip {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: center;
+    }
+    .about-image-block {
+      background: var(--light2);
+      border: 2px dashed #C0CDE0;
+      border-radius: 14px;
+      min-height: 400px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+    }
+    .about-image-block .ph-icon { font-size: 4rem; opacity: 0.35; margin-bottom: 12px; }
+    .about-image-block .ph-label { color: var(--muted); font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; }
+    .about-text .eyebrow { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: block; }
+    .about-text h2 { font-size: clamp(1.8rem, 3vw, 2.4rem); color: var(--navy); font-family: Georgia, serif; margin-bottom: 20px; line-height: 1.25; }
+    .about-text p { font-size: 0.95rem; color: var(--muted); line-height: 1.85; margin-bottom: 14px; }
+    .credentials { display: flex; gap: 12px; flex-wrap: wrap; margin: 20px 0; }
+    .cred-badge {
+      background: var(--light2); color: var(--navy2);
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 1px;
+      padding: 6px 14px; border-radius: 100px;
+      border: 1px solid #C8D8EC; text-transform: uppercase;
+    }
+    @media (max-width: 768px) { .about-strip { grid-template-columns: 1fr; gap: 40px; } }
+
+    /* ── STATS STRIP ── */
+    .stats-strip { padding: 72px 24px; background: var(--navy); }
+    .stats-inner { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .stat-box { text-align: center; }
+    .stat-box .number { font-size: 3rem; font-weight: 800; color: var(--gold); font-family: Georgia, serif; line-height: 1; }
+    .stat-box .label { font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; color: #8AAACA; margin-top: 8px; }
+    .stat-box .sublabel { font-size: 0.82rem; color: #5A7A9A; margin-top: 4px; }
+    @media (max-width: 768px) { .stats-inner { grid-template-columns: repeat(2, 1fr); } }
+
+    /* ── PORTFOLIO PREVIEW ── */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .portfolio-card {
+      border-radius: 12px; overflow: hidden;
+      border: 1px solid var(--light2);
+      transition: all 0.3s;
+    }
+    .portfolio-card:hover { box-shadow: 0 16px 48px rgba(15,32,64,0.12); transform: translateY(-4px); }
+    .portfolio-img {
+      background: var(--light2);
+      border-bottom: 2px dashed #C0CDE0;
+      min-height: 200px;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 8px;
+      padding: 24px;
+    }
+    .portfolio-img .ph-icon { font-size: 2.5rem; opacity: 0.35; }
+    .portfolio-img .ph-tag {
+      background: var(--navy); color: var(--gold);
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px;
+      padding: 4px 12px; border-radius: 100px; text-transform: uppercase;
+    }
+    .portfolio-body { padding: 22px 20px; background: var(--white); }
+    .portfolio-body h3 { font-size: 1rem; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
+    .portfolio-body p { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+    .portfolio-metric { display: flex; align-items: center; gap: 6px; margin-top: 12px; font-size: 0.78rem; color: var(--teal); font-weight: 700; }
+    @media (max-width: 900px) { .portfolio-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .portfolio-grid { grid-template-columns: 1fr; } }
+
+    /* ── TESTIMONIAL STRIP ── */
+    .testimonials-strip { padding: 88px 24px; background: var(--light); }
+    .testimonials-inner { max-width: 1280px; margin: 0 auto; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 56px; }
+    .testi-card {
+      background: var(--white); border-radius: 14px;
+      padding: 32px 28px; border: 1px solid var(--light2);
+      box-shadow: 0 4px 20px rgba(15,32,64,0.06);
+    }
+    .testi-stars { color: var(--gold); font-size: 1rem; margin-bottom: 16px; letter-spacing: 2px; }
+    .testi-card blockquote { font-size: 0.9rem; color: var(--muted); line-height: 1.8; font-style: italic; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .testi-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--light2); border: 2px dashed #C0CDE0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+    }
+    .testi-name { font-size: 0.88rem; font-weight: 700; color: var(--navy); }
+    .testi-title { font-size: 0.75rem; color: var(--muted); }
+    @media (max-width: 900px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy2) 100%);
+      padding: 88px 24px; text-align: center;
+    }
+    .cta-inner { max-width: 700px; margin: 0 auto; }
+    .cta-section h2 { font-size: clamp(1.9rem, 3.5vw, 2.8rem); color: #EEF3FF; font-family: Georgia, serif; margin-bottom: 18px; }
+    .cta-section p { font-size: 1rem; color: #8AAACA; margin-bottom: 36px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+    /* ── FOOTER ── */
+    footer { background: #080F1E; padding: 64px 24px 32px; }
+    .footer-inner { max-width: 1280px; margin: 0 auto; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; margin-bottom: 48px; }
+    .footer-brand p { font-size: 0.85rem; color: #5A7A9A; margin-top: 14px; line-height: 1.7; max-width: 260px; }
+    .footer-col h4 { font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold2); margin-bottom: 18px; }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul a { color: #5A7A9A; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+    .footer-col ul a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid #1A2A3A; padding-top: 28px; display: flex; justify-content: space-between; align-items: center; flex-wrap: gap; gap: 12px; }
+    .footer-bottom p { font-size: 0.8rem; color: #3A5070; }
+    .footer-bottom a { color: #3A5070; text-decoration: none; font-size: 0.8rem; transition: color 0.3s; }
+    .footer-bottom a:hover { color: var(--gold); }
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } .footer-bottom { flex-direction: column; text-align: center; } }
+  </style>
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">
+        Firoozeh Behnia
+        <span>Business Consultant</span>
+      </div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="expertise.html">Expertise</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="eyebrow"><span class="eyebrow-line"></span> Business Management Expert</p>
+      <h1>Firoozeh<br><span class="name-accent">Behnia</span></h1>
+      <p class="hero-role">Strategic Consultant · Executive Coach · Change Leader</p>
+      <p>Empowering organizations to achieve sustainable growth through strategic vision, operational excellence, and transformational leadership. Over 18 years driving results across industries worldwide.</p>
+      <div class="hero-btns">
+        <a href="portfolio.html" class="btn-primary">View My Work</a>
+        <a href="contact.html" class="btn-outline">Book a Consultation</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-number">18+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Clients Served</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">45+</div>
+          <div class="stat-label">Projects Led</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">12</div>
+          <div class="stat-label">Countries</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="hero-image-block">
+        <div class="ph-icon">👤</div>
+        <div class="ph-label">Professional Headshot</div>
+        <div class="ph-size">Recommended: 600 × 750 px</div>
+        <div class="hero-badge">MBA · PMP · CMC</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── SERVICES PREVIEW ── -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">What I Offer</span>
+      <h2>Core Consulting Services</h2>
+      <p>Tailored solutions for organizations at every stage of growth — from ambitious startups to established enterprises navigating transformation.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>Strategic Planning</h3>
+        <p>Crafting long-term roadmaps aligned with your organizational vision, market realities, and stakeholder expectations to ensure sustainable competitive advantage.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🔄</div>
+        <h3>Change Management</h3>
+        <p>Guiding organizations through complex transformations with structured methodologies, minimizing disruption while maximizing employee engagement and adoption.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Operational Excellence</h3>
+        <p>Identifying and eliminating inefficiencies across your operations using proven frameworks such as Lean, Six Sigma, and agile process improvement techniques.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🏆</div>
+        <h3>Executive Coaching</h3>
+        <p>One-on-one coaching for senior leaders and high-potential managers to develop the mindset, skills, and behaviors that drive extraordinary performance.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🤝</div>
+        <h3>Organizational Design</h3>
+        <p>Restructuring teams, roles, and reporting lines to maximize agility, accountability, and collaboration in alignment with strategic priorities.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Performance Management</h3>
+        <p>Designing KPI frameworks, OKR systems, and performance review processes that build a culture of continuous improvement and goal achievement.</p>
+        <a href="services.html" class="service-link">Learn More →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-strip">
+  <div class="stats-inner">
+    <div class="stat-box">
+      <div class="number">$2.4B+</div>
+      <div class="label">Client Revenue Influenced</div>
+      <div class="sublabel">Across portfolio</div>
+    </div>
+    <div class="stat-box">
+      <div class="number">94%</div>
+      <div class="label">Client Satisfaction</div>
+      <div class="sublabel">Average rating</div>
+    </div>
+    <div class="stat-box">
+      <div class="number">38%</div>
+      <div class="label">Avg. Efficiency Gain</div>
+      <div class="sublabel">Per engagement</div>
+    </div>
+    <div class="stat-box">
+      <div class="number">15</div>
+      <div class="label">Industry Sectors</div>
+      <div class="sublabel">Diverse expertise</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="about-strip">
+      <div class="about-image-block">
+        <div class="ph-icon">👤</div>
+        <div class="ph-label">Profile Photo</div>
+        <div class="ph-size" style="color:#8AAACA;font-size:0.72rem;margin-top:6px;">500 × 600 px</div>
+      </div>
+      <div class="about-text">
+        <span class="eyebrow">Who I Am</span>
+        <h2>Transforming Business Through Strategic Leadership</h2>
+        <p>With over 18 years of experience in business management and strategy consulting, Firoozeh Behnia has established herself as a leading authority in organizational transformation and executive leadership development.</p>
+        <p>She has collaborated with Fortune 500 companies, high-growth startups, and public sector organizations across North America, Europe, and the Middle East — delivering measurable, lasting results in complex and fast-moving environments.</p>
+        <div class="credentials">
+          <span class="cred-badge">MBA – INSEAD</span>
+          <span class="cred-badge">PMP Certified</span>
+          <span class="cred-badge">CMC Certified</span>
+          <span class="cred-badge">Lean Six Sigma</span>
+        </div>
+        <a href="about.html" class="btn-primary" style="margin-top:8px;">Read My Full Story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO PREVIEW ── -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="eyebrow">Recent Work</span>
+      <h2>Featured Case Studies</h2>
+      <p>A selection of transformational projects delivering measurable impact across industries.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="portfolio-grid">
+      <div class="portfolio-card">
+        <div class="portfolio-img">
+          <div class="ph-icon">🏦</div>
+          <div class="ph-tag">Finance</div>
+        </div>
+        <div class="portfolio-body">
+          <h3>Regional Bank Digital Transformation</h3>
+          <p>Led an 18-month enterprise-wide digital transformation for a regional bank serving 2M+ customers, overhauling core processes and culture.</p>
+          <div class="portfolio-metric">📈 42% operational cost reduction</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-img">
+          <div class="ph-icon">🏭</div>
+          <div class="ph-tag">Manufacturing</div>
+        </div>
+        <div class="portfolio-body">
+          <h3>Global Supply Chain Restructuring</h3>
+          <p>Redesigned end-to-end supply chain operations for an international manufacturer across 8 countries, introducing agile inventory systems.</p>
+          <div class="portfolio-metric">📈 28% lead time improvement</div>
+        </div>
+      </div>
+      <div class="portfolio-card">
+        <div class="portfolio-img">
+          <div class="ph-icon">🏥</div>
+          <div class="ph-tag">Healthcare</div>
+        </div>
+        <div class="portfolio-body">
+          <h3>Hospital Network Performance Turnaround</h3>
+          <p>Delivered a comprehensive performance improvement program for a 5-hospital network, focused on patient flow, staff productivity, and cost control.</p>
+          <div class="portfolio-metric">📈 35% patient throughput increase</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:44px;">
+      <a href="portfolio.html" class="btn-primary">View All Case Studies →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<div class="testimonials-strip">
+  <div class="testimonials-inner">
+    <div class="section-header">
+      <span class="eyebrow">Client Voices</span>
+      <h2>What Leaders Say</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"Firoozeh brought a level of strategic clarity and practical insight we had never experienced before. She transformed our leadership team and our bottom line within one year."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">👤</div>
+          <div>
+            <div class="testi-name">Michael Larsen</div>
+            <div class="testi-title">CEO, NorthBridge Capital Group</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"Her change management approach was methodical, empathetic, and highly effective. Firoozeh helped our 3,000-person organization embrace a complete operating model shift with remarkable speed."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">👤</div>
+          <div>
+            <div class="testi-name">Sarah Al-Rashidi</div>
+            <div class="testi-title">COO, Meridian Healthcare Systems</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <blockquote>"Working with Firoozeh was a turning point for our company. She identified blind spots, restructured our operations, and coached our executive team to perform at an entirely new level."</blockquote>
+        <div class="testi-author">
+          <div class="testi-avatar">👤</div>
+          <div>
+            <div class="testi-name">Jonas Weber</div>
+            <div class="testi-title">Founder & MD, VentureAxis GmbH</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:44px;">
+      <a href="testimonials.html" class="btn-primary">Read More Testimonials →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div class="cta-section">
+  <div class="cta-inner">
+    <h2>Ready to Transform Your Organization?</h2>
+    <p>Whether you're facing a strategic challenge, leading a complex change initiative, or seeking executive coaching — let's start the conversation.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn-primary">Book a Free Discovery Call</a>
+      <a href="services.html" class="btn-outline">Explore Services</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text" style="color:#C9A84C;font-size:1.1rem;font-weight:700;">Firoozeh Behnia</div>
+        <p>Business Management Consultant &amp; Strategic Leadership Expert. Partnering with organizations to unlock their full potential.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Strategic Planning</a></li>
+          <li><a href="services.html">Change Management</a></li>
+          <li><a href="services.html">Executive Coaching</a></li>
+          <li><a href="services.html">Operational Excellence</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Portfolio</h4>
+        <ul>
+          <li><a href="portfolio.html">Case Studies</a></li>
+          <li><a href="expertise.html">Expertise</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="about.html">About Firoozeh</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book a Call</a></li>
+          <li><a href="#">LinkedIn Profile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Firoozeh Behnia. All rights reserved.</p>
+      <a href="../customerno35.html">← Back to Template Preview</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
+</script>
+</body>
+</html>
