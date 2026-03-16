@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Robotics Company Template — Example No. 8 | Armin Studio</title>
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(145deg, #050A14 0%, #0D1B2A 50%, #050A14 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* Animated grid background */
+    .bg-grid {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+      background-image:
+        linear-gradient(rgba(10,132,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(10,132,255,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Glowing orbs */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: driftOrb ease-in-out infinite;
+    }
+    .orb-1 { width: 500px; height: 500px; background: rgba(10,132,255,0.08); top: -150px; right: -100px; animation-duration: 20s; }
+    .orb-2 { width: 400px; height: 400px; background: rgba(0,212,255,0.06); bottom: -100px; left: -80px; animation-duration: 25s; animation-delay: 5s; }
+    .orb-3 { width: 300px; height: 300px; background: rgba(10,132,255,0.05); top: 40%; left: 30%; animation-duration: 17s; animation-delay: 2s; }
+
+    @keyframes driftOrb {
+      0%,100% { transform: scale(1) translate(0,0); }
+      50%      { transform: scale(1.15) translate(20px,-20px); }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 48px;
+      animation: fadeInDown 0.8s ease both;
+    }
+
+    .header-badge {
+      display: inline-block;
+      background: rgba(10,132,255,0.15);
+      border: 1px solid rgba(10,132,255,0.4);
+      color: #0A84FF;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+
+    .hero-icon {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 18px;
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%,100% { transform: scale(1); }
+      50%      { transform: scale(1.06); }
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff 0%, #0A84FF 60%, #00D4FF 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 12px;
+      line-height: 1.1;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      font-weight: 400;
+    }
+
+    /* Template card */
+    .template-card {
+      background: rgba(13,27,42,0.7);
+      border: 1px solid rgba(10,132,255,0.2);
+      border-radius: 24px;
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 0 60px rgba(10,132,255,0.08), 0 30px 80px rgba(0,0,0,0.4);
+      animation: fadeInUp 0.9s 0.2s ease both;
+    }
+
+    .template-header {
+      background: linear-gradient(135deg, rgba(10,132,255,0.15) 0%, rgba(0,212,255,0.08) 100%);
+      border-bottom: 1px solid rgba(10,132,255,0.2);
+      padding: 40px 44px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .template-header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, transparent 30%, rgba(0,212,255,0.05) 100%);
+    }
+
+    .template-badge {
+      display: inline-block;
+      background: rgba(0,212,255,0.15);
+      border: 1px solid rgba(0,212,255,0.35);
+      color: #00D4FF;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 18px;
+      position: relative;
+    }
+
+    .template-title {
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #fff;
+      margin-bottom: 10px;
+      position: relative;
+    }
+
+    .template-subtitle {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.55);
+      position: relative;
+    }
+
+    /* Floating tech icons */
+    .header-floaters {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      opacity: 0.4;
+    }
+
+    .float-icon {
+      font-size: 2.2rem;
+      animation: floatIcon ease-in-out infinite;
+    }
+
+    .float-icon:nth-child(1) { animation-duration: 4s; }
+    .float-icon:nth-child(2) { animation-duration: 5s; animation-delay: 1s; }
+    .float-icon:nth-child(3) { animation-duration: 3.5s; animation-delay: 2s; }
+
+    @keyframes floatIcon {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-12px); }
+    }
+
+    .template-body {
+      padding: 40px 44px;
+    }
+
+    .template-description {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.75;
+      margin-bottom: 30px;
+    }
+
+    /* Page pills */
+    .pages-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .pill {
+      background: rgba(10,132,255,0.1);
+      border: 1px solid rgba(10,132,255,0.25);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.82rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 100px;
+      transition: all 0.25s;
+    }
+
+    .pill:hover {
+      background: rgba(10,132,255,0.2);
+      border-color: rgba(10,132,255,0.5);
+      color: #fff;
+    }
+
+    /* Highlight strip */
+    .highlight-strip {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+      background: rgba(0,212,255,0.06);
+      border: 1px solid rgba(0,212,255,0.2);
+      border-left: 3px solid #00D4FF;
+      border-radius: 12px;
+      padding: 20px 22px;
+      margin-bottom: 30px;
+    }
+
+    .highlight-strip .icon { font-size: 1.8rem; flex-shrink: 0; }
+    .highlight-strip p { font-size: 0.93rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .highlight-strip strong { color: #00D4FF; }
+
+    /* Features list */
+    .features-list {
+      list-style: none;
+      margin-bottom: 36px;
+    }
+
+    .features-list li {
+      padding: 10px 0;
+      padding-left: 28px;
+      font-size: 0.93rem;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.6;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      position: relative;
+    }
+
+    .features-list li:last-child { border-bottom: none; }
+
+    .features-list li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: #0A84FF;
+      font-weight: 700;
+    }
+
+    /* CTA button */
+    .cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #0A84FF 0%, #0060CC 100%);
+      color: #fff;
+      text-decoration: none;
+      font-size: 1rem;
+      font-weight: 700;
+      padding: 16px 36px;
+      border-radius: 12px;
+      transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+      box-shadow: 0 8px 30px rgba(10,132,255,0.35);
+      letter-spacing: 0.01em;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-3px) scale(1.03);
+      box-shadow: 0 14px 40px rgba(10,132,255,0.5);
+      background: linear-gradient(135deg, #1A94FF 0%, #0A74EE 100%);
+    }
+
+    .cta-button:active { transform: translateY(-1px) scale(1.01); }
+
+    .back-link {
+      display: block;
+      text-align: center;
+      margin-top: 36px;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.3s;
+    }
+
+    .back-link:hover { color: #0A84FF; }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .template-title { font-size: 1.4rem; }
+      .template-header, .template-body { padding: 26px 22px; }
+      .header-floaters { display: none; }
+      .cta-button { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animated background -->
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="orb orb-1" aria-hidden="true"></div>
+  <div class="orb orb-2" aria-hidden="true"></div>
+  <div class="orb orb-3" aria-hidden="true"></div>
+
+  <div class="container">
+    <header>
+      <div class="header-badge">🤖 Robotics Company Template</div>
+      <span class="hero-icon" aria-hidden="true">⚡</span>
+      <h1>NEXUS ROBOTICS</h1>
+      <p class="subtitle">Example No. 8 — Premium Robotics Company Website by Armin Studio</p>
+    </header>
+
+    <div class="template-card">
+      <div class="template-header">
+        <div class="template-badge">5-Page Website</div>
+        <h2 class="template-title">NEXUS ROBOTICS</h2>
+        <p class="template-subtitle">Engineering Tomorrow's Intelligence</p>
+
+        <!-- Floating icons -->
+        <div class="header-floaters" aria-hidden="true">
+          <span class="float-icon">🤖</span>
+          <span class="float-icon">⚡</span>
+          <span class="float-icon">🧠</span>
+        </div>
+      </div>
+
+      <div class="template-body">
+        <p class="template-description">
+          A cinematic, production-ready 5-page website for NEXUS ROBOTICS — a hyper-premium futuristic robotics company. Built with Three.js for real-time 3D, GSAP ScrollTrigger for scroll-driven animations, and Apple-level visual design. The site features a 3D humanoid robot hero, interactive product gallery, neural-network technology visualization, animated brand timeline, and a rotating globe contact page. Every pixel is crafted with film-grade precision and emotional storytelling.
+        </p>
+
+        <div class="pages-pills">
+          <span class="pill">🏠 Home</span>
+          <span class="pill">🤖 Products</span>
+          <span class="pill">⚙️ Technology</span>
+          <span class="pill">🌐 About</span>
+          <span class="pill">📡 Contact</span>
+        </div>
+
+        <div class="highlight-strip">
+          <div class="icon">🎬</div>
+          <p>This template is designed for <strong>robotics companies, AI startups, advanced manufacturing firms, and deep-tech brands</strong>. It includes a Three.js humanoid robot hero, 3D product modals, neural-network animations, an animated company timeline, and a rotating wireframe globe — all with cinematic camera motion and hyper-realistic PBR materials.</p>
+        </div>
+
+        <ul class="features-list">
+          <li>Cinematic Three.js hero: 15-part humanoid robot with emissive materials, 1,200 orbiting particles, volumetric lighting, and mouse-reactive rotation</li>
+          <li>Products page with 3 interactive 3D robot models (NX-7 Humanoid, RA-Pro Arm, AX-Nano Drone), full-screen modal reveals, and animated spec sheets</li>
+          <li>Technology page with scroll-driven neural network (55 animated nodes + pulsing connection lines), four engineering deep-dive sections</li>
+          <li>About page with parallax hero, animated milestone timeline (2013–2025), 4-person founding team, and cinematic mission statement</li>
+          <li>Contact page with rotating Three.js wireframe globe, 4 global office markers, tactile form micro-interactions, and success particle animation</li>
+          <li>Magnetic custom cursor with smooth follower lag across all 5 pages</li>
+          <li>Film-grain texture overlay and chromatic-aberration-inspired aesthetic throughout</li>
+          <li>GSAP ScrollTrigger animations: scroll-driven fades, slides, stagger reveals, and counter animations</li>
+          <li>Fully responsive with mobile hamburger menu, consistent dark space theme (#050A14/#0A84FF/#00D4FF)</li>
+          <li>No external assets — all 3D geometry is procedurally generated with Three.js BufferGeometry</li>
+        </ul>
+
+        <a href="exampleno8-site1/index.html" class="cta-button">
+          <span>🤖</span>
+          <span>View Robotics Template</span>
+        </a>
+      </div>
+    </div>
+
+    <a href="examples.html" class="back-link">← Back to all examples</a>
+  </div>
+
+</body>
+</html>
