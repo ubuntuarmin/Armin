@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEXUS ROBOTICS — Engineering Tomorrow's Intelligence</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #050A14;
+      color: #fff;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      cursor: none;
+      overflow-x: hidden;
+    }
+
+    /* Film grain */
+    .grain {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9998; opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      animation: grain 0.4s steps(2) infinite;
+    }
+    @keyframes grain {
+      0%,100% { transform: translate(0,0); }
+      10% { transform: translate(-2%,-3%); }
+      20% { transform: translate(2%,3%); }
+      30% { transform: translate(-3%,1%); }
+      40% { transform: translate(1%,-2%); }
+      50% { transform: translate(-1%,3%); }
+      60% { transform: translate(3%,-1%); }
+      70% { transform: translate(-2%,2%); }
+      80% { transform: translate(2%,-3%); }
+      90% { transform: translate(-3%,-1%); }
+    }
+
+    /* Cursor */
+    #cursor {
+      position: fixed; width: 10px; height: 10px; background: #0A84FF;
+      border-radius: 50%; pointer-events: none; z-index: 10000;
+      transform: translate(-50%,-50%); transition: transform 0.1s, background 0.2s;
+    }
+    #cursor-follower {
+      position: fixed; width: 38px; height: 38px;
+      border: 1.5px solid rgba(10,132,255,0.55); border-radius: 50%;
+      pointer-events: none; z-index: 9999; transform: translate(-50%,-50%);
+      transition: border-color 0.3s, transform 0.3s;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; width: 100%; z-index: 1000;
+      padding: 22px 60px; display: flex; justify-content: space-between; align-items: center;
+      background: linear-gradient(180deg, rgba(5,10,20,0.92) 0%, transparent 100%);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+    }
+    .nav-logo {
+      font-size: 1.35rem; font-weight: 700; letter-spacing: 3px;
+      color: #fff; text-decoration: none; text-transform: uppercase;
+    }
+    .nav-logo span { color: #0A84FF; }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); text-decoration: none;
+      margin-left: 38px; font-size: 0.78rem; letter-spacing: 2.5px;
+      text-transform: uppercase; transition: color 0.3s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: #0A84FF; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; transition: all 0.3s; border-radius: 2px; }
+
+    /* Hero canvas */
+    #hero-canvas {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      z-index: 0; display: block;
+    }
+
+    /* Hero */
+    .hero {
+      position: relative; z-index: 2; height: 100vh;
+      display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center; padding: 0 24px;
+    }
+    .hero-eyebrow {
+      font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+      color: #0A84FF; margin-bottom: 28px;
+      animation: fadeUp 1s ease 0.3s both;
+    }
+    .hero h1 {
+      font-size: clamp(3.2rem, 9vw, 7.5rem); font-weight: 900;
+      letter-spacing: 6px; text-transform: uppercase; line-height: 0.95;
+      animation: fadeUp 1s ease 0.5s both;
+    }
+    .hero h1 .blue { color: #0A84FF; }
+    .hero h1 .cyan { color: #00D4FF; }
+    .hero-subtitle {
+      font-size: clamp(0.85rem, 1.8vw, 1.1rem); letter-spacing: 4px;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      margin: 24px 0 44px; animation: fadeUp 1s ease 0.7s both;
+    }
+    .hero-cta-group {
+      display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;
+      animation: fadeUp 1s ease 0.9s both;
+    }
+    .cta-btn {
+      padding: 15px 44px; border: 1px solid #0A84FF; color: #fff;
+      text-decoration: none; letter-spacing: 3px; font-size: 0.78rem;
+      text-transform: uppercase; position: relative; overflow: hidden;
+      transition: all 0.4s; background: transparent; cursor: none; display: inline-block;
+    }
+    .cta-btn::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(10,132,255,0.25), transparent);
+      transition: left 0.45s;
+    }
+    .cta-btn:hover::before { left: 100%; }
+    .cta-btn:hover { border-color: #00D4FF; box-shadow: 0 0 32px rgba(10,132,255,0.38); }
+    .cta-btn.secondary { border-color: rgba(255,255,255,0.25); }
+    .cta-btn.secondary:hover { border-color: rgba(255,255,255,0.6); box-shadow: none; }
+    .hero-scroll {
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      animation: fadeUp 1s ease 1.2s both;
+    }
+    .hero-scroll span { font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(180deg, rgba(10,132,255,0.8), transparent);
+      animation: scrollLine 1.8s ease-in-out infinite;
+    }
+    @keyframes scrollLine { 0%,100% { opacity: 1; transform: scaleY(1); } 50% { opacity: 0.4; transform: scaleY(0.6); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Sections */
+    section { position: relative; z-index: 2; padding: 120px 60px; }
+    .section-label {
+      font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase;
+      color: #0A84FF; margin-bottom: 18px;
+    }
+    .section-title {
+      font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 800; line-height: 1.08;
+    }
+    .section-title span { color: #0A84FF; }
+
+    /* Features */
+    .features-section { background: rgba(5,10,20,0.6); }
+    .features-header { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 30px; margin-bottom: 60px; }
+    .features-header p { max-width: 360px; color: rgba(255,255,255,0.55); line-height: 1.8; font-size: 0.95rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .feature-card {
+      background: rgba(13,27,42,0.75); border: 1px solid rgba(10,132,255,0.18);
+      padding: 48px 38px; position: relative; overflow: hidden; transition: all 0.4s;
+    }
+    .feature-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, #0A84FF, #00D4FF);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
+    }
+    .feature-card::after {
+      content: ''; position: absolute; bottom: 0; right: 0;
+      width: 80px; height: 80px;
+      background: radial-gradient(circle, rgba(10,132,255,0.12), transparent 70%);
+      transition: all 0.4s;
+    }
+    .feature-card:hover::before { transform: scaleX(1); }
+    .feature-card:hover::after { width: 160px; height: 160px; }
+    .feature-card:hover {
+      border-color: rgba(10,132,255,0.5); transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(10,132,255,0.1);
+    }
+    .feature-icon { font-size: 2.6rem; margin-bottom: 22px; display: block; }
+    .feature-card h3 {
+      font-size: 1.15rem; letter-spacing: 2px; margin-bottom: 14px;
+      text-transform: uppercase; color: #fff;
+    }
+    .feature-card p { color: rgba(255,255,255,0.58); line-height: 1.85; font-size: 0.93rem; }
+
+    /* Stats */
+    .stats-section {
+      background: rgba(10,132,255,0.04);
+      border-top: 1px solid rgba(10,132,255,0.1);
+      border-bottom: 1px solid rgba(10,132,255,0.1);
+      padding: 80px 60px;
+    }
+    .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-size: clamp(2.8rem, 5vw, 4.2rem); font-weight: 900; color: #0A84FF;
+      display: block; line-height: 1;
+    }
+    .stat-suffix { color: #00D4FF; }
+    .stat-label {
+      font-size: 0.72rem; letter-spacing: 3.5px; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); margin-top: 12px; display: block;
+    }
+
+    /* Featured product */
+    .product-section { background: rgba(5,10,20,0.5); }
+    .featured-product { display: grid; grid-template-columns: 1fr 1fr; gap: 90px; align-items: center; }
+    .product-visual {
+      aspect-ratio: 1; position: relative; display: flex;
+      align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(10,132,255,0.07), rgba(0,212,255,0.04));
+      border: 1px solid rgba(10,132,255,0.25);
+    }
+    .product-visual-inner {
+      width: 75%; height: 75%;
+      background: linear-gradient(135deg, rgba(10,132,255,0.15), rgba(0,212,255,0.08));
+      border: 1px solid rgba(10,132,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative;
+      animation: float 4s ease-in-out infinite;
+    }
+    .product-visual-inner::before {
+      content: ''; position: absolute; inset: -8px;
+      border: 1px solid rgba(10,132,255,0.2);
+      animation: spinBorder 8s linear infinite;
+    }
+    .product-visual-inner::after {
+      content: ''; position: absolute; inset: -16px;
+      border: 1px solid rgba(0,212,255,0.12);
+      animation: spinBorder 12s linear infinite reverse;
+    }
+    @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-14px); } }
+    @keyframes spinBorder { from { transform: rotate(0); } to { transform: rotate(360deg); } }
+    .product-tag { font-size: 0.72rem; letter-spacing: 4px; text-transform: uppercase; color: #00D4FF; margin-bottom: 14px; }
+    .product-name { font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 800; margin-bottom: 22px; line-height: 1.1; }
+    .product-description { color: rgba(255,255,255,0.6); line-height: 1.9; font-size: 1rem; margin-bottom: 30px; }
+    .product-specs-mini { list-style: none; margin-bottom: 36px; }
+    .product-specs-mini li {
+      display: flex; justify-content: space-between;
+      padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.88rem;
+    }
+    .product-specs-mini li span:first-child { color: rgba(255,255,255,0.5); }
+    .product-specs-mini li span:last-child { color: #00D4FF; font-weight: 600; }
+
+    /* Footer */
+    footer {
+      background: rgba(5,10,20,0.97);
+      border-top: 1px solid rgba(10,132,255,0.12);
+      padding: 70px 60px 0;
+    }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; padding-bottom: 60px; }
+    .footer-brand .footer-logo {
+      font-size: 1.3rem; font-weight: 700; letter-spacing: 3px;
+      text-transform: uppercase; text-decoration: none; color: #fff; display: inline-block; margin-bottom: 18px;
+    }
+    .footer-brand .footer-logo span { color: #0A84FF; }
+    .footer-brand p { color: rgba(255,255,255,0.45); font-size: 0.9rem; line-height: 1.75; max-width: 280px; }
+    .footer-social { display: flex; gap: 14px; margin-top: 24px; }
+    .footer-social a {
+      width: 36px; height: 36px; border: 1px solid rgba(10,132,255,0.3);
+      display: flex; align-items: center; justify-content: center;
+      color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+    .footer-social a:hover { border-color: #0A84FF; color: #0A84FF; }
+    .footer-col h4 {
+      font-size: 0.7rem; letter-spacing: 3.5px; text-transform: uppercase;
+      color: #0A84FF; margin-bottom: 22px;
+    }
+    .footer-col a {
+      display: block; color: rgba(255,255,255,0.48); text-decoration: none;
+      font-size: 0.88rem; margin-bottom: 12px; transition: color 0.3s;
+    }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding: 24px 0; display: flex;
+      justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { color: rgba(255,255,255,0.28); font-size: 0.78rem; }
+
+    /* Mobile nav overlay */
+    @media (max-width: 900px) {
+      nav { padding: 20px 28px; }
+      .nav-links {
+        display: none; position: fixed; top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(5,10,20,0.98);
+        flex-direction: column; align-items: center; justify-content: center; gap: 28px;
+        z-index: 999;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a { margin: 0; font-size: 1.1rem; letter-spacing: 3px; }
+      .hamburger { display: flex; z-index: 1001; }
+      section { padding: 80px 28px; }
+      .features-grid { grid-template-columns: 1fr; }
+      .stats-section { padding: 60px 28px; }
+      .stats-grid { grid-template-columns: repeat(2,1fr); gap: 30px; }
+      .featured-product { grid-template-columns: 1fr; gap: 50px; }
+      .features-header { flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 36px; padding-bottom: 40px; }
+      footer { padding: 50px 28px 0; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-grid { grid-template-columns: 1fr; }
+      .hero-cta-group { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain"></div>
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <canvas id="hero-canvas"></canvas>
+
+  <nav id="mainNav">
+    <a href="index.html" class="nav-logo"><span>NEXUS</span> ROBOTICS</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="products.html">Products</a>
+      <a href="technology.html">Technology</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-eyebrow">Autonomous Systems · Advanced AI · Precision Engineering</div>
+    <h1>
+      <span class="blue">NEXUS</span><br>
+      ROBO<span class="cyan">TICS</span>
+    </h1>
+    <p class="hero-subtitle">Engineering Tomorrow's Intelligence</p>
+    <div class="hero-cta-group">
+      <a href="products.html" class="cta-btn">Explore Robots</a>
+      <a href="contact.html" class="cta-btn secondary">Request Demo</a>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features-section">
+    <div class="features-header">
+      <div>
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">The Future<br><span>Moves</span> With Us</h2>
+      </div>
+      <p>We engineer autonomous systems that perceive, reason, and act — built for the complexity of the real world, not the simplicity of the lab.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <span class="feature-icon">🤖</span>
+        <h3>Humanoid Robotics</h3>
+        <p>Bipedal platforms engineered for seamless integration into human environments. Our NX series adapts, learns, and collaborates with unprecedented dexterity and situational awareness.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">🧠</span>
+        <h3>Cognitive AI Systems</h3>
+        <p>On-board neural processing that interprets the world in real time. Multi-modal perception fuses vision, depth sensing, and tactile feedback into a unified understanding that drives autonomous decision-making.</p>
+      </div>
+      <div class="feature-card">
+        <span class="feature-icon">⚡</span>
+        <h3>Industrial Automation</h3>
+        <p>Robotic arm systems and mobile manipulators that redefine throughput and precision in manufacturing, logistics, and cleanroom environments — operating continuously without compromise.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-section">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <span class="stat-number" data-target="340">0</span>
+        <span class="stat-suffix-static" style="font-size:2rem;color:#0A84FF;font-weight:900;">+</span>
+        <span class="stat-label">Robots Deployed</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="18">0</span>
+        <span class="stat-suffix-static" style="font-size:2rem;color:#0A84FF;font-weight:900;"> hrs</span>
+        <span class="stat-label">Continuous Runtime</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="99">0</span>
+        <span class="stat-suffix-static" style="font-size:2rem;color:#0A84FF;font-weight:900;">.7%</span>
+        <span class="stat-label">Uptime Reliability</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-number" data-target="47">0</span>
+        <span class="stat-suffix-static" style="font-size:2rem;color:#0A84FF;font-weight:900;"> US</span>
+        <span class="stat-label">Patents Granted</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCT -->
+  <section class="product-section">
+    <div class="featured-product">
+      <div class="product-visual">
+        <div class="product-visual-inner">🤖</div>
+      </div>
+      <div class="product-content">
+        <div class="product-tag">Flagship · Now Shipping</div>
+        <h2 class="product-name">NX-7 Humanoid</h2>
+        <p class="product-description">
+          The NX-7 represents the apex of bipedal robotics. Standing 1.85 meters tall with 34 degrees of freedom and an onboard neural processor capable of 2.4 PFLOPS, it navigates unpredictable environments with the fluency of lived experience. From warehousing operations to collaborative research, the NX-7 is engineered to work alongside humans — not just for them.
+        </p>
+        <ul class="product-specs-mini">
+          <li><span>Height</span><span>1.85 m</span></li>
+          <li><span>Payload Capacity</span><span>40 kg</span></li>
+          <li><span>Battery Life</span><span>18 hours continuous</span></li>
+          <li><span>AI Processor</span><span>NEXUS CORE v3</span></li>
+          <li><span>Degrees of Freedom</span><span>34 DOF</span></li>
+        </ul>
+        <a href="products.html" class="cta-btn">View Full Specs</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="footer-logo"><span>NEXUS</span> ROBOTICS</a>
+        <p>Engineering autonomous systems that operate at the frontier of what machines can do — perceiving, reasoning, and acting in the full complexity of the real world.</p>
+        <div class="footer-social">
+          <a href="#">𝕏</a>
+          <a href="#">in</a>
+          <a href="#">▶</a>
+          <a href="#">gh</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Products</h4>
+        <a href="products.html">NX-7 Humanoid</a>
+        <a href="products.html">RA-Pro Arm</a>
+        <a href="products.html">AX-Nano Drone</a>
+        <a href="products.html">All Products</a>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <a href="about.html">About Us</a>
+        <a href="technology.html">Technology</a>
+        <a href="about.html#team">Leadership</a>
+        <a href="contact.html">Careers</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="contact.html">Get In Touch</a>
+        <a href="contact.html">Request Demo</a>
+        <a href="contact.html">Press Inquiries</a>
+        <a href="contact.html">Partnerships</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Nexus Robotics, Inc. All rights reserved.</p>
+      <p>490 Battery Street, San Francisco, CA 94111</p>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    // ── Cursor ──────────────────────────────────────────────
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursor-follower');
+    let mx = 0, my = 0, fx = 0, fy = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top  = my + 'px';
+    });
+
+    (function tickCursor() {
+      fx += (mx - fx) * 0.09;
+      fy += (my - fy) * 0.09;
+      follower.style.left = fx + 'px';
+      follower.style.top  = fy + 'px';
+      requestAnimationFrame(tickCursor);
+    })();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        follower.style.transform = 'translate(-50%,-50%) scale(2)';
+        follower.style.borderColor = '#00D4FF';
+      });
+      el.addEventListener('mouseleave', () => {
+        follower.style.transform = 'translate(-50%,-50%) scale(1)';
+        follower.style.borderColor = 'rgba(10,132,255,0.55)';
+      });
+    });
+
+    // ── Hamburger ───────────────────────────────────────────
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // ── Three.js Robot Scene ────────────────────────────────
+    (function initScene() {
+      const canvas = document.getElementById('hero-canvas');
+      const scene  = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.set(0, 1.5, 9);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+
+      // ── Materials ──
+      const metalMat = new THREE.MeshStandardMaterial({
+        color: 0x0d1f35, emissive: 0x0A84FF, emissiveIntensity: 0.25,
+        metalness: 0.95, roughness: 0.08
+      });
+      const cyanMat = new THREE.MeshStandardMaterial({
+        color: 0x003344, emissive: 0x00D4FF, emissiveIntensity: 0.8,
+        metalness: 0.5, roughness: 0.2
+      });
+      const glowMat = new THREE.MeshStandardMaterial({
+        color: 0x0A84FF, emissive: 0x0A84FF, emissiveIntensity: 1.2,
+        metalness: 0.2, roughness: 0.4, transparent: true, opacity: 0.9
+      });
+
+      // ── Robot Group ──
+      const robot = new THREE.Group();
+
+      // Head
+      const headGeo = new THREE.BoxGeometry(1.0, 0.9, 0.85);
+      const head = new THREE.Mesh(headGeo, metalMat);
+      head.position.y = 4.4;
+      robot.add(head);
+
+      // Head visor
+      const visorGeo = new THREE.BoxGeometry(0.75, 0.18, 0.1);
+      const visor = new THREE.Mesh(visorGeo, cyanMat);
+      visor.position.set(0, 4.4, 0.44);
+      robot.add(visor);
+
+      // Eyes
+      [-0.22, 0.22].forEach(x => {
+        const eye = new THREE.Mesh(new THREE.SphereGeometry(0.1, 10, 10), glowMat);
+        eye.position.set(x, 4.42, 0.45);
+        robot.add(eye);
+      });
+
+      // Neck
+      const neck = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.22, 0.3, 12), metalMat);
+      neck.position.y = 3.95;
+      robot.add(neck);
+
+      // Torso
+      const torsoGeo = new THREE.BoxGeometry(1.6, 2.1, 0.85);
+      const torso = new THREE.Mesh(torsoGeo, metalMat);
+      torso.position.y = 2.75;
+      robot.add(torso);
+
+      // Chest detail
+      const chestDetail = new THREE.Mesh(new THREE.BoxGeometry(0.8, 0.55, 0.12), cyanMat);
+      chestDetail.position.set(0, 3.0, 0.45);
+      robot.add(chestDetail);
+
+      // Chest glow dot
+      const chestGlow = new THREE.Mesh(new THREE.SphereGeometry(0.12, 10, 10), glowMat);
+      chestGlow.position.set(0, 2.6, 0.46);
+      robot.add(chestGlow);
+
+      // Shoulders
+      [-0.95, 0.95].forEach(x => {
+        const shoulder = new THREE.Mesh(new THREE.SphereGeometry(0.28, 12, 12), metalMat);
+        shoulder.position.set(x, 3.55, 0);
+        robot.add(shoulder);
+      });
+
+      // Arms
+      [[-1.18, 2.5], [1.18, 2.5]].forEach(([x, y]) => {
+        const upperArm = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.18, 1.3, 10), metalMat);
+        upperArm.position.set(x, y, 0);
+        robot.add(upperArm);
+
+        const elbow = new THREE.Mesh(new THREE.SphereGeometry(0.2, 10, 10), metalMat);
+        elbow.position.set(x, y - 0.72, 0);
+        robot.add(elbow);
+
+        const lowerArm = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.14, 1.1, 10), metalMat);
+        lowerArm.position.set(x, y - 1.42, 0);
+        robot.add(lowerArm);
+
+        const hand = new THREE.Mesh(new THREE.BoxGeometry(0.3, 0.28, 0.22), metalMat);
+        hand.position.set(x, y - 2.12, 0);
+        robot.add(hand);
+      });
+
+      // Pelvis
+      const pelvis = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.5, 0.75), metalMat);
+      pelvis.position.y = 1.55;
+      robot.add(pelvis);
+
+      // Legs
+      [[-0.45, 0.6], [0.45, 0.6]].forEach(([x, topY]) => {
+        const hip = new THREE.Mesh(new THREE.SphereGeometry(0.25, 12, 12), metalMat);
+        hip.position.set(x, topY, 0);
+        robot.add(hip);
+
+        const upperLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.2, 1.4, 10), metalMat);
+        upperLeg.position.set(x, topY - 0.85, 0);
+        robot.add(upperLeg);
+
+        const knee = new THREE.Mesh(new THREE.SphereGeometry(0.22, 10, 10), metalMat);
+        knee.position.set(x, topY - 1.62, 0);
+        robot.add(knee);
+
+        const lowerLeg = new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.2, 1.3, 10), metalMat);
+        lowerLeg.position.set(x, topY - 2.42, 0);
+        robot.add(lowerLeg);
+
+        const foot = new THREE.Mesh(new THREE.BoxGeometry(0.38, 0.2, 0.55), metalMat);
+        foot.position.set(x, topY - 3.18, 0.08);
+        robot.add(foot);
+      });
+
+      robot.position.y = 1;
+      scene.add(robot);
+
+      // ── Particles ──
+      const pCount = 1400;
+      const pPositions = new Float32Array(pCount * 3);
+      for (let i = 0; i < pCount; i++) {
+        const r = 4.5 + Math.random() * 4.5;
+        const theta = Math.random() * Math.PI * 2;
+        const phi   = Math.acos(2 * Math.random() - 1);
+        pPositions[i*3]   = r * Math.sin(phi) * Math.cos(theta);
+        pPositions[i*3+1] = r * Math.sin(phi) * Math.sin(theta) * 0.7;
+        pPositions[i*3+2] = r * Math.cos(phi);
+      }
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
+      const pMat = new THREE.PointsMaterial({
+        color: 0x00D4FF, size: 0.055, transparent: true, opacity: 0.55
+      });
+      const particles = new THREE.Points(pGeo, pMat);
+      scene.add(particles);
+
+      // Secondary ring particles
+      const ringCount = 600;
+      const ringPos = new Float32Array(ringCount * 3);
+      for (let i = 0; i < ringCount; i++) {
+        const angle = (i / ringCount) * Math.PI * 2 + Math.random() * 0.3;
+        const r = 3.5 + Math.random() * 0.8;
+        ringPos[i*3]   = Math.cos(angle) * r;
+        ringPos[i*3+1] = (Math.random() - 0.5) * 0.4;
+        ringPos[i*3+2] = Math.sin(angle) * r;
+      }
+      const ringGeo = new THREE.BufferGeometry();
+      ringGeo.setAttribute('position', new THREE.BufferAttribute(ringPos, 3));
+      const ringMat = new THREE.PointsMaterial({ color: 0x0A84FF, size: 0.04, transparent: true, opacity: 0.4 });
+      const ring = new THREE.Points(ringGeo, ringMat);
+      scene.add(ring);
+
+      // ── Lights ──
+      scene.add(new THREE.AmbientLight(0x050A14, 1.5));
+      const blueLight = new THREE.PointLight(0x0A84FF, 4, 22);
+      blueLight.position.set(5, 6, 5);
+      scene.add(blueLight);
+      const cyanLight = new THREE.PointLight(0x00D4FF, 3, 18);
+      cyanLight.position.set(-5, 1, 4);
+      scene.add(cyanLight);
+      const rimLight = new THREE.PointLight(0x0A84FF, 2, 12);
+      rimLight.position.set(0, 8, -4);
+      scene.add(rimLight);
+
+      // ── Mouse Reaction ──
+      let targetRotY = 0, targetRotX = 0;
+      document.addEventListener('mousemove', e => {
+        targetRotY = (e.clientX / window.innerWidth - 0.5) * 0.55;
+        targetRotX = (e.clientY / window.innerHeight - 0.5) * 0.22;
+      });
+
+      // ── Animate ──
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+
+        robot.rotation.y += (targetRotY - robot.rotation.y) * 0.04;
+        robot.rotation.x += (targetRotX - robot.rotation.x) * 0.04;
+        robot.position.y  = 1 + Math.sin(t * 0.5) * 0.18;
+
+        // Eye glow pulse
+        glowMat.emissiveIntensity = 0.9 + Math.sin(t * 2.2) * 0.4;
+
+        particles.rotation.y = t * 0.045;
+        particles.rotation.x = t * 0.018;
+        ring.rotation.y = -t * 0.08;
+
+        blueLight.position.x = Math.sin(t * 0.65) * 7;
+        blueLight.position.z = Math.cos(t * 0.65) * 7;
+        cyanLight.position.x = Math.cos(t * 0.5) * 6;
+        cyanLight.position.z = Math.sin(t * 0.5) * 6;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    })();
+
+    // ── GSAP ───────────────────────────────────────────────
+    gsap.registerPlugin(ScrollTrigger);
+
+    gsap.from('.feature-card', {
+      opacity: 0, y: 70, stagger: 0.18, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.features-grid', start: 'top 82%' }
+    });
+
+    gsap.from('.features-header > div', {
+      opacity: 0, x: -50, duration: 1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.features-header', start: 'top 82%' }
+    });
+
+    // Stats counter
+    document.querySelectorAll('.stat-number').forEach(el => {
+      const target = parseInt(el.dataset.target);
+      ScrollTrigger.create({
+        trigger: '.stats-section',
+        start: 'top 80%',
+        onEnter: () => {
+          gsap.fromTo(el, { textContent: 0 }, {
+            textContent: target, duration: 2.2, ease: 'power2.out',
+            snap: { textContent: 1 },
+            onUpdate() { el.textContent = Math.round(parseFloat(el.textContent)); }
+          });
+        },
+        once: true
+      });
+    });
+
+    gsap.from('.featured-product > *', {
+      opacity: 0, y: 50, stagger: 0.25, duration: 1.1, ease: 'power3.out',
+      scrollTrigger: { trigger: '.featured-product', start: 'top 78%' }
+    });
+  </script>
+</body>
+</html>
