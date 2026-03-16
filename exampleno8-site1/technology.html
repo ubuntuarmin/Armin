@@ -35,7 +35,7 @@
     .timeline-progress { height: 100%; background: linear-gradient(90deg, #0A84FF, #00D4FF); width: 0%; transition: width 0.05s; }
 
     /* Nav */
-    nav { position: fixed; top: 3px; width: 100%; z-index: 1000; padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(180deg, rgba(5,10,20,0.92) 0%, transparent 100%); backdrop-filter: blur(12px); }
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(180deg, rgba(5,10,20,0.92) 0%, transparent 100%); backdrop-filter: blur(12px); }
     .nav-logo { font-size: 1.35rem; font-weight: 700; letter-spacing: 3px; color: #fff; text-decoration: none; text-transform: uppercase; }
     .nav-logo span { color: #0A84FF; }
     .nav-links { display: flex; align-items: center; }
@@ -113,7 +113,7 @@
     .footer-bottom p { color: rgba(255,255,255,0.28); font-size: 0.78rem; }
 
     @media (max-width: 900px) {
-      nav { padding: 20px 28px; top: 3px; }
+      nav { padding: 20px 28px; top: 0; }
       .nav-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,10,20,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 999; }
       .nav-links.open { display: flex; }
       .nav-links a { margin: 0; font-size: 1.1rem; }
