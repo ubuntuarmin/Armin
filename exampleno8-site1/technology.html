@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Technology — NEXUS ROBOTICS</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: #050A14; color: #fff;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      cursor: none; overflow-x: hidden;
+    }
+
+    /* Grain */
+    .grain {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9998; opacity: 0.04;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      animation: grain 0.4s steps(2) infinite;
+    }
+    @keyframes grain {
+      0%,100%{transform:translate(0,0)}10%{transform:translate(-2%,-3%)}20%{transform:translate(2%,3%)}
+      30%{transform:translate(-3%,1%)}40%{transform:translate(1%,-2%)}50%{transform:translate(-1%,3%)}
+      60%{transform:translate(3%,-1%)}70%{transform:translate(-2%,2%)}80%{transform:translate(2%,-3%)}90%{transform:translate(-3%,-1%)}
+    }
+
+    /* Cursor */
+    #cursor { position: fixed; width: 10px; height: 10px; background: #0A84FF; border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%,-50%); }
+    #cursor-follower { position: fixed; width: 38px; height: 38px; border: 1.5px solid rgba(10,132,255,0.55); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: border-color 0.3s, transform 0.3s; }
+
+    /* Timeline bar */
+    .tech-timeline-bar { position: fixed; top: 0; left: 0; width: 100%; height: 3px; z-index: 1001; background: rgba(10,132,255,0.12); }
+    .timeline-progress { height: 100%; background: linear-gradient(90deg, #0A84FF, #00D4FF); width: 0%; transition: width 0.05s; }
+
+    /* Nav */
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; padding: 22px 60px; display: flex; justify-content: space-between; align-items: center; background: linear-gradient(180deg, rgba(5,10,20,0.92) 0%, transparent 100%); backdrop-filter: blur(12px); }
+    .nav-logo { font-size: 1.35rem; font-weight: 700; letter-spacing: 3px; color: #fff; text-decoration: none; text-transform: uppercase; }
+    .nav-logo span { color: #0A84FF; }
+    .nav-links { display: flex; align-items: center; }
+    .nav-links a { color: rgba(255,255,255,0.65); text-decoration: none; margin-left: 38px; font-size: 0.78rem; letter-spacing: 2.5px; text-transform: uppercase; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: #0A84FF; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: #fff; transition: all 0.3s; border-radius: 2px; }
+
+    /* Canvas */
+    #tech-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+
+    /* Content overlay */
+    .content { position: relative; z-index: 2; }
+
+    /* Tech hero */
+    .tech-hero {
+      height: 100vh; display: flex; flex-direction: column;
+      justify-content: center; align-items: center; text-align: center; padding: 0 24px;
+    }
+    .tech-hero .eyebrow { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: #0A84FF; margin-bottom: 24px; animation: fadeUp 1s ease 0.3s both; }
+    .tech-hero h1 { font-size: clamp(3rem, 8vw, 6rem); font-weight: 900; letter-spacing: 5px; text-transform: uppercase; line-height: 1; animation: fadeUp 1s ease 0.5s both; }
+    .tech-hero h1 .blue { color: #0A84FF; }
+    .tech-hero > p { font-size: clamp(0.9rem, 1.8vw, 1.1rem); color: rgba(255,255,255,0.55); max-width: 520px; margin-top: 22px; line-height: 1.8; animation: fadeUp 1s ease 0.7s both; }
+    .hero-hint { margin-top: 50px; font-size: 0.65rem; letter-spacing: 4px; color: rgba(255,255,255,0.3); text-transform: uppercase; animation: fadeUp 1s ease 1s both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Tech sections */
+    .tech-section {
+      min-height: 100vh; display: flex; align-items: center;
+      padding: 100px 60px; position: relative;
+    }
+    .tech-section:nth-child(even) { justify-content: flex-end; }
+    .tech-section-inner { max-width: 600px; }
+    .tech-number { font-size: 7rem; font-weight: 900; color: rgba(10,132,255,0.06); line-height: 1; margin-bottom: -20px; letter-spacing: -4px; }
+    .tech-label { font-size: 0.72rem; letter-spacing: 5px; text-transform: uppercase; color: #0A84FF; margin-bottom: 16px; }
+    .tech-section h2 { font-size: clamp(2.2rem, 4.5vw, 3.5rem); font-weight: 800; margin-bottom: 22px; }
+    .tech-section h2 span { color: #00D4FF; }
+    .tech-section > .tech-section-inner > p { color: rgba(255,255,255,0.6); line-height: 1.9; font-size: 1rem; margin-bottom: 16px; }
+
+    /* Metrics */
+    .tech-metrics { display: flex; gap: 36px; margin-top: 40px; flex-wrap: wrap; }
+    .metric {
+      padding: 24px 28px; border: 1px solid rgba(10,132,255,0.2);
+      background: rgba(13,27,42,0.7); min-width: 120px;
+      position: relative; overflow: hidden;
+    }
+    .metric::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, #0A84FF, #00D4FF); }
+    .metric-value { display: block; font-size: 2.2rem; font-weight: 900; color: #0A84FF; line-height: 1; }
+    .metric-unit { display: block; font-size: 0.75rem; letter-spacing: 2px; color: #00D4FF; margin-top: 2px; text-transform: uppercase; }
+    .metric-label { display: block; font-size: 0.68rem; letter-spacing: 2px; color: rgba(255,255,255,0.4); margin-top: 8px; text-transform: uppercase; }
+
+    /* Tech tags */
+    .tech-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 28px; }
+    .tech-tag { padding: 6px 16px; border: 1px solid rgba(10,132,255,0.3); font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.55); }
+
+    /* Section dividers */
+    .tech-divider { position: relative; z-index: 2; height: 1px; background: linear-gradient(90deg, transparent, rgba(10,132,255,0.25), transparent); margin: 0 60px; }
+
+    /* Bg panels per section */
+    .tech-section.layer-1 { background: rgba(5,10,20,0.65); }
+    .tech-section.layer-2 { background: rgba(5,10,20,0.7); }
+    .tech-section.layer-3 { background: rgba(5,10,20,0.72); }
+    .tech-section.layer-4 { background: rgba(5,10,20,0.68); }
+
+    /* Footer */
+    footer { position: relative; z-index: 2; background: rgba(5,10,20,0.97); border-top: 1px solid rgba(10,132,255,0.12); padding: 60px 60px 0; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 50px; padding-bottom: 50px; }
+    .footer-brand .footer-logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; color: #fff; display: inline-block; margin-bottom: 16px; }
+    .footer-brand .footer-logo span { color: #0A84FF; }
+    .footer-brand p { color: rgba(255,255,255,0.42); font-size: 0.88rem; line-height: 1.75; max-width: 270px; }
+    .footer-col h4 { font-size: 0.7rem; letter-spacing: 3.5px; text-transform: uppercase; color: #0A84FF; margin-bottom: 20px; }
+    .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.87rem; margin-bottom: 11px; transition: color 0.3s; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding: 22px 0; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+    .footer-bottom p { color: rgba(255,255,255,0.28); font-size: 0.78rem; }
+
+    @media (max-width: 900px) {
+      nav { padding: 20px 28px; top: 0; }
+      .nav-links { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5,10,20,0.98); flex-direction: column; align-items: center; justify-content: center; gap: 28px; z-index: 999; }
+      .nav-links.open { display: flex; }
+      .nav-links a { margin: 0; font-size: 1.1rem; }
+      .hamburger { display: flex; z-index: 1001; }
+      .tech-section { padding: 80px 28px; min-height: auto; justify-content: flex-start !important; }
+      .tech-number { font-size: 5rem; }
+      .tech-metrics { gap: 16px; }
+      .tech-divider { margin: 0 28px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; padding-bottom: 36px; }
+      footer { padding: 44px 28px 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="grain"></div>
+  <div id="cursor"></div>
+  <div id="cursor-follower"></div>
+
+  <div class="tech-timeline-bar">
+    <div class="timeline-progress" id="timelineProgress"></div>
+  </div>
+
+  <canvas id="tech-canvas"></canvas>
+
+  <nav>
+    <a href="index.html" class="nav-logo"><span>NEXUS</span> ROBOTICS</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+      <a href="technology.html" class="active">Technology</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="content">
+
+    <!-- Hero -->
+    <section class="tech-hero">
+      <div class="eyebrow">Core Systems · NEXUS Architecture</div>
+      <h1>Technology That<br><span class="blue">Transcends</span></h1>
+      <p>Four integrated systems. One unified intelligence. Built at the intersection of advanced computing, materials science, and adaptive AI — engineered to operate without limits.</p>
+      <div class="hero-hint">↓ Explore the architecture</div>
+    </section>
+
+    <!-- Section 01: AI Core -->
+    <div class="tech-divider"></div>
+    <section class="tech-section layer-1">
+      <div class="tech-section-inner">
+        <div class="tech-number">01</div>
+        <div class="tech-label">AI Core</div>
+        <h2>Machine Intelligence,<br><span>Redefined</span></h2>
+        <p>At the heart of every NEXUS system lies the NEXUS CORE — a proprietary neural processing unit designed from the silicon up for on-board autonomous intelligence. It does not wait for cloud confirmation. It thinks, interprets, and decides in real time, with less than 4 milliseconds of sensor-to-action latency across all modalities.</p>
+        <p>Our AI is trained on billions of simulated environmental interactions before a robot ever touches the real world, using a reinforcement learning framework built in-house. The result is an autonomous agent that doesn't just follow instructions — it anticipates, adapts, and improves with every task it completes.</p>
+        <div class="tech-metrics">
+          <div class="metric">
+            <span class="metric-value">2.4</span>
+            <span class="metric-unit">PFLOPS</span>
+            <span class="metric-label">Processing Power</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">&lt;4</span>
+            <span class="metric-unit">ms</span>
+            <span class="metric-label">Latency</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">34</span>
+            <span class="metric-unit">B</span>
+            <span class="metric-label">Parameters</span>
+          </div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Transformer Architecture</span>
+          <span class="tech-tag">On-Device Inference</span>
+          <span class="tech-tag">Reinforcement Learning</span>
+          <span class="tech-tag">Continual Learning</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 02: Precision Mechanics -->
+    <div class="tech-divider"></div>
+    <section class="tech-section layer-2">
+      <div class="tech-section-inner">
+        <div class="tech-number">02</div>
+        <div class="tech-label">Precision Mechanics</div>
+        <h2>Movement With<br><span>Intention</span></h2>
+        <p>NEXUS actuators are engineered for the full dynamic range of real-world interaction — from the delicate manipulation of fragile objects to the powerful exertion required for heavy industrial tasks. Each joint integrates position sensing, torque measurement, and thermal management into a single compact module, achieving a transparency that rivals biological muscle.</p>
+        <p>Our proprietary elastic actuator design provides passive compliance, making every NEXUS robot inherently safe to work alongside humans while delivering force-control precision at the sub-Newton level. This isn't servo-based motion — it's mechanical intelligence.</p>
+        <div class="tech-metrics">
+          <div class="metric">
+            <span class="metric-value">34</span>
+            <span class="metric-unit">DOF</span>
+            <span class="metric-label">Humanoid Config</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">0.02</span>
+            <span class="metric-unit">mm</span>
+            <span class="metric-label">Repeatability</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">280</span>
+            <span class="metric-unit">Nm</span>
+            <span class="metric-label">Peak Torque</span>
+          </div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Elastic Actuators</span>
+          <span class="tech-tag">Torque Sensing</span>
+          <span class="tech-tag">Carbon Composite Frame</span>
+          <span class="tech-tag">Soft Robotics Integration</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 03: Sensor Array -->
+    <div class="tech-divider"></div>
+    <section class="tech-section layer-3">
+      <div class="tech-section-inner">
+        <div class="tech-number">03</div>
+        <div class="tech-label">Sensor Array</div>
+        <h2>Perception Beyond<br><span>Human Limits</span></h2>
+        <p>The NEXUS Sensor Fusion System combines high-resolution solid-state LiDAR, stereo RGB-D cameras, inertial measurement, tactile sensor arrays, and acoustic proximity detection into a single unified perceptual model. The robot doesn't see the world in layers — it experiences it as a seamlessly integrated whole.</p>
+        <p>Our sensor fusion algorithm operates at 200Hz, continuously building and refining a probabilistic 3D map of the environment with centimeter accuracy. Whether navigating a cluttered factory floor or assisting in a hospital corridor, NEXUS robots always know precisely where they are, what surrounds them, and what is about to change.</p>
+        <div class="tech-metrics">
+          <div class="metric">
+            <span class="metric-value">200</span>
+            <span class="metric-unit">Hz</span>
+            <span class="metric-label">Fusion Rate</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">360°</span>
+            <span class="metric-unit"></span>
+            <span class="metric-label">Awareness</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">0.5</span>
+            <span class="metric-unit">cm</span>
+            <span class="metric-label">Map Accuracy</span>
+          </div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Solid-State LiDAR</span>
+          <span class="tech-tag">Stereo Vision</span>
+          <span class="tech-tag">Tactile Arrays</span>
+          <span class="tech-tag">SLAM</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 04: Energy Systems -->
+    <div class="tech-divider"></div>
+    <section class="tech-section layer-4">
+      <div class="tech-section-inner">
+        <div class="tech-number">04</div>
+        <div class="tech-label">Energy Systems</div>
+        <h2>Power Without<br><span>Compromise</span></h2>
+        <p>Autonomous operation demands energy systems that match the ambition of the mission. NEXUS developed a high-density lithium-silicon battery architecture that achieves 40% greater energy density than conventional lithium-ion at the same mass. Combined with a regenerative energy recovery system on every joint, NEXUS robots recapture kinetic energy on every step, every movement, every deceleration.</p>
+        <p>Thermal management is intelligent and predictive — the onboard system models heat generation across all components and dynamically adjusts performance thresholds to maintain safe operating temperatures in environments ranging from Arctic cold to desert heat, without interrupting mission continuity.</p>
+        <div class="tech-metrics">
+          <div class="metric">
+            <span class="metric-value">18</span>
+            <span class="metric-unit">hours</span>
+            <span class="metric-label">Runtime</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">40</span>
+            <span class="metric-unit">%</span>
+            <span class="metric-label">Energy Recovery</span>
+          </div>
+          <div class="metric">
+            <span class="metric-value">45</span>
+            <span class="metric-unit">min</span>
+            <span class="metric-label">Fast Charge</span>
+          </div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Li-Si Architecture</span>
+          <span class="tech-tag">Regenerative Recovery</span>
+          <span class="tech-tag">Smart Thermal Mgmt</span>
+          <span class="tech-tag">Wireless Charging</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="footer-logo"><span>NEXUS</span> ROBOTICS</a>
+          <p>Engineering autonomous systems that operate at the frontier of what machines can do — perceiving, reasoning, and acting in the full complexity of the real world.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="products.html">NX-7 Humanoid</a>
+          <a href="products.html">RA-Pro Arm</a>
+          <a href="products.html">AX-Nano Drone</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="technology.html">Technology</a>
+          <a href="contact.html">Careers</a>
+        </div>
+        <div class="footer-col">
+          <h4>Contact</h4>
+          <a href="contact.html">Get In Touch</a>
+          <a href="contact.html">Request Demo</a>
+          <a href="contact.html">Partnerships</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 Nexus Robotics, Inc. All rights reserved.</p>
+        <p>490 Battery Street, San Francisco, CA 94111</p>
+      </div>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script>
+    // ── Cursor ──
+    const cursor = document.getElementById('cursor');
+    const follower = document.getElementById('cursor-follower');
+    let mx=0,my=0,fx=0,fy=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function tick(){fx+=(mx-fx)*0.09;fy+=(my-fy)*0.09;follower.style.left=fx+'px';follower.style.top=fy+'px';requestAnimationFrame(tick);})();
+    document.querySelectorAll('a, button').forEach(el=>{
+      el.addEventListener('mouseenter',()=>{follower.style.transform='translate(-50%,-50%) scale(2)';follower.style.borderColor='#00D4FF';});
+      el.addEventListener('mouseleave',()=>{follower.style.transform='translate(-50%,-50%) scale(1)';follower.style.borderColor='rgba(10,132,255,0.55)';});
+    });
+    document.getElementById('hamburger').addEventListener('click',()=>{document.getElementById('navLinks').classList.toggle('open');});
+
+    // ── Three.js – Neural Network ──────────────────────────
+    (function() {
+      const canvas = document.getElementById('tech-canvas');
+      const scene  = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, innerWidth/innerHeight, 0.1, 1000);
+      camera.position.set(0, 0, 14);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(innerWidth, innerHeight);
+
+      // Nodes
+      const NODE_COUNT = 55;
+      const nodePositions = [];
+      const nodeMeshes = [];
+      const nodeMat = new THREE.MeshStandardMaterial({ color: 0x0A84FF, emissive: 0x0A84FF, emissiveIntensity: 0.7, transparent: true, opacity: 0.9 });
+      const nodeGroup = new THREE.Group();
+
+      for (let i = 0; i < NODE_COUNT; i++) {
+        const pos = new THREE.Vector3(
+          (Math.random() - 0.5) * 14,
+          (Math.random() - 0.5) * 9,
+          (Math.random() - 0.5) * 6
+        );
+        nodePositions.push(pos);
+        const size = 0.06 + Math.random() * 0.12;
+        const node = new THREE.Mesh(new THREE.SphereGeometry(size, 8, 8), nodeMat.clone());
+        node.position.copy(pos);
+        nodeGroup.add(node);
+        nodeMeshes.push(node);
+      }
+      scene.add(nodeGroup);
+
+      // Connections (edges between nearby nodes)
+      const edgeGroup = new THREE.Group();
+      const CONNECT_DIST = 4.5;
+      const edgeMaterials = [];
+
+      for (let i = 0; i < NODE_COUNT; i++) {
+        for (let j = i + 1; j < NODE_COUNT; j++) {
+          const dist = nodePositions[i].distanceTo(nodePositions[j]);
+          if (dist < CONNECT_DIST) {
+            const pts = [nodePositions[i].clone(), nodePositions[j].clone()];
+            const geo = new THREE.BufferGeometry().setFromPoints(pts);
+            const mat = new THREE.LineBasicMaterial({ color: 0x00D4FF, transparent: true, opacity: 0.18 });
+            edgeMaterials.push({ mat, baseDist: dist });
+            edgeGroup.add(new THREE.Line(geo, mat));
+          }
+        }
+      }
+      scene.add(edgeGroup);
+
+      // Particles
+      const pPos = new Float32Array(800 * 3);
+      for (let i = 0; i < 800; i++) {
+        pPos[i*3]   = (Math.random()-0.5)*24;
+        pPos[i*3+1] = (Math.random()-0.5)*16;
+        pPos[i*3+2] = (Math.random()-0.5)*10 - 4;
+      }
+      const pGeo = new THREE.BufferGeometry();
+      pGeo.setAttribute('position', new THREE.BufferAttribute(pPos, 3));
+      scene.add(new THREE.Points(pGeo, new THREE.PointsMaterial({ color: 0x0A84FF, size: 0.04, transparent: true, opacity: 0.3 })));
+
+      // Lights
+      scene.add(new THREE.AmbientLight(0x050A14, 2));
+      const bl = new THREE.PointLight(0x0A84FF, 3, 30); bl.position.set(5,5,5); scene.add(bl);
+      const cl = new THREE.PointLight(0x00D4FF, 2, 25); cl.position.set(-5,0,5); scene.add(cl);
+
+      // Animate
+      const clock = new THREE.Clock();
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+
+        // Orbit camera slowly
+        camera.position.x = Math.sin(t * 0.08) * 2;
+        camera.position.y = Math.cos(t * 0.06) * 1;
+        camera.lookAt(0,0,0);
+
+        // Pulse nodes
+        nodeMeshes.forEach((n, i) => {
+          const s = 0.85 + 0.18 * Math.sin(t * 1.2 + i * 0.7);
+          n.scale.setScalar(s);
+          n.material.emissiveIntensity = 0.4 + 0.5 * Math.abs(Math.sin(t * 0.9 + i * 0.5));
+        });
+
+        // Flicker edges
+        edgeMaterials.forEach(({ mat }, i) => {
+          mat.opacity = 0.05 + 0.18 * Math.abs(Math.sin(t * 0.6 + i * 0.3));
+        });
+
+        bl.position.x = Math.sin(t * 0.5) * 7;
+        bl.position.z = Math.cos(t * 0.5) * 7;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = innerWidth/innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(innerWidth, innerHeight);
+      });
+    })();
+
+    // ── GSAP ──────────────────────────────────────────────
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Timeline progress bar
+    ScrollTrigger.create({
+      trigger: 'body', start: 'top top', end: 'bottom bottom',
+      onUpdate: self => {
+        document.getElementById('timelineProgress').style.width = (self.progress * 100) + '%';
+      }
+    });
+
+    // Animate tech sections
+    gsap.utils.toArray('.tech-section').forEach((section, i) => {
+      gsap.from(section.querySelector('.tech-section-inner'), {
+        opacity: 0, x: i % 2 === 0 ? -80 : 80, duration: 1.1, ease: 'power3.out',
+        scrollTrigger: { trigger: section, start: 'top 75%', end: 'top 40%', scrub: 1 }
+      });
+    });
+
+    // Animate metrics
+    gsap.utils.toArray('.tech-section').forEach(section => {
+      gsap.from(section.querySelectorAll('.metric'), {
+        opacity: 0, y: 30, stagger: 0.1, duration: 0.8,
+        scrollTrigger: { trigger: section, start: 'top 60%' }
+      });
+    });
+  </script>
+</body>
+</html>
