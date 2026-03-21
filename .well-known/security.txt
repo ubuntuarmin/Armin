@@ -1,4 +1,5 @@
 Contact: https://armin.works/contact.html
+Contact: mailto:support@armin.works
 Expires: 2027-02-02T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://armin.works/.well-known/security.txt

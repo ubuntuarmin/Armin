@@ -1,7 +1,7 @@
 /* TEAM */
   Studio: Armin Studio (Armin Works)
   Site: https://armin.works
-  Contact: contact [at] armin.works
+  Contact: support [at] armin.works
   Location: United States
 
 /* SITE */
