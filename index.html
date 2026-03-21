@@ -858,6 +858,30 @@
 
     .footer-col ul a:hover { color: #ffffff; }
 
+    .social-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .social-link {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      color: #ffffff;
+      font-size: 0.95rem;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+
+    .social-link:hover {
+      border-color: #ffffff;
+      transform: translateY(-1px);
+    }
+
     .footer-bottom {
       max-width: 1100px;
       margin: 0 auto;
@@ -934,7 +958,10 @@
           "availableLanguage": ["English"]
         },
         "sameAs": [
-          "https://armin.works"
+          "https://armin.works",
+          "https://arminmajidi.substack.com",
+          "https://medium.com/@ArminMajidi",
+          "https://dev.to/@arminmajidi"
         ]
       },
       {
@@ -1363,6 +1390,11 @@
         <ul>
           <li><a href="contact.html">Contact Us</a></li>
         </ul>
+        <div class="social-links" aria-label="Armin Studio social profiles">
+          <a class="social-link" href="https://arminmajidi.substack.com" target="_blank" rel="noopener noreferrer me" aria-label="Visit Armin Majidi on Substack" title="Substack">📰</a>
+          <a class="social-link" href="https://medium.com/@ArminMajidi" target="_blank" rel="noopener noreferrer me" aria-label="Visit Armin Majidi on Medium" title="Medium">✍️</a>
+          <a class="social-link" href="https://dev.to/@arminmajidi" target="_blank" rel="noopener noreferrer me" aria-label="Visit Armin Majidi on DEV Community" title="DEV Community">💻</a>
+        </div>
         <p style="margin-top:12px;">Ready to get started? Reach out and let's build something great together.</p>
       </div>
     </div>

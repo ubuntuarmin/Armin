@@ -41,7 +41,10 @@
     "url": "https://armin.works/contact.html"
   },
   "sameAs": [
-    "https://armin.works"
+    "https://armin.works",
+    "https://arminmajidi.substack.com",
+    "https://medium.com/@ArminMajidi",
+    "https://dev.to/@arminmajidi"
   ],
   "serviceArea": {
     "@type": "Country",
