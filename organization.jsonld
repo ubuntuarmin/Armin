@@ -38,7 +38,8 @@
     "@type": "ContactPoint",
     "contactType": "Customer Service",
     "availableLanguage": ["English"],
-    "url": "https://armin.works/contact.html"
+    "url": "https://armin.works/contact.html",
+    "email": "support@armin.works"
   },
   "sameAs": [
     "https://armin.works",
