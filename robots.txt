@@ -11,13 +11,6 @@ Sitemap: https://armin.works/sitemap_index.xml
 # Additional Resources
 # Visit our humans.txt at https://armin.works/humans.txt
 
-# Block specific user agents (optional)
-User-agent: GPTBot
-Disallow: /
-
-User-agent: ChatGPT-User
-Disallow: /
-
 # Allow all major search engines explicitly
 User-agent: Googlebot
 Allow: /
