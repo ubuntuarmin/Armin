@@ -444,28 +444,51 @@
 
     function Shop() {
       const [cartCount, setCartCount] = useState(0);
+      const [cartItems, setCartItems] = useState([]);
       const [active, setActive] = useState('All');
+      const [showCheckout, setShowCheckout] = useState(false);
+      const [orderDone, setOrderDone] = useState(false);
+      const [form, setForm] = useState({ name:'', email:'', address:'' });
       const categories = ['All', 'Electronics', 'Clothing', 'Accessories'];
       const products = [
-        { name:'Wireless Earbuds', price:'$79', category:'Electronics', emoji:'🎧', desc:'Premium sound quality with 24h battery life' },
-        { name:'Smart Watch', price:'$199', category:'Electronics', emoji:'⌚', desc:'Track fitness, notifications & more' },
-        { name:'Laptop Stand', price:'$45', category:'Accessories', emoji:'💻', desc:'Ergonomic aluminum stand for any laptop' },
-        { name:'Cotton T-Shirt', price:'$29', category:'Clothing', emoji:'👕', desc:'Soft, sustainable everyday essential' },
-        { name:'Running Shoes', price:'$89', category:'Clothing', emoji:'👟', desc:'Lightweight with superior cushioning' },
-        { name:'Phone Case', price:'$19', category:'Accessories', emoji:'📱', desc:'Drop-proof case for all phone models' },
-        { name:'Bluetooth Speaker', price:'$59', category:'Electronics', emoji:'🔊', desc:'Waterproof with 360° immersive sound' },
-        { name:'Baseball Cap', price:'$24', category:'Clothing', emoji:'🧢', desc:'Adjustable fit, UV protection built-in' },
+        { name:'Wireless Earbuds', price: 79, category:'Electronics', emoji:'🎧', desc:'Premium sound quality with 24h battery life' },
+        { name:'Smart Watch', price: 199, category:'Electronics', emoji:'⌚', desc:'Track fitness, notifications & more' },
+        { name:'Laptop Stand', price: 45, category:'Accessories', emoji:'💻', desc:'Ergonomic aluminum stand for any laptop' },
+        { name:'Cotton T-Shirt', price: 29, category:'Clothing', emoji:'👕', desc:'Soft, sustainable everyday essential' },
+        { name:'Running Shoes', price: 89, category:'Clothing', emoji:'👟', desc:'Lightweight with superior cushioning' },
+        { name:'Phone Case', price: 19, category:'Accessories', emoji:'📱', desc:'Drop-proof case for all phone models' },
+        { name:'Bluetooth Speaker', price: 59, category:'Electronics', emoji:'🔊', desc:'Waterproof with 360° immersive sound' },
+        { name:'Baseball Cap', price: 24, category:'Clothing', emoji:'🧢', desc:'Adjustable fit, UV protection built-in' },
       ];
       const filtered = active === 'All' ? products : products.filter(p => p.category === active);
-      const addToCart = () => setCartCount(c => c + 1);
+      const addToCart = (p) => { setCartCount(c => c + 1); setCartItems(items => [...items, p]); };
+      const total = cartItems.reduce((sum, p) => sum + p.price, 0);
+      const tax = (total * 0.08).toFixed(2);
+      const grandTotal = (total + parseFloat(tax)).toFixed(2);
+      const inputSt = { width:'100%', padding:'10px 12px', border:'1.5px solid #e5e7eb', borderRadius:'8px', fontSize:'0.9rem', fontFamily:'inherit', color:'#333', marginTop:'5px', boxSizing:'border-box', outline:'none' };
+
+      if (orderDone) return (
+        <div style={{padding:'60px 20px',textAlign:'center',background:'#f8f9fa'}}>
+          <div style={{maxWidth:'480px',margin:'0 auto',background:'#fff',borderRadius:'16px',padding:'48px 32px',boxShadow:'0 4px 24px rgba(0,0,0,0.08)'}}>
+            <div style={{fontSize:'3.5rem',marginBottom:'20px'}}>🎉</div>
+            <h2 style={{color:'#222',marginBottom:'10px'}}>Order Confirmed!</h2>
+            <p style={{color:'#666',marginBottom:'24px',lineHeight:'1.7'}}>Thank you for your purchase. A confirmation has been sent to your email.</p>
+            <button onClick={() => { setOrderDone(false); setCartItems([]); setCartCount(0); setShowCheckout(false); }} style={{padding:'12px 28px',background:'#e44d26',color:'#fff',border:'none',borderRadius:'8px',fontWeight:'700',cursor:'pointer',fontSize:'1rem'}}>Continue Shopping</button>
+          </div>
+        </div>
+      );
 
       return (
         <div>
-          {/* Floating Cart Counter */}
-          <div style={{position:'fixed',top:'16px',right:'20px',zIndex:1001,display:'flex',alignItems:'center',gap:'8px',background:'#fff',borderRadius:'50px',padding:'8px 16px',boxShadow:'0 2px 12px rgba(0,0,0,0.15)'}}>
+          {/* Floating Cart Button */}
+          <div
+            onClick={() => cartCount > 0 && setShowCheckout(true)}
+            style={{position:'fixed',top:'16px',right:'20px',zIndex:1001,display:'flex',alignItems:'center',gap:'8px',background:'#fff',borderRadius:'50px',padding:'8px 16px',boxShadow:'0 2px 12px rgba(0,0,0,0.15)',cursor: cartCount > 0 ? 'pointer' : 'default'}}
+          >
             <span style={{fontSize:'1.2rem'}}>🛒</span>
             {cartCount > 0 && <span style={{background:'#e44d26',color:'#fff',borderRadius:'50%',width:'22px',height:'22px',display:'flex',alignItems:'center',justifyContent:'center',fontSize:'0.75rem',fontWeight:'700'}}>{cartCount}</span>}
-            <span style={{fontSize:'0.85rem',fontWeight:'600',color:'#333'}}>{cartCount === 0 ? 'Cart' : `${cartCount} item${cartCount>1?'s':''}`}</span>
+            <span style={{fontSize:'0.85rem',fontWeight:'600',color:'#333'}}>{cartCount === 0 ? 'Cart' : `${cartCount} item${cartCount>1?'s':''} · $${grandTotal}`}</span>
+            {cartCount > 0 && <span style={{background:'#e44d26',color:'#fff',borderRadius:'50px',padding:'3px 10px',fontSize:'0.75rem',fontWeight:'700'}}>Checkout</span>}
           </div>
 
           {/* Product Filter Section */}
@@ -485,13 +508,95 @@
                   <h3 style={{fontSize:'1rem',fontWeight:'700',color:'#222',marginBottom:'6px'}}>{p.name}</h3>
                   <p style={{fontSize:'0.85rem',color:'#666',marginBottom:'14px',lineHeight:'1.5'}}>{p.desc}</p>
                   <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
-                    <span style={{fontWeight:'700',fontSize:'1.15rem',color:'#333'}}>{p.price}</span>
-                    <button onClick={addToCart} style={{padding:'8px 16px',background:'#e44d26',color:'#fff',border:'none',borderRadius:'6px',cursor:'pointer',fontWeight:'600',fontSize:'0.85rem',minHeight:'44px'}}>Add to Cart</button>
+                    <span style={{fontWeight:'700',fontSize:'1.15rem',color:'#333'}}>${p.price}</span>
+                    <button onClick={() => addToCart(p)} style={{padding:'8px 16px',background:'#e44d26',color:'#fff',border:'none',borderRadius:'6px',cursor:'pointer',fontWeight:'600',fontSize:'0.85rem',minHeight:'44px'}}>Add to Cart</button>
                   </div>
                 </div>
               ))}
             </div>
           </section>
+
+          {/* Checkout Modal */}
+          {showCheckout && (
+            <div style={{position:'fixed',inset:0,background:'rgba(0,0,0,0.55)',zIndex:2000,display:'flex',alignItems:'center',justifyContent:'center',padding:'20px'}} onClick={e => { if (e.target === e.currentTarget) setShowCheckout(false); }}>
+              <div style={{background:'#fff',borderRadius:'18px',padding:'36px 32px',maxWidth:'520px',width:'100%',maxHeight:'90vh',overflowY:'auto',boxShadow:'0 24px 64px rgba(0,0,0,0.2)'}}>
+                <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'22px'}}>
+                  <h2 style={{fontWeight:'800',fontSize:'1.3rem',color:'#1a1a1a'}}>🛒 Checkout</h2>
+                  <button onClick={() => setShowCheckout(false)} style={{background:'none',border:'none',fontSize:'1.4rem',cursor:'pointer',color:'#9ca3af',lineHeight:1}}>✕</button>
+                </div>
+
+                {/* Order Summary */}
+                <div style={{background:'#f9fafb',borderRadius:'10px',padding:'16px',marginBottom:'22px'}}>
+                  <div style={{fontSize:'0.78rem',fontWeight:'700',textTransform:'uppercase',letterSpacing:'0.1em',color:'#6b7280',marginBottom:'10px'}}>Order Summary</div>
+                  {cartItems.map((item, i) => (
+                    <div key={i} style={{display:'flex',justifyContent:'space-between',fontSize:'0.88rem',color:'#374151',marginBottom:'6px'}}>
+                      <span>{item.emoji} {item.name}</span><span style={{fontWeight:'600'}}>${item.price}</span>
+                    </div>
+                  ))}
+                  <div style={{borderTop:'1px dashed #e5e7eb',marginTop:'10px',paddingTop:'10px'}}>
+                    <div style={{display:'flex',justifyContent:'space-between',fontSize:'0.85rem',color:'#6b7280',marginBottom:'4px'}}><span>Subtotal</span><span>${total.toFixed(2)}</span></div>
+                    <div style={{display:'flex',justifyContent:'space-between',fontSize:'0.85rem',color:'#6b7280',marginBottom:'4px'}}><span>Tax (8%)</span><span>${tax}</span></div>
+                    <div style={{display:'flex',justifyContent:'space-between',fontSize:'1.05rem',fontWeight:'800',color:'#1a1a1a',marginTop:'8px'}}><span>Total</span><span style={{color:'#e44d26'}}>${grandTotal}</span></div>
+                  </div>
+                </div>
+
+                {/* Contact Details */}
+                <div style={{marginBottom:'20px'}}>
+                  <div style={{fontSize:'0.78rem',fontWeight:'700',textTransform:'uppercase',letterSpacing:'0.1em',color:'#6b7280',marginBottom:'12px'}}>Your Details</div>
+                  <div style={{marginBottom:'12px'}}>
+                    <label style={{fontSize:'0.82rem',fontWeight:'600',color:'#374151',display:'block',marginBottom:'5px'}}>Full Name *</label>
+                    <input required style={inputSt} value={form.name} onChange={e=>setForm(f=>({...f,name:e.target.value}))} placeholder="Jane Doe" />
+                  </div>
+                  <div style={{marginBottom:'12px'}}>
+                    <label style={{fontSize:'0.82rem',fontWeight:'600',color:'#374151',display:'block',marginBottom:'5px'}}>Email *</label>
+                    <input required type="email" style={inputSt} value={form.email} onChange={e=>setForm(f=>({...f,email:e.target.value}))} placeholder="jane@example.com" />
+                  </div>
+                  <div style={{marginBottom:'12px'}}>
+                    <label style={{fontSize:'0.82rem',fontWeight:'600',color:'#374151',display:'block',marginBottom:'5px'}}>Shipping Address *</label>
+                    <input required style={inputSt} value={form.address} onChange={e=>setForm(f=>({...f,address:e.target.value}))} placeholder="123 Main St, City, State, ZIP" />
+                  </div>
+                </div>
+
+                {/* Stripe Payment */}
+                <div style={{borderTop:'1px dashed #e5e7eb',paddingTop:'18px',marginBottom:'20px'}}>
+                  <div style={{fontSize:'0.78rem',fontWeight:'700',textTransform:'uppercase',letterSpacing:'0.1em',color:'#6b7280',marginBottom:'12px'}}>💳 Payment Details</div>
+                  <div style={{display:'flex',alignItems:'center',gap:'8px',background:'#f0fdf4',border:'1px solid #86efac',borderRadius:'8px',padding:'9px 13px',marginBottom:'14px',fontSize:'0.78rem',color:'#166534',fontWeight:'600'}}>
+                    🔒 Your payment is secured with 256-bit SSL encryption
+                  </div>
+                  {/*
+                    ══════════════════════════════════════════════
+                    STRIPE INTEGRATION — Ready to connect
+                    ══════════════════════════════════════════════
+                    1. Add before </body>: <script src="https://js.stripe.com/v3/"></script>
+                    2. Initialize with your publishable key (from server-rendered config, never hardcode live keys)
+                    3. Mount Stripe Elements to '#card-element-ecommerce'
+                    ══════════════════════════════════════════════
+                  */}
+                  <label style={{fontSize:'0.82rem',fontWeight:'600',color:'#374151',display:'block',marginBottom:'6px'}}>Card Details <span style={{color:'#e53e3e'}}>*</span></label>
+                  <div id="card-element-ecommerce" style={{width:'100%',padding:'12px 14px',border:'1.5px solid #e5e7eb',borderRadius:'8px',background:'#f9fafb',minHeight:'44px'}}>
+                    {/* Stripe Elements mounts here — mock display below */}
+                    <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
+                      <span style={{flex:1,fontSize:'0.88rem',color:'#aaa',letterSpacing:'2px'}}>•••• •••• •••• ••••</span>
+                      <span style={{background:'#f3f4f6',border:'1px solid #e5e7eb',borderRadius:'4px',padding:'2px 6px',fontSize:'0.65rem',fontWeight:'800',color:'#374151'}}>VISA</span>
+                      <span style={{background:'#f3f4f6',border:'1px solid #e5e7eb',borderRadius:'4px',padding:'2px 6px',fontSize:'0.65rem',fontWeight:'800',color:'#374151'}}>MC</span>
+                      <span style={{background:'#f3f4f6',border:'1px solid #e5e7eb',borderRadius:'4px',padding:'2px 6px',fontSize:'0.65rem',fontWeight:'800',color:'#374151'}}>AMEX</span>
+                    </div>
+                  </div>
+                  <div style={{display:'flex',alignItems:'center',gap:'6px',marginTop:'8px',fontSize:'0.72rem',color:'#9ca3af'}}>
+                    🔒 Powered by <strong style={{color:'#6772e5'}}>Stripe</strong> — Card details never stored on our servers
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => { if (form.name && form.email && form.address) setOrderDone(true); }}
+                  style={{width:'100%',padding:'15px',background:'linear-gradient(135deg,#e44d26,#ff6b3d)',color:'#fff',border:'none',borderRadius:'10px',fontWeight:'800',fontSize:'1.05rem',cursor:'pointer',boxShadow:'0 4px 16px rgba(228,77,38,0.35)'}}
+                >
+                  🛒 Place Order · ${grandTotal}
+                </button>
+                <p style={{textAlign:'center',fontSize:'0.73rem',color:'#9ca3af',marginTop:'8px'}}>🔒 Secure checkout · Confirmation email sent instantly</p>
+              </div>
+            </div>
+          )}
         </div>
       );
     }

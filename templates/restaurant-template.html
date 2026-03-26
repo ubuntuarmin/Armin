@@ -647,7 +647,40 @@
             </div>
           </div>
           <div style={{marginBottom:'20px'}}><label style={labelStyle}>Special Requests</label><textarea style={{...inputStyle,resize:'vertical',minHeight:'80px'}} value={form.notes} onChange={e=>update('notes',e.target.value)} placeholder="Dietary needs, special occasions..." /></div>
+
+          {/* Payment Section */}
+          <div style={{borderTop:'1px dashed #e8d5b7',paddingTop:'20px',marginBottom:'20px'}}>
+            <div style={{display:'flex',alignItems:'center',gap:'8px',marginBottom:'14px'}}>
+              <span style={{fontSize:'1rem',fontWeight:'700',color:'#8b4513',fontFamily:'Georgia,serif'}}>💳 Secure Your Table</span>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:'8px',background:'#f0fdf4',border:'1px solid #86efac',borderRadius:'8px',padding:'9px 13px',marginBottom:'14px',fontSize:'0.8rem',color:'#166534',fontWeight:'600'}}>
+              🔒 Your payment is secured with 256-bit SSL encryption
+            </div>
+            <label style={labelStyle}>Card Details <span style={{color:'#e53e3e'}}>*</span></label>
+            {/*
+              ══════════════════════════════════════════════
+              STRIPE INTEGRATION — Ready to connect
+              ══════════════════════════════════════════════
+              1. Add before </body>: <script src="https://js.stripe.com/v3/"></script>
+              2. Initialize with your publishable key (via server-rendered config, never hardcode live keys)
+              3. Mount Stripe Elements to '#card-element-restaurant'
+              ══════════════════════════════════════════════
+            */}
+            <div id="card-element-restaurant" style={{width:'100%',padding:'12px 14px',border:'1px solid #e8d5b7',borderRadius:'6px',background:'#fffdf9',minHeight:'44px',marginTop:'6px'}}>
+              {/* Stripe Elements mounts here — mock display below */}
+              <div style={{display:'flex',alignItems:'center',gap:'10px'}}>
+                <span style={{flex:1,fontSize:'0.88rem',color:'#aaa',letterSpacing:'2px'}}>•••• •••• •••• ••••</span>
+                <span style={{background:'#f3f4f6',border:'1px solid #e5e7eb',borderRadius:'4px',padding:'2px 6px',fontSize:'0.65rem',fontWeight:'800',color:'#374151'}}>VISA</span>
+                <span style={{background:'#f3f4f6',border:'1px solid #e5e7eb',borderRadius:'4px',padding:'2px 6px',fontSize:'0.65rem',fontWeight:'800',color:'#374151'}}>MC</span>
+              </div>
+            </div>
+            <div style={{display:'flex',alignItems:'center',gap:'6px',marginTop:'8px',fontSize:'0.72rem',color:'#9ca3af'}}>
+              🔒 Powered by <strong style={{color:'#6772e5'}}>Stripe</strong> — Card details never stored on our servers
+            </div>
+          </div>
+
           <button type="submit" style={{width:'100%',padding:'14px',background:'#8b4513',color:'#fff',border:'none',borderRadius:'6px',fontFamily:'Georgia,serif',fontSize:'1.05rem',fontWeight:'600',cursor:'pointer',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#6d3610'} onMouseOut={e=>e.target.style.background='#8b4513'}>Confirm Reservation ✓</button>
+          <p style={{textAlign:'center',fontSize:'0.73rem',color:'#9ca3af',marginTop:'8px'}}>🔒 Secure checkout · Confirmation sent instantly</p>
         </form>
       );
     }

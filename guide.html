@@ -578,79 +578,135 @@
       margin-top: 10px;
     }
 
-    /* SUMMARY */
+    /* SUMMARY – glassmorphism breakdown */
     .quote-summary {
-      margin-top: 32px;
-      border-radius: var(--radius-lg);
-      padding: 22px 20px 18px;
-      background: var(--white);
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow-md);
+      margin-top: 40px;
+      border-radius: 20px;
+      padding: 36px 32px 32px;
+      background: rgba(255,255,255,0.72);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.55);
+      box-shadow: 0 8px 40px rgba(29,78,216,0.10), 0 2px 8px rgba(0,0,0,0.06);
       font-size: 0.96rem;
       color: var(--text);
       display: none;
       max-width: 1100px;
       margin-left: auto;
       margin-right: auto;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .quote-summary::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(29,78,216,0.09) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .quote-summary::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; left: -60px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
     }
 
     .quote-summary-title {
-      font-size: 1.15rem;
-      margin: 0 0 8px;
-      color: var(--text);
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin: 0 0 6px;
+      color: var(--navy);
+      letter-spacing: -0.01em;
     }
 
     .quote-summary-sub {
-      font-size: 0.94rem;
+      font-size: 0.93rem;
       color: var(--text-muted);
-      margin: 0 0 14px;
+      margin: 0 0 24px;
+      line-height: 1.6;
+    }
+
+    .quote-summary-section-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--blue);
+      margin: 18px 0 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(29,78,216,0.12);
     }
 
     .quote-summary-lines {
       display: grid;
-      gap: 6px;
-      margin-bottom: 10px;
+      gap: 0;
+      margin-bottom: 8px;
     }
 
     .quote-summary-line {
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.96rem;
-      color: var(--text-muted);
+      align-items: center;
+      font-size: 0.94rem;
+      color: var(--text);
       gap: 10px;
       flex-wrap: wrap;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: background 0.15s;
+    }
+
+    .quote-summary-line:nth-child(odd) {
+      background: rgba(249,250,251,0.7);
     }
 
     .quote-summary-line strong {
-      color: var(--text);
+      color: var(--navy);
+      font-weight: 600;
     }
 
     .quote-summary-line-right {
       text-align: right;
-      font-size: 0.9rem;
+      font-size: 0.91rem;
       color: var(--text-muted);
     }
 
     .quote-summary-line-right span.amount {
-      color: var(--text);
-      font-weight: 600;
+      color: var(--navy);
+      font-weight: 700;
+      font-size: 0.96rem;
+    }
+
+    .quote-summary-line-right span.amount.free {
+      color: #16a34a;
     }
 
     .quote-total {
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px dashed var(--border);
+      margin-top: 20px;
+      padding: 20px 18px 18px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(29,78,216,0.06) 0%, rgba(59,130,246,0.04) 100%);
+      border: 1px solid rgba(29,78,216,0.13);
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
+      align-items: center;
       flex-wrap: wrap;
       gap: 12px;
     }
 
     .quote-total-label {
-      font-size: 0.94rem;
+      font-size: 0.88rem;
+      font-weight: 600;
       color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
     }
 
     .quote-total-amounts {
@@ -658,27 +714,76 @@
     }
 
     .quote-total-main {
-      font-size: 1.6rem;
-      font-weight: 800;
+      font-size: 2rem;
+      font-weight: 900;
       display: block;
-      color: var(--text);
+      color: var(--navy);
+      letter-spacing: -0.02em;
     }
 
     .quote-total-monthly {
-      font-size: 0.9rem;
+      font-size: 0.88rem;
       color: var(--text-muted);
+      margin-top: 2px;
+      display: block;
+    }
+
+    .quote-what-included {
+      margin-top: 22px;
+      padding: 18px 20px;
+      border-radius: 12px;
+      background: rgba(240,253,244,0.8);
+      border: 1px solid rgba(22,163,74,0.18);
+    }
+
+    .quote-what-included-title {
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #16a34a;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 10px;
+    }
+
+    .quote-what-included ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 6px;
+    }
+
+    .quote-what-included li {
+      font-size: 0.88rem;
+      color: #166534;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+    }
+
+    .quote-what-included li::before {
+      content: '✓';
+      color: #16a34a;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
     }
 
     .quote-note {
-      font-size: 0.86rem;
+      font-size: 0.85rem;
       color: var(--text-muted);
-      margin-top: 10px;
+      margin-top: 16px;
+      line-height: 1.6;
     }
 
     .quote-text-cta {
-      margin-top: 14px;
-      font-size: 0.94rem;
+      margin-top: 20px;
+      font-size: 0.95rem;
       color: var(--text);
+      padding: 16px 18px;
+      background: rgba(29,78,216,0.04);
+      border-radius: 10px;
+      border-left: 3px solid var(--blue);
     }
 
     .quote-text-cta strong {
@@ -686,29 +791,36 @@
     }
 
     .quote-text-number {
-      margin-top: 8px;
+      margin-top: 14px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 9px 14px;
-      border-radius: 6px;
-      border: 1px solid var(--border);
-      background: var(--bg);
-      font-size: 0.9rem;
-      color: var(--text);
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1.5px solid var(--blue);
+      background: var(--white);
+      font-size: 0.92rem;
+      color: var(--navy);
       cursor: pointer;
-      transition: border-color 0.15s;
+      font-weight: 600;
+      transition: background 0.15s, box-shadow 0.15s;
+      box-shadow: 0 2px 8px rgba(29,78,216,0.08);
     }
 
     .quote-text-number:hover {
-      border-color: var(--blue-light);
+      background: rgba(29,78,216,0.04);
+      box-shadow: 0 4px 16px rgba(29,78,216,0.14);
     }
 
     .quote-text-number span.badge {
-      font-size: 0.78rem;
+      font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      color: var(--blue);
+      color: var(--white);
+      background: var(--blue);
+      padding: 3px 8px;
+      border-radius: 50px;
+      font-weight: 700;
     }
 
     /* FOOTER */
@@ -958,7 +1070,6 @@
           <a href="examples.html">Examples</a>
           <a href="pricing.html">Pricing</a>
           <a href="contact.html">Contact</a>
-          <a href="customization.html">Customization</a>
           <a href="guide.html">Estimate</a>
         </nav>
         <button class="nav-cta" onclick="window.location.href='contact.html'">Get Started</button>
@@ -974,7 +1085,6 @@
       <a href="pricing.html">Pricing</a>
       <a href="guide.html">Estimate</a>
       <a href="contact.html">Contact</a>
-      <a href="customization.html">Customization</a>
     </nav>
   </div>
 
@@ -1070,44 +1180,54 @@
 
         <!-- SUMMARY -->
         <article class="quote-summary hover-lift" id="quoteSummary">
-          <h2 class="quote-summary-title">Your estimated cost breakdown</h2>
+          <h2 class="quote-summary-title">Your personalised price breakdown</h2>
           <p class="quote-summary-sub">
-            Keep in mind this is just for you to get an idea of my pricing and does not reflect your final quote.
-            To receive an exact quote, please text me with your situation.
+            This is an estimate based on your answers — not a final invoice. We'll refine it together before you commit to anything or send any payment.
           </p>
 
+          <div class="quote-summary-section-label">What you selected</div>
           <div class="quote-summary-lines" id="quoteSummaryLines"></div>
 
           <div class="quote-total">
-            <div class="quote-total-label">
-              Estimated totals (USD)
+            <div>
+              <div class="quote-total-label">Estimated one-time cost</div>
+              <div class="quote-total-main">$<span id="quoteTotalOnce">0</span></div>
             </div>
-            <div class="quote-total-amounts">
-              <span class="quote-total-main">
-                $<span id="quoteTotalOnce">0</span> one‑time
-              </span>
+            <div style="text-align:right;">
+              <div class="quote-total-label">Estimated monthly</div>
               <span class="quote-total-monthly" id="quoteTotalMonthlyLine">
-                + $<span id="quoteTotalMonthly">0</span> per month (estimated)
+                $<span id="quoteTotalMonthly">0</span> / mo
               </span>
             </div>
           </div>
 
+          <div class="quote-what-included">
+            <div class="quote-what-included-title">✦ Every package includes</div>
+            <ul>
+              <li>Fully responsive design (looks great on phone, tablet, and desktop)</li>
+              <li>Unlimited revisions until you are 100% happy</li>
+              <li>You pay <em>only</em> after you approve the final result</li>
+              <li>All content uploaded and ready to go live</li>
+              <li>Basic SEO setup (page titles, meta descriptions, sitemap)</li>
+              <li>Fast page load speed and secure HTTPS hosting ready</li>
+            </ul>
+          </div>
+
           <p class="quote-note">
-            This is just an estimate – a starting point.
-            We'll agree on final one‑time and monthly amounts together before you send any payment.
+            💡 <strong>How pricing works:</strong> the one-time cost covers design and development. Monthly costs (if any) cover ongoing domain, hosting, or maintenance you selected. Final amounts are agreed before you send anything.
           </p>
 
           <div class="quote-text-cta">
             <strong>Want to move forward with this estimate?</strong><br />
-            Text us your total and a short description of your business or idea.
+            Text us your total and a short description of your business or idea — we'll confirm the exact price and timeline together.
           </div>
           <button
             type="button"
             class="quote-text-number btn-pressable"
-            onclick="window.location.href='tel:+1EXAMPLENUMBER'"
+            onclick="window.location.href='contact.html'"
           >
-            <span class="badge">Text this number to start</span>
-            <span>+1‑EXAMPLE NUMBER</span>
+            <span class="badge">Start here</span>
+            <span>Contact us to confirm your quote →</span>
           </button>
         </article>
       </section>
@@ -1127,7 +1247,7 @@
       </div>
       <div class="footer-col">
         <h4>Resources</h4>
-        <ul><li><a href="guide.html">Estimate Tool</a></li><li><a href="customization.html">Customization</a></li><li><a href="domain.html">Domain Guide</a></li><li><a href="host.html">Hosting Guide</a></li></ul>
+        <ul><li><a href="guide.html">Estimate Tool</a></li><li><a href="domain.html">Domain Guide</a></li><li><a href="host.html">Hosting Guide</a></li></ul>
       </div>
       <div class="footer-col">
         <h4>Get in Touch</h4>
@@ -1281,9 +1401,9 @@
         title: "How many pages do you think you'll need?",
         sub: "You can always adjust this later – this just shapes the estimate.",
         options: [
-          { id: "pages-1",      label: "1 page",          sub: "A focused one‑page website.",                 price: 16,  monthly: 0, pageCount: 1 },
-          { id: "pages-2-3",    label: "2–3 pages",       sub: "A bit more room to explain things.",          price: 65,  monthly: 0, pageCount: 2 },
-          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site. (text if you need more pages)", price: 130,  monthly: 0, pageCount: 4 }
+          { id: "pages-1",      label: "1 page",          sub: "A focused one‑page website.",                 price: 32,  monthly: 0, pageCount: 1 },
+          { id: "pages-2-3",    label: "2–3 pages",       sub: "A bit more room to explain things.",          price: 130,  monthly: 0, pageCount: 2 },
+          { id: "pages-4plus",  label: "4+ pages",        sub: "A small multi‑page site. (text if you need more pages)", price: 260,  monthly: 0, pageCount: 4 }
         ]
       },
       {
@@ -1312,8 +1432,8 @@
         sub: "Keep in mind this is a rough estimate.",
         options: [
           { id: "content-ready",  label: "No, I've got it",    sub: "You'll provide all photos, videos, logos, and other assets.",    price: 0,  monthly: 0 },
-          { id: "content-polish", label: "Need some help",     sub: "Our team can help edit or create up to 3 custom assets.",         price: 32, monthly: 0 },
-          { id: "content-create", label: "I need everything",  sub: "Our team will create up to 6 custom assets for your website.",   price: 65, monthly: 0 }
+          { id: "content-polish", label: "Need some help",     sub: "Our team can help edit or create up to 3 custom assets.",         price: 64, monthly: 0 },
+          { id: "content-create", label: "I need everything",  sub: "Our team will create up to 6 custom assets for your website.",   price: 130, monthly: 0 }
         ]
       },
       {
@@ -1322,8 +1442,8 @@
         sub: "My dev team will always be at your fingertips.",
         options: [
           { id: "maint-none",  label: "No maintenance needed", sub: "Your site will be published once. Future edits may have fees and take extra time.", price: 0,  monthly: 0 },
-          { id: "maint-basic", label: "Basic maintenance",     sub: "Unlimited basic edits (like updating menu prices or swapping photos). All bugs are fixed.", price: 0, monthly: 25 },
-          { id: "maint-pro",   label: "Pro maintenance",       sub: "Everything in basic plus: 2 major edits per month, priority support, and faster completion.", price: 65, monthly: 56 }
+          { id: "maint-basic", label: "Basic maintenance",     sub: "Unlimited basic edits (like updating menu prices or swapping photos). All bugs are fixed.", price: 0, monthly: 50 },
+          { id: "maint-pro",   label: "Pro maintenance",       sub: "Everything in basic plus: 2 major edits per month, priority support, and faster completion.", price: 130, monthly: 112 }
         ]
       },
       {
@@ -1332,8 +1452,8 @@
         sub: "This is about what visitors can do on the site.",
         options: [
           { id: "features-basic",    label: "Basic info",      sub: "Text sections, images, simple links.",                              price: 0,  monthly: 0 },
-          { id: "features-forms",    label: "Forms & actions", sub: "Everything in basic plus contact, booking, or simple forms.",      price: 8,  monthly: 0 },
-          { id: "features-advanced", label: "More advanced",   sub: "Everything in basic plus more advanced dynamic forms.",            price: 25, monthly: 0 }
+          { id: "features-forms",    label: "Forms & actions", sub: "Everything in basic plus contact, booking, or simple forms.",      price: 16,  monthly: 0 },
+          { id: "features-advanced", label: "More advanced",   sub: "Everything in basic plus more advanced dynamic forms.",            price: 50, monthly: 0 }
         ]
       },
       {
@@ -1342,8 +1462,8 @@
         sub: "This could be almost anything you can imagine.",
         options: [
           { id: "integrations-none",    label: "None",               sub: "My site is fine with just forms.",                                    price: 0,  monthly: 0 },
-          { id: "integrations-basic",   label: "Basic integrations", sub: "Examples: language options, dark/light theme, analytics.",           price: 32, monthly: 0 },
-          { id: "integrations-advanced",label: "Advanced integrations", sub: "Examples: login/signup, chat rooms, advanced calculators, and more.", price: 100, monthly: 0 }
+          { id: "integrations-basic",   label: "Basic integrations", sub: "Examples: language options, dark/light theme, analytics.",           price: 64, monthly: 0 },
+          { id: "integrations-advanced",label: "Advanced integrations", sub: "Examples: login/signup, chat rooms, advanced calculators, and more.", price: 200, monthly: 0 }
         ]
       },
       {
@@ -1359,10 +1479,10 @@
        {
         id: "new",
         title: "Do you want seo optimization?",
-        sub: "SEO optimization boosts a sites organic activity by over 400% without it your site wont look as reputable.",
+        sub: "SEO optimization boosts a site's organic traffic by over 400%. Without it, your site won't appear as reputable in search results.",
         options: [
-          { id: "seo-basic",  label: "Nope im ok ",         sub: "Best for companys that will direct users to thier website, and dont worry about users searching for them.",                 price: 0,  monthly: 0 },
-          { id: "seo-plus",   label: "PRO SEO", sub: " We will rank your site in google bringing lots of traffic. Keep in mind that pricing for SEO can be diffrent based on your needs.  ",  price: 145, monthly: 0 },
+          { id: "seo-basic",  label: "Nope, I'm OK",         sub: "Best for companies that direct users to their website and don't rely on organic search.",                 price: 0,  monthly: 0 },
+          { id: "seo-plus",   label: "PRO SEO", sub: "We will rank your site in Google, bringing lots of traffic. Keep in mind that pricing for SEO can be different based on your needs.",  price: 290, monthly: 0 },
         ]
       },
       {
@@ -1389,13 +1509,13 @@
               };
             } else if (v <= 85) {
               return {
-                once: 32,
+                once: 64,
                 monthly: 0,
                 label: "High – lots of motion and interactive elements."
               };
             } else {
               return {
-                once: 50,
+                once: 100,
                 monthly: 0,
                 label: "Very energetic – complex animations and heavy motion."
               };
@@ -1415,7 +1535,7 @@
           pricing: function (v) {
             if (v <= 25) {
               return {
-                once: -65,
+                once: -130,
                 monthly: 0,
                 label: "Very tight – We'll keep the estimate as low as possible."
               };
@@ -1427,13 +1547,13 @@
               };
             } else if (v <= 85) {
               return {
-                once: 16,
+                once: 32,
                 monthly: 0,
                 label: "Comfortable – okay investing more for better results."
               };
             } else {
               return {
-                once: 32,
+                once: 64,
                 monthly: 0,
                 label: "Very flexible – open to a higher budget for the right setup."
               };
