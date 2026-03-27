@@ -1023,6 +1023,14 @@
         return v;
       }
 
+      const okMsgs = {
+        name: '✓ Looks good',
+        email: '✓ Valid email',
+        phone: '✓ Valid number',
+        subject: '✓ Got it',
+        message: '✓ Message ready'
+      };
+
       function applyFeedback(key, errors) {
         const f = fields[key];
         if (!touched[key]) return;
@@ -1030,7 +1038,7 @@
         f.el.classList.toggle('cf-error', !!err);
         f.el.classList.toggle('cf-ok', !err && !!f.el.value.trim());
         if (err) { f.msg.textContent = '⚠ ' + err; f.msg.className = 'cf-msg err'; }
-        else if (f.el.value.trim()) { f.msg.textContent = '✓ Looks good'; f.msg.className = 'cf-msg ok'; }
+        else if (f.el.value.trim()) { f.msg.textContent = okMsgs[key]; f.msg.className = 'cf-msg ok'; }
         else { f.msg.textContent = ''; f.msg.className = 'cf-msg'; }
       }
 

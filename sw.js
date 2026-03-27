@@ -57,7 +57,10 @@ self.addEventListener('fetch', e => {
         const network = fetch(req).then(res => {
           if (res.ok) c.put(req, res.clone());
           return res;
-        }).catch(() => cached);
+        }).catch(() => cached || new Response('Offline – content unavailable', {
+          status: 503,
+          headers: { 'Content-Type': 'text/plain' }
+        }));
         return cached || network;
       })
     )

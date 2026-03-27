@@ -1050,21 +1050,24 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // Services FAQ accordion (vanilla JS)
-    document.querySelectorAll('#services-faq .svc-faq-item').forEach(item => {
-      const btn = item.querySelector('.svc-faq-q');
-      const ans = item.querySelector('.svc-faq-a');
-      const icon = item.querySelector('.svc-faq-icon');
+    // Services FAQ accordion (vanilla JS, cached DOM refs)
+    const svcFaqItems = Array.from(document.querySelectorAll('#services-faq .svc-faq-item')).map(item => ({
+      el: item,
+      btn: item.querySelector('.svc-faq-q'),
+      ans: item.querySelector('.svc-faq-a'),
+      icon: item.querySelector('.svc-faq-icon')
+    }));
+    svcFaqItems.forEach(({ el, btn, ans, icon }) => {
       btn.addEventListener('click', () => {
         const open = btn.getAttribute('aria-expanded') === 'true';
-        document.querySelectorAll('#services-faq .svc-faq-item').forEach(i => {
-          i.classList.remove('open');
-          i.querySelector('.svc-faq-q').setAttribute('aria-expanded', 'false');
-          i.querySelector('.svc-faq-a').hidden = true;
-          i.querySelector('.svc-faq-icon').textContent = '▼';
+        svcFaqItems.forEach(({ el: el2, btn: btn2, ans: ans2, icon: icon2 }) => {
+          el2.classList.remove('open');
+          btn2.setAttribute('aria-expanded', 'false');
+          ans2.hidden = true;
+          icon2.textContent = '▼';
         });
         if (!open) {
-          item.classList.add('open');
+          el.classList.add('open');
           btn.setAttribute('aria-expanded', 'true');
           ans.hidden = false;
           icon.textContent = '▲';
