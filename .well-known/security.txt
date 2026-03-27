@@ -3,7 +3,13 @@ Contact: mailto:support@armin.works
 Expires: 2027-02-02T00:00:00.000Z
 Preferred-Languages: en
 Canonical: https://armin.works/.well-known/security.txt
+Policy: https://armin.works/.well-known/security.txt
+Hiring: https://armin.works/contact.html
+Acknowledgments: https://armin.works/humans.txt
 
-# Our Security Policy
-# If you discover any security issues with Armin Studio (Armin Works) website,
-# please report them responsibly.
+# Security Policy — Armin Studio (armin.works)
+# This file follows RFC 9116 (https://www.rfc-editor.org/rfc/rfc9116).
+#
+# If you discover any security issues with the Armin Studio website,
+# please report them responsibly using one of the Contact fields above.
+# We commit to acknowledging your report within 72 hours.
