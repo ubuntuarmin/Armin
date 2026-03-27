@@ -7,7 +7,7 @@ const PRECACHE = [
   '/pricing.html',
   '/examples.html',
   '/contact.html',
-  '/guide.html',
+  '/quote.html',
   '/logo.png',
   '/mobile.css',
   '/manifest.json'
