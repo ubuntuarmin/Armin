@@ -10,6 +10,10 @@ Sitemap: https://armin.works/sitemap_index.xml
 
 # Additional Resources
 # Visit our humans.txt at https://armin.works/humans.txt
+# AI Discovery: https://armin.works/llms.txt
+# AI Discovery (full): https://armin.works/llms-full.txt
+# Founder record: https://armin.works/founders.txt
+# AI Policy: https://armin.works/.well-known/ai-config.json
 
 # Allow all major search engines explicitly
 User-agent: Googlebot
