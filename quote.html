@@ -1955,6 +1955,7 @@
     window.__quoteSteps      = steps;
     window.__quoteSelections = selections;
     let currentStepIndex = 0;
+    window.__quoteCurrentStep = 0;
 
     const stepsHeaderEl = document.getElementById("quoteStepsHeader");
     const stepContentEl = document.getElementById("quoteStepContent");
@@ -2168,6 +2169,7 @@
     function goToStep(index) {
       if (index < 0 || index >= steps.length) return;
       currentStepIndex = index;
+      window.__quoteCurrentStep = index;
       renderStepsHeader();
       renderCurrentStep();
       // Update next button label
@@ -2674,6 +2676,11 @@
     if (!nextBtn) return;
 
     nextBtn.addEventListener("click", () => {
+      // Capture step index before the original handler advances it
+      const stepAtClick = window.__quoteCurrentStep;
+      const totalSteps  = window.__quoteSteps ? window.__quoteSteps.length : 0;
+      // Only open the overlay when the user was on the very last step
+      if (stepAtClick !== totalSteps - 1) return;
       // Give the original handler a tick to update summaryEl, then read data
       setTimeout(() => {
         const data = buildGlassData();
