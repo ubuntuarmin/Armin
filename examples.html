@@ -1129,6 +1129,44 @@
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Prefetch internal links when near viewport
+    if ('IntersectionObserver' in window) {
+      const prefetched = new Set();
+      const pfObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const a = entry.target;
+          const href = a.href;
+          if (!href || prefetched.has(href)) return;
+          prefetched.add(href);
+          const fn = () => {
+            const el = document.createElement('link');
+            el.rel = 'prefetch';
+            el.href = href;
+            document.head.appendChild(el);
+          };
+          'requestIdleCallback' in window ? requestIdleCallback(fn) : setTimeout(fn, 200);
+          pfObs.unobserve(a);
+        });
+      }, { rootMargin: '0px 0px 300px 0px' });
+
+      document.querySelectorAll('a[href]').forEach(a => {
+        try {
+          const u = new URL(a.href, location.href);
+          if (u.origin === location.origin && !a.href.startsWith('mailto:') && !a.href.startsWith('tel:')) {
+            pfObs.observe(a);
+          }
+        } catch(_) {}
+      });
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

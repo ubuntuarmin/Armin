@@ -791,7 +791,7 @@
     if (siteHeader) {
       window.addEventListener('scroll', () => {
         siteHeader.classList.toggle('scrolled', window.scrollY > 30);
-      });
+      }, { passive: true });
     }
 
     // Animate price bars based on data-price normalized to --max-price
@@ -821,9 +821,16 @@
     if (backToTop) {
       window.addEventListener('scroll', () => {
         backToTop.classList.toggle('visible', window.scrollY > 400);
-      });
+      }, { passive: true });
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
       });
     }
   </script>
