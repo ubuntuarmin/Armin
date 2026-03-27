@@ -38,6 +38,7 @@
   <link rel="author" href="/humans.txt" />
   
   <!-- Preload Critical Resources -->
+  <link rel="preload" href="/logo.webp" as="image" type="image/webp" fetchpriority="high" />
   <link rel="preload" href="/logo.png" as="image" type="image/png" fetchpriority="high" />
 
   <!-- Early performance hints -->
@@ -937,7 +938,7 @@
     .armin-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; color:#1d4ed8; transition:background .2s; }
     .armin-faq-item.open .armin-faq-icon { background:#1d4ed8; color:#fff; }
   </style>
-  <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
+  <link rel="stylesheet" href="mobile.css?v=2026.02.03" media="(max-width:720px)" />
   
   <!-- Structured Data (JSON-LD) for SEO -->
   <script type="application/ld+json">
@@ -1134,7 +1135,7 @@
     <div class="page">
       <header class="nav">
         <a href="index.html" class="nav-brand" aria-label="Armin Studio – Home">
-          <img src="logo.png" alt="Armin Studio logo" class="brand-logo" fetchpriority="high" />
+          <picture><source srcset="logo.webp" type="image/webp"><img src="logo.png" alt="Armin Studio logo" class="brand-logo" width="80" height="76" fetchpriority="high" /></picture>
           <div>
             <span class="brand-title">Armin Studio</span>
             <span class="brand-sub">Professional Web Design</span>
