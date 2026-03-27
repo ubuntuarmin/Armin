@@ -30,6 +30,7 @@
   <link rel="author" href="/humans.txt" />
   
   <!-- Preconnect for Performance -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 
@@ -523,6 +524,32 @@
       .page-title { font-size: 1.8rem; }
       .card { padding: 20px 18px 18px; }
     }
+
+    /* Contact form (vanilla JS, no React) */
+    .cf-form { background:#fff; padding:36px 32px; border-radius:12px; border:1px solid #e5e7eb; box-shadow:0 4px 24px rgba(0,0,0,.06); }
+    @media (max-width:600px) { .cf-form { padding:24px 16px; } }
+    .cf-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    @media (max-width:540px) { .cf-grid { grid-template-columns:1fr; } }
+    .cf-field { margin-bottom:0; }
+    .cf-label { display:block; font-weight:600; color:#1a2e4a; margin-bottom:6px; font-size:.88rem; }
+    .cf-input { width:100%; padding:13px 14px; border:2px solid #e5e7eb; border-radius:8px; font-size:.95rem; box-sizing:border-box; color:#1f2937; outline:none; transition:border-color .2s; background:#fff; font-family:inherit; }
+    .cf-input:focus { border-color:#1d4ed8; }
+    .cf-input.cf-error { border-color:#ef4444; }
+    .cf-input.cf-ok { border-color:#22c55e; }
+    .cf-msg { font-size:.8rem; margin-top:4px; }
+    .cf-msg.err { color:#ef4444; }
+    .cf-msg.ok { color:#22c55e; }
+    .cf-msg-area { margin-bottom:24px; }
+    .cf-char { text-align:right; color:#9ca3af; font-size:.8rem; margin-top:4px; }
+    .cf-btn { width:100%; padding:15px; background:#1d4ed8; color:#fff; border:none; border-radius:8px; font-weight:700; cursor:pointer; font-size:1rem; letter-spacing:.02em; transition:background .2s; font-family:inherit; }
+    .cf-btn:hover { background:#1a45c4; }
+    .cf-global-err { text-align:center; color:#ef4444; font-size:.85rem; margin-top:12px; }
+    .cf-success { text-align:center; padding:48px 24px; background:#fff; border-radius:12px; border:1px solid #e5e7eb; box-shadow:0 4px 24px rgba(0,0,0,.06); }
+    .cf-success-icon { font-size:3.5rem; margin-bottom:16px; }
+    .cf-success h3 { color:#1a2e4a; font-size:1.5rem; font-weight:700; margin-bottom:10px; }
+    .cf-success p { color:#6b7280; margin-bottom:6px; }
+    .cf-reset-btn { margin-top:24px; padding:12px 28px; background:#1d4ed8; color:#fff; border:none; border-radius:8px; cursor:pointer; font-weight:600; font-size:.95rem; transition:background .2s; font-family:inherit; }
+    .cf-reset-btn:hover { background:#1a45c4; }
   </style>
 
   <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
@@ -596,9 +623,6 @@
     ]
   }
   </script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <div class="site-header">
@@ -860,137 +884,196 @@
     );
     document.querySelectorAll(".fade-in-up, .image-zoom, .image-slide-up, .animate-on-scroll").forEach((el)=>observer.observe(el));
 
-    // Sticky header scroll effect + Back to top button
+    // Sticky header scroll effect + Back to top button (passive listener)
     const siteHeader = document.querySelector('.site-header');
     const backToTopBtn = document.getElementById('backToTop');
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        siteHeader.classList.add('scrolled');
-      } else {
-        siteHeader.classList.remove('scrolled');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          siteHeader.classList.toggle('scrolled', scrollY > 50);
+          backToTopBtn.classList.toggle('show', scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
-      if (scrollY > 300) {
-        backToTopBtn.classList.add('show');
-      } else {
-        backToTopBtn.classList.remove('show');
-      }
-    });
+    }, { passive: true });
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Prefetch internal links when near viewport
+    if ('IntersectionObserver' in window) {
+      const prefetched = new Set();
+      const pfObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const a = entry.target;
+          const href = a.href;
+          if (!href || prefetched.has(href)) return;
+          prefetched.add(href);
+          const fn = () => {
+            const el = document.createElement('link');
+            el.rel = 'prefetch';
+            el.href = href;
+            document.head.appendChild(el);
+          };
+          'requestIdleCallback' in window ? requestIdleCallback(fn) : setTimeout(fn, 200);
+          pfObs.unobserve(a);
+        });
+      }, { rootMargin: '0px 0px 300px 0px' });
+
+      document.querySelectorAll('a[href]').forEach(a => {
+        try {
+          const u = new URL(a.href, location.href);
+          if (u.origin === location.origin && !a.href.startsWith('mailto:') && !a.href.startsWith('tel:')) {
+            pfObs.observe(a);
+          }
+        } catch(_) {}
+      });
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 
-  <!-- React Contact Form with Validation -->
+  <!-- Contact Form (vanilla JS, no React) -->
   <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
     <div style="max-width:640px;margin:0 auto;">
       <h2 style="font-size:1.8rem;font-weight:700;color:#1a2e4a;margin-bottom:8px;text-align:center;">Send Us a Message</h2>
       <p style="color:#6b7280;text-align:center;margin-bottom:36px;">Fill out the form below and we'll get back to you within one business day.</p>
-      <div id="react-contact-form"></div>
+
+      <div id="cf-success" class="cf-success" hidden>
+        <div class="cf-success-icon">✅</div>
+        <h3>Message Sent!</h3>
+        <p>Thank you, <strong id="cf-sent-name"></strong>! We've received your message.</p>
+        <p style="font-size:.9rem;">We'll reply to <strong id="cf-sent-email"></strong> within one business day.</p>
+        <button class="cf-reset-btn" id="cf-reset">Send Another Message</button>
+      </div>
+
+      <form class="cf-form" id="cf-form" novalidate>
+        <div class="cf-grid">
+          <div class="cf-field">
+            <label class="cf-label" for="cf-name">Full Name *</label>
+            <input class="cf-input" id="cf-name" name="name" placeholder="John Smith" autocomplete="name" />
+            <div class="cf-msg" id="cf-name-msg"></div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-email">Email Address *</label>
+            <input class="cf-input" id="cf-email" name="email" type="email" placeholder="john@example.com" autocomplete="email" />
+            <div class="cf-msg" id="cf-email-msg"></div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-phone">Phone Number</label>
+            <input class="cf-input" id="cf-phone" name="phone" type="tel" placeholder="(555) 000-0000" autocomplete="tel" />
+            <div class="cf-msg" id="cf-phone-msg"></div>
+          </div>
+          <div class="cf-field">
+            <label class="cf-label" for="cf-subject">Subject *</label>
+            <input class="cf-input" id="cf-subject" name="subject" placeholder="How can we help?" />
+            <div class="cf-msg" id="cf-subject-msg"></div>
+          </div>
+        </div>
+        <div class="cf-msg-area">
+          <label class="cf-label" for="cf-message">Message *</label>
+          <textarea class="cf-input" id="cf-message" name="message" rows="5" placeholder="Tell us about your project or question..." style="resize:vertical;"></textarea>
+          <div class="cf-msg" id="cf-message-msg"></div>
+          <div class="cf-char"><span id="cf-char-count">0</span> characters</div>
+        </div>
+        <button type="submit" class="cf-btn">Send Message →</button>
+        <p class="cf-global-err" id="cf-global-err" hidden>Please fix the errors above before submitting.</p>
+      </form>
     </div>
   </section>
 
-  <script type="text/babel">
-    const { useState } = React;
-
-    function ContactForm() {
-      const [form, setForm] = useState({ name:'', email:'', phone:'', subject:'', message:'' });
-      const [errors, setErrors] = useState({});
-      const [touched, setTouched] = useState({});
-      const [submitted, setSubmitted] = useState(false);
-
-      const validate = (f) => {
-        const e = {};
-        if (!f.name.trim()) e.name = 'Name is required';
-        else if (f.name.trim().length < 2) e.name = 'Name must be at least 2 characters';
-        if (!f.email.trim()) e.email = 'Email is required';
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) e.email = 'Please enter a valid email';
-        if (f.phone && !/^[\d\s\-\+\(\)\.]{6,20}$/.test(f.phone.trim())) e.phone = 'Please enter a valid phone number';
-        if (!f.subject.trim()) e.subject = 'Subject is required';
-        if (!f.message.trim()) e.message = 'Message is required';
-        else if (f.message.trim().length < 10) e.message = 'Message must be at least 10 characters';
-        return e;
+  <script>
+    (function() {
+      const form = document.getElementById('cf-form');
+      const success = document.getElementById('cf-success');
+      const fields = {
+        name:    { el: document.getElementById('cf-name'),    msg: document.getElementById('cf-name-msg') },
+        email:   { el: document.getElementById('cf-email'),   msg: document.getElementById('cf-email-msg') },
+        phone:   { el: document.getElementById('cf-phone'),   msg: document.getElementById('cf-phone-msg') },
+        subject: { el: document.getElementById('cf-subject'), msg: document.getElementById('cf-subject-msg') },
+        message: { el: document.getElementById('cf-message'), msg: document.getElementById('cf-message-msg') }
       };
+      const globalErr = document.getElementById('cf-global-err');
+      const touched = {};
 
-      const update = (k, v) => {
-        const newForm = { ...form, [k]: v };
-        setForm(newForm);
-        if (touched[k]) setErrors(validate(newForm));
-      };
+      function validate() {
+        const v = {};
+        const n = fields.name.el.value.trim();
+        if (!n) v.name = 'Name is required';
+        else if (n.length < 2) v.name = 'Name must be at least 2 characters';
+        const e = fields.email.el.value.trim();
+        if (!e) v.email = 'Email is required';
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)) v.email = 'Please enter a valid email';
+        const p = fields.phone.el.value.trim();
+        if (p && !/^[\d\s\-\+\(\)\.]{6,20}$/.test(p)) v.phone = 'Please enter a valid phone number';
+        if (!fields.subject.el.value.trim()) v.subject = 'Subject is required';
+        const m = fields.message.el.value.trim();
+        if (!m) v.message = 'Message is required';
+        else if (m.length < 10) v.message = 'Message must be at least 10 characters';
+        return v;
+      }
 
-      const blur = (k) => {
-        setTouched(t => ({ ...t, [k]: true }));
-        setErrors(validate(form));
-      };
+      function applyFeedback(key, errors) {
+        const f = fields[key];
+        if (!touched[key]) return;
+        const err = errors[key];
+        f.el.classList.toggle('cf-error', !!err);
+        f.el.classList.toggle('cf-ok', !err && !!f.el.value.trim());
+        if (err) { f.msg.textContent = '⚠ ' + err; f.msg.className = 'cf-msg err'; }
+        else if (f.el.value.trim()) { f.msg.textContent = '✓ Looks good'; f.msg.className = 'cf-msg ok'; }
+        else { f.msg.textContent = ''; f.msg.className = 'cf-msg'; }
+      }
 
-      const handleSubmit = (e) => {
+      Object.keys(fields).forEach(key => {
+        const el = fields[key].el;
+        el.addEventListener('blur', () => { touched[key] = true; applyFeedback(key, validate()); });
+        el.addEventListener('input', () => { if (touched[key]) applyFeedback(key, validate()); });
+      });
+
+      document.getElementById('cf-message').addEventListener('input', function() {
+        document.getElementById('cf-char-count').textContent = this.value.length;
+      });
+
+      form.addEventListener('submit', e => {
         e.preventDefault();
-        const allTouched = { name:true, email:true, phone:true, subject:true, message:true };
-        setTouched(allTouched);
-        const e2 = validate(form);
-        setErrors(e2);
-        if (Object.keys(e2).length === 0) setSubmitted(true);
-      };
+        Object.keys(fields).forEach(k => { touched[k] = true; });
+        const errors = validate();
+        Object.keys(fields).forEach(k => applyFeedback(k, errors));
+        if (Object.keys(errors).length > 0) {
+          globalErr.hidden = false;
+          return;
+        }
+        globalErr.hidden = true;
+        document.getElementById('cf-sent-name').textContent = fields.name.el.value.trim();
+        document.getElementById('cf-sent-email').textContent = fields.email.el.value.trim();
+        form.hidden = true;
+        success.hidden = false;
+      });
 
-      const inputBase = { width:'100%', padding:'13px 14px', border:'2px solid', borderRadius:'8px', fontSize:'0.95rem', boxSizing:'border-box', color:'#1f2937', outline:'none', transition:'border-color 0.2s', background:'#fff', fontFamily:'inherit' };
-      const getInputStyle = (k) => ({ ...inputBase, borderColor: errors[k] && touched[k] ? '#ef4444' : touched[k] && !errors[k] ? '#22c55e' : '#e5e7eb' });
-      const labelStyle = { display:'block', fontWeight:'600', color:'#1a2e4a', marginBottom:'6px', fontSize:'0.88rem' };
-      const errStyle = { color:'#ef4444', fontSize:'0.8rem', marginTop:'4px' };
-      const okStyle = { color:'#22c55e', fontSize:'0.8rem', marginTop:'4px' };
-
-      if (submitted) return (
-        <div style={{textAlign:'center',padding:'48px 24px',background:'#fff',borderRadius:'12px',border:'1px solid #e5e7eb',boxShadow:'0 4px 24px rgba(0,0,0,0.06)'}}>
-          <div style={{fontSize:'3.5rem',marginBottom:'16px'}}>✅</div>
-          <h3 style={{color:'#1a2e4a',fontSize:'1.5rem',fontWeight:'700',marginBottom:'10px'}}>Message Sent!</h3>
-          <p style={{color:'#6b7280',marginBottom:'6px'}}>Thank you, <strong>{form.name}</strong>! We've received your message.</p>
-          <p style={{color:'#6b7280',fontSize:'0.9rem'}}>We'll reply to <strong>{form.email}</strong> within one business day.</p>
-          <button onClick={()=>{setForm({name:'',email:'',phone:'',subject:'',message:''});setErrors({});setTouched({});setSubmitted(false);}} style={{marginTop:'24px',padding:'12px 28px',background:'#1d4ed8',color:'#fff',border:'none',borderRadius:'8px',cursor:'pointer',fontWeight:'600',fontSize:'0.95rem',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#1a45c4'} onMouseOut={e=>e.target.style.background='#1d4ed8'}>Send Another Message</button>
-        </div>
-      );
-
-      return (
-        <form onSubmit={handleSubmit} noValidate style={{background:'#fff',padding:'36px 32px',borderRadius:'12px',border:'1px solid #e5e7eb',boxShadow:'0 4px 24px rgba(0,0,0,0.06)'}}>
-          <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:'16px',marginBottom:'16px'}}>
-            <div>
-              <label style={labelStyle}>Full Name *</label>
-              <input value={form.name} onChange={e=>update('name',e.target.value)} onBlur={()=>blur('name')} placeholder="John Smith" style={getInputStyle('name')} />
-              {touched.name && errors.name && <div style={errStyle}>⚠ {errors.name}</div>}
-              {touched.name && !errors.name && form.name && <div style={okStyle}>✓ Looks good</div>}
-            </div>
-            <div>
-              <label style={labelStyle}>Email Address *</label>
-              <input type="email" value={form.email} onChange={e=>update('email',e.target.value)} onBlur={()=>blur('email')} placeholder="john@example.com" style={getInputStyle('email')} />
-              {touched.email && errors.email && <div style={errStyle}>⚠ {errors.email}</div>}
-              {touched.email && !errors.email && form.email && <div style={okStyle}>✓ Valid email</div>}
-            </div>
-            <div>
-              <label style={labelStyle}>Phone Number</label>
-              <input type="tel" value={form.phone} onChange={e=>update('phone',e.target.value)} onBlur={()=>blur('phone')} placeholder="(555) 000-0000" style={getInputStyle('phone')} />
-              {touched.phone && errors.phone && <div style={errStyle}>⚠ {errors.phone}</div>}
-              {touched.phone && !errors.phone && form.phone && <div style={okStyle}>✓ Valid number</div>}
-            </div>
-            <div>
-              <label style={labelStyle}>Subject *</label>
-              <input value={form.subject} onChange={e=>update('subject',e.target.value)} onBlur={()=>blur('subject')} placeholder="How can we help?" style={getInputStyle('subject')} />
-              {touched.subject && errors.subject && <div style={errStyle}>⚠ {errors.subject}</div>}
-              {touched.subject && !errors.subject && form.subject && <div style={okStyle}>✓ Got it</div>}
-            </div>
-          </div>
-          <div style={{marginBottom:'24px'}}>
-            <label style={labelStyle}>Message *</label>
-            <textarea rows={5} value={form.message} onChange={e=>update('message',e.target.value)} onBlur={()=>blur('message')} placeholder="Tell us about your project or question..." style={{...getInputStyle('message'),resize:'vertical',fontFamily:'inherit'}} />
-            {touched.message && errors.message && <div style={errStyle}>⚠ {errors.message}</div>}
-            {touched.message && !errors.message && form.message && <div style={okStyle}>✓ Message ready</div>}
-            <div style={{textAlign:'right',color:'#9ca3af',fontSize:'0.8rem',marginTop:'4px'}}>{form.message.length} characters</div>
-          </div>
-          <button type="submit" style={{width:'100%',padding:'15px',background:'#1d4ed8',color:'#fff',border:'none',borderRadius:'8px',fontWeight:'700',cursor:'pointer',fontSize:'1rem',letterSpacing:'0.02em',transition:'background 0.2s'}} onMouseOver={e=>e.target.style.background='#1a45c4'} onMouseOut={e=>e.target.style.background='#1d4ed8'}>Send Message →</button>
-          {Object.keys(errors).length > 0 && Object.keys(touched).length > 0 && <p style={{textAlign:'center',color:'#ef4444',fontSize:'0.85rem',marginTop:'12px'}}>Please fix the errors above before submitting.</p>}
-        </form>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('react-contact-form')).render(<ContactForm />);
+      document.getElementById('cf-reset').addEventListener('click', () => {
+        form.reset();
+        Object.keys(fields).forEach(k => {
+          delete touched[k];
+          fields[k].el.classList.remove('cf-error', 'cf-ok');
+          fields[k].msg.textContent = '';
+          fields[k].msg.className = 'cf-msg';
+        });
+        document.getElementById('cf-char-count').textContent = '0';
+        globalErr.hidden = true;
+        form.hidden = false;
+        success.hidden = true;
+      });
+    })();
   </script>
 </body>
 </html>

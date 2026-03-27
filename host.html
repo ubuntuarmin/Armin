@@ -506,7 +506,7 @@
     if (siteHeader) {
       window.addEventListener('scroll', () => {
         siteHeader.classList.toggle('scrolled', window.scrollY > 30);
-      });
+      }, { passive: true });
     }
 
     // Fade-in observer (fade-in-up + animate-on-scroll)
@@ -525,7 +525,7 @@
     if (backToTop) {
       window.addEventListener('scroll', () => {
         backToTop.classList.toggle('visible', window.scrollY > 400);
-      });
+      }, { passive: true });
       backToTop.addEventListener('click', () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       });
@@ -568,6 +568,13 @@
         if (!window.matchMedia('(max-width:720px)').matches) banner.style.display = 'none';
       });
     })();
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>

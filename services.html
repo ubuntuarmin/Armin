@@ -30,6 +30,7 @@
   <link rel="author" href="/humans.txt" />
   
   <!-- Preconnect for Performance -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <style>
@@ -209,6 +210,14 @@
       .page-title{font-size:1.8rem;}
       .strip{padding:22px 18px 20px;}
     }
+
+    /* Services FAQ accordion */
+    .svc-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; transition:box-shadow .2s,border-color .2s; }
+    .svc-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,.1); border-color:#bfdbfe; }
+    .svc-faq-q { width:100%; padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:.97rem; line-height:1.5; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; }
+    .svc-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:.95rem; }
+    .svc-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; color:#1d4ed8; transition:background .2s; }
+    .svc-faq-item.open .svc-faq-icon { background:#1d4ed8; color:#fff; }
   </style>
   <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
   
@@ -331,9 +340,6 @@
     ]
   }
   </script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
   <div class="site-header">
@@ -1024,76 +1030,145 @@
       }
     });
 
-    // Sticky header scroll effect + Back to top button
+    // Sticky header scroll effect + Back to top button (passive listener)
     const siteHeader = document.querySelector('.site-header');
     const backToTopBtn = document.getElementById('backToTop');
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        siteHeader.classList.add('scrolled');
-      } else {
-        siteHeader.classList.remove('scrolled');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          siteHeader.classList.toggle('scrolled', scrollY > 50);
+          backToTopBtn.classList.toggle('show', scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
-      if (scrollY > 300) {
-        backToTopBtn.classList.add('show');
-      } else {
-        backToTopBtn.classList.remove('show');
-      }
-    });
+    }, { passive: true });
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+
+    // Services FAQ accordion (vanilla JS)
+    document.querySelectorAll('#services-faq .svc-faq-item').forEach(item => {
+      const btn = item.querySelector('.svc-faq-q');
+      const ans = item.querySelector('.svc-faq-a');
+      const icon = item.querySelector('.svc-faq-icon');
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('#services-faq .svc-faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.svc-faq-q').setAttribute('aria-expanded', 'false');
+          i.querySelector('.svc-faq-a').hidden = true;
+          i.querySelector('.svc-faq-icon').textContent = '▼';
+        });
+        if (!open) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          ans.hidden = false;
+          icon.textContent = '▲';
+        }
+      });
+    });
+
+    // Prefetch internal links when near viewport
+    if ('IntersectionObserver' in window) {
+      const prefetched = new Set();
+      const pfObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const a = entry.target;
+          const href = a.href;
+          if (!href || prefetched.has(href)) return;
+          prefetched.add(href);
+          const fn = () => {
+            const el = document.createElement('link');
+            el.rel = 'prefetch';
+            el.href = href;
+            document.head.appendChild(el);
+          };
+          'requestIdleCallback' in window ? requestIdleCallback(fn) : setTimeout(fn, 200);
+          pfObs.unobserve(a);
+        });
+      }, { rootMargin: '0px 0px 300px 0px' });
+
+      document.querySelectorAll('a[href]').forEach(a => {
+        try {
+          const u = new URL(a.href, location.href);
+          if (u.origin === location.origin && !a.href.startsWith('mailto:') && !a.href.startsWith('tel:')) {
+            pfObs.observe(a);
+          }
+        } catch(_) {}
+      });
+    }
+
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 
-  <!-- React Services FAQ -->
+  <!-- Services FAQ (vanilla JS accordion) -->
   <section style="padding:80px 20px;background:#f9fafb;border-top:1px solid #e5e7eb;">
     <div style="max-width:760px;margin:0 auto;">
       <h2 style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
       <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Common questions about our services</p>
-      <div id="react-services-faq"></div>
+      <div id="services-faq">
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-0">
+            <span>What web design services do you offer?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-0" hidden>We offer a comprehensive range of web design services including custom website design, landing page design, e-commerce store design, UI/UX design, and redesigns of existing websites. Each project is tailored to your brand and business goals.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-1">
+            <span>Do you build websites from scratch or use templates?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-1" hidden>We do both, depending on your budget and needs. Custom-designed websites are built from scratch for a unique look and feel. We also work with premium templates for clients seeking faster turnaround at a lower cost, always customizing them to match your brand.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-2">
+            <span>Do you provide SEO services?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-2" hidden>Yes. We offer on-page SEO optimization as part of our website builds, including meta tags, structured data, site speed optimization, and mobile-friendliness. We also offer ongoing SEO packages for content strategy, link building, and analytics reporting.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-3">
+            <span>What e-commerce platforms do you work with?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-3" hidden>We build e-commerce solutions on Shopify, WooCommerce, and custom platforms depending on your requirements. We handle everything from product setup and payment gateway integration to inventory management and checkout optimization.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-4">
+            <span>Can you help with branding and logo design?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-4" hidden>Absolutely. Our design team provides full branding services including logo design, brand identity systems, color palettes, typography selection, and brand guidelines documents. A strong brand identity forms the foundation of great web design.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-5">
+            <span>Do you offer hosting and domain registration?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-5" hidden>Yes, we can manage hosting and domain registration on your behalf. We work with reliable hosting providers to ensure your website is fast, secure, and always online. We also handle SSL certificates, backups, and server maintenance.</div>
+        </div>
+        <div class="svc-faq-item">
+          <button class="svc-faq-q" aria-expanded="false" aria-controls="svc-a-6">
+            <span>What is your design and development process?</span>
+            <span class="svc-faq-icon" aria-hidden="true">▼</span>
+          </button>
+          <div class="svc-faq-a" id="svc-a-6" hidden>Our process has 5 phases: Discovery (understanding your goals and audience), Design (wireframes and visual mockups), Development (building the site), Testing (cross-browser and device testing), and Launch (going live with post-launch support).</div>
+        </div>
+      </div>
     </div>
   </section>
-
-  <script type="text/babel">
-    const { useState } = React;
-
-    function ServicesFAQ() {
-      const [openIndex, setOpenIndex] = useState(null);
-      const faqs = [
-        { q: "What web design services do you offer?", a: "We offer a comprehensive range of web design services including custom website design, landing page design, e-commerce store design, UI/UX design, and redesigns of existing websites. Each project is tailored to your brand and business goals." },
-        { q: "Do you build websites from scratch or use templates?", a: "We do both, depending on your budget and needs. Custom-designed websites are built from scratch for a unique look and feel. We also work with premium templates for clients seeking faster turnaround at a lower cost, always customizing them to match your brand." },
-        { q: "Do you provide SEO services?", a: "Yes. We offer on-page SEO optimization as part of our website builds, including meta tags, structured data, site speed optimization, and mobile-friendliness. We also offer ongoing SEO packages for content strategy, link building, and analytics reporting." },
-        { q: "What e-commerce platforms do you work with?", a: "We build e-commerce solutions on Shopify, WooCommerce, and custom platforms depending on your requirements. We handle everything from product setup and payment gateway integration to inventory management and checkout optimization." },
-        { q: "Can you help with branding and logo design?", a: "Absolutely. Our design team provides full branding services including logo design, brand identity systems, color palettes, typography selection, and brand guidelines documents. A strong brand identity forms the foundation of great web design." },
-        { q: "Do you offer hosting and domain registration?", a: "Yes, we can manage hosting and domain registration on your behalf. We work with reliable hosting providers to ensure your website is fast, secure, and always online. We also handle SSL certificates, backups, and server maintenance." },
-        { q: "What is your design and development process?", a: "Our process has 5 phases: Discovery (understanding your goals and audience), Design (wireframes and visual mockups), Development (building the site), Testing (cross-browser and device testing), and Launch (going live with post-launch support)." },
-      ];
-      return (
-        <div>
-          <style>{`
-            .svc-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; cursor:pointer; transition:box-shadow 0.2s,border-color 0.2s; }
-            .svc-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,0.1); border-color:#bfdbfe; }
-            .svc-faq-q { padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:0.97rem; line-height:1.5; }
-            .svc-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:0.95rem; }
-            .svc-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:#1d4ed8; transition:background 0.2s; }
-            .svc-faq-item.open .svc-faq-icon { background:#1d4ed8; color:#fff; }
-          `}</style>
-          {faqs.map((faq, i) => (
-            <div key={i} className={`svc-faq-item${openIndex === i ? ' open' : ''}`} onClick={() => setOpenIndex(openIndex === i ? null : i)}>
-              <div className="svc-faq-q">
-                <span>{faq.q}</span>
-                <span className="svc-faq-icon">{openIndex === i ? '▲' : '▼'}</span>
-              </div>
-              {openIndex === i && <div className="svc-faq-a">{faq.a}</div>}
-            </div>
-          ))}
-        </div>
-      );
-    }
-
-    ReactDOM.createRoot(document.getElementById('react-services-faq')).render(<ServicesFAQ />);
-  </script>
   <button id="backToTop" class="back-to-top" aria-label="Back to top">&uarr;</button>
 </body>
 </html>

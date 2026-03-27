@@ -38,9 +38,10 @@
   <link rel="author" href="/humans.txt" />
   
   <!-- Preload Critical Resources -->
-  <link rel="preload" href="/logo.png" as="image" type="image/png" />
-  
-  <!-- Preconnect for Performance -->
+  <link rel="preload" href="/logo.png" as="image" type="image/png" fetchpriority="high" />
+
+  <!-- Early performance hints -->
+  <meta http-equiv="x-dns-prefetch-control" content="on" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
   <style>
@@ -927,6 +928,14 @@
     }
 
     .back-to-top.show { display: flex; }
+
+    /* FAQ accordion (vanilla JS, no React) */
+    .armin-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; transition:box-shadow .2s,border-color .2s; }
+    .armin-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,.1); border-color:#bfdbfe; }
+    .armin-faq-q { width:100%; padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:.97rem; line-height:1.5; background:none; border:none; cursor:pointer; text-align:left; font-family:inherit; }
+    .armin-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:.95rem; }
+    .armin-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:.7rem; color:#1d4ed8; transition:background .2s; }
+    .armin-faq-item.open .armin-faq-icon { background:#1d4ed8; color:#fff; }
   </style>
   <link rel="stylesheet" href="mobile.css?v=2026.02.03" />
   
@@ -1117,9 +1126,6 @@
     ]
   }
   </script>
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 </head>
 <body>
 
@@ -1128,7 +1134,7 @@
     <div class="page">
       <header class="nav">
         <a href="index.html" class="nav-brand" aria-label="Armin Studio – Home">
-          <img src="logo.png" alt="Armin Studio logo" class="brand-logo" />
+          <img src="logo.png" alt="Armin Studio logo" class="brand-logo" fetchpriority="high" />
           <div>
             <span class="brand-title">Armin Studio</span>
             <span class="brand-sub">Professional Web Design</span>
@@ -1342,7 +1348,50 @@
       <div style="max-width:760px;margin:0 auto;">
         <h2 id="faq-title" style="font-size:clamp(1.5rem,4vw,2rem);font-weight:800;color:#1a2e4a;text-align:center;margin-bottom:8px;">Frequently Asked Questions</h2>
         <p style="text-align:center;color:#6b7280;margin-bottom:40px;">Everything you need to know about working with Armin Studio</p>
-        <div id="react-faq-main"></div>
+        <div class="faq-list" id="main-faq">
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-0">
+              <span>How long does it take to build a website?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-0" hidden>Timelines vary by complexity. A standard business website typically takes 2–4 weeks from kickoff to launch. E-commerce stores and custom web applications may take 6–12 weeks. We'll give you a detailed timeline estimate during our initial consultation.</div>
+          </div>
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-1">
+              <span>Do you offer ongoing website maintenance?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-1" hidden>Yes! We offer monthly maintenance plans that include security updates, content edits, performance monitoring, and priority support. Plans start at an affordable monthly rate and can be tailored to your specific needs.</div>
+          </div>
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-2">
+              <span>Will my website be mobile-friendly?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-2" hidden>Absolutely. Every website we build is fully responsive and tested on smartphones, tablets, and desktops. We follow mobile-first design principles to ensure a great experience on all devices and screen sizes.</div>
+          </div>
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-3">
+              <span>Can I update my website content myself?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-3" hidden>Yes. Most of our websites include a content management system (CMS) that lets you easily edit text, images, and other content without any technical knowledge. We also provide training and documentation.</div>
+          </div>
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-4">
+              <span>What happens after my website launches?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-4" hidden>We provide 30 days of complimentary post-launch support to address any issues or questions. We also offer SEO setup, Google Analytics integration, and ongoing marketing services to help you grow your online presence.</div>
+          </div>
+          <div class="armin-faq-item">
+            <button class="armin-faq-q" aria-expanded="false" aria-controls="faq-a-5">
+              <span>How much does a website cost?</span>
+              <span class="armin-faq-icon" aria-hidden="true">▼</span>
+            </button>
+            <div class="armin-faq-a" id="faq-a-5" hidden>Pricing depends on the scope and features required. Basic websites start from a few hundred dollars, while custom projects with advanced features are priced accordingly. We provide transparent, itemized quotes with no hidden fees. Contact us for a free estimate!</div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1430,66 +1479,86 @@
 
     scrollElements.forEach(el => observer.observe(el));
 
-    // Sticky header scroll effect + Back to top button
+    // Sticky header scroll effect + Back to top button (passive listener)
     const siteHeader = document.querySelector('.site-header');
     const backToTopBtn = document.getElementById('backToTop');
+    let ticking = false;
     window.addEventListener('scroll', () => {
-      const scrollY = window.scrollY;
-      if (scrollY > 50) {
-        siteHeader.classList.add('scrolled');
-      } else {
-        siteHeader.classList.remove('scrolled');
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const scrollY = window.scrollY;
+          siteHeader.classList.toggle('scrolled', scrollY > 50);
+          backToTopBtn.classList.toggle('show', scrollY > 300);
+          ticking = false;
+        });
+        ticking = true;
       }
-      if (scrollY > 300) {
-        backToTopBtn.classList.add('show');
-      } else {
-        backToTopBtn.classList.remove('show');
-      }
-    });
+    }, { passive: true });
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-  </script>
 
-  <!-- React FAQ Accordion -->
-  <script type="text/babel">
-    const { useState } = React;
+    // Vanilla JS FAQ accordion
+    document.querySelectorAll('#main-faq .armin-faq-item').forEach(item => {
+      const btn = item.querySelector('.armin-faq-q');
+      const ans = item.querySelector('.armin-faq-a');
+      const icon = item.querySelector('.armin-faq-icon');
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        // collapse all
+        document.querySelectorAll('#main-faq .armin-faq-item').forEach(i => {
+          i.classList.remove('open');
+          i.querySelector('.armin-faq-q').setAttribute('aria-expanded', 'false');
+          i.querySelector('.armin-faq-a').hidden = true;
+          i.querySelector('.armin-faq-icon').textContent = '▼';
+        });
+        if (!open) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+          ans.hidden = false;
+          icon.textContent = '▲';
+        }
+      });
+    });
 
-    function MainFAQ() {
-      const [openIndex, setOpenIndex] = useState(null);
-      const faqs = [
-        { q: "How long does it take to build a website?", a: "Timelines vary by complexity. A standard business website typically takes 2–4 weeks from kickoff to launch. E-commerce stores and custom web applications may take 6–12 weeks. We'll give you a detailed timeline estimate during our initial consultation." },
-        { q: "Do you offer ongoing website maintenance?", a: "Yes! We offer monthly maintenance plans that include security updates, content edits, performance monitoring, and priority support. Plans start at an affordable monthly rate and can be tailored to your specific needs." },
-        { q: "Will my website be mobile-friendly?", a: "Absolutely. Every website we build is fully responsive and tested on smartphones, tablets, and desktops. We follow mobile-first design principles to ensure a great experience on all devices and screen sizes." },
-        { q: "Can I update my website content myself?", a: "Yes. Most of our websites include a content management system (CMS) that lets you easily edit text, images, and other content without any technical knowledge. We also provide training and documentation." },
-        { q: "What happens after my website launches?", a: "We provide 30 days of complimentary post-launch support to address any issues or questions. We also offer SEO setup, Google Analytics integration, and ongoing marketing services to help you grow your online presence." },
-        { q: "How much does a website cost?", a: "Pricing depends on the scope and features required. Basic websites start from a few hundred dollars, while custom projects with advanced features are priced accordingly. We provide transparent, itemized quotes with no hidden fees. Contact us for a free estimate!" },
-      ];
-      return (
-        <div>
-          <style>{`
-            .armin-faq-item { border:1px solid #e5e7eb; border-radius:10px; margin-bottom:10px; background:#fff; cursor:pointer; transition:box-shadow 0.2s,border-color 0.2s; }
-            .armin-faq-item:hover { box-shadow:0 4px 20px rgba(29,78,216,0.1); border-color:#bfdbfe; }
-            .armin-faq-q { padding:20px 22px; font-weight:600; color:#1a2e4a; display:flex; justify-content:space-between; align-items:center; gap:12px; font-size:0.97rem; line-height:1.5; }
-            .armin-faq-a { padding:0 22px 20px; color:#4b5563; line-height:1.75; font-size:0.95rem; }
-            .armin-faq-icon { flex-shrink:0; width:24px; height:24px; background:#eff6ff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; color:#1d4ed8; transition:background 0.2s; }
-            .armin-faq-item.open .armin-faq-icon { background:#1d4ed8; color:#fff; }
-          `}</style>
-          {faqs.map((faq, i) => (
-            <div key={i} className={`armin-faq-item${openIndex === i ? ' open' : ''}`} onClick={() => setOpenIndex(openIndex === i ? null : i)}>
-              <div className="armin-faq-q">
-                <span>{faq.q}</span>
-                <span className="armin-faq-icon">{openIndex === i ? '▲' : '▼'}</span>
-              </div>
-              {openIndex === i && <div className="armin-faq-a">{faq.a}</div>}
-            </div>
-          ))}
-        </div>
-      );
+    // Prefetch internal pages when their links enter the viewport
+    if ('IntersectionObserver' in window) {
+      const prefetched = new Set();
+      const pfObs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          const a = entry.target;
+          const href = a.href;
+          if (!href || prefetched.has(href)) return;
+          prefetched.add(href);
+          const fn = () => {
+            const el = document.createElement('link');
+            el.rel = 'prefetch';
+            el.href = href;
+            document.head.appendChild(el);
+          };
+          'requestIdleCallback' in window ? requestIdleCallback(fn) : setTimeout(fn, 200);
+          pfObs.unobserve(a);
+        });
+      }, { rootMargin: '0px 0px 300px 0px' });
+
+      document.querySelectorAll('a[href]').forEach(a => {
+        try {
+          const u = new URL(a.href, location.href);
+          if (u.origin === location.origin && !a.href.startsWith('mailto:') && !a.href.startsWith('tel:')) {
+            pfObs.observe(a);
+          }
+        } catch(_) {}
+      });
     }
 
-    ReactDOM.createRoot(document.getElementById('react-faq-main')).render(<MainFAQ />);
+    // Register Service Worker
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
   </script>
 </body>
 </html>
