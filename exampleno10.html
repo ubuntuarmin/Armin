@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Maison Dorée - French Bakery Template | Armin Studio</title>
+  <title>Example No. 10 — Website Templates | Armin Studio</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(160deg, #1A2744 0%, #243358 50%, #1E3A5F 100%);
+      background: linear-gradient(160deg, #0F2040 0%, #162B50 50%, #1A3360 100%);
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -32,28 +32,27 @@
       font-size: 0.7rem;
       letter-spacing: 4px;
       text-transform: uppercase;
-      color: #B8922A;
-      background: rgba(184,146,42,0.12);
+      color: #C9A84C;
+      background: rgba(201,168,76,0.12);
       padding: 6px 18px;
       border-radius: 100px;
       margin-bottom: 20px;
-      border: 1px solid rgba(184,146,42,0.3);
+      border: 1px solid rgba(201,168,76,0.3);
     }
 
     h1 {
       font-size: clamp(2.2rem, 5vw, 3.4rem);
       font-weight: 700;
-      color: #FFF8EE;
+      color: #F0F4FF;
       margin-bottom: 10px;
-      font-style: italic;
       font-family: Georgia, serif;
     }
 
-    h1 em { color: #B8922A; font-style: normal; }
+    h1 em { color: #C9A84C; font-style: normal; }
 
     .subtitle {
       font-size: 1.1rem;
-      color: #B0BCCF;
+      color: #A0B2CC;
       font-weight: 300;
     }
 
@@ -76,7 +75,7 @@
 
     /* Card header */
     .card-header {
-      background: linear-gradient(135deg, #1A2744 0%, #243358 60%, #B8922A 140%);
+      background: linear-gradient(135deg, #0F2040 0%, #162B50 60%, #C9A84C 160%);
       padding: 48px 48px 40px;
       position: relative;
       overflow: hidden;
@@ -85,30 +84,30 @@
       content: '';
       position: absolute; top: -60%; right: -20%;
       width: 400px; height: 400px;
-      background: radial-gradient(circle, rgba(184,146,42,0.18) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(201,168,76,0.18) 0%, transparent 70%);
       border-radius: 50%;
     }
     .card-header::after {
       content: '';
       position: absolute; bottom: -40px; left: -40px;
       width: 200px; height: 200px;
-      background: radial-gradient(circle, rgba(212,175,106,0.12) 0%, transparent 70%);
+      background: radial-gradient(circle, rgba(20,140,120,0.12) 0%, transparent 70%);
       border-radius: 50%;
     }
     .card-header > * { position: relative; z-index: 1; }
 
     .card-eyebrow {
       font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
-      color: #D4AF6A; margin-bottom: 12px;
+      color: #D4B870; margin-bottom: 12px;
     }
-    .card-title { font-size: 2.2rem; color: #FFF8EE; font-family: Georgia, serif; font-style: italic; margin-bottom: 6px; }
-    .card-subtitle { font-size: 0.85rem; color: #B0BCCF; margin-bottom: 24px; }
+    .card-title { font-size: 2.2rem; color: #F0F4FF; font-family: Georgia, serif; margin-bottom: 6px; }
+    .card-subtitle { font-size: 0.85rem; color: #A0B2CC; margin-bottom: 24px; }
 
     .card-tags { display: flex; gap: 10px; flex-wrap: wrap; }
     .tag {
-      background: rgba(184,146,42,0.18); color: #D4AF6A;
+      background: rgba(201,168,76,0.18); color: #D4B870;
       font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
-      padding: 5px 14px; border-radius: 100px; border: 1px solid rgba(184,146,42,0.3);
+      padding: 5px 14px; border-radius: 100px; border: 1px solid rgba(201,168,76,0.3);
     }
 
     /* Card body */
@@ -117,51 +116,51 @@
     /* Page grid */
     .pages-label {
       font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-      color: #6B5744; margin-bottom: 16px; font-weight: 700;
+      color: #4A6080; margin-bottom: 16px; font-weight: 700;
     }
     .pages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
     .page-link {
       display: flex; flex-direction: column; align-items: center; gap: 6px;
-      background: #FAF6EF;
-      border: 2px solid #F2EBD9;
+      background: #F4F7FB;
+      border: 2px solid #E0E8F4;
       border-radius: 10px; padding: 16px 10px;
       text-decoration: none;
       transition: all 0.25s;
       text-align: center;
     }
-    .page-link:hover { border-color: #B8922A; background: #FFF8EE; transform: translateY(-2px); }
+    .page-link:hover { border-color: #C9A84C; background: #FDFAF0; transform: translateY(-2px); }
     .page-link .page-icon { font-size: 1.6rem; }
-    .page-link .page-name { font-size: 0.75rem; font-weight: 700; color: #1A2744; letter-spacing: 0.5px; }
-    .page-link .page-fr { font-size: 0.65rem; color: #B8922A; font-style: italic; }
+    .page-link .page-name { font-size: 0.75rem; font-weight: 700; color: #0F2040; letter-spacing: 0.5px; }
+    .page-link .page-sub { font-size: 0.65rem; color: #C9A84C; }
 
     /* Features list */
     .features-label {
       font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
-      color: #6B5744; margin-bottom: 14px; font-weight: 700;
+      color: #4A6080; margin-bottom: 14px; font-weight: 700;
     }
     .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 36px; }
     .feat-item {
       display: flex; align-items: flex-start; gap: 8px;
-      font-size: 0.82rem; color: #5A4535;
+      font-size: 0.82rem; color: #3A4F66;
     }
-    .feat-item .check { color: #B8922A; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+    .feat-item .check { color: #C9A84C; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
 
     /* CTA */
     .card-cta { display: flex; gap: 14px; flex-wrap: wrap; }
     .btn-primary {
-      background: #1A2744; color: #B8922A;
+      background: #0F2040; color: #C9A84C;
       padding: 14px 32px; border-radius: 6px;
       font-weight: 700; font-size: 0.9rem; text-decoration: none;
       transition: all 0.3s; display: inline-block; letter-spacing: 0.3px;
     }
-    .btn-primary:hover { background: #B8922A; color: #1A2744; }
+    .btn-primary:hover { background: #C9A84C; color: #0F2040; }
     .btn-gold {
-      background: #B8922A; color: #1A2744;
+      background: #C9A84C; color: #0F2040;
       padding: 14px 32px; border-radius: 6px;
       font-weight: 700; font-size: 0.9rem; text-decoration: none;
       transition: all 0.3s; display: inline-block;
     }
-    .btn-gold:hover { background: #D4AF6A; }
+    .btn-gold:hover { background: #D4B870; }
 
     /* Colour palette strip */
     .palette { display: flex; gap: 10px; margin-top: 32px; align-items: center; flex-wrap: wrap; }
@@ -175,7 +174,7 @@
       color: rgba(255,255,255,0.4); font-size: 0.82rem; text-decoration: none;
       transition: color 0.3s;
     }
-    .back-link:hover { color: #B8922A; }
+    .back-link:hover { color: #C9A84C; }
 
     @keyframes fadeInDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: translateY(0); } }
@@ -192,22 +191,22 @@
 <div class="container">
   <header>
     <div class="studio-badge">Armin Studio · Template Preview</div>
-    <h1>La Maison <em>Dorée</em></h1>
-    <p class="subtitle">French Bakery & Pâtisserie · 8-Page Website Template</p>
+    <h1>Firoozeh <em>Behnia</em></h1>
+    <p class="subtitle">Business Management Portfolio · 8-Page Professional Website Template</p>
   </header>
 
   <div class="template-card">
 
     <!-- CARD HEADER -->
     <div class="card-header">
-      <p class="card-eyebrow">Customer Template No. 34 · Site 1</p>
-      <h2 class="card-title">La Maison Dorée</h2>
-      <p class="card-subtitle">Boulangerie &amp; Pâtisserie Française — Premium French Bakery Template</p>
+      <p class="card-eyebrow">Customer Template No. 35 · Site 1</p>
+      <h2 class="card-title">Firoozeh Behnia</h2>
+      <p class="card-subtitle">Business Management Consultant &amp; Strategic Leadership Professional</p>
       <div class="card-tags">
-        <span class="tag">French Bakery</span>
+        <span class="tag">Business Management</span>
         <span class="tag">8 Pages</span>
         <span class="tag">Fully Responsive</span>
-        <span class="tag">Large Placeholders</span>
+        <span class="tag">Professional Portfolio</span>
         <span class="tag">Navy &amp; Gold</span>
       </div>
     </div>
@@ -218,81 +217,81 @@
       <!-- PAGES -->
       <p class="pages-label">All 8 Pages</p>
       <div class="pages-grid">
-        <a href="customerno34-site1/index.html" class="page-link">
+        <a href="exampleno10-site1/index.html" class="page-link">
           <span class="page-icon">🏠</span>
           <span class="page-name">Home</span>
-          <span class="page-fr">Accueil</span>
+          <span class="page-sub">Landing</span>
         </a>
-        <a href="customerno34-site1/menu.html" class="page-link">
-          <span class="page-icon">🥐</span>
-          <span class="page-name">Menu</span>
-          <span class="page-fr">La Carte</span>
-        </a>
-        <a href="customerno34-site1/about.html" class="page-link">
-          <span class="page-icon">📖</span>
+        <a href="exampleno10-site1/about.html" class="page-link">
+          <span class="page-icon">👤</span>
           <span class="page-name">About</span>
-          <span class="page-fr">Notre Histoire</span>
+          <span class="page-sub">Biography</span>
         </a>
-        <a href="customerno34-site1/gallery.html" class="page-link">
-          <span class="page-icon">🖼️</span>
-          <span class="page-name">Gallery</span>
-          <span class="page-fr">Galerie</span>
+        <a href="exampleno10-site1/services.html" class="page-link">
+          <span class="page-icon">💼</span>
+          <span class="page-name">Services</span>
+          <span class="page-sub">Consulting</span>
         </a>
-        <a href="customerno34-site1/catering.html" class="page-link">
-          <span class="page-icon">🍽️</span>
-          <span class="page-name">Catering</span>
-          <span class="page-fr">Traiteur</span>
+        <a href="exampleno10-site1/portfolio.html" class="page-link">
+          <span class="page-icon">📊</span>
+          <span class="page-name">Portfolio</span>
+          <span class="page-sub">Case Studies</span>
         </a>
-        <a href="customerno34-site1/events.html" class="page-link">
-          <span class="page-icon">🎉</span>
-          <span class="page-name">Events</span>
-          <span class="page-fr">Événements</span>
+        <a href="exampleno10-site1/expertise.html" class="page-link">
+          <span class="page-icon">🎯</span>
+          <span class="page-name">Expertise</span>
+          <span class="page-sub">Skills</span>
         </a>
-        <a href="customerno34-site1/blog.html" class="page-link">
+        <a href="exampleno10-site1/testimonials.html" class="page-link">
+          <span class="page-icon">⭐</span>
+          <span class="page-name">Testimonials</span>
+          <span class="page-sub">Reviews</span>
+        </a>
+        <a href="exampleno10-site1/blog.html" class="page-link">
           <span class="page-icon">✍️</span>
           <span class="page-name">Blog</span>
-          <span class="page-fr">Journal</span>
+          <span class="page-sub">Insights</span>
         </a>
-        <a href="customerno34-site1/contact.html" class="page-link">
+        <a href="exampleno10-site1/contact.html" class="page-link">
           <span class="page-icon">✉️</span>
           <span class="page-name">Contact</span>
-          <span class="page-fr">Contactez-nous</span>
+          <span class="page-sub">Get in Touch</span>
         </a>
       </div>
 
       <!-- FEATURES -->
       <p class="features-label">Template Features</p>
       <div class="features-list">
-        <div class="feat-item"><span class="check">✦</span>Huge dashed image placeholders throughout — easy to swap for real photos</div>
-        <div class="feat-item"><span class="check">✦</span>Cinematic hero sections with full-viewport image placeholder zones</div>
-        <div class="feat-item"><span class="check">✦</span>Navy (#1A2744) &amp; antique gold (#B8922A) luxury colour scheme</div>
-        <div class="feat-item"><span class="check">✦</span>Responsive mosaic gallery with 15+ placeholder slots</div>
-        <div class="feat-item"><span class="check">✦</span>Interactive menu with category tabs &amp; product cards</div>
-        <div class="feat-item"><span class="check">✦</span>Multi-tier catering packages &amp; wedding showcase</div>
-        <div class="feat-item"><span class="check">✦</span>3-generation story timeline with photo slots</div>
-        <div class="feat-item"><span class="check">✦</span>Events calendar &amp; weekly baking class listings</div>
-        <div class="feat-item"><span class="check">✦</span>Blog with sidebar, categories &amp; featured article</div>
-        <div class="feat-item"><span class="check">✦</span>Contact form, map placeholder, FAQ &amp; hours table</div>
+        <div class="feat-item"><span class="check">✦</span>Professional hero with large headshot image placeholder</div>
+        <div class="feat-item"><span class="check">✦</span>Animated statistics counters (years, clients, projects)</div>
+        <div class="feat-item"><span class="check">✦</span>Deep navy (#0F2040) &amp; antique gold (#C9A84C) executive colour scheme</div>
+        <div class="feat-item"><span class="check">✦</span>Detailed career timeline with milestones &amp; education</div>
+        <div class="feat-item"><span class="check">✦</span>Services grid with consultation pricing &amp; package tiers</div>
+        <div class="feat-item"><span class="check">✦</span>Portfolio case studies with metrics &amp; industry tags</div>
+        <div class="feat-item"><span class="check">✦</span>Skill radial charts &amp; expertise category breakdowns</div>
+        <div class="feat-item"><span class="check">✦</span>Client testimonials with company logos &amp; star ratings</div>
+        <div class="feat-item"><span class="check">✦</span>Business insights blog with category filters</div>
+        <div class="feat-item"><span class="check">✦</span>Contact form with consultation booking &amp; FAQ section</div>
         <div class="feat-item"><span class="check">✦</span>Sticky nav with hamburger mobile menu (toggleMenu)</div>
-        <div class="feat-item"><span class="check">✦</span>4-column footer with links, hours &amp; brand copy</div>
+        <div class="feat-item"><span class="check">✦</span>4-column footer with links, credentials &amp; social media</div>
       </div>
 
       <!-- CTA -->
       <div class="card-cta">
-        <a href="customerno34-site1/index.html" class="btn-gold">Open Template →</a>
+        <a href="exampleno10-site1/index.html" class="btn-gold">Open Portfolio →</a>
         <a href="examples.html" class="btn-primary">← Back to Examples</a>
       </div>
 
       <!-- COLOUR PALETTE -->
       <div class="palette">
         <span class="palette-label">Colour Palette</span>
-        <div class="swatch" style="background:#1A2744;" title="Navy #1A2744"></div>
-        <div class="swatch" style="background:#243358;" title="Navy 2 #243358"></div>
-        <div class="swatch" style="background:#B8922A;" title="Gold #B8922A"></div>
-        <div class="swatch" style="background:#D4AF6A;" title="Gold 2 #D4AF6A"></div>
-        <div class="swatch" style="background:#FAF6EF;" title="Cream #FAF6EF"></div>
-        <div class="swatch" style="background:#F2EBD9;border-color:#ccc;" title="Cream 2 #F2EBD9"></div>
-        <div class="swatch" style="background:#4A3728;" title="Brown #4A3728"></div>
+        <div class="swatch" style="background:#0F2040;" title="Navy #0F2040"></div>
+        <div class="swatch" style="background:#162B50;" title="Navy 2 #162B50"></div>
+        <div class="swatch" style="background:#C9A84C;" title="Gold #C9A84C"></div>
+        <div class="swatch" style="background:#D4B870;" title="Gold 2 #D4B870"></div>
+        <div class="swatch" style="background:#1A8870;" title="Teal #1A8870"></div>
+        <div class="swatch" style="background:#F4F7FB;border-color:#ccc;" title="Light #F4F7FB"></div>
+        <div class="swatch" style="background:#2C3E55;" title="Slate #2C3E55"></div>
       </div>
 
     </div>
