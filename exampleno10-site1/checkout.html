@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Book a Consultation — Firoozeh Behnia</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy:        #0F2040;
+      --navy2:       #162B50;
+      --navy3:       #1E3A6E;
+      --gold:        #C9A84C;
+      --gold2:       #D4B870;
+      --gold-light:  rgba(201,168,76,0.12);
+      --teal:        #1A8870;
+      --teal2:       #22A88A;
+      --teal-light:  rgba(26,136,112,0.12);
+      --light:       #F4F7FB;
+      --light2:      #EBF0F8;
+      --text:        #1C2B3A;
+      --text-mid:    #3A5068;
+      --muted:       #5A6E85;
+      --success:     #22c55e;
+      --border:      #D0DAEA;
+      --shadow:      0 4px 24px rgba(15,32,64,0.1);
+      --radius:      14px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--light); color: var(--text); overflow-x: hidden; line-height: 1.7; }
+
+    nav {
+      background: var(--navy);
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 2px 20px rgba(15,32,64,0.15);
+    }
+    .nav-container { max-width:1280px; margin:0 auto; padding:0 24px; display:flex; justify-content:space-between; align-items:center; }
+    .logo-wrap { display:flex; align-items:center; gap:14px; }
+    .logo-placeholder { width:50px; height:50px; border:3px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.55rem; font-weight:700; color:var(--gold); background:rgba(201,168,76,0.1); }
+    .logo-text { color:#fff; font-size:1.2rem; font-weight:600; }
+    .logo-text span { display:block; font-size:0.65rem; color:var(--gold2); letter-spacing:2px; text-transform:uppercase; font-weight:400; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; z-index:1001; }
+    .hamburger span { width:26px; height:2px; background:rgba(255,255,255,0.8); border-radius:2px; transition:0.3s; }
+    .nav-links { display:flex; gap:0; list-style:none; }
+    .nav-links li a { color:rgba(255,255,255,0.65); text-decoration:none; font-size:0.82rem; padding:8px 12px; letter-spacing:0.3px; transition:color 0.2s; display:flex; align-items:center; }
+    .nav-links li a:hover, .nav-links li a.active { color:var(--gold); }
+    nav.scrolled { box-shadow:0 4px 20px rgba(15,32,64,.2)!important; }
+
+    .page-hero { background:linear-gradient(135deg, var(--navy) 0%, var(--navy2) 55%, var(--navy3) 100%); padding:56px 24px 48px; text-align:center; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; top:-80px; right:-80px; width:360px; height:360px; background:radial-gradient(circle,rgba(201,168,76,0.18) 0%,transparent 70%); border-radius:50%; }
+    .page-hero::after  { content:''; position:absolute; bottom:-60px; left:-60px; width:280px; height:280px; background:radial-gradient(circle,rgba(26,136,112,0.15) 0%,transparent 70%); border-radius:50%; }
+    .page-hero-inner { max-width:660px; margin:0 auto; position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(201,168,76,0.15); border:1px solid rgba(201,168,76,0.3); color:var(--gold2); font-size:0.72rem; font-weight:600; letter-spacing:3px; text-transform:uppercase; padding:6px 16px; border-radius:50px; margin-bottom:18px; }
+    .page-title { font-size:clamp(2rem,5vw,3rem); font-weight:700; color:#fff; line-height:1.2; margin-bottom:14px; }
+    .page-title em { color:var(--gold2); font-style:normal; }
+    .page-desc { font-size:1rem; color:rgba(255,255,255,0.62); line-height:1.8; }
+
+    .checkout-steps { background:#fff; border-bottom:1px solid var(--border); padding:0 24px; }
+    .steps-inner { max-width:780px; margin:0 auto; display:flex; align-items:center; padding:20px 0; }
+    .step { display:flex; align-items:center; gap:10px; }
+    .step-circle { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:700; flex-shrink:0; }
+    .step.done   .step-circle { background:var(--success); color:#fff; }
+    .step.active .step-circle { background:var(--gold); color:#fff; }
+    .step.pending .step-circle { background:var(--light2); color:var(--muted); border:2px solid var(--border); }
+    .step-label { font-size:0.82rem; font-weight:600; letter-spacing:0.3px; }
+    .step.active  .step-label { color:var(--gold); }
+    .step.pending .step-label { color:var(--muted); }
+    .step-connector { flex:1; height:2px; background:var(--border); margin:0 12px; border-radius:2px; min-width:40px; }
+
+    .checkout-main { max-width:1100px; margin:0 auto; padding:40px 24px 80px; display:grid; grid-template-columns:1fr 400px; gap:36px; align-items:start; }
+
+    .order-panel { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; position:sticky; top:90px; }
+    .panel-header { padding:22px 26px; background:var(--navy); display:flex; align-items:center; gap:12px; border-bottom:2px solid var(--gold); }
+    .panel-header h3 { color:#fff; font-size:1rem; font-weight:600; letter-spacing:0.5px; }
+    .panel-header-icon { font-size:1.3rem; }
+    .panel-body { padding:24px 26px; }
+    .class-picker-label { font-size:0.7rem; font-weight:600; text-transform:uppercase; letter-spacing:2.5px; color:var(--muted); margin-bottom:12px; }
+    .class-options { display:flex; flex-direction:column; gap:8px; margin-bottom:22px; }
+    .class-option { display:flex; align-items:center; gap:12px; padding:12px 14px; border:2px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; }
+    .class-option:hover   { border-color:rgba(201,168,76,0.4); background:rgba(201,168,76,0.04); }
+    .class-option.selected{ border-color:var(--gold); background:rgba(201,168,76,0.06); }
+    .class-option input[type="radio"] { width:18px; height:18px; accent-color:var(--gold); cursor:pointer; flex-shrink:0; }
+    .class-option-info { flex:1; }
+    .class-option-name { font-size:0.87rem; font-weight:600; color:var(--text); margin-bottom:2px; }
+    .class-option-meta { font-size:0.74rem; color:var(--muted); }
+    .class-option-price { font-size:0.95rem; font-weight:700; color:var(--gold); white-space:nowrap; }
+
+    .qty-row { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+    .qty-label { font-size:0.85rem; font-weight:600; color:var(--text); }
+    .qty-control { display:flex; align-items:center; border:2px solid var(--border); border-radius:8px; overflow:hidden; }
+    .qty-btn { width:36px; height:36px; background:var(--light2); border:none; cursor:pointer; font-size:1.1rem; color:var(--text); transition:all 0.2s; display:flex; align-items:center; justify-content:center; }
+    .qty-btn:hover { background:var(--gold); color:#fff; }
+    .qty-num { width:42px; height:36px; border:none; text-align:center; font-size:0.95rem; font-weight:700; background:#fff; color:var(--text); }
+    .qty-num::-webkit-outer-spin-button,.qty-num::-webkit-inner-spin-button { -webkit-appearance:none; }
+
+    .order-line { display:flex; justify-content:space-between; align-items:center; padding:9px 0; border-bottom:1px dashed var(--border); font-size:0.88rem; }
+    .order-line:last-child { border:none; }
+    .order-line-label { color:var(--text-mid); }
+    .order-line-value { font-weight:600; color:var(--text); }
+    .order-total-row { display:flex; justify-content:space-between; align-items:center; padding:16px 0 0; margin-top:4px; border-top:2px solid var(--navy); }
+    .order-total-label { font-size:1rem; font-weight:700; }
+    .order-total-amount { font-size:1.5rem; font-weight:700; color:var(--gold); }
+    .security-badges { display:flex; gap:10px; margin-top:18px; padding-top:16px; border-top:1px solid var(--border); flex-wrap:wrap; }
+    .security-badge { font-size:0.72rem; color:var(--muted); }
+
+    .checkout-form-panel { display:flex; flex-direction:column; gap:22px; }
+    .form-card { background:#fff; border-radius:var(--radius); box-shadow:var(--shadow); overflow:hidden; }
+    .form-card-header { padding:18px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:10px; }
+    .form-card-header h3 { font-size:1rem; font-weight:600; color:var(--text); }
+    .form-card-num { width:28px; height:28px; border-radius:50%; background:var(--gold); color:#fff; font-size:0.78rem; font-weight:700; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .form-card-body { padding:22px 24px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-group { margin-bottom:14px; }
+    .form-group:last-child { margin-bottom:0; }
+    .form-group label { display:block; font-size:0.78rem; font-weight:600; color:var(--text); margin-bottom:6px; letter-spacing:0.3px; }
+    .form-group label .req { color:var(--gold); margin-left:2px; }
+    .form-input { width:100%; padding:11px 14px; border:2px solid var(--border); border-radius:10px; font-size:0.9rem; font-family:-apple-system,sans-serif; color:var(--text); background:#fff; transition:all 0.2s; outline:none; }
+    .form-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,0.12); }
+    .form-input::placeholder { color:var(--muted); }
+    .form-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235A6E85' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px; }
+    .datetime-grid { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .form-textarea { resize:vertical; min-height:78px; }
+    .teal-note { background:rgba(26,136,112,0.08); border:1px solid rgba(26,136,112,0.2); border-radius:8px; padding:10px 14px; font-size:0.82rem; color:var(--teal); margin-bottom:14px; line-height:1.6; }
+
+    .payment-info-bar { display:flex; align-items:center; gap:8px; background:#F0FDF4; border:1px solid #86EFAC; border-radius:8px; padding:10px 14px; margin-bottom:16px; font-size:0.82rem; color:#166534; font-weight:500; }
+    #card-element { padding:13px 14px; border:2px solid var(--border); border-radius:10px; background:#fff; min-height:48px; display:flex; align-items:center; }
+    #card-errors { color:#e53e3e; font-size:0.82rem; margin-top:6px; min-height:20px; }
+    .stripe-card-mock { display:flex; align-items:center; gap:12px; width:100%; }
+    .stripe-card-mock-num { flex:1; font-size:0.88rem; color:var(--muted); letter-spacing:2px; }
+    .stripe-card-mock-icons { display:flex; gap:5px; }
+    .card-icon { width:30px; height:19px; border-radius:3px; background:var(--light2); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.5rem; font-weight:700; color:var(--muted); }
+    .stripe-badge { display:flex; align-items:center; gap:6px; margin-top:10px; font-size:0.72rem; color:var(--muted); }
+    .stripe-badge strong { color:#6772e5; }
+
+    .submit-btn { display:flex; align-items:center; justify-content:center; gap:12px; width:100%; padding:17px 24px; border-radius:50px; background:linear-gradient(135deg,var(--gold),#9A7820); color:#fff; font-size:1.05rem; font-weight:700; border:none; cursor:pointer; transition:all 0.3s; letter-spacing:0.3px; box-shadow:0 8px 30px rgba(201,168,76,0.35); }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(201,168,76,0.5); }
+    .submit-btn.loading { opacity:0.7; cursor:not-allowed; pointer-events:none; }
+    .btn-spinner { width:20px; height:20px; border:3px solid rgba(255,255,255,0.3); border-top-color:#fff; border-radius:50%; animation:spin 0.8s linear infinite; display:none; }
+    .submit-btn.loading .btn-spinner { display:block; }
+    .submit-btn.loading .btn-icon { display:none; }
+    @keyframes spin { to { transform:rotate(360deg); } }
+    .submit-note { text-align:center; font-size:0.76rem; color:var(--muted); margin-top:10px; }
+
+    .success-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:4000; align-items:center; justify-content:center; padding:24px; backdrop-filter:blur(8px); }
+    .success-overlay.show { display:flex; }
+    .success-box { background:#fff; border-radius:20px; padding:56px 48px; text-align:center; max-width:460px; width:100%; box-shadow:0 30px 100px rgba(0,0,0,0.25); animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn { from{opacity:0;transform:scale(0.85);}to{opacity:1;transform:scale(1);} }
+    .success-check { width:72px; height:72px; background:#F0FDF4; border-radius:50%; display:flex; align-items:center; justify-content:center; margin:0 auto 24px; font-size:2rem; }
+    .success-title { font-size:1.8rem; font-weight:700; color:var(--navy); margin-bottom:12px; }
+    .success-desc { font-size:0.95rem; color:var(--text-mid); line-height:1.7; margin-bottom:20px; }
+    .success-ref { background:var(--light); border-radius:8px; padding:10px 16px; font-size:0.85rem; color:var(--text-mid); margin-bottom:24px; }
+    .success-back { display:inline-flex; align-items:center; gap:8px; padding:13px 30px; border-radius:50px; background:var(--gold); color:#fff; font-weight:700; text-decoration:none; font-size:0.92rem; transition:all 0.2s; }
+    .success-back:hover { background:#9A7820; }
+
+    .faq-strip { background:var(--navy2); padding:56px 24px; border-top:1px solid rgba(201,168,76,0.12); }
+    .faq-inner { max-width:900px; margin:0 auto; }
+    .faq-heading { font-size:1.7rem; font-weight:700; color:#fff; margin-bottom:32px; text-align:center; }
+    .faq-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+    .faq-item { background:rgba(255,255,255,0.05); border:1px solid rgba(201,168,76,0.15); border-radius:12px; padding:22px; transition:all 0.2s; }
+    .faq-item:hover { background:rgba(201,168,76,0.08); border-color:rgba(201,168,76,0.3); }
+    .faq-q { font-size:0.9rem; font-weight:700; color:var(--gold2); margin-bottom:8px; }
+    .faq-a { font-size:0.83rem; color:rgba(255,255,255,0.5); line-height:1.7; }
+
+    footer { background:#080F1E; padding:64px 24px 32px; }
+    .footer-inner { max-width:1280px; margin:0 auto; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:48px; }
+    .footer-brand-name { font-size:1.1rem; font-weight:700; color:var(--gold); margin-bottom:14px; display:block; }
+    .footer-brand p { font-size:0.85rem; color:#5A7A9A; line-height:1.7; max-width:260px; }
+    .footer-col h4 { font-size:0.72rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold2); margin-bottom:18px; font-weight:600; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { color:#5A7A9A; text-decoration:none; font-size:0.85rem; transition:color 0.3s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid #1A2A3A; padding-top:28px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { font-size:0.8rem; color:#3A5070; }
+    .back-link { color:#3A5070; text-decoration:none; font-size:0.8rem; transition:color 0.2s; }
+    .back-link:hover { color:var(--gold); }
+
+    @media (max-width:900px) { .checkout-main { grid-template-columns:1fr; } .order-panel { position:static; } .faq-grid { grid-template-columns:1fr; } .footer-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:768px) {
+      .nav-links { display:none; flex-direction:column; position:fixed; top:0; right:-100%; width:70%; height:100%; background:var(--navy); z-index:2000; padding:80px 28px; gap:0; border-left:2px solid var(--gold); transition:right 0.3s; }
+      .nav-links.open { display:flex; right:0; }
+      .nav-links li a { padding:13px 18px; font-size:0.95rem; }
+      .hamburger { display:flex; }
+      .form-row { grid-template-columns:1fr; }
+      .datetime-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:500px) { .step-label { display:none; } .success-box { padding:36px 24px; } .footer-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-container">
+    <div class="logo-wrap">
+      <div class="logo-placeholder">LOGO</div>
+      <div class="logo-text">
+        Firoozeh Behnia
+        <span>Business Consultant</span>
+      </div>
+    </div>
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="expertise.html">Expertise</a></li>
+      <li><a href="testimonials.html">Testimonials</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">📋 Strategic Partnership</div>
+    <h1 class="page-title">Book a <em>Consultation</em></h1>
+    <p class="page-desc">Select the engagement model that fits your needs. Whether a focused strategy session or an ongoing advisory retainer, let's unlock your organization's full potential.</p>
+  </div>
+</div>
+
+<div class="checkout-steps">
+  <div class="steps-inner">
+    <div class="step active">
+      <div class="step-circle">1</div>
+      <div class="step-label">Select Package</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step active">
+      <div class="step-circle">2</div>
+      <div class="step-label">Your Details</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step pending">
+      <div class="step-circle">3</div>
+      <div class="step-label">Payment</div>
+    </div>
+    <div class="step-connector"></div>
+    <div class="step pending">
+      <div class="step-circle">✓</div>
+      <div class="step-label">Confirmed</div>
+    </div>
+  </div>
+</div>
+
+<div class="checkout-main">
+
+  <div class="order-panel">
+    <div class="panel-header">
+      <span class="panel-header-icon">💼</span>
+      <h3>Your Engagement</h3>
+    </div>
+    <div class="panel-body">
+      <div class="class-picker-label">Choose Your Package</div>
+      <div class="class-options">
+        <label class="class-option selected">
+          <input type="radio" name="consultSelect" value="strategy" data-price="450" data-name="Strategy Session (90 min)" checked onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🎯 Strategy Session</div>
+            <div class="class-option-meta">90-minute focused session · Goal clarity &amp; action roadmap</div>
+          </div>
+          <div class="class-option-price">$450</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="consultSelect" value="audit" data-price="2400" data-name="Full Business Audit" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🔍 Full Business Audit</div>
+            <div class="class-option-meta">3–5 day deep dive · Operations, culture &amp; growth assessment</div>
+          </div>
+          <div class="class-option-price">$2,400</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="consultSelect" value="retainer" data-price="3800" data-name="Monthly Retainer" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🤝 Monthly Retainer</div>
+            <div class="class-option-meta">Ongoing advisory · 4 sessions/month · Priority access</div>
+          </div>
+          <div class="class-option-price">$3,800/mo</div>
+        </label>
+        <label class="class-option">
+          <input type="radio" name="consultSelect" value="workshop" data-price="900" data-name="Leadership Workshop (Half-Day)" onchange="updateOrder(this)">
+          <div class="class-option-info">
+            <div class="class-option-name">🏆 Leadership Workshop</div>
+            <div class="class-option-meta">Half-day · Team of up to 12 · Facilitated exercises</div>
+          </div>
+          <div class="class-option-price">$900</div>
+        </label>
+      </div>
+
+      <div class="qty-row">
+        <div class="qty-label">Sessions / Units</div>
+        <div class="qty-control">
+          <button class="qty-btn" onclick="changeQty(-1)" aria-label="Decrease">−</button>
+          <input type="number" class="qty-num" id="qtyInput" value="1" min="1" max="12" onchange="recalcTotal()" aria-label="Quantity">
+          <button class="qty-btn" onclick="changeQty(1)" aria-label="Increase">+</button>
+        </div>
+      </div>
+
+      <div class="order-line">
+        <span class="order-line-label" id="orderLineName">Strategy Session × 1</span>
+        <span class="order-line-value" id="orderLinePrice">$450.00</span>
+      </div>
+      <div class="order-line">
+        <span class="order-line-label">Pre-session brief review</span>
+        <span class="order-line-value" style="color:var(--success);">Included</span>
+      </div>
+      <div class="order-line">
+        <span class="order-line-label">Follow-up action plan</span>
+        <span class="order-line-value" style="color:var(--teal);">✓ Included</span>
+      </div>
+
+      <div class="order-total-row">
+        <div class="order-total-label">Total Due</div>
+        <div class="order-total-amount" id="orderTotal">$450.00</div>
+      </div>
+
+      <div class="security-badges">
+        <div class="security-badge">🔒 SSL Secured</div>
+        &nbsp;·&nbsp;
+        <div class="security-badge">📋 Expert Credentials</div>
+        &nbsp;·&nbsp;
+        <div class="security-badge">🤝 Confidential</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-form-panel">
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">1</div>
+        <h3>Your Details</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName">First Name <span class="req">*</span></label>
+            <input type="text" id="firstName" name="firstName" class="form-input" placeholder="Sarah" required autocomplete="given-name">
+          </div>
+          <div class="form-group">
+            <label for="lastName">Last Name <span class="req">*</span></label>
+            <input type="text" id="lastName" name="lastName" class="form-input" placeholder="Johnson" required autocomplete="family-name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="email">Email Address <span class="req">*</span></label>
+          <input type="email" id="email" name="email" class="form-input" placeholder="sarah@company.com" required autocomplete="email">
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" class="form-input" placeholder="(555) 000-0000" autocomplete="tel">
+        </div>
+        <div class="form-group">
+          <label for="company">Company / Organization</label>
+          <input type="text" id="company" name="company" class="form-input" placeholder="Acme Corp.">
+        </div>
+        <div class="form-group">
+          <label for="title">Your Role / Title</label>
+          <input type="text" id="title" name="title" class="form-input" placeholder="CEO / Director of Operations / etc.">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">2</div>
+        <h3>Session Details</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="teal-note">💡 All sessions are conducted via secure video call (Zoom/Teams) or in-person by arrangement. Firoozeh will confirm your preferred format after booking.</div>
+        <div class="datetime-grid">
+          <div class="form-group">
+            <label for="sessionDate">Preferred Date <span class="req">*</span></label>
+            <input type="date" id="sessionDate" name="sessionDate" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label for="sessionTime">Preferred Time <span class="req">*</span></label>
+            <select id="sessionTime" name="sessionTime" class="form-input form-select" required>
+              <option value="" disabled selected>— Select time —</option>
+              <option>8:00 am – 10:00 am</option>
+              <option>10:00 am – 12:00 pm</option>
+              <option>12:00 pm – 2:00 pm</option>
+              <option>2:00 pm – 4:00 pm</option>
+              <option>4:00 pm – 6:00 pm</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="focusArea">Primary Focus Area <span class="req">*</span></label>
+          <select id="focusArea" name="focusArea" class="form-input form-select" required>
+            <option value="" disabled selected>— What do you want to address? —</option>
+            <option>Strategic Planning &amp; Growth</option>
+            <option>Change Management</option>
+            <option>Executive / Leadership Coaching</option>
+            <option>Operational Excellence</option>
+            <option>Team Culture &amp; Engagement</option>
+            <option>Organizational Restructuring</option>
+            <option>Other / Multiple Areas</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="notes">Business Context &amp; Goals <span class="req">*</span></label>
+          <textarea id="notes" name="notes" class="form-input form-textarea" placeholder="Briefly describe your organization, the challenges you're facing, and what success looks like for you..." required></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-card">
+      <div class="form-card-header">
+        <div class="form-card-num">3</div>
+        <h3>Payment</h3>
+      </div>
+      <div class="form-card-body">
+        <div class="payment-info-bar">🔒 Your payment is secured with 256-bit SSL encryption</div>
+        <div class="form-group">
+          <label>Card Details <span class="req">*</span></label>
+          <div id="card-element">
+            <div class="stripe-card-mock">
+              <span class="stripe-card-mock-num">•••• •••• •••• ••••</span>
+              <div class="stripe-card-mock-icons">
+                <div class="card-icon">VISA</div>
+                <div class="card-icon">MC</div>
+                <div class="card-icon">AMEX</div>
+              </div>
+            </div>
+          </div>
+          <div id="card-errors" role="alert"></div>
+          <div class="stripe-badge">🔒 Powered by <strong>Stripe</strong> — Card details never stored on our servers</div>
+        </div>
+      </div>
+    </div>
+
+    <button class="submit-btn" id="submitBtn" onclick="handleCheckout(event)" type="button">
+      <span class="btn-icon">📋</span>
+      <span>Book Consultation — <span id="btnTotal">$450.00</span></span>
+      <div class="btn-spinner"></div>
+    </button>
+    <p class="submit-note">🔒 Secure checkout · Confirmation and calendar invite sent instantly</p>
+
+  </div>
+</div>
+
+<div class="success-overlay" id="successOverlay">
+  <div class="success-box">
+    <div class="success-check">✅</div>
+    <h2 class="success-title">Consultation Booked!</h2>
+    <p class="success-desc">Thank you! Your consultation with Firoozeh Behnia has been confirmed. You'll receive a calendar invite and session brief by email shortly.</p>
+    <div class="success-ref" id="successRef">Confirmation sent to your email.</div>
+    <a href="index.html" class="success-back">🏠 Back to Home</a>
+  </div>
+</div>
+
+<div class="faq-strip">
+  <div class="faq-inner">
+    <div class="faq-heading">Frequently Asked Questions</div>
+    <div class="faq-grid">
+      <div class="faq-item">
+        <div class="faq-q">What happens after I book?</div>
+        <div class="faq-a">You'll receive a confirmation email with a calendar invite and a brief pre-session questionnaire. Firoozeh reviews your context in advance to maximize session value.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Are sessions confidential?</div>
+        <div class="faq-a">Absolutely. All consultations are held under strict professional confidentiality. No details of your organization are shared with any third party.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Can I reschedule my session?</div>
+        <div class="faq-a">Yes — sessions can be rescheduled free of charge with 48 hours notice. Within 48 hours, a 25% reschedule fee applies. No-shows are non-refundable.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">Is the Monthly Retainer a long-term commitment?</div>
+        <div class="faq-a">No lock-in required. The retainer is billed month-to-month and can be paused or cancelled with 30 days notice. Volume discounts apply for 3+ month commitments.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div>
+        <span class="footer-brand-name">Firoozeh Behnia</span>
+        <p>Business Management Consultant &amp; Strategic Leadership Expert. Partnering with organizations to unlock their full potential.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Services</h4>
+        <ul>
+          <li><a href="services.html">Strategic Planning</a></li>
+          <li><a href="services.html">Change Management</a></li>
+          <li><a href="services.html">Executive Coaching</a></li>
+          <li><a href="services.html">Operational Excellence</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Portfolio</h4>
+        <ul>
+          <li><a href="portfolio.html">Case Studies</a></li>
+          <li><a href="expertise.html">Expertise</a></li>
+          <li><a href="testimonials.html">Testimonials</a></li>
+          <li><a href="blog.html">Blog</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="about.html">About Firoozeh</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html">Book a Call</a></li>
+          <li><a href="#">LinkedIn Profile</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Firoozeh Behnia. All rights reserved.</p>
+      <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  function toggleMenu() {
+    document.getElementById('navLinks').classList.toggle('open');
+  }
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => document.getElementById('navLinks').classList.remove('open'));
+  });
+
+  let currentPrice = 450;
+  let currentName  = 'Strategy Session (90 min)';
+
+  function updateOrder(radio) {
+    currentPrice = parseFloat(radio.dataset.price);
+    currentName  = radio.dataset.name;
+    document.querySelectorAll('.class-option').forEach(opt => opt.classList.remove('selected'));
+    radio.closest('.class-option').classList.add('selected');
+    recalcTotal();
+  }
+
+  function changeQty(delta) {
+    const inp = document.getElementById('qtyInput');
+    inp.value = Math.min(12, Math.max(1, parseInt(inp.value || 1) + delta));
+    recalcTotal();
+  }
+
+  function recalcTotal() {
+    const qty   = parseInt(document.getElementById('qtyInput').value) || 1;
+    const total = currentPrice * qty;
+    const fmt   = n => '$' + n.toLocaleString('en-US', {minimumFractionDigits:0, maximumFractionDigits:0});
+    document.getElementById('orderLineName').textContent  = `${currentName} \u00d7 ${qty}`;
+    document.getElementById('orderLinePrice').textContent = fmt(total);
+    document.getElementById('orderTotal').textContent     = fmt(total);
+    document.getElementById('btnTotal').textContent       = fmt(total);
+  }
+
+  const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function handleCheckout(e) {
+    e.preventDefault();
+    const fname   = document.getElementById('firstName').value.trim();
+    const lname   = document.getElementById('lastName').value.trim();
+    const email   = document.getElementById('email').value.trim();
+    const date    = document.getElementById('sessionDate').value;
+    const time    = document.getElementById('sessionTime').value;
+    const focus   = document.getElementById('focusArea').value;
+    const notes   = document.getElementById('notes').value.trim();
+    if (!fname || !lname || !email || !date || !time || !focus || !notes) { alert('Please fill in all required fields (marked with *).'); return; }
+    if (!EMAIL_REGEX.test(email)) { alert('Please enter a valid email address.'); return; }
+    const btn = document.getElementById('submitBtn');
+    btn.classList.add('loading');
+    setTimeout(() => {
+      btn.classList.remove('loading');
+      document.getElementById('successRef').textContent = 'Confirmation sent to ' + email;
+      document.getElementById('successOverlay').classList.add('show');
+    }, 2000);
+  }
+
+  document.getElementById('successOverlay').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+
+  const dateInput = document.getElementById('sessionDate');
+  dateInput.min = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+</script>
+</body>
+</html>
