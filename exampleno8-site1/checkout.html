@@ -250,34 +250,34 @@
       <div class="class-picker-label">Select Your System</div>
       <div class="class-options">
         <label class="class-option selected">
-          <input type="radio" name="robotSelect" value="scout" data-price="24900" data-name="NEXUS-X1 Scout" checked onchange="updateOrder(this)">
+          <input type="radio" name="robotSelect" value="scout" data-price="89900" data-name="NX-7 Humanoid" checked onchange="updateOrder(this)">
           <div class="class-option-info">
-            <div class="class-option-name">⚡ NEXUS-X1 Scout</div>
-            <div class="class-option-meta">Lightweight · Surveillance &amp; inspection · 12h runtime</div>
+            <div class="class-option-name">⚡ NX-7 Humanoid</div>
+            <div class="class-option-meta">Bipedal · 40kg payload · 18h runtime · NEXUS CORE v3</div>
           </div>
-          <div class="class-option-price">$24,900</div>
+          <div class="class-option-price">$89,900</div>
         </label>
         <label class="class-option">
-          <input type="radio" name="robotSelect" value="sentinel" data-price="59900" data-name="NEXUS-X2 Sentinel" onchange="updateOrder(this)">
+          <input type="radio" name="robotSelect" value="sentinel" data-price="34900" data-name="RA-Pro Industrial Arm" onchange="updateOrder(this)">
           <div class="class-option-info">
-            <div class="class-option-name">🛡️ NEXUS-X2 Sentinel</div>
-            <div class="class-option-meta">Industrial · 40kg payload · 18h runtime · AI CORE v3</div>
+            <div class="class-option-name">🛡️ RA-Pro Industrial Arm</div>
+            <div class="class-option-meta">Industrial arm · Full DOF · AI CORE v2 · CNC precision</div>
           </div>
-          <div class="class-option-price">$59,900</div>
+          <div class="class-option-price">$34,900</div>
         </label>
         <label class="class-option">
-          <input type="radio" name="robotSelect" value="enterprise" data-price="149000" data-name="Custom Enterprise Solution" onchange="updateOrder(this)">
+          <input type="radio" name="robotSelect" value="enterprise" data-price="18900" data-name="AX-Nano Drone" onchange="updateOrder(this)">
           <div class="class-option-info">
-            <div class="class-option-name">🏭 Custom Enterprise Solution</div>
-            <div class="class-option-meta">Fully bespoke · Fleet deployment · Dedicated support team</div>
+            <div class="class-option-name">🚁 AX-Nano Drone</div>
+            <div class="class-option-meta">Aerial · Surveillance · 12h flight · NEXUS EDGE v1</div>
           </div>
-          <div class="class-option-price">$149,000+</div>
+          <div class="class-option-price">$18,900</div>
         </label>
         <label class="class-option">
           <input type="radio" name="robotSelect" value="maintenance" data-price="4800" data-name="Annual Maintenance Plan" onchange="updateOrder(this)">
           <div class="class-option-info">
             <div class="class-option-name">🔧 Annual Maintenance Plan</div>
-            <div class="class-option-meta">Remote monitoring + 2 on-site service visits per year</div>
+            <div class="class-option-meta">Covers all 3 product lines · Remote diagnostics + 2 on-site visits/yr</div>
           </div>
           <div class="class-option-price">$4,800/yr</div>
         </label>
@@ -293,8 +293,8 @@
       </div>
 
       <div class="order-line">
-        <span class="order-line-label" id="orderLineName">NEXUS-X1 Scout × 1</span>
-        <span class="order-line-value" id="orderLinePrice">$24,900</span>
+        <span class="order-line-label" id="orderLineName">NX-7 Humanoid × 1</span>
+        <span class="order-line-value" id="orderLinePrice">$89,900</span>
       </div>
       <div class="order-line">
         <span class="order-line-label">Setup &amp; calibration</span>
@@ -307,7 +307,7 @@
 
       <div class="order-total-row">
         <div class="order-total-label">Total</div>
-        <div class="order-total-amount" id="orderTotal">$24,900</div>
+        <div class="order-total-amount" id="orderTotal">$89,900</div>
       </div>
 
       <div class="security-badges">
@@ -422,7 +422,7 @@
 
     <button class="submit-btn" id="submitBtn" onclick="handleCheckout(event)" type="button">
       <span class="btn-icon">🤖</span>
-      <span>Place Order — <span id="btnTotal">$24,900</span></span>
+      <span>Place Order — <span id="btnTotal">$89,900</span></span>
       <div class="btn-spinner"></div>
     </button>
     <p class="submit-note">🔒 Secure checkout · Our team will contact you within 24 hours to confirm your order</p>
@@ -433,8 +433,8 @@
 <div class="success-overlay" id="successOverlay">
   <div class="success-box">
     <div class="success-check">✅</div>
-    <h2 class="success-title">Order Confirmed</h2>
-    <p class="success-desc">Your NEXUS system order is confirmed. Our deployment team will contact you within 24 hours to schedule onboarding and logistics.</p>
+    <h2 class="success-title">Request Confirmed</h2>
+    <p class="success-desc">Your NEXUS system request has been confirmed at the listed price. Our enterprise deployment team will contact you within 24 hours to coordinate onboarding, logistics, and custom configuration.</p>
     <div class="success-ref" id="successRef">Confirmation sent to your email.</div>
     <a href="index.html" class="success-back">← Back to Home</a>
   </div>
@@ -470,10 +470,10 @@
       <a href="index.html" class="footer-logo"><span>NEXUS</span> ROBOTICS</a>
       <p>Engineering autonomous systems that operate at the frontier of what machines can do — perceiving, reasoning, and acting in the full complexity of the real world.</p>
       <div class="footer-social">
-        <a href="#">𝕏</a>
-        <a href="#">in</a>
-        <a href="#">▶</a>
-        <a href="#">gh</a>
+        <a href="https://x.com/nexusrobotics" target="_blank" rel="noopener noreferrer">𝕏</a>
+        <a href="https://www.linkedin.com/company/nexus-robotics" target="_blank" rel="noopener noreferrer">in</a>
+        <a href="https://www.youtube.com/@nexusrobotics" target="_blank" rel="noopener noreferrer">▶</a>
+        <a href="https://github.com/nexusrobotics" target="_blank" rel="noopener noreferrer">gh</a>
       </div>
     </div>
     <div class="footer-col">
@@ -492,6 +492,7 @@
     </div>
     <div class="footer-col">
       <h4>Contact</h4>
+      <a href="checkout.html">Order / Quote</a>
       <a href="contact.html">Get In Touch</a>
       <a href="contact.html">Request Demo</a>
       <a href="contact.html">Press Inquiries</a>
@@ -509,8 +510,8 @@
     document.getElementById('navLinks').classList.toggle('open');
   }
 
-  let currentPrice = 24900;
-  let currentName  = 'NEXUS-X1 Scout';
+  let currentPrice = 89900;
+  let currentName  = 'NX-7 Humanoid';
 
   function updateOrder(radio) {
     currentPrice = parseFloat(radio.dataset.price);

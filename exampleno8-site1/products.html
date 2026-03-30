@@ -210,6 +210,9 @@
     .footer-brand .footer-logo { font-size: 1.3rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; color: #fff; display: inline-block; margin-bottom: 16px; }
     .footer-brand .footer-logo span { color: #0A84FF; }
     .footer-brand p { color: rgba(255,255,255,0.42); font-size: 0.88rem; line-height: 1.75; max-width: 270px; }
+    .footer-social { display: flex; gap: 14px; margin-top: 24px; }
+    .footer-social a { width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.5); text-decoration: none; transition: all 0.3s; font-size: 0.85rem; font-weight: 700; }
+    .footer-social a:hover { border-color: #0A84FF; color: #0A84FF; }
     .footer-col h4 { font-size: 0.7rem; letter-spacing: 3.5px; text-transform: uppercase; color: #0A84FF; margin-bottom: 20px; }
     .footer-col a { display: block; color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.87rem; margin-bottom: 11px; transition: color 0.3s; }
     .footer-col a:hover { color: #fff; }
@@ -355,7 +358,7 @@
           <tr><td>Operating Environment</td><td>Indoor / Outdoor</td><td>Structured Indoor</td><td>Indoor / Outdoor</td></tr>
           <tr><td>OTA Updates</td><td class="check">✓</td><td class="check">✓</td><td class="check">✓</td></tr>
           <tr><td>API Access</td><td class="check">✓ Full SDK</td><td class="check">✓ Full SDK</td><td class="check">✓ Full SDK</td></tr>
-          <tr><td>Starting Price</td><td>Contact Sales</td><td>Contact Sales</td><td>Contact Sales</td></tr>
+          <tr><td>Starting Price</td><td><a href="checkout.html" style="color:#0A84FF;text-decoration:none;">From $89,900</a></td><td><a href="checkout.html" style="color:#0A84FF;text-decoration:none;">From $34,900</a></td><td><a href="checkout.html" style="color:#0A84FF;text-decoration:none;">From $18,900</a></td></tr>
         </tbody>
       </table>
     </section>
@@ -366,23 +369,33 @@
         <div class="footer-brand">
           <a href="index.html" class="footer-logo"><span>NEXUS</span> ROBOTICS</a>
           <p>Engineering autonomous systems that operate at the frontier of what machines can do — perceiving, reasoning, and acting in the full complexity of the real world.</p>
+          <div class="footer-social">
+            <a href="https://x.com/nexusrobotics" target="_blank" rel="noopener noreferrer">𝕏</a>
+            <a href="https://www.linkedin.com/company/nexus-robotics" target="_blank" rel="noopener noreferrer">in</a>
+            <a href="https://www.youtube.com/@nexusrobotics" target="_blank" rel="noopener noreferrer">▶</a>
+            <a href="https://github.com/nexusrobotics" target="_blank" rel="noopener noreferrer">gh</a>
+          </div>
         </div>
         <div class="footer-col">
           <h4>Products</h4>
           <a href="products.html">NX-7 Humanoid</a>
           <a href="products.html">RA-Pro Arm</a>
           <a href="products.html">AX-Nano Drone</a>
+          <a href="products.html">All Products</a>
         </div>
         <div class="footer-col">
           <h4>Company</h4>
           <a href="about.html">About Us</a>
           <a href="technology.html">Technology</a>
+          <a href="about.html#team">Leadership</a>
           <a href="contact.html">Careers</a>
         </div>
         <div class="footer-col">
           <h4>Contact</h4>
+          <a href="checkout.html">Order / Quote</a>
           <a href="contact.html">Get In Touch</a>
           <a href="contact.html">Request Demo</a>
+          <a href="contact.html">Press Inquiries</a>
           <a href="contact.html">Partnerships</a>
         </div>
       </div>
@@ -404,7 +417,7 @@
           <h2 class="modal-title" id="modalTitle"></h2>
           <p class="modal-desc" id="modalDesc"></p>
           <div class="modal-specs" id="modalSpecs"></div>
-          <button class="cta-btn" onclick="window.location.href='contact.html'">Request Demo</button>
+          <a href="checkout.html" class="cta-btn">Request a Quote</a>
         </div>
       </div>
     </div>
