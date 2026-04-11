@@ -14,6 +14,18 @@
     </image:image>
   </url>
   
+  <!-- AI Demo Page -->
+  <url>
+    <loc>https://armin.works/ai.html</loc>
+    <lastmod>2026-04-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://armin.works/logo.png</image:loc>
+      <image:title>Armin Studio AI Website Integration Demo</image:title>
+    </image:image>
+  </url>
+
   <!-- Services Page -->
   <url>
     <loc>https://armin.works/services.html</loc>
