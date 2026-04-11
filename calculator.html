@@ -831,7 +831,7 @@ function calculate() {
     var sd   = scanData[k2];
     var stt  = sd.C1 - pmw_eff;
     var avg2 = (stt+sd.szz_eff)*0.5;
-    var R2   = Math.sqrt(((stt-sd.szz_eff)*0.5)**2 + sd.tthz**2);
+    var R2   = Math.sqrt(Math.pow((stt-sd.szz_eff)*0.5,2) + Math.pow(sd.tthz,2));
     var sA2  = avg2+R2, sB2 = avg2-R2, srr2 = pmw_eff;
     var all2 = [sA2,sB2,srr2].sort(function(a,b){return b-a;});
     if (all2[0] >= ucs + q*all2[2]) boCount++;
@@ -863,7 +863,7 @@ function calculate() {
   var szzC  = sz_e - 2*nu*((sx_e-sy_e)*ct2C + 2*txy*st2C);
   var tthzC = 2*(-txz*Math.sin(thC) + tyz*Math.cos(thC));
   var sHoop = C1c - Peff, sRad = Peff, sAx = szzC;
-  var avgC  = (sHoop+szzC)*0.5, RC = Math.sqrt(((sHoop-szzC)*0.5)**2+tthzC**2);
+  var avgC  = (sHoop+szzC)*0.5, RC = Math.sqrt(Math.pow((sHoop-szzC)*0.5,2)+Math.pow(tthzC,2));
   var sA_c  = avgC+RC, sB_c = avgC-RC;
   var allC  = [sA_c, sB_c, sRad].sort(function(a,b){return b-a;});
   var S1c=allC[0], S2c=allC[1], S3c=allC[2];
@@ -892,7 +892,7 @@ function calculate() {
 // ═══════════════════════════════════════════════
 function renderResults(r, pmw) {
   var panel = document.getElementById('resultsPanel');
-  var icon  = r.wCls==='sb-ok' ? '\u2705' : r.wCls==='sb-warn' ? '\u26a0\ufe0f' : '\U0001f6a8';
+  var icon  = r.wCls==='sb-ok' ? '\u2705' : r.wCls==='sb-warn' ? '\u26a0\ufe0f' : '\ud83d\udea8';
 
   var statusH = '<div class="status-bar '+r.wCls+'"><span class="sb-icon">'+icon+'</span>'
     + '<span>'+r.wLbl+' \u2014 Window: <strong>'+(r.ok ? r.window_ppg.toFixed(2)+' ppg' : 'None')+'</strong>'
@@ -1230,7 +1230,7 @@ function drawPolarDiagram(r, pmw) {
     hoop[k]=stt;
     if(stt>hMax) hMax=stt;
     if(stt<hMin) hMin=stt;
-    var avg=(stt+szz)*0.5, R2=Math.sqrt(((stt-szz)*0.5)**2+tthz**2);
+    var avg=(stt+szz)*0.5, R2=Math.sqrt(Math.pow((stt-szz)*0.5,2)+Math.pow(tthz,2));
     var sA=avg+R2, sB=avg-R2, srr=pmwEff;
     var all=[sA,sB,srr].sort(function(a,b){return b-a;});
     fail[k]=all[0]>=r.ucs+r.q*all[2]?1:0;
