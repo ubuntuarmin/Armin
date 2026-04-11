@@ -9,463 +9,271 @@
   <link rel="icon" href="/logo.png" type="image/png">
   <link rel="manifest" href="/manifest.json" />
   <style>
-    :root {
-      --navy: #1a2e4a;
-      --blue: #1d4ed8;
-      --blue-light: #3b82f6;
-      --blue-pale: #eff6ff;
-      --text: #1f2937;
-      --text-muted: #6b7280;
-      --border: #e5e7eb;
-      --bg: #f9fafb;
-      --white: #ffffff;
-      --shadow: 0 2px 8px rgba(0,0,0,0.08);
-      --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
-      --green: #16a34a;
-      --green-pale: #f0fdf4;
-      --yellow: #d97706;
-      --yellow-pale: #fffbeb;
-      --red: #dc2626;
-      --red-pale: #fef2f2;
+    :root{
+      --navy:#1a2e4a;--blue:#1d4ed8;--blue-light:#3b82f6;
+      --blue-pale:#eff6ff;--text:#1f2937;--muted:#6b7280;
+      --border:#e5e7eb;--bg:#f9fafb;--white:#ffffff;
+      --shadow:0 2px 8px rgba(0,0,0,.08);
+      --shadow-md:0 4px 20px rgba(0,0,0,.13);
+      --green:#16a34a;--green-pale:#f0fdf4;--green-light:#22c55e;
+      --amber:#d97706;--amber-pale:#fffbeb;--amber-light:#f59e0b;
+      --red:#dc2626;--red-pale:#fef2f2;--red-light:#ef4444;
+      --canvas-bg:#0f1828;
     }
-
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    html, body { margin: 0; padding: 0; background: var(--white); }
-    body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      color: var(--text);
-      -webkit-font-smoothing: antialiased;
-      font-size: 16px;
-      line-height: 1.6;
-    }
-    a { color: inherit; text-decoration: none; }
-
-    /* ── NAV ── */
-    .site-header { background: var(--navy); border-bottom: 3px solid var(--blue); position: sticky; top: 0; z-index: 1000; transition: box-shadow 0.3s; }
-    .site-header.scrolled { box-shadow: 0 4px 20px rgba(0,0,0,0.3); }
-    .page { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    @media (min-width:768px) { .page { padding: 0 32px; } }
-    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
-    .nav-brand { display: flex; align-items: center; gap: 12px; }
-    .brand-logo { width: 40px; height: 40px; object-fit: contain; display: block; }
-    .brand-title { font-size: 20px; font-weight: 700; color: #ffffff; letter-spacing: 0.05em; }
-    .brand-sub { font-size: 12px; color: #93c5fd; display: block; }
-    .nav-links { display: none; gap: 4px; }
-    .nav-links a { color: #cbd5e1; font-size: 14px; font-weight: 500; padding: 8px 14px; border-radius: 6px; transition: background 0.15s, color 0.15s; }
-    .nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.1); color: #ffffff; }
-    .nav-cta { display: inline-block; padding: 9px 20px; background: var(--blue); color: #ffffff; font-weight: 600; font-size: 14px; border-radius: 6px; border: none; cursor: pointer; transition: background 0.15s; white-space: nowrap; }
-    .nav-cta:hover { background: var(--blue-light); }
-    .nav-toggle { display: flex; flex-direction: column; gap: 5px; padding: 8px; background: none; border: 1px solid rgba(255,255,255,0.3); border-radius: 6px; cursor: pointer; }
-    .nav-toggle span { width: 20px; height: 2px; background: #ffffff; display: block; }
-    .nav-links-mobile { display: none; flex-direction: column; background: #162236; border-top: 1px solid rgba(255,255,255,0.1); padding: 8px 0; }
-    .nav-links-mobile a { color: #cbd5e1; font-size: 15px; padding: 12px 24px; display: block; transition: background 0.15s; }
-    .nav-links-mobile a:hover { background: rgba(255,255,255,0.07); color: #ffffff; }
-    @media (min-width:880px) { .nav-links { display: flex; } .nav-toggle { display: none; } }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--navy) 0%, #1e3a5f 60%, #1d4ed8 100%);
-      padding: 60px 20px 48px;
-      text-align: center;
-      color: #ffffff;
-    }
-    .hero-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 999px;
-      padding: 5px 16px;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      margin-bottom: 18px;
-      color: #93c5fd;
-    }
-    .hero h1 {
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      font-weight: 800;
-      margin: 0 0 14px;
-      letter-spacing: -0.03em;
-      line-height: 1.2;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      color: #cbd5e1;
-      max-width: 680px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
-
-    /* ── MAIN CONTENT ── */
-    main { background: var(--bg); }
-    .calc-wrap { max-width: 1200px; margin: 0 auto; padding: 40px 20px 60px; }
-    @media (min-width:768px) { .calc-wrap { padding: 48px 32px 72px; } }
-
-    /* ── CALCULATOR GRID ── */
-    .calc-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-    @media (min-width: 900px) {
-      .calc-grid { grid-template-columns: 440px 1fr; }
-    }
-
-    /* ── INPUT PANEL ── */
-    .input-panel {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
-    .card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 24px;
-      box-shadow: var(--shadow);
-    }
-    .card-title {
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--blue);
-      margin: 0 0 18px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .card-title::before {
-      content: '';
-      width: 3px;
-      height: 16px;
-      background: var(--blue);
-      border-radius: 2px;
-      display: block;
-    }
-
-    .field { margin-bottom: 16px; }
-    .field:last-child { margin-bottom: 0; }
-    .field label {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--navy);
-      margin-bottom: 6px;
-    }
-    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    .field input[type="number"], .field select {
-      width: 100%;
-      padding: 10px 14px;
-      background: var(--bg);
-      border: 1.5px solid var(--border);
-      border-radius: 8px;
-      color: var(--text);
-      font-size: 15px;
-      font-family: inherit;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .field input[type="number"]:focus, .field select:focus {
-      outline: none;
-      border-color: var(--blue);
-      box-shadow: 0 0 0 3px rgba(29,78,216,0.1);
-    }
-    .field-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
-    .unit-row { display: flex; gap: 8px; margin-bottom: 16px; align-items: center; }
-    .unit-row label { font-size: 13px; font-weight: 600; color: var(--navy); }
-    .unit-btn {
-      padding: 5px 14px;
-      border-radius: 999px;
-      border: 1.5px solid var(--border);
-      background: var(--bg);
-      color: var(--text-muted);
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.15s;
-    }
-    .unit-btn.active {
-      background: var(--navy);
-      border-color: var(--navy);
-      color: #ffffff;
-    }
-
-    .calc-btn {
-      width: 100%;
-      padding: 14px 24px;
-      background: var(--blue);
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 700;
-      font-family: inherit;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.02em;
-    }
-    .calc-btn:hover { background: var(--blue-light); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(29,78,216,0.3); }
-    .calc-btn:active { transform: translateY(0); }
-
-    .reset-btn {
-      width: 100%;
-      padding: 10px 24px;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 14px;
-      font-weight: 600;
-      font-family: inherit;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 10px;
-    }
-    .reset-btn:hover { border-color: var(--navy); color: var(--navy); }
-
-    /* ── RESULTS PANEL ── */
-    .results-panel { display: flex; flex-direction: column; gap: 20px; }
-
-    .results-placeholder {
-      background: var(--white);
-      border: 2px dashed var(--border);
-      border-radius: 16px;
-      padding: 60px 24px;
-      text-align: center;
-      color: var(--text-muted);
-    }
-    .results-placeholder .icon { font-size: 48px; margin-bottom: 12px; }
-    .results-placeholder p { margin: 0; font-size: 1rem; }
-
-    /* Key Metrics */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 12px;
-    }
-    @media (min-width:600px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-    @media (min-width:900px) { .metrics-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width:1100px) { .metrics-grid { grid-template-columns: repeat(4, 1fr); } }
-
-    .metric-card {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px;
-      text-align: center;
-      box-shadow: var(--shadow);
-    }
-    .metric-card.highlight { border-color: var(--blue); background: var(--blue-pale); }
-    .metric-card.success { border-color: var(--green); background: var(--green-pale); }
-    .metric-card.warning { border-color: var(--yellow); background: var(--yellow-pale); }
-    .metric-card.danger { border-color: var(--red); background: var(--red-pale); }
-
-    .metric-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px; }
-    .metric-value { font-size: 1.5rem; font-weight: 800; color: var(--navy); line-height: 1; }
-    .metric-unit { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-weight: 600; }
-
-    /* Mud Weight Window Bar */
-    .mw-window-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
-    .mw-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
-    .mw-bar-container { position: relative; height: 60px; background: #f3f4f6; border-radius: 10px; overflow: hidden; margin-bottom: 10px; }
-    .mw-segment { position: absolute; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #ffffff; transition: width 0.6s ease; }
-    .mw-seg-collapse { background: linear-gradient(90deg, #dc2626, #ef4444); }
-    .mw-seg-safe { background: linear-gradient(90deg, #16a34a, #22c55e); }
-    .mw-seg-fracture { background: linear-gradient(90deg, #d97706, #f59e0b); }
-    .mw-seg-overflow { background: #9ca3af; }
-    .mw-markers { display: flex; justify-content: space-between; font-size: 11px; color: var(--text-muted); margin-top: 6px; }
-    .mw-legend { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 12px; }
-    .mw-legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text); }
-    .mw-legend-dot { width: 12px; height: 12px; border-radius: 3px; flex-shrink: 0; }
-
-    /* Mohr Circle Canvas */
-    .mohr-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); }
-    .mohr-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
-    #mohrCanvas { width: 100%; border-radius: 8px; display: block; }
-
-    /* Stress Table */
-    .stress-table-wrap { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 24px; box-shadow: var(--shadow); overflow-x: auto; }
-    .stress-table-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 16px; }
-    table { width: 100%; border-collapse: collapse; font-size: 13px; }
-    th { background: var(--navy); color: #ffffff; padding: 10px 14px; text-align: left; font-weight: 600; font-size: 12px; white-space: nowrap; }
-    td { padding: 9px 14px; border-bottom: 1px solid var(--border); color: var(--text); white-space: nowrap; }
-    tr:last-child td { border-bottom: none; }
-    tr:nth-child(even) td { background: var(--bg); }
-
-    /* Interpretation banner */
-    .interpretation {
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 20px 24px;
-      box-shadow: var(--shadow);
-    }
-    .interp-title { font-size: 14px; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
-    .interp-badge {
-      display: inline-block;
-      padding: 4px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 10px;
-    }
-    .badge-wide { background: var(--green-pale); color: var(--green); border: 1.5px solid var(--green); }
-    .badge-moderate { background: var(--yellow-pale); color: var(--yellow); border: 1.5px solid var(--yellow); }
-    .badge-narrow { background: var(--red-pale); color: var(--red); border: 1.5px solid var(--red); }
-    .badge-unstable { background: #1a1a1a; color: #fff; border: 1.5px solid #1a1a1a; }
-    .interp-text { font-size: 13.5px; color: var(--text-muted); line-height: 1.65; margin: 0; }
-
-    /* ── THEORY SECTION ── */
-    .theory-section {
-      background: var(--navy);
-      color: #e2e8f0;
-      padding: 56px 20px;
-      margin-top: 0;
-    }
-    @media (min-width:768px) { .theory-section { padding: 64px 32px; } }
-    .theory-inner { max-width: 1100px; margin: 0 auto; }
-    .theory-header { text-align: center; margin-bottom: 40px; }
-    .theory-badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 999px;
-      padding: 4px 14px;
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #93c5fd;
-      margin-bottom: 12px;
-    }
-    .theory-header h2 { font-size: 1.8rem; font-weight: 800; color: #ffffff; margin: 0 0 10px; letter-spacing: -0.02em; }
-    .theory-header p { color: #94a3b8; max-width: 600px; margin: 0 auto; }
-    .theory-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
-    @media (min-width:700px) { .theory-grid { grid-template-columns: repeat(2, 1fr); } }
-    @media (min-width:1000px) { .theory-grid { grid-template-columns: repeat(3, 1fr); } }
-    .theory-card {
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 12px;
-      padding: 22px;
-    }
-    .theory-card h3 { font-size: 14px; font-weight: 700; color: #93c5fd; margin: 0 0 10px; letter-spacing: 0.04em; text-transform: uppercase; }
-    .theory-card p { font-size: 13px; color: #94a3b8; line-height: 1.7; margin: 0 0 10px; }
-    .theory-card p:last-child { margin-bottom: 0; }
-    .formula {
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px;
-      padding: 10px 14px;
-      font-family: 'Courier New', monospace;
-      font-size: 12px;
-      color: #a5f3fc;
-      margin: 8px 0 0;
-      overflow-x: auto;
-      white-space: pre;
-    }
-
-    /* ── TOOLTIP ── */
-    .tip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 15px;
-      height: 15px;
-      border-radius: 50%;
-      background: rgba(29,78,216,0.12);
-      color: var(--blue);
-      font-size: 10px;
-      font-weight: 800;
-      cursor: help;
-      position: relative;
-    }
-    .tip:hover::after {
-      content: attr(data-tip);
-      position: absolute;
-      left: 50%;
-      bottom: calc(100% + 6px);
-      transform: translateX(-50%);
-      background: var(--navy);
-      color: #ffffff;
-      font-size: 11px;
-      font-weight: 500;
-      padding: 6px 10px;
-      border-radius: 6px;
-      white-space: normal;
-      min-width: 180px;
-      max-width: 240px;
-      z-index: 100;
-      line-height: 1.5;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    }
-
-    /* ── FOOTER ── */
-    footer { background: var(--navy); }
-    .footer-grid {
-      max-width: 1100px; margin: 0 auto; padding: 48px 20px 32px;
-      display: grid; grid-template-columns: 1fr; gap: 32px;
-    }
-    @media (min-width:600px) { .footer-grid { grid-template-columns: repeat(2,1fr); } }
-    @media (min-width:960px) { .footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; padding: 48px 32px 32px; } }
-    .footer-col h4 { font-size: 0.95rem; font-weight: 600; color: #ffffff; margin: 0 0 16px; }
-    .footer-col p { font-size: 0.88rem; color: #94a3b8; line-height: 1.6; margin: 0; }
-    .footer-col-brand { font-size: 1.1rem; font-weight: 700; color: #ffffff; margin-bottom: 12px; }
-    .footer-col ul { list-style: none; padding: 0; margin: 0; }
-    .footer-col ul li { margin-bottom: 10px; }
-    .footer-col ul a { font-size: 0.88rem; color: #94a3b8; transition: color 0.15s; }
-    .footer-col ul a:hover { color: #ffffff; }
-    .footer-bottom {
-      max-width: 1100px; margin: 0 auto; padding: 20px 20px 24px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px;
-      font-size: 0.82rem; color: #64748b;
-    }
-    .social-links { display: flex; gap: 10px; margin-top: 12px; }
-    .social-link {
-      width: 34px; height: 34px; border-radius: 50%;
-      background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.15);
-      display: flex; align-items: center; justify-content: center; font-size: 16px;
-      transition: background 0.2s;
-    }
-    .social-link:hover { background: rgba(255,255,255,0.18); }
-
-    /* Back to top */
-    .back-to-top {
-      position: fixed; bottom: 28px; right: 28px; width: 44px; height: 44px;
-      background: var(--navy); color: #ffffff; border: none; border-radius: 50%;
-      font-size: 1.1rem; cursor: pointer; display: none; align-items: center;
-      justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-      transition: background 0.2s, transform 0.2s; z-index: 999;
-    }
-    .back-to-top:hover { background: var(--blue); transform: translateY(-2px); }
-    .back-to-top.show { display: flex; }
-
-    /* Warning box */
-    .warning-box {
-      background: #fef3c7;
-      border: 1px solid #fbbf24;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13px;
-      color: #92400e;
-      margin-top: 8px;
-    }
-    .warning-box strong { color: #78350f; }
-
-    @media (max-width: 600px) {
-      .field-row { grid-template-columns: 1fr; }
-      .metric-value { font-size: 1.3rem; }
-    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+         color:var(--text);background:var(--white);-webkit-font-smoothing:antialiased;
+         font-size:16px;line-height:1.6}
+    a{color:inherit;text-decoration:none}
+    /* NAV */
+    .site-header{background:var(--navy);border-bottom:3px solid var(--blue);
+                 position:sticky;top:0;z-index:1000;transition:box-shadow .3s}
+    .site-header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.35)}
+    .page{max-width:1280px;margin:0 auto;padding:0 20px}
+    @media(min-width:768px){.page{padding:0 32px}}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px}
+    .nav-brand{display:flex;align-items:center;gap:12px}
+    .brand-logo{width:40px;height:40px;object-fit:contain;display:block}
+    .brand-title{font-size:20px;font-weight:700;color:#fff;letter-spacing:.05em}
+    .brand-sub{font-size:12px;color:#93c5fd;display:block}
+    .nav-links{display:none;gap:4px}
+    .nav-links a{color:#cbd5e1;font-size:14px;font-weight:500;padding:8px 14px;
+                 border-radius:6px;transition:background .15s,color .15s}
+    .nav-links a:hover{background:rgba(255,255,255,.1);color:#fff}
+    .nav-cta{display:inline-block;padding:9px 20px;background:var(--blue);color:#fff;
+             font-weight:600;font-size:14px;border-radius:6px;border:none;
+             cursor:pointer;transition:background .15s;white-space:nowrap}
+    .nav-cta:hover{background:var(--blue-light)}
+    .nav-toggle{display:flex;flex-direction:column;gap:5px;padding:8px;
+                background:none;border:1px solid rgba(255,255,255,.3);
+                border-radius:6px;cursor:pointer}
+    .nav-toggle span{width:20px;height:2px;background:#fff;display:block}
+    .nav-mobile{display:none;flex-direction:column;background:#162236;
+                border-top:1px solid rgba(255,255,255,.1);padding:8px 0}
+    .nav-mobile a{color:#cbd5e1;font-size:15px;padding:12px 24px;display:block}
+    .nav-mobile a:hover{background:rgba(255,255,255,.07);color:#fff}
+    @media(min-width:880px){.nav-links{display:flex}.nav-toggle{display:none}}
+    /* HERO */
+    .hero{background:linear-gradient(135deg,#0f1828 0%,#1a2e4a 50%,#1d3a6e 100%);
+          padding:56px 20px 48px;text-align:center;color:#fff;
+          position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;
+      background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(29,78,216,.25),transparent);
+      pointer-events:none}
+    .hero-badge{display:inline-block;background:rgba(255,255,255,.08);
+                border:1px solid rgba(255,255,255,.2);border-radius:999px;
+                padding:5px 16px;font-size:11px;font-weight:700;letter-spacing:.12em;
+                text-transform:uppercase;margin-bottom:18px;color:#93c5fd;position:relative}
+    .hero h1{font-size:clamp(1.8rem,4vw,3rem);font-weight:800;margin:0 0 14px;
+             letter-spacing:-.03em;line-height:1.15;position:relative}
+    .hero p{font-size:1.05rem;color:#94a3b8;max-width:680px;margin:0 auto;
+            line-height:1.65;position:relative}
+    /* MAIN */
+    main{background:var(--bg)}
+    .calc-wrap{max-width:1280px;margin:0 auto;padding:40px 20px 64px}
+    @media(min-width:768px){.calc-wrap{padding:48px 32px 80px}}
+    .calc-grid{display:grid;grid-template-columns:1fr;gap:24px}
+    @media(min-width:960px){.calc-grid{grid-template-columns:420px 1fr}}
+    /* CARDS */
+    .card{background:var(--white);border:1px solid var(--border);border-radius:16px;
+          padding:24px;box-shadow:var(--shadow)}
+    .card-title{font-size:.78rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+                color:var(--blue);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+    .card-title::before{content:'';width:3px;height:16px;background:var(--blue);
+                        border-radius:2px;flex-shrink:0}
+    /* INPUTS */
+    .input-panel{display:flex;flex-direction:column;gap:16px}
+    .field{margin-bottom:14px}
+    .field:last-child{margin-bottom:0}
+    .field label{display:flex;align-items:center;gap:6px;font-size:13px;
+                 font-weight:600;color:var(--navy);margin-bottom:6px}
+    .field-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .finp{width:100%;padding:9px 12px;background:var(--bg);
+          border:1.5px solid var(--border);border-radius:8px;color:var(--text);
+          font-size:14px;font-family:inherit;transition:border-color .2s,box-shadow .2s}
+    .finp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(29,78,216,.1)}
+    .field-hint{font-size:11px;color:var(--muted);margin-top:3px}
+    .unit-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:14px}
+    .unit-row label{font-size:13px;font-weight:600;color:var(--navy)}
+    .unit-btn{padding:5px 14px;border-radius:999px;border:1.5px solid var(--border);
+              background:var(--bg);color:var(--muted);font-size:12px;font-weight:700;
+              cursor:pointer;transition:all .15s;font-family:inherit}
+    .unit-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
+    .scenario-row{display:flex;gap:8px;align-items:center;margin-bottom:14px}
+    .scenario-row label{font-size:13px;font-weight:600;color:var(--navy);white-space:nowrap}
+    .scenario-row select,.finp-sm{flex:1;padding:8px 12px;background:var(--bg);
+                                  border:1.5px solid var(--border);border-radius:8px;
+                                  font-size:13px;font-family:inherit;cursor:pointer}
+    .planned-row{display:flex;gap:8px;align-items:center}
+    .planned-badge{padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;
+                   white-space:nowrap}
+    .pb-safe{background:var(--green-pale);color:var(--green);border:1.5px solid var(--green)}
+    .pb-col{background:var(--red-pale);color:var(--red);border:1.5px solid var(--red)}
+    .pb-frac{background:var(--amber-pale);color:var(--amber);border:1.5px solid var(--amber)}
+    /* BUTTONS */
+    .calc-btn{width:100%;padding:14px 24px;background:var(--blue);color:#fff;
+              font-size:16px;font-weight:700;font-family:inherit;border:none;
+              border-radius:10px;cursor:pointer;transition:all .2s;letter-spacing:.02em}
+    .calc-btn:hover{background:var(--blue-light);transform:translateY(-1px);
+                    box-shadow:0 6px 20px rgba(29,78,216,.3)}
+    .calc-btn:active{transform:translateY(0)}
+    .reset-btn{width:100%;padding:10px;background:transparent;color:var(--muted);
+               font-size:13px;font-weight:600;font-family:inherit;
+               border:1.5px solid var(--border);border-radius:10px;cursor:pointer;
+               transition:all .2s;margin-top:8px}
+    .reset-btn:hover{border-color:var(--navy);color:var(--navy)}
+    /* RESULTS */
+    .results-panel{display:flex;flex-direction:column;gap:20px}
+    .results-placeholder{background:var(--white);border:2px dashed var(--border);
+                         border-radius:16px;padding:72px 24px;text-align:center;
+                         color:var(--muted)}
+    .placeholder-icon{font-size:52px;margin-bottom:14px}
+    /* STATUS */
+    .status-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;
+                border-radius:10px;font-size:13px;font-weight:600}
+    .sb-ok{background:var(--green-pale);color:var(--green);border:1px solid var(--green)}
+    .sb-warn{background:var(--amber-pale);color:var(--amber);border:1px solid var(--amber)}
+    .sb-danger{background:var(--red-pale);color:var(--red);border:1px solid var(--red)}
+    .sb-icon{font-size:18px;flex-shrink:0}
+    /* METRICS */
+    .metrics-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    @media(min-width:540px){.metrics-grid{grid-template-columns:repeat(4,1fr)}}
+    @media(min-width:960px){.metrics-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1120px){.metrics-grid{grid-template-columns:repeat(4,1fr)}}
+    .metric-card{background:var(--white);border:1px solid var(--border);
+                 border-radius:12px;padding:16px 14px;text-align:center;
+                 box-shadow:var(--shadow);transition:transform .2s}
+    .metric-card:hover{transform:translateY(-2px)}
+    .mc-blue{border-color:var(--blue);background:var(--blue-pale)}
+    .mc-green{border-color:var(--green);background:var(--green-pale)}
+    .mc-amber{border-color:var(--amber);background:var(--amber-pale)}
+    .mc-red{border-color:var(--red);background:var(--red-pale)}
+    .mc-navy{border-color:var(--navy);background:#f0f4f8}
+    .m-label{font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+             color:var(--muted);margin-bottom:6px}
+    .m-value{font-size:1.5rem;font-weight:800;color:var(--navy);line-height:1;
+             font-variant-numeric:tabular-nums}
+    .m-unit{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+    .m-sub{font-size:10px;color:var(--muted);margin-top:2px}
+    /* MW WINDOW */
+    .mw-card{background:var(--white);border:1px solid var(--border);
+             border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+    .mw-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px}
+    .mw-outer{background:#f3f4f6;border-radius:12px;overflow:hidden;height:56px;
+              position:relative;margin-bottom:8px;box-shadow:inset 0 2px 4px rgba(0,0,0,.08)}
+    .mw-seg{position:absolute;height:100%;display:flex;align-items:center;
+            justify-content:center;font-size:10px;font-weight:800;color:#fff;
+            letter-spacing:.08em;text-transform:uppercase;transition:width .5s}
+    .mw-col{background:linear-gradient(90deg,#b91c1c,#ef4444)}
+    .mw-safe{background:linear-gradient(90deg,#16a34a,#22c55e)}
+    .mw-frac{background:linear-gradient(90deg,#d97706,#f59e0b)}
+    .mw-needle{position:absolute;top:0;width:3px;height:100%;background:#fff;
+               box-shadow:0 0 6px rgba(0,0,0,.6);z-index:10;transition:left .4s}
+    .mw-needle::after{content:attr(data-lbl);position:absolute;bottom:calc(100% + 7px);
+                      left:50%;transform:translateX(-50%);background:var(--navy);
+                      color:#fff;font-size:10px;font-weight:700;padding:2px 7px;
+                      border-radius:4px;white-space:nowrap}
+    .mw-scale{display:flex;justify-content:space-between;font-size:10px;
+              color:var(--muted);margin-bottom:10px}
+    .mw-legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+    .mw-li{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text)}
+    .mw-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+    .warn-box{background:#fef3c7;border:1px solid #fbbf24;border-radius:10px;
+              padding:10px 14px;font-size:12px;color:#92400e;margin-top:10px}
+    /* CANVAS */
+    .canvas-card{background:var(--white);border:1px solid var(--border);
+                 border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+    .canvas-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px}
+    .canvas-wrap{background:var(--canvas-bg);border-radius:10px;overflow:hidden}
+    canvas{display:block;width:100%}
+    .dual-canvas{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    @media(max-width:700px){.dual-canvas{grid-template-columns:1fr}}
+    /* TABLE */
+    .tbl-card{background:var(--white);border:1px solid var(--border);
+              border-radius:16px;padding:20px;box-shadow:var(--shadow);overflow-x:auto}
+    .tbl-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px}
+    table{width:100%;border-collapse:collapse;font-size:12.5px;min-width:520px}
+    th{background:var(--navy);color:#fff;padding:9px 14px;text-align:left;
+       font-weight:600;font-size:11px;white-space:nowrap}
+    td{padding:8px 14px;border-bottom:1px solid var(--border);white-space:nowrap;color:var(--text)}
+    tr:last-child td{border-bottom:none}
+    tr:nth-child(even) td{background:var(--bg)}
+    .td-k{font-weight:700;color:var(--navy)}
+    .td-sec{background:var(--navy)!important;color:#93c5fd!important;
+            font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+    /* INTERP */
+    .interp-card{background:var(--white);border:1px solid var(--border);
+                 border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+    .interp-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:10px}
+    .interp-badge{display:inline-block;padding:4px 14px;border-radius:999px;
+                  font-size:12px;font-weight:700;margin-bottom:10px}
+    .interp-text{font-size:13px;color:var(--muted);line-height:1.7}
+    /* TOOLTIP */
+    .tip{display:inline-flex;align-items:center;justify-content:center;
+         width:14px;height:14px;border-radius:50%;background:rgba(29,78,216,.12);
+         color:var(--blue);font-size:9px;font-weight:800;cursor:help;position:relative}
+    .tip:hover::after{content:attr(data-t);position:absolute;left:50%;
+                      bottom:calc(100% + 6px);transform:translateX(-50%);
+                      background:var(--navy);color:#fff;font-size:11px;font-weight:500;
+                      padding:6px 10px;border-radius:6px;white-space:normal;
+                      min-width:190px;max-width:250px;z-index:200;line-height:1.5;
+                      box-shadow:0 4px 12px rgba(0,0,0,.25)}
+    /* THEORY */
+    .theory-section{background:var(--navy);color:#e2e8f0;padding:56px 20px}
+    @media(min-width:768px){.theory-section{padding:64px 32px}}
+    .theory-inner{max-width:1200px;margin:0 auto}
+    .theory-hdr{text-align:center;margin-bottom:36px}
+    .theory-badge{display:inline-block;background:rgba(255,255,255,.08);
+                  border:1px solid rgba(255,255,255,.18);border-radius:999px;
+                  padding:4px 14px;font-size:11px;font-weight:700;letter-spacing:.12em;
+                  text-transform:uppercase;color:#93c5fd;margin-bottom:12px}
+    .theory-hdr h2{font-size:1.8rem;font-weight:800;color:#fff;margin:0 0 10px;
+                   letter-spacing:-.02em}
+    .theory-hdr p{color:#94a3b8;max-width:600px;margin:0 auto}
+    .theory-grid{display:grid;grid-template-columns:1fr;gap:16px}
+    @media(min-width:700px){.theory-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:1000px){.theory-grid{grid-template-columns:repeat(3,1fr)}}
+    .theory-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);
+                 border-radius:12px;padding:20px}
+    .theory-card h3{font-size:12px;font-weight:800;color:#93c5fd;margin:0 0 8px;
+                    letter-spacing:.08em;text-transform:uppercase}
+    .theory-card p{font-size:12.5px;color:#94a3b8;line-height:1.7;margin:0 0 8px}
+    .formula{background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.08);
+             border-radius:8px;padding:10px 14px;font-family:'Courier New',monospace;
+             font-size:11px;color:#a5f3fc;margin:8px 0 0;overflow-x:auto;
+             white-space:pre;line-height:1.55}
+    /* FOOTER */
+    footer{background:var(--navy)}
+    .footer-grid{max-width:1100px;margin:0 auto;padding:48px 20px 32px;
+                 display:grid;grid-template-columns:1fr;gap:28px}
+    @media(min-width:600px){.footer-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(min-width:960px){.footer-grid{grid-template-columns:2fr 1fr 1fr 1fr;padding:48px 32px 32px}}
+    .footer-col h4{font-size:.95rem;font-weight:600;color:#fff;margin:0 0 14px}
+    .footer-col p{font-size:.87rem;color:#94a3b8;line-height:1.6}
+    .footer-brand{font-size:1.1rem;font-weight:700;color:#fff;margin-bottom:10px}
+    .footer-col ul{list-style:none;padding:0;margin:0}
+    .footer-col ul li{margin-bottom:9px}
+    .footer-col ul a{font-size:.87rem;color:#94a3b8;transition:color .15s}
+    .footer-col ul a:hover{color:#fff}
+    .footer-bottom{max-width:1100px;margin:0 auto;padding:20px 20px 24px;
+                   border-top:1px solid rgba(255,255,255,.08);
+                   display:flex;flex-wrap:wrap;justify-content:space-between;
+                   gap:10px;font-size:.8rem;color:#64748b}
+    .social-links{display:flex;gap:8px;margin-top:10px}
+    .social-link{width:32px;height:32px;border-radius:50%;
+                 background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);
+                 display:flex;align-items:center;justify-content:center;font-size:15px;
+                 transition:background .2s}
+    .social-link:hover{background:rgba(255,255,255,.17)}
+    .btt{position:fixed;bottom:28px;right:28px;width:42px;height:42px;
+         background:var(--navy);color:#fff;border:none;border-radius:50%;
+         font-size:1rem;cursor:pointer;display:none;align-items:center;
+         justify-content:center;box-shadow:0 4px 12px rgba(0,0,0,.2);
+         transition:background .2s,transform .2s;z-index:999}
+    .btt:hover{background:var(--blue);transform:translateY(-2px)}
+    .btt.show{display:flex}
+    @media(max-width:540px){.field-row{grid-template-columns:1fr}.m-value{font-size:1.25rem}}
   </style>
 </head>
 <body>
@@ -474,17 +282,17 @@
 <div class="site-header" id="siteHeader">
   <div class="page">
     <header class="nav">
-      <a href="index.html" class="nav-brand" aria-label="Armin Studio – Home">
+      <a href="index.html" class="nav-brand" aria-label="Armin Studio">
         <picture>
           <source srcset="logo.webp" type="image/webp">
-          <img src="logo.png" alt="Armin Studio logo" class="brand-logo" width="80" height="76" loading="lazy" />
+          <img src="logo.png" alt="Armin Studio" class="brand-logo" width="80" height="76" loading="lazy"/>
         </picture>
         <div>
           <span class="brand-title">Armin Studio</span>
           <span class="brand-sub">Professional Web Design</span>
         </div>
       </a>
-      <nav class="nav-links" aria-label="Main navigation">
+      <nav class="nav-links">
         <a href="index.html">Home</a>
         <a href="services.html">Services</a>
         <a href="ai.html">AI Demo</a>
@@ -499,257 +307,269 @@
       </button>
     </header>
   </div>
-  <nav class="nav-links-mobile" id="navMobile" aria-label="Mobile navigation">
-    <a href="index.html">Home</a>
-    <a href="services.html">Services</a>
-    <a href="ai.html">AI Demo</a>
-    <a href="examples.html">Examples</a>
-    <a href="pricing.html">Pricing</a>
-    <a href="quote.html">Estimate</a>
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">Home</a><a href="services.html">Services</a>
+    <a href="ai.html">AI Demo</a><a href="examples.html">Examples</a>
+    <a href="pricing.html">Pricing</a><a href="quote.html">Estimate</a>
     <a href="contact.html">Contact</a>
   </nav>
 </div>
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-badge">⛏ Drilling Engineering Tool</div>
+  <div class="hero-badge">&#9935; Drilling Engineering Tool</div>
   <h1>Wellbore Stability Calculator</h1>
-  <p>Determine collapse pressure, fracture pressure, and the safe mud weight window using in-situ stresses, pore pressure, and rock mechanical properties. Supports vertical and deviated wells.</p>
+  <p>Compute collapse pressure, fracture pressure, and the safe mud weight window for vertical and deviated wells using Kirsch equations, full 3-D stress tensor rotation, and Mohr-Coulomb failure theory.</p>
 </div>
 
-<!-- MAIN -->
+<!-- CALCULATOR -->
 <main>
-  <div class="calc-wrap">
-    <div class="calc-grid">
+<div class="calc-wrap">
+<div class="calc-grid">
 
-      <!-- ════ INPUT PANEL ════ -->
-      <div class="input-panel">
+<!-- ======== INPUT PANEL ======== -->
+<div class="input-panel">
 
-        <!-- Units -->
-        <div class="card">
-          <div class="card-title">Unit System</div>
-          <div class="unit-row">
-            <label>Stress / Pressure:</label>
-            <button class="unit-btn active" id="btnPsi" onclick="setUnits('psi')">psi</button>
-            <button class="unit-btn" id="btnPpg" onclick="setUnits('ppg')">ppg EMW</button>
-          </div>
-          <div class="field-hint" id="unitHint">Enter all stresses and pressures in <strong>psi</strong>. Equivalent mud weight (EMW) will be calculated automatically using TVD.</div>
-        </div>
+  <!-- Scenarios -->
+  <div class="card">
+    <div class="card-title">Quick Load Scenario</div>
+    <div class="scenario-row">
+      <label for="scenarioSel">Preset:</label>
+      <select id="scenarioSel" class="finp-sm" onchange="loadScenario(this.value)">
+        <option value="">&#8212; choose a preset &#8212;</option>
+        <option value="normal">Normal Fault (&#963;v &gt; &#963;H &gt; &#963;h)</option>
+        <option value="strike">Strike-Slip (&#963;H &gt; &#963;v &gt; &#963;h)</option>
+        <option value="reverse">Reverse Fault (&#963;H &gt; &#963;h &gt; &#963;v)</option>
+        <option value="hpht">HPHT Deep Well</option>
+        <option value="horizontal">Horizontal Well (along &#963;H)</option>
+      </select>
+    </div>
+  </div>
 
-        <!-- Depth & In-Situ Stresses -->
-        <div class="card">
-          <div class="card-title">Depth &amp; In-Situ Stresses</div>
+  <!-- Unit system -->
+  <div class="card">
+    <div class="card-title">Unit System</div>
+    <div class="unit-row">
+      <label>Stress/Pressure:</label>
+      <button class="unit-btn active" id="btnPsi" onclick="setUnits('psi')">psi</button>
+      <button class="unit-btn" id="btnPpg" onclick="setUnits('ppg')">ppg EMW</button>
+    </div>
+    <div class="field-hint" id="unitHint">Enter stresses in <strong>psi</strong>. EMW results shown using TVD.</div>
+  </div>
 
-          <div class="field">
-            <label>
-              True Vertical Depth (TVD)
-              <span class="tip" data-tip="Measured vertical depth from surface to point of interest.">?</span>
-            </label>
-            <div style="display:flex;gap:8px;align-items:center;">
-              <input type="number" id="tvd" value="10000" min="100" step="100" style="flex:1;" oninput="onInputChange()" />
-              <select id="depthUnit" onchange="onInputChange()" style="width:80px;padding:10px 8px;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-size:15px;font-family:inherit;">
-                <option value="ft">ft</option>
-                <option value="m">m</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="field">
-            <label>
-              Vertical (Overburden) Stress σ<sub>v</sub>
-              <span class="tip" data-tip="Total vertical stress due to weight of overlying rock. Typically 0.9–1.1 psi/ft (1 psi/ft average).">?</span>
-            </label>
-            <input type="number" id="sv" value="9500" min="0" step="50" oninput="onInputChange()" />
-            <div class="field-hint" id="svHint">Typical: 0.85–1.0 psi/ft overburden gradient</div>
-          </div>
-
-          <div class="field">
-            <label>
-              Max Horizontal Stress σ<sub>H</sub>
-              <span class="tip" data-tip="Maximum principal horizontal stress. Must be ≥ σh. Direction sets the reference for wellbore azimuth.">?</span>
-            </label>
-            <input type="number" id="sH" value="8500" min="0" step="50" oninput="onInputChange()" />
-          </div>
-
-          <div class="field">
-            <label>
-              Min Horizontal Stress σ<sub>h</sub>
-              <span class="tip" data-tip="Minimum principal horizontal stress (also called least principal stress). This controls fracture propagation direction.">?</span>
-            </label>
-            <input type="number" id="sh" value="7000" min="0" step="50" oninput="onInputChange()" />
-          </div>
-
-          <div class="field">
-            <label>
-              Pore Pressure P<sub>p</sub>
-              <span class="tip" data-tip="Formation fluid pressure in the pore space. Normal gradient ≈ 0.433 psi/ft (sea water) or 0.465 psi/ft (formation brine).">?</span>
-            </label>
-            <input type="number" id="pp" value="4330" min="0" step="50" oninput="onInputChange()" />
-            <div class="field-hint" id="ppHint">Normal pore pressure gradient ≈ 0.433 psi/ft</div>
-          </div>
-        </div>
-
-        <!-- Rock Mechanical Properties -->
-        <div class="card">
-          <div class="card-title">Rock Mechanical Properties</div>
-
-          <div class="field-row">
-            <div class="field">
-              <label>
-                UCS (psi)
-                <span class="tip" data-tip="Unconfined Compressive Strength — rock strength at zero confining pressure. Sandstone: 1000–8000 psi; Shale: 500–4000 psi; Limestone: 2000–10000 psi.">?</span>
-              </label>
-              <input type="number" id="ucs" value="3000" min="0" step="100" oninput="onInputChange()" />
-            </div>
-            <div class="field">
-              <label>
-                Friction Angle φ (°)
-                <span class="tip" data-tip="Internal friction angle. Sandstone: 35–45°; Shale: 20–35°; Limestone: 30–45°. Controls q = tan²(45+φ/2).">?</span>
-              </label>
-              <input type="number" id="phi" value="30" min="0" max="60" step="1" oninput="onInputChange()" />
-            </div>
-          </div>
-
-          <div class="field-row">
-            <div class="field">
-              <label>
-                Tensile Strength T₀ (psi)
-                <span class="tip" data-tip="Tensile strength of rock. Typically T₀ = UCS/10 to UCS/15. Used in fracture initiation calculation.">?</span>
-              </label>
-              <input type="number" id="t0" value="300" min="0" step="50" oninput="onInputChange()" />
-            </div>
-            <div class="field">
-              <label>
-                Biot Coefficient α
-                <span class="tip" data-tip="Biot's poroelastic coefficient (0–1). α=1 is conservative and most common for drilling. Reflects how much pore pressure contributes to effective stress.">?</span>
-              </label>
-              <input type="number" id="biot" value="1.0" min="0" max="1" step="0.05" oninput="onInputChange()" />
-            </div>
-          </div>
-
-          <div class="field">
-            <label>
-              Poisson's Ratio ν
-              <span class="tip" data-tip="Controls axial stress at wellbore wall via Kirsch equations. Typical range: 0.15–0.35. Shale ≈ 0.25–0.30; Sandstone ≈ 0.20–0.25.">?</span>
-            </label>
-            <input type="number" id="nu" value="0.25" min="0.01" max="0.49" step="0.01" oninput="onInputChange()" />
-          </div>
-        </div>
-
-        <!-- Well Geometry -->
-        <div class="card">
-          <div class="card-title">Well Geometry</div>
-
-          <div class="field-row">
-            <div class="field">
-              <label>
-                Inclination i (°)
-                <span class="tip" data-tip="Well deviation from vertical. 0° = vertical, 90° = horizontal.">?</span>
-              </label>
-              <input type="number" id="incl" value="0" min="0" max="90" step="1" oninput="onInputChange()" />
-              <div class="field-hint">0° = vertical, 90° = horizontal</div>
-            </div>
-            <div class="field">
-              <label>
-                Azimuth α (°)
-                <span class="tip" data-tip="Wellbore azimuth measured clockwise from the direction of σH. For a vertical well this is irrelevant.">?</span>
-              </label>
-              <input type="number" id="azim" value="0" min="0" max="360" step="5" oninput="onInputChange()" />
-              <div class="field-hint">From σH direction (clockwise)</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Buttons -->
-        <div>
-          <button class="calc-btn" onclick="calculate()">⚙ Calculate Wellbore Stability</button>
-          <button class="reset-btn" onclick="resetDefaults()">↺ Reset to Defaults</button>
-        </div>
-
-      </div><!-- /input-panel -->
-
-      <!-- ════ RESULTS PANEL ════ -->
-      <div class="results-panel" id="resultsPanel">
-        <div class="results-placeholder" id="placeholder">
-          <div class="icon">🛢️</div>
-          <p><strong>Enter your parameters and click Calculate</strong><br><span style="font-size:0.9rem;">Results, the mud weight window, and Mohr circle will appear here.</span></p>
-        </div>
+  <!-- Depth & In-situ Stresses -->
+  <div class="card">
+    <div class="card-title">Depth &amp; In-Situ Stresses</div>
+    <div class="field">
+      <label>True Vertical Depth (TVD)
+        <span class="tip" data-t="Vertical depth from surface. Used for EMW conversions: psi = ppg x 0.052 x TVD_ft.">?</span>
+      </label>
+      <div style="display:flex;gap:8px">
+        <input type="number" id="tvd" value="10000" min="100" step="100"
+               class="finp" style="flex:1" oninput="onHints()"/>
+        <select id="depthUnit" class="finp" style="width:72px" onchange="onHints()">
+          <option value="ft">ft</option>
+          <option value="m">m</option>
+        </select>
       </div>
+    </div>
+    <div class="field">
+      <label>Overburden Stress &#963;<sub>v</sub>
+        <span class="tip" data-t="Total vertical stress from rock weight above. Typical: 1 psi/ft = 19.25 ppg.">?</span>
+      </label>
+      <input type="number" id="sv" value="9500" min="0" step="50" class="finp" oninput="onHints()"/>
+      <div class="field-hint" id="svHint"></div>
+    </div>
+    <div class="field">
+      <label>Max Horizontal Stress &#963;<sub>H</sub>
+        <span class="tip" data-t="Maximum principal horizontal stress. Must be >= sh. Azimuth reference for well orientation.">?</span>
+      </label>
+      <input type="number" id="sH" value="8500" min="0" step="50" class="finp" oninput="onHints()"/>
+      <div class="field-hint" id="sHHint"></div>
+    </div>
+    <div class="field">
+      <label>Min Horizontal Stress &#963;<sub>h</sub>
+        <span class="tip" data-t="Least principal horizontal stress. Controls fracture direction and closure pressure.">?</span>
+      </label>
+      <input type="number" id="sh" value="7000" min="0" step="50" class="finp" oninput="onHints()"/>
+      <div class="field-hint" id="shHint"></div>
+    </div>
+    <div class="field">
+      <label>Pore Pressure P<sub>p</sub>
+        <span class="tip" data-t="Formation fluid pressure. Normal: 0.433 psi/ft (8.33 ppg). Overpressure raises the minimum MW bound.">?</span>
+      </label>
+      <input type="number" id="pp" value="4330" min="0" step="50" class="finp" oninput="onHints()"/>
+      <div class="field-hint" id="ppHint"></div>
+    </div>
+  </div>
 
-    </div><!-- /calc-grid -->
-  </div><!-- /calc-wrap -->
+  <!-- Rock Properties -->
+  <div class="card">
+    <div class="card-title">Rock Mechanical Properties</div>
+    <div class="field-row">
+      <div class="field">
+        <label>UCS (psi)
+          <span class="tip" data-t="Unconfined Compressive Strength. Sandstone 1000-8000; Shale 500-4000; Limestone 2000-10000 psi.">?</span>
+        </label>
+        <input type="number" id="ucs" value="3000" min="0" step="100" class="finp" oninput="onHints()"/>
+      </div>
+      <div class="field">
+        <label>Friction Angle &#966; (&#176;)
+          <span class="tip" data-t="Internal friction angle for Mohr-Coulomb. Sandstone 35-45; Shale 20-35; Limestone 30-45.">?</span>
+        </label>
+        <input type="number" id="phi" value="30" min="1" max="75" step="1" class="finp" oninput="onHints()"/>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Tensile Strength T&#8320; (psi)
+          <span class="tip" data-t="Rock tensile strength ~ UCS/10. Use 0 for pre-existing natural fractures.">?</span>
+        </label>
+        <input type="number" id="t0" value="300" min="0" step="50" class="finp"/>
+      </div>
+      <div class="field">
+        <label>Biot Coefficient &#945;
+          <span class="tip" data-t="Poroelastic coupling (0-1). alpha=1 is conservative. Lower for stiff low-porosity rock.">?</span>
+        </label>
+        <input type="number" id="biot" value="1.0" min="0" max="1" step="0.05" class="finp"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Poisson's Ratio &#957;
+        <span class="tip" data-t="Controls axial stress via plane-strain Kirsch term. Shale 0.25-0.30; Sandstone 0.18-0.25. Range 0.05-0.49.">?</span>
+      </label>
+      <input type="number" id="nu" value="0.25" min="0.05" max="0.49" step="0.01" class="finp"/>
+    </div>
+    <div class="field-hint" id="mechHint" style="margin-top:4px;font-size:12px;color:var(--blue)"></div>
+  </div>
+
+  <!-- Well Geometry -->
+  <div class="card">
+    <div class="card-title">Well Geometry</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Inclination (&#176;)
+          <span class="tip" data-t="Deviation from vertical. 0=vertical, 90=horizontal. Full 3-D tensor rotation applied.">?</span>
+        </label>
+        <input type="number" id="incl" value="0" min="0" max="90" step="1" class="finp"/>
+        <div class="field-hint">0&#176; vertical &#8211; 90&#176; horizontal</div>
+      </div>
+      <div class="field">
+        <label>Azimuth from &#963;<sub>H</sub> (&#176;)
+          <span class="tip" data-t="Clockwise angle from sigma_H to wellbore projected on horizontal plane. Irrelevant for vertical wells.">?</span>
+        </label>
+        <input type="number" id="azim" value="0" min="0" max="360" step="5" class="finp"/>
+        <div class="field-hint">0&#176; = along &#963;H direction</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Planned MW -->
+  <div class="card">
+    <div class="card-title">Planned Mud Weight</div>
+    <div class="field">
+      <label>Planned MW (ppg EMW)
+        <span class="tip" data-t="Your intended mud weight. Shown on the window bar and used for breakout angle calculation.">?</span>
+      </label>
+      <div class="planned-row">
+        <input type="number" id="plannedMw" value="12.0" min="5" max="30" step="0.1"
+               class="finp" style="flex:1" oninput="onPlannedChange()"/>
+        <div id="plannedBadge" class="planned-badge pb-safe">&#8212;</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action buttons -->
+  <div>
+    <button class="calc-btn" onclick="calculate()">&#9881; Calculate Wellbore Stability</button>
+    <button class="reset-btn" onclick="resetDefaults()">&#10226; Reset to Defaults</button>
+  </div>
+
+</div><!-- /input-panel -->
+
+<!-- ======== RESULTS PANEL ======== -->
+<div class="results-panel" id="resultsPanel">
+  <div class="results-placeholder">
+    <div class="placeholder-icon">&#128739;</div>
+    <p><strong>Enter parameters and click Calculate</strong><br>
+       <span style="font-size:.9rem">Mud weight window, polar wellbore diagram, Mohr circle, and full stress table appear here.</span>
+    </p>
+  </div>
+</div>
+
+</div><!-- /calc-grid -->
+</div><!-- /calc-wrap -->
 </main>
 
-<!-- THEORY SECTION -->
+<!-- THEORY -->
 <section class="theory-section">
   <div class="theory-inner">
-    <div class="theory-header">
+    <div class="theory-hdr">
       <div class="theory-badge">Methodology</div>
       <h2>Theory &amp; Equations</h2>
-      <p>This calculator applies the Kirsch analytical solution with Mohr-Coulomb and tensile failure criteria using effective (poroelastic) stresses.</p>
+      <p>Kirsch analytical solution with 3-D tensor rotation, Biot effective stresses, Mohr-Coulomb collapse, and coupled tensile fracture criterion.</p>
     </div>
     <div class="theory-grid">
       <div class="theory-card">
-        <h3>Kirsch Equations</h3>
-        <p>Stresses at the wellbore wall (r = r<sub>w</sub>) are computed from the Kirsch (1898) solution for a circular hole in a biaxial stress field, extended here to deviated wells via full tensor rotation.</p>
-        <div class="formula">σθθ = (σx' + σy')
-  − 2(σx' − σy')cos2θ
-  − 4τxy' sin2θ − Pw
-σrr = Pw
-σzz = σz' − 2ν[(σx'−σy')cos2θ
-       + 2τxy' sin2θ]</div>
+        <h3>3-D Stress Tensor Rotation</h3>
+        <p>Far-field stresses (&#963;v, &#963;H, &#963;h) are rotated from global to wellbore frame via direction-cosine tensor using inclination i and azimuth &#945;.</p>
+        <div class="formula">&#963;x' = &#963;H cos&#178;i cos&#178;&#945; + &#963;h cos&#178;i sin&#178;&#945; + &#963;v sin&#178;i
+&#963;y' = &#963;H sin&#178;&#945; + &#963;h cos&#178;&#945;
+&#963;z' = &#963;H sin&#178;i cos&#178;&#945; + &#963;h sin&#178;i sin&#178;&#945; + &#963;v cos&#178;i
+&#964;xy' = &#8722;&#189; cos i &#183; sin 2&#945; &#183; (&#963;H &#8722; &#963;h)
+&#964;xz' = +&#189; sin 2i &#183; (&#963;H cos&#178;&#945; + &#963;h sin&#178;&#945; &#8722; &#963;v)
+&#964;yz' = &#8722;&#189; sin i &#183; sin 2&#945; &#183; (&#963;H &#8722; &#963;h)</div>
       </div>
       <div class="theory-card">
-        <h3>Effective Stresses</h3>
-        <p>Biot's poroelastic theory converts total stresses to effective stresses, controlling rock failure. α = 1 is the most conservative assumption.</p>
-        <div class="formula">σ'ij = σij − α·Pp
-σ'rr = Pw − α·Pp
-σ'θθ = σθθ − α·Pp
-σ'zz = σzz − α·Pp</div>
+        <h3>Kirsch Wall Stresses</h3>
+        <p>For a circular borehole (pressure Pw) the 1898 Kirsch solution (extended to 3-D) gives stresses at r&#160;=&#160;rw.</p>
+        <div class="formula">&#963;'rr = Pw &#8722; &#945;Pp
+&#963;'&#952;&#952;(&#952;) = (&#963;x'+&#963;y') &#8722; 2(&#963;x'&#8722;&#963;y')cos2&#952;
+          &#8722; 4&#964;xy'sin2&#952; &#8722; (Pw&#8722;&#945;Pp)
+&#963;'zz(&#952;) = &#963;z' &#8722; 2&#957;[(&#963;x'&#8722;&#963;y')cos2&#952;
+          + 2&#964;xy'sin2&#952;] &#8722; &#945;Pp
+&#964;'&#952;z(&#952;) = 2(&#8722;&#964;xz'sin&#952; + &#964;yz'cos&#952;)</div>
       </div>
       <div class="theory-card">
-        <h3>Mohr-Coulomb (Collapse)</h3>
-        <p>Shear failure (wellbore breakout) occurs when the maximum principal effective stress exceeds the Mohr-Coulomb criterion. q = tan²(45 + φ/2).</p>
-        <div class="formula">Failure: σ'₁ = UCS + q·σ'₃
+        <h3>Principal Stresses &amp; MC Criterion</h3>
+        <p>&#963;'rr is always principal at the wall (&#964;r&#952;=&#964;rz=0). The &#952;-z plane gives &#963;'A and &#963;'B by eigenvector analysis.</p>
+        <div class="formula">&#963;'A,B = &#189;(&#963;'&#952;&#952;+&#963;'zz) &#177; &#8730;[((&#963;'&#952;&#952;&#8722;&#963;'zz)/2)&#178; + &#964;'&#952;z&#178;]
 
-Pw_collapse =
-  (3σH − σh + α·Pp(q−1) − UCS)
-  ÷ (1 + q)
-
-where q = (1+sinφ)/(1−sinφ)</div>
+Sort: &#963;'1 &#8805; &#963;'2 &#8805; &#963;'3
+MC Failure:  &#963;'1 = UCS + q&#183;&#963;'3
+  q = (1+sin&#966;)/(1&#8722;sin&#966;)
+  c = UCS(1&#8722;sin&#966;)/(2cos&#966;)</div>
       </div>
       <div class="theory-card">
-        <h3>Tensile Fracture</h3>
-        <p>Tensile fractures initiate when the minimum effective hoop stress equals the negative of the rock's tensile strength. For a vertical well this occurs at θ = 0° (σH direction).</p>
-        <div class="formula">Failure: σ'θθ_min = −T₀
+        <h3>Collapse &#8212; Newton-Raphson</h3>
+        <p>At each angle &#952;, solve for Pw where &#963;'A(Pw)&#160;=&#160;UCS&#160;+&#160;q&#183;&#963;'rr(Pw). 720-point scan; maximum Pw&#160;=&#160;required collapse pressure.</p>
+        <div class="formula">f(P) = &#189;(C1&#8722;P+szz_e)+R &#8722; UCS &#8722; q&#183;P = 0
+R = &#8730;[((C1&#8722;P&#8722;szz_e)/2)&#178; + &#964;&#952;z&#178;]
+df/dP = &#8722;&#189; &#8722; half_diff/(2R) &#8722; q
+  where half_diff = (C1&#8722;P&#8722;szz_e)/2
 
-Pw_frac =
-  3σh − σH − α·Pp + T₀
-
-Fracture gradient = Pw_frac / TVD</div>
+Collapsed over all &#952; &#8594; Pw_collapse</div>
       </div>
       <div class="theory-card">
-        <h3>Stress Tensor Rotation</h3>
-        <p>For deviated wells, in-situ stresses are transformed from the global frame (σv, σH, σh) to the wellbore frame using full 3D tensor rotation.</p>
-        <div class="formula">σx' = σH cos²i cos²α
-     + σh cos²i sin²α
-     + σv sin²i
-σy' = σH sin²α + σh cos²α
-σz' = σH sin²i cos²α
-     + σh sin²i sin²α
-     + σv cos²i
-τxy' = −(cosi/2)sin2α·(σH−σh)</div>
+        <h3>Fracture &#8212; Closed Form</h3>
+        <p>Set minimum principal stress &#963;'B&#160;=&#160;&#8722;T&#8320; at each &#952; and solve analytically, accounting for &#964;'&#952;z coupling.</p>
+        <div class="formula">Pw_frac(&#952;) = C1(&#952;) + T&#8320;
+  &#8722; &#964;'&#952;z(&#952;)&#178; / (&#963;'zz(&#952;) + T&#8320;)
+  + &#945;&#183;Pp
+
+(Reduces to C1+T&#8320;+&#945;Pp when &#964;&#952;z=0)
+Min over all &#952; = hydraulic frac. pressure</div>
       </div>
       <div class="theory-card">
-        <h3>Mud Weight Window</h3>
-        <p>The safe drilling fluid density (mud weight) window lies between the collapse and fracture pressures, constrained below by pore pressure to prevent kicks.</p>
-        <div class="formula">Lower bound (EMW):
-  max(Pp, Pw_collapse) / (0.052·TVD_ft)
+        <h3>Safe Window &amp; Breakout</h3>
+        <p>The window spans max(Pp, Pw_collapse) to Pw_frac. The breakout halfwidth is the arc of wellbore circumference in MC failure at planned MW.</p>
+        <div class="formula">MW_min = max(Pp, Pw_collapse) / (0.052&#183;TVD_ft)
+MW_max = Pw_frac / (0.052&#183;TVD_ft)
 
-Upper bound (EMW):
-  Pw_frac / (0.052·TVD_ft)
+Breakout at angle &#952; if:
+  &#963;'1(&#952;,Pw_planned) &#8805; UCS + q&#183;&#963;'3
 
-Window = Upper − Lower  [ppg]</div>
+Breakout halfwidth &#952;bo = arc fraction &#215; 90&#176;</div>
       </div>
     </div>
   </div>
@@ -759,8 +579,8 @@ Window = Upper − Lower  [ppg]</div>
 <footer role="contentinfo">
   <div class="footer-grid">
     <div class="footer-col">
-      <div class="footer-col-brand">Armin Studio</div>
-      <p>We design and develop modern, affordable websites for small businesses, startups, and non-profits. Your online presence, done right.</p>
+      <div class="footer-brand">Armin Studio</div>
+      <p>Modern, affordable websites for small businesses, startups, and non-profits. Your online presence, done right.</p>
     </div>
     <div class="footer-col">
       <h4>Quick Links</h4>
@@ -785,739 +605,804 @@ Window = Upper − Lower  [ppg]</div>
       <ul>
         <li><a href="contact.html">Contact Us</a></li>
         <li><a href="mailto:support@armin.works">support@armin.works</a></li>
-        <li><a href="mailto:armin@armin.works">armin@armin.works</a></li>
       </ul>
       <div class="social-links">
-        <a class="social-link" href="https://arminmajidi.substack.com" target="_blank" rel="noopener noreferrer" aria-label="Substack"><span aria-hidden="true">📰</span></a>
-        <a class="social-link" href="https://medium.com/@ArminMajidi" target="_blank" rel="noopener noreferrer" aria-label="Medium"><span aria-hidden="true">✍️</span></a>
-        <a class="social-link" href="https://dev.to/@arminmajidi" target="_blank" rel="noopener noreferrer" aria-label="DEV Community"><span aria-hidden="true">💻</span></a>
+        <a class="social-link" href="https://arminmajidi.substack.com" target="_blank" rel="noopener" aria-label="Substack">&#128240;</a>
+        <a class="social-link" href="https://medium.com/@ArminMajidi" target="_blank" rel="noopener" aria-label="Medium">&#9997;&#65039;</a>
+        <a class="social-link" href="https://dev.to/@arminmajidi" target="_blank" rel="noopener" aria-label="DEV">&#128187;</a>
       </div>
-      <p style="margin-top:12px;">Ready to get started? Reach out and let's build something great together.</p>
     </div>
   </div>
   <div class="footer-bottom">
-    <div>&copy; <span id="year"></span> Armin Studio. All rights reserved.</div>
+    <div>&copy; <span id="fyear"></span> Armin Studio. All rights reserved.</div>
     <div>Designed with care by Armin Studio</div>
   </div>
 </footer>
 
-<button class="back-to-top" id="backToTop" aria-label="Back to top">↑</button>
+<button class="btt" id="bttBtn" aria-label="Back to top">&#8593;</button>
 
 <script>
-// ─── UNIT STATE ────────────────────────────────────────────────────────────────
-let currentUnits = 'psi'; // 'psi' or 'ppg'
+/* =====================================================
+   WELLBORE STABILITY CALCULATOR  v2 (Refined)
+   Kirsch + 3-D tensor rotation + Mohr-Coulomb +
+   Corrected NR derivative + Closed-form fracture +
+   Polar wellbore diagram + Stress bar chart
+   ===================================================== */
+
+// ── Unit state ────────────────────────────────────
+let currentUnits = 'psi';
 
 function setUnits(u) {
   currentUnits = u;
   document.getElementById('btnPsi').classList.toggle('active', u === 'psi');
   document.getElementById('btnPpg').classList.toggle('active', u === 'ppg');
-  const hint = document.getElementById('unitHint');
-  const svHint = document.getElementById('svHint');
-  const ppHint = document.getElementById('ppHint');
+  const h = document.getElementById('unitHint');
   if (u === 'psi') {
-    hint.innerHTML = 'Enter all stresses and pressures in <strong>psi</strong>. EMW will be calculated using TVD.';
-    svHint.textContent = 'Typical: 0.85–1.0 psi/ft overburden gradient';
-    ppHint.textContent = 'Normal pore pressure gradient ≈ 0.433 psi/ft';
+    h.innerHTML = 'Enter stresses in <strong>psi</strong>. EMW results calculated using TVD.';
   } else {
-    hint.innerHTML = 'Enter all stresses and pressures as <strong>ppg equivalent mud weight</strong>. Convert: psi = ppg × 0.052 × TVD_ft.';
-    svHint.textContent = 'Typical overburden: 16–19 ppg EMW';
-    ppHint.textContent = 'Normal pore pressure: ~8.6 ppg EMW (fresh water: 8.33)';
-    // Convert current psi values to ppg for display
-    const tvd_ft = getTvdFt();
-    if (tvd_ft > 0) convertDisplayToPpg(tvd_ft);
+    h.innerHTML = 'Enter stresses as <strong>ppg EMW</strong>. Conversion: psi = ppg \u00d7 0.052 \u00d7 TVD_ft.';
+    const tvdf = getTvdFt();
+    if (tvdf > 0) {
+      ['sv','sH','sh','pp'].forEach(function(id) {
+        var v = parseFloat(document.getElementById(id).value);
+        if (!isNaN(v) && v > 0) document.getElementById(id).value = (v/(0.052*tvdf)).toFixed(2);
+      });
+    }
   }
-  onInputChange();
+  onHints();
 }
 
 function getTvdFt() {
-  const tvd = parseFloat(document.getElementById('tvd').value) || 0;
-  const unit = document.getElementById('depthUnit').value;
-  return unit === 'm' ? tvd * 3.28084 : tvd;
+  var tvd = parseFloat(document.getElementById('tvd').value) || 0;
+  return document.getElementById('depthUnit').value === 'm' ? tvd * 3.28084 : tvd;
 }
 
-function convertDisplayToPpg(tvd_ft) {
-  const ids = ['sv','sH','sh','pp'];
-  ids.forEach(id => {
-    const val = parseFloat(document.getElementById(id).value);
-    if (!isNaN(val) && val > 0) {
-      document.getElementById(id).value = (val / (0.052 * tvd_ft)).toFixed(2);
-    }
-  });
+function getPsi(id) {
+  var tvdf = getTvdFt();
+  var v = parseFloat(document.getElementById(id).value) || 0;
+  return currentUnits === 'ppg' ? v * 0.052 * tvdf : v;
 }
 
-// ─── GET INPUT VALUES (always returns psi for internal calculation) ─────────
-function getInputPsi() {
-  const tvd_ft = getTvdFt();
-  const ids = ['sv','sH','sh','pp'];
-  const vals = {};
-  ids.forEach(id => {
-    const raw = parseFloat(document.getElementById(id).value) || 0;
-    vals[id] = (currentUnits === 'ppg') ? raw * 0.052 * tvd_ft : raw;
-  });
-  return {
-    tvd_ft,
-    sv: vals.sv,
-    sH: vals.sH,
-    sh: vals.sh,
-    pp: vals.pp,
-    ucs:  parseFloat(document.getElementById('ucs').value) || 0,
-    phi:  parseFloat(document.getElementById('phi').value) || 0,
-    t0:   parseFloat(document.getElementById('t0').value) || 0,
-    biot: parseFloat(document.getElementById('biot').value) || 1.0,
-    nu:   parseFloat(document.getElementById('nu').value) || 0.25,
-    incl: parseFloat(document.getElementById('incl').value) || 0,
-    azim: parseFloat(document.getElementById('azim').value) || 0
-  };
-}
-
-// ─── CORE CALCULATION ──────────────────────────────────────────────────────────
-function calculate() {
-  const inp = getInputPsi();
-  const { tvd_ft, sv, sH, sh, pp, ucs, phi, t0, biot, nu, incl, azim } = inp;
-
-  // Validate
-  if (tvd_ft <= 0) { alert('Please enter a valid TVD > 0.'); return; }
-  if (sH < sh) { alert('σH must be ≥ σh. Please check your stress inputs.'); return; }
-  if (phi <= 0 || phi >= 90) { alert('Friction angle must be between 1° and 89°.'); return; }
-  if (biot < 0 || biot > 1) { alert('Biot coefficient must be between 0 and 1.'); return; }
-
-  const deg2rad = Math.PI / 180;
-  const i_rad  = incl * deg2rad;
-  const az_rad = azim * deg2rad;
-
-  // ── 1. Stress Tensor Rotation to Wellbore Frame ──────────────────────────
-  const ci = Math.cos(i_rad), si = Math.sin(i_rad);
-  const ca = Math.cos(az_rad), sa = Math.sin(az_rad);
-  const sin2az = Math.sin(2 * az_rad);
-  const cos2az = Math.cos(2 * az_rad);
-
-  // Transformed stresses in wellbore frame (x'=highside, y'=lateral, z'=along wellbore)
-  const sx  = sH * ci*ci*ca*ca + sh * ci*ci*sa*sa + sv * si*si;   // σx' (highside)
-  const sy  = sH * sa*sa        + sh * ca*ca;                       // σy' (lateral)
-  const sz  = sH * si*si*ca*ca  + sh * si*si*sa*sa + sv * ci*ci;   // σz' (axial)
-  const txy = -0.5 * ci * sin2az * (sH - sh);                       // τx'y'
-  const txz =  0.5 * Math.sin(2*i_rad) * (sH*ca*ca + sh*sa*sa - sv); // τx'z'
-  const tyz = -0.5 * si * sin2az * (sH - sh);                       // τy'z'
-
-  // ── 2. Effective far-field stresses (in wellbore cross-section) ───────────
-  const sx_e  = sx  - biot * pp;
-  const sy_e  = sy  - biot * pp;
-  const sz_e  = sz  - biot * pp;
-
-  // ── 3. Scan θ from 0–360° for critical angles ────────────────────────────
-  const nTheta = 720; // high resolution
-  const dTheta = 2 * Math.PI / nTheta;
-
-  let Pw_collapse = -Infinity; // need maximum over all θ
-  let Pw_frac     =  Infinity; // need minimum over all θ
-  let critTheta_col = 0;
-  let critTheta_frac = 0;
-
-  const q = Math.pow(Math.tan((45 + phi/2) * deg2rad), 2); // MC parameter
-
-  for (let k = 0; k <= nTheta; k++) {
-    const th = k * dTheta;
-    const cos2th = Math.cos(2*th);
-    const sin2th = Math.sin(2*th);
-    const costh  = Math.cos(th);
-    const sinth  = Math.sin(th);
-
-    // Hoop stress (from Kirsch) – written in terms of Pw:
-    // σθθ = C1(θ) − Pw, where C1 includes far-field
-    const C1 = (sx_e + sy_e) - 2*(sx_e - sy_e)*cos2th - 4*txy*sin2th;
-    // σθθ_eff = C1 - Pw_eff, where Pw_eff = Pw - alpha*Pp
-    // σrr_eff = Pw - alpha*Pp = Pw_eff
-
-    // Axial stress (effective, plane-strain assumption, independent of Pw for Kirsch):
-    const szz_eff = sz_e - 2*nu*((sx_e - sy_e)*cos2th + 2*txy*sin2th);
-
-    // Shear stress on wellbore wall in θ-z plane:
-    const tthz = 2*(-txz*sinth + tyz*costh);
-
-    // ── Fracture: minimum hoop stress = -T0 ──────────────────────────────
-    // σ'θθ = C1 - Pw_eff = -T0  →  Pw_eff = C1 + T0
-    // Pw = Pw_eff + alpha*Pp
-    const Pw_frac_th = (C1 + t0) + biot*pp;
-    if (Pw_frac_th < Pw_frac) {
-      Pw_frac = Pw_frac_th;
-      critTheta_frac = th / deg2rad;
-    }
-
-    // ── Collapse: Mohr-Coulomb with Pw as unknown ─────────────────────────
-    // σrr_eff = Pw_eff (= Pw - alpha*Pp)
-    // The three stresses at the wall in terms of Pw_eff = P:
-    //   σ'rr = P
-    //   σ'θθ = C1 - P
-    //   σ'zz = szz_eff (constant w.r.t. Pw in plane strain)
-    //   τθz = tthz (constant w.r.t. Pw)
-    // Principal stresses in the θ-z plane (exclude σrr for now):
-    //   σA(P) = (C1-P + szz_eff)/2 + sqrt(((C1-P - szz_eff)/2)² + tthz²)
-    //   σB(P) = (C1-P + szz_eff)/2 - sqrt(((C1-P - szz_eff)/2)² + tthz²)
-    // σrr = P is also a principal stress (radial, decoupled).
-    //
-    // For collapse: σ'3 = P (min, small Pw), σ'1 = max(σA, σB)
-    // At critical state: σ'1 = UCS + q * σ'3
-    //   max(σA(P), σB(P)) = UCS + q*P
-    //
-    // Assume σ'θθ is the controlling maximum (valid when σzz is intermediate):
-    //   C1 - P = UCS + q*P  →  P = (C1 - UCS)/(1+q)
-    // But we need to verify σrr is truly σ'3 and check the role of axial stress.
-    //
-    // Solve iteratively or use the closed-form for each scenario:
-
-    // Case A: σ'rr = σ'3, dominant max is σ'θθ (most common for collapse)
-    const Pw_eff_A = (C1 - ucs) / (1 + q);
-    const Pw_A = Pw_eff_A + biot*pp;
-
-    // Verify: at this Pw, σ'θθ should be ≥ σ'zz and σ'rr should be ≤ σ'zz
-    // (otherwise a different stress ordering applies)
-    const sthth_A = C1 - Pw_eff_A;
-    const srr_A   = Pw_eff_A;
-    const szz_A   = szz_eff; // independent of Pw in this formulation
-    // check that σrr is min and σθθ is effectively the max vs szz
-    // (if σzz > σθθ, then we'd use a different pair)
-
-    let Pw_col_th;
-
-    // Determine stress ordering at Pw_A
-    const smax_A = Math.max(sthth_A, szz_A);
-    const smin_A = Math.min(srr_A, Math.min(sthth_A, szz_A));
-
-    if (smax_A === sthth_A && smin_A === srr_A) {
-      // Standard: σ'θθ is σ'1, σ'rr is σ'3
-      Pw_col_th = Pw_A;
-    } else if (szz_A > C1 - Pw_eff_A) {
-      // σ'zz might be σ'1 — solve: szz = UCS + q*P
-      const Pw_eff_B = (szz_eff - ucs) / q; // σzz = UCS + q*P → P = (σzz-UCS)/q
-      Pw_col_th = Pw_eff_B + biot*pp;
-    } else {
-      Pw_col_th = Pw_A;
-    }
-
-    // Also handle shear coupling via σA/σB for deviated wells:
-    // When tthz ≠ 0, use principal stresses in θ-z plane:
-    if (Math.abs(tthz) > 1) {
-      // Solve: σA(P) = UCS + q*P where σA(P) = (C1-P+szz_eff)/2 + R(P)
-      // R(P) = sqrt(((C1-P-szz_eff)/2)² + tthz²)
-      // Let X = C1-P, Y = szz_eff, T = tthz (const), then:
-      // (X+Y)/2 + sqrt(((X-Y)/2)²+T²) = UCS + q*(P)
-      // Let P be unknown: X = C1-P → P = C1-X
-      // Iterate to solve numerically (Newton's method):
-      let P = Pw_eff_A; // initial guess
-      for (let iter = 0; iter < 30; iter++) {
-        const X = C1 - P;
-        const half_diff = (X - szz_eff) / 2;
-        const R = Math.sqrt(half_diff*half_diff + tthz*tthz);
-        const sigma1 = (X + szz_eff)/2 + R;
-        const f  = sigma1 - ucs - q*P;
-        // df/dP = d/dP[(C1-P+szz_eff)/2 + R] - q
-        //       = -1/2 + dR/dP - q
-        // dR/dP = half_diff * (-1) / R = -(X-szz_eff)/2 / R * (-1) = ... 
-        // d(half_diff)/dP = d((C1-P-szz_eff)/2)/dP = -1/2
-        const dRdP = (-1/2) * (X - szz_eff) / R;
-        const df = -0.5 + dRdP - q;
-        if (Math.abs(df) < 1e-10) break;
-        const dP = -f / df;
-        P += dP;
-        if (Math.abs(dP) < 0.001) break;
-      }
-      const Pw_col_coupled = P + biot*pp;
-      // Take the more conservative (higher) collapse pressure
-      if (Pw_col_coupled > Pw_col_th && Pw_col_coupled > 0) {
-        Pw_col_th = Pw_col_coupled;
-      }
-    }
-
-    if (Pw_col_th > Pw_collapse) {
-      Pw_collapse = Pw_col_th;
-      critTheta_col = th / deg2rad;
-    }
+function onHints() {
+  var tvdf = getTvdFt();
+  if (tvdf <= 0) return;
+  function hint(id, hintId) {
+    var v = parseFloat(document.getElementById(id).value);
+    if (isNaN(v) || v <= 0) { document.getElementById(hintId).textContent = ''; return; }
+    var psi = currentUnits === 'ppg' ? v * 0.052 * tvdf : v;
+    var grad = psi / tvdf, emw = psi / (0.052 * tvdf);
+    document.getElementById(hintId).textContent = grad.toFixed(3) + ' psi/ft  \u00b7  ' + emw.toFixed(2) + ' ppg EMW';
   }
+  hint('sv','svHint'); hint('sH','sHHint'); hint('sh','shHint'); hint('pp','ppHint');
+  var phi  = parseFloat(document.getElementById('phi').value) || 30;
+  var ucs  = parseFloat(document.getElementById('ucs').value) || 0;
+  var biot = parseFloat(document.getElementById('biot').value) || 1;
+  var sinp = Math.sin(phi*Math.PI/180), cosp = Math.cos(phi*Math.PI/180);
+  var q    = (1+sinp)/(1-sinp);
+  var coh  = ucs*(1-sinp)/(2*cosp);
+  document.getElementById('mechHint').textContent = 'q = ' + q.toFixed(3) + '  |  Cohesion c = ' + Math.round(coh) + ' psi  |  \u03b1 = ' + biot;
+  onPlannedChange();
+}
 
-  // ── 4. Apply pore pressure constraint (kick prevention) ─────────────────
-  const Pw_lb = Math.max(Pw_collapse, pp); // actual lower bound
-
-  // ── 5. Convert to EMW (ppg) ───────────────────────────────────────────────
-  const f2emw = 1 / (0.052 * tvd_ft);
-  const emw_collapse = Pw_collapse * f2emw;
-  const emw_frac     = Pw_frac     * f2emw;
-  const emw_lb       = Pw_lb       * f2emw;
-  const emw_pp       = pp          * f2emw;
-  const emw_sv       = sv          * f2emw;
-  const emw_sH       = sH          * f2emw;
-  const emw_sh       = sh          * f2emw;
-  const window_ppg   = emw_frac - emw_lb;
-
-  // ── 6. Stress Regime ──────────────────────────────────────────────────────
-  let stressRegime;
-  if (sv >= sH && sv >= sh) {
-    stressRegime = sH >= sh ? 'Normal Faulting (σv ≥ σH ≥ σh)' : 'Normal Faulting (σv ≥ σh ≥ σH — check inputs)';
-  } else if (sH >= sv && sv >= sh) {
-    stressRegime = 'Strike-Slip (σH ≥ σv ≥ σh)';
+function onPlannedChange() {
+  if (!window._lastResult) return;
+  var r   = window._lastResult;
+  var pmw = parseFloat(document.getElementById('plannedMw').value) || 12;
+  var el  = document.getElementById('plannedBadge');
+  if (pmw < r.emw_lb - 0.01) {
+    el.className = 'planned-badge pb-col'; el.textContent = '\u25bc Below Collapse';
+  } else if (pmw > r.emw_frac + 0.01) {
+    el.className = 'planned-badge pb-frac'; el.textContent = '\u25b2 Above Fracture';
   } else {
-    stressRegime = 'Reverse Faulting (σH ≥ σh ≥ σv)';
+    var pct = r.window_ppg > 0 ? ((pmw - r.emw_lb)/r.window_ppg*100).toFixed(0) : '0';
+    el.className = 'planned-badge pb-safe'; el.textContent = '\u2714 Safe Zone (' + pct + '%)';
   }
-
-  // ── 7. Well stability assessment ─────────────────────────────────────────
-  let windowAssessment, windowClass;
-  if (emw_frac <= emw_lb) {
-    windowAssessment = 'Unconditionally Unstable';
-    windowClass = 'badge-unstable';
-  } else if (window_ppg >= 1.5) {
-    windowAssessment = 'Wide Window (Stable)';
-    windowClass = 'badge-wide';
-  } else if (window_ppg >= 0.5) {
-    windowAssessment = 'Moderate Window';
-    windowClass = 'badge-moderate';
-  } else {
-    windowAssessment = 'Narrow Window (Challenging)';
-    windowClass = 'badge-narrow';
-  }
-
-  // ── 8. Critical angle descriptions ────────────────────────────────────────
-  const critColDeg = critTheta_col.toFixed(0);
-  const critFracDeg = critTheta_frac.toFixed(0);
-
-  // ── 9. Effective stresses at critical collapse angle ─────────────────────
-  const th_col = critTheta_col * deg2rad;
-  const cos2c = Math.cos(2*th_col), sin2c = Math.sin(2*th_col);
-  const Pw_eff_crit = Pw_collapse - biot*pp;
-  const C1_crit = (sx_e+sy_e) - 2*(sx_e-sy_e)*cos2c - 4*txy*sin2c;
-  const eff_hoop_col  = C1_crit - Pw_eff_crit;
-  const eff_rad_col   = Pw_eff_crit;
-  const eff_axial_col = sz_e - 2*nu*((sx_e-sy_e)*cos2c + 2*txy*sin2c);
-
-  const th_frac = critTheta_frac * deg2rad;
-  const cos2f = Math.cos(2*th_frac), sin2f = Math.sin(2*th_frac);
-  const Pw_eff_frac = Pw_frac - biot*pp;
-  const C1_frac = (sx_e+sy_e) - 2*(sx_e-sy_e)*cos2f - 4*txy*sin2f;
-  const eff_hoop_frac = C1_frac - Pw_eff_frac;
-
-  // ── 10. Render results ────────────────────────────────────────────────────
-  renderResults({
-    tvd_ft, sv, sH, sh, pp, ucs, phi, t0, biot, nu, incl, azim,
-    Pw_collapse, Pw_lb, Pw_frac,
-    emw_collapse, emw_lb, emw_frac, emw_pp, emw_sv, emw_sH, emw_sh,
-    window_ppg, windowAssessment, windowClass,
-    stressRegime, q,
-    critColDeg, critFracDeg,
-    sx, sy, sz, txy,
-    eff_hoop_col, eff_rad_col, eff_axial_col, eff_hoop_frac
-  });
+  drawPolarDiagram(r, pmw);
+  moveMwNeedle(r, pmw);
 }
 
-// ─── RENDER ────────────────────────────────────────────────────────────────────
-function renderResults(r) {
-  const panel = document.getElementById('resultsPanel');
-  panel.innerHTML = '';
-
-  const windowOk = r.Pw_frac > r.Pw_lb;
-
-  // ── Key Metrics ───────────────────────────────────────────────────────────
-  const metricsHtml = `
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow);">
-      <div class="card-title">Key Results</div>
-      <div class="metrics-grid">
-        <div class="metric-card danger">
-          <div class="metric-label">Collapse Pressure</div>
-          <div class="metric-value">${r.emw_collapse.toFixed(2)}</div>
-          <div class="metric-unit">ppg EMW</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">${fmt(r.Pw_collapse)} psi</div>
-        </div>
-        <div class="metric-card success">
-          <div class="metric-label">Lower Bound MW</div>
-          <div class="metric-value">${r.emw_lb.toFixed(2)}</div>
-          <div class="metric-unit">ppg EMW</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">${fmt(r.Pw_lb)} psi</div>
-        </div>
-        <div class="metric-card warning">
-          <div class="metric-label">Fracture Pressure</div>
-          <div class="metric-value">${r.emw_frac.toFixed(2)}</div>
-          <div class="metric-unit">ppg EMW</div>
-          <div style="font-size:11px;color:var(--text-muted);margin-top:4px;">${fmt(r.Pw_frac)} psi</div>
-        </div>
-        <div class="metric-card ${windowOk ? 'highlight' : 'danger'}">
-          <div class="metric-label">Window Width</div>
-          <div class="metric-value">${windowOk ? r.window_ppg.toFixed(2) : '—'}</div>
-          <div class="metric-unit">${windowOk ? 'ppg' : 'No Window'}</div>
-        </div>
-      </div>
-    </div>`;
-
-  // ── Mud Weight Window Bar ─────────────────────────────────────────────────
-  const minScale = Math.max(0, Math.min(r.emw_pp, r.emw_collapse) - 1);
-  const maxScale = r.emw_frac + 1;
-  const totalRange = maxScale - minScale;
-
-  function pctOf(v) { return Math.max(0, Math.min(100, (v - minScale) / totalRange * 100)); }
-
-  const colPct   = pctOf(r.emw_lb);
-  const fracPct  = pctOf(r.emw_frac);
-  const safePct  = Math.max(0, fracPct - colPct);
-
-  const mwBarHtml = `
-    <div class="mw-window-wrap">
-      <div class="mw-title">🎚 Mud Weight Window</div>
-      <div class="mw-bar-container">
-        <div class="mw-segment mw-seg-collapse" style="left:0;width:${colPct.toFixed(1)}%;">
-          ${colPct > 8 ? 'COLLAPSE' : ''}
-        </div>
-        <div class="mw-segment mw-seg-safe" style="left:${colPct.toFixed(1)}%;width:${safePct.toFixed(1)}%;">
-          ${safePct > 8 ? 'SAFE WINDOW' : ''}
-        </div>
-        <div class="mw-segment mw-seg-fracture" style="left:${fracPct.toFixed(1)}%;width:${(100-fracPct).toFixed(1)}%;">
-          ${(100-fracPct) > 8 ? 'FRACTURE' : ''}
-        </div>
-      </div>
-      <div class="mw-markers">
-        <span>${minScale.toFixed(1)} ppg</span>
-        <span style="position:relative;left:${colPct.toFixed(1)}%">${r.emw_lb.toFixed(2)} ppg</span>
-        <span>${maxScale.toFixed(1)} ppg</span>
-      </div>
-      <div class="mw-legend">
-        <div class="mw-legend-item"><div class="mw-legend-dot" style="background:#ef4444;"></div>Below Collapse (${r.emw_lb.toFixed(2)} ppg)</div>
-        <div class="mw-legend-item"><div class="mw-legend-dot" style="background:#22c55e;"></div>Safe Zone (${windowOk ? r.window_ppg.toFixed(2) + ' ppg wide' : 'None'})</div>
-        <div class="mw-legend-item"><div class="mw-legend-dot" style="background:#f59e0b;"></div>Above Fracture (${r.emw_frac.toFixed(2)} ppg)</div>
-      </div>
-      ${!windowOk ? '<div class="warning-box"><strong>⚠ Warning:</strong> No safe mud weight window exists. The fracture pressure is below or at the collapse pressure. Consider well trajectory redesign, formation evaluation, or casing placement strategy.</div>' : ''}
-    </div>`;
-
-  // ── Stress Analysis Table ─────────────────────────────────────────────────
-  const tableHtml = `
-    <div class="stress-table-wrap">
-      <div class="stress-table-title">📋 Detailed Stress Analysis</div>
-      <table>
-        <thead>
-          <tr>
-            <th>Parameter</th>
-            <th>Value (psi)</th>
-            <th>EMW (ppg)</th>
-            <th>Notes</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>TVD</strong></td><td>${fmt(r.tvd_ft)} ft</td><td>—</td><td>True vertical depth</td></tr>
-          <tr><td>Vertical Stress σv</td><td>${fmt(r.sv)}</td><td>${r.emw_sv.toFixed(2)}</td><td>Overburden</td></tr>
-          <tr><td>Max Horiz. Stress σH</td><td>${fmt(r.sH)}</td><td>${r.emw_sH.toFixed(2)}</td><td>Max principal horizontal</td></tr>
-          <tr><td>Min Horiz. Stress σh</td><td>${fmt(r.sh)}</td><td>${r.emw_sh.toFixed(2)}</td><td>Min principal horizontal</td></tr>
-          <tr><td>Pore Pressure Pp</td><td>${fmt(r.pp)}</td><td>${r.emw_pp.toFixed(2)}</td><td>Formation fluid pressure</td></tr>
-          <tr><td><strong>Stress Regime</strong></td><td colspan="3">${r.stressRegime}</td></tr>
-          <tr style="background:rgba(220,38,38,0.05)"><td><strong>Collapse Pressure</strong></td><td>${fmt(r.Pw_collapse)}</td><td><strong>${r.emw_collapse.toFixed(2)}</strong></td><td>Critical angle θ ≈ ${r.critColDeg}°</td></tr>
-          <tr style="background:rgba(22,163,74,0.05)"><td><strong>Lower Bound MW</strong></td><td>${fmt(r.Pw_lb)}</td><td><strong>${r.emw_lb.toFixed(2)}</strong></td><td>max(Collapse, Pore pressure)</td></tr>
-          <tr style="background:rgba(217,119,6,0.05)"><td><strong>Fracture Pressure</strong></td><td>${fmt(r.Pw_frac)}</td><td><strong>${r.emw_frac.toFixed(2)}</strong></td><td>Critical angle θ ≈ ${r.critFracDeg}°</td></tr>
-          <tr><td><strong>MW Window</strong></td><td>${windowOk ? (r.Pw_frac - r.Pw_lb).toFixed(0) + ' psi' : 'None'}</td><td><strong>${windowOk ? r.window_ppg.toFixed(2) : '—'}</strong></td><td>${r.windowAssessment}</td></tr>
-          <tr><td colspan="4" style="background:var(--bg);font-weight:700;color:var(--navy);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">Effective Stresses at Critical Collapse Angle (θ ≈ ${r.critColDeg}°)</td></tr>
-          <tr><td>σ'θθ (Hoop)</td><td>${fmt(r.eff_hoop_col)}</td><td>${(r.eff_hoop_col * (1/(0.052*r.tvd_ft))).toFixed(2)}</td><td>Maximum tangential</td></tr>
-          <tr><td>σ'rr (Radial)</td><td>${fmt(r.eff_rad_col)}</td><td>${(r.eff_rad_col * (1/(0.052*r.tvd_ft))).toFixed(2)}</td><td>= Pw − αPp at collapse</td></tr>
-          <tr><td>σ'zz (Axial)</td><td>${fmt(r.eff_axial_col)}</td><td>${(r.eff_axial_col * (1/(0.052*r.tvd_ft))).toFixed(2)}</td><td>Along wellbore axis</td></tr>
-          <tr><td colspan="4" style="background:var(--bg);font-weight:700;color:var(--navy);font-size:12px;letter-spacing:0.08em;text-transform:uppercase;">Rock &amp; Well Parameters</td></tr>
-          <tr><td>UCS</td><td>${fmt(r.ucs)} psi</td><td>—</td><td>Unconfined compressive strength</td></tr>
-          <tr><td>Friction Angle φ</td><td>${r.phi}°</td><td>—</td><td>q = ${r.q.toFixed(3)}</td></tr>
-          <tr><td>Tensile Strength T₀</td><td>${fmt(r.t0)} psi</td><td>—</td><td>For fracture criterion</td></tr>
-          <tr><td>Biot Coefficient α</td><td>${r.biot}</td><td>—</td><td>Poroelastic coupling</td></tr>
-          <tr><td>Well Inclination</td><td>${r.incl}°</td><td>—</td><td>From vertical</td></tr>
-          <tr><td>Well Azimuth</td><td>${r.azim}°</td><td>—</td><td>From σH direction</td></tr>
-        </tbody>
-      </table>
-    </div>`;
-
-  // ── Wellbore frame stresses ───────────────────────────────────────────────
-  const wfHtml = `
-    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;box-shadow:var(--shadow);">
-      <div class="card-title" style="margin-bottom:14px;">Wellbore Frame Stresses</div>
-      <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
-        <div style="background:var(--bg);padding:12px;border-radius:8px;border:1px solid var(--border);">
-          <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">σx' (Highside)</div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--navy);">${fmt(r.sx)} psi</div>
-          <div style="font-size:11px;color:var(--text-muted);">${(r.sx/(0.052*r.tvd_ft)).toFixed(2)} ppg</div>
-        </div>
-        <div style="background:var(--bg);padding:12px;border-radius:8px;border:1px solid var(--border);">
-          <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">σy' (Lateral)</div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--navy);">${fmt(r.sy)} psi</div>
-          <div style="font-size:11px;color:var(--text-muted);">${(r.sy/(0.052*r.tvd_ft)).toFixed(2)} ppg</div>
-        </div>
-        <div style="background:var(--bg);padding:12px;border-radius:8px;border:1px solid var(--border);">
-          <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">σz' (Axial)</div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--navy);">${fmt(r.sz)} psi</div>
-          <div style="font-size:11px;color:var(--text-muted);">${(r.sz/(0.052*r.tvd_ft)).toFixed(2)} ppg</div>
-        </div>
-        <div style="background:var(--bg);padding:12px;border-radius:8px;border:1px solid var(--border);">
-          <div style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">τx'y' (In-plane Shear)</div>
-          <div style="font-size:1.15rem;font-weight:700;color:var(--navy);">${fmt(r.txy)} psi</div>
-          <div style="font-size:11px;color:var(--text-muted);">${(r.txy/(0.052*r.tvd_ft)).toFixed(2)} ppg</div>
-        </div>
-      </div>
-    </div>`;
-
-  // ── Mohr Circle Canvas ────────────────────────────────────────────────────
-  const mohrHtml = `
-    <div class="mohr-wrap">
-      <div class="mohr-title">⭕ Mohr Circle — At Critical Collapse State</div>
-      <canvas id="mohrCanvas" width="600" height="320"></canvas>
-      <div style="margin-top:10px;font-size:12px;color:var(--text-muted);">
-        The Mohr circle is plotted at the computed collapse pressure. The red failure envelope is the Mohr-Coulomb criterion: τ = c + σ·tan(φ).
-      </div>
-    </div>`;
-
-  // ── Interpretation ────────────────────────────────────────────────────────
-  const interpText = windowOk
-    ? `The safe mud weight window is <strong>${r.window_ppg.toFixed(2)} ppg</strong> wide, ranging from <strong>${r.emw_lb.toFixed(2)} ppg</strong> to <strong>${r.emw_frac.toFixed(2)} ppg</strong>.
-       The stress regime is <strong>${r.stressRegime}</strong>.
-       ${r.incl > 0 ? `At ${r.incl}° inclination and ${r.azim}° azimuth from σH, the critical collapse angle in the wellbore cross-section is θ ≈ ${r.critColDeg}°. ` : 'This is a vertical well. '}
-       Recommended mud weight: <strong>${((r.emw_lb + r.emw_frac)/2).toFixed(2)} ppg</strong> (midpoint of window).`
-    : `<strong>No safe mud weight window exists.</strong> The fracture pressure (${r.emw_frac.toFixed(2)} ppg) is at or below the collapse pressure (${r.emw_collapse.toFixed(2)} ppg). 
-       Consider: (1) casing the interval, (2) changing well trajectory, (3) reducing drill rate, or (4) managed pressure drilling (MPD).`;
-
-  const interpHtml = `
-    <div class="interpretation">
-      <div class="interp-title">📊 Engineering Interpretation</div>
-      <span class="interp-badge ${r.windowClass}">${r.windowAssessment}</span>
-      <p class="interp-text">${interpText}</p>
-    </div>`;
-
-  panel.innerHTML = metricsHtml + mwBarHtml + wfHtml + mohrHtml + tableHtml + interpHtml;
-
-  // Draw Mohr circle
-  requestAnimationFrame(() => drawMohrCircle(r));
-}
-
-// ─── MOHR CIRCLE DRAWING ───────────────────────────────────────────────────────
-function drawMohrCircle(r) {
-  const canvas = document.getElementById('mohrCanvas');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-
-  // Effective principal stresses at collapse pressure, critical angle
-  const s1 = r.eff_hoop_col;
-  const s3 = r.eff_rad_col;
-  const s2 = r.eff_axial_col;
-
-  // Sort
-  const stresses = [s1, s2, s3].sort((a,b) => b-a);
-  const S1 = stresses[0], S2 = stresses[1], S3 = stresses[2];
-
-  // MC envelope params
-  const phi_rad = r.phi * Math.PI / 180;
-  const sin_phi = Math.sin(phi_rad);
-  const cos_phi = Math.cos(phi_rad);
-  const cohesion = r.ucs * (1 - sin_phi) / (2 * cos_phi); // c from UCS
-
-  // Canvas dimensions
-  const W = canvas.width, H = canvas.height;
-  const padL = 80, padR = 30, padT = 30, padB = 60;
-  const plotW = W - padL - padR;
-  const plotH = H - padT - padB;
-
-  // Determine axis range
-  const margin = Math.abs(S1 - S3) * 0.3 + 500;
-  const xMin = Math.min(S3 - margin, 0);
-  const xMax = S1 + margin;
-  const yMax = (S1 - S3) / 2 + margin * 0.7;
-  const yMin = -yMax * 0.15;
-
-  function toCanX(v) { return padL + (v - xMin) / (xMax - xMin) * plotW; }
-  function toCanY(v) { return H - padB - (v - yMin) / (yMax - yMin) * plotH; }
-
-  ctx.clearRect(0, 0, W, H);
-
-  // Background
-  ctx.fillStyle = '#f9fafb';
-  ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = '#ffffff';
-  ctx.fillRect(padL, padT, plotW, plotH);
-
-  // Grid lines
-  ctx.strokeStyle = '#e5e7eb';
-  ctx.lineWidth = 1;
-  const gridStepX = Math.pow(10, Math.floor(Math.log10((xMax-xMin)/5)));
-  const startGridX = Math.ceil(xMin/gridStepX)*gridStepX;
-  for (let gx = startGridX; gx <= xMax; gx += gridStepX) {
-    const cx = toCanX(gx);
-    if (cx < padL || cx > padL+plotW) continue;
-    ctx.beginPath(); ctx.moveTo(cx, padT); ctx.lineTo(cx, H-padB); ctx.stroke();
-  }
-  const gridStepY = gridStepX;
-  const startGridY = 0;
-  for (let gy = startGridY; gy <= yMax; gy += gridStepY) {
-    const cy = toCanY(gy);
-    if (cy < padT || cy > H-padB) continue;
-    ctx.beginPath(); ctx.moveTo(padL, cy); ctx.lineTo(padL+plotW, cy); ctx.stroke();
-  }
-
-  // Axes
-  ctx.strokeStyle = '#6b7280';
-  ctx.lineWidth = 1.5;
-  // X axis at τ=0
-  const yAxis0 = toCanY(0);
-  ctx.beginPath(); ctx.moveTo(padL, yAxis0); ctx.lineTo(padL+plotW, yAxis0); ctx.stroke();
-  // Y axis at σ=0
-  const xAxis0 = toCanX(0);
-  if (xAxis0 >= padL && xAxis0 <= padL+plotW) {
-    ctx.beginPath(); ctx.moveTo(xAxis0, padT); ctx.lineTo(xAxis0, H-padB); ctx.stroke();
-  }
-
-  // Mohr-Coulomb failure envelope
-  ctx.strokeStyle = '#dc2626';
-  ctx.lineWidth = 2;
-  ctx.setLineDash([]);
-  const tanPhi = Math.tan(phi_rad);
-  const xEnvStart = xMin;
-  const xEnvEnd = xMax;
-  const yEnvStart = cohesion + xEnvStart * tanPhi;
-  const yEnvEnd = cohesion + xEnvEnd * tanPhi;
-  ctx.beginPath();
-  ctx.moveTo(toCanX(xEnvStart), toCanY(Math.max(yMin, yEnvStart)));
-  ctx.lineTo(toCanX(xEnvEnd), toCanY(Math.min(yMax, yEnvEnd)));
-  ctx.stroke();
-
-  // Label MC envelope
-  ctx.fillStyle = '#dc2626';
-  ctx.font = 'bold 11px system-ui';
-  ctx.fillText(`MC Envelope (φ=${r.phi}°)`, toCanX(xMax) - 140, toCanY(cohesion + xMax * tanPhi * 0.6) - 6);
-
-  // Draw Mohr circles (S1-S3 major circle, S1-S2, S2-S3 minor)
-  const circles = [
-    { a: S1, b: S3, color: '#1d4ed8', lw: 2.5, label: 'σ₁-σ₃' },
-    { a: S1, b: S2, color: '#60a5fa', lw: 1.2, label: '' },
-    { a: S2, b: S3, color: '#60a5fa', lw: 1.2, label: '' },
-  ];
-
-  circles.forEach(c => {
-    const cx = (c.a + c.b) / 2;
-    const rad = (c.a - c.b) / 2;
-    if (rad <= 0) return;
-    const ccx = toCanX(cx);
-    const ccy = toCanY(0);
-    const rPx = rad / (xMax - xMin) * plotW;
-    ctx.beginPath();
-    ctx.arc(ccx, ccy, rPx, Math.PI, 0, false);
-    ctx.strokeStyle = c.color;
-    ctx.lineWidth = c.lw;
-    ctx.stroke();
-  });
-
-  // Mark principal stresses on x-axis
-  [[S3,'σ\'₃','#dc2626'],[S2,'σ\'₂','#6b7280'],[S1,'σ\'₁','#1d4ed8']].forEach(([sv2, label, col]) => {
-    const cx2 = toCanX(sv2);
-    ctx.beginPath(); ctx.arc(cx2, yAxis0, 5, 0, 2*Math.PI);
-    ctx.fillStyle = col; ctx.fill();
-    ctx.fillStyle = col;
-    ctx.font = 'bold 11px system-ui';
-    ctx.textAlign = 'center';
-    ctx.fillText(label, cx2, yAxis0 + 18);
-    ctx.font = '10px system-ui';
-    ctx.fillStyle = '#6b7280';
-    ctx.fillText(`${Math.round(sv2)}`, cx2, yAxis0 + 30);
-  });
-  ctx.textAlign = 'left';
-
-  // Axis labels
-  ctx.fillStyle = '#1f2937';
-  ctx.font = 'bold 12px system-ui';
-  ctx.fillText('σ\' (psi)', padL + plotW - 40, yAxis0 - 8);
-  ctx.save(); ctx.translate(14, padT + plotH/2);
-  ctx.rotate(-Math.PI/2);
-  ctx.textAlign = 'center';
-  ctx.fillText('τ (psi)', 0, 0);
-  ctx.restore();
-  ctx.textAlign = 'left';
-
-  // X-axis tick labels
-  ctx.fillStyle = '#6b7280'; ctx.font = '10px system-ui';
-  for (let gx = startGridX; gx <= xMax; gx += gridStepX*2) {
-    const cx = toCanX(gx);
-    if (cx < padL || cx > padL+plotW) continue;
-    ctx.textAlign = 'center';
-    ctx.fillText(Math.round(gx).toLocaleString(), cx, H - padB + 14);
-  }
-  ctx.textAlign = 'left';
-
-  // Title
-  ctx.fillStyle = '#1a2e4a'; ctx.font = 'bold 13px system-ui';
-  ctx.fillText('Mohr Circle — Effective Principal Stresses at Collapse', padL, padT - 8);
-
-  // Cohesion intercept label
-  const cIntY = toCanY(cohesion);
-  if (cIntY > padT && cIntY < H-padB) {
-    ctx.beginPath(); ctx.arc(toCanX(0), cIntY, 4, 0, 2*Math.PI);
-    ctx.fillStyle = '#dc2626'; ctx.fill();
-    ctx.fillStyle = '#dc2626'; ctx.font = '10px system-ui';
-    ctx.fillText(`c = ${Math.round(cohesion)} psi`, toCanX(0)+6, cIntY-4);
-  }
-}
-
-// ─── HELPERS ───────────────────────────────────────────────────────────────────
-function fmt(v) {
-  if (isNaN(v) || !isFinite(v)) return '—';
-  return Math.round(v).toLocaleString('en-US');
-}
-
-function onInputChange() {
-  // Live update psi hints when using psi mode
-  if (currentUnits === 'psi') {
-    const tvd_ft = getTvdFt();
-    if (tvd_ft > 0) {
-      const sv = parseFloat(document.getElementById('sv').value);
-      if (!isNaN(sv)) document.getElementById('svHint').textContent = `≈ ${(sv/tvd_ft).toFixed(3)} psi/ft  |  ${(sv/(0.052*tvd_ft)).toFixed(2)} ppg EMW`;
-      const pp = parseFloat(document.getElementById('pp').value);
-      if (!isNaN(pp)) document.getElementById('ppHint').textContent = `≈ ${(pp/tvd_ft).toFixed(3)} psi/ft  |  ${(pp/(0.052*tvd_ft)).toFixed(2)} ppg EMW`;
-    }
-  }
-}
-
-function resetDefaults() {
+// ── Scenario presets ──────────────────────────────
+function loadScenario(key) {
+  var P = {
+    normal:     {tvd:10000,sv:9500, sH:8500, sh:7000, pp:4330, ucs:3000,phi:30,t0:300,biot:1.0,nu:.25,incl:0, azim:0,  pmw:12.0},
+    strike:     {tvd:12000,sv:10800,sH:13200,sh:7200, pp:5400, ucs:4000,phi:32,t0:400,biot:.95,nu:.23,incl:0, azim:0,  pmw:13.0},
+    reverse:    {tvd:8000, sv:7200, sH:10400,sh:9600, pp:3550, ucs:5000,phi:35,t0:500,biot:.9, nu:.2, incl:0, azim:0,  pmw:14.0},
+    hpht:       {tvd:18000,sv:19000,sH:17500,sh:15000,pp:16200,ucs:6000,phi:38,t0:600,biot:1.0,nu:.27,incl:0, azim:0,  pmw:18.5},
+    horizontal: {tvd:9000, sv:8500, sH:9000, sh:6500, pp:4000, ucs:3500,phi:30,t0:350,biot:1.0,nu:.25,incl:90,azim:0,  pmw:13.0}
+  }[key];
+  if (!P) return;
   currentUnits = 'psi';
   document.getElementById('btnPsi').classList.add('active');
   document.getElementById('btnPpg').classList.remove('active');
-  document.getElementById('tvd').value = 10000;
+  document.getElementById('unitHint').innerHTML = 'Enter stresses in <strong>psi</strong>. EMW results calculated using TVD.';
+  Object.keys(P).forEach(function(k){
+    var el = document.getElementById(k); if(el) el.value = P[k];
+  });
   document.getElementById('depthUnit').value = 'ft';
-  document.getElementById('sv').value = 9500;
-  document.getElementById('sH').value = 8500;
-  document.getElementById('sh').value = 7000;
-  document.getElementById('pp').value = 4330;
-  document.getElementById('ucs').value = 3000;
-  document.getElementById('phi').value = 30;
-  document.getElementById('t0').value = 300;
-  document.getElementById('biot').value = 1.0;
-  document.getElementById('nu').value = 0.25;
-  document.getElementById('incl').value = 0;
-  document.getElementById('azim').value = 0;
-  document.getElementById('unitHint').innerHTML = 'Enter all stresses and pressures in <strong>psi</strong>. EMW will be calculated using TVD.';
-  document.getElementById('svHint').textContent = 'Typical: 0.85–1.0 psi/ft overburden gradient';
-  document.getElementById('ppHint').textContent = 'Normal pore pressure gradient ≈ 0.433 psi/ft';
-  document.getElementById('resultsPanel').innerHTML = `
-    <div class="results-placeholder" id="placeholder">
-      <div class="icon">🛢️</div>
-      <p><strong>Enter your parameters and click Calculate</strong><br><span style="font-size:0.9rem;">Results, the mud weight window, and Mohr circle will appear here.</span></p>
-    </div>`;
+  onHints();
+  calculate();
 }
 
-// ─── NAV / UI ──────────────────────────────────────────────────────────────────
-document.getElementById('year').textContent = new Date().getFullYear();
+function resetDefaults() { loadScenario('normal'); }
 
-const navToggle = document.getElementById('navToggle');
-const navMobile = document.getElementById('navMobile');
-navToggle.addEventListener('click', () => {
-  const open = navMobile.style.display === 'flex';
-  navMobile.style.display = open ? 'none' : 'flex';
+// ═══════════════════════════════════════════════
+//  CORE CALCULATION
+// ═══════════════════════════════════════════════
+function calculate() {
+  var tvdf  = getTvdFt();
+  var sv    = getPsi('sv'), sH = getPsi('sH'), sh = getPsi('sh'), pp = getPsi('pp');
+  var ucs   = parseFloat(document.getElementById('ucs').value)  || 0;
+  var phi   = parseFloat(document.getElementById('phi').value)  || 30;
+  var t0    = parseFloat(document.getElementById('t0').value)   || 0;
+  var biot  = parseFloat(document.getElementById('biot').value) || 1;
+  var nu    = parseFloat(document.getElementById('nu').value)   || 0.25;
+  var incl  = parseFloat(document.getElementById('incl').value) || 0;
+  var azim  = parseFloat(document.getElementById('azim').value) || 0;
+  var pmw   = parseFloat(document.getElementById('plannedMw').value) || 12;
+
+  // Validation
+  if (tvdf <= 0) { alert('TVD must be > 0.'); return; }
+  if (sH < sh)   { alert('\u03c3H must be \u2265 \u03c3h.'); return; }
+  if (phi <= 0 || phi >= 90) { alert('Friction angle must be 1\u00b0\u201389\u00b0.'); return; }
+
+  var d2r = Math.PI/180;
+  var ir  = incl*d2r, ar = azim*d2r;
+  var ci  = Math.cos(ir), si = Math.sin(ir);
+  var ca  = Math.cos(ar), sa = Math.sin(ar);
+  var s2a = Math.sin(2*ar), c2a = Math.cos(2*ar);
+
+  // 1. Stress rotation to wellbore frame
+  var sx  = sH*ci*ci*ca*ca + sh*ci*ci*sa*sa + sv*si*si;
+  var sy  = sH*sa*sa        + sh*ca*ca;
+  var sz  = sH*si*si*ca*ca  + sh*si*si*sa*sa + sv*ci*ci;
+  var txy = -0.5*ci*s2a*(sH-sh);
+  var txz =  0.5*Math.sin(2*ir)*(sH*ca*ca + sh*sa*sa - sv);
+  var tyz = -0.5*si*s2a*(sH-sh);
+
+  // 2. Effective far-field stresses
+  var sx_e = sx - biot*pp;
+  var sy_e = sy - biot*pp;
+  var sz_e = sz - biot*pp;
+
+  // 3. MC parameters
+  var sinPhi = Math.sin(phi*d2r), cosPhi = Math.cos(phi*d2r);
+  var q   = (1+sinPhi)/(1-sinPhi);
+  var coh = ucs*(1-sinPhi)/(2*cosPhi);
+
+  // 4. Angular scan — 720 points
+  var N = 720, dTh = 2*Math.PI/N;
+  var Pw_collapse = -Infinity, Pw_frac = Infinity;
+  var critC = 0, critF = 0;
+  var scanData = [];
+
+  for (var k = 0; k < N; k++) {
+    var th   = k*dTh;
+    var ct2  = Math.cos(2*th), st2 = Math.sin(2*th);
+    var cth  = Math.cos(th),   sth = Math.sin(th);
+
+    var C1       = (sx_e+sy_e) - 2*(sx_e-sy_e)*ct2 - 4*txy*st2;
+    var szz_eff  = sz_e - 2*nu*((sx_e-sy_e)*ct2 + 2*txy*st2);
+    var tthz     = 2*(-txz*sth + tyz*cth);   // Fjaer et al. Eq 4.100
+
+    // ── Fracture: closed-form from sigma'B = -T0 ──────────────
+    // Pw_frac = C1 + T0 - tau_thz^2/(szz_eff+T0) + alpha*Pp
+    var denom = szz_eff + t0;
+    var Pwf   = denom > 1e-6 ? C1 + t0 - (tthz*tthz)/denom + biot*pp
+                              : C1 + t0 + biot*pp;
+    if (Pwf < Pw_frac) { Pw_frac = Pwf; critF = th/d2r; }
+
+    // ── Collapse: Newton-Raphson, sigma'A(P)=UCS+q*sigma'rr ──
+    // f(P)=0.5*(C1-P+szz_eff)+R-UCS-q*P, R=sqrt(half_diff^2+tthz^2)
+    // CORRECTED derivative: dR/dP = -half_diff/(2*R)
+    var P = (C1 - ucs)/(1+q);  // analytic initial guess (tthz=0 case)
+    for (var it = 0; it < 40; it++) {
+      var X    = C1 - P;
+      var hd   = (X - szz_eff)*0.5;         // half_diff
+      var R    = Math.sqrt(hd*hd + tthz*tthz);
+      var sA   = (X + szz_eff)*0.5 + R;
+      var f    = sA - ucs - q*P;
+      if (Math.abs(f) < 0.01) break;
+      var dRdP = -hd/(2*R);                  // corrected derivative
+      var df   = -0.5 + dRdP - q;
+      if (Math.abs(df) < 1e-12) break;
+      var dP = -f/df;
+      // step-limit prevents divergence on bad initial guess
+      P += Math.max(-2000, Math.min(2000, dP));
+    }
+    var Pwc = P + biot*pp;
+    if (Pwc > Pw_collapse) { Pw_collapse = Pwc; critC = th/d2r; }
+
+    scanData.push({th:th, C1:C1, szz_eff:szz_eff, tthz:tthz, Pwc_eff:P});
+  }
+
+  // 5. Lower bound = max(collapse, pore pressure)
+  var Pw_lb = Math.max(Pw_collapse, pp);
+
+  // 6. EMW conversions
+  var f2e  = 1/(0.052*tvdf);
+  var emw_col  = Pw_collapse*f2e, emw_lb = Pw_lb*f2e, emw_frac = Pw_frac*f2e;
+  var emw_pp   = pp*f2e, emw_sv = sv*f2e, emw_sH = sH*f2e, emw_sh = sh*f2e;
+  var window_ppg = emw_frac - emw_lb;
+
+  // 7. Breakout angle at planned MW
+  var pmw_psi = pmw*0.052*tvdf, pmw_eff = pmw_psi - biot*pp;
+  var boCount = 0;
+  for (var k2 = 0; k2 < N; k2++) {
+    var sd   = scanData[k2];
+    var stt  = sd.C1 - pmw_eff;
+    var avg2 = (stt+sd.szz_eff)*0.5;
+    var R2   = Math.sqrt(((stt-sd.szz_eff)*0.5)**2 + sd.tthz**2);
+    var sA2  = avg2+R2, sB2 = avg2-R2, srr2 = pmw_eff;
+    var all2 = [sA2,sB2,srr2].sort(function(a,b){return b-a;});
+    if (all2[0] >= ucs + q*all2[2]) boCount++;
+  }
+  var boFrac = boCount/N;
+  // Each breakout lobe spans 2*thetaBO on one side; the scan covers full 0-360 so
+  // thetaBO (halfwidth) = boFrac * 90 degrees.
+  var thetaBO = boFrac*90;
+
+  // 8. Stress regime
+  var regime;
+  if (sv >= sH)              regime = 'Normal Faulting (\u03c3v \u2265 \u03c3H \u2265 \u03c3h)';
+  else if (sH >= sv && sv >= sh) regime = 'Strike-Slip (\u03c3H \u2265 \u03c3v \u2265 \u03c3h)';
+  else                        regime = 'Reverse Faulting (\u03c3H \u2265 \u03c3h \u2265 \u03c3v)';
+
+  // 9. Window status
+  var ok = Pw_frac > Pw_lb && isFinite(Pw_frac);
+  var wCls, wLbl;
+  if (!ok)                  { wCls='sb-danger'; wLbl='No Safe Window \u2014 Critical'; }
+  else if (window_ppg>=2)   { wCls='sb-ok';     wLbl='Wide Window \u2014 Stable'; }
+  else if (window_ppg>=0.5) { wCls='sb-warn';   wLbl='Moderate Window \u2014 Exercise Care'; }
+  else                      { wCls='sb-danger';  wLbl='Narrow Window \u2014 Challenging'; }
+
+  // 10. Effective stresses at critical collapse angle (for Mohr circle)
+  var thC   = critC*d2r;
+  var ct2C  = Math.cos(2*thC), st2C = Math.sin(2*thC);
+  var Peff  = Pw_collapse - biot*pp;
+  var C1c   = (sx_e+sy_e) - 2*(sx_e-sy_e)*ct2C - 4*txy*st2C;
+  var szzC  = sz_e - 2*nu*((sx_e-sy_e)*ct2C + 2*txy*st2C);
+  var tthzC = 2*(-txz*Math.sin(thC) + tyz*Math.cos(thC));
+  var sHoop = C1c - Peff, sRad = Peff, sAx = szzC;
+  var avgC  = (sHoop+szzC)*0.5, RC = Math.sqrt(((sHoop-szzC)*0.5)**2+tthzC**2);
+  var sA_c  = avgC+RC, sB_c = avgC-RC;
+  var allC  = [sA_c, sB_c, sRad].sort(function(a,b){return b-a;});
+  var S1c=allC[0], S2c=allC[1], S3c=allC[2];
+
+  // 11. Pack result
+  var r = {
+    tvdf:tvdf,sv:sv,sH:sH,sh:sh,pp:pp,ucs:ucs,phi:phi,t0:t0,biot:biot,nu:nu,incl:incl,azim:azim,
+    sx:sx,sy:sy,sz:sz,txy:txy,txz:txz,tyz:tyz,
+    sx_e:sx_e,sy_e:sy_e,sz_e:sz_e,
+    q:q,coh:coh,sinPhi:sinPhi,cosPhi:cosPhi,
+    Pw_collapse:Pw_collapse,Pw_lb:Pw_lb,Pw_frac:Pw_frac,
+    emw_col:emw_col,emw_lb:emw_lb,emw_frac:emw_frac,
+    emw_pp:emw_pp,emw_sv:emw_sv,emw_sH:emw_sH,emw_sh:emw_sh,
+    window_ppg:window_ppg,ok:ok,wCls:wCls,wLbl:wLbl,
+    regime:regime,critC:critC,critF:critF,
+    S1c:S1c,S2c:S2c,S3c:S3c,sHoop:sHoop,sRad:sRad,sAx:sAx,
+    thetaBO:thetaBO,boFrac:boFrac,
+    scanData:scanData,N:N
+  };
+  window._lastResult = r;
+  renderResults(r, pmw);
+}
+
+// ═══════════════════════════════════════════════
+//  RENDER
+// ═══════════════════════════════════════════════
+function renderResults(r, pmw) {
+  var panel = document.getElementById('resultsPanel');
+  var icon  = r.wCls==='sb-ok' ? '\u2705' : r.wCls==='sb-warn' ? '\u26a0\ufe0f' : '\U0001f6a8';
+
+  var statusH = '<div class="status-bar '+r.wCls+'"><span class="sb-icon">'+icon+'</span>'
+    + '<span>'+r.wLbl+' \u2014 Window: <strong>'+(r.ok ? r.window_ppg.toFixed(2)+' ppg' : 'None')+'</strong>'
+    + ' &nbsp;|&nbsp; '+r.regime+'</span></div>';
+
+  var recMw = r.ok ? (r.emw_lb+0.3).toFixed(2) : '\u2014';
+  var metricsH = '<div class="card" style="padding:20px">'
+    +'<div class="card-title" style="margin-bottom:14px">Key Results</div>'
+    +'<div class="metrics-grid">'
+    + mc('mc-red',  'Collapse Pressure', r.emw_col.toFixed(2),  'ppg EMW', fmt(r.Pw_collapse)+' psi')
+    + mc('mc-green','Min Safe MW',       r.emw_lb.toFixed(2),   'ppg EMW', fmt(r.Pw_lb)+' psi')
+    + mc('mc-amber','Fracture Pressure', r.emw_frac.toFixed(2), 'ppg EMW', fmt(r.Pw_frac)+' psi')
+    + mc('mc-blue', 'Window Width',      r.ok?r.window_ppg.toFixed(2):'\u2014', r.ok?'ppg':'No window', 'Rec. MW: '+recMw+' ppg')
+    +'</div>'
+    +'<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px">'
+    + mc('mc-navy', 'Breakout Halfwidth', r.thetaBO.toFixed(1)+'&deg;', 'at planned '+pmw+' ppg', (r.boFrac*100).toFixed(1)+'% circumference')
+    + mc('mc-navy', 'Critical Angles',   r.critC.toFixed(0)+'&deg; / '+r.critF.toFixed(0)+'&deg;', 'collapse / fracture', 'from wellbore x-axis')
+    +'</div>'
+    +'</div>';
+
+  var mwBarH = buildMwBar(r, pmw);
+
+  var dualH = '<div class="dual-canvas">'
+    +'<div class="canvas-card">'
+    +'<div class="canvas-title">\u25ef Mohr Circle &mdash; Effective Principal Stresses at Collapse ('+r.critC.toFixed(0)+'&deg;)</div>'
+    +'<div class="canvas-wrap"><canvas id="mohrCanvas" width="560" height="310"></canvas></div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:8px">Blue = major circle (\u03c3\'<sub>1</sub>\u2013\u03c3\'<sub>3</sub>). Gray = minor circles. Red line = MC envelope. Yellow dot = failure point.</div>'
+    +'</div>'
+    +'<div class="canvas-card">'
+    +'<div class="canvas-title">\ud83c\udfaf Wellbore Polar Hoop Stress &mdash; Planned MW '+pmw+' ppg</div>'
+    +'<div class="canvas-wrap"><canvas id="polarCanvas" width="400" height="310"></canvas></div>'
+    +'<div style="font-size:11px;color:var(--muted);margin-top:8px">Blue = stable. Red = breakout zone. Outer contour = hoop stress magnitude. &sigma;H direction = right.</div>'
+    +'</div>'
+    +'</div>';
+
+  var barH = '<div class="canvas-card">'
+    +'<div class="canvas-title">\ud83d\udcca Stress Profile &mdash; All Pressures in ppg EMW</div>'
+    +'<div class="canvas-wrap"><canvas id="barCanvas" width="800" height="210"></canvas></div>'
+    +'</div>';
+
+  var tableH = buildTable(r, pmw);
+  var interpH = buildInterp(r, pmw);
+
+  panel.innerHTML = statusH+metricsH+mwBarH+dualH+barH+tableH+interpH;
+
+  requestAnimationFrame(function() {
+    drawMohrCircle(r);
+    drawPolarDiagram(r, pmw);
+    drawBarChart(r);
+    onPlannedChange();
+  });
+}
+
+function mc(cls,lbl,val,unit,sub) {
+  return '<div class="metric-card '+cls+'">'
+    +'<div class="m-label">'+lbl+'</div>'
+    +'<div class="m-value">'+val+'</div>'
+    +'<div class="m-unit">'+unit+'</div>'
+    +'<div class="m-sub">'+sub+'</div>'
+    +'</div>';
+}
+
+// ── Mud weight bar ────────────────────────────────
+function buildMwBar(r, pmw) {
+  var lo    = Math.max(0, Math.min(r.emw_pp, r.emw_col) - 1.5);
+  var hi    = r.emw_frac + 1.5;
+  var range = hi - lo;
+  function pct(v){ return Math.max(0,Math.min(100,(v-lo)/range*100)); }
+  var colPct   = pct(r.emw_lb);
+  var fracPct  = pct(r.emw_frac);
+  var safePct  = Math.max(0, fracPct-colPct);
+  var needlePct= pct(pmw);
+  var warnHTML = !r.ok ? '<div class="warn-box"><strong>\u26a0 Warning:</strong> No safe mud weight window. Consider casing, trajectory change, or MPD.</div>' : '';
+
+  return '<div class="mw-card">'
+    +'<div class="mw-title">\uD83C\uDFDA Safe Mud Weight Window (ppg EMW)</div>'
+    +'<div class="mw-outer">'
+    +'<div class="mw-seg mw-col"  style="left:0;width:'+colPct.toFixed(1)+'%">'+(colPct>10?'COLLAPSE':'')+'</div>'
+    +'<div class="mw-seg mw-safe" style="left:'+colPct.toFixed(1)+'%;width:'+safePct.toFixed(1)+'%">'+(safePct>12?'SAFE':'')+'</div>'
+    +'<div class="mw-seg mw-frac" style="left:'+fracPct.toFixed(1)+'%;width:'+(100-fracPct).toFixed(1)+'%">'+((100-fracPct)>10?'FRACTURE':'')+'</div>'
+    +'<div class="mw-needle" id="mwNeedle" style="left:'+needlePct.toFixed(1)+'%" data-lbl="'+pmw+' ppg"></div>'
+    +'</div>'
+    +'<div class="mw-scale"><span>'+lo.toFixed(1)+' ppg</span><span>'+((lo+hi)/2).toFixed(1)+' ppg</span><span>'+hi.toFixed(1)+' ppg</span></div>'
+    +'<div class="mw-legend">'
+    +'<div class="mw-li"><div class="mw-dot" style="background:#ef4444"></div>Collapse \u2264 '+r.emw_lb.toFixed(2)+' ppg</div>'
+    +'<div class="mw-li"><div class="mw-dot" style="background:#22c55e"></div>Safe Zone ('+r.window_ppg.toFixed(2)+' ppg wide)</div>'
+    +'<div class="mw-li"><div class="mw-dot" style="background:#f59e0b"></div>Fracture \u2265 '+r.emw_frac.toFixed(2)+' ppg</div>'
+    +'<div class="mw-li"><div class="mw-dot" style="background:#fff;border:1px solid #666"></div>Planned MW: '+pmw+' ppg</div>'
+    +'</div>'
+    +warnHTML
+    +'</div>';
+}
+
+function moveMwNeedle(r, pmw) {
+  var needle = document.getElementById('mwNeedle');
+  if (!needle) return;
+  var lo = Math.max(0, Math.min(r.emw_pp, r.emw_col)-1.5);
+  var hi = r.emw_frac+1.5;
+  var pct = Math.max(0,Math.min(100,(pmw-lo)/(hi-lo)*100));
+  needle.style.left = pct.toFixed(1)+'%';
+  needle.setAttribute('data-lbl', pmw+' ppg');
+}
+
+// ── Detail table ──────────────────────────────────
+function buildTable(r, pmw) {
+  var f2e = 1/(0.052*r.tvdf);
+  function emw(v){ return (v*f2e).toFixed(2); }
+  function row(lbl,p,e,n,key){
+    var td = key ? ' class="td-k"' : '';
+    return '<tr><td'+td+'>'+lbl+'</td><td'+td+'>'+p+'</td><td'+td+'>'+e+'</td><td style="color:var(--muted)">'+n+'</td></tr>';
+  }
+  function sec(lbl){ return '<tr><td colspan="4" class="td-sec">'+lbl+'</td></tr>'; }
+  var pmwPsi = pmw*0.052*r.tvdf;
+  return '<div class="tbl-card"><div class="tbl-title">\ud83d\udccb Full Stress Analysis Table</div>'
+    +'<table><thead><tr><th>Parameter</th><th>Value (psi)</th><th>EMW (ppg)</th><th>Notes</th></tr></thead><tbody>'
+    +sec('In-Situ Stresses')
+    +row('Overburden \u03c3v',      fmt(r.sv), r.emw_sv.toFixed(2), 'Vertical stress')
+    +row('Max Horizontal \u03c3H',  fmt(r.sH), r.emw_sH.toFixed(2), 'Max horizontal')
+    +row('Min Horizontal \u03c3h',  fmt(r.sh), r.emw_sh.toFixed(2), 'Min horizontal')
+    +row('Pore Pressure Pp',        fmt(r.pp), r.emw_pp.toFixed(2), 'Formation fluid pressure')
+    +row('Stress Regime',           '\u2014',  '\u2014',             r.regime)
+    +sec('Wellbore Frame Stresses (after rotation)')
+    +row('\u03c3x\u2019 (high-side dir.)', fmt(r.sx), emw(r.sx), 'After tensor rotation')
+    +row('\u03c3y\u2019 (lateral dir.)',   fmt(r.sy), emw(r.sy), 'After tensor rotation')
+    +row('\u03c3z\u2019 (axial dir.)',     fmt(r.sz), emw(r.sz), 'After tensor rotation')
+    +row('\u03c4xy\u2019',                 fmt(r.txy),emw(r.txy),'In-plane shear')
+    +row('\u03c4xz\u2019',                 fmt(r.txz),emw(r.txz),'Out-of-plane shear')
+    +row('\u03c4yz\u2019',                 fmt(r.tyz),emw(r.tyz),'Out-of-plane shear')
+    +sec('Stability Results')
+    +row('Collapse Pressure',    fmt(r.Pw_collapse), r.emw_col.toFixed(2),  '\u03b8crit \u2248 '+r.critC.toFixed(0)+'\u00b0', true)
+    +row('Min Safe MW',          fmt(r.Pw_lb),       r.emw_lb.toFixed(2),   'max(Collapse, Pp)', true)
+    +row('Fracture Pressure',    fmt(r.Pw_frac),     r.emw_frac.toFixed(2), '\u03b8crit \u2248 '+r.critF.toFixed(0)+'\u00b0', true)
+    +row('Window Width',         r.ok?fmt(r.Pw_frac-r.Pw_lb)+' psi':'None', r.ok?r.window_ppg.toFixed(2):'\u2014', r.wLbl, true)
+    +row('Recommended MW',       fmt(r.Pw_lb+0.3*0.052*r.tvdf)+' psi', (r.emw_lb+0.3).toFixed(2), 'Lower bound + 0.3 ppg safety margin', true)
+    +row('Planned MW',           fmt(pmwPsi), pmw.toFixed(2), 'Breakout \u03b8bo \u2248 '+r.thetaBO.toFixed(1)+'\u00b0', true)
+    +sec('Effective Principal Stresses at Critical Collapse Angle (\u03b8 \u2248 '+r.critC.toFixed(0)+'\u00b0)')
+    +row('\u03c3\'1 (maximum)',       fmt(r.S1c), emw(r.S1c), 'Maximum principal')
+    +row('\u03c3\'2 (intermediate)',  fmt(r.S2c), emw(r.S2c), 'Intermediate principal')
+    +row('\u03c3\'3 (minimum)',       fmt(r.S3c), emw(r.S3c), 'Minimum principal')
+    +sec('Rock &amp; Well Parameters')
+    +row('UCS',                  fmt(r.ucs)+' psi', '\u2014', 'Unconfined compressive strength')
+    +row('Friction Angle \u03c6', r.phi+'\u00b0', '\u2014', 'q = '+r.q.toFixed(3)+'  |  c = '+fmt(r.coh)+' psi')
+    +row('Tensile Strength T\u2080', fmt(r.t0)+' psi', '\u2014', 'Fracture initiation criterion')
+    +row('Biot Coefficient \u03b1', r.biot, '\u2014', 'Poroelastic coupling')
+    +row('Poisson\'s Ratio \u03bd', r.nu, '\u2014', 'Axial plane-strain correction')
+    +row('Inclination / Azimuth', r.incl+'\u00b0 / '+r.azim+'\u00b0', '\u2014', 'Well geometry')
+    +'</tbody></table></div>';
+}
+
+// ── Interpretation ────────────────────────────────
+function buildInterp(r, pmw) {
+  var pmwStatus = pmw < r.emw_lb ? 'BELOW collapse pressure (\u26a0 risk of wellbore breakout)'
+                : pmw > r.emw_frac ? 'ABOVE fracture pressure (\u26a0 risk of lost circulation)'
+                : 'within the safe window \u2714';
+  var body = r.ok
+    ? 'Mud weight window: <strong>'+r.emw_lb.toFixed(2)+' \u2013 '+r.emw_frac.toFixed(2)+' ppg</strong> ('
+      +r.window_ppg.toFixed(2)+' ppg wide). Regime: <strong>'+r.regime+'</strong>. '
+      +'At the planned mud weight of <strong>'+pmw+' ppg</strong>, the well is <strong>'+pmwStatus+'</strong>'
+      +(r.thetaBO>0.5&&pmw<r.emw_lb?' with a breakout halfwidth of ~'+r.thetaBO.toFixed(1)+'\u00b0':'')
+      +'. '+(r.incl>5?'At '+r.incl+'\u00b0 inclination the critical collapse angle is \u03b8 \u2248 '+r.critC.toFixed(0)+'\u00b0. ':'')
+      +'Recommended mud weight: <strong>'+(r.emw_lb+0.3).toFixed(2)+' ppg</strong> (lower bound + 0.3 ppg safety margin).'
+    : '<strong>No safe mud weight window exists.</strong> Pw_frac ('+r.emw_frac.toFixed(2)+' ppg) is at or below '
+      +'minimum required MW ('+r.emw_lb.toFixed(2)+' ppg). Options: (1) set casing and isolate the interval, '
+      +'(2) adjust well trajectory to reduce stress concentration, (3) managed pressure drilling (MPD), '
+      +'or (4) review formation evaluation data.';
+  var bStyle = r.wCls==='sb-ok'
+    ? 'background:var(--green-pale);color:var(--green);border:1.5px solid var(--green)'
+    : r.wCls==='sb-warn'
+    ? 'background:var(--amber-pale);color:var(--amber);border:1.5px solid var(--amber)'
+    : 'background:var(--red-pale);color:var(--red);border:1.5px solid var(--red)';
+  return '<div class="interp-card">'
+    +'<div class="interp-title">\ud83d\udccc Engineering Interpretation</div>'
+    +'<span class="interp-badge" style="'+bStyle+'">'+r.wLbl+'</span>'
+    +'<p class="interp-text">'+body+'</p>'
+    +'</div>';
+}
+
+// ═══════════════════════════════════════════════
+//  MOHR CIRCLE
+// ═══════════════════════════════════════════════
+function drawMohrCircle(r) {
+  var canvas = document.getElementById('mohrCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var W=canvas.width, H=canvas.height;
+  var pL=68,pR=16,pT=24,pB=46;
+  var pw=W-pL-pR, ph=H-pT-pB;
+  var S1=r.S1c, S2=r.S2c, S3=r.S3c;
+
+  var margin = Math.max(400, Math.abs(S1-S3)*0.28);
+  var xMin = Math.min(S3 - margin, -r.coh/Math.tan(r.phi*Math.PI/180) - margin*0.2);
+  var xMax = S1 + margin;
+  var yMax = (S1-S3)/2 + margin*0.45;
+  var yMin = -yMax*0.08;
+
+  function cx2(v){ return pL + (v-xMin)/(xMax-xMin)*pw; }
+  function cy2(v){ return H - pB - (v-yMin)/(yMax-yMin)*ph; }
+
+  // Background
+  ctx.fillStyle = '#0d1526'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle = '#0f1828'; ctx.fillRect(pL,pT,pw,ph);
+
+  // Grid
+  var step = niceStep((xMax-xMin)/5);
+  ctx.strokeStyle='rgba(255,255,255,0.07)'; ctx.lineWidth=1;
+  for (var gx=Math.ceil(xMin/step)*step; gx<=xMax; gx+=step) {
+    var bx=cx2(gx); if(bx<pL||bx>pL+pw) continue;
+    ctx.beginPath(); ctx.moveTo(bx,pT); ctx.lineTo(bx,H-pB); ctx.stroke();
+  }
+  for (var gy=0; gy<=yMax; gy+=step) {
+    var by=cy2(gy); if(by<pT||by>H-pB) continue;
+    ctx.beginPath(); ctx.moveTo(pL,by); ctx.lineTo(pL+pw,by); ctx.stroke();
+  }
+
+  // Axes
+  var y0=cy2(0), x0=cx2(0);
+  ctx.strokeStyle='rgba(255,255,255,0.28)'; ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(pL,y0); ctx.lineTo(pL+pw,y0); ctx.stroke();
+  if(x0>=pL&&x0<=pL+pw){ctx.beginPath(); ctx.moveTo(x0,pT); ctx.lineTo(x0,H-pB); ctx.stroke();}
+
+  // Safe zone shading
+  ctx.save();
+  ctx.beginPath(); ctx.rect(pL,pT,pw,ph); ctx.clip();
+  ctx.beginPath();
+  var tanP=r.sinPhi/r.cosPhi;
+  ctx.moveTo(cx2(xMin), cy2(Math.min(yMax,r.coh+xMin*tanP)));
+  ctx.lineTo(cx2(xMax), cy2(Math.min(yMax,r.coh+xMax*tanP)));
+  ctx.lineTo(cx2(xMax), cy2(yMin));
+  ctx.lineTo(cx2(xMin), cy2(yMin));
+  ctx.closePath();
+  ctx.fillStyle='rgba(22,163,74,0.07)'; ctx.fill();
+  ctx.restore();
+
+  // MC envelope
+  ctx.save(); ctx.beginPath(); ctx.rect(pL,pT,pw,ph); ctx.clip();
+  ctx.beginPath();
+  ctx.moveTo(cx2(xMin), cy2(Math.min(yMax,r.coh+xMin*tanP)));
+  ctx.lineTo(cx2(xMax), cy2(Math.min(yMax,r.coh+xMax*tanP)));
+  ctx.strokeStyle='#f87171'; ctx.lineWidth=2; ctx.setLineDash([]); ctx.stroke();
+  ctx.restore();
+  ctx.fillStyle='#f87171'; ctx.font='bold 10px system-ui';
+  ctx.fillText('MC Envelope (\u03c6='+r.phi+'\u00b0, c='+Math.round(r.coh)+' psi)', pL+6, pT+14);
+
+  // Cohesion marker
+  var cy_coh=cy2(r.coh), cx_coh=cx2(0);
+  if(cy_coh>=pT&&cy_coh<=H-pB&&cx_coh>=pL&&cx_coh<=pL+pw){
+    ctx.beginPath(); ctx.arc(cx_coh,cy_coh,3,0,2*Math.PI);
+    ctx.fillStyle='#f87171'; ctx.fill();
+    ctx.fillStyle='#f87171'; ctx.font='9px system-ui';
+    ctx.fillText('c='+Math.round(r.coh), cx_coh+5, cy_coh-3);
+  }
+
+  // Three Mohr circles (half-circle above x-axis)
+  ctx.save(); ctx.beginPath(); ctx.rect(pL,pT,pw,ph); ctx.clip();
+  var circles=[
+    {a:S1,b:S3,col:'#3b82f6',lw:2.5},
+    {a:S1,b:S2,col:'rgba(147,197,253,0.45)',lw:1.2},
+    {a:S2,b:S3,col:'rgba(147,197,253,0.45)',lw:1.2}
+  ];
+  circles.forEach(function(c){
+    var rad=(c.a-c.b)/2; if(rad<=0) return;
+    var ccx=cx2((c.a+c.b)/2), ccy=cy2(0);
+    var rpx=rad/(xMax-xMin)*pw;
+    ctx.beginPath(); ctx.arc(ccx,ccy,rpx,Math.PI,0,false);
+    ctx.strokeStyle=c.col; ctx.lineWidth=c.lw; ctx.stroke();
+  });
+  ctx.restore();
+
+  // Failure point (tangent of major circle to MC line)
+  var cen=(S1+S3)/2, rad_c=(S1-S3)/2;
+  var mag=Math.sqrt(r.sinPhi*r.sinPhi+1);
+  var sign=(r.coh*r.cosPhi+cen*r.sinPhi>0)?1:-1;
+  var fpX=cen - sign*r.sinPhi/mag*rad_c;
+  var fpY=       sign*1/mag*rad_c;
+  if(fpX>=xMin&&fpX<=xMax&&fpY>=yMin&&fpY<=yMax){
+    ctx.beginPath(); ctx.arc(cx2(fpX),cy2(fpY),5,0,2*Math.PI);
+    ctx.fillStyle='#fbbf24'; ctx.fill();
+    ctx.fillStyle='#fbbf24'; ctx.font='bold 10px system-ui';
+    ctx.fillText('Failure', cx2(fpX)+8, cy2(fpY)-4);
+  }
+
+  // Principal stress markers
+  [[S3,'\u03c3\u20323','#f87171'],[S2,'\u03c3\u20322','#94a3b8'],[S1,'\u03c3\u20321','#60a5fa']].forEach(function(item){
+    var sv2=item[0],lb=item[1],col=item[2];
+    var bx=cx2(sv2); if(bx<pL||bx>pL+pw) return;
+    ctx.beginPath(); ctx.arc(bx,y0,4,0,2*Math.PI);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.fillStyle=col; ctx.font='bold 10px system-ui'; ctx.textAlign='center';
+    ctx.fillText(lb, bx, y0+16);
+    ctx.fillStyle='rgba(255,255,255,0.45)'; ctx.font='9px system-ui';
+    ctx.fillText(Math.round(sv2/1000)+'k', bx, y0+27);
+    ctx.textAlign='left';
+  });
+
+  // Axis labels & ticks
+  ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='bold 11px system-ui';
+  ctx.fillText('\u03c3\' (psi)', pL+pw-52, y0-9);
+  ctx.save(); ctx.translate(13,pT+ph/2); ctx.rotate(-Math.PI/2);
+  ctx.textAlign='center'; ctx.fillText('\u03c4 (psi)',0,0); ctx.restore();
+  ctx.textAlign='left';
+  ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.font='9px system-ui'; ctx.textAlign='center';
+  for(var gx2=Math.ceil(xMin/step)*step; gx2<=xMax; gx2+=step*2){
+    var bx2=cx2(gx2); if(bx2<pL||bx2>pL+pw) continue;
+    ctx.fillText(Math.round(gx2/1000)+'k', bx2, H-pB+13);
+  }
+  ctx.textAlign='left';
+}
+
+// ═══════════════════════════════════════════════
+//  POLAR WELLBORE DIAGRAM
+// ═══════════════════════════════════════════════
+function drawPolarDiagram(r, pmw) {
+  var canvas = document.getElementById('polarCanvas');
+  if (!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width, H=canvas.height;
+  var cx=W*0.5, cy=H*0.5;
+  var wellR=Math.min(W,H)*0.09;
+  var maxR =Math.min(W,H)*0.41;
+
+  var pmwPsi=pmw*0.052*r.tvdf, pmwEff=pmwPsi-r.biot*r.pp;
+
+  var n=360;
+  var hoop=new Float64Array(n), fail=new Uint8Array(n);
+  var hMax=-Infinity, hMin=Infinity;
+
+  for(var k=0;k<n;k++){
+    var th=k*2*Math.PI/n;
+    var ct2=Math.cos(2*th),st2=Math.sin(2*th);
+    var cth=Math.cos(th),sth=Math.sin(th);
+    var C1=(r.sx_e+r.sy_e)-2*(r.sx_e-r.sy_e)*ct2-4*r.txy*st2;
+    var stt=C1-pmwEff;
+    var szz=r.sz_e-2*r.nu*((r.sx_e-r.sy_e)*ct2+2*r.txy*st2);
+    var tthz=2*(-r.txz*sth+r.tyz*cth);
+    hoop[k]=stt;
+    if(stt>hMax) hMax=stt;
+    if(stt<hMin) hMin=stt;
+    var avg=(stt+szz)*0.5, R2=Math.sqrt(((stt-szz)*0.5)**2+tthz**2);
+    var sA=avg+R2, sB=avg-R2, srr=pmwEff;
+    var all=[sA,sB,srr].sort(function(a,b){return b-a;});
+    fail[k]=all[0]>=r.ucs+r.q*all[2]?1:0;
+  }
+
+  ctx.fillStyle='#0f1828'; ctx.fillRect(0,0,W,H);
+
+  // Grid rings
+  [0.33,0.66,1.0].forEach(function(f){
+    ctx.beginPath(); ctx.arc(cx,cy,wellR+(maxR-wellR)*f,0,2*Math.PI);
+    ctx.strokeStyle='rgba(255,255,255,0.08)'; ctx.lineWidth=1; ctx.stroke();
+  });
+  // Spokes
+  for(var a=0;a<360;a+=30){
+    var ar=a*Math.PI/180;
+    ctx.beginPath();
+    ctx.moveTo(cx+wellR*Math.cos(ar),cy+wellR*Math.sin(ar));
+    ctx.lineTo(cx+maxR*Math.cos(ar),cy+maxR*Math.sin(ar));
+    ctx.strokeStyle='rgba(255,255,255,0.05)'; ctx.lineWidth=1; ctx.stroke();
+  }
+
+  var scale=(maxR-wellR)/Math.max(1,hMax-hMin);
+
+  // Hoop stress polygon (stable)
+  ctx.beginPath();
+  for(var k2=0;k2<n;k2++){
+    var th2=k2*2*Math.PI/n - Math.PI/2; // 0 = top
+    var rp=wellR+Math.max(0,hoop[k2]-hMin)*scale;
+    var x=cx+rp*Math.cos(th2), y=cy+rp*Math.sin(th2);
+    k2===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(29,78,216,0.14)'; ctx.fill();
+  ctx.strokeStyle='#60a5fa'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // Breakout overlay
+  var hasFail=false;
+  for(var k3=0;k3<n;k3++){
+    if(!fail[k3]) continue;
+    hasFail=true;
+    var th3=k3*2*Math.PI/n - Math.PI/2;
+    ctx.beginPath();
+    ctx.moveTo(cx+wellR*Math.cos(th3),cy+wellR*Math.sin(th3));
+    ctx.lineTo(cx+maxR*Math.cos(th3),cy+maxR*Math.sin(th3));
+    ctx.strokeStyle='rgba(220,38,38,0.55)'; ctx.lineWidth=2.5; ctx.stroke();
+  }
+  // Breakout polygon
+  if(hasFail){
+    ctx.beginPath();
+    var started=false;
+    for(var k4=0;k4<n;k4++){
+      if(!fail[k4]){started=false;continue;}
+      var th4=k4*2*Math.PI/n-Math.PI/2;
+      var rp4=wellR+Math.max(0,hoop[k4]-hMin)*scale;
+      var x4=cx+rp4*Math.cos(th4), y4=cy+rp4*Math.sin(th4);
+      if(!started){ctx.moveTo(x4,y4);started=true;}else{ctx.lineTo(x4,y4);}
+    }
+    ctx.strokeStyle='#f87171'; ctx.lineWidth=2; ctx.stroke();
+  }
+
+  // Wellbore circle
+  ctx.beginPath(); ctx.arc(cx,cy,wellR,0,2*Math.PI);
+  ctx.fillStyle='#1a2e4a'; ctx.fill();
+  ctx.strokeStyle='#93c5fd'; ctx.lineWidth=2; ctx.stroke();
+
+  // Direction labels
+  var arL=maxR+16;
+  ctx.strokeStyle='#fbbf24'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]);
+  ctx.beginPath(); ctx.moveTo(cx-arL,cy); ctx.lineTo(cx+arL,cy); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(cx,cy-arL); ctx.lineTo(cx,cy+arL); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.fillStyle='#fbbf24'; ctx.font='bold 11px system-ui'; ctx.textAlign='center';
+  ctx.fillText('\u03c3H', cx+arL-4, cy-7);
+  ctx.fillText('\u03c3h', cx+5,    cy-arL+14);
+  ctx.textAlign='left';
+
+  // Legend
+  ctx.fillStyle='#60a5fa'; ctx.font='10px system-ui';
+  ctx.fillText('\u2014 Stable', 8, H-32);
+  ctx.fillStyle='#f87171';
+  ctx.fillText('\u2014 Breakout', 8, H-18);
+  ctx.fillStyle='rgba(255,255,255,0.45)';
+  ctx.fillText('\u03b8bo \u2248 '+r.thetaBO.toFixed(1)+'\u00b0 | MW='+pmw+' ppg', 8, H-5);
+}
+
+// ═══════════════════════════════════════════════
+//  BAR CHART
+// ═══════════════════════════════════════════════
+function drawBarChart(r) {
+  var canvas=document.getElementById('barCanvas'); if(!canvas) return;
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width, H=canvas.height;
+  var pL=148,pR=80,pT=20,pB=32;
+  var pw=W-pL-pR, ph=H-pT-pB;
+
+  ctx.fillStyle='#0d1526'; ctx.fillRect(0,0,W,H);
+  ctx.fillStyle='#0f1828'; ctx.fillRect(pL,pT,pw,ph);
+
+  var bars=[
+    {lbl:'Pore Pressure Pp',        val:r.emw_pp,      col:'#3b82f6'},
+    {lbl:'Collapse Pressure',        val:r.emw_col,     col:'#ef4444'},
+    {lbl:'Min Safe MW',              val:r.emw_lb,      col:'#22c55e'},
+    {lbl:'Fracture Pressure',        val:r.emw_frac,    col:'#f59e0b'},
+    {lbl:'Overburden \u03c3v',       val:r.emw_sv,      col:'#8b5cf6'},
+    {lbl:'Max Horizontal \u03c3H',   val:r.emw_sH,      col:'#06b6d4'},
+    {lbl:'Min Horizontal \u03c3h',   val:r.emw_sh,      col:'#0ea5e9'}
+  ];
+
+  var maxVal=Math.max.apply(null,bars.map(function(b){return b.val;}))*1.12;
+  var bH=ph/bars.length;
+  var step=niceStep(maxVal/4);
+
+  // Grid
+  ctx.strokeStyle='rgba(255,255,255,0.06)'; ctx.lineWidth=1;
+  for(var gx=step;gx<=maxVal;gx+=step){
+    var bx=pL+gx/maxVal*pw;
+    ctx.beginPath(); ctx.moveTo(bx,pT); ctx.lineTo(bx,H-pB); ctx.stroke();
+  }
+
+  bars.forEach(function(b,i){
+    var y=pT+i*bH+bH*0.14, bh=bH*0.72, bw=b.val/maxVal*pw;
+    var gr=ctx.createLinearGradient(pL,0,pL+bw,0);
+    gr.addColorStop(0,b.col+'cc'); gr.addColorStop(1,b.col+'55');
+    ctx.fillStyle=gr;
+    ctx.beginPath();
+    if(ctx.roundRect) ctx.roundRect(pL,y,bw,bh,3);
+    else ctx.rect(pL,y,bw,bh);
+    ctx.fill();
+    ctx.fillStyle='rgba(255,255,255,0.78)'; ctx.font='bold 11px system-ui'; ctx.textAlign='right';
+    ctx.fillText(b.lbl, pL-8, y+bh/2+4);
+    ctx.textAlign='left';
+    ctx.fillStyle=b.col; ctx.font='bold 11px system-ui';
+    ctx.fillText(b.val.toFixed(2)+' ppg', pL+bw+6, y+bh/2+4);
+  });
+  ctx.textAlign='left';
+
+  // X ticks
+  ctx.fillStyle='rgba(255,255,255,0.38)'; ctx.font='9px system-ui'; ctx.textAlign='center';
+  for(var gx2=0;gx2<=maxVal;gx2+=step){
+    var bx2=pL+gx2/maxVal*pw;
+    ctx.fillText(gx2.toFixed(1), bx2, H-pB+14);
+  }
+  ctx.fillText('ppg EMW', pL+pw/2, H-2);
+  ctx.textAlign='left';
+}
+
+// ── Helpers ───────────────────────────────────────
+function fmt(v){ return isFinite(v)&&!isNaN(v)?Math.round(v).toLocaleString('en-US'):'\u2014'; }
+function niceStep(approx){
+  var mag=Math.pow(10,Math.floor(Math.log10(Math.abs(approx)||1)));
+  var steps=[1,2,2.5,5,10];
+  for(var i=0;i<steps.length;i++){ if(mag*steps[i]>=approx) return mag*steps[i]; }
+  return mag*10;
+}
+
+// ── UI boilerplate ────────────────────────────────
+document.getElementById('fyear').textContent = new Date().getFullYear();
+
+document.getElementById('navToggle').addEventListener('click', function(){
+  var m=document.getElementById('navMobile');
+  m.style.display=m.style.display==='flex'?'none':'flex';
+});
+window.addEventListener('scroll', function(){
+  document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY>10);
+  document.getElementById('bttBtn').classList.toggle('show', window.scrollY>300);
+});
+document.getElementById('bttBtn').addEventListener('click', function(){
+  window.scrollTo({top:0,behavior:'smooth'});
 });
 
-window.addEventListener('scroll', () => {
-  const header = document.getElementById('siteHeader');
-  header.classList.toggle('scrolled', window.scrollY > 10);
-  const btn = document.getElementById('backToTop');
-  btn.classList.toggle('show', window.scrollY > 300);
-});
-
-document.getElementById('backToTop').addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Auto-run on load with default values to demonstrate the tool
-window.addEventListener('load', () => {
-  onInputChange();
-  calculate();
-});
+// Auto-run on load with default values so the tool is immediately useful.
+window.addEventListener('load', function(){ onHints(); calculate(); });
 </script>
 </body>
 </html>
