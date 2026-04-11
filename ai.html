@@ -33,7 +33,7 @@
   <meta http-equiv="x-dns-prefetch-control" content="on" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://api-inference.huggingface.co" />
+  <link rel="preconnect" href="https://brigetheapp.netlify.app" />
 
   <style>
     :root{
@@ -173,7 +173,9 @@
     .chat-message.user .chat-bubble{background:var(--blue);color:#ffffff;border-bottom-right-radius:4px;}
 
     /* Typing indicator */
-    .typing-indicator{display:flex;gap:4px;align-items:center;padding:2px 0;}
+    .typing-indicator{display:flex;gap:8px;align-items:center;padding:2px 0;}
+    .typing-text{font-size:13px;color:var(--text-muted);font-style:italic;}
+    .typing-dots{display:flex;gap:4px;align-items:center;}
     .typing-dot{width:7px;height:7px;border-radius:50%;background:#94a3b8;animation:typing-bounce 1.4s infinite;}
     .typing-dot:nth-child(2){animation-delay:0.2s;}
     .typing-dot:nth-child(3){animation-delay:0.4s;}
@@ -337,11 +339,11 @@
                     <span class="chat-header-badge">✓ Live AI</span>
                   </div>
 
-                  <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+                  <div id="response-area" class="chat-messages" aria-live="polite"></div>
 
                   <div class="chat-input-row">
                     <input
-                      id="chatInput"
+                      id="user-query"
                       class="chat-input"
                       type="text"
                       placeholder="Ask about menu, hours, or ordering…"
@@ -594,9 +596,9 @@
 
       var s = scenarios[name];
       document.getElementById('chatBizName').textContent = s.bizName;
-      document.getElementById('chatInput').placeholder = 'Ask a question…';
+      document.getElementById('user-query').placeholder = 'Ask a question…';
 
-      var msgs = document.getElementById('chatMessages');
+      var msgs = document.getElementById('response-area');
       msgs.innerHTML = '';
       addBotMessage(s.greeting);
       renderSuggestions(name);
@@ -611,14 +613,14 @@
     }
 
     function useSuggestion(btn) {
-      var input = document.getElementById('chatInput');
+      var input = document.getElementById('user-query');
       input.value = btn.textContent.trim();
       handleSend();
     }
 
     // ─── Message helpers ───────────────────────────────────────────────────────
     function addBotMessage(text) {
-      var msgs = document.getElementById('chatMessages');
+      var msgs = document.getElementById('response-area');
       var div = document.createElement('div');
       div.className = 'chat-message bot';
       div.innerHTML =
@@ -630,7 +632,7 @@
     }
 
     function addUserMessage(text) {
-      var msgs = document.getElementById('chatMessages');
+      var msgs = document.getElementById('response-area');
       var div = document.createElement('div');
       div.className = 'chat-message user';
       div.innerHTML =
@@ -641,15 +643,17 @@
     }
 
     function showTyping() {
-      var msgs = document.getElementById('chatMessages');
+      var msgs = document.getElementById('response-area');
       var div = document.createElement('div');
       div.className = 'chat-message bot';
       div.id = 'typingIndicator';
       div.innerHTML =
         '<div class="chat-avatar bot" aria-hidden="true">🤖</div>' +
-        '<div class="chat-bubble"><div class="typing-indicator" aria-label="AI is typing">' +
+        '<div class="chat-bubble"><div class="typing-indicator" aria-label="AI is thinking...">' +
+        '<span class="typing-text">AI is thinking</span>' +
+        '<div class="typing-dots">' +
         '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>' +
-        '</div></div>';
+        '</div></div></div>';
       msgs.appendChild(div);
       msgs.scrollTop = msgs.scrollHeight;
     }
@@ -672,7 +676,7 @@
     // ─── Send handler ──────────────────────────────────────────────────────────
     function handleSend() {
       if (isWaiting) return;
-      var input = document.getElementById('chatInput');
+      var input = document.getElementById('user-query');
       var msg = input.value.trim();
       if (!msg) return;
 
@@ -688,39 +692,27 @@
       }).catch(function(err) {
         hideTyping();
         var errText = err && err.loading
-          ? '⏳ The AI model is warming up — this usually takes about 20 seconds. Please send your message again in a moment!'
+          ? '⏳ The AI is warming up — please send your message again in a moment!'
           : '😕 I could not connect right now. Please try again in a moment, or contact us directly for help!';
         addBotMessage(errText);
       }).finally(function() {
         isWaiting = false;
         document.getElementById('sendBtn').disabled = false;
-        document.getElementById('chatInput').focus();
+        document.getElementById('user-query').focus();
       });
     }
 
-    // ─── HuggingFace Inference API ─────────────────────────────────────────────
+    // ─── Netlify API Bridge ────────────────────────────────────────────────────
     function callAI(userMessage) {
       var s = scenarios[currentScenario];
       var prompt = '<s>[INST] ' + s.systemPrompt + '\n\nCustomer question: ' + userMessage + ' [/INST]';
 
       return fetch(
-        'https://api-inference.huggingface.co/models/mistralai/Mistral-7B-Instruct-v0.2',
+        'https://brigetheapp.netlify.app/.netlify/functions/chat',
         {
           method: 'POST',
-          headers: {
-            'Authorization': 'Bearer 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',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            inputs: prompt,
-            parameters: {
-              max_new_tokens: 220,
-              temperature: 0.65,
-              top_p: 0.9,
-              repetition_penalty: 1.1,
-              return_full_text: false
-            }
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: prompt })
         }
       ).then(function(response) {
         return response.json().then(function(data) {
