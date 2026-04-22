@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example No. 11 — Barbershop Template | Armin Studio</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+      background:linear-gradient(145deg,#0b0f16 0%,#141b27 50%,#0b0f16 100%);
+      min-height:100vh;display:flex;align-items:center;justify-content:center;padding:40px 20px;color:#fff;
+    }
+    .container{width:100%;max-width:900px}
+    header{text-align:center;margin-bottom:42px;animation:fadeDown .8s ease both}
+    .badge{display:inline-block;font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;padding:6px 16px;border-radius:100px;background:rgba(201,160,90,.15);border:1px solid rgba(201,160,90,.4);color:#e5cd9f;margin-bottom:16px}
+    h1{font-size:clamp(2rem,5vw,3rem);letter-spacing:-.02em;margin-bottom:10px}
+    h1 span{color:#c9a05a}
+    .subtitle{color:rgba(255,255,255,.62)}
+    .card{background:rgba(18,24,35,.82);border:1px solid rgba(255,255,255,.12);border-radius:20px;overflow:hidden;box-shadow:0 26px 70px rgba(0,0,0,.45);animation:fadeUp .9s .2s ease both}
+    .top{padding:34px 36px;background:linear-gradient(135deg,rgba(201,160,90,.15) 0%,rgba(93,166,255,.07) 100%);border-bottom:1px solid rgba(255,255,255,.1)}
+    .top small{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:#e5cd9f}
+    .top h2{font-size:2rem;margin:6px 0 8px}
+    .top p{color:rgba(255,255,255,.7)}
+    .body{padding:34px 36px}
+    .pills{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+    .pill{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.15);font-size:.84rem;text-decoration:none;color:#fff;transition:.25s}
+    .pill:hover{border-color:#c9a05a;transform:translateY(-2px)}
+    .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:26px}
+    .feature{font-size:.9rem;color:rgba(255,255,255,.75);padding:6px 0}
+    .feature::before{content:'✦ ';color:#c9a05a}
+    .cta{display:flex;gap:12px;flex-wrap:wrap}
+    .btn{padding:13px 24px;border-radius:10px;font-weight:700;text-decoration:none;display:inline-block;transition:.25s}
+    .btn-main{background:linear-gradient(135deg,#c9a05a 0%,#9f773a 100%);color:#18120b}
+    .btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.2);color:#fff}
+    .btn:hover{transform:translateY(-2px)}
+    .back-link{display:block;text-align:center;margin-top:26px;color:rgba(255,255,255,.45);text-decoration:none}
+    .back-link:hover{color:#c9a05a}
+    @keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:640px){.top,.body{padding:24px 20px}.feature-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">Armin Studio · Template Preview</div>
+      <h1>Barbershop <span>Media-First</span> Template</h1>
+      <p class="subtitle">Example No. 11 · 3-Page Animated Website</p>
+    </header>
+
+    <div class="card">
+      <div class="top">
+        <small>Customer Template No. 36 · Site 1</small>
+        <h2>Cut &amp; Craft Barbershop</h2>
+        <p>A modern 3-page barbershop website with heavy photo/video placeholder coverage and smooth motion design.</p>
+      </div>
+      <div class="body">
+        <div class="pills">
+          <a class="pill" href="exampleno11-site1/index.html">🏠 Home</a>
+          <a class="pill" href="exampleno11-site1/services.html">✂️ Services</a>
+          <a class="pill" href="exampleno11-site1/gallery.html">🎬 Gallery</a>
+        </div>
+
+        <div class="feature-grid">
+          <div class="feature">3 complete pages focused on barber conversion flow</div>
+          <div class="feature">Lots of large image placeholders for real photos</div>
+          <div class="feature">Dedicated video placeholder grids across pages</div>
+          <div class="feature">Animated shimmer, float, and reveal interactions</div>
+          <div class="feature">Premium dark + gold visual direction</div>
+          <div class="feature">Responsive layout with polished modern styling</div>
+          <div class="feature">Barbershop-specific sections and service storytelling</div>
+          <div class="feature">Ready for easy media replacement and branding</div>
+        </div>
+
+        <div class="cta">
+          <a href="exampleno11-site1/index.html" class="btn btn-main">Open Template →</a>
+          <a href="examples.html" class="btn btn-ghost">← Back to Examples</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="examples.html" class="back-link">← Return to all examples</a>
+  </div>
+</body>
+</html>

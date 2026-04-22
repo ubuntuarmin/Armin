@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cut & Craft Barbershop — Gallery</title>
+  <style>
+    :root{--bg:#0b0f16;--panel:#151d2a;--text:#f4f7ff;--muted:#aab4c8;--gold:#c9a05a;--line:rgba(255,255,255,.13)}
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;background:radial-gradient(circle at 75% -20%,#243044 0%,#0b0f16 42%),#0b0f16;color:var(--text)}
+    .container{width:min(1160px,92%);margin:0 auto}
+    .nav{position:sticky;top:0;z-index:11;background:rgba(11,15,22,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:15px 0}
+    .brand{font-weight:800;letter-spacing:.08em;text-transform:uppercase}.brand span{color:var(--gold)}
+    .links{display:flex;gap:10px;flex-wrap:wrap}.links a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);transition:.25s}.links a.active,.links a:hover{color:#fff;border-color:var(--gold)}
+    header{padding:54px 0 20px}
+    .tag{font-size:.74rem;color:#e5cd9f;letter-spacing:.1em;text-transform:uppercase}
+    h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.08;margin-top:10px}
+    .intro{max-width:760px;color:var(--muted);margin-top:12px}
+    .section{padding:24px 0 8px}
+    .section h2{font-size:1.2rem;color:#e5cd9f;text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px}
+    .masonry{display:grid;grid-template-columns:repeat(12,1fr);gap:10px}
+    .slot{border:2px dashed rgba(201,160,90,.48);border-radius:12px;background:linear-gradient(145deg,#161f2c,#121925);display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;position:relative;overflow:hidden;color:#dde3ef;font-size:.8rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;min-height:120px;animation:float 6s ease-in-out infinite}
+    .slot.video{border-color:rgba(93,166,255,.52)}
+    .slot::before{content:'';position:absolute;inset:-120% -20%;background:linear-gradient(125deg,transparent 30%,rgba(255,255,255,.12),transparent 70%);animation:shine 4.5s linear infinite}
+    .slot span{position:relative;z-index:1}
+    .a{grid-column:span 4;min-height:180px}.b{grid-column:span 3}.c{grid-column:span 5}.d{grid-column:span 6;min-height:200px}
+    .e{grid-column:span 2}.f{grid-column:span 4}.g{grid-column:span 3}.h{grid-column:span 5}
+    .video-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+    .reel{height:150px}
+    .note{margin-top:12px;color:var(--muted);font-size:.93rem}
+    .footer{padding:30px 0 42px;color:var(--muted);font-size:.9rem}
+    @keyframes shine{to{transform:translateX(70%)}}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+    @media(max-width:900px){.masonry{grid-template-columns:repeat(6,1fr)}.a,.b,.c,.d,.e,.f,.g,.h{grid-column:span 3}}
+    @media(max-width:620px){.masonry{grid-template-columns:1fr}.a,.b,.c,.d,.e,.f,.g,.h{grid-column:span 1;min-height:130px}}
+  </style>
+</head>
+<body>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Cut <span>&</span> Craft</div>
+      <div class="links">
+        <a href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a class="active" href="gallery.html">Gallery</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="container">
+    <div class="tag">Barbershop Visual Portfolio</div>
+    <h1>Photo & Video Placeholder-Heavy Gallery Page</h1>
+    <p class="intro">A modular gallery layout with a dense mix of placeholders for haircut showcases, barber portraits, product shots, event recaps, and cinematic social video blocks.</p>
+  </header>
+
+  <main class="container">
+    <section class="section">
+      <h2>Photo Placeholder Mosaic</h2>
+      <div class="masonry">
+        <div class="slot a"><span>Hero Lifestyle Session</span></div>
+        <div class="slot b"><span>Clean Fade Side Angle</span></div>
+        <div class="slot c"><span>Barber Team Group Portrait</span></div>
+        <div class="slot d"><span>Premium Chair + Interior Editorial</span></div>
+        <div class="slot e"><span>Clipper Macro</span></div>
+        <div class="slot f"><span>Beard Sculpt Sequence Shot</span></div>
+        <div class="slot g"><span>Reception & Product Wall</span></div>
+        <div class="slot h"><span>Client Reveal Celebration</span></div>
+      </div>
+      <p class="note">This section can be repeated for seasonal campaigns, holiday promos, and local event albums.</p>
+    </section>
+
+    <section class="section">
+      <h2>Video Placeholder Gallery</h2>
+      <div class="video-grid">
+        <div class="slot reel video"><span>Instagram Reel Placeholder</span></div>
+        <div class="slot reel video"><span>YouTube Short Placeholder</span></div>
+        <div class="slot reel video"><span>Transformation Montage</span></div>
+        <div class="slot reel video"><span>Client Testimonial Clip</span></div>
+        <div class="slot reel video"><span>Barber POV Tutorial</span></div>
+        <div class="slot reel video"><span>Shop Culture Highlight</span></div>
+        <div class="slot reel video"><span>Brand Story Trailer</span></div>
+        <div class="slot reel video"><span>Event Recap Reel</span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">Cut & Craft Gallery · Built to showcase high-volume barber visuals.</footer>
+</body>
+</html>
