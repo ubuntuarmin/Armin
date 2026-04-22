@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cut & Craft Barbershop — Home</title>
+  <style>
+    :root{
+      --bg:#0d0f14;
+      --bg-soft:#171b24;
+      --panel:#1f2531;
+      --text:#f6f7fb;
+      --muted:#a8b1c2;
+      --gold:#caa15a;
+      --gold-soft:#e3c992;
+      --line:rgba(255,255,255,.12);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:radial-gradient(circle at 15% -10%,#2a2f3d 0%,var(--bg) 40%),var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+    a{text-decoration:none;color:inherit}
+    .bg-lines{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:48px 48px;mask-image:radial-gradient(circle at center,black 35%,transparent 100%)}
+    .container{width:min(1120px,92%);margin:0 auto}
+    .nav{position:sticky;top:0;z-index:10;background:rgba(13,15,20,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+    .nav-inner{display:flex;justify-content:space-between;align-items:center;padding:16px 0}
+    .brand{font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+    .brand span{color:var(--gold)}
+    .links{display:flex;gap:10px;flex-wrap:wrap}
+    .links a{padding:8px 14px;border:1px solid var(--line);border-radius:999px;color:var(--muted);transition:.25s}
+    .links a.active,.links a:hover{color:var(--text);border-color:var(--gold);transform:translateY(-2px)}
+    .hero{padding:84px 0 44px;position:relative}
+    .badge{display:inline-block;padding:6px 12px;border-radius:999px;background:rgba(202,161,90,.12);border:1px solid rgba(202,161,90,.35);color:var(--gold-soft);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase}
+    h1{font-size:clamp(2.1rem,6vw,4.2rem);line-height:1.1;margin:16px 0 14px;max-width:760px}
+    h1 em{color:var(--gold);font-style:normal}
+    .lead{max-width:720px;color:var(--muted)}
+    .cta{margin-top:28px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{padding:12px 18px;border-radius:10px;font-weight:700;transition:.25s}
+    .btn-primary{background:linear-gradient(135deg,var(--gold) 0%,#9f773a 100%);color:#16110a}
+    .btn-ghost{border:1px solid var(--line);color:var(--text)}
+    .btn:hover{transform:translateY(-2px)}
+    .section{padding:30px 0 18px}
+    .section-title{font-size:1.25rem;letter-spacing:.05em;text-transform:uppercase;margin-bottom:14px;color:var(--gold-soft)}
+    .grid{display:grid;gap:14px}
+    .services{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+    .service{background:var(--bg-soft);border:1px solid var(--line);border-radius:14px;padding:18px;transition:.3s;animation:lift 5s ease-in-out infinite}
+    .service:nth-child(2){animation-delay:.8s}.service:nth-child(3){animation-delay:1.6s}.service:nth-child(4){animation-delay:2.4s}
+    .service h3{margin:8px 0}
+    .service p{color:var(--muted);font-size:.95rem}
+    .media-grid{grid-template-columns:repeat(auto-fit,minmax(180px,1fr));margin-top:8px}
+    .media-slot{position:relative;height:152px;border-radius:14px;border:2px dashed rgba(202,161,90,.45);background:linear-gradient(145deg,#1a202a,#141923);display:flex;align-items:center;justify-content:center;text-align:center;padding:10px;color:#d8deea;font-size:.82rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;overflow:hidden}
+    .media-slot.video{border-color:rgba(93,166,255,.5)}
+    .media-slot::before{content:'';position:absolute;inset:-40% -20%;background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,.12),transparent 70%);animation:shimmer 3.8s linear infinite}
+    .media-slot span{position:relative;z-index:1;opacity:.95}
+    .timeline{margin-top:10px;display:grid;gap:10px}
+    .timeline-step{padding:14px 16px;border-left:2px solid var(--gold);background:rgba(255,255,255,.02);border-radius:0 10px 10px 0;color:var(--muted)}
+    .footer{padding:34px 0 46px;color:var(--muted);font-size:.9rem}
+    .reveal{opacity:0;transform:translateY(22px);transition:.65s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    @keyframes shimmer{to{transform:translateX(70%)}}
+    @keyframes lift{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+    @media (max-width:680px){.hero{padding-top:62px}.media-slot{height:128px}}
+  </style>
+</head>
+<body>
+  <div class="bg-lines" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <div class="container nav-inner">
+      <div class="brand">Cut <span>&</span> Craft</div>
+      <div class="links">
+        <a class="active" href="index.html">Home</a>
+        <a href="services.html">Services</a>
+        <a href="gallery.html">Gallery</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero container reveal">
+    <span class="badge">Modern Barbershop Template</span>
+    <h1>Premium <em>Barber Experience</em> with high-impact visuals</h1>
+    <p class="lead">A professional 3-page barbershop site loaded with animated placeholders for team portraits, style shots, transformation videos, social reels, and interior atmosphere clips.</p>
+    <div class="cta">
+      <a class="btn btn-primary" href="services.html">Explore Services</a>
+      <a class="btn btn-ghost" href="gallery.html">View Media Layout</a>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="section reveal">
+      <h2 class="section-title">Signature Services</h2>
+      <div class="grid services">
+        <article class="service"><div>✂️</div><h3>Precision Fade</h3><p>Dedicated placeholder areas for close-up fade photos and process clips.</p></article>
+        <article class="service"><div>🧔</div><h3>Beard Sculpt</h3><p>Show beard lineup before/after visuals and trimming technique videos.</p></article>
+        <article class="service"><div>🔥</div><h3>Hot Towel Ritual</h3><p>Feature relaxing treatment imagery, steam detail shots, and vertical reels.</p></article>
+        <article class="service"><div>🎓</div><h3>Master Barber Team</h3><p>Highlight barber portraits, chair-side candids, and training footage.</p></article>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 class="section-title">Photo Placeholder Zones</h2>
+      <div class="grid media-grid">
+        <div class="media-slot"><span>Hero Banner Photo Placeholder</span></div>
+        <div class="media-slot"><span>Shop Interior Wide Shot</span></div>
+        <div class="media-slot"><span>Barber Team Portrait</span></div>
+        <div class="media-slot"><span>Client Style Showcase</span></div>
+        <div class="media-slot"><span>Before Cut / After Cut</span></div>
+        <div class="media-slot"><span>Product Shelf Close-Up</span></div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 class="section-title">Video Placeholder Zones</h2>
+      <div class="grid media-grid">
+        <div class="media-slot video"><span>30s Brand Reel Placeholder</span></div>
+        <div class="media-slot video"><span>Fade Process Time-lapse</span></div>
+        <div class="media-slot video"><span>Barber Interview Clip</span></div>
+        <div class="media-slot video"><span>Social Story Vertical Video</span></div>
+        <div class="media-slot video"><span>Client Reaction Video</span></div>
+        <div class="media-slot video"><span>Event Night Highlight Reel</span></div>
+      </div>
+    </section>
+
+    <section class="section reveal">
+      <h2 class="section-title">Client Journey</h2>
+      <div class="timeline">
+        <div class="timeline-step">1. Book slot online and pick your barber.</div>
+        <div class="timeline-step">2. Consultation + haircut mapping with reference placeholders.</div>
+        <div class="timeline-step">3. Service delivery + cinematic content capture spots.</div>
+        <div class="timeline-step">4. Final reveal + share-ready photo and video moments.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container footer">Cut & Craft Barbershop Template · Built for high-end barber brands with heavy media storytelling.</footer>
+
+  <script>
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
