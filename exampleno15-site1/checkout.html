@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Order Now — The Artisan Bowl</title>
+  <title>Build Your Plan — The Artisan Bowl</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     :root {
-      --forest:#1D3A2A; --forest2:#2E5540;
-      --gold:#C8933A; --gold2:#E5B86A;
+      --forest:#1D3A2A; --forest2:#2E5540; --forest3:#3D6B52;
+      --gold:#C8933A; --gold2:#E5B86A; --gold3:rgba(200,147,58,0.15);
       --cream:#FAF8F0; --cream2:#F0EBE0; --cream3:#E8E0CC;
       --text:#1E1A14; --text-mid:#4A3C2C; --text-muted:#7A6A58; --white:#FFFFFF;
-      --success:#22C55E;
-      --border:#D8D0C0;
+      --success:#22C55E; --border:#D8D0C0; --err:#EF4444;
+      --shadow: 0 4px 20px rgba(0,0,0,0.08);
+      --shadow-lg: 0 12px 48px rgba(0,0,0,0.14);
     }
     html { scroll-behavior:smooth; }
     body { font-family:'Inter','Segoe UI',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; line-height:1.6; }
 
-    nav { position:sticky; top:0; z-index:1000; background:rgba(29,58,42,0.97); backdrop-filter:blur(20px); border-bottom:3px solid var(--gold); box-shadow:0 4px 30px rgba(0,0,0,0.25); }
+    /* ── NAV ── */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(29,58,42,0.97); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:3px solid var(--gold); box-shadow:0 4px 30px rgba(0,0,0,0.25); }
     .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:72px; display:flex; align-items:center; justify-content:space-between; }
     .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
     .logo-mark { width:48px; height:48px; border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:rgba(200,147,58,0.1); }
@@ -31,9 +33,10 @@
     .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
     .nav-links a { color:rgba(255,255,255,0.78); text-decoration:none; padding:8px 12px; border-radius:8px; font-size:0.84rem; font-weight:500; transition:all 0.2s; }
     .nav-links a:hover,.nav-links a.active { background:rgba(255,255,255,0.1); color:var(--gold2); }
-    .nav-order { background:var(--gold)!important; color:var(--forest)!important; font-weight:700!important; padding:9px 20px!important; border-radius:50px!important; }
+    .nav-order { background:var(--gold)!important; color:var(--forest)!important; font-weight:700!important; padding:9px 20px!important; border-radius:50px!important; box-shadow:0 4px 16px rgba(200,147,58,0.4)!important; }
+    .nav-order:hover { background:var(--gold2)!important; }
     .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; }
-    .hamburger span { display:block; width:26px; height:3px; background:var(--gold); border-radius:3px; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--gold); border-radius:3px; transition:all 0.3s; }
     .mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1999; }
     .mobile-overlay.open { display:block; }
     .mobile-menu { display:none; position:fixed; top:0; right:-100%; width:72%; height:100%; background:var(--forest); z-index:2000; flex-direction:column; padding:80px 28px 32px; gap:6px; transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left:3px solid var(--gold); }
@@ -43,106 +46,280 @@
     .close-btn { position:absolute; top:22px; right:22px; background:none; border:none; color:var(--gold); font-size:1.7rem; cursor:pointer; }
     @media (max-width:900px) { .nav-links{display:none;} .hamburger{display:flex;} .mobile-menu{display:flex;} }
 
-    /* PAGE HERO */
+    /* ── HERO ── */
     .page-hero { background:linear-gradient(150deg,var(--forest) 0%,#152A1C 50%,#0E1F12 100%); padding:64px 24px 56px; text-align:center; position:relative; overflow:hidden; }
-    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(200,147,58,0.15) 0%,transparent 70%); }
-    .page-hero-inner { max-width:620px; margin:0 auto; position:relative; z-index:1; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(200,147,58,0.15) 0%,transparent 70%); pointer-events:none; }
+    .page-hero-inner { max-width:680px; margin:0 auto; position:relative; z-index:1; }
     .page-label { display:inline-block; background:rgba(200,147,58,0.15); border:1px solid rgba(200,147,58,0.4); color:var(--gold2); font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; padding:6px 18px; border-radius:50px; margin-bottom:20px; }
     .page-title { font-size:clamp(2.2rem,4.5vw,3.2rem); font-weight:700; color:#fff; font-family:'Playfair Display',Georgia,serif; margin-bottom:14px; }
     .page-title em { color:var(--gold); font-style:italic; }
-    .page-desc { font-size:1rem; color:rgba(255,255,255,0.68); }
-    .hero-trust { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
-    .trust-badge { display:flex; align-items:center; gap:7px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:8px 18px; border-radius:50px; color:rgba(255,255,255,0.82); font-size:0.8rem; font-weight:500; }
+    .page-desc { font-size:1rem; color:rgba(255,255,255,0.68); margin-bottom:28px; }
+    .hero-badges { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+    .hero-badge { display:flex; align-items:center; gap:7px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:8px 18px; border-radius:50px; color:rgba(255,255,255,0.82); font-size:0.8rem; font-weight:500; }
 
-    /* CHECKOUT LAYOUT */
-    .checkout-section { padding:60px 24px 100px; }
-    .checkout-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 380px; gap:48px; align-items:start; }
-    @media (max-width:860px) { .checkout-inner{grid-template-columns:1fr;} }
+    /* ── PROGRESS BAR ── */
+    .wizard-progress { background:var(--white); border-bottom:1px solid var(--cream3); padding:18px 24px; position:sticky; top:72px; z-index:99; box-shadow:0 2px 12px rgba(0,0,0,0.06); }
+    .progress-inner { max-width:860px; margin:0 auto; display:flex; align-items:center; gap:0; }
+    .prog-step { display:flex; flex-direction:column; align-items:center; flex:1; position:relative; cursor:pointer; }
+    .prog-step:not(:last-child)::after { content:''; position:absolute; top:18px; left:calc(50% + 18px); right:calc(-50% + 18px); height:2px; background:var(--cream3); z-index:0; transition:background 0.4s; }
+    .prog-step.done:not(:last-child)::after { background:var(--gold); }
+    .prog-num { width:36px; height:36px; border-radius:50%; background:var(--cream3); border:2px solid var(--cream3); display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:700; color:var(--text-muted); position:relative; z-index:1; transition:all 0.35s; }
+    .prog-step.active .prog-num { background:var(--gold); border-color:var(--gold); color:var(--forest); box-shadow:0 0 0 4px rgba(200,147,58,0.22); }
+    .prog-step.done .prog-num { background:var(--forest); border-color:var(--forest); color:var(--gold2); }
+    .prog-label { font-size:0.7rem; font-weight:600; color:var(--text-muted); margin-top:6px; letter-spacing:0.3px; text-align:center; line-height:1.3; transition:color 0.35s; }
+    .prog-step.active .prog-label { color:var(--gold); }
+    .prog-step.done .prog-label { color:var(--forest2); }
+    @media (max-width:640px) { .prog-label { display:none; } }
 
-    /* FORM */
-    .form-card { background:var(--white); border-radius:16px; box-shadow:0 6px 30px rgba(0,0,0,0.08); overflow:hidden; }
-    .form-section-head { background:var(--forest); padding:20px 28px; display:flex; align-items:center; gap:12px; }
-    .form-step-num { width:32px; height:32px; border-radius:50%; background:var(--gold); color:var(--forest); font-weight:800; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-    .form-section-head h3 { color:var(--white); font-size:1.05rem; font-family:'Playfair Display',Georgia,serif; }
-    .form-body { padding:28px; }
-    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
-    .form-row.single { grid-template-columns:1fr; }
+    /* ── MAIN LAYOUT ── */
+    .checkout-section { padding:48px 24px 100px; }
+    .checkout-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 360px; gap:40px; align-items:start; }
+    @media (max-width:900px) { .checkout-inner { grid-template-columns:1fr; } }
+
+    /* ── STEP PANELS ── */
+    .step-panel { display:none; }
+    .step-panel.active { display:block; animation:slideIn 0.4s cubic-bezier(0.25,0.8,0.25,1) both; }
+    .step-panel.exit { animation:slideOut 0.3s cubic-bezier(0.4,0,0.6,1) both; }
+    @keyframes slideIn { from { opacity:0; transform:translateY(28px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes slideOut { from { opacity:1; transform:translateY(0); } to { opacity:0; transform:translateY(-20px); } }
+
+    /* ── CARDS ── */
+    .step-card { background:var(--white); border-radius:20px; box-shadow:var(--shadow); overflow:hidden; margin-bottom:24px; }
+    .step-card-head { background:var(--forest); padding:22px 28px; display:flex; align-items:center; gap:14px; }
+    .step-num-badge { width:36px; height:36px; border-radius:50%; background:var(--gold); color:var(--forest); font-weight:800; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .step-card-head h2 { color:var(--white); font-size:1.1rem; font-family:'Playfair Display',Georgia,serif; }
+    .step-card-head p { color:rgba(255,255,255,0.62); font-size:0.82rem; margin-top:2px; }
+    .step-body { padding:28px 30px; }
+
+    /* ── DOG PROFILE STEP ── */
+    .field-label { font-size:0.82rem; font-weight:700; color:var(--text); margin-bottom:10px; display:block; letter-spacing:0.4px; text-transform:uppercase; }
+    .field-label span { color:var(--gold); font-size:1rem; }
+    .text-input {
+      width:100%; padding:14px 18px; border:2px solid var(--border); border-radius:12px;
+      font-size:1rem; color:var(--text); background:var(--cream); font-family:'Inter',sans-serif;
+      transition:border-color 0.2s, box-shadow 0.2s, background 0.2s; outline:none;
+    }
+    .text-input:focus { border-color:var(--gold); box-shadow:0 0 0 4px rgba(200,147,58,0.14); background:var(--white); }
+    .text-input::placeholder { color:var(--text-muted); }
+    .form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .form-row-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+    @media (max-width:560px) { .form-row-2,.form-row-3 { grid-template-columns:1fr; } }
+
+    /* Visual option cards */
+    .option-cards { display:flex; gap:12px; flex-wrap:wrap; }
+    .opt-card { position:relative; flex:1; min-width:80px; }
+    .opt-card input { position:absolute; opacity:0; width:0; height:0; }
+    .opt-label {
+      display:flex; flex-direction:column; align-items:center; gap:6px; padding:14px 10px;
+      border:2px solid var(--border); border-radius:14px; cursor:pointer; background:var(--cream);
+      transition:all 0.22s; text-align:center; height:100%;
+    }
+    .opt-card input:checked + .opt-label { border-color:var(--gold); background:rgba(200,147,58,0.1); box-shadow:0 4px 16px rgba(200,147,58,0.2); }
+    .opt-label:hover { border-color:var(--gold2); }
+    .opt-emoji { font-size:1.6rem; }
+    .opt-name { font-size:0.8rem; font-weight:700; color:var(--forest); line-height:1.2; }
+    .opt-sub { font-size:0.7rem; color:var(--text-muted); }
+    .opt-card input:checked + .opt-label .opt-name { color:var(--gold); }
+
+    /* Weight slider */
+    .slider-wrap { padding:6px 0 12px; }
+    .range-track { position:relative; height:8px; background:var(--cream3); border-radius:8px; margin:18px 0 10px; }
+    .range-fill { position:absolute; left:0; top:0; height:100%; background:linear-gradient(90deg,var(--gold),var(--gold2)); border-radius:8px; pointer-events:none; transition:width 0.15s; }
+    input[type=range] {
+      -webkit-appearance:none; appearance:none;
+      width:100%; height:8px; border-radius:8px; background:transparent; outline:none;
+      position:absolute; top:0; left:0; margin:0; cursor:pointer;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none; width:28px; height:28px;
+      border-radius:50%; background:var(--gold); border:3px solid var(--white);
+      box-shadow:0 2px 10px rgba(200,147,58,0.5); cursor:pointer;
+      margin-top:-10px; transition:transform 0.2s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform:scale(1.15); }
+    input[type=range]::-moz-range-thumb { width:28px; height:28px; border-radius:50%; background:var(--gold); border:3px solid var(--white); box-shadow:0 2px 10px rgba(200,147,58,0.5); cursor:pointer; }
+    .slider-labels { display:flex; justify-content:space-between; font-size:0.72rem; color:var(--text-muted); font-weight:500; }
+    .weight-display { display:inline-flex; align-items:center; gap:8px; background:var(--forest); color:var(--gold2); padding:8px 20px; border-radius:50px; font-size:1rem; font-weight:700; margin-top:12px; font-family:'Playfair Display',Georgia,serif; }
+
+    /* Calculator Result Panel */
+    .calc-result {
+      background:linear-gradient(135deg,var(--forest) 0%,var(--forest2) 100%);
+      border-radius:16px; padding:26px 28px; margin-top:24px; position:relative; overflow:hidden;
+    }
+    .calc-result::before { content:''; position:absolute; top:-30px; right:-30px; width:130px; height:130px; background:radial-gradient(circle,rgba(200,147,58,0.25) 0%,transparent 70%); border-radius:50%; }
+    .calc-result-title { font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold2); margin-bottom:18px; }
+    .calc-metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+    @media (max-width:500px) { .calc-metrics { grid-template-columns:1fr 1fr; } }
+    .metric-box { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:14px 16px; }
+    .metric-value { font-size:1.5rem; font-weight:800; color:var(--gold2); font-family:'Playfair Display',Georgia,serif; line-height:1; }
+    .metric-label { font-size:0.72rem; color:rgba(255,255,255,0.6); margin-top:5px; font-weight:500; letter-spacing:0.3px; }
+    .metric-sub { font-size:0.7rem; color:rgba(255,255,255,0.45); margin-top:2px; }
+    .calc-note { font-size:0.78rem; color:rgba(255,255,255,0.5); margin-top:18px; line-height:1.6; padding-top:14px; border-top:1px solid rgba(255,255,255,0.08); }
+
+    /* ── RECIPE STEP ── */
+    .recipe-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media (max-width:580px) { .recipe-grid { grid-template-columns:1fr; } }
+    .recipe-card { position:relative; background:var(--cream); border:2px solid var(--border); border-radius:16px; overflow:hidden; transition:all 0.25s; cursor:pointer; }
+    .recipe-card:hover { border-color:var(--gold2); box-shadow:0 6px 24px rgba(200,147,58,0.15); }
+    .recipe-card.selected { border-color:var(--gold); background:rgba(200,147,58,0.06); box-shadow:0 6px 28px rgba(200,147,58,0.22); }
+    .recipe-card-header { padding:18px 18px 12px; display:flex; align-items:flex-start; gap:14px; }
+    .recipe-emoji { font-size:2.2rem; flex-shrink:0; }
+    .recipe-info { flex:1; }
+    .recipe-name { font-size:1rem; font-weight:700; color:var(--forest); font-family:'Playfair Display',Georgia,serif; line-height:1.2; }
+    .recipe-protein { font-size:0.72rem; color:var(--gold); font-weight:700; letter-spacing:1px; text-transform:uppercase; margin-top:3px; }
+    .recipe-price-tag { font-size:0.88rem; font-weight:700; color:var(--gold); }
+    .recipe-price-per { font-size:0.7rem; color:var(--text-muted); }
+    .recipe-cal { font-size:0.72rem; color:var(--text-muted); margin-top:4px; }
+    .recipe-badge-row { display:flex; gap:6px; padding:0 18px 10px; flex-wrap:wrap; }
+    .r-badge { font-size:0.65rem; padding:3px 9px; border-radius:50px; font-weight:700; }
+    .r-badge-seasonal { background:#8B5E3C; color:#fff; }
+    .r-badge-bestseller { background:var(--gold); color:var(--forest); }
+    .r-badge-rec { background:var(--forest); color:var(--gold2); }
+    .recipe-check { position:absolute; top:12px; right:12px; width:26px; height:26px; border-radius:50%; background:var(--cream3); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.85rem; transition:all 0.22s; }
+    .recipe-card.selected .recipe-check { background:var(--gold); border-color:var(--gold); }
+    .recipe-qty { padding:12px 18px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; gap:12px; background:var(--white); transition:all 0.25s; }
+    .recipe-qty-label { font-size:0.8rem; font-weight:600; color:var(--text-mid); }
+    .qty-ctrl { display:flex; align-items:center; gap:10px; }
+    .qty-btn {
+      width:34px; height:34px; border-radius:50%; border:2px solid var(--border); background:var(--cream);
+      color:var(--forest); font-size:1.1rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center;
+      transition:all 0.18s; line-height:1; padding-bottom:1px;
+    }
+    .qty-btn:hover { border-color:var(--gold); background:var(--gold3); }
+    .qty-val { font-size:1rem; font-weight:700; color:var(--forest); min-width:42px; text-align:center; font-family:'Playfair Display',Georgia,serif; }
+    .qty-sublabel { font-size:0.7rem; color:var(--text-muted); text-align:center; margin-top:2px; }
+    .recipe-auto-hint { font-size:0.76rem; color:var(--gold); font-weight:600; padding:0 18px 12px; }
+
+    /* ── SUBSCRIPTION STEP ── */
+    .plan-cards { display:grid; grid-template-columns:1fr 1fr 1fr; gap:16px; }
+    @media (max-width:700px) { .plan-cards { grid-template-columns:1fr; } }
+    .plan-card { position:relative; border:2px solid var(--border); border-radius:18px; padding:24px 22px; cursor:pointer; transition:all 0.25s; background:var(--cream); }
+    .plan-card:hover { border-color:var(--gold2); }
+    .plan-card.selected { border-color:var(--gold); background:rgba(200,147,58,0.07); box-shadow:0 8px 30px rgba(200,147,58,0.2); }
+    .plan-card.featured { border-color:var(--forest2); }
+    .plan-card.featured.selected { border-color:var(--gold); }
+    .plan-badge { position:absolute; top:-12px; left:50%; transform:translateX(-50%); background:var(--forest); color:var(--gold2); font-size:0.68rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:5px 14px; border-radius:50px; white-space:nowrap; }
+    .plan-card.selected .plan-badge { background:var(--gold); color:var(--forest); }
+    .plan-icon { font-size:2rem; margin-bottom:12px; }
+    .plan-name { font-size:1.05rem; font-weight:700; color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:4px; }
+    .plan-freq { font-size:0.78rem; color:var(--text-muted); margin-bottom:16px; }
+    .plan-price-main { font-size:1.8rem; font-weight:800; color:var(--gold); font-family:'Playfair Display',Georgia,serif; line-height:1; }
+    .plan-price-period { font-size:0.75rem; color:var(--text-muted); font-weight:400; font-family:Inter,sans-serif; }
+    .plan-savings { font-size:0.76rem; color:var(--success); font-weight:700; margin-top:6px; }
+    .plan-features { list-style:none; display:flex; flex-direction:column; gap:8px; margin-top:18px; }
+    .plan-features li { font-size:0.82rem; color:var(--text-mid); display:flex; align-items:center; gap:8px; }
+    .plan-features li::before { content:'✓'; color:var(--gold); font-weight:700; flex-shrink:0; }
+    .plan-card.selected .plan-check { background:var(--gold); border-color:var(--gold); }
+    .plan-check { width:24px; height:24px; border-radius:50%; border:2px solid var(--border); background:var(--cream3); display:flex; align-items:center; justify-content:center; font-size:0.8rem; transition:all 0.2s; margin-top:16px; }
+    .three-month-perks { background:linear-gradient(135deg,rgba(29,58,42,0.05),rgba(200,147,58,0.08)); border:1px solid rgba(200,147,58,0.3); border-radius:14px; padding:18px 22px; margin-top:28px; }
+    .three-month-perks h4 { font-size:0.85rem; font-weight:800; color:var(--forest); margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .three-month-perks ul { list-style:none; display:flex; flex-direction:column; gap:8px; }
+    .three-month-perks li { font-size:0.85rem; color:var(--text-mid); display:flex; align-items:flex-start; gap:8px; line-height:1.45; }
+    .three-month-perks li::before { content:'🎁'; flex-shrink:0; }
+    .free-meal-banner { background:var(--gold); border-radius:10px; padding:12px 18px; margin-top:14px; display:flex; align-items:center; gap:10px; }
+    .free-meal-banner .fmb-text { font-size:0.85rem; font-weight:700; color:var(--forest); }
+    .free-meal-banner .fmb-val { font-size:0.8rem; color:rgba(29,58,42,0.7); margin-top:1px; }
+
+    /* ── DETAILS STEP ── */
     .form-group { margin-bottom:20px; }
-    .form-label { display:block; font-size:0.82rem; font-weight:600; color:var(--text); margin-bottom:8px; letter-spacing:0.3px; }
-    .form-label span { color:var(--gold); }
-    .form-input, .form-select, .form-textarea {
-      width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:10px;
-      font-size:0.95rem; color:var(--text); background:var(--white); font-family:'Inter',sans-serif;
-      transition:border-color 0.2s, box-shadow 0.2s; outline:none;
+    .zip-katy-hint { font-size:0.76rem; color:var(--success); font-weight:600; margin-top:6px; display:none; }
+    .zip-katy-hint.show { display:flex; align-items:center; gap:5px; }
+    .zip-warn { font-size:0.76rem; color:var(--err); font-weight:600; margin-top:6px; display:none; }
+    .zip-warn.show { display:flex; align-items:center; gap:5px; }
+
+    /* ── REVIEW STEP ── */
+    .review-block { background:var(--cream2); border-radius:14px; padding:20px 24px; margin-bottom:16px; }
+    .review-block h4 { font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--gold); margin-bottom:12px; }
+    .review-line { display:flex; justify-content:space-between; align-items:center; font-size:0.9rem; padding:7px 0; border-bottom:1px solid var(--cream3); }
+    .review-line:last-child { border-bottom:none; }
+    .review-line-label { color:var(--text-muted); }
+    .review-line-val { font-weight:600; color:var(--text); }
+    .review-total { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; background:var(--forest); border-radius:14px; margin-top:6px; }
+    .review-total-label { color:rgba(255,255,255,0.7); font-size:0.9rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+    .review-total-val { font-size:1.8rem; font-weight:800; color:var(--gold2); font-family:'Playfair Display',Georgia,serif; }
+
+    /* Payment */
+    .payment-box { background:var(--cream2); border:2px solid var(--cream3); border-radius:14px; padding:22px; margin-bottom:20px; }
+    .card-icons { display:flex; gap:8px; margin-bottom:16px; }
+    .card-icon { background:var(--white); border:1px solid var(--cream3); border-radius:6px; padding:4px 10px; font-size:0.75rem; font-weight:700; color:var(--text-mid); }
+    .card-row { display:grid; grid-template-columns:1fr; gap:14px; }
+    .card-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    .card-input-wrap { position:relative; }
+    .card-type-badge { position:absolute; right:14px; top:50%; transform:translateY(-50%); font-size:0.72rem; font-weight:700; background:var(--cream3); color:var(--text-mid); padding:3px 9px; border-radius:6px; pointer-events:none; }
+
+    /* Nav buttons */
+    .nav-btns { display:flex; gap:14px; justify-content:space-between; margin-top:8px; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; padding:13px 24px; border:2px solid var(--border); border-radius:50px; background:transparent; color:var(--text-mid); font-size:0.92rem; font-weight:600; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif; }
+    .btn-back:hover { border-color:var(--gold); color:var(--forest); }
+    .btn-next {
+      display:inline-flex; align-items:center; gap:10px; padding:14px 32px; background:var(--forest); color:var(--gold2);
+      border:none; border-radius:50px; font-size:0.95rem; font-weight:700; cursor:pointer;
+      transition:all 0.25s; font-family:'Inter',sans-serif; box-shadow:0 4px 16px rgba(29,58,42,0.3);
+      flex:1; justify-content:center;
     }
-    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gold); box-shadow:0 0 0 4px rgba(200,147,58,0.12); }
-    .form-textarea { min-height:100px; resize:vertical; }
-    .form-divider { height:1px; background:var(--cream3); margin:8px 0 28px; }
+    .btn-next:hover { background:var(--forest2); transform:translateY(-2px); box-shadow:0 8px 28px rgba(29,58,42,0.4); }
+    .btn-next.gold { background:var(--gold); color:var(--forest); }
+    .btn-next.gold:hover { background:var(--gold2); }
 
-    /* RECIPE SELECTOR */
-    .recipe-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px; }
-    .recipe-option { position:relative; }
-    .recipe-option input[type="checkbox"] { position:absolute; opacity:0; width:0; height:0; }
-    .recipe-label {
-      display:flex; align-items:center; gap:12px; padding:14px 16px;
-      border:2px solid var(--border); border-radius:10px; cursor:pointer;
-      transition:all 0.2s; background:var(--cream);
-    }
-    .recipe-option input:checked + .recipe-label { border-color:var(--gold); background:rgba(200,147,58,0.06); }
-    .recipe-icon { font-size:1.5rem; }
-    .recipe-name { font-size:0.88rem; font-weight:600; color:var(--forest); }
-    .recipe-price { font-size:0.78rem; color:var(--text-muted); margin-top:2px; }
-    .qty-row { display:flex; align-items:center; gap:8px; margin-top:6px; }
-    .qty-label { font-size:0.78rem; color:var(--text-muted); }
-    .qty-input { width:70px; padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88rem; text-align:center; }
-    @media (max-width:520px) { .recipe-grid{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} }
-
-    /* FREQUENCY */
-    .freq-options { display:flex; gap:12px; flex-wrap:wrap; }
-    .freq-opt { position:relative; }
-    .freq-opt input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
-    .freq-label { display:flex; flex-direction:column; align-items:center; padding:14px 18px; border:2px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; min-width:120px; background:var(--cream); }
-    .freq-opt input:checked + .freq-label { border-color:var(--forest); background:rgba(29,58,42,0.05); }
-    .freq-label .f-name { font-size:0.9rem; font-weight:700; color:var(--forest); }
-    .freq-label .f-desc { font-size:0.75rem; color:var(--text-muted); margin-top:3px; }
-
-    /* ORDER SUMMARY */
-    .summary-card { background:var(--white); border-radius:16px; box-shadow:0 6px 30px rgba(0,0,0,0.08); position:sticky; top:100px; }
-    .summary-head { background:var(--forest); padding:20px 24px; border-radius:16px 16px 0 0; }
-    .summary-head h3 { color:var(--gold2); font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; }
-    .summary-body { padding:24px; }
-    .summary-line { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--cream3); font-size:0.9rem; }
-    .summary-line:last-of-type { border-bottom:none; }
-    .summary-label { color:var(--text-mid); }
-    .summary-value { font-weight:600; color:var(--text); }
-    .summary-delivery { color:var(--success); font-weight:700; }
-    .summary-total { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; background:var(--cream2); border-top:2px solid var(--gold); }
-    .total-label { font-size:0.9rem; font-weight:700; color:var(--forest); text-transform:uppercase; letter-spacing:1px; }
-    .total-value { font-size:1.6rem; font-weight:800; color:var(--gold); font-family:'Playfair Display',Georgia,serif; }
-    .summary-footer { padding:20px 24px; }
-    .btn-checkout {
-      width:100%; padding:16px; background:var(--forest); color:var(--gold2);
-      border:none; border-radius:10px; font-size:1rem; font-weight:700; font-family:'Inter',sans-serif;
+    /* ── SIDEBAR SUMMARY ── */
+    .summary-panel { position:sticky; top:150px; }
+    .summary-card { background:var(--white); border-radius:20px; box-shadow:var(--shadow-lg); overflow:hidden; }
+    .summary-head { background:linear-gradient(135deg,var(--forest),var(--forest2)); padding:20px 24px; display:flex; align-items:center; justify-content:space-between; }
+    .summary-head h3 { color:var(--gold2); font-family:'Playfair Display',Georgia,serif; font-size:1.05rem; }
+    .summary-head .dog-name-tag { background:rgba(200,147,58,0.2); color:var(--gold2); font-size:0.76rem; font-weight:700; padding:4px 12px; border-radius:50px; }
+    .summary-body { padding:20px 24px; }
+    .s-section { margin-bottom:16px; }
+    .s-section-title { font-size:0.68rem; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+    .s-line { display:flex; justify-content:space-between; align-items:flex-start; padding:7px 0; border-bottom:1px solid var(--cream3); font-size:0.88rem; gap:8px; }
+    .s-line:last-child { border-bottom:none; }
+    .s-line-label { color:var(--text-muted); flex:1; }
+    .s-line-val { font-weight:600; color:var(--text); text-align:right; }
+    .s-empty { color:var(--text-muted); font-size:0.85rem; font-style:italic; padding:8px 0; }
+    .summary-delivery { display:flex; justify-content:space-between; padding:12px 24px; background:rgba(34,197,94,0.08); border-top:1px solid rgba(34,197,94,0.15); }
+    .summary-delivery span { font-size:0.88rem; color:var(--text-mid); font-weight:500; }
+    .summary-delivery .free { color:var(--success); font-weight:700; font-size:0.88rem; }
+    .summary-total { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; background:var(--forest); }
+    .s-total-label { color:rgba(255,255,255,0.7); font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; }
+    .s-total-val { font-size:1.7rem; font-weight:800; color:var(--gold2); font-family:'Playfair Display',Georgia,serif; }
+    .summary-footer { padding:18px 24px; }
+    .summary-place-btn {
+      width:100%; padding:16px; background:var(--gold); color:var(--forest);
+      border:none; border-radius:12px; font-size:1rem; font-weight:800; font-family:'Inter',sans-serif;
       cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:10px;
-      box-shadow:0 4px 16px rgba(29,58,42,0.3);
+      box-shadow:0 4px 20px rgba(200,147,58,0.4); letter-spacing:0.3px;
     }
-    .btn-checkout:hover { background:var(--forest2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(29,58,42,0.4); }
-    .stripe-note { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; color:var(--text-muted); font-size:0.78rem; }
-    .trust-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
-    .trust-item { display:flex; align-items:center; gap:5px; font-size:0.75rem; color:var(--text-muted); }
+    .summary-place-btn:hover { background:var(--gold2); transform:translateY(-2px); box-shadow:0 8px 28px rgba(200,147,58,0.5); }
+    .summary-place-btn:disabled { background:var(--cream3); color:var(--text-muted); box-shadow:none; transform:none; cursor:not-allowed; }
+    .secure-note { display:flex; align-items:center; justify-content:center; gap:6px; margin-top:12px; color:var(--text-muted); font-size:0.76rem; }
+    .summary-trust { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin-top:10px; }
+    .s-trust-item { font-size:0.73rem; color:var(--text-muted); display:flex; align-items:center; gap:4px; }
 
-    /* SUCCESS MESSAGE */
-    .success-overlay { display:none; position:fixed; inset:0; background:rgba(29,58,42,0.92); z-index:9999; align-items:center; justify-content:center; }
+    /* ── SAVINGS CALLOUT ── */
+    .savings-callout { background:linear-gradient(135deg,rgba(34,197,94,0.1),rgba(34,197,94,0.05)); border:1px solid rgba(34,197,94,0.3); border-radius:12px; padding:14px 18px; display:none; align-items:center; gap:12px; margin-top:14px; }
+    .savings-callout.show { display:flex; }
+    .savings-callout .sc-text { font-size:0.85rem; color:var(--forest); font-weight:600; }
+    .savings-callout .sc-amt { font-size:1rem; font-weight:800; color:var(--success); }
+
+    /* ── SUCCESS OVERLAY ── */
+    .success-overlay { display:none; position:fixed; inset:0; background:rgba(29,58,42,0.92); z-index:9999; align-items:center; justify-content:center; backdrop-filter:blur(8px); }
     .success-overlay.show { display:flex; }
-    .success-card { background:var(--white); border-radius:20px; padding:56px 48px; max-width:480px; width:90%; text-align:center; animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
-    @keyframes popIn { from{opacity:0;transform:scale(0.85);} to{opacity:1;transform:scale(1);} }
-    .success-icon { font-size:4rem; margin-bottom:20px; }
-    .success-card h2 { font-size:1.8rem; color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:14px; }
-    .success-card p { color:var(--text-mid); font-size:0.97rem; line-height:1.8; margin-bottom:28px; }
-    .btn-back { display:inline-flex; align-items:center; gap:8px; background:var(--forest); color:var(--gold2); padding:14px 32px; border-radius:50px; font-size:0.95rem; font-weight:700; text-decoration:none; transition:all 0.3s; }
-    .btn-back:hover { background:var(--forest2); }
+    .success-card { background:var(--white); border-radius:24px; padding:56px 48px; max-width:520px; width:90%; text-align:center; animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; position:relative; overflow:hidden; }
+    .success-card::before { content:''; position:absolute; top:0; left:0; right:0; height:5px; background:linear-gradient(90deg,var(--gold),var(--gold2)); }
+    @keyframes popIn { from{opacity:0;transform:scale(0.8) translateY(20px);} to{opacity:1;transform:scale(1) translateY(0);} }
+    .success-paw { font-size:4.5rem; margin-bottom:16px; animation:bounce 1s ease infinite alternate; display:block; }
+    @keyframes bounce { from{transform:translateY(0);} to{transform:translateY(-10px);} }
+    .success-card h2 { font-size:2rem; color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:10px; }
+    .success-card .dog-name-success { color:var(--gold); }
+    .success-card p { color:var(--text-mid); font-size:0.97rem; line-height:1.8; margin-bottom:10px; }
+    .success-details { background:var(--cream2); border-radius:12px; padding:16px 20px; margin:20px 0; text-align:left; }
+    .success-details div { font-size:0.85rem; color:var(--text-mid); padding:5px 0; display:flex; align-items:center; gap:8px; }
+    .btn-home { display:inline-flex; align-items:center; gap:8px; background:var(--forest); color:var(--gold2); padding:14px 36px; border-radius:50px; font-size:0.97rem; font-weight:700; text-decoration:none; transition:all 0.3s; margin-top:8px; }
+    .btn-home:hover { background:var(--forest2); }
 
-    /* FOOTER */
+    /* Confetti canvas */
+    #confetti-canvas { position:fixed; inset:0; pointer-events:none; z-index:10000; }
+
+    /* ── FOOTER ── */
     footer { background:#0E1A12; padding:60px 24px 36px; }
     .footer-inner { max-width:1200px; margin:0 auto; }
     .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
@@ -157,10 +334,33 @@
     .footer-bottom p { color:rgba(255,255,255,0.35); font-size:0.82rem; }
     @media (max-width:760px) { .footer-grid{grid-template-columns:1fr 1fr;} }
     @media (max-width:480px) { .footer-grid{grid-template-columns:1fr;} }
+    @media (max-width:900px) { .summary-panel { position:static; } }
+
+    /* Tooltip */
+    .tooltip-wrap { position:relative; display:inline-flex; align-items:center; }
+    .tooltip-icon { width:18px; height:18px; border-radius:50%; background:var(--cream3); color:var(--text-muted); font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; cursor:help; margin-left:6px; }
+    .tooltip-text { display:none; position:absolute; top:calc(100% + 8px); left:50%; transform:translateX(-50%); background:var(--text); color:var(--white); font-size:0.75rem; padding:8px 12px; border-radius:8px; width:220px; line-height:1.5; z-index:50; font-weight:400; }
+    .tooltip-wrap:hover .tooltip-text { display:block; }
+
+    /* Pulse animation for recommended */
+    @keyframes pulse-gold { 0%,100%{box-shadow:0 0 0 0 rgba(200,147,58,0.4);} 50%{box-shadow:0 0 0 8px rgba(200,147,58,0);} }
+    .pulse { animation:pulse-gold 2s ease infinite; }
+
+    /* Mobile sticky summary CTA */
+    .mobile-summary-cta { display:none; position:fixed; bottom:0; left:0; right:0; background:var(--forest); padding:14px 20px; z-index:900; box-shadow:0 -4px 20px rgba(0,0,0,0.25); }
+    .mobile-summary-cta .mc-inner { display:flex; align-items:center; justify-content:space-between; max-width:600px; margin:0 auto; }
+    .mobile-summary-cta .mc-total { color:var(--gold2); font-size:0.8rem; }
+    .mobile-summary-cta .mc-total strong { font-size:1.2rem; font-family:'Playfair Display',Georgia,serif; display:block; line-height:1.1; }
+    .mobile-summary-cta .mc-btn { background:var(--gold); color:var(--forest); padding:11px 24px; border-radius:50px; font-size:0.9rem; font-weight:700; border:none; cursor:pointer; }
+    @media (max-width:900px) { .mobile-summary-cta { display:block; } body { padding-bottom:76px; } }
   </style>
 </head>
 <body>
 
+<!-- CONFETTI CANVAS -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- NAV -->
 <nav>
   <div class="nav-inner">
     <a class="nav-logo" href="index.html">
@@ -176,7 +376,7 @@
       <li><a href="ingredients.html">Real Food</a></li>
       <li><a href="neverlist.html">Never List</a></li>
       <li><a href="menu.html">Menu</a></li>
-      <li><a href="care.html">Care & Storage</a></li>
+      <li><a href="care.html">Care &amp; Storage</a></li>
       <li><a href="delivery.html">Free Delivery</a></li>
       <li><a href="checkout.html" class="nav-order active">Order Now</a></li>
     </ul>
@@ -191,271 +391,551 @@
   <a href="ingredients.html">🥩 Real Food</a>
   <a href="neverlist.html">🚫 Never List</a>
   <a href="menu.html">📋 Menu</a>
-  <a href="care.html">❄️ Care & Storage</a>
+  <a href="care.html">❄️ Care &amp; Storage</a>
   <a href="delivery.html">🚚 Free Delivery</a>
   <a href="checkout.html">🛒 Order Now</a>
 </nav>
 
-<!-- SUCCESS OVERLAY -->
-<div class="success-overlay" id="successOverlay">
-  <div class="success-card">
-    <div class="success-icon">🎉</div>
-    <h2>Order Received!</h2>
-    <p>Thank you! We've received your order and will reach out shortly to confirm your delivery window. Your dog is going to love it.</p>
-    <a href="index.html" class="btn-back">← Back to Home</a>
-  </div>
-</div>
-
 <!-- HERO -->
 <section class="page-hero">
   <div class="page-hero-inner">
-    <div class="page-label">Fresh from Our Kitchen</div>
-    <h1 class="page-title">Build Your Dog's <em>Order</em></h1>
-    <p class="page-desc">Select your recipes, choose your quantity, and we'll deliver fresh right to your door — free, anywhere in Katy.</p>
-    <div class="hero-trust">
-      <div class="trust-badge">🚚 Free Delivery in Katy</div>
-      <div class="trust-badge">🔒 Secure Checkout</div>
-      <div class="trust-badge">❄️ Cold-Packed Delivery</div>
+    <div class="page-label">Personalized Meal Plan</div>
+    <h1 class="page-title">Build <em>Your Dog's</em> Perfect Bowl</h1>
+    <p class="page-desc">Answer a few questions and our calculator will dial in the exact portions, frequency, and monthly cost — tailored just for your pup.</p>
+    <div class="hero-badges">
+      <div class="hero-badge">🐾 Personalized Portions</div>
+      <div class="hero-badge">🚚 Free Delivery in Katy</div>
+      <div class="hero-badge">🎁 3-Month Prepay Deal</div>
     </div>
   </div>
 </section>
 
-<!-- CHECKOUT -->
+<!-- PROGRESS BAR -->
+<div class="wizard-progress" id="wizardProgress">
+  <div class="progress-inner">
+    <div class="prog-step active" id="ps1" onclick="jumpTo(1)">
+      <div class="prog-num" id="pn1">🐶</div>
+      <div class="prog-label">Dog Profile</div>
+    </div>
+    <div class="prog-step" id="ps2" onclick="jumpTo(2)">
+      <div class="prog-num" id="pn2">��️</div>
+      <div class="prog-label">Recipes</div>
+    </div>
+    <div class="prog-step" id="ps3" onclick="jumpTo(3)">
+      <div class="prog-num" id="pn3">📦</div>
+      <div class="prog-label">Your Plan</div>
+    </div>
+    <div class="prog-step" id="ps4" onclick="jumpTo(4)">
+      <div class="prog-num" id="pn4">📋</div>
+      <div class="prog-label">Your Details</div>
+    </div>
+    <div class="prog-step" id="ps5" onclick="jumpTo(5)">
+      <div class="prog-num" id="pn5">💳</div>
+      <div class="prog-label">Checkout</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
 <section class="checkout-section">
   <div class="checkout-inner">
 
-    <!-- ORDER FORM -->
-    <form id="orderForm">
+    <!-- ════════════════════════ STEPS ════════════════════════ -->
+    <div id="stepsContainer">
 
-      <!-- STEP 1: YOUR INFO -->
-      <div class="form-card" style="margin-bottom:24px;">
-        <div class="form-section-head">
-          <div class="form-step-num">1</div>
-          <h3>Your Information</h3>
+      <!-- ── STEP 1: DOG PROFILE ── -->
+      <div class="step-panel active" id="step1">
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-num-badge">1</div>
+            <div>
+              <h2>Tell Us About Your Dog</h2>
+              <p>We'll calculate the perfect daily portions and estimate your costs</p>
+            </div>
+          </div>
+          <div class="step-body">
+
+            <div class="form-row-2" style="margin-bottom:22px;">
+              <div class="form-group" style="margin-bottom:0">
+                <label class="field-label" for="ownerName">Your Name <span>*</span></label>
+                <input type="text" class="text-input" id="ownerName" placeholder="Sarah" required>
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="field-label" for="dogName">Your Dog's Name <span>*</span></label>
+                <input type="text" class="text-input" id="dogName" placeholder="Biscuit" required oninput="onDogNameChange(this.value)">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="field-label">Dog's Size</label>
+              <div class="option-cards">
+                <div class="opt-card">
+                  <input type="radio" name="dogSize" id="sz-xs" value="xs" onchange="calcPortions()">
+                  <label class="opt-label" for="sz-xs">
+                    <span class="opt-emoji">🐭</span>
+                    <span class="opt-name">Toy</span>
+                    <span class="opt-sub">Under 10 lbs</span>
+                  </label>
+                </div>
+                <div class="opt-card">
+                  <input type="radio" name="dogSize" id="sz-sm" value="sm" onchange="calcPortions()" checked>
+                  <label class="opt-label" for="sz-sm">
+                    <span class="opt-emoji">🐩</span>
+                    <span class="opt-name">Small</span>
+                    <span class="opt-sub">10–25 lbs</span>
+                  </label>
+                </div>
+                <div class="opt-card">
+                  <input type="radio" name="dogSize" id="sz-md" value="md" onchange="calcPortions()">
+                  <label class="opt-label" for="sz-md">
+                    <span class="opt-emoji">🐕</span>
+                    <span class="opt-name">Medium</span>
+                    <span class="opt-sub">25–50 lbs</span>
+                  </label>
+                </div>
+                <div class="opt-card">
+                  <input type="radio" name="dogSize" id="sz-lg" value="lg" onchange="calcPortions()">
+                  <label class="opt-label" for="sz-lg">
+                    <span class="opt-emoji">🦮</span>
+                    <span class="opt-name">Large</span>
+                    <span class="opt-sub">50–80 lbs</span>
+                  </label>
+                </div>
+                <div class="opt-card">
+                  <input type="radio" name="dogSize" id="sz-xl" value="xl" onchange="calcPortions()">
+                  <label class="opt-label" for="sz-xl">
+                    <span class="opt-emoji">🐻</span>
+                    <span class="opt-name">Giant</span>
+                    <span class="opt-sub">80+ lbs</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="field-label">Weight (lbs)</label>
+              <div class="slider-wrap">
+                <div class="range-track">
+                  <div class="range-fill" id="weightFill" style="width:19%"></div>
+                  <input type="range" id="weightSlider" min="2" max="130" value="18" oninput="onWeightSlide(this.value)">
+                </div>
+                <div class="slider-labels"><span>2 lbs</span><span>30</span><span>60</span><span>90</span><span>130 lbs</span></div>
+              </div>
+              <div class="weight-display">🐾 <span id="weightDisplay">18 lbs</span></div>
+            </div>
+
+            <div class="form-row-2" style="margin-bottom:22px;">
+              <div class="form-group" style="margin-bottom:0">
+                <label class="field-label">Age</label>
+                <div class="option-cards" style="flex-direction:column;gap:8px;">
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogAge" id="age-puppy" value="puppy" onchange="calcPortions()">
+                    <label class="opt-label" for="age-puppy" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">🐶</span>
+                      <div><div class="opt-name">Puppy</div><div class="opt-sub">Under 1 year</div></div>
+                    </label>
+                  </div>
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogAge" id="age-adult" value="adult" checked onchange="calcPortions()">
+                    <label class="opt-label" for="age-adult" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">🐕</span>
+                      <div><div class="opt-name">Adult</div><div class="opt-sub">1–7 years</div></div>
+                    </label>
+                  </div>
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogAge" id="age-senior" value="senior" onchange="calcPortions()">
+                    <label class="opt-label" for="age-senior" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">🦴</span>
+                      <div><div class="opt-name">Senior</div><div class="opt-sub">7+ years</div></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group" style="margin-bottom:0">
+                <label class="field-label">Activity Level</label>
+                <div class="option-cards" style="flex-direction:column;gap:8px;">
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogActivity" id="act-low" value="low" onchange="calcPortions()">
+                    <label class="opt-label" for="act-low" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">😴</span>
+                      <div><div class="opt-name">Low</div><div class="opt-sub">Mostly lounging</div></div>
+                    </label>
+                  </div>
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogActivity" id="act-mod" value="moderate" checked onchange="calcPortions()">
+                    <label class="opt-label" for="act-mod" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">🚶</span>
+                      <div><div class="opt-name">Moderate</div><div class="opt-sub">Daily walks</div></div>
+                    </label>
+                  </div>
+                  <div class="opt-card" style="min-width:unset;flex:unset;">
+                    <input type="radio" name="dogActivity" id="act-high" value="high" onchange="calcPortions()">
+                    <label class="opt-label" for="act-high" style="flex-direction:row;justify-content:flex-start;gap:10px;padding:12px 14px;">
+                      <span class="opt-emoji" style="font-size:1.2rem;">🏃</span>
+                      <div><div class="opt-name">Active</div><div class="opt-sub">Runs &amp; sports</div></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- CALC RESULT -->
+            <div class="calc-result" id="calcResult">
+              <div class="calc-result-title">📊 Your Personalized Calculation</div>
+              <div class="calc-metrics">
+                <div class="metric-box">
+                  <div class="metric-value" id="metricDaily">—</div>
+                  <div class="metric-label">Daily Amount</div>
+                  <div class="metric-sub" id="metricDailySub">per day</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-value" id="metricFeeds">2×</div>
+                  <div class="metric-label">Feedings / Day</div>
+                  <div class="metric-sub" id="metricFeedsSub">split portions</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-value" id="metricWeekly">—</div>
+                  <div class="metric-label">Weekly Amount</div>
+                  <div class="metric-sub" id="metricWeeklySub">lbs to order</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-value" id="metricMonthly">—</div>
+                  <div class="metric-label">Est. Monthly Cost</div>
+                  <div class="metric-sub">based on avg $18/lb</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-value" id="metricPerMeal">—</div>
+                  <div class="metric-label">Cost Per Meal</div>
+                  <div class="metric-sub">single serving</div>
+                </div>
+                <div class="metric-box">
+                  <div class="metric-value" id="metricPerDay">—</div>
+                  <div class="metric-label">Cost Per Day</div>
+                  <div class="metric-sub">fresh food</div>
+                </div>
+              </div>
+              <div class="calc-note">
+                🔬 Calculated using 2% of body weight methodology, adjusted for your dog's age and activity level. Puppies need ~50% more to support growth. Always consult your vet for precision.
+              </div>
+            </div>
+
+          </div>
         </div>
-        <div class="form-body">
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">First Name <span>*</span></label>
-              <input type="text" class="form-input" placeholder="Sarah" required id="firstName">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Last Name <span>*</span></label>
-              <input type="text" class="form-input" placeholder="Mitchell" required id="lastName">
-            </div>
-          </div>
-          <div class="form-row single">
-            <div class="form-group">
-              <label class="form-label">Email Address <span>*</span></label>
-              <input type="email" class="form-input" placeholder="sarah@example.com" required id="email">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Phone Number <span>*</span></label>
-              <input type="tel" class="form-input" placeholder="(832) 555-0000" required id="phone">
-            </div>
-            <div class="form-group">
-              <label class="form-label">Dog's Name</label>
-              <input type="text" class="form-input" placeholder="Biscuit" id="dogName">
-            </div>
-          </div>
+        <div class="nav-btns">
+          <div></div>
+          <button class="btn-next" onclick="goTo(2)">Choose Recipes →</button>
         </div>
       </div>
 
-      <!-- STEP 2: DELIVERY ADDRESS -->
-      <div class="form-card" style="margin-bottom:24px;">
-        <div class="form-section-head">
-          <div class="form-step-num">2</div>
-          <h3>Delivery Address — Katy, TX Only</h3>
+      <!-- ── STEP 2: RECIPES ── -->
+      <div class="step-panel" id="step2">
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-num-badge">2</div>
+            <div>
+              <h2>Choose Your Recipes</h2>
+              <p>Quantities auto-filled from your dog's profile — adjust anytime</p>
+            </div>
+          </div>
+          <div class="step-body">
+            <div style="background:var(--cream2);border-radius:12px;padding:14px 18px;margin-bottom:22px;font-size:0.85rem;color:var(--text-mid);display:flex;align-items:center;gap:10px;">
+              <span style="font-size:1.4rem;">💡</span>
+              <span>Based on your profile, we've pre-filled the recommended weekly quantity for each recipe. Select one or more — <strong>mix &amp; match for variety!</strong></span>
+            </div>
+            <div class="recipe-grid" id="recipeGrid">
+              <!-- Filled by JS -->
+            </div>
+          </div>
         </div>
-        <div class="form-body">
-          <div class="form-row single">
-            <div class="form-group">
-              <label class="form-label">Street Address <span>*</span></label>
-              <input type="text" class="form-input" placeholder="123 Meadow Creek Ln" required id="address">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">City <span>*</span></label>
-              <input type="text" class="form-input" value="Katy" required id="city">
-            </div>
-            <div class="form-group">
-              <label class="form-label">ZIP Code <span>*</span></label>
-              <input type="text" class="form-input" placeholder="77494" required id="zip">
-            </div>
-          </div>
-          <div class="form-row single">
-            <div class="form-group">
-              <label class="form-label">Delivery Instructions</label>
-              <textarea class="form-textarea" placeholder="Gate code, leave at door, ring doorbell, etc." id="instructions"></textarea>
-            </div>
-          </div>
+        <div class="nav-btns">
+          <button class="btn-back" onclick="goTo(1)">← Back</button>
+          <button class="btn-next" onclick="goTo(3)">Choose Your Plan →</button>
         </div>
       </div>
 
-      <!-- STEP 3: SELECT RECIPES -->
-      <div class="form-card" style="margin-bottom:24px;">
-        <div class="form-section-head">
-          <div class="form-step-num">3</div>
-          <h3>Choose Your Recipes</h3>
+      <!-- ── STEP 3: SUBSCRIPTION PLAN ── -->
+      <div class="step-panel" id="step3">
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-num-badge">3</div>
+            <div>
+              <h2>Choose Your Subscription Plan</h2>
+              <p>Subscribe to save money and never run out of fresh food</p>
+            </div>
+          </div>
+          <div class="step-body">
+            <div class="plan-cards" id="planCards">
+              <!-- Filled by JS -->
+            </div>
+
+            <div class="savings-callout" id="savingsCallout">
+              <span style="font-size:1.5rem;">🎉</span>
+              <div>
+                <div class="sc-text">You're saving with this plan!</div>
+                <div class="sc-amt" id="savingsAmt">$0.00 saved</div>
+              </div>
+            </div>
+
+            <div class="three-month-perks">
+              <h4>🎁 3-Month Prepay Perks — What You Get:</h4>
+              <ul>
+                <li>Lock in <strong>10% off</strong> your entire order total for 3 months</li>
+                <li><strong>2 Free Meals</strong> credited to your account (valued at your dog's daily food cost × 2)</li>
+                <li>Priority delivery scheduling — always first on the route</li>
+                <li>Freeze or pause your subscription anytime — no penalty</li>
+              </ul>
+              <div class="free-meal-banner" id="freeMealBanner">
+                <span style="font-size:1.5rem;">🐾</span>
+                <div>
+                  <div class="fmb-text">2 Free Meals Value: <span id="freeMealVal">—</span></div>
+                  <div class="fmb-val">Applied to your first delivery as a bonus portion</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
         </div>
-        <div class="form-body">
-          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Select one or more recipes. Enter quantity in pounds for each.</p>
-          <div class="recipe-grid">
-            <div class="recipe-option">
-              <input type="checkbox" id="r1" name="recipe" value="sunday-roast" onchange="updateSummary()">
-              <label class="recipe-label" for="r1">
-                <span class="recipe-icon">🥩</span>
-                <div><div class="recipe-name">The Sunday Roast</div><div class="recipe-price">$18/lb · Grass-Fed Beef</div></div>
+        <div class="nav-btns">
+          <button class="btn-back" onclick="goTo(2)">← Back</button>
+          <button class="btn-next" onclick="goTo(4)">Enter Your Details →</button>
+        </div>
+      </div>
+
+      <!-- ── STEP 4: YOUR DETAILS ── -->
+      <div class="step-panel" id="step4">
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-num-badge">4</div>
+            <div>
+              <h2>Delivery Details</h2>
+              <p>We deliver free anywhere in the Katy area — no minimum order</p>
+            </div>
+          </div>
+          <div class="step-body">
+            <div style="background:rgba(34,197,94,0.08);border:1px solid rgba(34,197,94,0.25);border-radius:12px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;gap:12px;">
+              <span style="font-size:1.4rem;">🚚</span>
+              <div>
+                <div style="font-size:0.9rem;font-weight:700;color:var(--forest);">Free Delivery — Katy Area</div>
+                <div style="font-size:0.8rem;color:var(--text-muted);margin-top:2px;">ZIP codes 77449, 77450, 77493, 77494 and surrounding Katy neighborhoods. No delivery fee, ever.</div>
+              </div>
+            </div>
+
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="field-label" for="d-fname">First Name <span>*</span></label>
+                <input type="text" class="text-input" id="d-fname" placeholder="Sarah" required>
+              </div>
+              <div class="form-group">
+                <label class="field-label" for="d-lname">Last Name <span>*</span></label>
+                <input type="text" class="text-input" id="d-lname" placeholder="Mitchell" required>
+              </div>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="field-label" for="d-email">Email Address <span>*</span></label>
+                <input type="email" class="text-input" id="d-email" placeholder="sarah@example.com" required>
+              </div>
+              <div class="form-group">
+                <label class="field-label" for="d-phone">Phone Number <span>*</span></label>
+                <input type="tel" class="text-input" id="d-phone" placeholder="(832) 555-0000" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="field-label" for="d-address">Street Address <span>*</span></label>
+              <input type="text" class="text-input" id="d-address" placeholder="123 Meadow Creek Lane" required>
+            </div>
+            <div class="form-row-2">
+              <div class="form-group">
+                <label class="field-label" for="d-city">City <span>*</span></label>
+                <input type="text" class="text-input" id="d-city" value="Katy" required>
+              </div>
+              <div class="form-group">
+                <label class="field-label" for="d-zip">ZIP Code <span>*</span></label>
+                <input type="text" class="text-input" id="d-zip" placeholder="77494" maxlength="5" required oninput="checkZip(this.value)">
+                <div class="zip-katy-hint" id="zipOk">✅ Great — that's in our free delivery zone!</div>
+                <div class="zip-warn" id="zipWarn">⚠️ We currently only deliver in the Katy area. Contact us to check your address.</div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="field-label" for="d-instructions">Delivery Instructions</label>
+              <textarea class="text-input" id="d-instructions" rows="3" placeholder="Gate code, leave at door, ring doorbell, text when arriving, etc." style="resize:vertical;min-height:80px;"></textarea>
+            </div>
+            <div class="form-group">
+              <label class="field-label" for="d-dogname2">
+                Dog's Name
+                <span style="font-weight:400;color:var(--text-muted);text-transform:none;letter-spacing:0;font-size:0.8rem;"> (so we can personalize your bag!)</span>
               </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q1" value="1" min="1" max="20" oninput="updateSummary()"></div>
-            </div>
-            <div class="recipe-option">
-              <input type="checkbox" id="r2" name="recipe" value="oceans-garden" onchange="updateSummary()">
-              <label class="recipe-label" for="r2">
-                <span class="recipe-icon">🐟</span>
-                <div><div class="recipe-name">Ocean's Garden</div><div class="recipe-price">$20/lb · Wild Salmon</div></div>
-              </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q2" value="1" min="1" max="20" oninput="updateSummary()"></div>
-            </div>
-            <div class="recipe-option">
-              <input type="checkbox" id="r3" name="recipe" value="gentle-garden" onchange="updateSummary()">
-              <label class="recipe-label" for="r3">
-                <span class="recipe-icon">🍗</span>
-                <div><div class="recipe-name">The Gentle Garden</div><div class="recipe-price">$17/lb · Free-Range Chicken</div></div>
-              </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q3" value="1" min="1" max="20" oninput="updateSummary()"></div>
-            </div>
-            <div class="recipe-option">
-              <input type="checkbox" id="r4" name="recipe" value="turkey-harvest" onchange="updateSummary()">
-              <label class="recipe-label" for="r4">
-                <span class="recipe-icon">🦃</span>
-                <div><div class="recipe-name">Turkey Harvest</div><div class="recipe-price">$18/lb · Heritage Turkey</div></div>
-              </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q4" value="1" min="1" max="20" oninput="updateSummary()"></div>
-            </div>
-            <div class="recipe-option">
-              <input type="checkbox" id="r5" name="recipe" value="ranch-bowl" onchange="updateSummary()">
-              <label class="recipe-label" for="r5">
-                <span class="recipe-icon">🐄</span>
-                <div><div class="recipe-name">The Ranch Bowl</div><div class="recipe-price">$19/lb · Beef & Egg</div></div>
-              </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q5" value="1" min="1" max="20" oninput="updateSummary()"></div>
-            </div>
-            <div class="recipe-option">
-              <input type="checkbox" id="r6" name="recipe" value="wellness-bowl" onchange="updateSummary()">
-              <label class="recipe-label" for="r6">
-                <span class="recipe-icon">🥗</span>
-                <div><div class="recipe-name">The Wellness Bowl</div><div class="recipe-price">$16/lb · Lean Chicken</div></div>
-              </label>
-              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q6" value="1" min="1" max="20" oninput="updateSummary()"></div>
+              <input type="text" class="text-input" id="d-dogname2" placeholder="Biscuit" id="d-dogname2">
             </div>
           </div>
+        </div>
+        <div class="nav-btns">
+          <button class="btn-back" onclick="goTo(3)">← Back</button>
+          <button class="btn-next" onclick="goTo(5)">Review &amp; Pay →</button>
         </div>
       </div>
 
-      <!-- STEP 4: DELIVERY FREQUENCY -->
-      <div class="form-card" style="margin-bottom:24px;">
-        <div class="form-section-head">
-          <div class="form-step-num">4</div>
-          <h3>Delivery Frequency</h3>
-        </div>
-        <div class="form-body">
-          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Set up a recurring delivery and never run out. One-time orders are always available.</p>
-          <div class="freq-options">
-            <div class="freq-opt">
-              <input type="radio" name="frequency" id="once" value="one-time" checked>
-              <label class="freq-label" for="once"><span class="f-name">One-Time</span><span class="f-desc">Single order</span></label>
-            </div>
-            <div class="freq-opt">
-              <input type="radio" name="frequency" id="weekly" value="weekly">
-              <label class="freq-label" for="weekly"><span class="f-name">Weekly</span><span class="f-desc">Every 7 days</span></label>
-            </div>
-            <div class="freq-opt">
-              <input type="radio" name="frequency" id="biweekly" value="bi-weekly">
-              <label class="freq-label" for="biweekly"><span class="f-name">Bi-Weekly</span><span class="f-desc">Every 14 days</span></label>
-            </div>
-            <div class="freq-opt">
-              <input type="radio" name="frequency" id="monthly" value="monthly">
-              <label class="freq-label" for="monthly"><span class="f-name">Monthly</span><span class="f-desc">Every 30 days</span></label>
+      <!-- ── STEP 5: REVIEW + PAY ── -->
+      <div class="step-panel" id="step5">
+        <div class="step-card">
+          <div class="step-card-head">
+            <div class="step-num-badge">5</div>
+            <div>
+              <h2>Review &amp; Complete Your Order</h2>
+              <p>Double-check everything before placing your order</p>
             </div>
           </div>
+          <div class="step-body">
+
+            <!-- Order Review -->
+            <div class="review-block" id="reviewRecipes">
+              <h4>🍽️ Recipes Ordered</h4>
+              <div id="reviewRecipeLines">—</div>
+            </div>
+            <div class="review-block" id="reviewPlanBlock">
+              <h4>📦 Subscription Plan</h4>
+              <div id="reviewPlanLines">—</div>
+            </div>
+            <div class="review-block" id="reviewDelivery">
+              <h4>🚚 Delivery</h4>
+              <div id="reviewDeliveryLines">—</div>
+            </div>
+
+            <div class="review-total">
+              <span class="review-total-label">Order Total</span>
+              <span class="review-total-val" id="reviewTotal">$0.00</span>
+            </div>
+
+            <!-- Payment -->
+            <div style="margin-top:28px;">
+              <label class="field-label" style="margin-bottom:14px;display:flex;align-items:center;gap:8px;">
+                💳 Payment Details
+                <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.78rem;color:var(--text-muted);">— SSL encrypted &amp; secure</span>
+              </label>
+              <div class="payment-box">
+                <div class="card-icons">
+                  <div class="card-icon">VISA</div>
+                  <div class="card-icon">MC</div>
+                  <div class="card-icon">AMEX</div>
+                  <div class="card-icon">Discover</div>
+                </div>
+                <div class="card-row" style="margin-bottom:14px;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="field-label" style="text-transform:none;font-size:0.78rem;letter-spacing:0;margin-bottom:6px;" for="cc-name">Name on Card</label>
+                    <input type="text" class="text-input" id="cc-name" placeholder="Sarah Mitchell">
+                  </div>
+                </div>
+                <div class="card-row" style="margin-bottom:14px;">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="field-label" style="text-transform:none;font-size:0.78rem;letter-spacing:0;margin-bottom:6px;" for="cc-num">Card Number</label>
+                    <div class="card-input-wrap">
+                      <input type="text" class="text-input" id="cc-num" placeholder="4242 4242 4242 4242" maxlength="19">
+                      <div class="card-type-badge" id="cardTypeBadge"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-row-2">
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="field-label" style="text-transform:none;font-size:0.78rem;letter-spacing:0;margin-bottom:6px;" for="cc-exp">Expiry</label>
+                    <input type="text" class="text-input" id="cc-exp" placeholder="MM / YY" maxlength="7">
+                  </div>
+                  <div class="form-group" style="margin-bottom:0;">
+                    <label class="field-label" style="text-transform:none;font-size:0.78rem;letter-spacing:0;margin-bottom:6px;" for="cc-cvv">CVV</label>
+                    <input type="text" class="text-input" id="cc-cvv" placeholder="•••" maxlength="4" type="password">
+                  </div>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-top:16px;color:var(--text-muted);font-size:0.76rem;">
+                  🔒 Secured by Stripe &nbsp;·&nbsp; SSL Encrypted &nbsp;·&nbsp; We never store your card
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="nav-btns">
+          <button class="btn-back" onclick="goTo(4)">← Back</button>
+          <button class="btn-next gold" id="placeOrderBtn" onclick="submitOrder()">🐾 Place My Order</button>
         </div>
       </div>
 
-      <!-- STEP 5: PAYMENT (Stripe placeholder) -->
-      <div class="form-card">
-        <div class="form-section-head">
-          <div class="form-step-num">5</div>
-          <h3>Payment</h3>
-        </div>
-        <div class="form-body">
-          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Your payment is processed securely via Stripe. We never store your card information.</p>
-          <!-- STRIPE ELEMENT PLACEHOLDER -->
-          <div style="border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;background:var(--cream);">
-            <div style="font-size:2rem;margin-bottom:12px;">💳</div>
-            <p style="color:var(--text-muted);font-size:0.9rem;font-weight:600;">Stripe Payment Element</p>
-            <p style="color:var(--text-muted);font-size:0.82rem;margin-top:6px;">Connect your Stripe account and replace this placeholder with <code style="background:var(--cream3);padding:2px 6px;border-radius:4px;font-size:0.8rem;">stripe.elements()</code></p>
-          </div>
-          <div class="form-row single" style="margin-top:20px;">
-            <div class="form-group">
-              <label class="form-label">Name on Card <span>*</span></label>
-              <input type="text" class="form-input" placeholder="Sarah Mitchell" id="cardName">
-            </div>
-          </div>
-          <!-- Demo: simple card fields -->
-          <div class="form-row single">
-            <div class="form-group">
-              <label class="form-label">Card Number</label>
-              <input type="text" class="form-input" placeholder="4242 4242 4242 4242" maxlength="19" id="cardNum">
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label class="form-label">Expiry</label>
-              <input type="text" class="form-input" placeholder="MM / YY" maxlength="7" id="cardExp">
-            </div>
-            <div class="form-group">
-              <label class="form-label">CVV</label>
-              <input type="text" class="form-input" placeholder="•••" maxlength="4" id="cardCvv">
-            </div>
-          </div>
-        </div>
-      </div>
+    </div><!-- /stepsContainer -->
 
-    </form>
+    <!-- ════════════════════════ SIDEBAR ════════════════════════ -->
+    <div class="summary-panel">
+      <div class="summary-card">
+        <div class="summary-head">
+          <h3>🧾 Your Order</h3>
+          <div class="dog-name-tag" id="sidebarDogTag">Your Dog</div>
+        </div>
+        <div class="summary-body">
 
-    <!-- ORDER SUMMARY -->
-    <div class="summary-card">
-      <div class="summary-head"><h3>🧾 Order Summary</h3></div>
-      <div class="summary-body" id="summaryLines">
-        <div class="summary-line"><span class="summary-label">No recipes selected</span><span class="summary-value">—</span></div>
-      </div>
-      <div class="summary-line" style="padding:12px 24px;border-top:1px solid var(--cream3);">
-        <span class="summary-label" style="font-size:0.9rem;">Delivery</span>
-        <span class="summary-delivery">FREE 🚚</span>
-      </div>
-      <div class="summary-total">
-        <span class="total-label">Total</span>
-        <span class="total-value" id="totalValue">$0.00</span>
-      </div>
-      <div class="summary-footer">
-        <button class="btn-checkout" id="placeOrderBtn" type="button" onclick="submitOrder()">
-          🔒 Place Order Securely
-        </button>
-        <div class="stripe-note">🔒 Powered by Stripe · SSL Encrypted</div>
-        <div class="trust-row">
-          <div class="trust-item">✅ Free Delivery</div>
-          <div class="trust-item">❄️ Cold-Packed</div>
-          <div class="trust-item">🐾 Made Fresh</div>
+          <div class="s-section" id="sCalcSection">
+            <div class="s-section-title">📊 Calculator Results</div>
+            <div class="s-line"><span class="s-line-label">Daily Amount</span><span class="s-line-val" id="sCalcDaily">—</span></div>
+            <div class="s-line"><span class="s-line-label">Feedings / Day</span><span class="s-line-val" id="sCalcFeeds">—</span></div>
+            <div class="s-line"><span class="s-line-label">Weekly Amount</span><span class="s-line-val" id="sCalcWeekly">—</span></div>
+          </div>
+
+          <div class="s-section" id="sRecipesSection">
+            <div class="s-section-title">🍽️ Recipes</div>
+            <div id="sRecipeLines"><div class="s-empty">No recipes selected yet</div></div>
+          </div>
+
+          <div class="s-section" id="sPlanSection">
+            <div class="s-section-title">📦 Plan</div>
+            <div id="sPlanLine"><div class="s-empty">No plan selected yet</div></div>
+          </div>
+
+        </div>
+        <div class="summary-delivery">
+          <span>🚚 Delivery (Katy Area)</span>
+          <span class="free">FREE</span>
+        </div>
+        <div class="summary-total">
+          <span class="s-total-label">Total</span>
+          <span class="s-total-val" id="sTotalVal">$0.00</span>
+        </div>
+        <div class="summary-footer">
+          <button class="summary-place-btn" id="sidebarPlaceBtn" onclick="submitOrder()" disabled>
+            🔒 Place Order
+          </button>
+          <div class="secure-note">🔒 SSL Secured · Powered by Stripe</div>
+          <div class="summary-trust">
+            <div class="s-trust-item">✅ Free Delivery</div>
+            <div class="s-trust-item">❄️ Cold-Packed</div>
+            <div class="s-trust-item">🐾 Made Fresh</div>
+          </div>
         </div>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- MOBILE STICKY BOTTOM -->
+<div class="mobile-summary-cta" id="mobileSummaryCta">
+  <div class="mc-inner">
+    <div class="mc-total">
+      <span>Order Total</span>
+      <strong id="mobileTotal">$0.00</strong>
+    </div>
+    <button class="mc-btn" onclick="mobileCtaAction()">Continue →</button>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <span class="success-paw">🐾</span>
+    <h2>Order Received, <span class="dog-name-success" id="successDogName">Buddy</span>!</h2>
+    <p>Your first fresh delivery is on its way. We'll text you with a delivery window — it'll be cold-packed and ready when you are.</p>
+    <div class="success-details" id="successDetails">
+      <!-- filled by JS -->
+    </div>
+    <p style="font-size:0.82rem;color:var(--text-muted);">A confirmation email will be sent to <strong id="successEmail">—</strong></p>
+    <a href="index.html" class="btn-home" style="margin-top:20px;">← Back to Home</a>
+  </div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -480,7 +960,7 @@
           <li><a href="menu.html">The Menu</a></li>
           <li><a href="checkout.html">Order Now</a></li>
           <li><a href="delivery.html">Free Delivery</a></li>
-          <li><a href="care.html">Care & Storage</a></li>
+          <li><a href="care.html">Care &amp; Storage</a></li>
         </ul>
       </div>
       <div class="footer-col">
@@ -501,70 +981,646 @@
 </footer>
 
 <script>
-  // Mobile menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const overlay    = document.getElementById('overlay');
-  const closeBtn   = document.getElementById('closeBtn');
-  hamburger.addEventListener('click', () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; });
-  closeBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
-  overlay.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+/* ═══════════════════════════════════════════════════
+   DATA
+═══════════════════════════════════════════════════ */
+const RECIPES = [
+  { id:'r1', emoji:'🐔', name:'Harvest Bird',       protein:'Chicken & Sweet Potato',  price:18, kcalKg:1450, badge:'bestseller', seasonal:false },
+  { id:'r2', emoji:'🥩', name:'Garden Beef',        protein:'Beef & Zucchini',          price:19, kcalKg:1580, badge:'staff',      seasonal:false },
+  { id:'r3', emoji:'🦃', name:'Power Poultry',      protein:'Turkey & Quinoa',          price:18, kcalKg:1320, badge:'',           seasonal:false },
+  { id:'r4', emoji:'🥚', name:'The Breakfast Bowl', protein:'Chicken, Eggs & Oats',     price:17, kcalKg:1490, badge:'',           seasonal:false },
+  { id:'r5', emoji:'🦬', name:'The Prairie Bowl',   protein:'Bison & Sweet Potato',     price:24, kcalKg:1600, badge:'seasonal',   seasonal:true  },
+  { id:'r6', emoji:'🫐', name:'The Summer Garden',  protein:'Chicken & Berry',           price:21, kcalKg:1380, badge:'seasonal',   seasonal:true  },
+];
 
-  // Format card number
-  const cardNum = document.getElementById('cardNum');
-  if (cardNum) {
-    cardNum.addEventListener('input', function() {
-      let v = this.value.replace(/\D/g,'').slice(0,16);
-      this.value = v.match(/.{1,4}/g)?.join(' ') || v;
+const KATY_ZIPS = ['77449','77450','77493','77494','77492','77084','77095','77433','77406'];
+
+// Dog calculator state
+let calc = { dailyLbs: 0, weeklyLbs: 0, feedsPerDay: 2, monthlyEst: 0, perMeal: 0, perDay: 0 };
+
+// Selected recipes { id: qty }
+let selectedRecipes = {};
+
+// Selected plan
+let selectedPlan = null; // 'weekly' | 'biweekly' | '3month'
+
+// Current step
+let currentStep = 1;
+
+/* ═══════════════════════════════════════════════════
+   CALCULATOR
+═══════════════════════════════════════════════════ */
+const SIZE_PCT = { xs:0.030, sm:0.025, md:0.020, lg:0.018, xl:0.015 };
+const AGE_MUL  = { puppy:1.50, adult:1.00, senior:0.85 };
+const ACT_MUL  = { low:0.85, moderate:1.00, high:1.25 };
+
+function getRadio(name) {
+  const el = document.querySelector(`input[name="${name}"]:checked`);
+  return el ? el.value : null;
+}
+
+function calcPortions() {
+  const wt  = parseFloat(document.getElementById('weightSlider').value) || 18;
+  const sz  = getRadio('dogSize') || 'sm';
+  const age = getRadio('dogAge')  || 'adult';
+  const act = getRadio('dogActivity') || 'moderate';
+
+  const basePct   = SIZE_PCT[sz]  || 0.020;
+  const ageFactor = AGE_MUL[age]  || 1.00;
+  const actFactor = ACT_MUL[act]  || 1.00;
+
+  const dailyLbs  = +(wt * basePct * ageFactor * actFactor).toFixed(2);
+  const dailyOz   = +(dailyLbs * 16).toFixed(1);
+  const weeklyLbs = +(dailyLbs * 7).toFixed(1);
+  const monthlyLbs = +(dailyLbs * 30).toFixed(1);
+  const avgPrice   = 18;
+  const monthlyEst = +(monthlyLbs * avgPrice).toFixed(2);
+  const feedsPerDay = age === 'puppy' ? 3 : 2;
+  const perMeal = +(dailyLbs / feedsPerDay * avgPrice).toFixed(2);
+  const perDay  = +(dailyLbs * avgPrice).toFixed(2);
+
+  calc = { dailyLbs, dailyOz, weeklyLbs, monthlyLbs, monthlyEst, feedsPerDay, perMeal, perDay, avgPrice };
+
+  // Update display
+  document.getElementById('metricDaily').textContent   = dailyOz + ' oz';
+  document.getElementById('metricDailySub').textContent = '(' + dailyLbs + ' lbs)';
+  document.getElementById('metricFeeds').textContent   = feedsPerDay + '×';
+  document.getElementById('metricFeedsSub').textContent = Math.round(dailyOz / feedsPerDay * 10)/10 + ' oz each';
+  document.getElementById('metricWeekly').textContent  = weeklyLbs + ' lbs';
+  document.getElementById('metricWeeklySub').textContent = 'order ' + weeklyLbs + ' lbs/wk';
+  document.getElementById('metricMonthly').textContent = '$' + monthlyEst.toFixed(0);
+  document.getElementById('metricPerMeal').textContent = '$' + perMeal.toFixed(2);
+  document.getElementById('metricPerDay').textContent  = '$' + perDay.toFixed(2);
+
+  // Sidebar
+  document.getElementById('sCalcDaily').textContent  = dailyOz + ' oz / day';
+  document.getElementById('sCalcFeeds').textContent  = feedsPerDay + '× daily';
+  document.getElementById('sCalcWeekly').textContent = weeklyLbs + ' lbs / week';
+
+  // Update recipe suggested quantities
+  updateRecipeSuggestedQty();
+  updateRecipeAutoHints();
+
+  // Update plan pricing
+  renderPlans();
+  updateSummary();
+}
+
+function onWeightSlide(val) {
+  const min = 2, max = 130;
+  const pct = ((val - min) / (max - min)) * 100;
+  document.getElementById('weightFill').style.width = pct + '%';
+  document.getElementById('weightDisplay').textContent = val + ' lbs';
+
+  // Auto-select size category
+  const v = parseInt(val);
+  if (v < 10) document.getElementById('sz-xs').checked = true;
+  else if (v <= 25) document.getElementById('sz-sm').checked = true;
+  else if (v <= 50) document.getElementById('sz-md').checked = true;
+  else if (v <= 80) document.getElementById('sz-lg').checked = true;
+  else document.getElementById('sz-xl').checked = true;
+
+  calcPortions();
+}
+
+function onDogNameChange(val) {
+  const name = val.trim() || 'Your Dog';
+  document.getElementById('sidebarDogTag').textContent = name;
+  document.getElementById('d-dogname2').value = val;
+}
+
+/* ═══════════════════════════════════════════════════
+   RECIPE GRID
+═══════════════════════════════════════════════════ */
+function buildRecipeGrid() {
+  const grid = document.getElementById('recipeGrid');
+  grid.innerHTML = RECIPES.map(r => {
+    const selected = selectedRecipes[r.id] ? 'selected' : '';
+    const qty = selectedRecipes[r.id] || Math.max(1, Math.ceil(calc.weeklyLbs || 2));
+    let badgeHtml = '';
+    if (r.badge === 'bestseller') badgeHtml = '<span class="r-badge r-badge-bestseller">Bestseller</span>';
+    if (r.badge === 'staff')      badgeHtml = '<span class="r-badge r-badge-bestseller">Staff Fave</span>';
+    if (r.badge === 'seasonal')   badgeHtml = '<span class="r-badge r-badge-seasonal">Seasonal</span>';
+
+    return `
+    <div class="recipe-card ${selected}" id="rc-${r.id}" onclick="toggleRecipe('${r.id}')">
+      <div class="recipe-check" id="rcheck-${r.id}">${selectedRecipes[r.id] ? '✓' : ''}</div>
+      <div class="recipe-card-header">
+        <div class="recipe-emoji">${r.emoji}</div>
+        <div class="recipe-info">
+          <div class="recipe-name">${r.name}</div>
+          <div class="recipe-protein">${r.protein}</div>
+          <div class="recipe-cal">🔥 ~${r.kcalKg.toLocaleString()} kcal/kg</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;">
+          <div class="recipe-price-tag">$${r.price}</div>
+          <div class="recipe-price-per">/ lb</div>
+        </div>
+      </div>
+      ${badgeHtml ? '<div class="recipe-badge-row">' + badgeHtml + '</div>' : ''}
+      <div class="recipe-qty" id="rqty-${r.id}" style="${selectedRecipes[r.id] ? '' : 'opacity:0.4;pointer-events:none;'}">
+        <div>
+          <div class="recipe-qty-label">Quantity (lbs / delivery)</div>
+          <div class="qty-sublabel" id="rqty-sub-${r.id}">~${qty} lbs / week suggested</div>
+        </div>
+        <div class="qty-ctrl" onclick="event.stopPropagation()">
+          <button class="qty-btn" onclick="changeQty('${r.id}',-1)">−</button>
+          <div>
+            <div class="qty-val" id="qval-${r.id}">${qty} lb</div>
+          </div>
+          <button class="qty-btn" onclick="changeQty('${r.id}',1)">+</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function toggleRecipe(id) {
+  if (selectedRecipes[id]) {
+    delete selectedRecipes[id];
+  } else {
+    const suggestedQty = Math.max(1, Math.ceil(calc.weeklyLbs || 2));
+    selectedRecipes[id] = suggestedQty;
+  }
+  buildRecipeGrid();
+  updateSummary();
+}
+
+function changeQty(id, delta) {
+  const current = selectedRecipes[id] || 1;
+  const next = Math.max(1, Math.min(50, current + delta));
+  selectedRecipes[id] = next;
+  document.getElementById('qval-' + id).textContent = next + ' lb';
+  updateSummary();
+}
+
+function updateRecipeSuggestedQty() {
+  RECIPES.forEach(r => {
+    const el = document.getElementById('rqty-sub-' + r.id);
+    if (el) {
+      const suggested = Math.max(1, Math.ceil(calc.weeklyLbs || 2));
+      el.textContent = '~' + suggested + ' lbs / week suggested';
+    }
+  });
+}
+
+function updateRecipeAutoHints() {}
+
+/* ═══════════════════════════════════════════════════
+   PLAN CARDS
+═══════════════════════════════════════════════════ */
+function getOrderSubtotal() {
+  let sub = 0;
+  RECIPES.forEach(r => {
+    if (selectedRecipes[r.id]) sub += r.price * selectedRecipes[r.id];
+  });
+  return sub;
+}
+
+function renderPlans() {
+  const sub = getOrderSubtotal();
+  const weeklyCost   = sub;                           // full price
+  const biweeklyCost = +(sub * 2 * 0.95).toFixed(2); // bi-weekly = 2 deliveries at 5% off
+  const monthly3Price = +(sub * 4 * 0.90).toFixed(2); // ~4 weeks x 3 months = 12 deliveries at 10% off, charged once
+  const biweeklySave  = +(sub * 2 * 0.05).toFixed(2);
+  const monthly3Save  = +(sub * 4 * 0.10).toFixed(2) * 3; // total savings over 3 months
+  const freeMealVal   = +(calc.dailyLbs * 2 * calc.avgPrice).toFixed(2);
+
+  document.getElementById('freeMealVal').textContent = freeMealVal > 0 ? '$' + freeMealVal.toFixed(2) : '—';
+
+  const plans = [
+    {
+      key:'weekly',
+      icon:'🔄',
+      name:'Weekly',
+      freq:'Delivered every 7 days',
+      price: weeklyCost > 0 ? '$' + weeklyCost.toFixed(2) : '—',
+      period:'/ week',
+      savings: null,
+      features:['Fresh every 7 days','Cancel anytime','Free delivery in Katy'],
+      featured:false,
+    },
+    {
+      key:'biweekly',
+      icon:'📅',
+      name:'Bi-Weekly',
+      freq:'Delivered every 14 days',
+      price: weeklyCost > 0 ? '$' + biweeklyCost.toFixed(2) : '—',
+      period:'/ 2 weeks',
+      savings: biweeklySave > 0 ? 'Save $' + biweeklySave.toFixed(2) + ' per delivery (5% off)' : null,
+      features:['Fresh every 14 days','5% off each delivery','Cancel anytime','Free delivery in Katy'],
+      featured:false,
+    },
+    {
+      key:'3month',
+      icon:'🎁',
+      name:'3-Month Prepay',
+      freq:'Weekly or bi-weekly for 3 months',
+      price: weeklyCost > 0 ? '$' + monthly3Price.toFixed(2) : '—',
+      period:'for 3 months',
+      savings: monthly3Save > 0 ? 'Total savings: $' + monthly3Save.toFixed(2) + ' + 2 free meals' : '10% off + 2 Free Meals',
+      features:['10% off entire order','2 free bonus meals','Priority delivery scheduling','Pause or freeze anytime','Free delivery in Katy'],
+      featured:true,
+    },
+  ];
+
+  document.getElementById('planCards').innerHTML = plans.map(p => {
+    const isSel = selectedPlan === p.key;
+    return `
+    <div class="plan-card ${p.featured ? 'featured' : ''} ${isSel ? 'selected' : ''}" onclick="selectPlan('${p.key}')">
+      ${p.featured ? '<div class="plan-badge">Most Savings</div>' : ''}
+      <div class="plan-icon">${p.icon}</div>
+      <div class="plan-name">${p.name}</div>
+      <div class="plan-freq">${p.freq}</div>
+      <div class="plan-price-main">${p.price}</div>
+      <div class="plan-price-period">${p.period}</div>
+      ${p.savings ? `<div class="plan-savings">🎉 ${p.savings}</div>` : ''}
+      <ul class="plan-features">
+        ${p.features.map(f => `<li>${f}</li>`).join('')}
+      </ul>
+      <div class="plan-check">${isSel ? '✓' : ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectPlan(key) {
+  selectedPlan = key;
+  renderPlans();
+
+  const sub = getOrderSubtotal();
+  let savings = 0;
+  if (key === 'biweekly') savings = +(sub * 2 * 0.05).toFixed(2);
+  if (key === '3month')   savings = +(sub * 4 * 0.10 * 3).toFixed(2);
+
+  const callout = document.getElementById('savingsCallout');
+  const amt     = document.getElementById('savingsAmt');
+  if (savings > 0) {
+    callout.classList.add('show');
+    amt.textContent = '$' + savings.toFixed(2) + ' saved with this plan';
+  } else {
+    callout.classList.remove('show');
+  }
+
+  updateSummary();
+}
+
+/* ═══════════════════════════════════════════════════
+   SUMMARY PANEL + TOTAL
+═══════════════════════════════════════════════════ */
+function computeTotal() {
+  const sub = getOrderSubtotal();
+  if (!sub || !selectedPlan) return 0;
+  if (selectedPlan === 'weekly')   return +sub.toFixed(2);
+  if (selectedPlan === 'biweekly') return +(sub * 2 * 0.95).toFixed(2);
+  if (selectedPlan === '3month')   return +(sub * 4 * 0.90).toFixed(2);
+  return +sub.toFixed(2);
+}
+
+function updateSummary() {
+  // Recipe lines
+  const recipeHtml = RECIPES.filter(r => selectedRecipes[r.id]).map(r => {
+    const qty = selectedRecipes[r.id];
+    return `<div class="s-line">
+      <span class="s-line-label">${r.emoji} ${r.name} × ${qty} lb</span>
+      <span class="s-line-val">$${(r.price * qty).toFixed(2)}</span>
+    </div>`;
+  }).join('');
+  document.getElementById('sRecipeLines').innerHTML = recipeHtml ||
+    '<div class="s-empty">No recipes selected yet</div>';
+
+  // Plan line
+  const planNames = { weekly:'Weekly Subscription', biweekly:'Bi-Weekly Subscription', '3month':'3-Month Prepay' };
+  document.getElementById('sPlanLine').innerHTML = selectedPlan
+    ? `<div class="s-line"><span class="s-line-label">${planNames[selectedPlan]}</span><span class="s-line-val">✓</span></div>`
+    : '<div class="s-empty">No plan selected yet</div>';
+
+  // Total
+  const total = computeTotal();
+  const fmt = total > 0 ? '$' + total.toFixed(2) : '$0.00';
+  document.getElementById('sTotalVal').textContent = fmt;
+  document.getElementById('mobileTotal').textContent = fmt;
+
+  // Enable place order button only if all required data filled
+  const canPlace = Object.keys(selectedRecipes).length > 0 && selectedPlan;
+  document.getElementById('sidebarPlaceBtn').disabled = !canPlace;
+}
+
+/* ═══════════════════════════════════════════════════
+   STEP NAVIGATION
+═══════════════════════════════════════════════════ */
+function goTo(n, skipValidation) {
+  if (!skipValidation && n > currentStep) {
+    if (!validateStep(currentStep)) return;
+  }
+  // Auto-prefill delivery dog name from step 1
+  if (n === 4) {
+    const dn = document.getElementById('dogName').value.trim();
+    if (dn) document.getElementById('d-dogname2').value = dn;
+    const on = document.getElementById('ownerName').value.trim();
+    if (on) {
+      const parts = on.split(' ');
+      if (!document.getElementById('d-fname').value) document.getElementById('d-fname').value = parts[0] || '';
+      if (!document.getElementById('d-lname').value) document.getElementById('d-lname').value = parts.slice(1).join(' ') || '';
+    }
+  }
+  // Populate review step
+  if (n === 5) populateReview();
+
+  const panels = document.querySelectorAll('.step-panel');
+  panels.forEach(p => p.classList.remove('active'));
+  document.getElementById('step' + n).classList.add('active');
+  currentStep = n;
+
+  updateProgressBar(n);
+  window.scrollTo({ top: 0, behavior:'smooth' });
+
+  // Rebuild recipes when entering step 2
+  if (n === 2) buildRecipeGrid();
+  // Render plans when entering step 3
+  if (n === 3) renderPlans();
+}
+
+function jumpTo(n) {
+  if (n <= currentStep) goTo(n, true);
+}
+
+function updateProgressBar(n) {
+  for (let i = 1; i <= 5; i++) {
+    const ps = document.getElementById('ps' + i);
+    const pn = document.getElementById('pn' + i);
+    ps.classList.remove('active','done');
+    if (i < n) {
+      ps.classList.add('done');
+      pn.textContent = '✓';
+    } else if (i === n) {
+      ps.classList.add('active');
+      const icons = ['🐶','🍽️','📦','📋','💳'];
+      pn.textContent = icons[i-1];
+    } else {
+      const icons = ['🐶','🍽️','📦','📋','💳'];
+      pn.textContent = icons[i-1];
+    }
+  }
+}
+
+function validateStep(n) {
+  if (n === 1) {
+    if (!document.getElementById('dogName').value.trim()) {
+      flashError('dogName', "Please enter your dog's name to personalize your plan!");
+      return false;
+    }
+    if (!document.getElementById('ownerName').value.trim()) {
+      flashError('ownerName', 'Please enter your name!');
+      return false;
+    }
+  }
+  if (n === 2) {
+    if (Object.keys(selectedRecipes).length === 0) {
+      showAlert('🍽️ Please select at least one recipe for your dog!');
+      return false;
+    }
+  }
+  if (n === 3) {
+    if (!selectedPlan) {
+      showAlert('📦 Please choose a subscription plan to continue!');
+      return false;
+    }
+  }
+  if (n === 4) {
+    const req = ['d-fname','d-lname','d-email','d-phone','d-address','d-zip'];
+    for (const id of req) {
+      const el = document.getElementById(id);
+      if (!el.value.trim()) {
+        flashError(id, 'This field is required.');
+        return false;
+      }
+    }
+    const email = document.getElementById('d-email').value;
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      flashError('d-email', 'Please enter a valid email address.');
+      return false;
+    }
+  }
+  return true;
+}
+
+function flashError(id, msg) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.style.borderColor = 'var(--err)';
+  el.style.boxShadow = '0 0 0 3px rgba(239,68,68,0.15)';
+  el.focus();
+  showAlert(msg);
+  setTimeout(() => { el.style.borderColor = ''; el.style.boxShadow = ''; }, 3000);
+}
+
+function showAlert(msg) {
+  // Custom toast instead of alert
+  const existing = document.getElementById('customToast');
+  if (existing) existing.remove();
+  const t = document.createElement('div');
+  t.id = 'customToast';
+  t.style.cssText = `
+    position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+    background:var(--err); color:#fff; padding:13px 24px; border-radius:50px;
+    font-size:0.9rem; font-weight:600; z-index:9999;
+    box-shadow:0 4px 20px rgba(239,68,68,0.4); animation:slideIn 0.3s ease;
+    max-width:90vw; text-align:center;
+  `;
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+function mobileCtaAction() {
+  if (currentStep < 5) goTo(currentStep + 1);
+  else submitOrder();
+}
+
+/* ═══════════════════════════════════════════════════
+   ZIP CODE CHECK
+═══════════════════════════════════════════════════ */
+function checkZip(val) {
+  const ok   = document.getElementById('zipOk');
+  const warn = document.getElementById('zipWarn');
+  if (val.length < 5) { ok.classList.remove('show'); warn.classList.remove('show'); return; }
+  if (KATY_ZIPS.includes(val)) {
+    ok.classList.add('show');
+    warn.classList.remove('show');
+  } else {
+    warn.classList.add('show');
+    ok.classList.remove('show');
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   REVIEW POPULATION
+═══════════════════════════════════════════════════ */
+function populateReview() {
+  // Recipes
+  const recLines = RECIPES.filter(r => selectedRecipes[r.id]).map(r => {
+    const qty = selectedRecipes[r.id];
+    return `<div class="review-line">
+      <span class="review-line-label">${r.emoji} ${r.name} × ${qty} lb</span>
+      <span class="review-line-val">$${(r.price * qty).toFixed(2)}</span>
+    </div>`;
+  }).join('') || '<div class="review-line"><span class="review-line-label">None selected</span></div>';
+  document.getElementById('reviewRecipeLines').innerHTML = recLines;
+
+  // Plan
+  const planNameMap = { weekly:'Weekly Subscription', biweekly:'Bi-Weekly Subscription', '3month':'3-Month Prepay (10% off + 2 Free Meals)' };
+  const sub = getOrderSubtotal();
+  let periodPriceHtml = '';
+  if (selectedPlan === 'weekly')   periodPriceHtml = `<div class="review-line"><span class="review-line-label">Per delivery</span><span class="review-line-val">$${sub.toFixed(2)}</span></div>`;
+  if (selectedPlan === 'biweekly') periodPriceHtml = `<div class="review-line"><span class="review-line-label">Per 2-week delivery (5% off)</span><span class="review-line-val">$${(sub*2*0.95).toFixed(2)}</span></div>`;
+  if (selectedPlan === '3month')   periodPriceHtml = `<div class="review-line"><span class="review-line-label">3-month prepay (10% off)</span><span class="review-line-val">$${(sub*4*0.90).toFixed(2)}</span></div>
+    <div class="review-line"><span class="review-line-label">🎁 2 Free Meals Bonus</span><span class="review-line-val" style="color:var(--success)">Included!</span></div>`;
+  document.getElementById('reviewPlanLines').innerHTML =
+    `<div class="review-line"><span class="review-line-label">Plan</span><span class="review-line-val">${planNameMap[selectedPlan] || '—'}</span></div>` + periodPriceHtml;
+
+  // Delivery
+  const addr  = document.getElementById('d-address').value;
+  const city  = document.getElementById('d-city').value;
+  const zip   = document.getElementById('d-zip').value;
+  const name  = document.getElementById('d-fname').value + ' ' + document.getElementById('d-lname').value;
+  document.getElementById('reviewDeliveryLines').innerHTML = `
+    <div class="review-line"><span class="review-line-label">Name</span><span class="review-line-val">${name.trim() || '—'}</span></div>
+    <div class="review-line"><span class="review-line-label">Address</span><span class="review-line-val">${addr || '—'}, ${city || 'Katy'} TX ${zip || ''}</span></div>
+    <div class="review-line"><span class="review-line-label">Delivery Fee</span><span class="review-line-val" style="color:var(--success)">FREE 🚚</span></div>`;
+
+  // Total
+  const total = computeTotal();
+  document.getElementById('reviewTotal').textContent = '$' + total.toFixed(2);
+}
+
+/* ═══════════════════════════════════════════════════
+   SUBMIT ORDER
+═══════════════════════════════════════════════════ */
+function submitOrder() {
+  if (currentStep < 5) { goTo(5); return; }
+
+  // Validate payment fields (basic demo)
+  const ccName = document.getElementById('cc-name').value.trim();
+  const ccNum  = document.getElementById('cc-num').value.replace(/\s/g,'');
+  const ccExp  = document.getElementById('cc-exp').value.trim();
+  const ccCvv  = document.getElementById('cc-cvv').value.trim();
+
+  if (!ccName) { flashError('cc-name','Please enter the name on your card.'); return; }
+  if (ccNum.length < 15) { flashError('cc-num','Please enter a valid card number.'); return; }
+  if (ccExp.length < 5)  { flashError('cc-exp','Please enter a valid expiry date.'); return; }
+  if (ccCvv.length < 3)  { flashError('cc-cvv','Please enter your CVV.'); return; }
+
+  // Show success
+  const dogName  = document.getElementById('dogName').value.trim() || 'your pup';
+  const email    = document.getElementById('d-email').value.trim();
+  const plan     = { weekly:'Weekly', biweekly:'Bi-Weekly', '3month':'3-Month Prepay' }[selectedPlan];
+  const total    = computeTotal();
+
+  document.getElementById('successDogName').textContent = dogName;
+  document.getElementById('successEmail').textContent = email || '—';
+
+  const recipes = RECIPES.filter(r => selectedRecipes[r.id]);
+  document.getElementById('successDetails').innerHTML = `
+    <div>📦 Plan: <strong>${plan}</strong></div>
+    <div>🍽️ Recipes: <strong>${recipes.map(r => r.name).join(', ')}</strong></div>
+    <div>💰 Total Charged: <strong>$${total.toFixed(2)}</strong></div>
+    <div>🚚 Free delivery in Katy, TX</div>
+    ${selectedPlan === '3month' ? '<div>🎁 2 Free Meals will be added to your first order!</div>' : ''}
+  `;
+
+  document.getElementById('successOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+  launchConfetti();
+}
+
+/* ═══════════════════════════════════════════════════
+   CARD NUMBER FORMATTING
+═══════════════════════════════════════════════════ */
+document.getElementById('cc-num').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').slice(0,16);
+  this.value = v.match(/.{1,4}/g)?.join(' ') || v;
+  // Detect card type
+  const badge = document.getElementById('cardTypeBadge');
+  if      (/^4/.test(v))         badge.textContent = 'VISA';
+  else if (/^5[1-5]/.test(v))    badge.textContent = 'MC';
+  else if (/^3[47]/.test(v))     badge.textContent = 'AMEX';
+  else if (/^6/.test(v))         badge.textContent = 'Discover';
+  else                           badge.textContent = '';
+});
+
+document.getElementById('cc-exp').addEventListener('input', function() {
+  let v = this.value.replace(/\D/g,'').slice(0,4);
+  if (v.length >= 2) v = v.slice(0,2) + ' / ' + v.slice(2);
+  this.value = v;
+});
+
+/* ═══════════════════════════════════════════════════
+   CONFETTI
+═══════════════════════════════════════════════════ */
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const COLORS = ['#C8933A','#E5B86A','#1D3A2A','#2E5540','#22C55E','#FFFFFF','#FAF8F0'];
+  const particles = [];
+  for (let i = 0; i < 160; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: -20 - Math.random() * 80,
+      w: 8 + Math.random() * 12,
+      h: 4 + Math.random() * 8,
+      color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      angle: Math.random() * Math.PI * 2,
+      spin: (Math.random() - 0.5) * 0.15,
+      vx: (Math.random() - 0.5) * 4,
+      vy: 2 + Math.random() * 4,
+      alpha: 1,
     });
   }
 
-  // Order summary
-  const prices = { r1:18, r2:20, r3:17, r4:18, r5:19, r6:16 };
-  const names  = { r1:'The Sunday Roast', r2:"Ocean's Garden", r3:'The Gentle Garden', r4:'Turkey Harvest', r5:'The Ranch Bowl', r6:'The Wellness Bowl' };
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    let alive = false;
+    particles.forEach(p => {
+      p.x  += p.vx;
+      p.y  += p.vy;
+      p.vy += 0.04;
+      p.angle += p.spin;
+      if (p.y < canvas.height + 20) alive = true;
 
-  function updateSummary() {
-    const lines = document.getElementById('summaryLines');
-    const totalEl = document.getElementById('totalValue');
-    let html = '';
-    let total = 0;
-    let hasItems = false;
-
-    for (let i = 1; i <= 6; i++) {
-      const cb = document.getElementById('r' + i);
-      const qty = parseInt(document.getElementById('q' + i).value) || 1;
-      if (cb && cb.checked) {
-        const price = prices['r' + i] * qty;
-        total += price;
-        hasItems = true;
-        html += `<div class="summary-line"><span class="summary-label">${names['r'+i]} × ${qty}lb</span><span class="summary-value">$${price}</span></div>`;
-      }
-    }
-    if (!hasItems) html = '<div class="summary-line"><span class="summary-label">No recipes selected yet</span><span class="summary-value">—</span></div>';
-    lines.innerHTML = html;
-    totalEl.textContent = '$' + total.toFixed(2);
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    if (alive) requestAnimationFrame(draw);
+    else ctx.clearRect(0,0,canvas.width,canvas.height);
   }
+  draw();
+}
 
-  function submitOrder() {
-    const firstName = document.getElementById('firstName').value.trim();
-    const address   = document.getElementById('address').value.trim();
-    const phone     = document.getElementById('phone').value.trim();
+/* ═══════════════════════════════════════════════════
+   MOBILE NAV
+═══════════════════════════════════════════════════ */
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+const overlay    = document.getElementById('overlay');
+const closeBtn   = document.getElementById('closeBtn');
+hamburger.addEventListener('click', () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+closeBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+overlay.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
 
-    if (!firstName || !address || !phone) {
-      alert('Please fill in your name, phone number, and delivery address before placing your order.');
-      return;
-    }
-
-    const hasRecipe = [1,2,3,4,5,6].some(i => document.getElementById('r'+i).checked);
-    if (!hasRecipe) {
-      alert('Please select at least one recipe.');
-      return;
-    }
-
-    // Show success overlay (demo — in production, submit to Stripe/server)
-    document.getElementById('successOverlay').classList.add('show');
-    document.body.style.overflow = 'hidden';
-  }
+/* ═══════════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════════ */
+calcPortions();
+buildRecipeGrid();
+renderPlans();
 </script>
 </body>
 </html>
