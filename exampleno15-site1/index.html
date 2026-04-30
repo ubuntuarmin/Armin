@@ -427,6 +427,11 @@
       background: var(--forest); padding: 90px 24px; text-align: center; overflow: hidden;
     }
     .ing-showcase-inner { max-width: 700px; margin: 0 auto; }
+    .ing-showcase-title {
+      font-size: clamp(1.9rem,3.5vw,2.8rem); color: #fff;
+      font-family: 'Playfair Display',Georgia,serif; margin-bottom: 0;
+    }
+    .ing-showcase-title em { color: var(--gold); font-style: italic; }
     .ing-cycle-wrap { position: relative; min-height: 150px; margin: 48px auto 0; }
     .ing-slide {
       position: absolute; inset: 0;
@@ -647,7 +652,7 @@
 <section class="ing-showcase-section">
   <div class="ing-showcase-inner">
     <span class="section-eyebrow" style="color:var(--gold2);">Farm to Bowl</span>
-    <h2 style="font-size:clamp(1.9rem,3.5vw,2.8rem);color:#fff;font-family:'Playfair Display',Georgia,serif;margin-bottom:0;">Ingredients You Can <em style="color:var(--gold);">Actually Pronounce</em></h2>
+    <h2 class="ing-showcase-title">Ingredients You Can <em>Actually Pronounce</em></h2>
     <div class="ing-cycle-wrap" id="ingCycleWrap">
       <div class="ing-slide active">
         <span class="ing-emoji-big">🐔</span>
