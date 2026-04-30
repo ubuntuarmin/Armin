@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Menu — The Artisan Bowl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --forest:#1D3A2A; --forest2:#2E5540;
+      --gold:#C8933A; --gold2:#E5B86A;
+      --cream:#FAF8F0; --cream2:#F0EBE0; --cream3:#E8E0CC;
+      --text:#1E1A14; --text-mid:#4A3C2C; --text-muted:#7A6A58; --white:#FFFFFF;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter','Segoe UI',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; line-height:1.6; }
+
+    /* NAV */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(29,58,42,0.97); backdrop-filter:blur(20px); border-bottom:3px solid var(--gold); box-shadow:0 4px 30px rgba(0,0,0,0.25); }
+    .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:72px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .logo-mark { width:48px; height:48px; border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:rgba(200,147,58,0.1); }
+    .logo-text { display:flex; flex-direction:column; }
+    .logo-name { font-size:1.2rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; }
+    .logo-name span { color:var(--gold); }
+    .logo-tag { font-size:0.6rem; color:var(--gold2); letter-spacing:2.5px; text-transform:uppercase; margin-top:1px; }
+    .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
+    .nav-links a { color:rgba(255,255,255,0.78); text-decoration:none; padding:8px 12px; border-radius:8px; font-size:0.84rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover,.nav-links a.active { background:rgba(255,255,255,0.1); color:var(--gold2); }
+    .nav-order { background:var(--gold)!important; color:var(--forest)!important; font-weight:700!important; padding:9px 20px!important; border-radius:50px!important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--gold); border-radius:3px; }
+    .mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1999; }
+    .mobile-overlay.open { display:block; }
+    .mobile-menu { display:none; position:fixed; top:0; right:-100%; width:72%; height:100%; background:var(--forest); z-index:2000; flex-direction:column; padding:80px 28px 32px; gap:6px; transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left:3px solid var(--gold); }
+    .mobile-menu.open { right:0; }
+    .mobile-menu a { color:var(--white); text-decoration:none; font-size:1.05rem; padding:13px 18px; border-radius:8px; transition:all 0.25s; border-left:3px solid transparent; }
+    .mobile-menu a:hover { background:rgba(200,147,58,0.15); border-left-color:var(--gold); color:var(--gold); }
+    .close-btn { position:absolute; top:22px; right:22px; background:none; border:none; color:var(--gold); font-size:1.7rem; cursor:pointer; }
+    @media (max-width:900px) { .nav-links{display:none;} .hamburger{display:flex;} .mobile-menu{display:flex;} }
+
+    /* HERO */
+    .page-hero { background:linear-gradient(150deg,var(--forest) 0%,#152A1C 50%,#0E1F12 100%); padding:90px 24px 80px; text-align:center; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; top:-100px; right:-100px; width:450px; height:450px; background:radial-gradient(circle,rgba(200,147,58,0.18) 0%,transparent 70%); border-radius:50%; }
+    .page-hero::after  { content:''; position:absolute; bottom:-80px; left:-60px; width:350px; height:350px; background:radial-gradient(circle,rgba(61,107,82,0.2) 0%,transparent 70%); border-radius:50%; }
+    .page-hero-inner { max-width:720px; margin:0 auto; position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(200,147,58,0.15); border:1px solid rgba(200,147,58,0.4); color:var(--gold2); font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; padding:6px 18px; border-radius:50px; margin-bottom:20px; }
+    .page-title { font-size:clamp(2.4rem,5vw,3.8rem); font-weight:700; color:#fff; line-height:1.15; margin-bottom:18px; font-family:'Playfair Display',Georgia,serif; }
+    .page-title em { color:var(--gold); font-style:italic; }
+    .page-desc { font-size:1.1rem; color:rgba(255,255,255,0.68); line-height:1.85; }
+    .divider { width:70px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold2)); margin:24px auto 0; border-radius:2px; }
+
+    /* FILTER TABS */
+    .filter-bar { background:var(--cream2); border-bottom:1px solid var(--cream3); padding:20px 24px; position:sticky; top:72px; z-index:99; }
+    .filter-inner { max-width:1200px; margin:0 auto; display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .filter-tab {
+      padding:8px 22px; border-radius:50px; font-size:0.85rem; font-weight:600;
+      border:2px solid transparent; cursor:pointer; transition:all 0.2s;
+      background:var(--white); color:var(--text-mid); border-color:var(--cream3);
+    }
+    .filter-tab.active { background:var(--forest); color:var(--gold2); border-color:var(--forest); }
+    .filter-tab:hover:not(.active) { border-color:var(--gold); color:var(--forest); }
+
+    /* MENU SECTIONS */
+    .menu-section { padding:80px 24px; }
+    .menu-inner { max-width:1200px; margin:0 auto; }
+    .menu-section.alt { background:var(--cream2); }
+    .section-eyebrow { font-size:0.73rem; letter-spacing:5px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:12px; display:block; }
+    .section-h2 { font-size:clamp(1.8rem,3.5vw,2.6rem); color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:16px; }
+    .section-h2 em { color:var(--gold); font-style:italic; }
+    .section-line { width:70px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold2)); margin:0 0 48px; border-radius:2px; }
+    .menu-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:32px; }
+
+    /* MENU CARD */
+    .menu-card { background:var(--white); border-radius:16px; overflow:hidden; box-shadow:0 4px 20px rgba(0,0,0,0.07); transition:transform 0.3s,box-shadow 0.3s; }
+    .menu-card:hover { transform:translateY(-8px); box-shadow:0 20px 50px rgba(0,0,0,0.14); }
+    .menu-card-img { height:220px; background:var(--cream2); display:flex; flex-direction:column; align-items:center; justify-content:center; border-bottom:3px solid var(--gold); position:relative; overflow:hidden; }
+    .menu-card-img .ph-emoji { font-size:4rem; opacity:0.4; }
+    .menu-card-img .ph-label { font-size:0.7rem; letter-spacing:2px; text-transform:uppercase; color:var(--text-muted); font-weight:600; margin-top:10px; }
+    .menu-card-img::after { content:''; position:absolute; inset:-40% -20%; background:linear-gradient(120deg,transparent 30%,rgba(255,255,255,0.16),transparent 70%); animation:shimmer 3.5s linear infinite; }
+    @keyframes shimmer { to{transform:translateX(100%);} }
+    .badge-row-card { position:absolute; top:14px; left:14px; display:flex; gap:6px; flex-wrap:wrap; }
+    .card-badge { font-size:0.65rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; padding:4px 10px; border-radius:50px; }
+    .badge-bestseller { background:var(--gold); color:var(--forest); }
+    .badge-new { background:#2D7A4F; color:#fff; }
+    .badge-seasonal { background:#8B5E3C; color:#fff; }
+    .badge-gentle { background:#5A6E9A; color:#fff; }
+    .menu-card-body { padding:24px; }
+    .menu-card-protein { font-size:0.68rem; letter-spacing:3px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:8px; display:block; }
+    .menu-card-body h3 { font-size:1.3rem; color:var(--forest); margin-bottom:10px; font-family:'Playfair Display',Georgia,serif; }
+    .menu-card-body p { font-size:0.88rem; color:var(--text-mid); line-height:1.75; margin-bottom:16px; }
+    .ing-pills { display:flex; flex-wrap:wrap; gap:6px; margin-bottom:18px; }
+    .ing-pill { background:var(--cream2); color:var(--text-mid); font-size:0.72rem; padding:4px 10px; border-radius:50px; font-weight:500; }
+    .menu-card-footer { display:flex; align-items:center; justify-content:space-between; padding-top:16px; border-top:1px solid var(--cream3); }
+    .menu-price { font-size:1.35rem; color:var(--gold); font-weight:700; font-family:'Playfair Display',Georgia,serif; }
+    .menu-price span { font-size:0.75rem; color:var(--text-muted); font-weight:400; font-family:Inter,sans-serif; }
+    .btn-order { background:var(--forest); color:var(--gold2); padding:10px 22px; border-radius:50px; font-size:0.83rem; font-weight:700; text-decoration:none; transition:all 0.25s; }
+    .btn-order:hover { background:var(--forest2); transform:translateY(-1px); }
+    @media (max-width:840px) { .menu-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:540px) { .menu-grid{grid-template-columns:1fr;} }
+
+    /* SIZE GUIDE */
+    .size-guide { background:var(--forest); padding:80px 24px; }
+    .size-inner { max-width:900px; margin:0 auto; }
+    .size-guide h2 { font-size:clamp(1.8rem,3vw,2.6rem); color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:40px; text-align:center; }
+    .size-table { width:100%; border-collapse:collapse; }
+    .size-table th { background:var(--gold); color:var(--forest); padding:16px 20px; text-align:left; font-size:0.82rem; font-weight:800; letter-spacing:1px; text-transform:uppercase; }
+    .size-table th:first-child { border-radius:8px 0 0 0; }
+    .size-table th:last-child { border-radius:0 8px 0 0; }
+    .size-table td { padding:16px 20px; font-size:0.9rem; color:rgba(255,255,255,0.82); border-bottom:1px solid rgba(255,255,255,0.08); }
+    .size-table tr:hover td { background:rgba(255,255,255,0.04); }
+    .size-table td strong { color:var(--gold2); }
+    @media (max-width:640px) { .size-table td, .size-table th { padding:12px 14px; font-size:0.82rem; } }
+
+    /* SUBSCRIPTION */
+    .sub-banner { background:var(--gold); padding:70px 24px; text-align:center; }
+    .sub-inner { max-width:700px; margin:0 auto; }
+    .sub-banner h2 { font-size:clamp(1.7rem,3vw,2.5rem); color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:16px; }
+    .sub-banner p { color:rgba(29,58,42,0.82); font-size:1rem; margin-bottom:28px; line-height:1.75; }
+    .btn-forest { display:inline-flex; align-items:center; gap:10px; background:var(--forest); color:var(--gold2); padding:15px 36px; border-radius:50px; font-size:0.97rem; font-weight:700; text-decoration:none; transition:all 0.3s; }
+    .btn-forest:hover { background:var(--forest2); transform:translateY(-2px); }
+
+    /* FOOTER */
+    footer { background:#0E1A12; padding:60px 24px 36px; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-logo-name { font-size:1.4rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:12px; }
+    .footer-logo-name span { color:var(--gold); }
+    .footer-col p { color:rgba(255,255,255,0.55); font-size:0.9rem; line-height:1.8; }
+    .footer-col h4 { color:var(--gold2); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.87rem; transition:color 0.2s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { color:rgba(255,255,255,0.35); font-size:0.82rem; }
+    @media (max-width:760px) { .footer-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:480px) { .footer-grid{grid-template-columns:1fr;} }
+
+    .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
+    .reveal.show { opacity:1; transform:translateY(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-mark">🐾</div>
+      <div class="logo-text">
+        <span class="logo-name">The <span>Artisan</span> Bowl</span>
+        <span class="logo-tag">Katy, Texas</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="kitchen.html">The Kitchen</a></li>
+      <li><a href="ingredients.html">Real Food</a></li>
+      <li><a href="neverlist.html">Never List</a></li>
+      <li><a href="menu.html" class="active">Menu</a></li>
+      <li><a href="care.html">Care & Storage</a></li>
+      <li><a href="delivery.html">Free Delivery</a></li>
+      <li><a href="checkout.html" class="nav-order">Order Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="overlay"></div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="kitchen.html">🍳 The Kitchen</a>
+  <a href="ingredients.html">🥩 Real Food</a>
+  <a href="neverlist.html">🚫 Never List</a>
+  <a href="menu.html">📋 Menu</a>
+  <a href="care.html">❄️ Care & Storage</a>
+  <a href="delivery.html">🚚 Free Delivery</a>
+  <a href="checkout.html">🛒 Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Crafted Recipes</div>
+    <h1 class="page-title">The <em>Menu</em></h1>
+    <p class="page-desc">Seven handcrafted recipes, each built around a single protein with supporting whole vegetables and superfoods. Rotating seasonal specials available throughout the year.</p>
+    <div class="divider"></div>
+  </div>
+</section>
+
+<!-- EVERYDAY RECIPES -->
+<section class="menu-section">
+  <div class="menu-inner">
+    <span class="section-eyebrow">Core Recipes</span>
+    <h2 class="section-h2">Our <em>Everyday</em> Bowls</h2>
+    <div class="section-line"></div>
+    <div class="menu-grid">
+
+      <!-- SUNDAY ROAST -->
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-bestseller">Bestseller</span></div>
+          <div class="ph-emoji">🥩</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🥩 Grass-Fed Beef · Everyday</span>
+          <h3>The Sunday Roast</h3>
+          <p>Slow-roasted grass-fed beef with sweet potato, green beans, and a drizzle of our in-house bone broth. Pure comfort in every bowl.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Grass-Fed Beef</span>
+            <span class="ing-pill">Sweet Potato</span>
+            <span class="ing-pill">Green Beans</span>
+            <span class="ing-pill">Bone Broth</span>
+            <span class="ing-pill">Flaxseed</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$18 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OCEAN'S GARDEN -->
+      <div class="menu-card reveal" style="transition-delay:0.1s">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-new">Staff Fave</span></div>
+          <div class="ph-emoji">🐟</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🐟 Wild-Caught Salmon · Everyday</span>
+          <h3>Ocean's Garden</h3>
+          <p>Wild-caught Pacific salmon, steamed broccoli, and brown rice. Omega-3 rich and gut-friendly — especially loved by dogs with dull coats or dry skin.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Wild Salmon</span>
+            <span class="ing-pill">Broccoli</span>
+            <span class="ing-pill">Brown Rice</span>
+            <span class="ing-pill">Coconut Oil</span>
+            <span class="ing-pill">Carrots</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$20 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- GENTLE GARDEN -->
+      <div class="menu-card reveal" style="transition-delay:0.2s">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-gentle">Sensitive</span></div>
+          <div class="ph-emoji">🍗</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🍗 Free-Range Chicken · Everyday</span>
+          <h3>The Gentle Garden</h3>
+          <p>Free-range chicken, pumpkin, zucchini, and kale. Our most tender recipe — designed for sensitive stomachs, picky eaters, and dogs transitioning from commercial food.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Free-Range Chicken</span>
+            <span class="ing-pill">Pumpkin</span>
+            <span class="ing-pill">Zucchini</span>
+            <span class="ing-pill">Kale</span>
+            <span class="ing-pill">Eggs</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$17 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- TURKEY HARVEST -->
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="ph-emoji">🦃</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🦃 Heritage Turkey · Everyday</span>
+          <h3>Turkey Harvest</h3>
+          <p>Pasture-raised turkey with sweet potato, kale, and bone broth. Lean, high-protein, and easy on joints — ideal for active or working dogs.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Heritage Turkey</span>
+            <span class="ing-pill">Sweet Potato</span>
+            <span class="ing-pill">Kale</span>
+            <span class="ing-pill">Bone Broth</span>
+            <span class="ing-pill">Turmeric</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$18 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- RANCH BOWL -->
+      <div class="menu-card reveal" style="transition-delay:0.1s">
+        <div class="menu-card-img">
+          <div class="ph-emoji">🐄</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🐄 Beef & Egg · Everyday</span>
+          <h3>The Ranch Bowl</h3>
+          <p>Ground grass-fed beef with pasture-raised eggs, carrots, and sweet potato. Our most protein-dense recipe — perfect for larger breeds or high-activity dogs.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Grass-Fed Beef</span>
+            <span class="ing-pill">Pasture Eggs</span>
+            <span class="ing-pill">Carrots</span>
+            <span class="ing-pill">Sweet Potato</span>
+            <span class="ing-pill">Flaxseed</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$19 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- WEIGHT WELLNESS -->
+      <div class="menu-card reveal" style="transition-delay:0.2s">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-gentle">Low Calorie</span></div>
+          <div class="ph-emoji">🥗</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🍗 Chicken & Veggies · Wellness</span>
+          <h3>The Wellness Bowl</h3>
+          <p>Lean chicken breast, steamed green beans, zucchini, broccoli, and cucumber. Designed to support healthy weight management without sacrificing satisfaction.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Lean Chicken</span>
+            <span class="ing-pill">Green Beans</span>
+            <span class="ing-pill">Zucchini</span>
+            <span class="ing-pill">Broccoli</span>
+            <span class="ing-pill">Cucumber</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$16 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASONAL SPECIALS -->
+<section class="menu-section alt">
+  <div class="menu-inner">
+    <span class="section-eyebrow">Limited Availability</span>
+    <h2 class="section-h2"><em>Seasonal</em> Specials</h2>
+    <div class="section-line"></div>
+    <div class="menu-grid">
+      <div class="menu-card reveal">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-seasonal">Seasonal</span></div>
+          <div class="ph-emoji">🦬</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🦬 Bison · Spring/Summer</span>
+          <h3>The Prairie Bowl</h3>
+          <p>American bison with sweet potato, green beans, and turmeric bone broth. Leaner than beef, richer in Omega-3, and an extraordinary option for dogs with beef sensitivities.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Bison</span>
+            <span class="ing-pill">Sweet Potato</span>
+            <span class="ing-pill">Green Beans</span>
+            <span class="ing-pill">Turmeric Bone Broth</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$24 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+      <div class="menu-card reveal" style="transition-delay:0.1s">
+        <div class="menu-card-img">
+          <div class="badge-row-card"><span class="card-badge badge-seasonal">Seasonal</span></div>
+          <div class="ph-emoji">🫐</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🍗 Chicken & Berry · Summer</span>
+          <h3>The Summer Garden</h3>
+          <p>Free-range chicken with fresh blueberries, kale, and a light coconut oil drizzle. Antioxidant-rich and refreshing — a summer seasonal your dog will look forward to all year.</p>
+          <div class="ing-pills">
+            <span class="ing-pill">Free-Range Chicken</span>
+            <span class="ing-pill">Blueberries</span>
+            <span class="ing-pill">Kale</span>
+            <span class="ing-pill">Coconut Oil</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$21 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SIZING GUIDE -->
+<section class="size-guide">
+  <div class="size-inner">
+    <h2>How Much to Feed Your Dog</h2>
+    <table class="size-table">
+      <thead>
+        <tr>
+          <th>Dog Size</th>
+          <th>Weight Range</th>
+          <th>Daily Amount</th>
+          <th>Weekly Order</th>
+          <th>Estimated Cost/Week</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Extra Small</strong></td><td>Under 10 lbs</td><td>¼ – ½ lb / day</td><td>2–3 lbs</td><td>$34–$54</td></tr>
+        <tr><td><strong>Small</strong></td><td>10–25 lbs</td><td>½ – ¾ lb / day</td><td>3.5–5 lbs</td><td>$60–$90</td></tr>
+        <tr><td><strong>Medium</strong></td><td>25–50 lbs</td><td>¾ – 1 lb / day</td><td>5–7 lbs</td><td>$85–$126</td></tr>
+        <tr><td><strong>Large</strong></td><td>50–80 lbs</td><td>1 – 1.5 lbs / day</td><td>7–10 lbs</td><td>$119–$180</td></tr>
+        <tr><td><strong>Extra Large</strong></td><td>80+ lbs</td><td>1.5 – 2 lbs / day</td><td>10–14 lbs</td><td>$170–$252</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:20px;font-size:0.85rem;color:rgba(255,255,255,0.45);text-align:center;">Amounts are guidelines. Active dogs, puppies, and seniors may need adjustments. When in doubt, ask your vet.</p>
+  </div>
+</section>
+
+<!-- SUBSCRIPTION BANNER -->
+<section class="sub-banner">
+  <div class="sub-inner">
+    <h2>Ready to Build Your Dog's Weekly Bowl?</h2>
+    <p>Order once, or set up a weekly recurring delivery. We'll make sure there's always fresh food ready at your door — anywhere in Katy, with free delivery every time.</p>
+    <a href="checkout.html" class="btn-forest">🛒 Build Your Order</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo-name">The <span>Artisan</span> Bowl</div>
+        <p>Handcrafted small-batch dog food, made with human-grade ingredients and delivered free anywhere in Katy, Texas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="kitchen.html">The Kitchen</a></li>
+          <li><a href="ingredients.html">Real Food</a></li>
+          <li><a href="neverlist.html">Never List</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Order</h4>
+        <ul>
+          <li><a href="menu.html">The Menu</a></li>
+          <li><a href="checkout.html">Order Now</a></li>
+          <li><a href="delivery.html">Free Delivery</a></li>
+          <li><a href="care.html">Care & Storage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Katy, TX</h4>
+        <ul>
+          <li><a href="#">(832) 555-0194</a></li>
+          <li><a href="#">hello@artisanbowl.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 The Artisan Bowl. Made with ❤️ in Katy, Texas.</p>
+      <p>Example template by Armin Studio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay    = document.getElementById('overlay');
+  const closeBtn   = document.getElementById('closeBtn');
+  hamburger.addEventListener('click', () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  closeBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+  const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('show'); }), { threshold:0.1, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

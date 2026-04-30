@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Kitchen — The Artisan Bowl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --forest:#1D3A2A; --forest2:#2E5540; --forest3:#3D6B52;
+      --gold:#C8933A; --gold2:#E5B86A; --gold3:rgba(200,147,58,0.15);
+      --cream:#FAF8F0; --cream2:#F0EBE0; --cream3:#E8E0CC;
+      --text:#1E1A14; --text-mid:#4A3C2C; --text-muted:#7A6A58; --white:#FFFFFF;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter','Segoe UI',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; line-height:1.6; }
+
+    /* NAV */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(29,58,42,0.97); backdrop-filter:blur(20px); border-bottom:3px solid var(--gold); box-shadow:0 4px 30px rgba(0,0,0,0.25); }
+    .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:72px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .logo-mark { width:48px; height:48px; border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:rgba(200,147,58,0.1); }
+    .logo-text { display:flex; flex-direction:column; }
+    .logo-name { font-size:1.2rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; }
+    .logo-name span { color:var(--gold); }
+    .logo-tag { font-size:0.6rem; color:var(--gold2); letter-spacing:2.5px; text-transform:uppercase; margin-top:1px; }
+    .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
+    .nav-links a { color:rgba(255,255,255,0.78); text-decoration:none; padding:8px 12px; border-radius:8px; font-size:0.84rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover,.nav-links a.active { background:rgba(255,255,255,0.1); color:var(--gold2); }
+    .nav-order { background:var(--gold)!important; color:var(--forest)!important; font-weight:700!important; padding:9px 20px!important; border-radius:50px!important; }
+    .nav-order:hover { background:var(--gold2)!important; transform:translateY(-1px); }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--gold); border-radius:3px; transition:all 0.3s; }
+    .mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1999; }
+    .mobile-overlay.open { display:block; }
+    .mobile-menu { display:none; position:fixed; top:0; right:-100%; width:72%; height:100%; background:var(--forest); z-index:2000; flex-direction:column; padding:80px 28px 32px; gap:6px; transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left:3px solid var(--gold); }
+    .mobile-menu.open { right:0; }
+    .mobile-menu a { color:var(--white); text-decoration:none; font-size:1.05rem; padding:13px 18px; border-radius:8px; transition:all 0.25s; border-left:3px solid transparent; }
+    .mobile-menu a:hover { background:rgba(200,147,58,0.15); border-left-color:var(--gold); color:var(--gold); }
+    .close-btn { position:absolute; top:22px; right:22px; background:none; border:none; color:var(--gold); font-size:1.7rem; cursor:pointer; }
+    @media (max-width:900px) { .nav-links{display:none;} .hamburger{display:flex;} .mobile-menu{display:flex;} }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(150deg, var(--forest) 0%, #152A1C 50%, #0E1F12 100%);
+      padding: 90px 24px 80px; text-align:center; position:relative; overflow:hidden;
+    }
+    .page-hero::before { content:''; position:absolute; top:-100px; right:-100px; width:450px; height:450px; background:radial-gradient(circle,rgba(200,147,58,0.18) 0%,transparent 70%); border-radius:50%; }
+    .page-hero::after  { content:''; position:absolute; bottom:-80px; left:-60px; width:350px; height:350px; background:radial-gradient(circle,rgba(61,107,82,0.2) 0%,transparent 70%); border-radius:50%; }
+    .page-hero-inner { max-width:720px; margin:0 auto; position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(200,147,58,0.15); border:1px solid rgba(200,147,58,0.4); color:var(--gold2); font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; padding:6px 18px; border-radius:50px; margin-bottom:20px; }
+    .page-title { font-size:clamp(2.4rem,5vw,3.8rem); font-weight:700; color:#fff; line-height:1.15; margin-bottom:18px; font-family:'Playfair Display',Georgia,serif; }
+    .page-title em { color:var(--gold); font-style:italic; }
+    .page-desc { font-size:1.1rem; color:rgba(255,255,255,0.68); line-height:1.85; }
+    .page-hero-divider { width:70px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold2)); margin:24px auto 0; border-radius:2px; }
+
+    /* SECTIONS */
+    .section { padding:90px 24px; }
+    .section-inner { max-width:1200px; margin:0 auto; }
+    .section-alt { background:var(--cream2); }
+    .section-dark { background:var(--forest); padding:90px 24px; }
+    .eyebrow { font-size:0.73rem; letter-spacing:5px; text-transform:uppercase; color:var(--gold); font-weight:700; margin-bottom:14px; display:block; }
+    h2.headline { font-size:clamp(1.9rem,3.5vw,3rem); color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:20px; }
+    h2.headline em { color:var(--gold); font-style:italic; }
+    h2.headline-light { color:var(--white); }
+    .lead-text { font-size:1.05rem; color:var(--text-mid); line-height:1.9; max-width:640px; }
+    .lead-text-light { color:rgba(255,255,255,0.72); }
+    .divider { width:70px; height:3px; background:linear-gradient(90deg,var(--gold),var(--gold2)); margin:20px 0; border-radius:2px; }
+
+    /* TWO-COL */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center; }
+    .two-col.reverse { direction:rtl; }
+    .two-col.reverse > * { direction:ltr; }
+    .ph-block {
+      border-radius:16px; border:2px dashed rgba(200,147,58,0.35); background:rgba(200,147,58,0.04);
+      min-height:480px; display:flex; flex-direction:column; align-items:center;
+      justify-content:center; text-align:center; padding:40px;
+    }
+    .ph-block .ph-emoji { font-size:5rem; opacity:0.35; }
+    .ph-block .ph-label { color:var(--gold); font-size:0.8rem; letter-spacing:2px; text-transform:uppercase; margin-top:16px; font-weight:600; }
+    .ph-block.dark { border-color:rgba(200,147,58,0.35); background:rgba(255,255,255,0.04); }
+    .ph-block.dark .ph-label { color:var(--gold2); opacity:0.7; }
+    @media (max-width:840px) { .two-col{grid-template-columns:1fr;gap:48px;} .two-col.reverse{direction:ltr;} .ph-block{min-height:280px;} }
+
+    /* STEPS */
+    .steps-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:24px; margin-top:56px; }
+    .step-card {
+      background:var(--white); border-radius:14px; padding:32px 24px;
+      box-shadow:0 4px 20px rgba(0,0,0,0.06); border-top:4px solid var(--gold);
+      text-align:center; position:relative;
+    }
+    .step-num {
+      width:48px; height:48px; border-radius:50%; background:var(--gold);
+      color:var(--forest); font-size:1.2rem; font-weight:800; font-family:'Playfair Display',Georgia,serif;
+      display:flex; align-items:center; justify-content:center; margin:0 auto 18px;
+    }
+    .step-icon { font-size:2rem; margin-bottom:14px; }
+    .step-card h3 { font-size:1.05rem; color:var(--forest); margin-bottom:10px; font-family:'Playfair Display',Georgia,serif; }
+    .step-card p { font-size:0.88rem; color:var(--text-mid); line-height:1.75; }
+    @media (max-width:840px) { .steps-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:480px) { .steps-grid{grid-template-columns:1fr;} }
+
+    /* STANDARDS GRID */
+    .standards-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:28px; margin-top:56px; }
+    .standard-card {
+      background:rgba(255,255,255,0.06); border:1px solid rgba(200,147,58,0.2);
+      border-radius:14px; padding:32px 28px; transition:border-color 0.3s;
+    }
+    .standard-card:hover { border-color:rgba(200,147,58,0.5); }
+    .standard-icon { font-size:2.4rem; margin-bottom:16px; }
+    .standard-card h3 { color:var(--gold2); font-size:1.05rem; margin-bottom:12px; font-family:'Playfair Display',Georgia,serif; }
+    .standard-card p { color:rgba(255,255,255,0.68); font-size:0.9rem; line-height:1.8; }
+    @media (max-width:760px) { .standards-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:480px) { .standards-grid{grid-template-columns:1fr;} }
+
+    /* BADGE ROW */
+    .badge-row { display:flex; gap:20px; flex-wrap:wrap; margin-top:32px; }
+    .badge {
+      display:flex; align-items:center; gap:10px;
+      background:rgba(200,147,58,0.12); border:1px solid rgba(200,147,58,0.3);
+      padding:10px 18px; border-radius:50px; color:var(--gold2); font-size:0.82rem; font-weight:600;
+    }
+
+    /* CTA STRIP */
+    .cta-strip { background:var(--gold); padding:50px 24px; text-align:center; }
+    .cta-strip h2 { font-size:clamp(1.6rem,3vw,2.4rem); color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:14px; }
+    .cta-strip p { color:rgba(29,58,42,0.8); font-size:1rem; margin-bottom:28px; }
+    .btn-forest { display:inline-flex; align-items:center; gap:10px; background:var(--forest); color:var(--gold2); padding:15px 36px; border-radius:50px; font-size:0.97rem; font-weight:700; text-decoration:none; transition:all 0.3s; }
+    .btn-forest:hover { background:var(--forest2); transform:translateY(-2px); }
+
+    /* FOOTER */
+    footer { background:#0E1A12; padding:60px 24px 36px; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-logo-name { font-size:1.4rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:12px; }
+    .footer-logo-name span { color:var(--gold); }
+    .footer-col p { color:rgba(255,255,255,0.55); font-size:0.9rem; line-height:1.8; }
+    .footer-col h4 { color:var(--gold2); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.87rem; transition:color 0.2s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { color:rgba(255,255,255,0.35); font-size:0.82rem; }
+    @media (max-width:760px) { .footer-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:480px) { .footer-grid{grid-template-columns:1fr;} }
+
+    /* SCROLL REVEAL */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.75s ease,transform 0.75s ease; }
+    .reveal.show { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity 0.75s ease,transform 0.75s ease; }
+    .reveal-left.show { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(40px); transition:opacity 0.75s ease,transform 0.75s ease; }
+    .reveal-right.show { opacity:1; transform:translateX(0); }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-mark">🐾</div>
+      <div class="logo-text">
+        <span class="logo-name">The <span>Artisan</span> Bowl</span>
+        <span class="logo-tag">Katy, Texas</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="kitchen.html" class="active">The Kitchen</a></li>
+      <li><a href="ingredients.html">Real Food</a></li>
+      <li><a href="neverlist.html">Never List</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="care.html">Care & Storage</a></li>
+      <li><a href="delivery.html">Free Delivery</a></li>
+      <li><a href="checkout.html" class="nav-order">Order Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="overlay"></div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="kitchen.html">🍳 The Kitchen</a>
+  <a href="ingredients.html">🥩 Real Food</a>
+  <a href="neverlist.html">🚫 Never List</a>
+  <a href="menu.html">📋 Menu</a>
+  <a href="care.html">❄️ Care & Storage</a>
+  <a href="delivery.html">🚚 Free Delivery</a>
+  <a href="checkout.html">🛒 Order Now</a>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Behind the Scenes</div>
+    <h1 class="page-title">Welcome to <em>The Kitchen</em></h1>
+    <p class="page-desc">Where every bowl is crafted with intention — small batches, human-grade protocols, and a kitchen you'd be proud to eat from yourself.</p>
+    <div class="page-hero-divider"></div>
+  </div>
+</section>
+
+<!-- SMALL BATCH SECTION -->
+<section class="section">
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="reveal-left">
+        <span class="eyebrow">Small-Batch Philosophy</span>
+        <h2 class="headline">Quality You Can <em>Taste</em>, Because We Never Rush It</h2>
+        <div class="divider"></div>
+        <p class="lead-text">Mass production is the enemy of quality. When a company makes thousands of pounds of food at a time, corners get cut — on ingredients, on cooking temperatures, on quality checks.</p>
+        <p class="lead-text" style="margin-top:16px;">At The Artisan Bowl, we cook in small, carefully monitored batches. This means we can personally inspect every ingredient before it goes in, control the exact cooking temperature and duration, and never sacrifice flavor or nutrition for volume.</p>
+        <p class="lead-text" style="margin-top:16px;font-style:italic;font-weight:600;color:var(--forest);">"We could make ten times the food. We choose not to. Small is how we stay honest."</p>
+        <div class="badge-row" style="margin-top:28px;">
+          <div class="badge">🔥 Slow-Cooked</div>
+          <div class="badge">🧪 Every Batch Inspected</div>
+          <div class="badge">📦 Made-to-Order</div>
+        </div>
+      </div>
+      <div class="ph-block reveal-right">
+        <div class="ph-emoji">🍳</div>
+        <div class="ph-label">Small Batch Kitchen Photo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OUR PROCESS STEPS -->
+<section class="section section-alt">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:56px;">
+      <span class="eyebrow">Our Process</span>
+      <h2 class="headline" style="text-align:center;">From <em>Farm to Bowl</em> — Every Step Matters</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-card reveal">
+        <div class="step-num">1</div>
+        <div class="step-icon">🛒</div>
+        <h3>Ingredient Sourcing</h3>
+        <p>We source proteins from local and regional farms that raise animals without antibiotics or hormones. Vegetables come from trusted local growers.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.1s">
+        <div class="step-num">2</div>
+        <div class="step-icon">🔍</div>
+        <h3>Incoming Inspection</h3>
+        <p>Every delivery is visually inspected before entering our kitchen. We reject anything that doesn't meet our freshness and quality standards.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.2s">
+        <div class="step-num">3</div>
+        <div class="step-icon">🍲</div>
+        <h3>Slow Cooking</h3>
+        <p>Proteins and vegetables are cooked at precise temperatures to retain maximum nutrition while ensuring complete food safety compliance.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.3s">
+        <div class="step-num">4</div>
+        <div class="step-icon">🌡️</div>
+        <h3>Temperature Testing</h3>
+        <p>Each batch is temperature-tested before packaging to verify it has reached safe internal temperatures — the same standard as human food facilities.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.1s">
+        <div class="step-num">5</div>
+        <div class="step-icon">📦</div>
+        <h3>Portioning & Packaging</h3>
+        <p>Food is portioned into sealed, food-grade containers. We label every container with the batch date, ingredients, and a best-by date.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.2s">
+        <div class="step-num">6</div>
+        <div class="step-icon">❄️</div>
+        <h3>Cold Storage & Delivery</h3>
+        <p>Orders are stored in refrigerated conditions and delivered fresh within 24 hours of preparation — right to your door in Katy.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.3s">
+        <div class="step-num">7</div>
+        <div class="step-icon">🧹</div>
+        <h3>Sanitation Protocol</h3>
+        <p>Our kitchen is cleaned and sanitized between every batch using food-grade, pet-safe cleaning agents — documented in our cleaning log.</p>
+      </div>
+      <div class="step-card reveal" style="transition-delay:0.4s">
+        <div class="step-num">8</div>
+        <div class="step-icon">🐾</div>
+        <h3>Happy Dog, Happy You</h3>
+        <p>The final step is always your dog's reaction. We consider a clean bowl within 30 seconds our highest quality metric.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SAFETY STANDARDS -->
+<section class="section-dark">
+  <div class="section-inner">
+    <div class="reveal" style="text-align:center;margin-bottom:0;">
+      <span class="eyebrow" style="color:var(--gold2);">Food Safety</span>
+      <h2 class="headline headline-light" style="text-align:center;">We Follow <em>Human-Grade</em> Food Safety Protocols</h2>
+      <p class="lead-text lead-text-light" style="max-width:640px;margin:16px auto 0;text-align:center;">The phrase "pet food grade" has always bothered us. Why should safety standards be lower for your family member? We hold ourselves to the same standards as a commercial human kitchen.</p>
+    </div>
+    <div class="standards-grid">
+      <div class="standard-card reveal">
+        <div class="standard-icon">🌡️</div>
+        <h3>HACCP Principles</h3>
+        <p>We follow Hazard Analysis and Critical Control Points (HACCP) methodology — the same framework used in FDA-regulated human food facilities — to identify and control potential food safety hazards.</p>
+      </div>
+      <div class="standard-card reveal" style="transition-delay:0.1s">
+        <div class="standard-icon">🧴</div>
+        <h3>NSF-Certified Cleaning</h3>
+        <p>All surfaces, equipment, and utensils are cleaned with NSF-certified food-safe sanitizers. No harsh chemicals that could transfer to your dog's food. Cleaning logs are maintained for every session.</p>
+      </div>
+      <div class="standard-card reveal" style="transition-delay:0.2s">
+        <div class="standard-icon">🧤</div>
+        <h3>Personal Protective Practices</h3>
+        <p>All food handlers wear nitrile gloves, hair covers, and clean aprons while cooking. Handwashing occurs before, during, and after food preparation — no exceptions.</p>
+      </div>
+      <div class="standard-card reveal" style="transition-delay:0.3s">
+        <div class="standard-icon">📋</div>
+        <h3>Batch Traceability</h3>
+        <p>Every batch receives a unique lot number that traces ingredients back to their source. If there's ever a quality concern, we can identify and recall affected products within hours.</p>
+      </div>
+      <div class="standard-card reveal" style="transition-delay:0.1s">
+        <div class="standard-icon">❄️</div>
+        <h3>Cold Chain Management</h3>
+        <p>From the moment ingredients arrive to the moment your order is delivered, temperature is continuously monitored. The cold chain is never broken — ever.</p>
+      </div>
+      <div class="standard-card reveal" style="transition-delay:0.2s">
+        <div class="standard-icon">🔬</div>
+        <h3>No Cross-Contamination</h3>
+        <p>Different proteins are prepared on separate, color-coded cutting boards and in dedicated cookware. We eliminate cross-contamination risk the same way allergy-aware restaurants do.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HUMAN-GRADE CALLOUT -->
+<section class="section">
+  <div class="section-inner">
+    <div class="two-col">
+      <div class="ph-block reveal-left">
+        <div class="ph-emoji">👨‍⚕️</div>
+        <div class="ph-label">Kitchen Certification Photo</div>
+      </div>
+      <div class="reveal-right">
+        <span class="eyebrow">The Human-Grade Difference</span>
+        <h2 class="headline">Good Enough for <em>You</em> to Eat — Seriously</h2>
+        <div class="divider"></div>
+        <p class="lead-text">We use the phrase "human-grade" because it's accurate — not as marketing. Every ingredient in our kitchen is sourced from human food supply chains, handled under human food safety protocols, and prepared in a manner consistent with human food production.</p>
+        <p class="lead-text" style="margin-top:16px;">In fact, our staff joke that the food smells so good it's tempting to try it. A few have. They survived. (In all seriousness — yes, you could technically eat your dog's bowl. We'd suggest grabbing your own lunch though.)</p>
+        <p class="lead-text" style="margin-top:16px;font-weight:600;color:var(--forest);">This standard costs us more time and more money. We do it anyway because it's the right thing to do.</p>
+        <div class="badge-row">
+          <div class="badge">✅ Human-Grade Ingredients</div>
+          <div class="badge">✅ Human Food Safety Standards</div>
+          <div class="badge">✅ Edible by Humans</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA STRIP -->
+<section class="cta-strip">
+  <h2>Hungry to See What's Actually In the Bowl?</h2>
+  <p>Head to our Real Food page for a full breakdown of every ingredient we use — and why we chose it.</p>
+  <a href="ingredients.html" class="btn-forest">Explore Real Food →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo-name">The <span>Artisan</span> Bowl</div>
+        <p>Handcrafted small-batch dog food, made with human-grade ingredients and delivered fresh anywhere in Katy, Texas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="kitchen.html">The Kitchen</a></li>
+          <li><a href="ingredients.html">Real Food</a></li>
+          <li><a href="neverlist.html">Never List</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Order</h4>
+        <ul>
+          <li><a href="menu.html">The Menu</a></li>
+          <li><a href="checkout.html">Order Now</a></li>
+          <li><a href="delivery.html">Free Delivery</a></li>
+          <li><a href="care.html">Care & Storage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Katy, TX</h4>
+        <ul>
+          <li><a href="#">(832) 555-0194</a></li>
+          <li><a href="#">hello@artisanbowl.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 The Artisan Bowl. Made with ❤️ in Katy, Texas.</p>
+      <p>Example template by Armin Studio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay    = document.getElementById('overlay');
+  const closeBtn   = document.getElementById('closeBtn');
+  const openMenu  = () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; };
+  const closeMenu = () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; };
+  hamburger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+  const obs = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('show'); }), { threshold:0.12, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
