@@ -141,6 +141,73 @@
 
     .reveal { opacity:0; transform:translateY(28px); transition:opacity 0.7s ease,transform 0.7s ease; }
     .reveal.show { opacity:1; transform:translateY(0); }
+
+    /* CALORIE BADGE */
+    .calorie-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: linear-gradient(135deg, var(--forest), var(--forest2));
+      color: var(--gold2); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 0.5px; padding: 5px 12px; border-radius: 50px;
+      margin-bottom: 12px;
+    }
+
+    /* INGREDIENT LIST */
+    .ing-list { list-style: none; margin: 0 0 16px; display: flex; flex-direction: column; gap: 6px; }
+    .ing-list li {
+      font-size: 0.82rem; color: var(--text-mid); line-height: 1.5;
+      padding-left: 18px; position: relative;
+    }
+    .ing-list li::before { content: '→'; position: absolute; left: 0; color: var(--gold); font-size: 0.75rem; top: 0; }
+
+    /* TRANSITION GUIDE */
+    .transition-section { padding: 100px 24px; background: var(--forest); }
+    .transition-inner { max-width: 900px; margin: 0 auto; }
+    .transition-section .section-eyebrow { color: var(--gold2); }
+    .transition-section .section-h2 { color: var(--white); }
+    .transition-section .section-h2 em { color: var(--gold); }
+    .transition-section .section-line { background: linear-gradient(90deg,var(--gold),var(--gold2)); }
+    .transition-intro { color: rgba(255,255,255,0.7); font-size: 1rem; line-height: 1.85; margin-bottom: 48px; max-width: 680px; }
+    .transition-chart { display: flex; flex-direction: column; gap: 18px; }
+    .day-row {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(200,147,58,0.2);
+      border-radius: 14px; padding: 18px 24px;
+      display: grid; grid-template-columns: 90px 1fr 120px;
+      gap: 20px; align-items: center;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .day-row:hover { background: rgba(255,255,255,0.09); border-color: rgba(200,147,58,0.45); }
+    .day-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 1px; color: var(--gold2); text-transform: uppercase; }
+    .day-bar-wrap { position: relative; height: 14px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .day-bar-old {
+      position: absolute; left: 0; top: 0; height: 100%;
+      background: rgba(255,255,255,0.25); border-radius: 10px 0 0 10px;
+      transition: width 1s ease;
+    }
+    .day-bar-new {
+      position: absolute; top: 0; height: 100%;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      border-radius: 0 10px 10px 0; transition: width 1s ease;
+    }
+    .day-ratio { font-size: 0.8rem; color: rgba(255,255,255,0.65); text-align: right; white-space: nowrap; }
+    .day-ratio strong { color: var(--gold2); }
+    .transition-legend { display: flex; gap: 28px; margin-top: 28px; flex-wrap: wrap; }
+    .legend-item { display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: rgba(255,255,255,0.62); }
+    .legend-swatch { width: 24px; height: 10px; border-radius: 5px; flex-shrink: 0; }
+    .legend-old { background: rgba(255,255,255,0.25); }
+    .legend-new { background: linear-gradient(90deg, var(--gold), var(--gold2)); }
+    .transition-tip {
+      margin-top: 36px; background: rgba(200,147,58,0.12);
+      border: 1px solid rgba(200,147,58,0.35); border-radius: 12px;
+      padding: 20px 24px; color: rgba(255,255,255,0.72); font-size: 0.9rem; line-height: 1.75;
+    }
+    .transition-tip strong { color: var(--gold2); }
+    @media (max-width:640px) { .day-row { grid-template-columns:70px 1fr; grid-template-rows:auto auto; } .day-ratio { grid-column:1/-1; text-align:left; } }
+
+    /* 2x2 MENU GRID */
+    .menu-grid-2 { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px; }
+    @media (max-width:840px) { .menu-grid-2 { grid-template-columns: 1fr 1fr; } }
+    @media (max-width:540px) { .menu-grid-2 { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
@@ -196,25 +263,33 @@
     <span class="section-eyebrow">Core Recipes</span>
     <h2 class="section-h2">Our <em>Everyday</em> Bowls</h2>
     <div class="section-line"></div>
-    <div class="menu-grid">
+    <div class="menu-grid-2">
 
-      <!-- SUNDAY ROAST -->
+      <!-- HARVEST BIRD -->
       <div class="menu-card reveal">
-        <div class="menu-card-img">
+        <div class="menu-card-img" style="background:linear-gradient(135deg,#f5f0e8,#e8dfc8);">
           <div class="badge-row-card"><span class="card-badge badge-bestseller">Bestseller</span></div>
-          <div class="ph-emoji">🥩</div>
-          <div class="ph-label">Product Photo</div>
+          <div class="ph-emoji">🐔</div>
+          <div class="ph-label">Harvest Bird</div>
         </div>
         <div class="menu-card-body">
-          <span class="menu-card-protein">🥩 Grass-Fed Beef · Everyday</span>
-          <h3>The Sunday Roast</h3>
-          <p>Slow-roasted grass-fed beef with sweet potato, green beans, and a drizzle of our in-house bone broth. Pure comfort in every bowl.</p>
+          <span class="menu-card-protein">🐔 Chicken &amp; Sweet Potato · Everyday</span>
+          <h3>Harvest Bird</h3>
+          <p>A nutrient-dense classic built on organic chicken and sweet potato — packed with superfoods your dog will absolutely love.</p>
+          <span class="calorie-badge">🔥 ~1,450 kcal/kg &nbsp;·&nbsp; ~190 kcal/cup</span>
+          <ul class="ing-list">
+            <li>3 lbs Organic Ground Chicken</li>
+            <li>2 cups Organic Sweet Potato</li>
+            <li>1 cup Organic Spinach</li>
+            <li>½ cup Organic Blueberries</li>
+            <li>2 tbsp Organic Hemp Seed Oil</li>
+          </ul>
           <div class="ing-pills">
-            <span class="ing-pill">Grass-Fed Beef</span>
-            <span class="ing-pill">Sweet Potato</span>
-            <span class="ing-pill">Green Beans</span>
-            <span class="ing-pill">Bone Broth</span>
-            <span class="ing-pill">Flaxseed</span>
+            <span class="ing-pill">Lean Protein</span>
+            <span class="ing-pill">Antioxidants</span>
+            <span class="ing-pill">Omega-3s</span>
+            <span class="ing-pill">Beta-Carotene</span>
+            <span class="ing-pill">Iron-Rich</span>
           </div>
           <div class="menu-card-footer">
             <div class="menu-price">$18 <span>/ lb</span></div>
@@ -223,96 +298,31 @@
         </div>
       </div>
 
-      <!-- OCEAN'S GARDEN -->
-      <div class="menu-card reveal" style="transition-delay:0.1s">
-        <div class="menu-card-img">
+      <!-- GARDEN BEEF -->
+      <div class="menu-card reveal" style="transition-delay:0.12s">
+        <div class="menu-card-img" style="background:linear-gradient(135deg,#f0ebe0,#e0d4be);">
           <div class="badge-row-card"><span class="card-badge badge-new">Staff Fave</span></div>
-          <div class="ph-emoji">🐟</div>
-          <div class="ph-label">Product Photo</div>
+          <div class="ph-emoji">🥩</div>
+          <div class="ph-label">Garden Beef</div>
         </div>
         <div class="menu-card-body">
-          <span class="menu-card-protein">🐟 Wild-Caught Salmon · Everyday</span>
-          <h3>Ocean's Garden</h3>
-          <p>Wild-caught Pacific salmon, steamed broccoli, and brown rice. Omega-3 rich and gut-friendly — especially loved by dogs with dull coats or dry skin.</p>
+          <span class="menu-card-protein">🥩 Beef &amp; Zucchini · Everyday</span>
+          <h3>Garden Beef</h3>
+          <p>Lean 90% organic beef with gut-friendly brown rice, fresh zucchini, pumpkin purée, and mineral-rich kelp powder.</p>
+          <span class="calorie-badge">🔥 ~1,580 kcal/kg &nbsp;·&nbsp; ~210 kcal/cup</span>
+          <ul class="ing-list">
+            <li>2.5 lbs Organic Lean Ground Beef (90% lean)</li>
+            <li>1 cup Organic Brown Rice (cooked)</li>
+            <li>1 cup Organic Zucchini (shredded)</li>
+            <li>½ cup Organic Pumpkin (pureed)</li>
+            <li>½ tsp Organic Kelp Powder</li>
+          </ul>
           <div class="ing-pills">
-            <span class="ing-pill">Wild Salmon</span>
-            <span class="ing-pill">Broccoli</span>
-            <span class="ing-pill">Brown Rice</span>
-            <span class="ing-pill">Coconut Oil</span>
-            <span class="ing-pill">Carrots</span>
-          </div>
-          <div class="menu-card-footer">
-            <div class="menu-price">$20 <span>/ lb</span></div>
-            <a href="checkout.html" class="btn-order">Order →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- GENTLE GARDEN -->
-      <div class="menu-card reveal" style="transition-delay:0.2s">
-        <div class="menu-card-img">
-          <div class="badge-row-card"><span class="card-badge badge-gentle">Sensitive</span></div>
-          <div class="ph-emoji">🍗</div>
-          <div class="ph-label">Product Photo</div>
-        </div>
-        <div class="menu-card-body">
-          <span class="menu-card-protein">🍗 Free-Range Chicken · Everyday</span>
-          <h3>The Gentle Garden</h3>
-          <p>Free-range chicken, pumpkin, zucchini, and kale. Our most tender recipe — designed for sensitive stomachs, picky eaters, and dogs transitioning from commercial food.</p>
-          <div class="ing-pills">
-            <span class="ing-pill">Free-Range Chicken</span>
-            <span class="ing-pill">Pumpkin</span>
-            <span class="ing-pill">Zucchini</span>
-            <span class="ing-pill">Kale</span>
-            <span class="ing-pill">Eggs</span>
-          </div>
-          <div class="menu-card-footer">
-            <div class="menu-price">$17 <span>/ lb</span></div>
-            <a href="checkout.html" class="btn-order">Order →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- TURKEY HARVEST -->
-      <div class="menu-card reveal">
-        <div class="menu-card-img">
-          <div class="ph-emoji">🦃</div>
-          <div class="ph-label">Product Photo</div>
-        </div>
-        <div class="menu-card-body">
-          <span class="menu-card-protein">🦃 Heritage Turkey · Everyday</span>
-          <h3>Turkey Harvest</h3>
-          <p>Pasture-raised turkey with sweet potato, kale, and bone broth. Lean, high-protein, and easy on joints — ideal for active or working dogs.</p>
-          <div class="ing-pills">
-            <span class="ing-pill">Heritage Turkey</span>
-            <span class="ing-pill">Sweet Potato</span>
-            <span class="ing-pill">Kale</span>
-            <span class="ing-pill">Bone Broth</span>
-            <span class="ing-pill">Turmeric</span>
-          </div>
-          <div class="menu-card-footer">
-            <div class="menu-price">$18 <span>/ lb</span></div>
-            <a href="checkout.html" class="btn-order">Order →</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- RANCH BOWL -->
-      <div class="menu-card reveal" style="transition-delay:0.1s">
-        <div class="menu-card-img">
-          <div class="ph-emoji">🐄</div>
-          <div class="ph-label">Product Photo</div>
-        </div>
-        <div class="menu-card-body">
-          <span class="menu-card-protein">🐄 Beef & Egg · Everyday</span>
-          <h3>The Ranch Bowl</h3>
-          <p>Ground grass-fed beef with pasture-raised eggs, carrots, and sweet potato. Our most protein-dense recipe — perfect for larger breeds or high-activity dogs.</p>
-          <div class="ing-pills">
-            <span class="ing-pill">Grass-Fed Beef</span>
-            <span class="ing-pill">Pasture Eggs</span>
-            <span class="ing-pill">Carrots</span>
-            <span class="ing-pill">Sweet Potato</span>
-            <span class="ing-pill">Flaxseed</span>
+            <span class="ing-pill">High Protein</span>
+            <span class="ing-pill">Gut-Friendly</span>
+            <span class="ing-pill">B Vitamins</span>
+            <span class="ing-pill">Minerals</span>
+            <span class="ing-pill">Digestive Support</span>
           </div>
           <div class="menu-card-footer">
             <div class="menu-price">$19 <span>/ lb</span></div>
@@ -321,30 +331,124 @@
         </div>
       </div>
 
-      <!-- WEIGHT WELLNESS -->
-      <div class="menu-card reveal" style="transition-delay:0.2s">
-        <div class="menu-card-img">
-          <div class="badge-row-card"><span class="card-badge badge-gentle">Low Calorie</span></div>
-          <div class="ph-emoji">🥗</div>
-          <div class="ph-label">Product Photo</div>
+      <!-- POWER POULTRY -->
+      <div class="menu-card reveal" style="transition-delay:0.24s">
+        <div class="menu-card-img" style="background:linear-gradient(135deg,#edf2e8,#d8e8d0);">
+          <div class="ph-emoji">🦃</div>
+          <div class="ph-label">Power Poultry</div>
         </div>
         <div class="menu-card-body">
-          <span class="menu-card-protein">🍗 Chicken & Veggies · Wellness</span>
-          <h3>The Wellness Bowl</h3>
-          <p>Lean chicken breast, steamed green beans, zucchini, broccoli, and cucumber. Designed to support healthy weight management without sacrificing satisfaction.</p>
+          <span class="menu-card-protein">🦃 Turkey &amp; Quinoa · Everyday</span>
+          <h3>Power Poultry</h3>
+          <p>Organic ground turkey with quinoa or brown rice, steamed peas &amp; carrots, spinach, and extra-virgin olive oil for active, energetic dogs.</p>
+          <span class="calorie-badge">🔥 ~1,320 kcal/kg &nbsp;·&nbsp; ~175 kcal/cup</span>
+          <ul class="ing-list">
+            <li>3 lbs Organic Ground Turkey</li>
+            <li>2 cups Organic Quinoa or Brown Rice (cooked)</li>
+            <li>2 cups Organic Frozen Peas and Carrots (steamed)</li>
+            <li>1 cup Organic Spinach (finely chopped)</li>
+            <li>2 tbsp Organic Extra Virgin Olive Oil</li>
+          </ul>
           <div class="ing-pills">
-            <span class="ing-pill">Lean Chicken</span>
-            <span class="ing-pill">Green Beans</span>
-            <span class="ing-pill">Zucchini</span>
-            <span class="ing-pill">Broccoli</span>
-            <span class="ing-pill">Cucumber</span>
+            <span class="ing-pill">Lean &amp; Light</span>
+            <span class="ing-pill">High Energy</span>
+            <span class="ing-pill">Complete Protein</span>
+            <span class="ing-pill">Vision Support</span>
+            <span class="ing-pill">Anti-Inflammatory</span>
           </div>
           <div class="menu-card-footer">
-            <div class="menu-price">$16 <span>/ lb</span></div>
+            <div class="menu-price">$18 <span>/ lb</span></div>
             <a href="checkout.html" class="btn-order">Order →</a>
           </div>
         </div>
       </div>
+
+      <!-- BREAKFAST BOWL -->
+      <div class="menu-card reveal" style="transition-delay:0.36s">
+        <div class="menu-card-img" style="background:linear-gradient(135deg,#faf5e8,#f0e8c8);">
+          <div class="badge-row-card"><span class="card-badge badge-gentle">Morning Boost</span></div>
+          <div class="ph-emoji">🥚</div>
+          <div class="ph-label">Breakfast Bowl</div>
+        </div>
+        <div class="menu-card-body">
+          <span class="menu-card-protein">🥚 Chicken, Eggs &amp; Oats · Everyday</span>
+          <h3>The Breakfast Bowl</h3>
+          <p>Organic chicken with hard-boiled eggs, wholesome oatmeal, fresh apple, and steamed broccoli. A morning start full of vitamins and joy.</p>
+          <span class="calorie-badge">🔥 ~1,490 kcal/kg &nbsp;·&nbsp; ~195 kcal/cup</span>
+          <ul class="ing-list">
+            <li>2 lbs Organic Ground Chicken</li>
+            <li>4 Hard-boiled Organic Eggs (chopped)</li>
+            <li>2 cups Organic Oatmeal (prepared with water)</li>
+            <li>2 Organic Apples (cored, seeded, finely diced)</li>
+            <li>1 cup Organic Broccoli Florets (steamed and minced)</li>
+          </ul>
+          <div class="ing-pills">
+            <span class="ing-pill">Vitamin-Rich</span>
+            <span class="ing-pill">Complete Amino Acids</span>
+            <span class="ing-pill">Fiber</span>
+            <span class="ing-pill">Antioxidants</span>
+            <span class="ing-pill">Bone Health</span>
+          </div>
+          <div class="menu-card-footer">
+            <div class="menu-price">$17 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-order">Order →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FEEDING TRANSITION GUIDE -->
+<section class="transition-section">
+  <div class="transition-inner">
+    <span class="section-eyebrow">Switching to Real Food</span>
+    <h2 class="section-h2">Your <em>7-Day</em> Transition Guide</h2>
+    <div class="section-line"></div>
+    <p class="transition-intro">Introducing new food too quickly can upset sensitive stomachs. This gentle 7-day plan helps your dog's digestive system adapt smoothly — minimizing gas, loose stools, and pickiness.</p>
+
+    <div class="transition-chart" id="transitionChart">
+      <div class="day-row reveal">
+        <div class="day-label">Days 1–2</div>
+        <div class="day-bar-wrap">
+          <div class="day-bar-old" style="width:75%"></div>
+          <div class="day-bar-new" style="left:75%;width:25%"></div>
+        </div>
+        <div class="day-ratio">75% Old &nbsp;<strong>+ 25% New</strong></div>
+      </div>
+      <div class="day-row reveal" style="transition-delay:0.08s">
+        <div class="day-label">Days 3–4</div>
+        <div class="day-bar-wrap">
+          <div class="day-bar-old" style="width:50%"></div>
+          <div class="day-bar-new" style="left:50%;width:50%"></div>
+        </div>
+        <div class="day-ratio">50% Old &nbsp;<strong>+ 50% New</strong></div>
+      </div>
+      <div class="day-row reveal" style="transition-delay:0.16s">
+        <div class="day-label">Days 5–6</div>
+        <div class="day-bar-wrap">
+          <div class="day-bar-old" style="width:25%"></div>
+          <div class="day-bar-new" style="left:25%;width:75%"></div>
+        </div>
+        <div class="day-ratio">25% Old &nbsp;<strong>+ 75% New</strong></div>
+      </div>
+      <div class="day-row reveal" style="transition-delay:0.24s;border-color:rgba(200,147,58,0.5);">
+        <div class="day-label">Day 7 🎉</div>
+        <div class="day-bar-wrap">
+          <div class="day-bar-old" style="width:0%"></div>
+          <div class="day-bar-new" style="left:0%;width:100%"></div>
+        </div>
+        <div class="day-ratio"><strong>100% New Food!</strong></div>
+      </div>
+    </div>
+
+    <div class="transition-legend">
+      <div class="legend-item"><div class="legend-swatch legend-old"></div>Current / Old Food</div>
+      <div class="legend-item"><div class="legend-swatch legend-new"></div>The Artisan Bowl</div>
+    </div>
+    <div class="transition-tip reveal">
+      <strong>💡 Pro tip:</strong> If your dog shows loose stools or excessive gas at any stage, slow down and stay at that ratio for an extra day or two. Every dog is different — trust their pace. Puppies and senior dogs may need a 10–14 day transition. When in doubt, ask your vet.
     </div>
   </div>
 </section>
