@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Now — The Artisan Bowl</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --forest:#1D3A2A; --forest2:#2E5540;
+      --gold:#C8933A; --gold2:#E5B86A;
+      --cream:#FAF8F0; --cream2:#F0EBE0; --cream3:#E8E0CC;
+      --text:#1E1A14; --text-mid:#4A3C2C; --text-muted:#7A6A58; --white:#FFFFFF;
+      --success:#22C55E;
+      --border:#D8D0C0;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter','Segoe UI',sans-serif; background:var(--cream); color:var(--text); overflow-x:hidden; line-height:1.6; }
+
+    nav { position:sticky; top:0; z-index:1000; background:rgba(29,58,42,0.97); backdrop-filter:blur(20px); border-bottom:3px solid var(--gold); box-shadow:0 4px 30px rgba(0,0,0,0.25); }
+    .nav-inner { max-width:1200px; margin:0 auto; padding:0 24px; height:72px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:14px; text-decoration:none; }
+    .logo-mark { width:48px; height:48px; border:2px solid var(--gold); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.4rem; background:rgba(200,147,58,0.1); }
+    .logo-text { display:flex; flex-direction:column; }
+    .logo-name { font-size:1.2rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; }
+    .logo-name span { color:var(--gold); }
+    .logo-tag { font-size:0.6rem; color:var(--gold2); letter-spacing:2.5px; text-transform:uppercase; margin-top:1px; }
+    .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
+    .nav-links a { color:rgba(255,255,255,0.78); text-decoration:none; padding:8px 12px; border-radius:8px; font-size:0.84rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover,.nav-links a.active { background:rgba(255,255,255,0.1); color:var(--gold2); }
+    .nav-order { background:var(--gold)!important; color:var(--forest)!important; font-weight:700!important; padding:9px 20px!important; border-radius:50px!important; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; padding:8px; background:none; border:none; }
+    .hamburger span { display:block; width:26px; height:3px; background:var(--gold); border-radius:3px; }
+    .mobile-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.55); z-index:1999; }
+    .mobile-overlay.open { display:block; }
+    .mobile-menu { display:none; position:fixed; top:0; right:-100%; width:72%; height:100%; background:var(--forest); z-index:2000; flex-direction:column; padding:80px 28px 32px; gap:6px; transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); border-left:3px solid var(--gold); }
+    .mobile-menu.open { right:0; }
+    .mobile-menu a { color:var(--white); text-decoration:none; font-size:1.05rem; padding:13px 18px; border-radius:8px; transition:all 0.25s; border-left:3px solid transparent; }
+    .mobile-menu a:hover { background:rgba(200,147,58,0.15); border-left-color:var(--gold); color:var(--gold); }
+    .close-btn { position:absolute; top:22px; right:22px; background:none; border:none; color:var(--gold); font-size:1.7rem; cursor:pointer; }
+    @media (max-width:900px) { .nav-links{display:none;} .hamburger{display:flex;} .mobile-menu{display:flex;} }
+
+    /* PAGE HERO */
+    .page-hero { background:linear-gradient(150deg,var(--forest) 0%,#152A1C 50%,#0E1F12 100%); padding:64px 24px 56px; text-align:center; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(200,147,58,0.15) 0%,transparent 70%); }
+    .page-hero-inner { max-width:620px; margin:0 auto; position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(200,147,58,0.15); border:1px solid rgba(200,147,58,0.4); color:var(--gold2); font-size:0.72rem; font-weight:700; letter-spacing:3px; text-transform:uppercase; padding:6px 18px; border-radius:50px; margin-bottom:20px; }
+    .page-title { font-size:clamp(2.2rem,4.5vw,3.2rem); font-weight:700; color:#fff; font-family:'Playfair Display',Georgia,serif; margin-bottom:14px; }
+    .page-title em { color:var(--gold); font-style:italic; }
+    .page-desc { font-size:1rem; color:rgba(255,255,255,0.68); }
+    .hero-trust { display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin-top:28px; }
+    .trust-badge { display:flex; align-items:center; gap:7px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15); padding:8px 18px; border-radius:50px; color:rgba(255,255,255,0.82); font-size:0.8rem; font-weight:500; }
+
+    /* CHECKOUT LAYOUT */
+    .checkout-section { padding:60px 24px 100px; }
+    .checkout-inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:1fr 380px; gap:48px; align-items:start; }
+    @media (max-width:860px) { .checkout-inner{grid-template-columns:1fr;} }
+
+    /* FORM */
+    .form-card { background:var(--white); border-radius:16px; box-shadow:0 6px 30px rgba(0,0,0,0.08); overflow:hidden; }
+    .form-section-head { background:var(--forest); padding:20px 28px; display:flex; align-items:center; gap:12px; }
+    .form-step-num { width:32px; height:32px; border-radius:50%; background:var(--gold); color:var(--forest); font-weight:800; font-size:0.9rem; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .form-section-head h3 { color:var(--white); font-size:1.05rem; font-family:'Playfair Display',Georgia,serif; }
+    .form-body { padding:28px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:20px; }
+    .form-row.single { grid-template-columns:1fr; }
+    .form-group { margin-bottom:20px; }
+    .form-label { display:block; font-size:0.82rem; font-weight:600; color:var(--text); margin-bottom:8px; letter-spacing:0.3px; }
+    .form-label span { color:var(--gold); }
+    .form-input, .form-select, .form-textarea {
+      width:100%; padding:13px 16px; border:2px solid var(--border); border-radius:10px;
+      font-size:0.95rem; color:var(--text); background:var(--white); font-family:'Inter',sans-serif;
+      transition:border-color 0.2s, box-shadow 0.2s; outline:none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--gold); box-shadow:0 0 0 4px rgba(200,147,58,0.12); }
+    .form-textarea { min-height:100px; resize:vertical; }
+    .form-divider { height:1px; background:var(--cream3); margin:8px 0 28px; }
+
+    /* RECIPE SELECTOR */
+    .recipe-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:8px; }
+    .recipe-option { position:relative; }
+    .recipe-option input[type="checkbox"] { position:absolute; opacity:0; width:0; height:0; }
+    .recipe-label {
+      display:flex; align-items:center; gap:12px; padding:14px 16px;
+      border:2px solid var(--border); border-radius:10px; cursor:pointer;
+      transition:all 0.2s; background:var(--cream);
+    }
+    .recipe-option input:checked + .recipe-label { border-color:var(--gold); background:rgba(200,147,58,0.06); }
+    .recipe-icon { font-size:1.5rem; }
+    .recipe-name { font-size:0.88rem; font-weight:600; color:var(--forest); }
+    .recipe-price { font-size:0.78rem; color:var(--text-muted); margin-top:2px; }
+    .qty-row { display:flex; align-items:center; gap:8px; margin-top:6px; }
+    .qty-label { font-size:0.78rem; color:var(--text-muted); }
+    .qty-input { width:70px; padding:6px 10px; border:1px solid var(--border); border-radius:6px; font-size:0.88rem; text-align:center; }
+    @media (max-width:520px) { .recipe-grid{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;} }
+
+    /* FREQUENCY */
+    .freq-options { display:flex; gap:12px; flex-wrap:wrap; }
+    .freq-opt { position:relative; }
+    .freq-opt input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
+    .freq-label { display:flex; flex-direction:column; align-items:center; padding:14px 18px; border:2px solid var(--border); border-radius:10px; cursor:pointer; transition:all 0.2s; min-width:120px; background:var(--cream); }
+    .freq-opt input:checked + .freq-label { border-color:var(--forest); background:rgba(29,58,42,0.05); }
+    .freq-label .f-name { font-size:0.9rem; font-weight:700; color:var(--forest); }
+    .freq-label .f-desc { font-size:0.75rem; color:var(--text-muted); margin-top:3px; }
+
+    /* ORDER SUMMARY */
+    .summary-card { background:var(--white); border-radius:16px; box-shadow:0 6px 30px rgba(0,0,0,0.08); position:sticky; top:100px; }
+    .summary-head { background:var(--forest); padding:20px 24px; border-radius:16px 16px 0 0; }
+    .summary-head h3 { color:var(--gold2); font-family:'Playfair Display',Georgia,serif; font-size:1.1rem; }
+    .summary-body { padding:24px; }
+    .summary-line { display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid var(--cream3); font-size:0.9rem; }
+    .summary-line:last-of-type { border-bottom:none; }
+    .summary-label { color:var(--text-mid); }
+    .summary-value { font-weight:600; color:var(--text); }
+    .summary-delivery { color:var(--success); font-weight:700; }
+    .summary-total { display:flex; justify-content:space-between; align-items:center; padding:16px 24px; background:var(--cream2); border-top:2px solid var(--gold); }
+    .total-label { font-size:0.9rem; font-weight:700; color:var(--forest); text-transform:uppercase; letter-spacing:1px; }
+    .total-value { font-size:1.6rem; font-weight:800; color:var(--gold); font-family:'Playfair Display',Georgia,serif; }
+    .summary-footer { padding:20px 24px; }
+    .btn-checkout {
+      width:100%; padding:16px; background:var(--forest); color:var(--gold2);
+      border:none; border-radius:10px; font-size:1rem; font-weight:700; font-family:'Inter',sans-serif;
+      cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:10px;
+      box-shadow:0 4px 16px rgba(29,58,42,0.3);
+    }
+    .btn-checkout:hover { background:var(--forest2); transform:translateY(-2px); box-shadow:0 8px 24px rgba(29,58,42,0.4); }
+    .stripe-note { display:flex; align-items:center; justify-content:center; gap:8px; margin-top:14px; color:var(--text-muted); font-size:0.78rem; }
+    .trust-row { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:16px; }
+    .trust-item { display:flex; align-items:center; gap:5px; font-size:0.75rem; color:var(--text-muted); }
+
+    /* SUCCESS MESSAGE */
+    .success-overlay { display:none; position:fixed; inset:0; background:rgba(29,58,42,0.92); z-index:9999; align-items:center; justify-content:center; }
+    .success-overlay.show { display:flex; }
+    .success-card { background:var(--white); border-radius:20px; padding:56px 48px; max-width:480px; width:90%; text-align:center; animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+    @keyframes popIn { from{opacity:0;transform:scale(0.85);} to{opacity:1;transform:scale(1);} }
+    .success-icon { font-size:4rem; margin-bottom:20px; }
+    .success-card h2 { font-size:1.8rem; color:var(--forest); font-family:'Playfair Display',Georgia,serif; margin-bottom:14px; }
+    .success-card p { color:var(--text-mid); font-size:0.97rem; line-height:1.8; margin-bottom:28px; }
+    .btn-back { display:inline-flex; align-items:center; gap:8px; background:var(--forest); color:var(--gold2); padding:14px 32px; border-radius:50px; font-size:0.95rem; font-weight:700; text-decoration:none; transition:all 0.3s; }
+    .btn-back:hover { background:var(--forest2); }
+
+    /* FOOTER */
+    footer { background:#0E1A12; padding:60px 24px 36px; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-logo-name { font-size:1.4rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:12px; }
+    .footer-logo-name span { color:var(--gold); }
+    .footer-col p { color:rgba(255,255,255,0.55); font-size:0.9rem; line-height:1.8; }
+    .footer-col h4 { color:var(--gold2); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.87rem; transition:color 0.2s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { color:rgba(255,255,255,0.35); font-size:0.82rem; }
+    @media (max-width:760px) { .footer-grid{grid-template-columns:1fr 1fr;} }
+    @media (max-width:480px) { .footer-grid{grid-template-columns:1fr;} }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-mark">🐾</div>
+      <div class="logo-text">
+        <span class="logo-name">The <span>Artisan</span> Bowl</span>
+        <span class="logo-tag">Katy, Texas</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="kitchen.html">The Kitchen</a></li>
+      <li><a href="ingredients.html">Real Food</a></li>
+      <li><a href="neverlist.html">Never List</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="care.html">Care & Storage</a></li>
+      <li><a href="delivery.html">Free Delivery</a></li>
+      <li><a href="checkout.html" class="nav-order active">Order Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="overlay"></div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="kitchen.html">🍳 The Kitchen</a>
+  <a href="ingredients.html">🥩 Real Food</a>
+  <a href="neverlist.html">🚫 Never List</a>
+  <a href="menu.html">📋 Menu</a>
+  <a href="care.html">❄️ Care & Storage</a>
+  <a href="delivery.html">🚚 Free Delivery</a>
+  <a href="checkout.html">🛒 Order Now</a>
+</nav>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <div class="success-icon">🎉</div>
+    <h2>Order Received!</h2>
+    <p>Thank you! We've received your order and will reach out shortly to confirm your delivery window. Your dog is going to love it.</p>
+    <a href="index.html" class="btn-back">← Back to Home</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-label">Fresh from Our Kitchen</div>
+    <h1 class="page-title">Build Your Dog's <em>Order</em></h1>
+    <p class="page-desc">Select your recipes, choose your quantity, and we'll deliver fresh right to your door — free, anywhere in Katy.</p>
+    <div class="hero-trust">
+      <div class="trust-badge">🚚 Free Delivery in Katy</div>
+      <div class="trust-badge">🔒 Secure Checkout</div>
+      <div class="trust-badge">❄️ Cold-Packed Delivery</div>
+    </div>
+  </div>
+</section>
+
+<!-- CHECKOUT -->
+<section class="checkout-section">
+  <div class="checkout-inner">
+
+    <!-- ORDER FORM -->
+    <form id="orderForm">
+
+      <!-- STEP 1: YOUR INFO -->
+      <div class="form-card" style="margin-bottom:24px;">
+        <div class="form-section-head">
+          <div class="form-step-num">1</div>
+          <h3>Your Information</h3>
+        </div>
+        <div class="form-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name <span>*</span></label>
+              <input type="text" class="form-input" placeholder="Sarah" required id="firstName">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name <span>*</span></label>
+              <input type="text" class="form-input" placeholder="Mitchell" required id="lastName">
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">Email Address <span>*</span></label>
+              <input type="email" class="form-input" placeholder="sarah@example.com" required id="email">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number <span>*</span></label>
+              <input type="tel" class="form-input" placeholder="(832) 555-0000" required id="phone">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Dog's Name</label>
+              <input type="text" class="form-input" placeholder="Biscuit" id="dogName">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2: DELIVERY ADDRESS -->
+      <div class="form-card" style="margin-bottom:24px;">
+        <div class="form-section-head">
+          <div class="form-step-num">2</div>
+          <h3>Delivery Address — Katy, TX Only</h3>
+        </div>
+        <div class="form-body">
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">Street Address <span>*</span></label>
+              <input type="text" class="form-input" placeholder="123 Meadow Creek Ln" required id="address">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">City <span>*</span></label>
+              <input type="text" class="form-input" value="Katy" required id="city">
+            </div>
+            <div class="form-group">
+              <label class="form-label">ZIP Code <span>*</span></label>
+              <input type="text" class="form-input" placeholder="77494" required id="zip">
+            </div>
+          </div>
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">Delivery Instructions</label>
+              <textarea class="form-textarea" placeholder="Gate code, leave at door, ring doorbell, etc." id="instructions"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3: SELECT RECIPES -->
+      <div class="form-card" style="margin-bottom:24px;">
+        <div class="form-section-head">
+          <div class="form-step-num">3</div>
+          <h3>Choose Your Recipes</h3>
+        </div>
+        <div class="form-body">
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Select one or more recipes. Enter quantity in pounds for each.</p>
+          <div class="recipe-grid">
+            <div class="recipe-option">
+              <input type="checkbox" id="r1" name="recipe" value="sunday-roast" onchange="updateSummary()">
+              <label class="recipe-label" for="r1">
+                <span class="recipe-icon">🥩</span>
+                <div><div class="recipe-name">The Sunday Roast</div><div class="recipe-price">$18/lb · Grass-Fed Beef</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q1" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+            <div class="recipe-option">
+              <input type="checkbox" id="r2" name="recipe" value="oceans-garden" onchange="updateSummary()">
+              <label class="recipe-label" for="r2">
+                <span class="recipe-icon">🐟</span>
+                <div><div class="recipe-name">Ocean's Garden</div><div class="recipe-price">$20/lb · Wild Salmon</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q2" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+            <div class="recipe-option">
+              <input type="checkbox" id="r3" name="recipe" value="gentle-garden" onchange="updateSummary()">
+              <label class="recipe-label" for="r3">
+                <span class="recipe-icon">🍗</span>
+                <div><div class="recipe-name">The Gentle Garden</div><div class="recipe-price">$17/lb · Free-Range Chicken</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q3" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+            <div class="recipe-option">
+              <input type="checkbox" id="r4" name="recipe" value="turkey-harvest" onchange="updateSummary()">
+              <label class="recipe-label" for="r4">
+                <span class="recipe-icon">🦃</span>
+                <div><div class="recipe-name">Turkey Harvest</div><div class="recipe-price">$18/lb · Heritage Turkey</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q4" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+            <div class="recipe-option">
+              <input type="checkbox" id="r5" name="recipe" value="ranch-bowl" onchange="updateSummary()">
+              <label class="recipe-label" for="r5">
+                <span class="recipe-icon">🐄</span>
+                <div><div class="recipe-name">The Ranch Bowl</div><div class="recipe-price">$19/lb · Beef & Egg</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q5" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+            <div class="recipe-option">
+              <input type="checkbox" id="r6" name="recipe" value="wellness-bowl" onchange="updateSummary()">
+              <label class="recipe-label" for="r6">
+                <span class="recipe-icon">🥗</span>
+                <div><div class="recipe-name">The Wellness Bowl</div><div class="recipe-price">$16/lb · Lean Chicken</div></div>
+              </label>
+              <div class="qty-row"><span class="qty-label">Qty (lbs):</span><input type="number" class="qty-input" id="q6" value="1" min="1" max="20" oninput="updateSummary()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4: DELIVERY FREQUENCY -->
+      <div class="form-card" style="margin-bottom:24px;">
+        <div class="form-section-head">
+          <div class="form-step-num">4</div>
+          <h3>Delivery Frequency</h3>
+        </div>
+        <div class="form-body">
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Set up a recurring delivery and never run out. One-time orders are always available.</p>
+          <div class="freq-options">
+            <div class="freq-opt">
+              <input type="radio" name="frequency" id="once" value="one-time" checked>
+              <label class="freq-label" for="once"><span class="f-name">One-Time</span><span class="f-desc">Single order</span></label>
+            </div>
+            <div class="freq-opt">
+              <input type="radio" name="frequency" id="weekly" value="weekly">
+              <label class="freq-label" for="weekly"><span class="f-name">Weekly</span><span class="f-desc">Every 7 days</span></label>
+            </div>
+            <div class="freq-opt">
+              <input type="radio" name="frequency" id="biweekly" value="bi-weekly">
+              <label class="freq-label" for="biweekly"><span class="f-name">Bi-Weekly</span><span class="f-desc">Every 14 days</span></label>
+            </div>
+            <div class="freq-opt">
+              <input type="radio" name="frequency" id="monthly" value="monthly">
+              <label class="freq-label" for="monthly"><span class="f-name">Monthly</span><span class="f-desc">Every 30 days</span></label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5: PAYMENT (Stripe placeholder) -->
+      <div class="form-card">
+        <div class="form-section-head">
+          <div class="form-step-num">5</div>
+          <h3>Payment</h3>
+        </div>
+        <div class="form-body">
+          <p style="font-size:0.9rem;color:var(--text-muted);margin-bottom:20px;">Your payment is processed securely via Stripe. We never store your card information.</p>
+          <!-- STRIPE ELEMENT PLACEHOLDER -->
+          <div style="border:2px dashed var(--border);border-radius:10px;padding:32px;text-align:center;background:var(--cream);">
+            <div style="font-size:2rem;margin-bottom:12px;">💳</div>
+            <p style="color:var(--text-muted);font-size:0.9rem;font-weight:600;">Stripe Payment Element</p>
+            <p style="color:var(--text-muted);font-size:0.82rem;margin-top:6px;">Connect your Stripe account and replace this placeholder with <code style="background:var(--cream3);padding:2px 6px;border-radius:4px;font-size:0.8rem;">stripe.elements()</code></p>
+          </div>
+          <div class="form-row single" style="margin-top:20px;">
+            <div class="form-group">
+              <label class="form-label">Name on Card <span>*</span></label>
+              <input type="text" class="form-input" placeholder="Sarah Mitchell" id="cardName">
+            </div>
+          </div>
+          <!-- Demo: simple card fields -->
+          <div class="form-row single">
+            <div class="form-group">
+              <label class="form-label">Card Number</label>
+              <input type="text" class="form-input" placeholder="4242 4242 4242 4242" maxlength="19" id="cardNum">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Expiry</label>
+              <input type="text" class="form-input" placeholder="MM / YY" maxlength="7" id="cardExp">
+            </div>
+            <div class="form-group">
+              <label class="form-label">CVV</label>
+              <input type="text" class="form-input" placeholder="•••" maxlength="4" id="cardCvv">
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+
+    <!-- ORDER SUMMARY -->
+    <div class="summary-card">
+      <div class="summary-head"><h3>🧾 Order Summary</h3></div>
+      <div class="summary-body" id="summaryLines">
+        <div class="summary-line"><span class="summary-label">No recipes selected</span><span class="summary-value">—</span></div>
+      </div>
+      <div class="summary-line" style="padding:12px 24px;border-top:1px solid var(--cream3);">
+        <span class="summary-label" style="font-size:0.9rem;">Delivery</span>
+        <span class="summary-delivery">FREE 🚚</span>
+      </div>
+      <div class="summary-total">
+        <span class="total-label">Total</span>
+        <span class="total-value" id="totalValue">$0.00</span>
+      </div>
+      <div class="summary-footer">
+        <button class="btn-checkout" id="placeOrderBtn" type="button" onclick="submitOrder()">
+          🔒 Place Order Securely
+        </button>
+        <div class="stripe-note">🔒 Powered by Stripe · SSL Encrypted</div>
+        <div class="trust-row">
+          <div class="trust-item">✅ Free Delivery</div>
+          <div class="trust-item">❄️ Cold-Packed</div>
+          <div class="trust-item">🐾 Made Fresh</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo-name">The <span>Artisan</span> Bowl</div>
+        <p>Handcrafted small-batch dog food, made with human-grade ingredients and delivered free anywhere in Katy, Texas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="kitchen.html">The Kitchen</a></li>
+          <li><a href="ingredients.html">Real Food</a></li>
+          <li><a href="neverlist.html">Never List</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Order</h4>
+        <ul>
+          <li><a href="menu.html">The Menu</a></li>
+          <li><a href="checkout.html">Order Now</a></li>
+          <li><a href="delivery.html">Free Delivery</a></li>
+          <li><a href="care.html">Care & Storage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Katy, TX</h4>
+        <ul>
+          <li><a href="#">(832) 555-0194</a></li>
+          <li><a href="#">hello@artisanbowl.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 The Artisan Bowl. Made with ❤️ in Katy, Texas.</p>
+      <p>Example template by Armin Studio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay    = document.getElementById('overlay');
+  const closeBtn   = document.getElementById('closeBtn');
+  hamburger.addEventListener('click', () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; });
+  closeBtn.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+  overlay.addEventListener('click', () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; });
+
+  // Format card number
+  const cardNum = document.getElementById('cardNum');
+  if (cardNum) {
+    cardNum.addEventListener('input', function() {
+      let v = this.value.replace(/\D/g,'').slice(0,16);
+      this.value = v.match(/.{1,4}/g)?.join(' ') || v;
+    });
+  }
+
+  // Order summary
+  const prices = { r1:18, r2:20, r3:17, r4:18, r5:19, r6:16 };
+  const names  = { r1:'The Sunday Roast', r2:"Ocean's Garden", r3:'The Gentle Garden', r4:'Turkey Harvest', r5:'The Ranch Bowl', r6:'The Wellness Bowl' };
+
+  function updateSummary() {
+    const lines = document.getElementById('summaryLines');
+    const totalEl = document.getElementById('totalValue');
+    let html = '';
+    let total = 0;
+    let hasItems = false;
+
+    for (let i = 1; i <= 6; i++) {
+      const cb = document.getElementById('r' + i);
+      const qty = parseInt(document.getElementById('q' + i).value) || 1;
+      if (cb && cb.checked) {
+        const price = prices['r' + i] * qty;
+        total += price;
+        hasItems = true;
+        html += `<div class="summary-line"><span class="summary-label">${names['r'+i]} × ${qty}lb</span><span class="summary-value">$${price}</span></div>`;
+      }
+    }
+    if (!hasItems) html = '<div class="summary-line"><span class="summary-label">No recipes selected yet</span><span class="summary-value">—</span></div>';
+    lines.innerHTML = html;
+    totalEl.textContent = '$' + total.toFixed(2);
+  }
+
+  function submitOrder() {
+    const firstName = document.getElementById('firstName').value.trim();
+    const address   = document.getElementById('address').value.trim();
+    const phone     = document.getElementById('phone').value.trim();
+
+    if (!firstName || !address || !phone) {
+      alert('Please fill in your name, phone number, and delivery address before placing your order.');
+      return;
+    }
+
+    const hasRecipe = [1,2,3,4,5,6].some(i => document.getElementById('r'+i).checked);
+    if (!hasRecipe) {
+      alert('Please select at least one recipe.');
+      return;
+    }
+
+    // Show success overlay (demo — in production, submit to Stripe/server)
+    document.getElementById('successOverlay').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+</script>
+</body>
+</html>

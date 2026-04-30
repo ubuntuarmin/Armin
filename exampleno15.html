@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example No. 15 — Website Templates | Armin Studio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(160deg, #0E1F12 0%, #1D3A2A 50%, #152A1C 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container { max-width: 960px; width: 100%; }
+
+    header {
+      text-align: center;
+      margin-bottom: 56px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .studio-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #C8933A;
+      background: rgba(200,147,58,0.12);
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(200,147,58,0.3);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      color: #FAF8F0;
+      margin-bottom: 10px;
+      font-style: italic;
+      font-family: Georgia, serif;
+    }
+
+    h1 em { color: #C8933A; font-style: normal; }
+
+    .subtitle {
+      font-size: 1.1rem;
+      color: #90A890;
+      font-weight: 300;
+    }
+
+    /* TEMPLATE CARD */
+    .template-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      animation: fadeInUp 0.8s ease;
+      animation-fill-mode: both;
+      animation-delay: 0.2s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 36px 100px rgba(0,0,0,0.6);
+    }
+
+    /* Card header */
+    .card-header {
+      background: linear-gradient(135deg, #1D3A2A 0%, #2E5540 55%, #C8933A 160%);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+    .card-header::before {
+      content: '';
+      position: absolute; top: -60%; right: -20%;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(200,147,58,0.18) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .card-header::after {
+      content: '';
+      position: absolute; bottom: -40px; left: -40px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(61,107,82,0.2) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .card-header > * { position: relative; z-index: 1; }
+
+    .card-eyebrow {
+      font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+      color: #E5B86A; margin-bottom: 12px;
+    }
+    .card-title { font-size: 2.2rem; color: #FAF8F0; font-family: Georgia, serif; font-style: italic; margin-bottom: 6px; }
+    .card-subtitle { font-size: 0.85rem; color: #90A890; margin-bottom: 24px; }
+
+    .card-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag {
+      background: rgba(200,147,58,0.18); color: #E5B86A;
+      font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px; border: 1px solid rgba(200,147,58,0.3);
+    }
+
+    /* Card body */
+    .card-body { padding: 40px 48px 48px; }
+
+    /* Page grid */
+    .pages-label {
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: #3D5530; margin-bottom: 16px; font-weight: 700;
+    }
+    .pages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
+    .page-link {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      background: #FAF8F0;
+      border: 2px solid #E8E0CC;
+      border-radius: 10px; padding: 16px 10px;
+      text-decoration: none;
+      transition: all 0.25s;
+      text-align: center;
+    }
+    .page-link:hover { border-color: #C8933A; background: #FFF8EE; transform: translateY(-2px); }
+    .page-link .page-icon { font-size: 1.6rem; }
+    .page-link .page-name { font-size: 0.75rem; font-weight: 700; color: #1D3A2A; letter-spacing: 0.5px; }
+    .page-link .page-sub { font-size: 0.65rem; color: #C8933A; font-style: italic; }
+
+    /* Features list */
+    .features-label {
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: #3D5530; margin-bottom: 14px; font-weight: 700;
+    }
+    .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 36px; }
+    .feat-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.82rem; color: #4A3C2C;
+    }
+    .feat-item .check { color: #C8933A; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* CTA */
+    .card-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: #1D3A2A; color: #C8933A;
+      padding: 14px 32px; border-radius: 6px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.3s; display: inline-block; letter-spacing: 0.3px;
+    }
+    .btn-primary:hover { background: #C8933A; color: #1D3A2A; }
+    .btn-gold {
+      background: #C8933A; color: #1D3A2A;
+      padding: 14px 32px; border-radius: 6px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.3s; display: inline-block;
+    }
+    .btn-gold:hover { background: #E5B86A; }
+
+    /* Colour palette strip */
+    .palette { display: flex; gap: 10px; margin-top: 32px; align-items: center; flex-wrap: wrap; }
+    .palette-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: #7A8A7A; margin-right: 6px; }
+    .swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.6); position: relative; cursor: default; }
+    .swatch[title]:hover::after { content: attr(title); position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%); background: #111; color: #fff; font-size: 0.65rem; padding: 3px 8px; border-radius: 4px; white-space: nowrap; }
+
+    /* Back link */
+    .back-link {
+      display: block; text-align: center; margin-top: 32px;
+      color: rgba(255,255,255,0.4); font-size: 0.82rem; text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #C8933A; }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 640px) {
+      .card-header, .card-body { padding: 28px 24px; }
+      .pages-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="studio-badge">Armin Studio · Template Preview</div>
+    <h1>The <em>Artisan</em> Bowl</h1>
+    <p class="subtitle">Katy Dog Food Business · 8-Page Website Template</p>
+  </header>
+
+  <div class="template-card">
+
+    <!-- CARD HEADER -->
+    <div class="card-header">
+      <p class="card-eyebrow">Example No. 15 · Katy, Texas</p>
+      <h2 class="card-title">The Artisan Bowl</h2>
+      <p class="card-subtitle">Premium Small-Batch Dog Food — Katy, Texas · Free Delivery Included</p>
+      <div class="card-tags">
+        <span class="tag">Dog Food Business</span>
+        <span class="tag">8 Pages</span>
+        <span class="tag">Fully Responsive</span>
+        <span class="tag">Animated Never List</span>
+        <span class="tag">Forest Green & Gold</span>
+        <span class="tag">Katy, TX</span>
+      </div>
+    </div>
+
+    <!-- CARD BODY -->
+    <div class="card-body">
+
+      <!-- PAGES -->
+      <p class="pages-label">All 8 Pages</p>
+      <div class="pages-grid">
+        <a href="exampleno15-site1/index.html" class="page-link">
+          <span class="page-icon">🏠</span>
+          <span class="page-name">Home</span>
+          <span class="page-sub">Brand Hero</span>
+        </a>
+        <a href="exampleno15-site1/kitchen.html" class="page-link">
+          <span class="page-icon">🍳</span>
+          <span class="page-name">The Kitchen</span>
+          <span class="page-sub">Small Batch & Safety</span>
+        </a>
+        <a href="exampleno15-site1/ingredients.html" class="page-link">
+          <span class="page-icon">🥩</span>
+          <span class="page-name">Real Food</span>
+          <span class="page-sub">Ingredients Guide</span>
+        </a>
+        <a href="exampleno15-site1/neverlist.html" class="page-link">
+          <span class="page-icon">🚫</span>
+          <span class="page-name">Never List</span>
+          <span class="page-sub">Animated Contrast</span>
+        </a>
+        <a href="exampleno15-site1/menu.html" class="page-link">
+          <span class="page-icon">📋</span>
+          <span class="page-name">The Menu</span>
+          <span class="page-sub">8 Recipes + Sizing</span>
+        </a>
+        <a href="exampleno15-site1/care.html" class="page-link">
+          <span class="page-icon">❄️</span>
+          <span class="page-name">Care & Storage</span>
+          <span class="page-sub">Freshness Guide</span>
+        </a>
+        <a href="exampleno15-site1/delivery.html" class="page-link">
+          <span class="page-icon">🚚</span>
+          <span class="page-name">Free Delivery</span>
+          <span class="page-sub">Katy Coverage</span>
+        </a>
+        <a href="exampleno15-site1/checkout.html" class="page-link">
+          <span class="page-icon">🛒</span>
+          <span class="page-name">Order Now</span>
+          <span class="page-sub">Stripe-Ready</span>
+        </a>
+      </div>
+
+      <!-- FEATURES -->
+      <p class="features-label">Template Features</p>
+      <div class="features-list">
+        <div class="feat-item"><span class="check">✦</span>Animated "Never List" page — scrolling ticker + side-by-side ingredient comparisons</div>
+        <div class="feat-item"><span class="check">✦</span>Human-grade food safety section — HACCP, cold chain, sanitation protocols</div>
+        <div class="feat-item"><span class="check">✦</span>Small-batch cooking philosophy with 8-step illustrated process</div>
+        <div class="feat-item"><span class="check">✦</span>"Humans can eat it" joke section on the Real Food page</div>
+        <div class="feat-item"><span class="check">✦</span>Detailed storage guide — refrigerate 4 days, freeze 3 months with thawing steps</div>
+        <div class="feat-item"><span class="check">✦</span>Interactive FAQ accordions on Storage, Delivery, and Never List pages</div>
+        <div class="feat-item"><span class="check">✦</span>Full menu with 6 core + 2 seasonal recipes, serving size guide table</div>
+        <div class="feat-item"><span class="check">✦</span>Stripe-ready checkout with order summary, live pricing, and success overlay</div>
+        <div class="feat-item"><span class="check">✦</span>Delivery zone map placeholder with 9 Katy neighborhoods listed</div>
+        <div class="feat-item"><span class="check">✦</span>Scroll-triggered reveal animations on all sections</div>
+        <div class="feat-item"><span class="check">✦</span>Sticky nav with hamburger mobile menu on all 8 pages</div>
+        <div class="feat-item"><span class="check">✦</span>Forest green (#1D3A2A) & brushed gold (#C8933A) luxury colour scheme</div>
+      </div>
+
+      <!-- CTA -->
+      <div class="card-cta">
+        <a href="exampleno15-site1/index.html" class="btn-gold">Open Template →</a>
+        <a href="examples.html" class="btn-primary">← Back to Examples</a>
+      </div>
+
+      <!-- COLOUR PALETTE -->
+      <div class="palette">
+        <span class="palette-label">Colour Palette</span>
+        <div class="swatch" style="background:#1D3A2A;" title="Forest #1D3A2A"></div>
+        <div class="swatch" style="background:#2E5540;" title="Forest 2 #2E5540"></div>
+        <div class="swatch" style="background:#C8933A;" title="Gold #C8933A"></div>
+        <div class="swatch" style="background:#E5B86A;" title="Gold 2 #E5B86A"></div>
+        <div class="swatch" style="background:#FAF8F0;border:2px solid rgba(0,0,0,0.2);" title="Cream #FAF8F0"></div>
+        <div class="swatch" style="background:#F0EBE0;border:2px solid rgba(0,0,0,0.15);" title="Cream 2 #F0EBE0"></div>
+        <div class="swatch" style="background:#0E1A12;" title="Deep Forest #0E1A12"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <a href="examples.html" class="back-link">← Return to all examples</a>
+</div>
+
+</body>
+</html>

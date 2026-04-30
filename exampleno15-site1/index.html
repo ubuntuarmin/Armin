@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Artisan Bowl — Katy's Premium Small-Batch Dog Food</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --forest:      #1D3A2A;
+      --forest2:     #2E5540;
+      --forest3:     #3D6B52;
+      --gold:        #C8933A;
+      --gold2:       #E5B86A;
+      --gold3:       rgba(200,147,58,0.15);
+      --cream:       #FAF8F0;
+      --cream2:      #F0EBE0;
+      --cream3:      #E8E0CC;
+      --brown:       #3A2C1E;
+      --text:        #1E1A14;
+      --text-mid:    #4A3C2C;
+      --text-muted:  #7A6A58;
+      --white:       #FFFFFF;
+      --line:        rgba(200,147,58,0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', 'Segoe UI', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; line-height: 1.6; }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(29,58,42,0.97);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 3px solid var(--gold);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      max-width: 1200px; margin: 0 auto;
+      padding: 0 24px; height: 72px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+    .logo-mark {
+      width: 48px; height: 48px; border: 2px solid var(--gold); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem; background: rgba(200,147,58,0.1);
+    }
+    .logo-text { display: flex; flex-direction: column; }
+    .logo-name  { font-size: 1.2rem; font-weight: 700; color: var(--white); letter-spacing: 0.3px; font-family: 'Playfair Display', Georgia, serif; }
+    .logo-name span { color: var(--gold); }
+    .logo-tag   { font-size: 0.6rem; color: var(--gold2); letter-spacing: 2.5px; text-transform: uppercase; margin-top: 1px; }
+    .nav-links  { display: flex; gap: 2px; list-style: none; align-items: center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.78); text-decoration: none;
+      padding: 8px 12px; border-radius: 8px;
+      font-size: 0.84rem; font-weight: 500; transition: all 0.2s; letter-spacing: 0.2px;
+    }
+    .nav-links a:hover, .nav-links a.active { background: rgba(255,255,255,0.1); color: var(--gold2); }
+    .nav-order {
+      background: var(--gold) !important; color: var(--forest) !important;
+      font-weight: 700 !important; padding: 9px 20px !important;
+      border-radius: 50px !important; box-shadow: 0 4px 16px rgba(200,147,58,0.4) !important;
+    }
+    .nav-order:hover { background: var(--gold2) !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 3px; background: var(--gold); border-radius: 3px; transition: all 0.3s; }
+    .mobile-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 1999; }
+    .mobile-overlay.open { display: block; }
+    .mobile-menu {
+      display: none; position: fixed; top: 0; right: -100%; width: 72%; height: 100%;
+      background: var(--forest); z-index: 2000; flex-direction: column;
+      padding: 80px 28px 32px; gap: 6px; transition: right 0.38s cubic-bezier(0.25,0.8,0.25,1);
+      border-left: 3px solid var(--gold);
+    }
+    .mobile-menu.open { right: 0; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.05rem; padding: 13px 18px; border-radius: 8px; transition: all 0.25s; border-left: 3px solid transparent; }
+    .mobile-menu a:hover { background: rgba(200,147,58,0.15); border-left-color: var(--gold); color: var(--gold); }
+    .close-btn { position: absolute; top: 22px; right: 22px; background: none; border: none; color: var(--gold); font-size: 1.7rem; cursor: pointer; line-height: 1; }
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .mobile-menu { display: flex; }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative; min-height: 100vh;
+      background: linear-gradient(150deg, var(--forest) 0%, #152A1C 40%, #0E1F12 100%);
+      display: flex; align-items: center; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 65% 55% at 80% 20%, rgba(200,147,58,0.2) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 50% at 15% 80%, rgba(61,107,82,0.3) 0%, transparent 65%);
+    }
+    .hero-particle {
+      position: absolute; border-radius: 50%; pointer-events: none; opacity: 0.08;
+      animation: floatDrift 12s ease-in-out infinite;
+    }
+    .hero-particle:nth-child(1) { width:600px; height:600px; background: var(--forest3); top:-100px; right:-200px; animation-delay:0s; }
+    .hero-particle:nth-child(2) { width:400px; height:400px; background: var(--gold); bottom:-80px; left:-100px; animation-delay:4s; }
+    .hero-particle:nth-child(3) { width:250px; height:250px; background: var(--gold2); top:40%; left:35%; animation-delay:8s; filter:blur(60px); }
+    @keyframes floatDrift {
+      0%,100% { transform: scale(1) translate(0,0); }
+      50%      { transform: scale(1.06) translate(12px,-12px); }
+    }
+    .hero-inner {
+      position: relative; z-index: 2; max-width: 1200px; margin: 0 auto;
+      padding: 60px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; width: 100%;
+    }
+    .hero-content { animation: slideInLeft 0.9s ease both; }
+    @keyframes slideInLeft { from { opacity:0; transform:translateX(-48px); } to { opacity:1; transform:translateX(0); } }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(200,147,58,0.15); border: 1px solid rgba(200,147,58,0.4);
+      color: var(--gold2); padding: 7px 18px; border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 28px;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 5.5vw, 4.5rem); font-weight: 700; line-height: 1.1;
+      color: var(--white); margin-bottom: 26px; font-family: 'Playfair Display', Georgia, serif;
+    }
+    .hero-title .accent { color: var(--gold); font-style: italic; }
+    .hero-desc { font-size: 1.12rem; color: rgba(255,255,255,0.72); line-height: 1.85; margin-bottom: 42px; max-width: 490px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 60px; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--gold); color: var(--forest); text-decoration: none;
+      padding: 16px 36px; border-radius: 50px; font-size: 0.97rem; font-weight: 700;
+      transition: all 0.3s; box-shadow: 0 8px 28px rgba(200,147,58,0.45); letter-spacing: 0.3px;
+    }
+    .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 14px 36px rgba(200,147,58,0.55); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 10px; background: transparent;
+      color: var(--white); text-decoration: none; padding: 16px 36px; border-radius: 50px;
+      font-size: 0.97rem; font-weight: 600; border: 2px solid rgba(255,255,255,0.3); transition: all 0.3s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.7); transform: translateY(-2px); }
+    .hero-stats { display: flex; gap: 42px; flex-wrap: wrap; }
+    .stat-num { font-size: 2.1rem; font-weight: 800; color: var(--gold); font-family: 'Playfair Display', Georgia, serif; }
+    .stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 3px; }
+
+    /* Hero bowl visual */
+    .hero-visual { animation: slideInRight 0.9s ease 0.15s both; display: flex; justify-content: center; align-items: center; position: relative; }
+    @keyframes slideInRight { from { opacity:0; transform:translateX(48px); } to { opacity:1; transform:translateX(0); } }
+    .bowl-graphic {
+      width: 100%; max-width: 420px; aspect-ratio: 1;
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    .bowl-ring {
+      width: 340px; height: 340px; border-radius: 50%;
+      border: 2px solid rgba(200,147,58,0.25);
+      position: absolute; animation: rotateSlow 30s linear infinite;
+    }
+    .bowl-ring-2 {
+      width: 280px; height: 280px; border-radius: 50%;
+      border: 1px solid rgba(200,147,58,0.15);
+      position: absolute; animation: rotateSlow 20s linear infinite reverse;
+    }
+    @keyframes rotateSlow { to { transform: rotate(360deg); } }
+    .bowl-center {
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, rgba(200,147,58,0.35), rgba(29,58,42,0.6));
+      border: 3px solid rgba(200,147,58,0.5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 5rem; position: relative; z-index: 2;
+      box-shadow: 0 0 60px rgba(200,147,58,0.2), inset 0 0 40px rgba(0,0,0,0.3);
+      animation: bowlPulse 4s ease-in-out infinite;
+    }
+    @keyframes bowlPulse { 0%,100%{transform:scale(1);box-shadow:0 0 60px rgba(200,147,58,0.2),inset 0 0 40px rgba(0,0,0,0.3);} 50%{transform:scale(1.04);box-shadow:0 0 90px rgba(200,147,58,0.35),inset 0 0 40px rgba(0,0,0,0.3);} }
+    .bowl-orbit {
+      position: absolute; width: 340px; height: 340px;
+      border-radius: 50%; animation: orbit 8s linear infinite;
+    }
+    .bowl-dot {
+      position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+      width: 22px; height: 22px; background: var(--gold); border-radius: 50%;
+      font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 20px rgba(200,147,58,0.6);
+    }
+    @keyframes orbit { to { transform: rotate(360deg); } }
+    .bowl-label {
+      position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+      background: var(--gold); color: var(--forest); font-size: 0.72rem; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase; padding: 8px 22px; border-radius: 50px; white-space: nowrap;
+    }
+    @media (max-width: 900px) { .hero-inner { grid-template-columns:1fr; gap:48px; padding-top:80px; } .bowl-graphic { max-width:300px; } }
+    @media (max-width: 480px) { .hero-title { font-size:2.4rem; } .hero-stats { gap:28px; } .bowl-graphic { max-width: 240px; } .bowl-ring { width:230px; height:230px; } .bowl-ring-2 { width:190px; height:190px; } .bowl-orbit { width:230px; height:230px; } .bowl-center { width:140px; height:140px; font-size:3.5rem; } }
+
+    /* ── DELIVERY BANNER ── */
+    .delivery-banner {
+      background: var(--gold); padding: 14px 24px;
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+    }
+    .delivery-banner p { font-size: 0.92rem; font-weight: 700; color: var(--forest); letter-spacing: 0.3px; }
+    .delivery-banner a { color: var(--forest); text-decoration: underline; font-weight: 700; }
+
+    /* ── FEATURES STRIP ── */
+    .features-strip { background: var(--forest); padding: 60px 24px; }
+    .features-grid {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: repeat(4,1fr); gap: 32px;
+    }
+    .feature-item { text-align: center; }
+    .feature-icon { font-size: 2.4rem; margin-bottom: 14px; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3)); }
+    .feature-item h3 { color: var(--gold2); font-size: 1rem; margin-bottom: 8px; font-family: 'Playfair Display', Georgia, serif; }
+    .feature-item p { color: rgba(255,255,255,0.65); font-size: 0.85rem; line-height: 1.7; }
+    @media (max-width: 760px) { .features-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 420px) { .features-grid { grid-template-columns: 1fr; } }
+
+    /* ── SECTION STRUCTURE ── */
+    .section { padding: 100px 24px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 64px; }
+    .section-eyebrow {
+      font-size: 0.73rem; letter-spacing: 5px; text-transform: uppercase;
+      color: var(--gold); font-weight: 700; margin-bottom: 14px; display: block;
+    }
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.2rem); color: var(--forest);
+      font-family: 'Playfair Display', Georgia, serif; margin-bottom: 18px;
+    }
+    .section-header h2 em { color: var(--gold); font-style: italic; }
+    .section-header p { font-size: 1.05rem; color: var(--text-mid); max-width: 600px; margin: 0 auto; line-height: 1.8; }
+    .divider { width: 70px; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold2)); margin: 20px auto 0; border-radius: 2px; }
+    .section-alt { background: var(--cream2); }
+
+    /* ── PRODUCTS PREVIEW ── */
+    .products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; }
+    .product-card {
+      background: var(--white); border-radius: 16px; overflow: hidden;
+      box-shadow: 0 6px 30px rgba(0,0,0,0.07); transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.14); }
+    .product-img {
+      height: 240px; background: var(--cream2);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      border-bottom: 3px solid var(--gold); position: relative; overflow: hidden;
+    }
+    .product-img .ph-emoji { font-size: 4rem; opacity: 0.45; }
+    .product-img .ph-label { font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); font-weight: 600; margin-top: 10px; }
+    .product-img::after {
+      content: ''; position: absolute; inset: -40% -20%;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.18), transparent 70%);
+      animation: shimmer 3.5s linear infinite;
+    }
+    @keyframes shimmer { to { transform: translateX(100%); } }
+    .product-body { padding: 28px; }
+    .product-tag { font-size: 0.68rem; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 10px; display: block; }
+    .product-body h3 { font-size: 1.4rem; color: var(--forest); margin-bottom: 10px; font-family: 'Playfair Display', Georgia, serif; }
+    .product-body p { font-size: 0.9rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 18px; }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 18px; border-top: 1px solid var(--cream3); }
+    .product-price { font-size: 1.4rem; color: var(--gold); font-weight: 700; font-family: 'Playfair Display', Georgia, serif; }
+    .product-price span { font-size: 0.75rem; color: var(--text-muted); font-weight: 400; font-family: Inter, sans-serif; }
+    .btn-sm {
+      background: var(--forest); color: var(--gold2); padding: 10px 22px; border-radius: 50px;
+      font-size: 0.83rem; font-weight: 700; text-decoration: none; transition: all 0.25s;
+    }
+    .btn-sm:hover { background: var(--forest2); transform: translateY(-1px); }
+    @media (max-width: 840px) { .products-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .products-grid { grid-template-columns: 1fr; } }
+
+    /* ── PROMISE SECTION ── */
+    .promise-section { background: var(--forest); padding: 100px 24px; }
+    .promise-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .promise-img {
+      border-radius: 16px; border: 2px dashed rgba(200,147,58,0.35);
+      background: rgba(255,255,255,0.04); min-height: 520px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 40px;
+    }
+    .promise-img .ph-emoji { font-size: 5rem; opacity: 0.3; }
+    .promise-img .ph-label { color: var(--gold2); font-size: 0.82rem; letter-spacing: 2px; text-transform: uppercase; margin-top: 18px; opacity: 0.6; }
+    .promise-text .eyebrow { font-size: 0.73rem; letter-spacing: 5px; text-transform: uppercase; color: var(--gold2); font-weight: 700; margin-bottom: 16px; display: block; }
+    .promise-text h2 { font-size: clamp(2rem, 3.5vw, 3rem); color: var(--white); font-family: 'Playfair Display', Georgia, serif; margin-bottom: 28px; line-height: 1.2; }
+    .promise-text h2 em { color: var(--gold); font-style: italic; }
+    .promise-text p { color: rgba(255,255,255,0.72); font-size: 1rem; line-height: 1.9; margin-bottom: 20px; }
+    .promise-checks { margin: 28px 0; display: flex; flex-direction: column; gap: 14px; }
+    .check-item { display: flex; align-items: flex-start; gap: 14px; color: rgba(255,255,255,0.85); font-size: 0.95rem; }
+    .check-icon { width: 24px; height: 24px; border-radius: 50%; background: var(--gold); color: var(--forest); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 900; flex-shrink: 0; margin-top: 1px; }
+    .promise-text a { display: inline-flex; align-items: center; gap: 8px; color: var(--gold); font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(200,147,58,0.4); padding-bottom: 3px; transition: border-color 0.2s; font-size: 0.97rem; }
+    .promise-text a:hover { border-color: var(--gold); }
+    @media (max-width: 840px) { .promise-inner { grid-template-columns:1fr; gap:48px; } .promise-img { min-height:280px; } }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 28px; }
+    .testimonial {
+      background: var(--white); border-radius: 14px; padding: 36px 30px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06); border-top: 4px solid var(--gold);
+      position: relative;
+    }
+    .testimonial::before { content: '"'; font-size: 5rem; color: var(--gold); opacity: 0.15; position: absolute; top: 8px; left: 18px; line-height: 1; font-family: 'Playfair Display', Georgia, serif; }
+    .stars { color: var(--gold); font-size: 1rem; margin-bottom: 14px; letter-spacing: 2px; }
+    .testimonial p { font-size: 0.95rem; color: var(--text-mid); line-height: 1.85; margin-bottom: 24px; font-style: italic; }
+    .reviewer { display: flex; align-items: center; gap: 14px; }
+    .reviewer-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--cream2); border: 2px solid var(--gold); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+    .reviewer-name { font-weight: 700; font-size: 0.9rem; color: var(--forest); }
+    .reviewer-sub  { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
+    @media (max-width: 840px) { .testimonials-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 540px) { .testimonials-grid { grid-template-columns: 1fr; } }
+
+    /* ── DELIVERY CTA ── */
+    .delivery-cta {
+      background: linear-gradient(135deg, var(--forest) 0%, #0E1F12 100%);
+      padding: 100px 24px; text-align: center; position: relative; overflow: hidden;
+    }
+    .delivery-cta::before {
+      content:''; position:absolute; inset:0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(200,147,58,0.15) 0%, transparent 70%);
+    }
+    .delivery-cta-inner { max-width:700px; margin:0 auto; position:relative; z-index:1; }
+    .delivery-cta h2 { font-size: clamp(2rem,4vw,3.2rem); color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:18px; }
+    .delivery-cta h2 em { color:var(--gold); font-style:italic; }
+    .delivery-cta p { font-size:1.1rem; color:rgba(255,255,255,0.72); margin-bottom:40px; line-height:1.8; }
+    .delivery-cta .btn-primary { margin: 0 auto; }
+
+    /* ── FOOTER ── */
+    footer { background: #0E1A12; padding: 64px 24px 36px; }
+    .footer-inner { max-width:1200px; margin:0 auto; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:48px; }
+    .footer-logo-name { font-size:1.4rem; font-weight:700; color:var(--white); font-family:'Playfair Display',Georgia,serif; margin-bottom:12px; }
+    .footer-logo-name span { color:var(--gold); }
+    .footer-col p { color:rgba(255,255,255,0.55); font-size:0.9rem; line-height:1.8; }
+    .footer-col h4 { color:var(--gold2); font-size:0.75rem; letter-spacing:3px; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .footer-col ul a { color:rgba(255,255,255,0.6); text-decoration:none; font-size:0.87rem; transition:color 0.2s; }
+    .footer-col ul a:hover { color:var(--gold); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { color:rgba(255,255,255,0.35); font-size:0.82rem; }
+    @media (max-width:760px) { .footer-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:480px) { .footer-grid { grid-template-columns:1fr; } }
+
+    /* ── SCROLL ANIMATIONS ── */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.show { opacity:1; transform:translateY(0); }
+    .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-left.show { opacity:1; transform:translateX(0); }
+    .reveal-right { opacity:0; transform:translateX(40px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-right.show { opacity:1; transform:translateX(0); }
+  </style>
+</head>
+<body>
+
+<!-- DELIVERY BANNER -->
+<div class="delivery-banner">
+  <p>🚚 Free Delivery Anywhere in Katy, TX — <a href="delivery.html">Check Your Area →</a></p>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <div class="logo-mark">🐾</div>
+      <div class="logo-text">
+        <span class="logo-name">The <span>Artisan</span> Bowl</span>
+        <span class="logo-tag">Katy, Texas</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="kitchen.html">The Kitchen</a></li>
+      <li><a href="ingredients.html">Real Food</a></li>
+      <li><a href="neverlist.html">Never List</a></li>
+      <li><a href="menu.html">Menu</a></li>
+      <li><a href="care.html">Care & Storage</a></li>
+      <li><a href="delivery.html">Free Delivery</a></li>
+      <li><a href="checkout.html" class="nav-order">Order Now</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-overlay" id="overlay"></div>
+<nav class="mobile-menu" id="mobileMenu">
+  <button class="close-btn" id="closeBtn">✕</button>
+  <a href="index.html">🏠 Home</a>
+  <a href="kitchen.html">🍳 The Kitchen</a>
+  <a href="ingredients.html">🥩 Real Food</a>
+  <a href="neverlist.html">🚫 Never List</a>
+  <a href="menu.html">📋 Menu</a>
+  <a href="care.html">❄️ Care & Storage</a>
+  <a href="delivery.html">🚚 Free Delivery</a>
+  <a href="checkout.html">🛒 Order Now</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-particle"></div>
+  <div class="hero-particle"></div>
+  <div class="hero-particle"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">🌿 Katy, Texas · Small-Batch Crafted</div>
+      <h1 class="hero-title">Real Food for <span class="accent">Real Dogs.</span> Made With Love.</h1>
+      <p class="hero-desc">We slow-cook every batch right here in Katy with human-grade ingredients you can actually read — no by-products, no preservatives, no mystery. Just honest food your dog deserves.</p>
+      <div class="hero-buttons">
+        <a href="menu.html" class="btn-primary">🐾 Shop the Menu</a>
+        <a href="neverlist.html" class="btn-outline">See What's Not in It →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">100%</div>
+          <div class="stat-label">Real Ingredients</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">0</div>
+          <div class="stat-label">By-Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">Free</div>
+          <div class="stat-label">Katy Delivery</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="bowl-graphic">
+        <div class="bowl-ring"></div>
+        <div class="bowl-ring-2"></div>
+        <div class="bowl-orbit">
+          <div class="bowl-dot" style="animation:orbit 8s linear infinite;">🥩</div>
+        </div>
+        <div class="bowl-orbit" style="animation:orbit 12s linear 3s infinite reverse;">
+          <div class="bowl-dot" style="background:#4CAF50;">🥦</div>
+        </div>
+        <div class="bowl-orbit" style="animation:orbit 10s linear 6s infinite;">
+          <div class="bowl-dot" style="background:#FF8C00;">🍠</div>
+        </div>
+        <div class="bowl-center">🐶</div>
+        <div class="bowl-label">The Artisan Bowl</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES STRIP -->
+<section class="features-strip">
+  <div class="features-grid">
+    <div class="feature-item reveal">
+      <div class="feature-icon">🔥</div>
+      <h3>Small-Batch Cooked</h3>
+      <p>Every order is prepared in small quantities so we never compromise on quality or freshness.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.1s">
+      <div class="feature-icon">👨‍⚕️</div>
+      <h3>Human-Grade Safety</h3>
+      <p>We follow the same food safety protocols used in human kitchens — clean, inspected, and certified.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.2s">
+      <div class="feature-icon">🚫</div>
+      <h3>Zero Mystery Ingredients</h3>
+      <p>No by-products, no synthetic dyes, no artificial preservatives. Every ingredient is real and recognizable.</p>
+    </div>
+    <div class="feature-item reveal" style="transition-delay:0.3s">
+      <div class="feature-icon">🚚</div>
+      <h3>Free Katy Delivery</h3>
+      <p>We deliver fresh to your door — anywhere in Katy, Texas. No delivery fee, ever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SIGNATURE PRODUCTS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Our Recipes</span>
+      <h2>Crafted Bowls Your Dog <em>Will Beg</em> For</h2>
+      <p>Each recipe is built around a single protein source, paired with whole vegetables and healing superfoods. Simple. Nutritious. Irresistible.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="products-grid">
+      <div class="product-card reveal">
+        <div class="product-img">
+          <div class="ph-emoji">🥩</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Bestseller</span>
+          <h3>The Sunday Roast</h3>
+          <p>Slow-roasted grass-fed beef with sweet potato, green beans, and a drizzle of bone broth. Pure comfort in every bowl.</p>
+          <div class="product-footer">
+            <div class="product-price">$18 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-sm">Add to Order</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.1s">
+        <div class="product-img">
+          <div class="ph-emoji">🐟</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Staff Favorite</span>
+          <h3>Ocean's Garden</h3>
+          <p>Wild-caught salmon, steamed broccoli, and brown rice. Omega-3 rich and gut-friendly for dogs who need a little extra glow.</p>
+          <div class="product-footer">
+            <div class="product-price">$20 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-sm">Add to Order</a>
+          </div>
+        </div>
+      </div>
+      <div class="product-card reveal" style="transition-delay:0.2s">
+        <div class="product-img">
+          <div class="ph-emoji">🍗</div>
+          <div class="ph-label">Product Photo</div>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">Gentle on Tummies</span>
+          <h3>The Gentle Garden</h3>
+          <p>Free-range chicken, pumpkin, zucchini, and kale. Our most tender recipe — perfect for sensitive stomachs and picky eaters.</p>
+          <div class="product-footer">
+            <div class="product-price">$17 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-sm">Add to Order</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:48px;">
+      <a href="menu.html" class="btn-primary reveal">View Full Menu →</a>
+    </div>
+  </div>
+</section>
+
+<!-- OUR PROMISE -->
+<section class="promise-section">
+  <div class="promise-inner">
+    <div class="promise-img reveal-left">
+      <div class="ph-emoji">🧑‍🍳</div>
+      <div class="ph-label">Kitchen Photo Placeholder</div>
+    </div>
+    <div class="promise-text reveal-right">
+      <span class="eyebrow">Our Philosophy</span>
+      <h2>If <em>You</em> Wouldn't Eat It, We Won't Feed It to Your Dog</h2>
+      <p>That's not just a catchy line — it's how we shop, prep, and cook. Every ingredient in our kitchen meets the same standard we'd hold a meal to for ourselves.</p>
+      <p>We cook in small batches because quality can't be rushed. We follow human-grade food handling protocols because your dog's health is non-negotiable. We use zero by-products because "chicken meal" shouldn't be a mystery.</p>
+      <div class="promise-checks">
+        <div class="check-item"><div class="check-icon">✓</div><span>Small-batch cooking for quality control — never mass produced</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Human-grade food safety standards in every step</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Zero synthetic preservatives, artificial dyes, or fillers</span></div>
+        <div class="check-item"><div class="check-icon">✓</div><span>Real, whole ingredients — readable and recognizable</span></div>
+      </div>
+      <a href="kitchen.html">Explore The Kitchen →</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">From Katy Families</span>
+      <h2>Happy Dogs. Happier <em>Owners.</em></h2>
+      <div class="divider"></div>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial reveal">
+        <div class="stars">★★★★★</div>
+        <p>"My golden retriever had skin issues for two years. After switching to The Artisan Bowl, his coat is shiny and his energy is through the roof. We're never going back."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🐕</div>
+          <div>
+            <div class="reviewer-name">Sarah M.</div>
+            <div class="reviewer-sub">Cinco Ranch, Katy</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:0.1s">
+        <div class="stars">★★★★★</div>
+        <p>"The free delivery is amazing — they dropped it off same day on a Friday afternoon. And my picky Frenchie who usually refuses everything cleaned the bowl in 30 seconds."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🐩</div>
+          <div>
+            <div class="reviewer-name">James & Laura T.</div>
+            <div class="reviewer-sub">Grand Lakes, Katy</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial reveal" style="transition-delay:0.2s">
+        <div class="stars">★★★★★</div>
+        <p>"I love that I can read every single ingredient. No guessing, no weird chemistry names. Just real food. My vet actually asked what I was feeding him — she was impressed!"</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">🦮</div>
+          <div>
+            <div class="reviewer-name">Monica R.</div>
+            <div class="reviewer-sub">Katy Lakes, Katy</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY CTA -->
+<section class="delivery-cta">
+  <div class="delivery-cta-inner">
+    <div class="reveal">
+      <span class="section-eyebrow" style="color:var(--gold2);">Free Delivery in Katy, TX</span>
+      <h2>Ready to <em>Upgrade</em> Your Dog's Bowl?</h2>
+      <p>Order today and we'll deliver fresh, handcrafted food right to your door — anywhere in Katy. No minimums. No fees. Just real food, right on time.</p>
+      <a href="checkout.html" class="btn-primary">🐾 Start Your Order</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <div class="footer-logo-name">The <span>Artisan</span> Bowl</div>
+        <p>Handcrafted small-batch dog food, made with human-grade ingredients and delivered fresh anywhere in Katy, Texas.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="kitchen.html">The Kitchen</a></li>
+          <li><a href="ingredients.html">Real Food</a></li>
+          <li><a href="neverlist.html">Never List</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Order</h4>
+        <ul>
+          <li><a href="menu.html">The Menu</a></li>
+          <li><a href="checkout.html">Order Now</a></li>
+          <li><a href="delivery.html">Free Delivery</a></li>
+          <li><a href="care.html">Care & Storage</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Katy, TX</h4>
+        <ul>
+          <li><a href="#">(832) 555-0194</a></li>
+          <li><a href="#">hello@artisanbowl.com</a></li>
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 The Artisan Bowl. Made with ❤️ in Katy, Texas.</p>
+      <p style="color:rgba(255,255,255,0.25);">Example template by Armin Studio</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Mobile menu
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const overlay = document.getElementById('overlay');
+  const closeBtn = document.getElementById('closeBtn');
+  const openMenu = () => { mobileMenu.classList.add('open'); overlay.classList.add('open'); document.body.style.overflow='hidden'; };
+  const closeMenu = () => { mobileMenu.classList.remove('open'); overlay.classList.remove('open'); document.body.style.overflow=''; };
+  hamburger.addEventListener('click', openMenu);
+  closeBtn.addEventListener('click', closeMenu);
+  overlay.addEventListener('click', closeMenu);
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); } });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
