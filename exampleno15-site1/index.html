@@ -345,13 +345,163 @@
     .reveal-left.show { opacity:1; transform:translateX(0); }
     .reveal-right { opacity:0; transform:translateX(40px); transition:opacity 0.75s ease, transform 0.75s ease; }
     .reveal-right.show { opacity:1; transform:translateX(0); }
+
+    /* ── MARQUEE INGREDIENTS TICKER ── */
+    .ticker-wrap {
+      background: linear-gradient(90deg, #152A1C 0%, #1a3828 50%, #152A1C 100%);
+      border-bottom: 1px solid rgba(200,147,58,0.35);
+      overflow: hidden; padding: 11px 0; position: relative;
+    }
+    .ticker-wrap::before, .ticker-wrap::after {
+      content: ''; position: absolute; top: 0; width: 90px; height: 100%; z-index: 2;
+    }
+    .ticker-wrap::before { left: 0; background: linear-gradient(90deg, #152A1C, transparent); }
+    .ticker-wrap::after  { right: 0; background: linear-gradient(-90deg, #152A1C, transparent); }
+    .ticker-track {
+      display: inline-flex; animation: tickerScroll 38s linear infinite; white-space: nowrap;
+    }
+    .ticker-track:hover { animation-play-state: paused; }
+    .ticker-item {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 0 28px; font-size: 0.84rem; font-weight: 600;
+      color: var(--gold2); letter-spacing: 0.4px;
+    }
+    .ticker-sep { color: var(--gold); opacity: 0.45; }
+    @keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ── SPARKLE FIREFLIES ── */
+    .sparkle {
+      position: absolute; border-radius: 50%; pointer-events: none;
+      background: radial-gradient(circle, var(--gold2), rgba(200,147,58,0.2));
+      opacity: 0;
+      animation: sparkleFly var(--dur, 5s) ease-in-out var(--delay, 0s) infinite;
+      z-index: 1;
+    }
+    @keyframes sparkleFly {
+      0%   { opacity: 0; transform: translateY(30px) scale(0.2); }
+      20%  { opacity: 1; transform: translateY(-20px) scale(1); }
+      70%  { opacity: 0.4; transform: translateY(-90px) scale(0.7); }
+      100% { opacity: 0; transform: translateY(-150px) scale(0.1); }
+    }
+
+    /* ── FLOATING FOOD EMOJIS ── */
+    .food-float {
+      position: absolute; pointer-events: none; z-index: 1;
+      opacity: 0;
+      animation: foodDrift var(--dur, 9s) ease-in-out var(--delay, 0s) infinite;
+      filter: drop-shadow(0 2px 10px rgba(200,147,58,0.35));
+      font-size: 1.7rem;
+    }
+    @keyframes foodDrift {
+      0%   { opacity: 0; transform: translateY(60px) rotate(-8deg) scale(0.7); }
+      12%  { opacity: 0.22; }
+      50%  { opacity: 0.16; transform: translateY(-20px) rotate(6deg) scale(1); }
+      88%  { opacity: 0.08; }
+      100% { opacity: 0; transform: translateY(-110px) rotate(18deg) scale(0.5); }
+    }
+
+    /* ── TYPEWRITER ── */
+    .hero-typewriter {
+      margin-bottom: 18px; min-height: 28px;
+      display: flex; align-items: center;
+    }
+    #typewriter-text {
+      font-size: 0.88rem; color: var(--gold2); font-weight: 600;
+      letter-spacing: 1px; border-right: 2px solid var(--gold);
+      padding-right: 6px; white-space: nowrap; overflow: hidden;
+    }
+
+    /* ── PULSING GLOW CTA ── */
+    .btn-primary { animation: glowPulse 2.8s ease-in-out infinite; }
+    @keyframes glowPulse {
+      0%,100% { box-shadow: 0 8px 28px rgba(200,147,58,0.45); }
+      50%     { box-shadow: 0 8px 52px rgba(200,147,58,0.88), 0 0 40px rgba(200,147,58,0.45); }
+    }
+    .btn-primary:hover { animation: none; box-shadow: 0 14px 36px rgba(200,147,58,0.65); }
+
+    /* ── PRODUCT GRID 2×2 ── */
+    .products-grid { grid-template-columns: repeat(2,1fr) !important; }
+
+    /* ── INGREDIENT SHOWCASE ── */
+    .ing-showcase-section {
+      background: var(--forest); padding: 90px 24px; text-align: center; overflow: hidden;
+    }
+    .ing-showcase-inner { max-width: 700px; margin: 0 auto; }
+    .ing-cycle-wrap { position: relative; min-height: 150px; margin: 48px auto 0; }
+    .ing-slide {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      opacity: 0; transform: translateY(22px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .ing-slide.active { opacity: 1; transform: translateY(0); }
+    .ing-emoji-big { font-size: 3.6rem; display: block; margin-bottom: 10px; }
+    .ing-name-big { font-size: 2rem; color: var(--gold); font-family: 'Playfair Display',Georgia,serif; }
+    .ing-benefit-text { font-size: 0.9rem; color: rgba(255,255,255,0.58); margin-top: 8px; display: block; }
+    .ing-nav-dots { display: flex; gap: 10px; justify-content: center; margin-top: 44px; }
+    .ing-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(200,147,58,0.25); cursor: pointer; transition: background 0.3s, transform 0.2s; border: none; padding: 0; }
+    .ing-dot.active { background: var(--gold); transform: scale(1.35); }
+
+    /* ── WHY REAL FOOD SECTION ── */
+    .why-section { padding: 100px 24px; background: var(--cream2); }
+    .why-inner { max-width: 1200px; margin: 0 auto; }
+    .why-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 28px; }
+    .why-card {
+      background: var(--white); border-radius: 20px; padding: 38px 22px;
+      text-align: center; box-shadow: 0 6px 30px rgba(0,0,0,0.07);
+      border-bottom: 4px solid var(--gold);
+      transition: transform 0.35s, box-shadow 0.35s; position: relative; overflow: hidden;
+    }
+    .why-card::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 130px; height: 130px;
+      background: radial-gradient(circle, rgba(200,147,58,0.08), transparent 70%);
+      border-radius: 50%;
+    }
+    .why-card:hover { transform: translateY(-10px); box-shadow: 0 24px 60px rgba(0,0,0,0.13); }
+    .why-icon { font-size: 3rem; margin-bottom: 16px; display: block; transition: transform 0.3s; }
+    .why-card:hover .why-icon { transform: scale(1.2) rotate(-5deg); }
+    .why-card h3 { font-size: 1.1rem; color: var(--forest); font-family: 'Playfair Display',Georgia,serif; margin-bottom: 10px; }
+    .why-card p { font-size: 0.86rem; color: var(--text-mid); line-height: 1.75; }
+    @media (max-width: 840px) { .why-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .why-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
 
-<!-- DELIVERY BANNER -->
-<div class="delivery-banner">
-  <p>🚚 Free Delivery Anywhere in Katy, TX — <a href="delivery.html">Check Your Area →</a></p>
+<!-- INGREDIENTS TICKER -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-track" id="tickerTrack">
+    <span class="ticker-item">🐔 Organic Chicken</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥬 Spinach</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🫐 Blueberries</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥩 Grass-Fed Beef</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🍠 Sweet Potato</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥦 Broccoli</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🦃 Ground Turkey</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥕 Carrots</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🍎 Organic Apple</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌾 Organic Oats</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥚 Pasture Eggs</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🫒 Olive Oil</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌿 Hemp Seed Oil</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🚚 Free Delivery in Katy, TX</span><span class="ticker-sep">·</span>
+    <!-- duplicate for seamless loop -->
+    <span class="ticker-item">🐔 Organic Chicken</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥬 Spinach</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🫐 Blueberries</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥩 Grass-Fed Beef</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🍠 Sweet Potato</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥦 Broccoli</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🦃 Ground Turkey</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥕 Carrots</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🍎 Organic Apple</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌾 Organic Oats</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🥚 Pasture Eggs</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🫒 Olive Oil</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🌿 Hemp Seed Oil</span><span class="ticker-sep">·</span>
+    <span class="ticker-item">🚚 Free Delivery in Katy, TX</span><span class="ticker-sep">·</span>
+  </div>
 </div>
 
 <!-- NAV -->
@@ -397,9 +547,35 @@
   <div class="hero-particle"></div>
   <div class="hero-particle"></div>
   <div class="hero-particle"></div>
+
+  <!-- Sparkle fireflies -->
+  <div class="sparkle" style="--dur:5s;--delay:0s;width:5px;height:5px;left:12%;top:70%;"></div>
+  <div class="sparkle" style="--dur:6s;--delay:1s;width:4px;height:4px;left:22%;top:80%;"></div>
+  <div class="sparkle" style="--dur:4.5s;--delay:2s;width:6px;height:6px;left:35%;top:65%;"></div>
+  <div class="sparkle" style="--dur:7s;--delay:0.5s;width:4px;height:4px;left:55%;top:85%;"></div>
+  <div class="sparkle" style="--dur:5.5s;--delay:3s;width:5px;height:5px;left:68%;top:72%;"></div>
+  <div class="sparkle" style="--dur:6s;--delay:1.5s;width:3px;height:3px;left:78%;top:78%;"></div>
+  <div class="sparkle" style="--dur:4s;--delay:2.5s;width:5px;height:5px;left:88%;top:68%;"></div>
+  <div class="sparkle" style="--dur:5s;--delay:4s;width:4px;height:4px;left:8%;top:50%;"></div>
+  <div class="sparkle" style="--dur:6.5s;--delay:0.8s;width:6px;height:6px;left:45%;top:75%;"></div>
+  <div class="sparkle" style="--dur:5s;--delay:3.5s;width:4px;height:4px;left:92%;top:55%;"></div>
+  <div class="sparkle" style="--dur:4.5s;--delay:1.2s;width:3px;height:3px;left:30%;top:88%;"></div>
+  <div class="sparkle" style="--dur:7s;--delay:2.8s;width:5px;height:5px;left:62%;top:60%;"></div>
+
+  <!-- Floating food emojis drifting upward -->
+  <span class="food-float" style="--dur:9s;--delay:0s;left:5%;bottom:10%;">🐔</span>
+  <span class="food-float" style="--dur:11s;--delay:2s;left:18%;bottom:5%;">🥬</span>
+  <span class="food-float" style="--dur:8s;--delay:4s;left:30%;bottom:15%;">🫐</span>
+  <span class="food-float" style="--dur:10s;--delay:1s;left:72%;bottom:8%;">🍠</span>
+  <span class="food-float" style="--dur:12s;--delay:3s;left:82%;bottom:12%;">🥦</span>
+  <span class="food-float" style="--dur:9s;--delay:5s;left:92%;bottom:6%;">🥕</span>
+  <span class="food-float" style="--dur:10s;--delay:6s;left:50%;bottom:3%;">🥚</span>
+  <span class="food-float" style="--dur:8.5s;--delay:2.5s;left:60%;bottom:20%;">🍎</span>
+
   <div class="hero-inner">
     <div class="hero-content">
       <div class="hero-eyebrow">🌿 Katy, Texas · Small-Batch Crafted</div>
+      <div class="hero-typewriter"><span id="typewriter-text"></span></div>
       <h1 class="hero-title">Real Food for <span class="accent">Real Dogs.</span> Made With Love.</h1>
       <p class="hero-desc">We slow-cook every batch right here in Katy with human-grade ingredients you can actually read — no by-products, no preservatives, no mystery. Just honest food your dog deserves.</p>
       <div class="hero-buttons">
@@ -408,15 +584,15 @@
       </div>
       <div class="hero-stats">
         <div class="stat">
-          <div class="stat-num">100%</div>
+          <div class="stat-num" data-target="100" data-suffix="%">0%</div>
           <div class="stat-label">Real Ingredients</div>
         </div>
         <div class="stat">
-          <div class="stat-num">0</div>
+          <div class="stat-num" data-target="0" data-suffix="">0</div>
           <div class="stat-label">By-Products</div>
         </div>
         <div class="stat">
-          <div class="stat-num">Free</div>
+          <div class="stat-num" data-target-text="Free">Free</div>
           <div class="stat-label">Katy Delivery</div>
         </div>
       </div>
@@ -467,6 +643,54 @@
   </div>
 </section>
 
+<!-- INGREDIENT SHOWCASE -->
+<section class="ing-showcase-section">
+  <div class="ing-showcase-inner">
+    <span class="section-eyebrow" style="color:var(--gold2);">Farm to Bowl</span>
+    <h2 style="font-size:clamp(1.9rem,3.5vw,2.8rem);color:#fff;font-family:'Playfair Display',Georgia,serif;margin-bottom:0;">Ingredients You Can <em style="color:var(--gold);">Actually Pronounce</em></h2>
+    <div class="ing-cycle-wrap" id="ingCycleWrap">
+      <div class="ing-slide active">
+        <span class="ing-emoji-big">🐔</span>
+        <span class="ing-name-big">Organic Chicken</span>
+        <span class="ing-benefit-text">Lean protein · Builds muscle · Supports healthy weight</span>
+      </div>
+      <div class="ing-slide">
+        <span class="ing-emoji-big">🍠</span>
+        <span class="ing-name-big">Sweet Potato</span>
+        <span class="ing-benefit-text">Complex carbs · Rich in beta-carotene · Easy digestion</span>
+      </div>
+      <div class="ing-slide">
+        <span class="ing-emoji-big">🥬</span>
+        <span class="ing-name-big">Organic Spinach</span>
+        <span class="ing-benefit-text">Iron · Vitamins A, C & K · Anti-inflammatory</span>
+      </div>
+      <div class="ing-slide">
+        <span class="ing-emoji-big">🫐</span>
+        <span class="ing-name-big">Blueberries</span>
+        <span class="ing-benefit-text">Antioxidant powerhouse · Brain health · Immune boost</span>
+      </div>
+      <div class="ing-slide">
+        <span class="ing-emoji-big">🥩</span>
+        <span class="ing-name-big">Grass-Fed Beef</span>
+        <span class="ing-benefit-text">High protein · Omega-3s · B vitamins & iron</span>
+      </div>
+      <div class="ing-slide">
+        <span class="ing-emoji-big">🌿</span>
+        <span class="ing-name-big">Hemp Seed Oil</span>
+        <span class="ing-benefit-text">Perfect Omega ratio · Shiny coat · Reduces inflammation</span>
+      </div>
+    </div>
+    <div class="ing-nav-dots" id="ingDots">
+      <button class="ing-dot active" data-idx="0"></button>
+      <button class="ing-dot" data-idx="1"></button>
+      <button class="ing-dot" data-idx="2"></button>
+      <button class="ing-dot" data-idx="3"></button>
+      <button class="ing-dot" data-idx="4"></button>
+      <button class="ing-dot" data-idx="5"></button>
+    </div>
+  </div>
+</section>
+
 <!-- SIGNATURE PRODUCTS -->
 <section class="section">
   <div class="section-inner">
@@ -477,45 +701,64 @@
       <div class="divider"></div>
     </div>
     <div class="products-grid">
+      <!-- HARVEST BIRD -->
       <div class="product-card reveal">
-        <div class="product-img">
-          <div class="ph-emoji">🥩</div>
-          <div class="ph-label">Product Photo</div>
+        <div class="product-img" style="background:linear-gradient(135deg,#f5f0e8,#e8dfc8);">
+          <div class="ph-emoji">🐔</div>
+          <div class="ph-label">Harvest Bird</div>
         </div>
         <div class="product-body">
-          <span class="product-tag">Bestseller</span>
-          <h3>The Sunday Roast</h3>
-          <p>Slow-roasted grass-fed beef with sweet potato, green beans, and a drizzle of bone broth. Pure comfort in every bowl.</p>
+          <span class="product-tag">🐔 Chicken &amp; Sweet Potato</span>
+          <h3>Harvest Bird</h3>
+          <p>Organic ground chicken with sweet potato, spinach, blueberries, and hemp seed oil. A nutrient-dense classic your dog will beg for daily.</p>
           <div class="product-footer">
             <div class="product-price">$18 <span>/ lb</span></div>
             <a href="checkout.html" class="btn-sm">Add to Order</a>
           </div>
         </div>
       </div>
-      <div class="product-card reveal" style="transition-delay:0.1s">
-        <div class="product-img">
-          <div class="ph-emoji">🐟</div>
-          <div class="ph-label">Product Photo</div>
+      <!-- GARDEN BEEF -->
+      <div class="product-card reveal" style="transition-delay:0.12s">
+        <div class="product-img" style="background:linear-gradient(135deg,#f0ebe0,#e0d4be);">
+          <div class="ph-emoji">🥩</div>
+          <div class="ph-label">Garden Beef</div>
         </div>
         <div class="product-body">
-          <span class="product-tag">Staff Favorite</span>
-          <h3>Ocean's Garden</h3>
-          <p>Wild-caught salmon, steamed broccoli, and brown rice. Omega-3 rich and gut-friendly for dogs who need a little extra glow.</p>
+          <span class="product-tag">🥩 Beef &amp; Zucchini</span>
+          <h3>Garden Beef</h3>
+          <p>Lean 90% organic ground beef with brown rice, zucchini, pumpkin purée, and kelp powder. Gut-friendly and deeply satisfying.</p>
           <div class="product-footer">
-            <div class="product-price">$20 <span>/ lb</span></div>
+            <div class="product-price">$19 <span>/ lb</span></div>
             <a href="checkout.html" class="btn-sm">Add to Order</a>
           </div>
         </div>
       </div>
-      <div class="product-card reveal" style="transition-delay:0.2s">
-        <div class="product-img">
-          <div class="ph-emoji">🍗</div>
-          <div class="ph-label">Product Photo</div>
+      <!-- POWER POULTRY -->
+      <div class="product-card reveal" style="transition-delay:0.24s">
+        <div class="product-img" style="background:linear-gradient(135deg,#edf2e8,#d8e8d0);">
+          <div class="ph-emoji">🦃</div>
+          <div class="ph-label">Power Poultry</div>
         </div>
         <div class="product-body">
-          <span class="product-tag">Gentle on Tummies</span>
-          <h3>The Gentle Garden</h3>
-          <p>Free-range chicken, pumpkin, zucchini, and kale. Our most tender recipe — perfect for sensitive stomachs and picky eaters.</p>
+          <span class="product-tag">🦃 Turkey &amp; Quinoa</span>
+          <h3>Power Poultry</h3>
+          <p>Organic ground turkey with quinoa or brown rice, steamed peas &amp; carrots, spinach, and extra-virgin olive oil. High energy, high protein.</p>
+          <div class="product-footer">
+            <div class="product-price">$18 <span>/ lb</span></div>
+            <a href="checkout.html" class="btn-sm">Add to Order</a>
+          </div>
+        </div>
+      </div>
+      <!-- BREAKFAST BOWL -->
+      <div class="product-card reveal" style="transition-delay:0.36s">
+        <div class="product-img" style="background:linear-gradient(135deg,#faf5e8,#f0e8c8);">
+          <div class="ph-emoji">🥚</div>
+          <div class="ph-label">Breakfast Bowl</div>
+        </div>
+        <div class="product-body">
+          <span class="product-tag">🥚 Chicken, Eggs &amp; Oats</span>
+          <h3>The Breakfast Bowl</h3>
+          <p>Organic chicken with hard-boiled eggs, oatmeal, fresh apple, and steamed broccoli. A wholesome morning start packed with vitamins.</p>
           <div class="product-footer">
             <div class="product-price">$17 <span>/ lb</span></div>
             <a href="checkout.html" class="btn-sm">Add to Order</a>
@@ -525,6 +768,40 @@
     </div>
     <div style="text-align:center;margin-top:48px;">
       <a href="menu.html" class="btn-primary reveal">View Full Menu →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY REAL FOOD -->
+<section class="why-section">
+  <div class="why-inner">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">The Difference Is Visible</span>
+      <h2>Why <em>Real Food</em> Changes Everything</h2>
+      <p>Dogs fed with whole, recognizable ingredients show measurable improvements — often within weeks of switching.</p>
+      <div class="divider"></div>
+    </div>
+    <div class="why-grid">
+      <div class="why-card reveal" style="transition-delay:0s">
+        <span class="why-icon">✨</span>
+        <h3>Shinier Coat</h3>
+        <p>Omega-rich oils from hemp seed and olive oil nourish skin and fur from the inside out, giving coats a natural lustrous glow.</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.12s">
+        <span class="why-icon">🌱</span>
+        <h3>Better Digestion</h3>
+        <p>Whole vegetables and natural fibers from oats, pumpkin and zucchini support a healthy gut microbiome — fewer tummy issues, firmer stools.</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.24s">
+        <span class="why-icon">⚡</span>
+        <h3>More Energy</h3>
+        <p>Complex carbs from sweet potato and quinoa deliver steady, sustained energy — no sugar spikes, no afternoon crashes, just vibrant vitality.</p>
+      </div>
+      <div class="why-card reveal" style="transition-delay:0.36s">
+        <span class="why-icon">🦷</span>
+        <h3>Cleaner Teeth</h3>
+        <p>No sticky fillers or syrup binders mean less plaque build-up. Crunchy vegetable fibers like broccoli and carrots naturally scrub as they eat.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -665,11 +942,84 @@
   closeBtn.addEventListener('click', closeMenu);
   overlay.addEventListener('click', closeMenu);
 
-  // Scroll reveal
+  // Scroll reveal (staggered)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); } });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
   document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
+
+  // Animated number counters
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    if (isNaN(target)) return;
+    const duration = 1800;
+    const startTime = performance.now();
+    function update(now) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.target.dataset.target) {
+        animateCounter(e.target);
+        counterObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => counterObs.observe(el));
+
+  // Typewriter effect
+  const twEl = document.getElementById('typewriter-text');
+  const twPhrases = [
+    'Small-Batch. Human-Grade. Delivered Fresh.',
+    'No By-Products. No Preservatives. No Mystery.',
+    'Real Ingredients. Real Results. Real Love.'
+  ];
+  let twPhrase = 0, twChar = 0, twDeleting = false;
+  function typeLoop() {
+    const current = twPhrases[twPhrase];
+    if (!twDeleting) {
+      twEl.textContent = current.slice(0, twChar + 1);
+      twChar++;
+      if (twChar === current.length) {
+        twDeleting = true;
+        setTimeout(typeLoop, 2200);
+        return;
+      }
+      setTimeout(typeLoop, 52);
+    } else {
+      twEl.textContent = current.slice(0, twChar - 1);
+      twChar--;
+      if (twChar === 0) {
+        twDeleting = false;
+        twPhrase = (twPhrase + 1) % twPhrases.length;
+        setTimeout(typeLoop, 400);
+        return;
+      }
+      setTimeout(typeLoop, 28);
+    }
+  }
+  setTimeout(typeLoop, 800);
+
+  // Ingredient showcase cycling
+  const ingSlides = document.querySelectorAll('#ingCycleWrap .ing-slide');
+  const ingDots   = document.querySelectorAll('#ingDots .ing-dot');
+  let ingCurrent = 0;
+  function showIngSlide(n) {
+    ingSlides.forEach((s, i) => { s.classList.toggle('active', i === n); });
+    ingDots.forEach((d, i) => { d.classList.toggle('active', i === n); });
+    ingCurrent = n;
+  }
+  ingDots.forEach(dot => {
+    dot.addEventListener('click', () => showIngSlide(parseInt(dot.dataset.idx, 10)));
+  });
+  setInterval(() => showIngSlide((ingCurrent + 1) % ingSlides.length), 3000);
 </script>
 </body>
 </html>
