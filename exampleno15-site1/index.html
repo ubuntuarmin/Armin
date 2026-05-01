@@ -149,51 +149,87 @@
     .stat-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); text-transform: uppercase; letter-spacing: 1.5px; margin-top: 3px; }
 
     /* Hero bowl visual */
-    .hero-visual { animation: slideInRight 0.9s ease 0.15s both; display: flex; justify-content: center; align-items: center; position: relative; }
-    @keyframes slideInRight { from { opacity:0; transform:translateX(48px); } to { opacity:1; transform:translateX(0); } }
+    .hero-visual { animation: slideInRight 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s both; display: flex; justify-content: center; align-items: center; position: relative; }
+    @keyframes slideInRight { from { opacity:0; transform:translateX(56px); } to { opacity:1; transform:translateX(0); } }
+
+    /* ── Hero image – replaces emoji bowl, keeps orbit overlay ── */
     .bowl-graphic {
-      width: 100%; max-width: 420px; aspect-ratio: 1;
+      width: 100%; max-width: 440px; aspect-ratio: 1;
       position: relative; display: flex; align-items: center; justify-content: center;
     }
+    .hero-img-wrap {
+      width: 340px; height: 340px; border-radius: 50%; overflow: hidden;
+      position: absolute; z-index: 1;
+      box-shadow: 0 0 80px rgba(200,147,58,0.30), 0 30px 80px rgba(0,0,0,0.5);
+      border: 3px solid rgba(200,147,58,0.50);
+      animation: bowlPulse 4s ease-in-out infinite;
+      will-change: transform;
+    }
+    .hero-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transform: scale(1.05);   /* slight over-zoom so parallax has travel room */
+      transition: transform 0.3s ease;
+    }
     .bowl-ring {
-      width: 340px; height: 340px; border-radius: 50%;
+      width: 370px; height: 370px; border-radius: 50%;
       border: 2px solid rgba(200,147,58,0.25);
       position: absolute; animation: rotateSlow 30s linear infinite;
+      will-change: transform;
     }
     .bowl-ring-2 {
-      width: 280px; height: 280px; border-radius: 50%;
+      width: 300px; height: 300px; border-radius: 50%;
       border: 1px solid rgba(200,147,58,0.15);
       position: absolute; animation: rotateSlow 20s linear infinite reverse;
+      will-change: transform;
     }
     @keyframes rotateSlow { to { transform: rotate(360deg); } }
-    .bowl-center {
-      width: 200px; height: 200px; border-radius: 50%;
-      background: radial-gradient(circle at 35% 35%, rgba(200,147,58,0.35), rgba(29,58,42,0.6));
-      border: 3px solid rgba(200,147,58,0.5);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 5rem; position: relative; z-index: 2;
-      box-shadow: 0 0 60px rgba(200,147,58,0.2), inset 0 0 40px rgba(0,0,0,0.3);
-      animation: bowlPulse 4s ease-in-out infinite;
+    @keyframes bowlPulse {
+      0%,100%{ box-shadow:0 0 60px rgba(200,147,58,0.22),0 30px 80px rgba(0,0,0,0.5); }
+      50%    { box-shadow:0 0 100px rgba(200,147,58,0.42),0 30px 80px rgba(0,0,0,0.5); }
     }
-    @keyframes bowlPulse { 0%,100%{transform:scale(1);box-shadow:0 0 60px rgba(200,147,58,0.2),inset 0 0 40px rgba(0,0,0,0.3);} 50%{transform:scale(1.04);box-shadow:0 0 90px rgba(200,147,58,0.35),inset 0 0 40px rgba(0,0,0,0.3);} }
     .bowl-orbit {
-      position: absolute; width: 340px; height: 340px;
+      position: absolute; width: 370px; height: 370px;
       border-radius: 50%; animation: orbit 8s linear infinite;
+      will-change: transform;
     }
     .bowl-dot {
       position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
-      width: 22px; height: 22px; background: var(--gold); border-radius: 50%;
-      font-size: 0.8rem; display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 0 20px rgba(200,147,58,0.6);
+      width: 24px; height: 24px; background: var(--gold); border-radius: 50%;
+      font-size: 0.85rem; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 20px rgba(200,147,58,0.7);
     }
     @keyframes orbit { to { transform: rotate(360deg); } }
     .bowl-label {
-      position: absolute; bottom: -16px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
       background: var(--gold); color: var(--forest); font-size: 0.72rem; font-weight: 700;
       letter-spacing: 2px; text-transform: uppercase; padding: 8px 22px; border-radius: 50px; white-space: nowrap;
+      z-index: 3;
     }
-    @media (max-width: 900px) { .hero-inner { grid-template-columns:1fr; gap:48px; padding-top:80px; } .bowl-graphic { max-width:300px; } }
-    @media (max-width: 480px) { .hero-title { font-size:2.4rem; } .hero-stats { gap:28px; } .bowl-graphic { max-width: 240px; } .bowl-ring { width:230px; height:230px; } .bowl-ring-2 { width:190px; height:190px; } .bowl-orbit { width:230px; height:230px; } .bowl-center { width:140px; height:140px; font-size:3.5rem; } }
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns:1fr; gap:48px; padding-top:80px; }
+      .bowl-graphic,.hero-img-wrap,.bowl-ring,.bowl-orbit { max-width:280px; width:280px; height:280px; }
+      .bowl-ring-2 { width:230px; height:230px; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size:2.4rem; } .hero-stats { gap:28px; }
+      .bowl-graphic,.hero-img-wrap,.bowl-ring,.bowl-orbit { width:220px; height:220px; }
+      .bowl-ring-2 { width:180px; height:180px; }
+    }
+
+    /* ── IMAGE ENHANCEMENTS ── */
+    .product-img img, .promise-img img, .ph-block img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      transition: transform 0.65s cubic-bezier(0.25,0.46,0.45,0.94);
+    }
+    .product-card:hover .product-img img { transform: scale(1.07); }
+    .promise-img { overflow: hidden; }
+    .promise-img img { transform: scale(1.04); transition: transform 0.65s ease; }
+    .promise-img:hover img { transform: scale(1.09); }
+
+    /* ── PARALLAX LAYERS ── */
+    .parallax-slow { will-change: transform; }
+    .parallax-mid  { will-change: transform; }
+    .parallax-fast { will-change: transform; }
 
     /* ── DELIVERY BANNER ── */
     .delivery-banner {
@@ -339,12 +375,32 @@
     @media (max-width:480px) { .footer-grid { grid-template-columns:1fr; } }
 
     /* ── SCROLL ANIMATIONS ── */
-    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal {
+      opacity:0; transform:translateY(36px);
+      transition: opacity 0.80s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.80s cubic-bezier(0.22,1,0.36,1);
+    }
     .reveal.show { opacity:1; transform:translateY(0); }
-    .reveal-left { opacity:0; transform:translateX(-40px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-left {
+      opacity:0; transform:translateX(-48px);
+      transition: opacity 0.80s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.80s cubic-bezier(0.22,1,0.36,1);
+    }
     .reveal-left.show { opacity:1; transform:translateX(0); }
-    .reveal-right { opacity:0; transform:translateX(40px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal-right {
+      opacity:0; transform:translateX(48px);
+      transition: opacity 0.80s cubic-bezier(0.22,1,0.36,1),
+                  transform 0.80s cubic-bezier(0.22,1,0.36,1);
+    }
     .reveal-right.show { opacity:1; transform:translateX(0); }
+
+    /* ── SCROLL PROGRESS BAR ── */
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px; z-index: 2000;
+      background: linear-gradient(90deg, var(--gold), var(--gold2));
+      width: 0%; transition: width 0.1s linear;
+      pointer-events: none;
+    }
 
     /* ── MARQUEE INGREDIENTS TICKER ── */
     .ticker-wrap {
