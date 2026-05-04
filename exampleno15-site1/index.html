@@ -7,6 +7,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600;1,700&display=swap" rel="stylesheet">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.167.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.167.0/examples/jsm/"
+    }
+  }
+  </script>
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -209,12 +217,41 @@
       .hero-inner { grid-template-columns:1fr; gap:48px; padding-top:80px; }
       .bowl-graphic,.hero-img-wrap,.bowl-ring,.bowl-orbit { max-width:280px; width:280px; height:280px; }
       .bowl-ring-2 { width:230px; height:230px; }
+      #hero-canvas-wrap { max-width:300px; }
     }
     @media (max-width: 480px) {
       .hero-title { font-size:2.4rem; } .hero-stats { gap:28px; }
       .bowl-graphic,.hero-img-wrap,.bowl-ring,.bowl-orbit { width:220px; height:220px; }
       .bowl-ring-2 { width:180px; height:180px; }
+      #hero-canvas-wrap { max-width:240px; }
     }
+
+    /* ── THREE.JS HERO CANVAS ── */
+    #hero-canvas-wrap {
+      width: 100%; max-width: 460px; aspect-ratio: 1;
+      position: relative; display: flex; align-items: center; justify-content: center;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; width: 100% !important; height: 100% !important;
+      display: block; border-radius: 50%; cursor: default;
+      box-shadow: 0 0 80px rgba(200,147,58,0.22), 0 30px 80px rgba(0,0,0,0.45);
+    }
+    #hero-canvas-wrap .bowl-label { z-index: 5; }
+
+    /* ── PRODUCT CARD REAL IMAGES ── */
+    .product-img img { position: absolute; inset: 0; }
+
+    /* ── PROMISE SECTION REAL IMAGE ── */
+    .promise-img.has-img {
+      padding: 0; border: 2px solid rgba(200,147,58,0.35);
+      background: none; display: block;
+    }
+    .promise-img.has-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      border-radius: 14px; transform: scale(1.02);
+      transition: transform 0.65s ease;
+    }
+    .promise-img.has-img:hover img { transform: scale(1.06); }
 
     /* ── IMAGE ENHANCEMENTS ── */
     .product-img img, .promise-img img, .ph-block img {
@@ -659,19 +696,8 @@
       </div>
     </div>
     <div class="hero-visual">
-      <div class="bowl-graphic">
-        <div class="bowl-ring"></div>
-        <div class="bowl-ring-2"></div>
-        <div class="bowl-orbit">
-          <div class="bowl-dot" style="animation:orbit 8s linear infinite;">🥩</div>
-        </div>
-        <div class="bowl-orbit" style="animation:orbit 12s linear 3s infinite reverse;">
-          <div class="bowl-dot" style="background:#4CAF50;">🥦</div>
-        </div>
-        <div class="bowl-orbit" style="animation:orbit 10s linear 6s infinite;">
-          <div class="bowl-dot" style="background:#FF8C00;">🍠</div>
-        </div>
-        <div class="bowl-center">🐶</div>
+      <div id="hero-canvas-wrap">
+        <canvas id="hero-canvas"></canvas>
         <div class="bowl-label">The Artisan Bowl</div>
       </div>
     </div>
@@ -764,9 +790,8 @@
     <div class="products-grid">
       <!-- HARVEST BIRD -->
       <div class="product-card reveal">
-        <div class="product-img" style="background:linear-gradient(135deg,#f5f0e8,#e8dfc8);">
-          <div class="ph-emoji">🐔</div>
-          <div class="ph-label">Harvest Bird</div>
+        <div class="product-img">
+          <img src="img/product-harvest-bird.jpg" alt="Harvest Bird — Organic Chicken & Sweet Potato" loading="lazy">
         </div>
         <div class="product-body">
           <span class="product-tag">🐔 Chicken &amp; Sweet Potato</span>
@@ -780,9 +805,8 @@
       </div>
       <!-- GARDEN BEEF -->
       <div class="product-card reveal" style="transition-delay:0.12s">
-        <div class="product-img" style="background:linear-gradient(135deg,#f0ebe0,#e0d4be);">
-          <div class="ph-emoji">🥩</div>
-          <div class="ph-label">Garden Beef</div>
+        <div class="product-img">
+          <img src="img/product-garden-beef.jpg" alt="Garden Beef — Organic Ground Beef & Zucchini" loading="lazy">
         </div>
         <div class="product-body">
           <span class="product-tag">🥩 Beef &amp; Zucchini</span>
@@ -796,9 +820,8 @@
       </div>
       <!-- POWER POULTRY -->
       <div class="product-card reveal" style="transition-delay:0.24s">
-        <div class="product-img" style="background:linear-gradient(135deg,#edf2e8,#d8e8d0);">
-          <div class="ph-emoji">🦃</div>
-          <div class="ph-label">Power Poultry</div>
+        <div class="product-img">
+          <img src="img/product-power-poultry.jpg" alt="Power Poultry — Organic Turkey & Quinoa" loading="lazy">
         </div>
         <div class="product-body">
           <span class="product-tag">🦃 Turkey &amp; Quinoa</span>
@@ -812,9 +835,8 @@
       </div>
       <!-- BREAKFAST BOWL -->
       <div class="product-card reveal" style="transition-delay:0.36s">
-        <div class="product-img" style="background:linear-gradient(135deg,#faf5e8,#f0e8c8);">
-          <div class="ph-emoji">🥚</div>
-          <div class="ph-label">Breakfast Bowl</div>
+        <div class="product-img">
+          <img src="img/product-breakfast-bowl.jpg" alt="The Breakfast Bowl — Chicken, Eggs & Oats" loading="lazy">
         </div>
         <div class="product-body">
           <span class="product-tag">🥚 Chicken, Eggs &amp; Oats</span>
@@ -870,9 +892,8 @@
 <!-- OUR PROMISE -->
 <section class="promise-section">
   <div class="promise-inner">
-    <div class="promise-img reveal-left">
-      <div class="ph-emoji">🧑‍🍳</div>
-      <div class="ph-label">Kitchen Photo Placeholder</div>
+    <div class="promise-img has-img reveal-left">
+      <img src="img/kitchen-promise.jpg" alt="Our small-batch kitchen in Katy, Texas" loading="lazy">
     </div>
     <div class="promise-text reveal-right">
       <span class="eyebrow">Our Philosophy</span>
@@ -1081,6 +1102,414 @@
     dot.addEventListener('click', () => showIngSlide(parseInt(dot.dataset.idx, 10)));
   });
   setInterval(() => showIngSlide((ingCurrent + 1) % ingSlides.length), 3000);
+</script>
+
+<script type="module">
+// ── THREE.JS ORGANIC HERO v2 ─────────────────────────────────────────────
+// Upgrades: AgX tone mapping · RGBELoader HDR · 4-octave FBM vertex noise
+// Procedural DataTexture normal maps · Sheen · SMAAPass · FilmPass grain
+import * as THREE          from 'three';
+import { RGBELoader }      from 'three/addons/loaders/RGBELoader.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+import { EffectComposer }  from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass }      from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { SMAAPass }        from 'three/addons/postprocessing/SMAAPass.js';
+import { FilmPass }        from 'three/addons/postprocessing/FilmPass.js';
+import { OutputPass }      from 'three/addons/postprocessing/OutputPass.js';
+
+(function () {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+
+  // ── RENDERER ──────────────────────────────────────────────────────────
+  let renderer;
+  try {
+    renderer = new THREE.WebGLRenderer({
+      canvas,
+      antialias:   false,          // SMAA post-process handles AA — MSAA is wasteful
+      alpha:       true,
+      powerPreference: 'high-performance',
+    });
+  } catch (e) { return; }
+
+  const getSize = () => ({ w: canvas.offsetWidth || 460, h: canvas.offsetHeight || 460 });
+  let { w, h } = getSize();
+
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(w, h, false);
+  renderer.toneMapping        = THREE.AgXToneMapping;  // cinematic highlight roll-off
+  renderer.toneMappingExposure = 1.0;                  // AgX is calibrated at 1.0
+  renderer.shadowMap.enabled  = true;
+  renderer.shadowMap.type     = THREE.PCFSoftShadowMap;
+  renderer.setClearColor(0x000000, 0);
+
+  // ── SCENE & CAMERA ────────────────────────────────────────────────────
+  const scene  = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(54, w / h, 0.1, 50);
+  camera.position.set(0, 0.18, 4.3);
+
+  // ── ENVIRONMENT — Poly Haven studio HDR → RoomEnvironment fallback ────
+  const pmremGen = new THREE.PMREMGenerator(renderer);
+  pmremGen.compileEquirectangularShader();
+
+  function applyRoomEnv() {
+    const roomEnv = new RoomEnvironment(renderer);
+    scene.environment = pmremGen.fromScene(roomEnv, 0.04).texture;
+    roomEnv.dispose();
+    pmremGen.dispose();
+  }
+
+  new RGBELoader().load(
+    'https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/studio_small_09_1k.hdr',
+    (hdr) => {
+      hdr.mapping = THREE.EquirectangularReflectionMapping;
+      scene.environment = pmremGen.fromEquirectangular(hdr).texture;
+      hdr.dispose();
+      pmremGen.dispose();
+    },
+    undefined,
+    () => applyRoomEnv()   // network/CORS failure → graceful fallback
+  );
+
+  // ── LIGHTING ──────────────────────────────────────────────────────────
+  scene.add(new THREE.AmbientLight(0xfff8e7, 0.45));
+
+  const key = new THREE.SpotLight(0xffeedd, 5.0, 18, Math.PI / 5.0, 0.30, 1.0);
+  key.position.set(4, 5, 5);
+  key.castShadow = true;
+  key.shadow.mapSize.setScalar(1024);
+  key.shadow.bias = -0.001;
+  scene.add(key, key.target);
+
+  const fill = new THREE.PointLight(0x3355bb, 1.2, 16);
+  fill.position.set(-4, 2, 3);
+  scene.add(fill);
+
+  const rim = new THREE.PointLight(0xffd070, 2.0, 14);
+  rim.position.set(0, -4, -3);
+  scene.add(rim);
+
+  // Warm glow from the hero center entity — updated each frame
+  const entityGlow = new THREE.PointLight(0xFFAA22, 1.0, 5.0);
+  entityGlow.position.set(0, 0, 0.6);
+  scene.add(entityGlow);
+
+  // ── GLSL: 3D simplex noise + 4-octave FBM ────────────────────────────
+  // Simplex noise by Stefan Gustavson (public domain).
+  // FBM (fractional Brownian motion) stacks 4 octaves for richer surface detail.
+  const VERT_NOISE_GLSL = /* glsl */`
+uniform float uTime;
+uniform float uNoiseFreq;
+uniform float uNoiseAmp;
+vec3 _m289v3(vec3 x){return x-floor(x*(1./289.))*289.;}
+vec4 _m289v4(vec4 x){return x-floor(x*(1./289.))*289.;}
+vec4 _perm(vec4 x){return _m289v4(((x*34.)+10.)*x);}
+vec4 _tis(vec4 r){return 1.79284291400159-.85373472095314*r;}
+float snoise3(vec3 v){
+  const vec2 C=vec2(1./6.,1./3.);
+  const vec4 D=vec4(0.,.5,1.,2.);
+  vec3 i=floor(v+dot(v,C.yyy));
+  vec3 x0=v-i+dot(i,C.xxx);
+  vec3 g=step(x0.yzx,x0.xyz),l=1.-g;
+  vec3 i1=min(g.xyz,l.zxy),i2=max(g.xyz,l.zxy);
+  vec3 x1=x0-i1+C.xxx,x2=x0-i2+C.yyy,x3=x0-D.yyy;
+  i=_m289v3(i);
+  vec4 p=_perm(_perm(_perm(i.z+vec4(0.,i1.z,i2.z,1.))+i.y+vec4(0.,i1.y,i2.y,1.))+i.x+vec4(0.,i1.x,i2.x,1.));
+  float n_=.142857142857;
+  vec3 ns=n_*D.wyz-D.xzx;
+  vec4 j=p-49.*floor(p*ns.z*ns.z);
+  vec4 x_=floor(j*ns.z),y_=floor(j-7.*x_);
+  vec4 xn=x_*ns.x+ns.yyyy,yn=y_*ns.x+ns.yyyy;
+  vec4 hv=1.-abs(xn)-abs(yn);
+  vec4 b0=vec4(xn.xy,yn.xy),b1=vec4(xn.zw,yn.zw);
+  vec4 s0=floor(b0)*2.+1.,s1=floor(b1)*2.+1.;
+  vec4 sh=-step(hv,vec4(0.));
+  vec4 a0=b0.xzyw+s0.xzyw*sh.xxyy,a1=b1.xzyw+s1.xzyw*sh.zzww;
+  vec3 p0=vec3(a0.xy,hv.x),p1=vec3(a0.zw,hv.y),p2=vec3(a1.xy,hv.z),p3=vec3(a1.zw,hv.w);
+  vec4 norm=_tis(vec4(dot(p0,p0),dot(p1,p1),dot(p2,p2),dot(p3,p3)));
+  p0*=norm.x;p1*=norm.y;p2*=norm.z;p3*=norm.w;
+  vec4 m=max(.6-vec4(dot(x0,x0),dot(x1,x1),dot(x2,x2),dot(x3,x3)),0.);
+  m=m*m;
+  return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
+}
+// 4-octave fractional Brownian motion — richer, more organic than 2-octave
+float fbm4(vec3 p){
+  float v=0.,a=.5;
+  vec3 sh=vec3(100.);
+  for(int i=0;i<4;++i){v+=a*snoise3(p);p=p*2.17+sh;a*=.5;}
+  return v;
+}
+`;
+
+  // ── PROCEDURAL NORMAL MAPS — CPU-generated DataTexture per entity ─────
+  // Encodes surface micro-detail (pores, scales, wax texture) as tangent-space
+  // normals baked from 3-octave value-noise FBM. Uploaded once to the GPU.
+  function hash21(ix, iy) {
+    const v = Math.sin(ix * 127.1 + iy * 311.7) * 43758.5453;
+    return v - Math.floor(v);
+  }
+  function valueNoise2D(x, y) {
+    const ix = Math.floor(x), iy = Math.floor(y);
+    const fx = x - ix, fy = y - iy;
+    const ux = fx * fx * (3.0 - 2.0 * fx);
+    const uy = fy * fy * (3.0 - 2.0 * fy);
+    const n00 = hash21(ix,   iy),   n10 = hash21(ix+1, iy);
+    const n01 = hash21(ix,   iy+1), n11 = hash21(ix+1, iy+1);
+    return n00 + (n10-n00)*ux + (n01-n00)*uy + (n11-n10-n01+n00)*ux*uy;
+  }
+  function fbmNoise2D(x, y) {
+    return valueNoise2D(x, y)       * 0.500
+         + valueNoise2D(x*2.1, y*2.1) * 0.250
+         + valueNoise2D(x*4.2, y*4.2) * 0.125;
+  }
+  function makeNormalMap(sz, freq, bumpStrength) {
+    const data = new Uint8Array(sz * sz * 4);
+    const inv = 1.0 / sz;
+    for (let row = 0; row < sz; row++) {
+      for (let col = 0; col < sz; col++) {
+        const u = col * inv, v = row * inv;
+        const eps = inv * 2.0;
+        const h   = fbmNoise2D( u * freq,        v * freq       );
+        const hx  = fbmNoise2D((u + eps) * freq,  v * freq       );
+        const hy  = fbmNoise2D( u * freq,        (v + eps) * freq);
+        const nx  = -(hx - h) / eps * bumpStrength;
+        const ny  = -(hy - h) / eps * bumpStrength;
+        const nz  = 1.0;
+        const len = Math.sqrt(nx*nx + ny*ny + nz*nz);
+        const idx = (row * sz + col) * 4;
+        data[idx]   = Math.round(((nx/len) * 0.5 + 0.5) * 255);
+        data[idx+1] = Math.round(((ny/len) * 0.5 + 0.5) * 255);
+        data[idx+2] = Math.round(((nz/len) * 0.5 + 0.5) * 255);
+        data[idx+3] = 255;
+      }
+    }
+    const tex = new THREE.DataTexture(data, sz, sz);
+    tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
+    // 64×64 normal maps are too small to benefit from mipmaps; linear filter is sufficient
+    tex.minFilter = THREE.LinearFilter;
+    tex.generateMipmaps = false;
+    tex.needsUpdate = true;
+    return tex;
+  }
+
+  // ── 10 ENTITY DEFINITIONS ─────────────────────────────────────────────
+  // col, attCol, rough, trans, thick, cc, ccR, irid, noiseFreq, noiseAmp,
+  // pos[3], scale, driftSx, driftSy, phaseX, phaseY, parallaxFactor,
+  // sheen, sheenCol, sheenRough,
+  // normalMapFreq, normalBumpStrength, normalScale (UV tiles)
+  const ENTITIES = [
+    // 0 — Chicken: glistening amber skin — slight clearcoat + sheen
+    [0xF4A060,0xFF6B00, 0.22,0.30,1.8, 1.0,0.04,0.15, 1.8,0.09,
+     [-0.90, 0.52, 0.00], 0.31,0.38,0.25,0.00,1.20,0.008,
+     0.40,0xFFCC88,0.50, 7,1.8,0.55],
+    // 1 — Beef: deep burgundy SSS — high transmission, muscle-fiber normal map
+    [0x8B1A1A,0xFF2200, 0.14,0.85,2.5, 1.0,0.02,0.22, 2.2,0.12,
+     [ 0.75, 0.42,-0.40], 0.27,0.32,0.48,2.10,0.80,0.012,
+     0.00,0x000000,0.50, 10,2.0,0.40],
+    // 2 — Blueberry: waxy indigo bloom — high sheen mimics fruit wax coating
+    [0x2A1870,0x3311BB, 0.10,0.82,2.0, 1.0,0.02,0.32, 2.8,0.07,
+     [-0.35,-0.65,-0.20], 0.21,0.52,0.36,1.10,2.50,0.006,
+     1.00,0x3322CC,0.30, 8,1.4,0.35],
+    // 3 — Sweet Potato: matte rough skin — strong normal map
+    [0xE8780A,0xFF8800, 0.28,0.40,2.2, 0.8,0.06,0.10, 1.5,0.10,
+     [ 0.45,-0.42, 0.20], 0.26,0.58,0.30,3.20,1.80,0.010,
+     0.00,0x000000,0.50, 5,2.5,1.20],
+    // 4 — Spinach: translucent leaf — slight sheen for leaf surface shine
+    [0x2A7A36,0x00AA22, 0.26,0.58,1.5, 0.9,0.05,0.18, 3.0,0.08,
+     [-0.62, 0.08, 0.30], 0.23,0.36,0.44,0.70,3.10,0.007,
+     0.30,0x44AA22,0.60, 9,1.6,0.80],
+    // 5 — Salmon: coral, wet, iridescent — sheen for scale shimmer
+    [0xE86050,0xFF4422, 0.17,0.55,2.0, 1.0,0.03,0.26, 2.0,0.10,
+     [ 0.20, 0.68, 0.10], 0.19,0.68,0.52,4.30,0.40,0.014,
+     0.60,0xFF9988,0.40, 7,1.5,0.50],
+    // 6 — Lamb: warm tan, velvety — high sheen roughness for diffuse sheen
+    [0xC8956A,0xCC6622, 0.30,0.35,1.8, 0.7,0.08,0.08, 1.6,0.11,
+     [ 0.82,-0.25,-0.10], 0.22,0.44,0.40,1.90,2.90,0.009,
+     0.50,0xDDAA88,0.70, 4,1.2,1.00],
+    // 7 — Hemp Oil: near-glass golden drop — very subtle normal (liquid ripple)
+    [0xD4AA20,0xFFCC00, 0.04,0.92,3.0, 1.0,0.01,0.40, 1.2,0.06,
+     [-0.12,-0.82, 0.20], 0.17,0.54,0.58,5.10,1.50,0.016,
+     0.00,0x000000,0.50, 3,0.8,0.20],
+    // 8 — Broccoli: vivid green, rough bumps — strongest normal map
+    [0x4A9A30,0x44CC00, 0.32,0.44,1.6, 0.8,0.05,0.12, 2.5,0.13,
+     [-0.72,-0.32,-0.30], 0.20,0.40,0.46,2.70,3.80,0.011,
+     0.20,0x55BB33,0.80, 12,2.8,1.50],
+    // 9 — Center: artisan gold — hero piece, slight emissive glow
+    [0xC8933A,0xFFAA00, 0.07,0.72,2.8, 1.0,0.02,0.30, 1.0,0.08,
+     [ 0.00, 0.00, 0.60], 0.36,0.26,0.30,1.50,0.90,0.005,
+     0.20,0xFFDD88,0.30, 5,1.6,0.45],
+  ];
+
+  // ── BUILD MESHES ──────────────────────────────────────────────────────
+  // Hero center entity (index 9) uses higher detail; the other 9 share a lower-detail
+  // geometry to keep total triangle count reasonable on mid-range devices.
+  const geoHero = new THREE.IcosahedronGeometry(1, 40); // center entity: high detail
+  const geoRest = new THREE.IcosahedronGeometry(1, 32); // surrounding entities: balanced
+  const meshes    = [];
+  const jiggle    = [];
+  const shaderRef = [];
+
+  ENTITIES.forEach((d, i) => {
+    const [col, att, rough, trans, thick, cc, ccR, irid, freq, amp,
+           pos, sc, dsx, dsy, px, py, par,
+           sheen, sheenCol, sheenRough,
+           nmFreq, nmBump, nmScale] = d;
+
+    // CPU-generated normal map — baked once, uploaded to GPU
+    const normalMap = makeNormalMap(64, nmFreq, nmBump);
+
+    const mat = new THREE.MeshPhysicalMaterial({
+      color:                     new THREE.Color(col),
+      emissive:                  new THREE.Color(col).multiplyScalar(i === 9 ? 0.20 : 0.05),
+      emissiveIntensity:         1,
+      roughness:                 rough,
+      metalness:                 0,
+      transmission:              trans,
+      thickness:                 thick,
+      attenuationColor:          new THREE.Color(att),
+      attenuationDistance:       1.4,
+      clearcoat:                 cc,
+      clearcoatRoughness:        ccR,
+      iridescence:               irid,
+      iridescenceIOR:            1.5,
+      iridescenceThicknessRange: [100, 700],
+      sheen,
+      sheenColor:                new THREE.Color(sheenCol),
+      sheenRoughness:            sheenRough,
+      normalMap,
+      normalScale:               new THREE.Vector2(nmScale, nmScale),
+      envMapIntensity:           2.8,
+      side:                      THREE.FrontSide,
+    });
+
+    const sr = { shader: null };
+    mat.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime      = { value: 0 };
+      shader.uniforms.uNoiseFreq = { value: freq };
+      shader.uniforms.uNoiseAmp  = { value: amp };
+      shader.vertexShader = VERT_NOISE_GLSL + shader.vertexShader;
+      // Replace the standard vertex position init with 4-octave FBM displacement
+      shader.vertexShader = shader.vertexShader.replace(
+        '#include <begin_vertex>',
+        `vec3 transformed = position;
+         float n = fbm4(position * uNoiseFreq + vec3(uTime * 0.09 + ${i}.0 * 1.62));
+         transformed += normalize(objectNormal) * n * uNoiseAmp;`
+      );
+      sr.shader = shader;
+    };
+    shaderRef.push(sr);
+
+    const mesh = new THREE.Mesh(i === 9 ? geoHero : geoRest, mat);
+    mesh.position.set(...pos);
+    mesh.scale.setScalar(sc);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    mesh.userData = { pos, sc, dsx, dsy, px, py, par };
+    scene.add(mesh);
+    meshes.push(mesh);
+    jiggle.push({ s: 1.0, v: 0.0 });
+  });
+
+  // ── POST-PROCESSING ───────────────────────────────────────────────────
+  // RenderPass → UnrealBloom → SMAA (AA) → FilmPass (grain) → OutputPass
+  const composer = new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene, camera));
+
+  const bloom = new UnrealBloomPass(new THREE.Vector2(w, h), 0.35, 0.60, 0.82);
+  composer.addPass(bloom);
+
+  // SMAAPass: subpixel-accurate AA — far superior to MSAA with HDR post-processing
+  const smaa = new SMAAPass(w, h);
+  composer.addPass(smaa);
+
+  // FilmPass: subtle photographic grain (intensity 0.12 = barely perceptible)
+  composer.addPass(new FilmPass(0.12, false));
+
+  composer.addPass(new OutputPass());
+
+  // ── SCROLL TRACKING ───────────────────────────────────────────────────
+  const SCROLL_DECAY      = 0.90;
+  const JIGGLE_INTENSITY  = 0.22;
+  const SPRING_STIFFNESS  = 0.16;
+  const SPRING_DAMPING    = 0.84;
+
+  let scrollY = window.scrollY, lastScrollY = scrollY, scrollVel = 0;
+  window.addEventListener('scroll', () => {
+    scrollVel   = (window.scrollY - lastScrollY) * 0.15;
+    lastScrollY = window.scrollY;
+    scrollY     = window.scrollY;
+  }, { passive: true });
+
+  // ── VISIBILITY — pause render loop when hero is off-screen ────────────
+  let visible = true;
+  new IntersectionObserver(
+    entries => { visible = entries[0].isIntersecting; },
+    { threshold: 0 }
+  ).observe(canvas);
+
+  // ── RESIZE ────────────────────────────────────────────────────────────
+  function onResize() {
+    const s = getSize();
+    if (!s.w || !s.h) return;
+    w = s.w; h = s.h;
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h, false);
+    composer.setSize(w, h); // propagates setSize to all passes including bloom + smaa
+  }
+  window.addEventListener('resize', onResize);
+  setTimeout(onResize, 0);
+
+  // ── ANIMATION LOOP ────────────────────────────────────────────────────
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    if (!visible) return;
+
+    const t = clock.getElapsedTime();
+    scrollVel *= SCROLL_DECAY;
+
+    meshes.forEach((mesh, i) => {
+      const d  = mesh.userData;
+      const jr = jiggle[i];
+      const sr = shaderRef[i];
+
+      if (sr.shader) sr.shader.uniforms.uTime.value = t;
+
+      // Spring jiggle: scroll impulse squash & stretch then rebound
+      const targetScale = 1.0 + Math.abs(scrollVel) * JIGGLE_INTENSITY;
+      jr.v += (targetScale - jr.s) * SPRING_STIFFNESS;
+      jr.v *= SPRING_DAMPING;
+      jr.s += jr.v;
+
+      // Organic drift — each entity never appears static
+      const dx = Math.sin(t * d.dsx + d.px) * 0.055;
+      const dy = Math.cos(t * d.dsy + d.py) * 0.048;
+
+      // Parallax from scroll — deeper Z = slower movement
+      const parallaxY = (scrollY / Math.max(window.innerHeight, 1)) * d.par * 4.2;
+
+      mesh.position.x = d.pos[0] + dx;
+      mesh.position.y = d.pos[1] + dy - parallaxY;
+      mesh.position.z = d.pos[2];
+
+      mesh.rotation.x = t * 0.10 + d.px * 0.25;
+      mesh.rotation.y = t * 0.15 + d.py * 0.35;
+
+      mesh.scale.setScalar(d.sc * jr.s);
+    });
+
+    // Center entity (index 9) emits a pulsing warm glow
+    entityGlow.position.copy(meshes[9].position);
+    entityGlow.intensity = 0.8 + Math.sin(t * 1.5) * 0.2;
+
+    composer.render();
+  }
+
+  animate();
+})();
 </script>
 </body>
 </html>
