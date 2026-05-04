@@ -1234,7 +1234,7 @@ float snoise3(vec3 v){
   return 42.*dot(m*m,vec4(dot(p0,x0),dot(p1,x1),dot(p2,x2),dot(p3,x3)));
 }
 // 4-octave fractional Brownian motion — richer, more organic than 2-octave
-float fbm3(vec3 p){
+float fbm4(vec3 p){
   float v=0.,a=.5;
   vec3 sh=vec3(100.);
   for(int i=0;i<4;++i){v+=a*snoise3(p);p=p*2.17+sh;a*=.5;}
@@ -1286,8 +1286,9 @@ float fbm3(vec3 p){
     }
     const tex = new THREE.DataTexture(data, sz, sz);
     tex.wrapS = tex.wrapT = THREE.RepeatWrapping;
-    tex.generateMipmaps = true;
-    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    // 64×64 normal maps are too small to benefit from mipmaps; linear filter is sufficient
+    tex.minFilter = THREE.LinearFilter;
+    tex.generateMipmaps = false;
     tex.needsUpdate = true;
     return tex;
   }
@@ -1341,7 +1342,10 @@ float fbm3(vec3 p){
   ];
 
   // ── BUILD MESHES ──────────────────────────────────────────────────────
-  const geo       = new THREE.IcosahedronGeometry(1, 48); // 48 > 32: smoother organic silhouette
+  // Hero center entity (index 9) uses higher detail; the other 9 share a lower-detail
+  // geometry to keep total triangle count reasonable on mid-range devices.
+  const geoHero = new THREE.IcosahedronGeometry(1, 40); // center entity: high detail
+  const geoRest = new THREE.IcosahedronGeometry(1, 32); // surrounding entities: balanced
   const meshes    = [];
   const jiggle    = [];
   const shaderRef = [];
@@ -1389,14 +1393,14 @@ float fbm3(vec3 p){
       shader.vertexShader = shader.vertexShader.replace(
         '#include <begin_vertex>',
         `vec3 transformed = position;
-         float n = fbm3(position * uNoiseFreq + vec3(uTime * 0.09 + ${i}.0 * 1.62));
+         float n = fbm4(position * uNoiseFreq + vec3(uTime * 0.09 + ${i}.0 * 1.62));
          transformed += normalize(objectNormal) * n * uNoiseAmp;`
       );
       sr.shader = shader;
     };
     shaderRef.push(sr);
 
-    const mesh = new THREE.Mesh(geo, mat);
+    const mesh = new THREE.Mesh(i === 9 ? geoHero : geoRest, mat);
     mesh.position.set(...pos);
     mesh.scale.setScalar(sc);
     mesh.castShadow = true;
