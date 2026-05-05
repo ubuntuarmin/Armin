@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phantom Rider EDT — Two Wheel Clothing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --black:#080808; --dark:#0F0F0F; --dark2:#161616; --dark3:#1E1E1E; --panel:#242424;
+      --border:rgba(255,255,255,0.08); --fire:#FF4500; --fire2:#FF6A00;
+      --white:#FFFFFF; --text:#EFEFEF; --text-muted:#888; --success:#22C55E;
+      --warning:#F59E0B;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; background:var(--black); color:var(--text); overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+
+    /* PRELOADER */
+    #preloader { position:fixed; inset:0; z-index:99999; background:var(--black); display:flex; align-items:center; justify-content:center; transition:opacity 0.6s ease, transform 0.6s cubic-bezier(0.76,0,0.24,1); }
+    #preloader.done { opacity:0; pointer-events:none; transform:translateY(-100%); }
+    #pl-wheel-svg { width:110px; height:110px; animation:wheelSpin 0.9s linear infinite; transform-origin:55px 55px; filter:drop-shadow(0 0 12px rgba(255,69,0,0.4)); }
+    @keyframes wheelSpin { to{transform:rotate(360deg);} }
+    .pl-brand { text-align:center; margin:20px 0 16px; }
+    .pl-brand-top { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.18em; color:var(--white); line-height:1; }
+    .pl-brand-bottom { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.35em; color:var(--fire); }
+    .pl-bar-wrap { width:140px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin:0 auto; }
+    .pl-bar { height:100%; background:linear-gradient(90deg,var(--fire),var(--fire2)); width:0%; transition:width 0.05s linear; }
+
+    #site-wrap { opacity:0; transition:opacity 0.5s ease 0.1s; }
+    #site-wrap.visible { opacity:1; }
+
+    /* MOBILE MENU */
+    .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1999; }
+    .mob-overlay.open { display:block; }
+    .mob-menu { display:flex; flex-direction:column; position:fixed; top:0; right:-100%; width:72%; max-width:300px; height:100%; background:var(--dark2); z-index:2000; padding:88px 28px 40px; gap:4px; border-left:2px solid var(--fire); transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); }
+    .mob-menu.open { right:0; }
+    .mob-close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--fire); font-size:1.7rem; cursor:pointer; }
+    .mob-menu a { color:rgba(255,255,255,0.82); font-size:1rem; font-weight:500; padding:12px 16px; border-radius:8px; border-left:3px solid transparent; transition:all 0.22s; }
+    .mob-menu a:hover { background:rgba(255,69,0,0.1); border-left-color:var(--fire); color:var(--fire); }
+    .mob-cart-badge { background:var(--fire); color:#fff; border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; margin-left:6px; }
+
+    /* NAV */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(8,8,8,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:2px solid var(--fire); box-shadow:0 4px 30px rgba(0,0,0,0.5); }
+    .nav-inner { max-width:1240px; margin:0 auto; padding:0 28px; height:70px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+    .nav-logo-icon { width:40px; height:40px; border:2px solid var(--fire); border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,69,0,0.08); }
+    .nav-logo-icon svg { width:22px; height:22px; }
+    .nav-brand-text { display:flex; flex-direction:column; }
+    .nav-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.15em; color:var(--white); line-height:1; }
+    .nav-brand-name span { color:var(--fire); }
+    .nav-brand-tag { font-size:0.58rem; color:#888; letter-spacing:0.25em; text-transform:uppercase; }
+    .nav-links { display:flex; gap:2px; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.65); padding:8px 14px; border-radius:6px; font-size:0.85rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--white); background:rgba(255,255,255,0.07); }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .cart-btn { display:flex; align-items:center; gap:8px; background:var(--fire); color:#fff; border:none; cursor:pointer; padding:9px 18px; border-radius:6px; font-size:0.85rem; font-weight:700; font-family:'Inter',sans-serif; transition:all 0.25s; box-shadow:0 4px 16px rgba(255,69,0,0.35); }
+    .cart-btn:hover { background:var(--fire2); transform:translateY(-1px); }
+    .cart-badge { background:#fff; color:var(--fire); border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--fire); border-radius:2px; }
+
+    /* BREADCRUMB */
+    .breadcrumb { max-width:1240px; margin:0 auto; padding:18px 28px; display:flex; gap:8px; align-items:center; font-size:0.8rem; color:var(--text-muted); flex-wrap:wrap; }
+    .breadcrumb a { color:var(--text-muted); transition:color 0.2s; }
+    .breadcrumb a:hover { color:var(--fire); }
+    .breadcrumb span { color:rgba(255,255,255,0.25); }
+
+    /* PRODUCT MAIN */
+    .product-main { max-width:1240px; margin:0 auto; padding:0 28px 60px; display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+
+    /* ── GALLERY ── */
+    .product-gallery { position:sticky; top:90px; align-self:start; }
+
+    .gallery-main-img {
+      aspect-ratio:1; background:var(--dark3); border-radius:12px;
+      border:1px solid var(--border); position:relative;
+      display:flex; align-items:center; justify-content:center;
+      font-size:8rem; overflow:hidden; margin-bottom:14px;
+      cursor:zoom-in;
+    }
+    .gallery-main-img::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#1A1A2E,#2E1A1A); }
+    .gallery-main-img span { position:relative; z-index:1; }
+    .gallery-badge-row { position:absolute; top:14px; left:14px; display:flex; gap:8px; z-index:2; }
+    .g-badge { padding:5px 12px; border-radius:4px; font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; }
+    .g-badge-sale { background:var(--fire); color:#fff; }
+    .g-badge-free { background:#22C55E; color:#fff; }
+
+    .img-ph-overlay { position:absolute; bottom:0; left:0; right:0; padding:12px; background:rgba(0,0,0,0.6); text-align:center; font-size:0.66rem; font-weight:600; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.4); }
+
+    .gallery-thumbs { display:grid; grid-template-columns:repeat(4,1fr); gap:10px; }
+    .gallery-thumb {
+      aspect-ratio:1; background:var(--dark3); border-radius:8px;
+      border:2px solid var(--border); display:flex; align-items:center;
+      justify-content:center; font-size:2.5rem; cursor:pointer;
+      transition:all 0.25s; overflow:hidden; position:relative;
+    }
+    .gallery-thumb::before { content:''; position:absolute; inset:0; }
+    .gallery-thumb:nth-child(1)::before { background:linear-gradient(135deg,#1A1A2E,#2E1A1A); }
+    .gallery-thumb:nth-child(2)::before { background:linear-gradient(135deg,#1A2A1A,#0E1A2E); }
+    .gallery-thumb:nth-child(3)::before { background:linear-gradient(135deg,#2E1A0E,#1A0E2A); }
+    .gallery-thumb:nth-child(4)::before { background:linear-gradient(135deg,#0E1E2A,#2A1E0E); }
+    .gallery-thumb span { position:relative; z-index:1; }
+    .gallery-thumb:hover, .gallery-thumb.active { border-color:var(--fire); box-shadow:0 0 12px rgba(255,69,0,0.3); }
+
+    /* ── PRODUCT INFO ── */
+    .product-info { display:flex; flex-direction:column; gap:0; }
+
+    .p-brand { font-size:0.8rem; color:var(--fire); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px; }
+    .p-title { font-family:'Bebas Neue',sans-serif; font-size:2.8rem; letter-spacing:0.05em; color:var(--white); line-height:1; margin-bottom:14px; }
+    .p-subtitle { font-size:0.95rem; color:rgba(255,255,255,0.5); margin-bottom:20px; line-height:1.6; }
+
+    /* Rating row */
+    .p-rating-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding-bottom:16px; border-bottom:1px solid var(--border); margin-bottom:20px; }
+    .p-stars { color:var(--warning); font-size:1.05rem; letter-spacing:2px; }
+    .p-rating-num { font-size:0.9rem; font-weight:700; color:var(--white); }
+    .p-rating-count { font-size:0.85rem; color:var(--fire); cursor:pointer; }
+    .p-rating-count:hover { text-decoration:underline; }
+    .p-qa-link { font-size:0.85rem; color:var(--fire); cursor:pointer; }
+    .p-qa-link:hover { text-decoration:underline; }
+
+    /* Price */
+    .p-price-block { margin-bottom:22px; }
+    .p-price-tag { font-size:0.75rem; color:var(--text-muted); margin-bottom:4px; }
+    .p-price-row { display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; }
+    .p-price { font-size:2.6rem; font-weight:800; color:var(--white); line-height:1; }
+    .p-price-was { font-size:1.1rem; color:var(--text-muted); text-decoration:line-through; }
+    .p-price-save { background:rgba(255,69,0,0.15); border:1px solid rgba(255,69,0,0.3); color:var(--fire); font-size:0.85rem; font-weight:700; padding:4px 10px; border-radius:4px; }
+
+    /* Stock / shipping pills */
+    .p-info-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:24px; }
+    .p-pill { display:flex; align-items:center; gap:6px; padding:8px 14px; border-radius:6px; font-size:0.82rem; font-weight:600; }
+    .p-pill-stock { background:rgba(34,197,94,0.1); border:1px solid rgba(34,197,94,0.25); color:var(--success); }
+    .p-pill-ship  { background:rgba(255,255,255,0.05); border:1px solid var(--border); color:rgba(255,255,255,0.6); }
+    .p-pill-return{ background:rgba(255,255,255,0.05); border:1px solid var(--border); color:rgba(255,255,255,0.6); }
+
+    /* Scent selector */
+    .p-selector { margin-bottom:22px; }
+    .p-selector-label { font-size:0.82rem; font-weight:700; color:rgba(255,255,255,0.6); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:10px; }
+    .p-selector-label span { color:var(--white); font-style:italic; }
+    .p-option-group { display:flex; gap:10px; flex-wrap:wrap; }
+    .p-option { padding:9px 18px; border-radius:6px; border:2px solid var(--border); background:transparent; color:rgba(255,255,255,0.6); font-size:0.86rem; font-weight:600; cursor:pointer; transition:all 0.22s; font-family:'Inter',sans-serif; }
+    .p-option:hover { border-color:rgba(255,69,0,0.4); color:var(--white); }
+    .p-option.active { border-color:var(--fire); background:rgba(255,69,0,0.12); color:var(--white); }
+
+    /* Size selector */
+    .p-size-group { display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .p-size-btn { width:56px; height:40px; border-radius:6px; border:2px solid var(--border); background:transparent; color:rgba(255,255,255,0.6); font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.22s; font-family:'Inter',sans-serif; }
+    .p-size-btn:hover { border-color:rgba(255,69,0,0.4); color:var(--white); }
+    .p-size-btn.active { border-color:var(--fire); background:rgba(255,69,0,0.12); color:var(--white); }
+    .p-size-btn.oos { opacity:0.4; cursor:not-allowed; text-decoration:line-through; }
+    .p-size-guide { font-size:0.78rem; color:var(--fire); cursor:pointer; margin-left:4px; }
+    .p-size-guide:hover { text-decoration:underline; }
+
+    /* Qty + CTA */
+    .p-cta-row { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-bottom:24px; }
+    .p-qty-wrap { display:flex; align-items:center; border:2px solid var(--border); border-radius:6px; overflow:hidden; }
+    .p-qty-btn { width:40px; height:48px; background:var(--dark3); border:none; color:var(--white); font-size:1.3rem; cursor:pointer; transition:background 0.2s; font-family:'Inter',sans-serif; }
+    .p-qty-btn:hover { background:rgba(255,69,0,0.15); }
+    .p-qty-input { width:52px; height:48px; background:transparent; border:none; border-left:2px solid var(--border); border-right:2px solid var(--border); color:var(--white); font-size:1rem; font-weight:700; text-align:center; font-family:'Inter',sans-serif; }
+    .p-qty-input:focus { outline:none; }
+    .btn-add-cart { flex:1; padding:14px 28px; background:linear-gradient(135deg,var(--fire),var(--fire2)); color:#fff; border:none; border-radius:6px; font-size:1rem; font-weight:800; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; display:flex; align-items:center; justify-content:center; gap:10px; box-shadow:0 6px 24px rgba(255,69,0,0.4); letter-spacing:0.3px; min-width:180px; }
+    .btn-add-cart:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,69,0,0.55); }
+    .btn-buy-now { flex:1; padding:14px 28px; background:transparent; color:var(--white); border:2px solid rgba(255,255,255,0.25); border-radius:6px; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.3s; font-family:'Inter',sans-serif; display:flex; align-items:center; justify-content:center; gap:10px; min-width:160px; }
+    .btn-buy-now:hover { border-color:var(--white); background:rgba(255,255,255,0.06); transform:translateY(-2px); }
+
+    /* Highlights */
+    .p-highlights { background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:24px; margin-bottom:24px; }
+    .p-highlights h4 { font-size:0.8rem; font-weight:800; color:var(--fire); letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; }
+    .p-highlights ul { list-style:none; display:flex; flex-direction:column; gap:10px; }
+    .p-highlights ul li { display:flex; align-items:flex-start; gap:10px; font-size:0.9rem; color:rgba(255,255,255,0.65); line-height:1.5; }
+    .p-highlights ul li::before { content:'→'; color:var(--fire); font-weight:700; flex-shrink:0; margin-top:1px; }
+
+    /* Trust badges */
+    .p-trust { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-bottom:24px; }
+    .trust-item { background:var(--dark3); border:1px solid var(--border); border-radius:8px; padding:14px 12px; text-align:center; }
+    .trust-icon { font-size:1.5rem; display:block; margin-bottom:6px; }
+    .trust-label { font-size:0.72rem; color:rgba(255,255,255,0.5); line-height:1.4; }
+
+    /* ── TABS ── */
+    .product-tabs { max-width:1240px; margin:0 auto; padding:0 28px 48px; }
+    .tab-nav { display:flex; border-bottom:1px solid var(--border); overflow-x:auto; scrollbar-width:none; }
+    .tab-nav::-webkit-scrollbar { display:none; }
+    .tab-nav-btn { background:none; border:none; padding:16px 24px; font-size:0.9rem; font-weight:600; color:rgba(255,255,255,0.45); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent; margin-bottom:-1px; transition:all 0.25s; font-family:'Inter',sans-serif; }
+    .tab-nav-btn:hover { color:var(--fire); }
+    .tab-nav-btn.active { color:var(--fire); border-bottom-color:var(--fire); }
+
+    .tab-panel { display:none; padding:36px 0; }
+    .tab-panel.active { display:block; }
+
+    /* Description tab */
+    .tab-desc-intro { font-size:1.05rem; color:rgba(255,255,255,0.7); line-height:1.9; margin-bottom:28px; }
+    .tab-desc-story { font-size:0.95rem; color:rgba(255,255,255,0.55); line-height:1.9; margin-bottom:24px; }
+    .notes-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:24px; }
+    .note-card { background:var(--dark3); border:1px solid var(--border); border-radius:10px; padding:24px 20px; text-align:center; transition:all 0.3s; }
+    .note-card:hover { border-color:rgba(255,69,0,0.3); transform:translateY(-4px); }
+    .note-type { font-size:0.7rem; color:var(--fire); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px; }
+    .note-icon { font-size:2rem; margin-bottom:10px; }
+    .note-name { font-size:0.9rem; font-weight:700; color:var(--white); margin-bottom:4px; }
+    .note-desc { font-size:0.78rem; color:var(--text-muted); line-height:1.5; }
+
+    /* Details tab — technical table */
+    .tech-table { width:100%; border-collapse:collapse; }
+    .tech-table tr:nth-child(even) td { background:rgba(255,255,255,0.02); }
+    .tech-table td { padding:14px 18px; font-size:0.9rem; border-bottom:1px solid var(--border); }
+    .tech-table td:first-child { color:rgba(255,255,255,0.5); font-weight:600; width:40%; white-space:nowrap; }
+    .tech-table td:last-child { color:rgba(255,255,255,0.82); }
+
+    /* Reviews tab */
+    .reviews-summary { display:grid; grid-template-columns:220px 1fr; gap:40px; margin-bottom:40px; align-items:center; background:var(--dark3); border:1px solid var(--border); border-radius:12px; padding:32px; }
+    .reviews-avg { text-align:center; }
+    .reviews-avg-num { font-family:'Bebas Neue',sans-serif; font-size:5rem; letter-spacing:0.05em; color:var(--white); line-height:1; }
+    .reviews-avg-stars { color:var(--warning); font-size:1.5rem; letter-spacing:3px; margin:8px 0; }
+    .reviews-avg-count { font-size:0.82rem; color:var(--text-muted); }
+    .reviews-bars { display:flex; flex-direction:column; gap:10px; }
+    .review-bar-row { display:flex; align-items:center; gap:12px; }
+    .review-bar-label { font-size:0.82rem; color:var(--text-muted); white-space:nowrap; width:50px; text-align:right; cursor:pointer; }
+    .review-bar-label:hover { color:var(--fire); }
+    .review-bar-track { flex:1; height:8px; background:rgba(255,255,255,0.08); border-radius:4px; overflow:hidden; }
+    .review-bar-fill { height:100%; background:var(--warning); border-radius:4px; transition:width 1s ease; }
+    .review-bar-pct { font-size:0.78rem; color:var(--text-muted); width:36px; }
+
+    .review-list { display:flex; flex-direction:column; gap:24px; }
+    .review-card { background:var(--dark3); border:1px solid var(--border); border-radius:12px; padding:24px 28px; transition:border-color 0.25s; }
+    .review-card:hover { border-color:rgba(255,69,0,0.2); }
+    .review-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; flex-wrap:wrap; gap:10px; }
+    .review-author-info { display:flex; align-items:center; gap:12px; }
+    .review-avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:1rem; color:#fff; flex-shrink:0; }
+    .review-name { font-size:0.9rem; font-weight:700; color:var(--white); }
+    .review-verified { font-size:0.72rem; color:var(--success); margin-top:2px; }
+    .review-stars { color:var(--warning); font-size:0.9rem; letter-spacing:1px; }
+    .review-date { font-size:0.78rem; color:var(--text-muted); }
+    .review-title { font-size:1rem; font-weight:700; color:var(--white); margin-bottom:8px; }
+    .review-body { font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.8; }
+    .review-helpful { display:flex; align-items:center; gap:10px; margin-top:16px; padding-top:14px; border-top:1px solid var(--border); }
+    .review-helpful-label { font-size:0.78rem; color:var(--text-muted); }
+    .helpful-btn { background:var(--dark2); border:1px solid var(--border); color:rgba(255,255,255,0.5); padding:5px 12px; border-radius:4px; font-size:0.76rem; cursor:pointer; transition:all 0.2s; font-family:'Inter',sans-serif; }
+    .helpful-btn:hover { border-color:rgba(255,69,0,0.3); color:var(--fire); }
+
+    /* Q&A tab */
+    .qa-list { display:flex; flex-direction:column; gap:18px; }
+    .qa-item { background:var(--dark3); border:1px solid var(--border); border-radius:10px; overflow:hidden; }
+    .qa-question { display:flex; align-items:flex-start; gap:14px; padding:20px 24px; cursor:pointer; transition:background 0.2s; }
+    .qa-question:hover { background:rgba(255,69,0,0.05); }
+    .qa-q-icon { color:var(--fire); font-weight:900; font-size:1rem; flex-shrink:0; margin-top:2px; }
+    .qa-q-text { font-size:0.95rem; font-weight:600; color:var(--white); flex:1; line-height:1.5; }
+    .qa-toggle { color:rgba(255,255,255,0.3); font-size:1rem; flex-shrink:0; transition:transform 0.25s; }
+    .qa-answer { display:none; padding:0 24px 20px 52px; }
+    .qa-answer.open { display:block; }
+    .qa-a-icon { color:var(--success); font-weight:900; font-size:0.85rem; margin-right:8px; }
+    .qa-a-text { font-size:0.9rem; color:rgba(255,255,255,0.55); line-height:1.8; display:inline; }
+    .qa-a-author { font-size:0.76rem; color:var(--text-muted); margin-top:8px; }
+
+    /* ── RELATED PRODUCTS ── */
+    .related-section { max-width:1240px; margin:0 auto; padding:0 28px 80px; }
+    .related-title { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.08em; color:var(--white); margin-bottom:32px; }
+    .related-title span { color:var(--fire); }
+    .related-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
+
+    .product-card { background:var(--dark3); border:1px solid var(--border); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; transition:all 0.4s; cursor:pointer; }
+    .product-card:hover { border-color:rgba(255,69,0,0.4); transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
+    .product-img { position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:4rem; overflow:hidden; transition:transform 0.4s; }
+    .product-card:hover .product-img { transform:scale(1.04); }
+    .product-badge { position:absolute; top:10px; left:10px; padding:4px 10px; border-radius:4px; font-size:0.68rem; font-weight:800; text-transform:uppercase; }
+    .badge-sale { background:var(--fire); color:#fff; }
+    .badge-new  { background:#22C55E; color:#fff; }
+    .badge-hot  { background:#F59E0B; color:#000; }
+    .product-quick-add { position:absolute; bottom:-44px; left:0; right:0; background:var(--fire); color:#fff; padding:11px; text-align:center; font-size:0.78rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; transition:bottom 0.32s cubic-bezier(0.25,0.8,0.25,1); border:none; cursor:pointer; font-family:'Inter',sans-serif; }
+    .product-card:hover .product-quick-add { bottom:0; }
+    .product-info { padding:16px; flex:1; display:flex; flex-direction:column; }
+    .product-category { font-size:0.66rem; color:var(--fire); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:5px; }
+    .product-name { font-size:0.9rem; font-weight:600; color:var(--white); line-height:1.4; margin-bottom:6px; flex:1; }
+    .product-rating { display:flex; align-items:center; gap:6px; margin-bottom:8px; }
+    .stars { color:var(--warning); font-size:0.76rem; }
+    .rating-count { font-size:0.7rem; color:var(--text-muted); }
+    .product-price { display:flex; align-items:center; gap:8px; }
+    .price-current { font-size:1.05rem; font-weight:800; color:var(--white); }
+    .price-original { font-size:0.82rem; color:var(--text-muted); text-decoration:line-through; }
+
+    /* TOAST */
+    .toast { position:fixed; bottom:28px; right:28px; z-index:5000; background:var(--dark3); border:1px solid rgba(34,197,94,0.3); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 40px rgba(0,0,0,0.5); transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1); max-width:320px; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast-icon { font-size:1.4rem; flex-shrink:0; }
+    .toast-text { font-size:0.86rem; color:var(--text); line-height:1.4; }
+    .toast-text strong { color:var(--success); }
+
+    /* FOOTER */
+    footer { background:var(--black); border-top:2px solid var(--fire); padding:48px 28px 28px; }
+    .footer-inner { max-width:1240px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:36px; }
+    .footer-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.15em; color:var(--white); margin-bottom:12px; display:block; }
+    .footer-brand-name span { color:var(--fire); }
+    .footer-brand p { font-size:0.85rem; color:rgba(255,255,255,0.35); line-height:1.8; }
+    .footer-col h4 { font-size:0.72rem; font-weight:700; color:var(--fire); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col a { display:block; color:rgba(255,255,255,0.4); font-size:0.84rem; margin-bottom:9px; transition:all 0.22s; }
+    .footer-col a:hover { color:var(--fire); transform:translateX(5px); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; max-width:1240px; margin:0 auto; }
+    .footer-bottom p { color:rgba(255,255,255,0.25); font-size:0.78rem; }
+
+    /* RESPONSIVE */
+    @media (max-width:1024px) { .product-main { grid-template-columns:1fr; gap:36px; } .product-gallery { position:static; } .reviews-summary { grid-template-columns:1fr; } .notes-grid { grid-template-columns:1fr 1fr; } }
+    @media (max-width:768px) { .nav-links { display:none; } .hamburger { display:flex; } .related-grid { grid-template-columns:1fr 1fr; } .footer-inner { grid-template-columns:1fr 1fr; } .p-trust { grid-template-columns:1fr 1fr; } .notes-grid { grid-template-columns:1fr; } }
+    @media (max-width:600px) { .gallery-thumbs { grid-template-columns:repeat(4,1fr); } .p-cta-row { flex-direction:column; } .btn-add-cart, .btn-buy-now { min-width:0; width:100%; } .related-grid { grid-template-columns:1fr 1fr; } .footer-inner { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <svg id="pl-wheel-svg" viewBox="0 0 110 110">
+      <circle cx="55" cy="55" r="52" fill="#111"/><circle cx="55" cy="55" r="52" fill="none" stroke="#222" stroke-width="5"/><circle cx="55" cy="55" r="52" fill="none" stroke="#111" stroke-width="10" stroke-dasharray="15 12"/><circle cx="55" cy="55" r="40" fill="#181818" stroke="#3A3A3A" stroke-width="1.5"/><circle cx="55" cy="55" r="40" fill="none" stroke="#555" stroke-width="1"/>
+      <g stroke="#888" stroke-width="2" stroke-linecap="round"><line x1="55" y1="55" x2="55" y2="15"/><line x1="55" y1="55" x2="83" y2="27"/><line x1="55" y1="55" x2="95" y2="55"/><line x1="55" y1="55" x2="83" y2="83"/><line x1="55" y1="55" x2="55" y2="95"/><line x1="55" y1="55" x2="27" y2="83"/><line x1="55" y1="55" x2="15" y2="55"/><line x1="55" y1="55" x2="27" y2="27"/></g>
+      <g stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" opacity="0.5"><line x1="55" y1="55" x2="55" y2="15"/><line x1="55" y1="55" x2="95" y2="55"/><line x1="55" y1="55" x2="55" y2="95"/><line x1="55" y1="55" x2="15" y2="55"/></g>
+      <circle cx="55" cy="55" r="11" fill="#111" stroke="#555" stroke-width="1.5"/><circle cx="55" cy="55" r="4" fill="#FF4500"/><rect x="53.5" y="3" width="3" height="8" rx="1.5" fill="#666"/>
+    </svg>
+    <div class="pl-brand"><span class="pl-brand-top">TWO WHEEL</span><span class="pl-brand-bottom">CLOTHING</span></div>
+    <div class="pl-bar-wrap"><div class="pl-bar" id="plBar"></div></div>
+  </div>
+</div>
+
+<div id="site-wrap">
+<!-- Mobile Menu -->
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?cat=cologne">Cologne</a>
+  <a href="shop.html?cat=jackets">Jackets</a>
+  <a href="shop.html?cat=clothing">Clothing</a>
+  <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="cart.html" style="display:flex;align-items:center;">🛒 Cart <span class="mob-cart-badge" id="mobCartBadge">0</span></a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="5.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><circle cx="18.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><path d="M9 16 L12 8 L15 10 L18.5 16" stroke="#FF4500" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 16 L9 16" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8 L16 6" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <div class="nav-brand-text"><span class="nav-brand-name">TWO <span>WHEEL</span></span><span class="nav-brand-tag">Ride in Style</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop All</a></li>
+      <li><a href="shop.html?cat=cologne" class="active">Cologne</a></li>
+      <li><a href="shop.html?cat=jackets">Jackets</a></li>
+      <li><a href="shop.html?cat=clothing">Clothing</a></li>
+      <li><a href="shop.html?cat=accessories">Accessories</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- BREADCRUMB -->
+<div class="breadcrumb">
+  <a href="index.html">Home</a>
+  <span>/</span>
+  <a href="shop.html">Shop</a>
+  <span>/</span>
+  <a href="shop.html?cat=cologne">Cologne</a>
+  <span>/</span>
+  <span style="color:rgba(255,255,255,0.5);">Phantom Rider EDT</span>
+</div>
+
+<!-- PRODUCT MAIN -->
+<div class="product-main">
+
+  <!-- GALLERY -->
+  <div class="product-gallery">
+    <div class="gallery-main-img" id="mainImg">
+      <span id="mainEmoji">💎</span>
+      <div class="gallery-badge-row">
+        <span class="g-badge g-badge-sale">25% OFF</span>
+        <span class="g-badge g-badge-free">Free Ship</span>
+      </div>
+      <div class="img-ph-overlay">Product Image Placeholder — Replace with actual photography</div>
+    </div>
+    <div class="gallery-thumbs">
+      <div class="gallery-thumb active" onclick="switchImg(this,'💎','linear-gradient(135deg,#1A1A2E,#2E1A1A)')"><span>💎</span></div>
+      <div class="gallery-thumb" onclick="switchImg(this,'🏍️','linear-gradient(135deg,#1A2A1A,#0E1A2E)')"><span>🏍️</span></div>
+      <div class="gallery-thumb" onclick="switchImg(this,'✨','linear-gradient(135deg,#2E1A0E,#1A0E2A)')"><span>✨</span></div>
+      <div class="gallery-thumb" onclick="switchImg(this,'🔥','linear-gradient(135deg,#0E1E2A,#2A1E0E)')"><span>🔥</span></div>
+    </div>
+  </div>
+
+  <!-- PRODUCT INFO -->
+  <div class="product-info">
+
+    <div class="p-brand">Two Wheel Clothing</div>
+    <h1 class="p-title">PHANTOM<br>RIDER EDT</h1>
+    <p class="p-subtitle">Eau de Toilette — The scent of the open road. Bold, confident, and unmistakably Two Wheel.</p>
+
+    <div class="p-rating-row">
+      <span class="p-stars">★★★★★</span>
+      <span class="p-rating-num">4.8</span>
+      <a class="p-rating-count" onclick="openTab('reviews')">892 ratings</a>
+      <span style="color:var(--border);">|</span>
+      <a class="p-qa-link" onclick="openTab('qa')">245 answered questions</a>
+    </div>
+
+    <div class="p-price-block">
+      <div class="p-price-tag">Price:</div>
+      <div class="p-price-row">
+        <span class="p-price" id="displayPrice">$67</span>
+        <span class="p-price-was">$89</span>
+        <span class="p-price-save">You save 25%</span>
+      </div>
+    </div>
+
+    <div class="p-info-pills">
+      <span class="p-pill p-pill-stock">✅ In Stock — 23 left</span>
+      <span class="p-pill p-pill-ship">🚚 Free Shipping on $75+</span>
+      <span class="p-pill p-pill-return">↩️ 30-Day Returns</span>
+    </div>
+
+    <!-- Scent selector -->
+    <div class="p-selector">
+      <div class="p-selector-label">Scent: <span id="selectedScent">Original</span></div>
+      <div class="p-option-group">
+        <button class="p-option active" onclick="selectOption(this,'scent','selectedScent')">Original</button>
+        <button class="p-option" onclick="selectOption(this,'scent','selectedScent')">Dark Chrome</button>
+        <button class="p-option" onclick="selectOption(this,'scent','selectedScent')">Iron Wood</button>
+        <button class="p-option" onclick="selectOption(this,'scent','selectedScent')">Midnight Amber</button>
+      </div>
+    </div>
+
+    <!-- Size selector -->
+    <div class="p-selector">
+      <div class="p-selector-label">
+        Size: <span id="selectedSize">50ml</span>
+        <a class="p-size-guide" onclick="alert('30ml: $48 · 50ml: $67 · 100ml: $110')">Size guide</a>
+      </div>
+      <div class="p-size-group">
+        <button class="p-size-btn" onclick="selectSize(this,48)" data-price="48">30ml</button>
+        <button class="p-size-btn active" onclick="selectSize(this,67)" data-price="67">50ml</button>
+        <button class="p-size-btn" onclick="selectSize(this,110)" data-price="110">100ml</button>
+        <button class="p-size-btn oos" disabled title="Out of stock">200ml</button>
+      </div>
+    </div>
+
+    <!-- Qty + CTA -->
+    <div class="p-cta-row">
+      <div class="p-qty-wrap">
+        <button class="p-qty-btn" onclick="changeQty(-1)">−</button>
+        <input type="number" class="p-qty-input" id="qtyInput" value="1" min="1" max="10">
+        <button class="p-qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+      <button class="btn-add-cart" onclick="addToCart()">🛒 Add to Cart</button>
+      <button class="btn-buy-now" onclick="buyNow()">⚡ Buy Now</button>
+    </div>
+
+    <!-- Highlights -->
+    <div class="p-highlights">
+      <h4>Product Highlights</h4>
+      <ul>
+        <li>Long-lasting 8–12 hour wear — formulated for active riders</li>
+        <li>Signature woody-spicy accord with tobacco, black pepper and vetiver</li>
+        <li>Inspired by open-road freedom — bold without being overpowering</li>
+        <li>Alcohol-based EDT formula in premium frosted glass flacon</li>
+        <li>Cruelty-free. No parabens. Made in France.</li>
+        <li>Perfect for everyday wear or special occasions</li>
+      </ul>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="p-trust">
+      <div class="trust-item">
+        <span class="trust-icon">🔒</span>
+        <div class="trust-label">Secure Checkout</div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">🚀</span>
+        <div class="trust-label">Ships in 24h</div>
+      </div>
+      <div class="trust-item">
+        <span class="trust-icon">↩️</span>
+        <div class="trust-label">30-Day Returns</div>
+      </div>
+    </div>
+
+  </div><!-- /product-info -->
+</div><!-- /product-main -->
+
+<!-- TABS -->
+<div class="product-tabs">
+  <div class="tab-nav">
+    <button class="tab-nav-btn active" onclick="openTab('description')">Description</button>
+    <button class="tab-nav-btn" onclick="openTab('details')">Technical Details</button>
+    <button class="tab-nav-btn" onclick="openTab('reviews')">Reviews (892)</button>
+    <button class="tab-nav-btn" onclick="openTab('qa')">Q&amp;A (245)</button>
+  </div>
+
+  <!-- DESCRIPTION -->
+  <div class="tab-panel active" id="tab-description">
+    <p class="tab-desc-intro">Phantom Rider is the signature fragrance from Two Wheel Clothing. Built for riders who demand presence before they even start the engine. This Eau de Toilette opens with a burst of citrus and black pepper, then settles into a deep, smoky heart of vetiver, tobacco, and cedarwood. The drydown is warm musk with a whisper of leather — as close to the open road as a bottle can get.</p>
+    <p class="tab-desc-story">Created in collaboration with a master perfumer in Grasse, France, Phantom Rider was designed from the ground up to complement the lifestyle of a modern rider. It works on the bike, in the bar, at the meeting, and everywhere in between. Long-lasting and projection-heavy — you'll be remembered long after you leave the room.</p>
+
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.08em;color:var(--white);margin:32px 0 20px;">Fragrance Notes</h3>
+    <div class="notes-grid">
+      <div class="note-card">
+        <div class="note-type">Top Notes</div>
+        <div class="note-icon">🍋</div>
+        <div class="note-name">Bergamot & Black Pepper</div>
+        <div class="note-desc">A sharp, citrusy opening with spicy kick. The first impression is bold and decisive.</div>
+      </div>
+      <div class="note-card">
+        <div class="note-type">Heart Notes</div>
+        <div class="note-icon">🌿</div>
+        <div class="note-name">Vetiver & Tobacco Leaf</div>
+        <div class="note-desc">Earthy, smoky depth that evokes the smell of warm asphalt and open fields.</div>
+      </div>
+      <div class="note-card">
+        <div class="note-type">Base Notes</div>
+        <div class="note-icon">🪵</div>
+        <div class="note-name">Cedarwood, Musk & Leather</div>
+        <div class="note-desc">Rich, warm foundation with a whisper of worn leather. Lingers for hours.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DETAILS -->
+  <div class="tab-panel" id="tab-details">
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.08em;color:var(--white);margin-bottom:24px;">Technical Details</h3>
+    <table class="tech-table">
+      <tr><td>Brand</td><td>Two Wheel Clothing</td></tr>
+      <tr><td>Product Name</td><td>Phantom Rider Eau de Toilette</td></tr>
+      <tr><td>Fragrance Type</td><td>Eau de Toilette (EDT)</td></tr>
+      <tr><td>Available Sizes</td><td>30ml / 50ml / 100ml</td></tr>
+      <tr><td>Concentration</td><td>8–12% (EDT range)</td></tr>
+      <tr><td>Longevity</td><td>8–12 hours (tested on skin)</td></tr>
+      <tr><td>Sillage</td><td>Strong — moderate projection</td></tr>
+      <tr><td>Fragrance Family</td><td>Woody Spicy</td></tr>
+      <tr><td>Top Notes</td><td>Bergamot, Black Pepper, Grapefruit</td></tr>
+      <tr><td>Heart Notes</td><td>Vetiver, Tobacco Leaf, Cedarwood</td></tr>
+      <tr><td>Base Notes</td><td>Musk, Amber, Leather, Oakmoss</td></tr>
+      <tr><td>Made In</td><td>Grasse, France</td></tr>
+      <tr><td>Year Released</td><td>2023</td></tr>
+      <tr><td>Bottle Material</td><td>Frosted borosilicate glass, zinc alloy cap</td></tr>
+      <tr><td>Spray Type</td><td>Fine mist atomiser</td></tr>
+      <tr><td>Cruelty-Free</td><td>Yes — PETA Certified</td></tr>
+      <tr><td>Paraben-Free</td><td>Yes</td></tr>
+      <tr><td>Vegan</td><td>Yes</td></tr>
+      <tr><td>Skin Type</td><td>Suitable for all skin types</td></tr>
+      <tr><td>Recommended For</td><td>All genders · Everyday wear · Fall/Winter/Year-round</td></tr>
+      <tr><td>Product Weight</td><td>180g (50ml with box)</td></tr>
+      <tr><td>Box Dimensions</td><td>4.5 × 4.5 × 11.5 cm</td></tr>
+      <tr><td>ASIN / SKU</td><td>TW-EDT-PHANTOM-50</td></tr>
+    </table>
+  </div>
+
+  <!-- REVIEWS -->
+  <div class="tab-panel" id="tab-reviews">
+    <div class="reviews-summary">
+      <div class="reviews-avg">
+        <div class="reviews-avg-num">4.8</div>
+        <div class="reviews-avg-stars">★★★★★</div>
+        <div class="reviews-avg-count">out of 5 · 892 global ratings</div>
+      </div>
+      <div class="reviews-bars">
+        <div class="review-bar-row">
+          <span class="review-bar-label">5 ★</span>
+          <div class="review-bar-track"><div class="review-bar-fill" style="width:74%"></div></div>
+          <span class="review-bar-pct">74%</span>
+        </div>
+        <div class="review-bar-row">
+          <span class="review-bar-label">4 ★</span>
+          <div class="review-bar-track"><div class="review-bar-fill" style="width:16%"></div></div>
+          <span class="review-bar-pct">16%</span>
+        </div>
+        <div class="review-bar-row">
+          <span class="review-bar-label">3 ★</span>
+          <div class="review-bar-track"><div class="review-bar-fill" style="width:6%"></div></div>
+          <span class="review-bar-pct">6%</span>
+        </div>
+        <div class="review-bar-row">
+          <span class="review-bar-label">2 ★</span>
+          <div class="review-bar-track"><div class="review-bar-fill" style="width:3%"></div></div>
+          <span class="review-bar-pct">3%</span>
+        </div>
+        <div class="review-bar-row">
+          <span class="review-bar-label">1 ★</span>
+          <div class="review-bar-track"><div class="review-bar-fill" style="width:1%"></div></div>
+          <span class="review-bar-pct">1%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-list">
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author-info">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#FF4500,#c93a00);">M</div>
+            <div><div class="review-name">Marcus D.</div><div class="review-verified">✓ Verified Purchase</div></div>
+          </div>
+          <div style="text-align:right;"><div class="review-stars">★★★★★</div><div class="review-date">November 12, 2024</div></div>
+        </div>
+        <div class="review-title">Best cologne I've worn in years — gets compliments every ride</div>
+        <p class="review-body">I've tried a lot of fragrances over the years, from high-end houses to mass market stuff. Phantom Rider is genuinely different. It opens bold with a lot of pepper and citrus, then dries down into this smoky, leathery warmth that just works. I wore it on a group ride last weekend and had three people ask what I was wearing. Good projection without being obnoxious. Lasts the whole day on my skin without reapplication. The bottle looks amazing too — real quality packaging. Will be ordering the 100ml next time.</p>
+        <div class="review-helpful">
+          <span class="review-helpful-label">Helpful?</span>
+          <button class="helpful-btn" onclick="this.textContent='👍 Yes (143)'">Yes (142)</button>
+          <button class="helpful-btn" onclick="this.textContent='👎 No (4)'">No (4)</button>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author-info">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">S</div>
+            <div><div class="review-name">Sarah K.</div><div class="review-verified">✓ Verified Purchase</div></div>
+          </div>
+          <div style="text-align:right;"><div class="review-stars">★★★★★</div><div class="review-date">October 28, 2024</div></div>
+        </div>
+        <div class="review-title">Bought for my husband and he won't stop wearing it</div>
+        <p class="review-body">Got this as a birthday gift for my husband who's an avid rider. He opened it and immediately sprayed it and said it's the best thing he's smelled in a long time. The tobacco and leather base notes are sophisticated but not stuffy. The first spray has this incredible pepper kick that fades into something really warm and inviting. He's used it every day since. Packaging came beautifully — the frosted bottle is a premium touch. Already ordered a backup 100ml.</p>
+        <div class="review-helpful">
+          <span class="review-helpful-label">Helpful?</span>
+          <button class="helpful-btn">Yes (89)</button>
+          <button class="helpful-btn">No (2)</button>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author-info">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#22C55E,#15803D);">T</div>
+            <div><div class="review-name">Tyler R.</div><div class="review-verified">✓ Verified Purchase</div></div>
+          </div>
+          <div style="text-align:right;"><div class="review-stars">★★★★☆</div><div class="review-date">October 14, 2024</div></div>
+        </div>
+        <div class="review-title">Excellent quality, slightly strong projection at first</div>
+        <p class="review-body">Really solid cologne. Four stars only because the opening is very powerful — probably one spray is enough if you're in a confined space. But give it 30–45 minutes and it settles into the most incredible woody musk you've ever worn. The longevity is exceptional — still detectable on my shirt the next morning. The vetiver and tobacco combination is unique and I haven't found anything quite like it at this price point. Fast shipping too. Two Wheel is quickly becoming my go-to brand.</p>
+        <div class="review-helpful">
+          <span class="review-helpful-label">Helpful?</span>
+          <button class="helpful-btn">Yes (67)</button>
+          <button class="helpful-btn">No (8)</button>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-author-info">
+            <div class="review-avatar" style="background:linear-gradient(135deg,#8B5CF6,#6D28D9);">J</div>
+            <div><div class="review-name">James L.</div><div class="review-verified">✓ Verified Purchase</div></div>
+          </div>
+          <div style="text-align:right;"><div class="review-stars">★★★★★</div><div class="review-date">September 30, 2024</div></div>
+        </div>
+        <div class="review-title">This is what a rider's cologne should smell like</div>
+        <p class="review-body">Finally a brand that made something for people like us. Every other cologne brand targets office workers or beach vacationers. This smells like freedom — like leather seats, open highway, and campfire smoke. It's sophisticated but grounded. I've gotten more compliments wearing this than anything else in my collection. The Dark Chrome variant is also fantastic by the way — more incense and sandalwood. Both are worth owning. Customer service was also excellent when I had a shipping question.</p>
+        <div class="review-helpful">
+          <span class="review-helpful-label">Helpful?</span>
+          <button class="helpful-btn">Yes (54)</button>
+          <button class="helpful-btn">No (1)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Q&A -->
+  <div class="tab-panel" id="tab-qa">
+    <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:0.08em;color:var(--white);margin-bottom:28px;">Customer Questions &amp; Answers</h3>
+    <div class="qa-list">
+      <div class="qa-item">
+        <div class="qa-question" onclick="toggleQA(this)">
+          <span class="qa-q-icon">Q</span>
+          <span class="qa-q-text">How long does the scent last on skin?</span>
+          <span class="qa-toggle">▼</span>
+        </div>
+        <div class="qa-answer open">
+          <span class="qa-a-icon">A</span>
+          <span class="qa-a-text">In our testing and based on hundreds of customer reviews, Phantom Rider EDT typically lasts 8–12 hours on skin. Results vary by skin type — drier skin may need a single re-application after 6–7 hours. Applying to pulse points (wrists, neck, chest) dramatically improves longevity.</span>
+          <div class="qa-a-author">Answered by Two Wheel Clothing · November 2, 2024</div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="toggleQA(this)">
+          <span class="qa-q-icon">Q</span>
+          <span class="qa-q-text">Is this suitable for warm weather or is it a heavy winter scent?</span>
+          <span class="qa-toggle">▼</span>
+        </div>
+        <div class="qa-answer">
+          <span class="qa-a-icon">A</span>
+          <span class="qa-a-text">Phantom Rider is technically a year-round fragrance but performs best in cooler temperatures — fall, winter, and cool spring evenings. In summer heat, use 1–2 sprays only. The tobacco and vetiver heart notes can become very intense in high humidity. For summer, we recommend Chrome Dusk EDT, which is lighter and more citrus-forward.</span>
+          <div class="qa-a-author">Answered by Two Wheel Clothing · October 18, 2024</div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="toggleQA(this)">
+          <span class="qa-q-icon">Q</span>
+          <span class="qa-q-text">What's the difference between the 30ml, 50ml and 100ml? Same formula?</span>
+          <span class="qa-toggle">▼</span>
+        </div>
+        <div class="qa-answer">
+          <span class="qa-a-icon">A</span>
+          <span class="qa-a-text">Yes — exact same EDT formula across all sizes. The 30ml is ideal for travel or trying the scent. The 50ml is the most popular size for everyday use. The 100ml offers the best value per ml and is recommended if you know you love it. All three come in the same frosted glass bottle, just different heights.</span>
+          <div class="qa-a-author">Answered by Two Wheel Clothing · October 5, 2024</div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="toggleQA(this)">
+          <span class="qa-q-icon">Q</span>
+          <span class="qa-q-text">Does this ship internationally? How long does delivery take?</span>
+          <span class="qa-toggle">▼</span>
+        </div>
+        <div class="qa-answer">
+          <span class="qa-a-icon">A</span>
+          <span class="qa-a-text">Yes, we ship to 42+ countries. Standard domestic delivery is 3–5 business days. Express is 1–2 days. International shipping typically takes 7–14 business days depending on destination and customs. Free shipping is available on US orders over $75. International orders over $120 qualify for discounted shipping. All orders are tracked.</span>
+          <div class="qa-a-author">Answered by Two Wheel Clothing · September 22, 2024</div>
+        </div>
+      </div>
+
+      <div class="qa-item">
+        <div class="qa-question" onclick="toggleQA(this)">
+          <span class="qa-q-icon">Q</span>
+          <span class="qa-q-text">Is this scent more masculine, feminine, or unisex?</span>
+          <span class="qa-toggle">▼</span>
+        </div>
+        <div class="qa-answer">
+          <span class="qa-a-icon">A</span>
+          <span class="qa-a-text">Phantom Rider was designed as a unisex fragrance, though it leans slightly masculine due to the tobacco and vetiver base. About 68% of our customers who purchased this identify as male, 32% female or non-binary. Many customers in the female demographic say they appreciate it for its unconventional boldness. Fragrance is personal — we encourage everyone to try it.</span>
+          <div class="qa-a-author">Answered by Two Wheel Clothing · September 10, 2024</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RELATED PRODUCTS -->
+<div class="related-section">
+  <h2 class="related-title">FREQUENTLY BOUGHT <span>TOGETHER</span></h2>
+  <div class="related-grid">
+    <div class="product-card" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#0E0E1A,#1A1A2A);font-size:4rem;">💎<span class="product-badge badge-hot">Best Seller</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(3,'Chrome Dusk EDT',63,'cologne')">+ Add to Cart</button></div>
+      <div class="product-info"><div class="product-category">Cologne</div><div class="product-name">Chrome Dusk EDT — 50ml</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,204)</span></div><div class="product-price"><span class="price-current">$63</span><span class="price-original">$79</span></div></div>
+    </div>
+    <div class="product-card" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A2A,#0A1A2A);font-size:4rem;">💎<span class="product-badge badge-new">New</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(5,'Midnight Chrome EDP',110,'cologne')">+ Add to Cart</button></div>
+      <div class="product-info"><div class="product-category">Cologne</div><div class="product-name">Midnight Chrome EDP — 75ml</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(528)</span></div><div class="product-price"><span class="price-current">$110</span></div></div>
+    </div>
+    <div class="product-card" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);font-size:4rem;">👕<span class="product-badge badge-hot">Hot</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(13,'Throttle Chrome Tee',48,'clothing')">+ Add to Cart</button></div>
+      <div class="product-info"><div class="product-category">Clothing</div><div class="product-name">Throttle Chrome Tee</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(789)</span></div><div class="product-price"><span class="price-current">$48</span></div></div>
+    </div>
+    <div class="product-card" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1E1A,#0E1A0E);font-size:4rem;">🧢<button class="product-quick-add" onclick="event.stopPropagation();quickAdd(20,'Chrome Moto Cap',35,'accessories')">+ Add to Cart</button></div>
+      <div class="product-info"><div class="product-category">Accessories</div><div class="product-name">Chrome Moto Snapback Cap</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,245)</span></div><div class="product-price"><span class="price-current">$35</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand"><span class="footer-brand-name">TWO <span>WHEEL</span></span><p>Cologne, clothing and accessories for riders who refuse to settle.</p></div>
+    <div class="footer-col"><h4>Shop</h4><a href="shop.html?cat=cologne">Cologne</a><a href="shop.html?cat=jackets">Jackets</a><a href="shop.html?cat=clothing">Clothing</a><a href="shop.html?cat=accessories">Accessories</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="#">About Us</a><a href="#">Shipping</a><a href="#">Returns</a><a href="#">Size Guide</a></div>
+    <div class="footer-col"><h4>Account</h4><a href="cart.html">Cart</a><a href="#">Orders</a><a href="#">Contact</a></div>
+  </div>
+  <div class="footer-bottom"><p>© 2025 Two Wheel Clothing. All rights reserved.</p><p>Code RIDE20 = 20% Off</p></div>
+</footer>
+</div><!-- /#site-wrap -->
+
+<div class="toast" id="toast"><span class="toast-icon">🛒</span><div class="toast-text" id="toastText"></div></div>
+
+<script>
+  /* PRELOADER */
+  (function(){var pl=document.getElementById('preloader'),bar=document.getElementById('plBar'),site=document.getElementById('site-wrap'),p=0;var t=setInterval(function(){p+=Math.random()*22+5;if(p>100)p=100;bar.style.width=p+'%';if(p>=100){clearInterval(t);setTimeout(function(){pl.classList.add('done');site.classList.add('visible');},280);}},55);})();
+
+  /* MOBILE MENU */
+  function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');document.getElementById('mobOverlay').classList.toggle('open');}
+
+  /* CART */
+  function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
+  function saveCart(c){localStorage.setItem('twCart',JSON.stringify(c));}
+  function updateBadge(){var n=getCart().reduce(function(s,i){return s+i.qty;},0);document.getElementById('cartBadge').textContent=n;document.getElementById('mobCartBadge').textContent=n;}
+  function quickAdd(id,name,price,cat){var cart=getCart();var ex=cart.find(function(i){return i.id===id;});if(ex)ex.qty++;else cart.push({id:id,name:name,price:price,cat:cat,qty:1});saveCart(cart);updateBadge();showToast('<strong>'+name+'</strong> added!');}
+  updateBadge();
+
+  /* TOAST */
+  var tt;function showToast(msg){var t=document.getElementById('toast');document.getElementById('toastText').innerHTML=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show');},2800);}
+
+  /* GALLERY SWITCH */
+  function switchImg(el,emoji,bg){
+    document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
+    document.getElementById('mainEmoji').textContent=emoji;
+    document.querySelector('.gallery-main-img::before');
+    var mainImg=document.getElementById('mainImg');
+    mainImg.style.background=bg;
+  }
+
+  /* OPTION SELECTORS */
+  function selectOption(btn,group,displayId){
+    btn.closest('.p-option-group').querySelectorAll('.p-option').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById(displayId).textContent=btn.textContent;
+  }
+
+  var currentPrice=67;
+  function selectSize(btn,price){
+    document.querySelectorAll('.p-size-btn:not(.oos)').forEach(function(b){b.classList.remove('active');});
+    btn.classList.add('active');
+    document.getElementById('selectedSize').textContent=btn.textContent;
+    currentPrice=price;
+    document.getElementById('displayPrice').textContent='$'+price;
+  }
+
+  /* QTY */
+  function changeQty(d){var i=document.getElementById('qtyInput');var v=parseInt(i.value)+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}
+
+  /* ADD TO CART */
+  function addToCart(){
+    var qty=parseInt(document.getElementById('qtyInput').value);
+    var scent=document.getElementById('selectedScent').textContent;
+    var size=document.getElementById('selectedSize').textContent;
+    var name='Phantom Rider EDT ('+scent+', '+size+')';
+    var cart=getCart();
+    var ex=cart.find(function(i){return i.id===1&&i.scent===scent&&i.size===size;});
+    if(ex){ex.qty+=qty;}else{cart.push({id:1,name:name,price:currentPrice,cat:'cologne',qty:qty,scent:scent,size:size});}
+    saveCart(cart);updateBadge();
+    showToast('<strong>'+name+'</strong> × '+qty+' added to cart!');
+  }
+
+  function buyNow(){addToCart();window.location.href='cart.html';}
+
+  /* TABS */
+  function openTab(id){
+    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+    document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');});
+    document.getElementById('tab-'+id).classList.add('active');
+    var map={description:0,details:1,reviews:2,qa:3};
+    document.querySelectorAll('.tab-nav-btn')[map[id]].classList.add('active');
+    document.querySelector('.product-tabs').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  document.querySelectorAll('.tab-nav-btn').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      var idx=Array.from(document.querySelectorAll('.tab-nav-btn')).indexOf(this);
+      var ids=['description','details','reviews','qa'];
+      document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
+      document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');});
+      document.getElementById('tab-'+ids[idx]).classList.add('active');
+      this.classList.add('active');
+    });
+  });
+
+  /* Q&A TOGGLE */
+  function toggleQA(el){
+    var ans=el.nextElementSibling;
+    var tog=el.querySelector('.qa-toggle');
+    ans.classList.toggle('open');
+    tog.style.transform=ans.classList.contains('open')?'rotate(180deg)':'rotate(0deg)';
+  }
+</script>
+</body>
+</html>

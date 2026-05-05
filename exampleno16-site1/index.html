@@ -1,0 +1,1879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Two Wheel Clothing — Ride in Style</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black:        #080808;
+      --dark:         #0F0F0F;
+      --dark2:        #161616;
+      --dark3:        #1E1E1E;
+      --panel:        #242424;
+      --border:       rgba(255,255,255,0.08);
+      --border-hover: rgba(255,255,255,0.18);
+      --fire:         #FF4500;
+      --fire2:        #FF6A00;
+      --fire-glow:    rgba(255,69,0,0.22);
+      --chrome:       #C8C8C8;
+      --chrome-dark:  #888888;
+      --white:        #FFFFFF;
+      --text:         #EFEFEF;
+      --text-muted:   #888888;
+      --success:      #22C55E;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--black); color: var(--text); overflow-x: hidden; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ══════════════════════════════════════════════
+       PRELOADER
+    ══════════════════════════════════════════════ */
+    #preloader {
+      position: fixed; inset: 0; z-index: 99999;
+      background: var(--black);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.76,0,0.24,1);
+    }
+    #preloader.done { opacity: 0; pointer-events: none; transform: translateY(-100%); }
+
+    .pl-wheel-wrap {
+      position: relative;
+      width: 200px; height: 200px;
+      margin-bottom: 36px;
+    }
+
+    /* Outer tyre glow ring */
+    .pl-wheel-wrap::after {
+      content: '';
+      position: absolute; inset: -12px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,69,0,0.15) 0%, transparent 70%);
+      animation: glowPulse 1.6s ease-in-out infinite;
+    }
+    @keyframes glowPulse { 0%,100%{opacity:0.6;transform:scale(1);} 50%{opacity:1;transform:scale(1.08);} }
+
+    #pl-wheel-svg {
+      width: 200px; height: 200px;
+      animation: wheelSpin 1s linear infinite;
+      transform-origin: 100px 100px;
+      filter: drop-shadow(0 0 18px rgba(255,69,0,0.35));
+    }
+    @keyframes wheelSpin { from{transform:rotate(0deg);}  to{transform:rotate(360deg);} }
+
+    /* Burnout flash when complete */
+    #preloader.burnout #pl-wheel-svg { animation: wheelSpinFast 0.18s linear infinite; }
+    @keyframes wheelSpinFast { from{transform:rotate(0deg);}  to{transform:rotate(360deg);} }
+
+    .pl-brand {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .pl-brand-top {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      letter-spacing: 0.18em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .pl-brand-bottom {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.35em;
+      color: var(--fire);
+      line-height: 1;
+      margin-top: 4px;
+    }
+
+    .pl-progress-track {
+      width: 220px; height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .pl-progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--fire), var(--fire2));
+      border-radius: 2px;
+      width: 0%;
+      transition: width 0.05s linear;
+      box-shadow: 0 0 8px rgba(255,69,0,0.6);
+    }
+    .pl-tagline {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    /* ══════════════════════════════════════════════
+       SITE WRAPPER
+    ══════════════════════════════════════════════ */
+    #site-wrap { opacity: 0; transition: opacity 0.5s ease 0.1s; }
+    #site-wrap.visible { opacity: 1; }
+
+    /* ══════════════════════════════════════════════
+       MOBILE OVERLAY + MENU
+    ══════════════════════════════════════════════ */
+    .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1999; }
+    .mob-overlay.open { display:block; }
+
+    .mob-menu {
+      display:flex; flex-direction:column;
+      position:fixed; top:0; right:-100%; width:72%; max-width:300px; height:100%;
+      background:var(--dark2); z-index:2000;
+      padding:88px 28px 40px;
+      gap:4px;
+      border-left:2px solid var(--fire);
+      transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1);
+      overflow-y:auto;
+    }
+    .mob-menu.open { right:0; }
+    .mob-close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--fire); font-size:1.7rem; cursor:pointer; line-height:1; }
+
+    .mob-menu a {
+      color: rgba(255,255,255,0.82);
+      font-size: 1rem; font-weight: 500;
+      padding: 12px 16px; border-radius: 8px;
+      border-left: 3px solid transparent;
+      transition: all 0.22s;
+    }
+    .mob-menu a:hover { background:rgba(255,69,0,0.1); border-left-color:var(--fire); color:var(--fire); }
+    .mob-cart-link { display:flex; align-items:center; gap:8px; }
+    .mob-cart-badge { background:var(--fire); color:#fff; border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:700; display:flex; align-items:center; justify-content:center; }
+
+    /* ══════════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════════ */
+    nav {
+      position: sticky; top: 0; z-index: 1000;
+      background: rgba(8,8,8,0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 2px solid var(--fire);
+      box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-inner {
+      max-width: 1240px; margin: 0 auto;
+      padding: 0 28px; height: 70px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+
+    .nav-logo-icon {
+      width: 40px; height: 40px;
+      border: 2px solid var(--fire);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,69,0,0.08);
+    }
+    .nav-logo-icon svg { width:22px; height:22px; }
+
+    .nav-brand-text { display:flex; flex-direction:column; }
+    .nav-brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem; letter-spacing: 0.15em; color: var(--white); line-height: 1;
+    }
+    .nav-brand-name span { color: var(--fire); }
+    .nav-brand-tag { font-size: 0.58rem; color: var(--chrome-dark); letter-spacing: 0.25em; text-transform: uppercase; }
+
+    .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65); padding: 8px 14px; border-radius: 6px;
+      font-size: 0.85rem; font-weight: 500; transition: all 0.2s; letter-spacing: 0.2px;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--white); background:rgba(255,255,255,0.07); }
+
+    .nav-right { display:flex; align-items:center; gap:10px; }
+
+    .cart-btn {
+      position:relative; display:flex; align-items:center; gap:8px;
+      background:var(--fire); color:#fff; border:none; cursor:pointer;
+      padding:9px 18px; border-radius:6px; font-size:0.85rem; font-weight:700;
+      font-family:'Inter',sans-serif; letter-spacing:0.3px;
+      transition:all 0.25s; box-shadow:0 4px 16px rgba(255,69,0,0.35);
+    }
+    .cart-btn:hover { background:var(--fire2); transform:translateY(-1px); box-shadow:0 6px 22px rgba(255,69,0,0.5); }
+
+    .cart-badge {
+      background: #fff; color: var(--fire);
+      border-radius: 50%; width: 20px; height: 20px;
+      font-size: 0.72rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--fire); border-radius:2px; transition:all 0.3s; }
+
+    /* ══════════════════════════════════════════════
+       HERO
+    ══════════════════════════════════════════════ */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      background: var(--dark);
+      display: flex; align-items: center;
+      overflow: hidden;
+    }
+
+    /* Subtle grid background */
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,69,0,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,69,0,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+
+    /* Glow orbs */
+    .hero-orb {
+      position:absolute; border-radius:50%; pointer-events:none;
+      filter:blur(100px);
+    }
+    .hero-orb-1 { width:600px; height:600px; background:rgba(255,69,0,0.1); top:-150px; right:-100px; animation:driftOrb 20s ease-in-out infinite; }
+    .hero-orb-2 { width:400px; height:400px; background:rgba(255,106,0,0.07); bottom:-80px; left:-80px; animation:driftOrb 25s ease-in-out 5s infinite; }
+    @keyframes driftOrb { 0%,100%{transform:scale(1) translate(0,0);} 50%{transform:scale(1.15) translate(20px,-20px);} }
+
+    .hero-inner {
+      position:relative; z-index:2;
+      max-width:1240px; margin:0 auto; padding:0 28px;
+      display:grid; grid-template-columns:1fr 1fr;
+      gap:60px; align-items:center; width:100%;
+      padding-top: 60px; padding-bottom: 60px;
+    }
+
+    .hero-content { animation: slideInLeft 0.9s ease both; }
+    @keyframes slideInLeft { from{opacity:0;transform:translateX(-50px);} to{opacity:1;transform:translateX(0);} }
+
+    .hero-badge {
+      display:inline-flex; align-items:center; gap:8px;
+      background:rgba(255,69,0,0.12); border:1px solid rgba(255,69,0,0.35);
+      color:var(--fire2); padding:7px 18px; border-radius:50px;
+      font-size:0.78rem; font-weight:600; letter-spacing:1.5px; text-transform:uppercase;
+      margin-bottom:28px;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3.8rem, 7vw, 6.5rem);
+      line-height: 0.95;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 24px;
+    }
+    .hero-title .fire { color: var(--fire); }
+
+    .hero-desc {
+      font-size: 1.08rem; color: rgba(255,255,255,0.6); line-height: 1.8;
+      margin-bottom: 40px; max-width: 480px;
+    }
+
+    .hero-buttons { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:52px; }
+
+    .btn-primary {
+      display:inline-flex; align-items:center; gap:10px;
+      background: linear-gradient(135deg, var(--fire) 0%, var(--fire2) 100%);
+      color:#fff; padding:15px 34px; border-radius:6px;
+      font-size:0.96rem; font-weight:700; transition:all 0.3s;
+      box-shadow:0 8px 28px rgba(255,69,0,0.4); letter-spacing:0.3px;
+      border:none; cursor:pointer; font-family:'Inter',sans-serif;
+    }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 38px rgba(255,69,0,0.55); }
+
+    .btn-outline {
+      display:inline-flex; align-items:center; gap:10px;
+      background:transparent; color:var(--white); padding:15px 34px; border-radius:6px;
+      font-size:0.96rem; font-weight:600; border:2px solid rgba(255,255,255,0.25);
+      transition:all 0.3s; letter-spacing:0.3px;
+      cursor:pointer; font-family:'Inter',sans-serif;
+    }
+    .btn-outline:hover { border-color:rgba(255,255,255,0.6); background:rgba(255,255,255,0.06); transform:translateY(-2px); }
+
+    .hero-stats { display:flex; gap:40px; }
+    .stat-item { text-align:center; }
+    .stat-num { font-family:'Bebas Neue',sans-serif; font-size:2.2rem; letter-spacing:0.06em; color:var(--fire); line-height:1; }
+    .stat-lbl { font-size:0.68rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.18em; margin-top:3px; }
+
+    /* Hero visual — motorcycle */
+    .hero-visual {
+      animation: slideInRight 0.9s ease 0.15s both;
+      position:relative;
+      display:flex; align-items:center; justify-content:center;
+    }
+    @keyframes slideInRight { from{opacity:0;transform:translateX(50px);} to{opacity:1;transform:translateX(0);} }
+
+    .moto-wrap {
+      position:relative;
+      width:100%; max-width:560px;
+      animation: motoFloat 5s ease-in-out infinite;
+    }
+    @keyframes motoFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-14px);} }
+
+    .moto-svg { width:100%; height:auto; overflow:visible; }
+
+    /* Wheel rotation */
+    #wheel-rear  { animation: wheelRoll 1.8s linear infinite; transform-origin: 188px 300px; }
+    #wheel-front { animation: wheelRoll 1.8s linear infinite; transform-origin: 618px 308px; }
+    @keyframes wheelRoll { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+    /* Headlight pulse */
+    .headlight-glow { animation: headPulse 2.5s ease-in-out infinite; }
+    @keyframes headPulse { 0%,100%{opacity:0.75;} 50%{opacity:1;filter:brightness(1.3);} }
+
+    /* Speed lines animation */
+    .speed-lines { animation: speedFlash 1.4s ease-in-out infinite; transform-origin:left center; }
+    @keyframes speedFlash { 0%,100%{opacity:0.15;transform:scaleX(1);} 50%{opacity:0.4;transform:scaleX(1.15);} }
+
+    /* Exhaust smoke particles (CSS) */
+    .smoke-container {
+      position:absolute;
+      left: 2%; top: 65%;
+      pointer-events:none;
+    }
+    .smoke-particle {
+      position:absolute;
+      border-radius:50%;
+      background:rgba(150,150,150,0.25);
+      animation: smokeRise 2.4s ease-out infinite;
+      left: 0; bottom: 0;
+    }
+    .smoke-particle:nth-child(1) { width:14px; height:14px; animation-delay:0s; }
+    .smoke-particle:nth-child(2) { width:20px; height:20px; animation-delay:0.5s; }
+    .smoke-particle:nth-child(3) { width:26px; height:26px; animation-delay:1s; }
+    .smoke-particle:nth-child(4) { width:18px; height:18px; animation-delay:1.6s; }
+    .smoke-particle:nth-child(5) { width:22px; height:22px; animation-delay:2s; }
+    @keyframes smokeRise {
+      0%   { opacity:0.6; transform:translate(0,0) scale(1); }
+      50%  { opacity:0.3; transform:translate(-30px,-40px) scale(1.6); }
+      100% { opacity:0;   transform:translate(-60px,-90px) scale(2.4); }
+    }
+
+    /* Float badges on hero visual */
+    .hero-float-badge {
+      position:absolute;
+      background:var(--dark3); border:1px solid rgba(255,69,0,0.3);
+      border-radius:12px; padding:14px 18px;
+      display:flex; align-items:center; gap:12px;
+      box-shadow:0 8px 28px rgba(0,0,0,0.5);
+      animation:floatBadge 5s ease-in-out infinite;
+    }
+    .hero-float-badge:nth-of-type(1) { top:6%; right:-18px; animation-delay:0s; }
+    .hero-float-badge:nth-of-type(2) { bottom:14%; left:-22px; animation-delay:1.8s; }
+    @keyframes floatBadge { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    .badge-icon { font-size:1.6rem; }
+    .badge-main { font-size:1rem; font-weight:800; color:var(--white); }
+    .badge-sub  { font-size:0.66rem; color:rgba(255,255,255,0.45); text-transform:uppercase; letter-spacing:1px; }
+
+    /* ══════════════════════════════════════════════
+       MARQUEE
+    ══════════════════════════════════════════════ */
+    .marquee-bar {
+      background:linear-gradient(90deg, var(--fire), #c93a00, var(--fire));
+      padding:14px 0; overflow:hidden;
+    }
+    .marquee-track {
+      display:flex; width:max-content;
+      animation:marqueeScroll 32s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state:paused; }
+    @keyframes marqueeScroll { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+    .marquee-item {
+      white-space:nowrap; color:rgba(255,255,255,0.92);
+      font-size:0.8rem; font-weight:700; letter-spacing:0.22em;
+      text-transform:uppercase; padding:0 28px;
+      display:flex; align-items:center; gap:14px;
+    }
+    .marquee-dot { width:5px; height:5px; border-radius:50%; background:rgba(255,255,255,0.45); flex-shrink:0; }
+
+    /* ══════════════════════════════════════════════
+       SECTIONS (shared)
+    ══════════════════════════════════════════════ */
+    section { position:relative; }
+    .section-inner { max-width:1240px; margin:0 auto; padding:0 28px; }
+    .section-head { text-align:center; margin-bottom:64px; }
+    .section-label {
+      display:inline-block; color:var(--fire);
+      font-size:0.76rem; font-weight:700; letter-spacing:0.3em;
+      text-transform:uppercase; margin-bottom:14px;
+    }
+    .section-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(2.4rem,4vw,3.8rem); letter-spacing:0.06em; color:var(--white); line-height:1;
+    }
+    .section-title .fire { color:var(--fire); }
+    .section-desc { font-size:1rem; color:var(--text-muted); max-width:540px; margin:16px auto 0; line-height:1.8; }
+
+    /* ══════════════════════════════════════════════
+       CATEGORIES STRIP
+    ══════════════════════════════════════════════ */
+    .categories-section { padding:90px 28px; background:var(--dark2); }
+
+    .categories-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
+    }
+
+    .cat-card {
+      position:relative; overflow:hidden; border-radius:10px;
+      background:var(--dark3); border:1px solid var(--border);
+      padding:36px 24px 28px;
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+      cursor:pointer; transition:all 0.4s;
+      text-decoration:none;
+    }
+    .cat-card::before {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, rgba(255,69,0,0.08) 0%, transparent 60%);
+      opacity:0; transition:opacity 0.4s;
+    }
+    .cat-card:hover { border-color:rgba(255,69,0,0.4); transform:translateY(-6px); box-shadow:0 20px 50px rgba(0,0,0,0.4); }
+    .cat-card:hover::before { opacity:1; }
+
+    .cat-img-placeholder {
+      width:100%; aspect-ratio:1; max-width:140px;
+      border-radius:8px; background:var(--panel);
+      display:flex; align-items:center; justify-content:center;
+      font-size:3.5rem; margin-bottom:20px; position:relative; overflow:hidden;
+      border:1px solid var(--border);
+      transition:transform 0.4s;
+    }
+    .cat-card:hover .cat-img-placeholder { transform:scale(1.06); }
+
+    .cat-img-placeholder::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.06), transparent 70%);
+      animation:shimmer 3s linear infinite;
+    }
+    @keyframes shimmer { to{transform:translateX(150%);} }
+
+    .cat-name {
+      font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.1em;
+      color:var(--white); margin-bottom:6px;
+    }
+    .cat-count { font-size:0.8rem; color:var(--text-muted); letter-spacing:0.05em; }
+
+    .cat-arrow {
+      margin-top:16px; width:36px; height:36px; border-radius:50%;
+      background:rgba(255,69,0,0.1); border:1px solid rgba(255,69,0,0.3);
+      display:flex; align-items:center; justify-content:center;
+      color:var(--fire); font-size:1rem;
+      transition:all 0.3s;
+    }
+    .cat-card:hover .cat-arrow { background:var(--fire); border-color:var(--fire); color:#fff; }
+
+    /* ══════════════════════════════════════════════
+       PRODUCT CARDS (shared)
+    ══════════════════════════════════════════════ */
+    .product-card {
+      background:var(--dark3); border:1px solid var(--border);
+      border-radius:10px; overflow:hidden;
+      display:flex; flex-direction:column;
+      transition:all 0.4s; cursor:pointer;
+    }
+    .product-card:hover { border-color:rgba(255,69,0,0.35); transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
+
+    .product-img {
+      position:relative; aspect-ratio:1; background:var(--panel);
+      display:flex; align-items:center; justify-content:center;
+      font-size:4.5rem; overflow:hidden;
+      transition:transform 0.4s;
+    }
+    .product-card:hover .product-img { transform:scale(1.04); }
+
+    .product-img::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.04), transparent 70%);
+      animation:shimmer 4s linear infinite;
+    }
+
+    .product-badge {
+      position:absolute; top:12px; left:12px;
+      padding:4px 10px; border-radius:4px;
+      font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase;
+    }
+    .badge-sale { background:var(--fire); color:#fff; }
+    .badge-new  { background:#22C55E; color:#fff; }
+    .badge-hot  { background:#F59E0B; color:#000; }
+
+    .product-quick-add {
+      position:absolute; bottom:-50px; left:0; right:0;
+      background:var(--fire); color:#fff;
+      padding:12px; text-align:center;
+      font-size:0.82rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase;
+      transition:bottom 0.35s cubic-bezier(0.25,0.8,0.25,1);
+      border:none; cursor:pointer; font-family:'Inter',sans-serif;
+    }
+    .product-card:hover .product-quick-add { bottom:0; }
+
+    .product-info { padding:20px; flex:1; display:flex; flex-direction:column; }
+
+    .product-category {
+      font-size:0.68rem; color:var(--fire); font-weight:700;
+      letter-spacing:0.2em; text-transform:uppercase; margin-bottom:8px;
+    }
+    .product-name {
+      font-size:0.96rem; font-weight:600; color:var(--white);
+      line-height:1.4; margin-bottom:6px; flex:1;
+    }
+    .product-rating { display:flex; align-items:center; gap:6px; margin-bottom:12px; }
+    .stars { color:#F59E0B; font-size:0.8rem; letter-spacing:1px; }
+    .rating-count { font-size:0.75rem; color:var(--text-muted); }
+    .product-price { display:flex; align-items:center; gap:10px; }
+    .price-current { font-size:1.15rem; font-weight:800; color:var(--white); }
+    .price-original { font-size:0.88rem; color:var(--text-muted); text-decoration:line-through; }
+    .price-save { font-size:0.74rem; color:var(--success); font-weight:700; }
+
+    /* ══════════════════════════════════════════════
+       NEW ARRIVALS
+    ══════════════════════════════════════════════ */
+    .arrivals-section { padding:90px 28px; background:var(--dark); }
+
+    .arrivals-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+    }
+
+    .arrivals-tabs {
+      display:flex; gap:0; margin-bottom:52px; border-bottom:1px solid var(--border);
+      overflow-x:auto; scrollbar-width:none;
+    }
+    .arrivals-tabs::-webkit-scrollbar { display:none; }
+
+    .tab-btn {
+      background:none; border:none; padding:14px 22px;
+      font-size:0.88rem; font-weight:600; color:rgba(255,255,255,0.45);
+      cursor:pointer; white-space:nowrap;
+      border-bottom:3px solid transparent; margin-bottom:-1px;
+      transition:all 0.25s; font-family:'Inter',sans-serif;
+    }
+    .tab-btn:hover { color:var(--fire); }
+    .tab-btn.active { color:var(--fire); border-bottom-color:var(--fire); }
+
+    /* ══════════════════════════════════════════════
+       PROMO BANNER
+    ══════════════════════════════════════════════ */
+    .promo-banner {
+      padding:80px 28px;
+      background:linear-gradient(135deg, #1A0800 0%, #2A1000 40%, #1A0800 100%);
+      position:relative; overflow:hidden; text-align:center;
+    }
+    .promo-banner::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 80% 80% at 50% 50%, rgba(255,69,0,0.1) 0%, transparent 70%);
+    }
+
+    .promo-inner { position:relative; z-index:1; max-width:640px; margin:0 auto; }
+
+    .promo-emoji { font-size:3rem; display:block; margin-bottom:20px; }
+    .promo-title {
+      font-family:'Bebas Neue',sans-serif; font-size:clamp(3rem,6vw,5.5rem);
+      letter-spacing:0.08em; color:var(--white); line-height:0.95; margin-bottom:16px;
+    }
+    .promo-title span { color:var(--fire); }
+    .promo-code-wrap {
+      display:inline-flex; align-items:center; gap:0;
+      background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.15);
+      border-radius:8px; overflow:hidden; margin:24px 0;
+    }
+    .promo-code-label { padding:12px 18px; font-size:0.75rem; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.15em; }
+    .promo-code {
+      padding:12px 22px;
+      background:rgba(255,69,0,0.2); border-left:1px solid rgba(255,69,0,0.3);
+      font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.2em; color:var(--fire);
+    }
+    .promo-sub { font-size:0.9rem; color:rgba(255,255,255,0.5); margin-top:8px; }
+
+    .promo-code-list {
+      display:flex; gap:12px; justify-content:center; flex-wrap:wrap; margin-top:28px;
+    }
+    .promo-pill {
+      padding:8px 18px; background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.12); border-radius:50px;
+      font-size:0.82rem; color:rgba(255,255,255,0.6);
+    }
+    .promo-pill span { font-family:'Bebas Neue',sans-serif; color:var(--fire); font-size:1rem; letter-spacing:0.1em; }
+
+    /* ══════════════════════════════════════════════
+       BRAND STORY
+    ══════════════════════════════════════════════ */
+    .brand-section { padding:110px 28px; background:var(--dark2); }
+
+    .brand-inner {
+      max-width:1240px; margin:0 auto;
+      display:grid; grid-template-columns:1fr 1fr; gap:80px; align-items:center;
+    }
+
+    .brand-visual {
+      position:relative; display:flex; justify-content:center; align-items:center;
+    }
+    .brand-canvas {
+      width:100%; max-width:420px; aspect-ratio:4/5;
+      background:var(--dark3); border-radius:8px;
+      border:1px solid var(--border);
+      box-shadow:0 30px 80px rgba(0,0,0,0.5), 0 0 0 12px rgba(255,69,0,0.03);
+      position:relative; overflow:hidden;
+      display:flex; align-items:center; justify-content:center;
+    }
+
+    .brand-canvas-content {
+      position:relative; z-index:1; text-align:center; padding:40px;
+    }
+    .brand-canvas-icon { font-size:5rem; display:block; margin-bottom:20px; }
+    .brand-canvas-label {
+      font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.15em;
+      color:var(--white); line-height:1;
+    }
+    .brand-canvas-label span { color:var(--fire); display:block; }
+
+    /* Brand canvas animated elements */
+    .brand-glow-1 { position:absolute; width:250px; height:250px; background:radial-gradient(circle, rgba(255,69,0,0.2) 0%, transparent 70%); top:-50px; right:-50px; border-radius:50%; animation:glowFloat 7s ease-in-out infinite; }
+    .brand-glow-2 { position:absolute; width:180px; height:180px; background:radial-gradient(circle, rgba(255,100,0,0.15) 0%, transparent 70%); bottom:-30px; left:-30px; border-radius:50%; animation:glowFloat 9s ease-in-out 2s infinite; }
+    @keyframes glowFloat { 0%,100%{transform:scale(1) translate(0,0);} 50%{transform:scale(1.1) translate(8px,-8px);} }
+
+    .brand-accent-badge {
+      position:absolute; bottom:-20px; right:-20px;
+      background:var(--fire); color:#fff;
+      padding:20px 24px; border-radius:12px; text-align:center;
+      box-shadow:0 10px 32px rgba(255,69,0,0.5);
+    }
+    .accent-num { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.1em; display:block; line-height:1; }
+    .accent-lbl { font-size:0.68rem; text-transform:uppercase; letter-spacing:0.18em; opacity:0.85; margin-top:4px; display:block; }
+
+    .brand-float-badge {
+      position:absolute; top:10%; left:-24px;
+      background:var(--dark3); border:1px solid rgba(255,69,0,0.25);
+      border-radius:12px; padding:14px 18px; display:flex; align-items:center; gap:12px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.5);
+      animation:floatBadge 5.5s ease-in-out 1s infinite;
+    }
+
+    .brand-content .section-head { text-align:left; margin-bottom:28px; }
+
+    .brand-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(2rem,3.5vw,3rem); letter-spacing:0.08em;
+      color:var(--white); line-height:1; margin-bottom:10px;
+    }
+    .brand-subtitle { font-size:1rem; color:var(--fire); font-weight:600; font-style:italic; margin-bottom:24px; }
+    .brand-text { font-size:0.95rem; color:rgba(255,255,255,0.55); line-height:1.9; margin-bottom:16px; }
+    .brand-quote {
+      font-size:1rem; font-style:italic; color:rgba(255,200,100,0.8);
+      border-left:3px solid var(--fire); padding-left:18px; margin:24px 0 32px;
+    }
+
+    /* Brand stats grid */
+    .brand-stats { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:36px; }
+    .brand-stat-card {
+      background:rgba(255,255,255,0.03); border:1px solid var(--border);
+      border-radius:12px; padding:24px 20px; text-align:center; transition:all 0.3s;
+    }
+    .brand-stat-card:hover { background:rgba(255,69,0,0.08); border-color:rgba(255,69,0,0.3); transform:scale(1.04); }
+    .brand-stat-icon { font-size:2.4rem; margin-bottom:12px; }
+    .brand-stat-num { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.08em; color:var(--fire); line-height:1; }
+    .brand-stat-lbl { font-size:0.72rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.15em; margin-top:4px; }
+
+    /* ══════════════════════════════════════════════
+       BEST SELLERS (second product grid)
+    ══════════════════════════════════════════════ */
+    .best-section { padding:90px 28px; background:var(--dark); }
+
+    .best-grid {
+      display:grid; grid-template-columns:repeat(4,1fr); gap:22px;
+    }
+
+    /* ══════════════════════════════════════════════
+       TESTIMONIALS
+    ══════════════════════════════════════════════ */
+    .testimonials-section { padding:110px 28px; background:var(--dark2); }
+
+    .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+
+    .testimonial-card {
+      background:var(--dark3); border-radius:12px; padding:32px 28px;
+      border:1px solid var(--border); position:relative; transition:all 0.35s;
+      border-top:3px solid transparent;
+    }
+    .testimonial-card::before {
+      content:'\201C'; font-size:5.5rem; font-family:Georgia,serif;
+      color:rgba(255,69,0,0.1); position:absolute; top:-8px; left:20px; line-height:1;
+    }
+    .testimonial-card:hover { transform:translateY(-6px); box-shadow:0 18px 50px rgba(0,0,0,0.3); border-top-color:var(--fire); }
+
+    .testimonial-stars { color:#F59E0B; font-size:0.95rem; margin-bottom:14px; }
+    .testimonial-text { font-size:0.93rem; color:rgba(255,255,255,0.55); line-height:1.8; margin-bottom:22px; font-style:italic; padding-top:14px; }
+    .testimonial-author { display:flex; align-items:center; gap:12px; }
+    .author-avatar {
+      width:44px; height:44px; border-radius:50%;
+      display:flex; align-items:center; justify-content:center;
+      font-weight:800; font-size:1rem; color:#fff; flex-shrink:0;
+    }
+    .author-name { font-size:0.88rem; font-weight:700; color:var(--white); }
+    .author-tag  { font-size:0.72rem; color:var(--text-muted); }
+
+    /* ══════════════════════════════════════════════
+       NEWSLETTER
+    ══════════════════════════════════════════════ */
+    .newsletter-section {
+      padding:100px 28px;
+      background:linear-gradient(135deg, #0F0F0F 0%, #1A0800 50%, #0F0F0F 100%);
+      text-align:center; position:relative; overflow:hidden;
+    }
+    .newsletter-section::before {
+      content:''; position:absolute; inset:0;
+      background:radial-gradient(ellipse 70% 70% at 50% 50%, rgba(255,69,0,0.08) 0%, transparent 70%);
+    }
+
+    .newsletter-inner { position:relative; z-index:1; max-width:560px; margin:0 auto; }
+    .newsletter-title {
+      font-family:'Bebas Neue',sans-serif;
+      font-size:clamp(2.5rem,5vw,4rem); letter-spacing:0.08em; color:var(--white); margin-bottom:14px;
+    }
+    .newsletter-title span { color:var(--fire); }
+    .newsletter-desc { font-size:0.96rem; color:rgba(255,255,255,0.5); line-height:1.8; margin-bottom:32px; }
+    .newsletter-form { display:flex; gap:0; max-width:460px; margin:0 auto 16px; border-radius:6px; overflow:hidden; border:1px solid rgba(255,69,0,0.35); }
+    .newsletter-input {
+      flex:1; padding:15px 20px; background:rgba(255,255,255,0.06);
+      border:none; color:var(--white); font-size:0.95rem;
+      font-family:'Inter',sans-serif; outline:none;
+    }
+    .newsletter-input::placeholder { color:rgba(255,255,255,0.3); }
+    .newsletter-submit {
+      padding:15px 28px; background:var(--fire); color:#fff;
+      border:none; font-size:0.88rem; font-weight:700;
+      cursor:pointer; font-family:'Inter',sans-serif; letter-spacing:0.1em; text-transform:uppercase;
+      transition:background 0.2s;
+    }
+    .newsletter-submit:hover { background:var(--fire2); }
+    .newsletter-note { font-size:0.76rem; color:rgba(255,255,255,0.3); }
+
+    /* ══════════════════════════════════════════════
+       FOOTER
+    ══════════════════════════════════════════════ */
+    footer {
+      background:var(--black);
+      border-top:2px solid var(--fire);
+      padding:64px 28px 32px;
+    }
+    .footer-inner {
+      max-width:1240px; margin:0 auto;
+      display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
+      gap:56px; margin-bottom:48px;
+    }
+    .footer-brand-name {
+      font-family:'Bebas Neue',sans-serif; font-size:1.6rem; letter-spacing:0.15em;
+      color:var(--white); margin-bottom:14px; display:block;
+    }
+    .footer-brand-name span { color:var(--fire); }
+    .footer-brand p { font-size:0.87rem; color:rgba(255,255,255,0.35); line-height:1.8; max-width:260px; }
+    .footer-social { display:flex; gap:10px; margin-top:20px; }
+    .social-link {
+      width:36px; height:36px; border-radius:50%;
+      background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1);
+      display:flex; align-items:center; justify-content:center;
+      font-size:0.9rem; text-decoration:none; transition:all 0.3s;
+    }
+    .social-link:hover { background:var(--fire); border-color:var(--fire); transform:translateY(-3px); }
+    .footer-col h4 { font-size:0.74rem; font-weight:700; color:var(--fire); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:20px; }
+    .footer-col a { display:block; color:rgba(255,255,255,0.4); font-size:0.86rem; margin-bottom:10px; transition:all 0.22s; text-decoration:none; }
+    .footer-col a:hover { color:var(--fire); transform:translateX(5px); }
+    .footer-bottom {
+      border-top:1px solid rgba(255,255,255,0.08); padding-top:28px;
+      display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
+      max-width:1240px; margin:0 auto;
+    }
+    .footer-bottom p { color:rgba(255,255,255,0.25); font-size:0.8rem; }
+
+    /* ══════════════════════════════════════════════
+       TOAST NOTIFICATION
+    ══════════════════════════════════════════════ */
+    .toast {
+      position:fixed; bottom:28px; right:28px; z-index:5000;
+      background:var(--dark3); border:1px solid rgba(34,197,94,0.3);
+      border-radius:10px; padding:16px 20px;
+      display:flex; align-items:center; gap:12px;
+      box-shadow:0 12px 40px rgba(0,0,0,0.5);
+      transform:translateY(100px); opacity:0;
+      transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1);
+      max-width:320px;
+    }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast-icon { font-size:1.5rem; flex-shrink:0; }
+    .toast-text { font-size:0.88rem; color:var(--text); line-height:1.4; }
+    .toast-text strong { color:var(--success); }
+
+    /* ══════════════════════════════════════════════
+       REVEAL ANIMATIONS
+    ══════════════════════════════════════════════ */
+    .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.75s ease, transform 0.75s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-d1 { transition-delay:0.1s; }
+    .reveal-d2 { transition-delay:0.2s; }
+    .reveal-d3 { transition-delay:0.3s; }
+    .reveal-d4 { transition-delay:0.4s; }
+    .reveal-d5 { transition-delay:0.5s; }
+    .reveal-d6 { transition-delay:0.6s; }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width:1100px) {
+      .hero-inner { grid-template-columns:1fr; gap:48px; text-align:center; padding-top:70px; }
+      .hero-buttons { justify-content:center; }
+      .hero-stats { justify-content:center; }
+      .hero-desc { margin:0 auto 40px; }
+      .hero-visual { order:-1; }
+      .moto-wrap { max-width:480px; }
+      .brand-inner { grid-template-columns:1fr; gap:56px; }
+      .brand-content .section-head { text-align:center; }
+      .footer-inner { grid-template-columns:1fr 1fr; gap:36px; }
+    }
+    @media (max-width:900px) {
+      .arrivals-grid, .best-grid { grid-template-columns:repeat(2,1fr); }
+      .categories-grid { grid-template-columns:repeat(2,1fr); }
+      .testimonials-grid { grid-template-columns:1fr; }
+    }
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .hero-title { font-size:3.2rem; }
+    }
+    @media (max-width:600px) {
+      .arrivals-grid, .best-grid { grid-template-columns:1fr 1fr; }
+      .categories-grid { grid-template-columns:1fr 1fr; }
+      .hero-stats { gap:24px; flex-wrap:wrap; justify-content:center; }
+      .hero-buttons { flex-direction:column; align-items:center; }
+      .footer-inner { grid-template-columns:1fr; gap:28px; }
+      .newsletter-form { flex-direction:column; border-radius:6px; }
+      .newsletter-submit { border-radius:0 0 6px 6px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════
+     PRELOADER
+═══════════════════════════════════════ -->
+<div id="preloader">
+  <div style="position:relative;display:flex;flex-direction:column;align-items:center;">
+    <div class="pl-wheel-wrap">
+      <svg id="pl-wheel-svg" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="pl-tire-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#2A2A2A"/>
+            <stop offset="100%" stop-color="#0D0D0D"/>
+          </radialGradient>
+          <filter id="pl-spoke-glow">
+            <feGaussianBlur stdDeviation="1.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <!-- Outer tire -->
+        <circle cx="100" cy="100" r="96" fill="url(#pl-tire-grad)"/>
+        <!-- Tire tread dashes -->
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#333" stroke-width="4"/>
+        <circle cx="100" cy="100" r="96" fill="none" stroke="#1A1A1A" stroke-width="10" stroke-dasharray="22 18"/>
+        <!-- Tire inner wall -->
+        <circle cx="100" cy="100" r="82" fill="none" stroke="#222" stroke-width="2"/>
+        <!-- Rim -->
+        <circle cx="100" cy="100" r="74" fill="#1E1E1E" stroke="#444" stroke-width="2"/>
+        <!-- Chrome rim accent -->
+        <circle cx="100" cy="100" r="74" fill="none" stroke="#666" stroke-width="1.5"/>
+        <circle cx="100" cy="100" r="68" fill="none" stroke="#333" stroke-width="1.5"/>
+        <!-- Spokes (10) with glow -->
+        <g stroke="#999" stroke-width="2.5" stroke-linecap="round" filter="url(#pl-spoke-glow)">
+          <line x1="100" y1="100" x2="100" y2="27"/>
+          <line x1="100" y1="100" x2="152" y2="38"/>
+          <line x1="100" y1="100" x2="173" y2="80"/>
+          <line x1="100" y1="100" x2="173" y2="120"/>
+          <line x1="100" y1="100" x2="152" y2="162"/>
+          <line x1="100" y1="100" x2="100" y2="173"/>
+          <line x1="100" y1="100" x2="48" y2="162"/>
+          <line x1="100" y1="100" x2="27" y2="120"/>
+          <line x1="100" y1="100" x2="27" y2="80"/>
+          <line x1="100" y1="100" x2="48" y2="38"/>
+        </g>
+        <!-- Fire accent spokes -->
+        <g stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" opacity="0.5">
+          <line x1="100" y1="100" x2="100" y2="27"/>
+          <line x1="100" y1="100" x2="173" y2="80"/>
+          <line x1="100" y1="100" x2="152" y2="162"/>
+          <line x1="100" y1="100" x2="27" y2="120"/>
+          <line x1="100" y1="100" x2="48" y2="38"/>
+        </g>
+        <!-- Hub outer -->
+        <circle cx="100" cy="100" r="22" fill="#181818" stroke="#777" stroke-width="2"/>
+        <!-- Hub inner -->
+        <circle cx="100" cy="100" r="13" fill="#111" stroke="#555" stroke-width="1.5"/>
+        <!-- Hub fire center -->
+        <circle cx="100" cy="100" r="6" fill="#FF4500"/>
+        <circle cx="100" cy="100" r="3" fill="#FF7A00"/>
+        <!-- Valve stem -->
+        <rect x="98" y="4" width="4" height="14" rx="2" fill="#888"/>
+        <rect x="97" y="4" width="6" height="5" rx="2" fill="#666"/>
+        <!-- Rim reflection highlight -->
+        <path d="M 28 70 A 74 74 0 0 1 68 26" stroke="rgba(255,255,255,0.12)" stroke-width="4" fill="none" stroke-linecap="round"/>
+      </svg>
+    </div>
+
+    <div class="pl-brand">
+      <span class="pl-brand-top">TWO WHEEL</span>
+      <span class="pl-brand-bottom">CLOTHING</span>
+    </div>
+
+    <div class="pl-progress-track">
+      <div class="pl-progress-bar" id="plProgressBar"></div>
+    </div>
+    <div class="pl-tagline" id="plTagline">Loading the Ride…</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SITE CONTENT
+═══════════════════════════════════════ -->
+<div id="site-wrap">
+
+<!-- Mobile Overlay -->
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="toggleMenu()" aria-label="Close">✕</button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?cat=cologne">Cologne</a>
+  <a href="shop.html?cat=jackets">Jackets</a>
+  <a href="shop.html?cat=clothing">Clothing</a>
+  <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="cart.html" class="mob-cart-link">
+    🛒 Cart <span class="mob-cart-badge" id="mobCartBadge">0</span>
+  </a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="5.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/>
+          <circle cx="18.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/>
+          <path d="M9 16 L12 8 L15 10 L18.5 16" stroke="#FF4500" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.5 16 L9 16" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/>
+          <path d="M12 8 L16 6" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">TWO <span>WHEEL</span></span>
+        <span class="nav-brand-tag">Ride in Style</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="shop.html">Shop All</a></li>
+      <li><a href="shop.html?cat=cologne">Cologne</a></li>
+      <li><a href="shop.html?cat=jackets">Jackets</a></li>
+      <li><a href="shop.html?cat=clothing">Clothing</a></li>
+      <li><a href="shop.html?cat=accessories">Accessories</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="cart-btn" onclick="window.location.href='cart.html'">
+        🛒 Cart
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="hero-inner">
+    <!-- Left: Content -->
+    <div class="hero-content">
+      <div class="hero-badge">🏍️ New 2025 Collection — Drop I</div>
+      <h1 class="hero-title">
+        RIDE<br>
+        IN <span class="fire">STYLE</span><br>
+        LIVE<br>
+        THE <span class="fire">LEGEND</span>
+      </h1>
+      <p class="hero-desc">
+        Premium cologne, cutting-edge moto-inspired clothing, and accessories built for riders and those who live by the open road. No compromise.
+      </p>
+      <div class="hero-buttons">
+        <a href="shop.html" class="btn-primary">🔥 Shop Now</a>
+        <a href="shop.html?cat=cologne" class="btn-outline">Explore Cologne →</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">28+</div>
+          <div class="stat-lbl">Products</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">4.9</div>
+          <div class="stat-lbl">Avg Rating</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">18K</div>
+          <div class="stat-lbl">Riders Trust Us</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Motorcycle SVG -->
+    <div class="hero-visual">
+      <div class="moto-wrap">
+        <!-- Smoke container -->
+        <div class="smoke-container">
+          <div class="smoke-particle"></div>
+          <div class="smoke-particle"></div>
+          <div class="smoke-particle"></div>
+          <div class="smoke-particle"></div>
+          <div class="smoke-particle"></div>
+        </div>
+
+        <!-- Motorcycle SVG -->
+        <svg class="moto-svg" viewBox="0 0 760 400" xmlns="http://www.w3.org/2000/svg" overflow="visible">
+          <defs>
+            <radialGradient id="tireGrad" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#2A2A2A"/>
+              <stop offset="100%" stop-color="#0A0A0A"/>
+            </radialGradient>
+            <linearGradient id="tankGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2A2A2A"/>
+              <stop offset="40%" stop-color="#1A1A1A"/>
+              <stop offset="100%" stop-color="#0F0F0F"/>
+            </linearGradient>
+            <filter id="hlGlow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="5" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="shadowF">
+              <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="rgba(0,0,0,0.6)" flood-opacity="1"/>
+            </filter>
+          </defs>
+
+          <!-- Ground shadow -->
+          <ellipse cx="385" cy="390" rx="295" ry="11" fill="rgba(0,0,0,0.45)"/>
+
+          <!-- Speed lines -->
+          <g class="speed-lines">
+            <line x1="-20" y1="275" x2="110" y2="275" stroke="#FF4500" stroke-width="2.5" stroke-linecap="round" opacity="0.5"/>
+            <line x1="10"  y1="292" x2="105" y2="292" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round" opacity="0.4"/>
+            <line x1="0"   y1="258" x2="90"  y2="258" stroke="#FF4500" stroke-width="1.4" stroke-linecap="round" opacity="0.3"/>
+            <line x1="20"  y1="240" x2="85"  y2="240" stroke="#888"    stroke-width="1.2" stroke-linecap="round" opacity="0.25"/>
+            <line x1="30"  y1="310" x2="95"  y2="310" stroke="#666"    stroke-width="1"   stroke-linecap="round" opacity="0.2"/>
+          </g>
+
+          <!-- ── EXHAUST SYSTEM ── -->
+          <path d="M 360,275 C 310,286 268,290 238,288 C 220,287 208,288 200,291 C 193,294 188,297 185,300" fill="none" stroke="#4A4A4A" stroke-width="8" stroke-linecap="round"/>
+          <path d="M 360,270 C 310,280 268,284 238,282 C 220,280 206,281 196,284 C 188,287 182,291 179,295" fill="none" stroke="#3A3A3A" stroke-width="7" stroke-linecap="round"/>
+          <!-- Muffler tip -->
+          <path d="M 180,295 L 160,291 C 152,289 149,292 149,298 L 149,305 C 149,311 152,314 160,312 L 182,307 Z" fill="#3A3A3A" stroke="#666" stroke-width="1"/>
+          <!-- Exhaust heat wrap bands -->
+          <line x1="250" y1="285" x2="252" y2="291" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+          <line x1="270" y1="283" x2="272" y2="289" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+          <line x1="290" y1="281" x2="292" y2="287" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+          <line x1="310" y1="279" x2="312" y2="285" stroke="#555" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- ── SWINGARM ── -->
+          <path d="M 188,300 L 318,277" stroke="#3E3E3E" stroke-width="10" stroke-linecap="round"/>
+          <path d="M 188,300 L 318,284" stroke="#2E2E2E" stroke-width="5" stroke-linecap="round"/>
+          <!-- Swingarm bracing -->
+          <line x1="230" y1="296" x2="232" y2="282" stroke="#444" stroke-width="3" stroke-linecap="round"/>
+          <line x1="272" y1="289" x2="274" y2="279" stroke="#444" stroke-width="3" stroke-linecap="round"/>
+
+          <!-- ── MAIN FRAME ── -->
+          <!-- Backbone tube -->
+          <path d="M 318,277 L 350,262 L 390,248 L 430,238 L 480,215 L 518,190 L 540,162" fill="none" stroke="#4A4A4A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Lower frame tube -->
+          <path d="M 318,280 L 365,280 L 420,278 L 450,278" fill="none" stroke="#404040" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Down tube (head to engine) -->
+          <path d="M 540,168 L 460,278" fill="none" stroke="#3A3A3A" stroke-width="9" stroke-linecap="round"/>
+          <path d="M 540,168 L 480,280" fill="none" stroke="#333" stroke-width="7" stroke-linecap="round"/>
+          <!-- Sub-frame (tail) -->
+          <path d="M 390,248 L 430,235 L 470,225 L 510,216 L 545,208 L 565,198 L 575,188" fill="none" stroke="#3C3C3C" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+
+          <!-- ── ENGINE BLOCK ── -->
+          <path d="M 345,248 L 452,248 L 460,282 L 338,282 Z" fill="#222" stroke="#4A4A4A" stroke-width="1.5"/>
+          <!-- Engine details -->
+          <line x1="345" y1="258" x2="452" y2="258" stroke="#333" stroke-width="1"/>
+          <line x1="345" y1="268" x2="452" y2="268" stroke="#333" stroke-width="1"/>
+          <line x1="396" y1="248" x2="396" y2="282" stroke="#333" stroke-width="1"/>
+          <!-- V-twin cylinders -->
+          <path d="M 355,248 L 346,192 C 345,188 350,185 355,188 L 374,192 L 380,248 Z" fill="#2E2E2E" stroke="#4A4A4A" stroke-width="1.5"/>
+          <path d="M 398,248 L 406,185 C 407,181 412,180 416,184 L 428,192 L 426,248 Z" fill="#2E2E2E" stroke="#4A4A4A" stroke-width="1.5"/>
+          <!-- Cylinder fins -->
+          <g stroke="#444" stroke-width="1.5">
+            <line x1="348" y1="198" x2="378" y2="198"/><line x1="347" y1="206" x2="378" y2="206"/>
+            <line x1="346" y1="214" x2="378" y2="214"/><line x1="346" y1="222" x2="379" y2="222"/>
+            <line x1="345" y1="230" x2="380" y2="230"/><line x1="345" y1="238" x2="380" y2="238"/>
+            <line x1="408" y1="192" x2="426" y2="194"/><line x1="408" y1="200" x2="427" y2="202"/>
+            <line x1="407" y1="208" x2="427" y2="210"/><line x1="407" y1="216" x2="427" y2="218"/>
+            <line x1="407" y1="224" x2="427" y2="225"/><line x1="407" y1="232" x2="426" y2="233"/>
+            <line x1="406" y1="240" x2="426" y2="241"/>
+          </g>
+          <!-- Air intake scoop -->
+          <path d="M 460,248 L 478,245 L 480,265 L 460,265 Z" fill="#2A2A2A" stroke="#555" stroke-width="1.5"/>
+          <!-- Engine bottom pan -->
+          <path d="M 338,282 L 460,282 L 462,292 L 336,292 Z" fill="#1E1E1E" stroke="#444" stroke-width="1"/>
+
+          <!-- ── FUEL TANK ── -->
+          <path d="M 320,197 C 324,164 358,148 418,148 C 470,148 512,155 530,167 L 520,200 C 504,212 464,220 416,220 C 374,220 332,212 320,202 Z" fill="url(#tankGrad)" stroke="#FF4500" stroke-width="2"/>
+          <!-- Tank body glow line -->
+          <path d="M 320,197 C 324,164 358,148 418,148 C 470,148 512,155 530,167" fill="none" stroke="rgba(255,69,0,0.5)" stroke-width="1"/>
+          <!-- Tank highlight -->
+          <path d="M 338,164 C 365,153 432,151 486,160 L 474,167 C 425,158 363,160 340,172 Z" fill="rgba(255,255,255,0.06)"/>
+          <!-- Tank center stripe (fire) -->
+          <path d="M 368,172 L 516,172 L 510,188 L 362,188 Z" fill="rgba(255,69,0,0.18)" stroke="rgba(255,69,0,0.45)" stroke-width="0.5"/>
+          <!-- Tank cap -->
+          <ellipse cx="422" cy="152" rx="12" ry="5" fill="#1A1A1A" stroke="#666" stroke-width="1.5"/>
+
+          <!-- ── SEAT ── -->
+          <path d="M 318,202 C 318,194 336,186 358,185 L 508,185 C 525,185 538,192 540,200 L 540,216 C 540,224 525,230 508,230 L 380,230 C 348,230 318,222 318,214 Z" fill="#141414" stroke="#3A3A3A" stroke-width="1.5"/>
+          <!-- Seat stitching detail -->
+          <path d="M 334,213 L 534,213" stroke="#2A2A2A" stroke-width="1" stroke-dasharray="9 7"/>
+          <path d="M 334,200 L 534,200" stroke="rgba(255,255,255,0.04)" stroke-width="1"/>
+
+          <!-- ── TAIL FAIRING ── -->
+          <path d="M 503,185 C 533,185 551,181 564,173 C 574,166 574,155 564,148 C 553,141 537,144 522,152 L 503,185 Z" fill="#161616" stroke="#3A3A3A" stroke-width="1.5"/>
+          <!-- Tail light -->
+          <path d="M 562,158 L 572,160 C 576,161 577,165 575,168 L 571,173 C 569,176 565,176 562,174 L 556,170 Z" fill="#CC0000" opacity="0.95" filter="url(#hlGlow)"/>
+
+          <!-- ── FORK LEGS ── -->
+          <line x1="536" y1="166" x2="618" y2="305" stroke="#4E4E4E" stroke-width="8" stroke-linecap="round"/>
+          <line x1="550" y1="166" x2="632" y2="305" stroke="#4E4E4E" stroke-width="8" stroke-linecap="round"/>
+          <!-- Fork lower brace -->
+          <path d="M 604,282 L 645,282 L 643,296 L 606,296 Z" fill="#383838" stroke="#555" stroke-width="1"/>
+          <!-- Fork upper triple tree -->
+          <path d="M 528,156 L 560,156 L 558,172 L 530,172 Z" fill="#383838" stroke="#666" stroke-width="1.5"/>
+
+          <!-- ── HANDLEBARS ── -->
+          <path d="M 544,156 C 524,144 510,138 496,132" stroke="#666" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+          <path d="M 544,156 C 562,144 577,138 592,132" stroke="#666" stroke-width="5.5" fill="none" stroke-linecap="round"/>
+          <!-- Hand grips -->
+          <rect x="487" y="127" width="15" height="10" rx="5" fill="#111" stroke="#888" stroke-width="1.5"/>
+          <rect x="585" y="127" width="15" height="10" rx="5" fill="#111" stroke="#888" stroke-width="1.5"/>
+          <!-- Mirrors -->
+          <line x1="496" y1="133" x2="474" y2="118" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="470" cy="115" rx="9" ry="6" fill="#2A2A2A" stroke="#666" stroke-width="1.5" transform="rotate(-15 470 115)"/>
+          <line x1="592" y1="133" x2="614" y2="118" stroke="#555" stroke-width="2" stroke-linecap="round"/>
+          <ellipse cx="618" cy="115" rx="9" ry="6" fill="#2A2A2A" stroke="#666" stroke-width="1.5" transform="rotate(15 618 115)"/>
+
+          <!-- ── FRONT FAIRING / HEADLIGHT HOUSING ── -->
+          <path d="M 624,242 C 646,230 668,235 682,249 C 694,261 691,282 675,292 C 659,301 638,297 628,283 C 618,269 616,252 624,242 Z" fill="#161616" stroke="#333" stroke-width="1.5"/>
+          <!-- Headlight ring -->
+          <ellipse cx="657" cy="268" rx="24" ry="22" fill="#111" stroke="#4A4A4A" stroke-width="2"/>
+          <!-- Headlight glow (animated) -->
+          <ellipse cx="657" cy="268" rx="19" ry="17" class="headlight-glow" fill="#FF8C00" opacity="0.85" filter="url(#hlGlow)"/>
+          <!-- Headlight reflector lines -->
+          <line x1="640" y1="258" x2="674" y2="258" stroke="rgba(255,200,100,0.2)" stroke-width="1.5"/>
+          <line x1="638" y1="265" x2="676" y2="265" stroke="rgba(255,200,100,0.15)" stroke-width="1.5"/>
+          <!-- Headlight shine spot -->
+          <ellipse cx="651" cy="260" rx="6" ry="4" fill="rgba(255,255,255,0.35)" transform="rotate(-25 651 260)"/>
+
+          <!-- ── REAR FENDER ── -->
+          <path d="M 125,256 C 136,230 158,218 188,218 C 220,218 244,232 256,258" fill="none" stroke="#383838" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- ── FRONT FENDER ── -->
+          <path d="M 574,257 C 580,234 598,222 622,222 C 648,222 666,234 672,256" fill="none" stroke="#383838" stroke-width="6" stroke-linecap="round"/>
+
+          <!-- ── REAR WHEEL ── -->
+          <g id="wheel-rear">
+            <circle cx="188" cy="300" r="88" fill="url(#tireGrad)"/>
+            <circle cx="188" cy="300" r="88" fill="none" stroke="#2E2E2E" stroke-width="4"/>
+            <circle cx="188" cy="300" r="88" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="20" stroke-dasharray="28 22"/>
+            <circle cx="188" cy="300" r="70" fill="#1E1E1E" stroke="#404040" stroke-width="3"/>
+            <circle cx="188" cy="300" r="70" fill="none" stroke="#777" stroke-width="1.5"/>
+            <circle cx="188" cy="300" r="63" fill="none" stroke="#2A2A2A" stroke-width="2"/>
+            <!-- Spokes -->
+            <g stroke="#999" stroke-width="2.5" stroke-linecap="round">
+              <line x1="188" y1="300" x2="188" y2="212"/>
+              <line x1="188" y1="300" x2="249" y2="247"/>
+              <line x1="188" y1="300" x2="276" y2="300"/>
+              <line x1="188" y1="300" x2="249" y2="353"/>
+              <line x1="188" y1="300" x2="188" y2="388"/>
+              <line x1="188" y1="300" x2="127" y2="353"/>
+              <line x1="188" y1="300" x2="100" y2="300"/>
+              <line x1="188" y1="300" x2="127" y2="247"/>
+            </g>
+            <!-- Hub -->
+            <circle cx="188" cy="300" r="22" fill="#1A1A1A" stroke="#777" stroke-width="2"/>
+            <circle cx="188" cy="300" r="12" fill="#111" stroke="#555" stroke-width="1.5"/>
+            <circle cx="188" cy="300" r="5"  fill="#FF4500"/>
+            <!-- Valve -->
+            <rect x="186" y="212" width="4" height="11" rx="2" fill="#777"/>
+          </g>
+
+          <!-- ── FRONT WHEEL ── -->
+          <g id="wheel-front">
+            <circle cx="618" cy="308" r="80" fill="url(#tireGrad)"/>
+            <circle cx="618" cy="308" r="80" fill="none" stroke="#2E2E2E" stroke-width="3.5"/>
+            <circle cx="618" cy="308" r="80" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="18" stroke-dasharray="25 18"/>
+            <circle cx="618" cy="308" r="64" fill="#1E1E1E" stroke="#404040" stroke-width="2.5"/>
+            <circle cx="618" cy="308" r="64" fill="none" stroke="#777" stroke-width="1.5"/>
+            <circle cx="618" cy="308" r="57" fill="none" stroke="#2A2A2A" stroke-width="1.5"/>
+            <!-- Spokes -->
+            <g stroke="#999" stroke-width="2.2" stroke-linecap="round">
+              <line x1="618" y1="308" x2="618" y2="228"/>
+              <line x1="618" y1="308" x2="675" y2="251"/>
+              <line x1="618" y1="308" x2="698" y2="308"/>
+              <line x1="618" y1="308" x2="675" y2="365"/>
+              <line x1="618" y1="308" x2="618" y2="388"/>
+              <line x1="618" y1="308" x2="561" y2="365"/>
+              <line x1="618" y1="308" x2="538" y2="308"/>
+              <line x1="618" y1="308" x2="561" y2="251"/>
+            </g>
+            <!-- Hub -->
+            <circle cx="618" cy="308" r="20" fill="#1A1A1A" stroke="#777" stroke-width="2"/>
+            <circle cx="618" cy="308" r="11" fill="#111" stroke="#555" stroke-width="1.5"/>
+            <circle cx="618" cy="308" r="5"  fill="#FF4500"/>
+            <!-- Valve -->
+            <rect x="616" y="228" width="4" height="10" rx="2" fill="#777"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Float badges -->
+      <div class="hero-float-badge">
+        <div class="badge-icon">🏍️</div>
+        <div>
+          <div class="badge-main">Moto-Inspired</div>
+          <div class="badge-sub">Since 2019</div>
+        </div>
+      </div>
+      <div class="hero-float-badge">
+        <div class="badge-icon">⭐</div>
+        <div>
+          <div class="badge-main">4.9 / 5.0</div>
+          <div class="badge-sub">18,400+ Reviews</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-track">
+    <div class="marquee-item">🏍️ Phantom Rider EDT <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🔥 New Drop — Chrome Collection <div class="marquee-dot"></div></div>
+    <div class="marquee-item">👕 Moto Tees & Hoodies <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🌟 Free Shipping Over $75 <div class="marquee-dot"></div></div>
+    <div class="marquee-item">💎 Premium Cologne Line <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🎽 Rider Jackets & Gear <div class="marquee-dot"></div></div>
+    <div class="marquee-item">⚡ Use Code RIDE20 — 20% Off <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🏍️ Phantom Rider EDT <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🔥 New Drop — Chrome Collection <div class="marquee-dot"></div></div>
+    <div class="marquee-item">👕 Moto Tees & Hoodies <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🌟 Free Shipping Over $75 <div class="marquee-dot"></div></div>
+    <div class="marquee-item">💎 Premium Cologne Line <div class="marquee-dot"></div></div>
+    <div class="marquee-item">🎽 Rider Jackets & Gear <div class="marquee-dot"></div></div>
+    <div class="marquee-item">⚡ Use Code RIDE20 — 20% Off <div class="marquee-dot"></div></div>
+  </div>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-label">Shop by Category</div>
+      <h2 class="section-title">FIND YOUR <span class="fire">RIDE</span></h2>
+      <p class="section-desc">From signature colognes to full riding looks — everything you need to own the road.</p>
+    </div>
+
+    <div class="categories-grid">
+      <a href="shop.html?cat=cologne" class="cat-card reveal reveal-d1">
+        <div class="cat-img-placeholder" style="background:linear-gradient(135deg,#1A1A2E,#2A1A1A);">💎</div>
+        <div class="cat-name">Cologne</div>
+        <div class="cat-count">6 Fragrances</div>
+        <div class="cat-arrow">→</div>
+      </a>
+      <a href="shop.html?cat=jackets" class="cat-card reveal reveal-d2">
+        <div class="cat-img-placeholder" style="background:linear-gradient(135deg,#1A1A1A,#2A2A1A);">🧥</div>
+        <div class="cat-name">Jackets</div>
+        <div class="cat-count">4 Styles</div>
+        <div class="cat-arrow">→</div>
+      </a>
+      <a href="shop.html?cat=clothing" class="cat-card reveal reveal-d3">
+        <div class="cat-img-placeholder" style="background:linear-gradient(135deg,#1A1A1A,#1A1E2A);">👕</div>
+        <div class="cat-name">Clothing</div>
+        <div class="cat-count">10 Pieces</div>
+        <div class="cat-arrow">→</div>
+      </a>
+      <a href="shop.html?cat=accessories" class="cat-card reveal reveal-d4">
+        <div class="cat-img-placeholder" style="background:linear-gradient(135deg,#1A1A1A,#1A2A1A);">⌚</div>
+        <div class="cat-name">Accessories</div>
+        <div class="cat-count">8 Items</div>
+        <div class="cat-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEW ARRIVALS -->
+<section class="arrivals-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-label">Fresh Off the Line</div>
+      <h2 class="section-title">NEW <span class="fire">ARRIVALS</span></h2>
+    </div>
+
+    <div class="arrivals-tabs reveal">
+      <button class="tab-btn active" onclick="filterTab(this,'all')">All New</button>
+      <button class="tab-btn" onclick="filterTab(this,'cologne')">Cologne</button>
+      <button class="tab-btn" onclick="filterTab(this,'jackets')">Jackets</button>
+      <button class="tab-btn" onclick="filterTab(this,'clothing')">Clothing</button>
+      <button class="tab-btn" onclick="filterTab(this,'accessories')">Accessories</button>
+    </div>
+
+    <div class="arrivals-grid" id="arrivalsGrid">
+      <!-- Product 1 -->
+      <div class="product-card reveal reveal-d1" data-cat="cologne" onclick="window.location.href='product.html?id=1'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
+          💎
+          <span class="product-badge badge-sale">25% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(1,'Phantom Rider EDT',67,'cologne')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Cologne</div>
+          <div class="product-name">Phantom Rider EDT — 50ml</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(892)</span></div>
+          <div class="product-price">
+            <span class="price-current">$67</span>
+            <span class="price-original">$89</span>
+            <span class="price-save">Save $22</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2 -->
+      <div class="product-card reveal reveal-d2" data-cat="jackets" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1E1A0E,#2A1A0A);">
+          🧥
+          <span class="product-badge badge-sale">20% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(7,'Moto Chrome Rider Jacket',228,'jackets')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Jackets</div>
+          <div class="product-name">Moto Chrome Rider Jacket</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(412)</span></div>
+          <div class="product-price">
+            <span class="price-current">$228</span>
+            <span class="price-original">$285</span>
+            <span class="price-save">Save $57</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3 -->
+      <div class="product-card reveal reveal-d3" data-cat="cologne" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1E2A,#0A1A2A);">
+          💎
+          <span class="product-badge badge-new">New</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(5,'Midnight Chrome EDP',110,'cologne')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Cologne</div>
+          <div class="product-name">Midnight Chrome EDP — 75ml</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(528)</span></div>
+          <div class="product-price">
+            <span class="price-current">$110</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4 -->
+      <div class="product-card reveal reveal-d4" data-cat="clothing" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1A1A,#0E1620);">
+          👕
+          <span class="product-badge badge-hot">Hot</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(11,'Phantom Graphic Tee',36,'clothing')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Clothing</div>
+          <div class="product-name">Phantom Graphic Tee</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,102)</span></div>
+          <div class="product-price">
+            <span class="price-current">$36</span>
+            <span class="price-original">$45</span>
+            <span class="price-save">Save $9</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 5 -->
+      <div class="product-card reveal reveal-d1" data-cat="cologne" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#200A00,#2A1500);">
+          💎
+          <span class="product-badge badge-sale">20% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(6,'Asphalt & Smoke EDT',68,'cologne')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Cologne</div>
+          <div class="product-name">Asphalt &amp; Smoke EDT — 50ml</div>
+          <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(274)</span></div>
+          <div class="product-price">
+            <span class="price-current">$68</span>
+            <span class="price-original">$85</span>
+            <span class="price-save">Save $17</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 6 -->
+      <div class="product-card reveal reveal-d2" data-cat="accessories" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1E1A,#0E1A0E);">
+          ⌚
+          <span class="product-badge badge-new">New</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(20,'Chrome Moto Cap',35,'accessories')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Accessories</div>
+          <div class="product-name">Chrome Moto Cap</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,245)</span></div>
+          <div class="product-price">
+            <span class="price-current">$35</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 7 -->
+      <div class="product-card reveal reveal-d3" data-cat="clothing" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1A14,#14180A);">
+          🧥
+          <span class="product-badge badge-sale">20% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(15,'Iron Moto Pullover Hoodie',68,'clothing')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Clothing</div>
+          <div class="product-name">Iron Moto Pullover Hoodie</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(623)</span></div>
+          <div class="product-price">
+            <span class="price-current">$68</span>
+            <span class="price-original">$85</span>
+            <span class="price-save">Save $17</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 8 -->
+      <div class="product-card reveal reveal-d4" data-cat="jackets" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A0E14,#200A18);">
+          🧥
+          <span class="product-badge badge-sale">25% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(9,'Speed Classic Leather Jacket',199,'jackets')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Jackets</div>
+          <div class="product-name">Speed Classic Leather Jacket</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(573)</span></div>
+          <div class="product-price">
+            <span class="price-current">$199</span>
+            <span class="price-original">$265</span>
+            <span class="price-save">Save $66</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align:center;margin-top:48px;" class="reveal">
+      <a href="shop.html" class="btn-primary" style="display:inline-flex;">View All 28 Products →</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-inner">
+    <span class="promo-emoji">🔥</span>
+    <div class="promo-title">SAVE UP TO<br><span>25% OFF</span></div>
+    <p style="color:rgba(255,255,255,0.6);font-size:1rem;margin-bottom:4px;">Use promo codes at checkout for instant savings</p>
+    <div class="promo-code-list">
+      <div class="promo-pill"><span>RIDE20</span> — 20% off everything</div>
+      <div class="promo-pill"><span>CHROME25</span> — 25% off $150+</div>
+      <div class="promo-pill"><span>WHEEL10</span> — 10% off any order</div>
+    </div>
+    <div style="margin-top:32px;">
+      <a href="shop.html" class="btn-primary" style="display:inline-flex;">Shop Now →</a>
+    </div>
+  </div>
+</div>
+
+<!-- BRAND STORY -->
+<section class="brand-section">
+  <div class="brand-inner">
+    <div class="brand-visual reveal">
+      <div class="brand-canvas">
+        <div class="brand-glow-1"></div>
+        <div class="brand-glow-2"></div>
+        <div class="brand-canvas-content">
+          <span class="brand-canvas-icon">🏍️</span>
+          <div class="brand-canvas-label">
+            TWO WHEEL
+            <span>CLOTHING</span>
+          </div>
+        </div>
+      </div>
+      <div class="brand-accent-badge">
+        <span class="accent-num">2019</span>
+        <span class="accent-lbl">Founded</span>
+      </div>
+      <div class="brand-float-badge">
+        <div class="badge-icon">🔥</div>
+        <div>
+          <div class="badge-main">Born on the Road</div>
+          <div class="badge-sub">Est. Houston, TX</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="brand-content reveal">
+      <div class="section-head" style="text-align:left;margin-bottom:28px;">
+        <div class="section-label">Our Story</div>
+      </div>
+      <div class="brand-title">THE SCENT OF<br>THE OPEN ROAD</div>
+      <div class="brand-subtitle">Born from asphalt, built for riders.</div>
+      <p class="brand-text">Two Wheel Clothing was started in a garage in Houston by two riders who were tired of mainstream fashion that had no soul. Every scent we bottle, every jacket we cut, and every thread we stitch carries the spirit of the open road.</p>
+      <p class="brand-text">We don't just make clothing. We make a statement — that you ride your own path, that you live on your own terms, and that how you show up matters.</p>
+      <p class="brand-quote">"The road is our runway. The engine is our heartbeat."</p>
+      <a href="shop.html" class="btn-primary" style="display:inline-flex;margin-top:8px;">Shop the Collection →</a>
+
+      <div class="brand-stats">
+        <div class="brand-stat-card">
+          <div class="brand-stat-icon">🏍️</div>
+          <div class="brand-stat-num">18K+</div>
+          <div class="brand-stat-lbl">Riders Worldwide</div>
+        </div>
+        <div class="brand-stat-card">
+          <div class="brand-stat-icon">⭐</div>
+          <div class="brand-stat-num">4.9/5</div>
+          <div class="brand-stat-lbl">Average Rating</div>
+        </div>
+        <div class="brand-stat-card">
+          <div class="brand-stat-icon">🌍</div>
+          <div class="brand-stat-num">42+</div>
+          <div class="brand-stat-lbl">Countries Shipped</div>
+        </div>
+        <div class="brand-stat-card">
+          <div class="brand-stat-icon">🔥</div>
+          <div class="brand-stat-num">28+</div>
+          <div class="brand-stat-lbl">Products</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="best-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-label">Rider Favourites</div>
+      <h2 class="section-title">BEST <span class="fire">SELLERS</span></h2>
+      <p class="section-desc">The pieces our riders keep coming back for.</p>
+    </div>
+
+    <div class="best-grid">
+      <div class="product-card reveal reveal-d1" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#0E0E1A,#1A1A2A);">
+          💎
+          <span class="product-badge badge-hot">Hot</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(3,'Chrome Dusk EDT',63,'cologne')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Cologne</div>
+          <div class="product-name">Chrome Dusk EDT — 50ml</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,204)</span></div>
+          <div class="product-price">
+            <span class="price-current">$63</span>
+            <span class="price-original">$79</span>
+            <span class="price-save">Save $16</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d2" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);">
+          👕
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(13,'Throttle Chrome Tee',48,'clothing')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Clothing</div>
+          <div class="product-name">Throttle Chrome Tee</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(789)</span></div>
+          <div class="product-price">
+            <span class="price-current">$48</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d3" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#100A1A,#200A1A);">
+          🎽
+          <span class="product-badge badge-sale">20% OFF</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(17,'Rider Cargo Pants',76,'clothing')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Clothing</div>
+          <div class="product-name">Rider Cargo Pants</div>
+          <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(347)</span></div>
+          <div class="product-price">
+            <span class="price-current">$76</span>
+            <span class="price-original">$95</span>
+            <span class="price-save">Save $19</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-card reveal reveal-d4" onclick="window.location.href='shop.html'">
+        <div class="product-img" style="background:linear-gradient(135deg,#0A1A0A,#1A2A0A);">
+          ⌚
+          <span class="product-badge badge-hot">Hot</span>
+          <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(23,'Throttle Chain Bracelet',22,'accessories')">+ Add to Cart</button>
+        </div>
+        <div class="product-info">
+          <div class="product-category">Accessories</div>
+          <div class="product-name">Throttle Chain Bracelet</div>
+          <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(892)</span></div>
+          <div class="product-price">
+            <span class="price-current">$22</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials-section">
+  <div class="section-inner">
+    <div class="section-head reveal">
+      <div class="section-label">What Riders Say</div>
+      <h2 class="section-title">FROM THE <span class="fire">COMMUNITY</span></h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <div class="testimonial-card reveal reveal-d1">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Phantom Rider is the best cologne I've worn in years. It's woody, warm, and stays on all day. Got three compliments on my first ride wearing it. This brand understands what a rider wants."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#FF4500,#c93a00);">M</div>
+          <div>
+            <div class="author-name">Marcus D.</div>
+            <div class="author-tag">Verified Buyer · Cologne</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-d2">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The Moto Chrome jacket fits perfectly and the leather quality is incredible for the price. I wear it both on and off the bike. Fast shipping, great packaging. Will be back for more."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#3B82F6,#1D4ED8);">J</div>
+          <div>
+            <div class="author-name">Jake T.</div>
+            <div class="author-tag">Verified Buyer · Jackets</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card reveal reveal-d3">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"Finally a brand that gets it. The Phantom Graphic Tee is heavy cotton, the print doesn't crack after washing, and it looks exactly like the photo. Two Wheel is the real deal."</p>
+        <div class="testimonial-author">
+          <div class="author-avatar" style="background:linear-gradient(135deg,#22C55E,#15803D);">R</div>
+          <div>
+            <div class="author-name">Riley K.</div>
+            <div class="author-tag">Verified Buyer · Clothing</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="newsletter-inner">
+    <div class="section-label reveal" style="display:block;text-align:center;">Stay in the Loop</div>
+    <h2 class="newsletter-title reveal">JOIN THE <span>RIDE</span></h2>
+    <p class="newsletter-desc reveal">Get early access to new drops, exclusive promo codes, and rider-only offers straight to your inbox.</p>
+    <div class="newsletter-form reveal">
+      <input type="email" class="newsletter-input" placeholder="your@email.com">
+      <button class="newsletter-submit" onclick="newsletterSignup(this)">Subscribe</button>
+    </div>
+    <p class="newsletter-note reveal">No spam. Unsubscribe any time. We ride clean.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-brand-name">TWO <span>WHEEL</span></span>
+      <p>Cologne, clothing, and accessories for riders who refuse to settle. Born on the road. Made for the open highway.</p>
+      <div class="footer-social">
+        <a href="#" class="social-link" title="Instagram">📸</a>
+        <a href="#" class="social-link" title="TikTok">🎵</a>
+        <a href="#" class="social-link" title="YouTube">▶️</a>
+        <a href="#" class="social-link" title="Facebook">👥</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="shop.html?cat=cologne">Cologne</a>
+      <a href="shop.html?cat=jackets">Jackets</a>
+      <a href="shop.html?cat=clothing">Clothing</a>
+      <a href="shop.html?cat=accessories">Accessories</a>
+      <a href="shop.html">All Products</a>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <a href="#">About Us</a>
+      <a href="#">Size Guide</a>
+      <a href="#">Shipping Info</a>
+      <a href="#">Returns</a>
+      <a href="#">FAQ</a>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <a href="cart.html">Shopping Cart</a>
+      <a href="#">Order Tracking</a>
+      <a href="#">Wishlist</a>
+      <a href="#">Contact Us</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Two Wheel Clothing. All rights reserved.</p>
+    <p>Free shipping on orders over $75 · Use code RIDE20 for 20% off</p>
+  </div>
+</footer>
+
+</div><!-- /#site-wrap -->
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+  <span class="toast-icon">🛒</span>
+  <div class="toast-text" id="toastText">Item added to cart!</div>
+</div>
+
+<script>
+  /* ─── PRELOADER ─── */
+  (function() {
+    const pl   = document.getElementById('preloader');
+    const bar  = document.getElementById('plProgressBar');
+    const tag  = document.getElementById('plTagline');
+    const site = document.getElementById('site-wrap');
+    let prog   = 0;
+
+    const messages = ['Loading the Ride…', 'Warming Up the Engine…', 'Revving to Life…', 'Hit the Road!'];
+    let msgIdx = 0;
+
+    const timer = setInterval(function() {
+      prog += Math.random() * 18 + 4;
+      if (prog > 100) prog = 100;
+      bar.style.width = prog + '%';
+
+      const newIdx = Math.min(Math.floor(prog / 26), messages.length - 1);
+      if (newIdx !== msgIdx) { msgIdx = newIdx; tag.textContent = messages[msgIdx]; }
+
+      if (prog >= 100) {
+        clearInterval(timer);
+        pl.classList.add('burnout');
+        setTimeout(function() {
+          pl.classList.add('done');
+          site.classList.add('visible');
+        }, 300);
+      }
+    }, 60);
+  })();
+
+  /* ─── MOBILE MENU ─── */
+  function toggleMenu() {
+    document.getElementById('mobMenu').classList.toggle('open');
+    document.getElementById('mobOverlay').classList.toggle('open');
+  }
+
+  /* ─── CART (localStorage) ─── */
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem('twCart') || '[]'); } catch(e) { return []; }
+  }
+  function saveCart(cart) { localStorage.setItem('twCart', JSON.stringify(cart)); }
+  function updateCartBadge() {
+    const n = getCart().reduce(function(s,i){ return s + i.qty; }, 0);
+    document.getElementById('cartBadge').textContent  = n;
+    document.getElementById('mobCartBadge').textContent = n;
+  }
+  function quickAdd(id, name, price, cat) {
+    const cart = getCart();
+    const ex   = cart.find(function(i){ return i.id === id; });
+    if (ex) { ex.qty += 1; }
+    else { cart.push({ id:id, name:name, price:price, cat:cat, qty:1 }); }
+    saveCart(cart);
+    updateCartBadge();
+    showToast('<strong>' + name + '</strong> added to cart!');
+  }
+  updateCartBadge();
+
+  /* ─── TOAST ─── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    document.getElementById('toastText').innerHTML = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  }
+
+  /* ─── ARRIVALS TAB FILTER ─── */
+  function filterTab(btn, cat) {
+    document.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('#arrivalsGrid .product-card').forEach(function(card) {
+      const match = cat === 'all' || card.dataset.cat === cat;
+      card.style.display = match ? '' : 'none';
+    });
+  }
+
+  /* ─── NEWSLETTER ─── */
+  function newsletterSignup(btn) {
+    const input = btn.previousElementSibling;
+    if (!input.value || !input.value.includes('@')) {
+      input.style.borderColor = 'rgba(255,69,0,0.6)';
+      return;
+    }
+    btn.textContent = '✓ Subscribed!';
+    btn.style.background = '#22C55E';
+    input.style.opacity = '0.5';
+    input.disabled = true;
+    btn.disabled = true;
+  }
+
+  /* ─── SCROLL REVEAL ─── */
+  const revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+</script>
+</body>
+</html>
