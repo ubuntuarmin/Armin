@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart & Checkout — Two Wheel Clothing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --black:#080808; --dark:#0F0F0F; --dark2:#161616; --dark3:#1E1E1E; --panel:#242424;
+      --border:rgba(255,255,255,0.08); --fire:#FF4500; --fire2:#FF6A00;
+      --white:#FFFFFF; --text:#EFEFEF; --text-muted:#888; --success:#22C55E; --error:#EF4444;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; background:var(--black); color:var(--text); overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+
+    /* PRELOADER */
+    #preloader { position:fixed; inset:0; z-index:99999; background:var(--black); display:flex; align-items:center; justify-content:center; transition:opacity 0.6s ease, transform 0.6s cubic-bezier(0.76,0,0.24,1); }
+    #preloader.done { opacity:0; pointer-events:none; transform:translateY(-100%); }
+    #pl-wheel-svg { width:110px; height:110px; animation:wheelSpin 0.9s linear infinite; transform-origin:55px 55px; filter:drop-shadow(0 0 12px rgba(255,69,0,0.4)); }
+    @keyframes wheelSpin { to{transform:rotate(360deg);} }
+    .pl-brand { text-align:center; margin:18px 0 14px; }
+    .pl-brand-top { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.8rem; letter-spacing:0.18em; color:var(--white); }
+    .pl-brand-bottom { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.1rem; letter-spacing:0.35em; color:var(--fire); }
+    .pl-bar-wrap { width:140px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin:0 auto; }
+    .pl-bar { height:100%; background:linear-gradient(90deg,var(--fire),var(--fire2)); width:0%; transition:width 0.05s linear; }
+
+    #site-wrap { opacity:0; transition:opacity 0.5s ease 0.1s; }
+    #site-wrap.visible { opacity:1; }
+
+    /* MOBILE MENU */
+    .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1999; }
+    .mob-overlay.open { display:block; }
+    .mob-menu { display:flex; flex-direction:column; position:fixed; top:0; right:-100%; width:72%; max-width:300px; height:100%; background:var(--dark2); z-index:2000; padding:88px 28px 40px; gap:4px; border-left:2px solid var(--fire); transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); }
+    .mob-menu.open { right:0; }
+    .mob-close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--fire); font-size:1.7rem; cursor:pointer; }
+    .mob-menu a { color:rgba(255,255,255,0.82); font-size:1rem; font-weight:500; padding:12px 16px; border-radius:8px; border-left:3px solid transparent; transition:all 0.22s; }
+    .mob-menu a:hover { background:rgba(255,69,0,0.1); border-left-color:var(--fire); color:var(--fire); }
+    .mob-cart-badge { background:var(--fire); color:#fff; border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; margin-left:6px; }
+
+    /* NAV */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(8,8,8,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:2px solid var(--fire); box-shadow:0 4px 30px rgba(0,0,0,0.5); }
+    .nav-inner { max-width:1240px; margin:0 auto; padding:0 28px; height:70px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+    .nav-logo-icon { width:40px; height:40px; border:2px solid var(--fire); border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,69,0,0.08); }
+    .nav-logo-icon svg { width:22px; height:22px; }
+    .nav-brand-text { display:flex; flex-direction:column; }
+    .nav-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.15em; color:var(--white); line-height:1; }
+    .nav-brand-name span { color:var(--fire); }
+    .nav-brand-tag { font-size:0.58rem; color:#888; letter-spacing:0.25em; text-transform:uppercase; }
+    .nav-links { display:flex; gap:2px; list-style:none; }
+    .nav-links a { color:rgba(255,255,255,0.65); padding:8px 14px; border-radius:6px; font-size:0.85rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover { color:var(--white); background:rgba(255,255,255,0.07); }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .cart-btn { display:flex; align-items:center; gap:8px; background:var(--fire); color:#fff; border:none; cursor:pointer; padding:9px 18px; border-radius:6px; font-size:0.85rem; font-weight:700; font-family:'Inter',sans-serif; transition:all 0.25s; }
+    .cart-btn:hover { background:var(--fire2); }
+    .cart-badge { background:#fff; color:var(--fire); border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--fire); border-radius:2px; }
+
+    /* PAGE HEADER */
+    .page-hero { padding:56px 28px 48px; background:var(--dark2); text-align:center; position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 60% 80% at 50% 50%, rgba(255,69,0,0.06) 0%, transparent 70%); }
+    .page-hero-inner { position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(255,69,0,0.1); border:1px solid rgba(255,69,0,0.3); color:var(--fire); font-size:0.72rem; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; padding:6px 16px; border-radius:50px; margin-bottom:14px; }
+    .page-title { font-family:'Bebas Neue',sans-serif; font-size:3rem; letter-spacing:0.08em; color:var(--white); }
+    .page-title span { color:var(--fire); }
+
+    /* CHECKOUT STEPS */
+    .steps-bar { max-width:500px; margin:0 auto; padding:28px 28px 0; }
+    .steps { display:flex; align-items:center; justify-content:center; gap:0; }
+    .step { display:flex; flex-direction:column; align-items:center; gap:6px; flex:1; }
+    .step-num { width:36px; height:36px; border-radius:50%; border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:700; color:rgba(255,255,255,0.4); transition:all 0.3s; }
+    .step.active .step-num { border-color:var(--fire); background:var(--fire); color:#fff; }
+    .step.done .step-num { border-color:var(--success); background:var(--success); color:#fff; }
+    .step-label { font-size:0.68rem; font-weight:700; text-transform:uppercase; letter-spacing:0.15em; color:rgba(255,255,255,0.35); transition:color 0.3s; }
+    .step.active .step-label { color:var(--fire); }
+    .step.done .step-label { color:var(--success); }
+    .step-line { flex:1; height:2px; background:var(--border); transition:background 0.3s; }
+    .step-line.done { background:var(--success); }
+
+    /* MAIN LAYOUT */
+    .cart-layout { max-width:1240px; margin:0 auto; padding:40px 28px 80px; display:grid; grid-template-columns:1fr 380px; gap:32px; align-items:start; }
+
+    /* ── CART PANEL ── */
+    .cart-panel { background:var(--dark2); border:1px solid var(--border); border-radius:12px; overflow:hidden; }
+    .cart-panel-header { padding:22px 28px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .cart-panel-title { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.08em; color:var(--white); }
+    .cart-clear-btn { background:none; border:none; color:var(--text-muted); font-size:0.8rem; cursor:pointer; font-family:'Inter',sans-serif; transition:color 0.2s; }
+    .cart-clear-btn:hover { color:var(--error); }
+
+    /* Cart items */
+    .cart-items { padding:0; }
+    .cart-item { display:grid; grid-template-columns:80px 1fr auto; gap:18px; align-items:start; padding:22px 28px; border-bottom:1px solid var(--border); transition:background 0.2s; }
+    .cart-item:hover { background:rgba(255,255,255,0.02); }
+    .cart-item-img { width:80px; height:80px; border-radius:8px; background:var(--dark3); border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:2.5rem; overflow:hidden; flex-shrink:0; }
+    .cart-item-name { font-size:0.95rem; font-weight:700; color:var(--white); margin-bottom:5px; line-height:1.4; }
+    .cart-item-cat { font-size:0.74rem; color:var(--fire); font-weight:600; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:10px; }
+    .cart-item-unit { font-size:0.8rem; color:var(--text-muted); }
+    .cart-item-right { display:flex; flex-direction:column; align-items:flex-end; gap:12px; }
+    .cart-item-price { font-size:1.1rem; font-weight:800; color:var(--white); }
+    .cart-item-controls { display:flex; align-items:center; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; }
+    .qty-btn { width:32px; height:32px; background:var(--dark3); border:none; color:var(--white); font-size:1rem; cursor:pointer; transition:background 0.2s; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
+    .qty-btn:hover { background:rgba(255,69,0,0.2); }
+    .qty-display { width:36px; height:32px; background:transparent; border-left:1px solid var(--border); border-right:1px solid var(--border); color:var(--white); font-size:0.9rem; font-weight:700; text-align:center; line-height:32px; }
+    .cart-item-remove { background:none; border:none; color:rgba(255,255,255,0.2); cursor:pointer; font-size:0.8rem; transition:color 0.2s; font-family:'Inter',sans-serif; }
+    .cart-item-remove:hover { color:var(--error); }
+
+    /* Empty cart */
+    .empty-cart { padding:64px 28px; text-align:center; }
+    .empty-icon { font-size:4rem; display:block; margin-bottom:18px; }
+    .empty-title { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.1em; color:var(--white); margin-bottom:10px; }
+    .empty-desc { font-size:0.9rem; color:var(--text-muted); margin-bottom:28px; line-height:1.7; }
+
+    /* Promo section */
+    .promo-section { padding:22px 28px; border-bottom:1px solid var(--border); }
+    .promo-label { font-size:0.8rem; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:0.1em; text-transform:uppercase; margin-bottom:12px; }
+    .promo-row { display:flex; gap:0; border:1px solid var(--border); border-radius:6px; overflow:hidden; transition:border-color 0.3s; }
+    .promo-row.valid { border-color:rgba(34,197,94,0.4); }
+    .promo-row.invalid { border-color:rgba(239,68,68,0.4); }
+    .promo-input { flex:1; padding:12px 16px; background:var(--dark3); border:none; color:var(--white); font-size:0.9rem; font-family:'Inter',sans-serif; }
+    .promo-input::placeholder { color:rgba(255,255,255,0.2); }
+    .promo-input:focus { outline:none; }
+    .promo-btn { padding:12px 20px; background:var(--fire); color:#fff; border:none; font-size:0.84rem; font-weight:700; cursor:pointer; font-family:'Inter',sans-serif; transition:background 0.2s; }
+    .promo-btn:hover { background:var(--fire2); }
+    .promo-msg { margin-top:8px; font-size:0.8rem; height:20px; transition:all 0.3s; }
+    .promo-msg.success { color:var(--success); }
+    .promo-msg.error   { color:var(--error); }
+
+    .promo-codes-hint { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
+    .hint-code { padding:4px 10px; border:1px solid rgba(255,69,0,0.25); border-radius:4px; font-size:0.74rem; color:rgba(255,69,0,0.7); cursor:pointer; transition:all 0.2s; font-family:'Bebas Neue',sans-serif; letter-spacing:0.1em; }
+    .hint-code:hover { border-color:var(--fire); color:var(--fire); background:rgba(255,69,0,0.08); }
+
+    /* ── ORDER SUMMARY ── */
+    .order-summary { background:var(--dark2); border:1px solid var(--border); border-radius:12px; overflow:hidden; position:sticky; top:90px; }
+    .summary-header { padding:20px 24px; border-bottom:1px solid var(--border); font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.08em; color:var(--white); }
+    .summary-body { padding:24px; }
+
+    .summary-line { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; font-size:0.9rem; }
+    .summary-line-label { color:rgba(255,255,255,0.55); }
+    .summary-line-val { color:var(--white); font-weight:600; }
+    .summary-discount { color:var(--success) !important; }
+    .summary-divider { border:none; border-top:1px solid var(--border); margin:16px 0; }
+    .summary-total { display:flex; justify-content:space-between; align-items:center; }
+    .summary-total-label { font-size:1rem; font-weight:700; color:var(--white); }
+    .summary-total-val { font-size:1.5rem; font-weight:800; color:var(--fire); }
+
+    .checkout-btn { width:100%; margin-top:20px; padding:16px; background:linear-gradient(135deg,var(--fire),var(--fire2)); color:#fff; border:none; border-radius:6px; font-size:1.05rem; font-weight:800; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.3s; box-shadow:0 6px 24px rgba(255,69,0,0.4); letter-spacing:0.3px; display:flex; align-items:center; justify-content:center; gap:10px; }
+    .checkout-btn:hover { transform:translateY(-2px); box-shadow:0 10px 32px rgba(255,69,0,0.55); }
+    .checkout-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+
+    .summary-trust { margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+    .trust-row { display:flex; align-items:center; gap:8px; font-size:0.78rem; color:rgba(255,255,255,0.4); }
+
+    /* ── CHECKOUT FORM ── */
+    .checkout-section { display:none; }
+    .checkout-section.active { display:block; }
+
+    .form-section-title { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.08em; color:var(--white); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+    .form-section-badge { background:rgba(255,69,0,0.15); border:1px solid rgba(255,69,0,0.3); color:var(--fire); font-size:0.7rem; font-weight:700; padding:3px 8px; border-radius:4px; letter-spacing:0.1em; text-transform:uppercase; font-family:'Inter',sans-serif; }
+
+    .form-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:20px; }
+    .form-group { display:flex; flex-direction:column; gap:6px; }
+    .form-group.full { grid-column:1/-1; }
+    .form-label { font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:0.12em; text-transform:uppercase; }
+    .form-input { padding:13px 16px; background:var(--dark3); border:2px solid var(--border); border-radius:6px; color:var(--white); font-size:0.92rem; font-family:'Inter',sans-serif; transition:border-color 0.25s; }
+    .form-input:focus { outline:none; border-color:rgba(255,69,0,0.5); }
+    .form-input::placeholder { color:rgba(255,255,255,0.2); }
+    .form-input.error { border-color:var(--error); }
+    .form-input.valid { border-color:rgba(34,197,94,0.4); }
+    .form-select { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:16px; padding-right:36px; }
+
+    .form-divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
+
+    .payment-icons { display:flex; gap:8px; margin-bottom:18px; }
+    .pay-icon { padding:6px 12px; background:var(--dark3); border:1px solid var(--border); border-radius:4px; font-size:0.8rem; color:rgba(255,255,255,0.5); font-weight:600; }
+
+    .form-back-btn { background:none; border:2px solid var(--border); color:rgba(255,255,255,0.6); padding:13px 24px; border-radius:6px; font-size:0.9rem; font-weight:600; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.2s; }
+    .form-back-btn:hover { border-color:rgba(255,255,255,0.3); color:var(--white); }
+
+    .submit-btn { flex:1; padding:14px 28px; background:linear-gradient(135deg,var(--fire),var(--fire2)); color:#fff; border:none; border-radius:6px; font-size:1rem; font-weight:800; cursor:pointer; font-family:'Inter',sans-serif; transition:all 0.3s; box-shadow:0 5px 20px rgba(255,69,0,0.4); display:flex; align-items:center; justify-content:center; gap:10px; }
+    .submit-btn:hover { transform:translateY(-1px); box-shadow:0 8px 28px rgba(255,69,0,0.55); }
+
+    /* ── SUCCESS MODAL ── */
+    .modal-overlay { position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.85); display:flex; align-items:center; justify-content:center; opacity:0; pointer-events:none; transition:opacity 0.4s; padding:20px; }
+    .modal-overlay.open { opacity:1; pointer-events:all; }
+    .modal { background:var(--dark2); border:1px solid rgba(34,197,94,0.3); border-radius:16px; padding:48px 44px; max-width:520px; width:100%; text-align:center; transform:scale(0.92); transition:transform 0.4s cubic-bezier(0.25,0.8,0.25,1); }
+    .modal-overlay.open .modal { transform:scale(1); }
+
+    .modal-icon { font-size:4.5rem; display:block; margin-bottom:24px; animation:successBounce 0.6s ease 0.3s both; }
+    @keyframes successBounce { 0%{transform:scale(0);} 70%{transform:scale(1.15);} 100%{transform:scale(1);} }
+    .modal-title { font-family:'Bebas Neue',sans-serif; font-size:2.5rem; letter-spacing:0.1em; color:var(--white); margin-bottom:14px; }
+    .modal-title span { color:var(--success); }
+    .modal-desc { font-size:0.95rem; color:rgba(255,255,255,0.55); line-height:1.8; margin-bottom:10px; }
+    .modal-order-num { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.15em; color:var(--fire); margin:12px 0 28px; }
+    .modal-details { background:rgba(255,255,255,0.03); border:1px solid var(--border); border-radius:8px; padding:18px; margin-bottom:28px; display:flex; flex-direction:column; gap:10px; }
+    .modal-detail-row { display:flex; justify-content:space-between; font-size:0.86rem; }
+    .modal-detail-row span:first-child { color:rgba(255,255,255,0.4); }
+    .modal-detail-row span:last-child { color:var(--white); font-weight:600; }
+    .modal-shop-btn { display:inline-flex; align-items:center; gap:8px; background:linear-gradient(135deg,var(--fire),var(--fire2)); color:#fff; padding:14px 32px; border-radius:6px; font-size:0.96rem; font-weight:700; transition:all 0.3s; box-shadow:0 6px 20px rgba(255,69,0,0.4); }
+    .modal-shop-btn:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(255,69,0,0.55); }
+
+    /* TOAST */
+    .toast { position:fixed; bottom:28px; right:28px; z-index:5000; background:var(--dark3); border:1px solid rgba(34,197,94,0.3); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 40px rgba(0,0,0,0.5); transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1); max-width:320px; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast-icon { font-size:1.4rem; flex-shrink:0; }
+    .toast-text { font-size:0.86rem; color:var(--text); }
+    .toast-text strong { color:var(--success); }
+
+    /* FOOTER */
+    footer { background:var(--black); border-top:2px solid var(--fire); padding:40px 28px 24px; }
+    .footer-bottom { max-width:1240px; margin:0 auto; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; }
+    .footer-bottom p { color:rgba(255,255,255,0.25); font-size:0.78rem; }
+    .footer-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.15em; color:var(--white); }
+    .footer-brand-name span { color:var(--fire); }
+
+    /* RESPONSIVE */
+    @media (max-width:1024px) { .cart-layout { grid-template-columns:1fr; } .order-summary { position:static; } }
+    @media (max-width:768px) { .nav-links { display:none; } .hamburger { display:flex; } .form-grid { grid-template-columns:1fr; } .cart-item { grid-template-columns:64px 1fr; } .cart-item-right { display:none; } }
+    @media (max-width:600px) { .cart-item { grid-template-columns:56px 1fr; gap:12px; } .modal { padding:32px 24px; } }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <svg id="pl-wheel-svg" viewBox="0 0 110 110">
+      <circle cx="55" cy="55" r="52" fill="#111"/><circle cx="55" cy="55" r="52" fill="none" stroke="#222" stroke-width="5"/><circle cx="55" cy="55" r="52" fill="none" stroke="#111" stroke-width="10" stroke-dasharray="15 12"/><circle cx="55" cy="55" r="40" fill="#181818" stroke="#3A3A3A" stroke-width="1.5"/><circle cx="55" cy="55" r="40" fill="none" stroke="#555" stroke-width="1"/>
+      <g stroke="#888" stroke-width="2" stroke-linecap="round"><line x1="55" y1="55" x2="55" y2="15"/><line x1="55" y1="55" x2="83" y2="27"/><line x1="55" y1="55" x2="95" y2="55"/><line x1="55" y1="55" x2="83" y2="83"/><line x1="55" y1="55" x2="55" y2="95"/><line x1="55" y1="55" x2="27" y2="83"/><line x1="55" y1="55" x2="15" y2="55"/><line x1="55" y1="55" x2="27" y2="27"/></g>
+      <g stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" opacity="0.5"><line x1="55" y1="55" x2="55" y2="15"/><line x1="55" y1="55" x2="95" y2="55"/><line x1="55" y1="55" x2="55" y2="95"/><line x1="55" y1="55" x2="15" y2="55"/></g>
+      <circle cx="55" cy="55" r="11" fill="#111" stroke="#555" stroke-width="1.5"/><circle cx="55" cy="55" r="4" fill="#FF4500"/><rect x="53.5" y="3" width="3" height="8" rx="1.5" fill="#666"/>
+    </svg>
+    <div class="pl-brand"><span class="pl-brand-top">TWO WHEEL</span><span class="pl-brand-bottom">CHECKOUT</span></div>
+    <div class="pl-bar-wrap"><div class="pl-bar" id="plBar"></div></div>
+  </div>
+</div>
+
+<div id="site-wrap">
+<!-- Mobile Menu -->
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="shop.html">Shop All</a>
+  <a href="shop.html?cat=cologne">Cologne</a>
+  <a href="shop.html?cat=clothing">Clothing</a>
+  <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="cart.html" style="color:var(--fire);">🛒 Cart</a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="5.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><circle cx="18.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><path d="M9 16 L12 8 L15 10 L18.5 16" stroke="#FF4500" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 16 L9 16" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8 L16 6" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <div class="nav-brand-text"><span class="nav-brand-name">TWO <span>WHEEL</span></span><span class="nav-brand-tag">Secure Checkout</span></div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html">Shop All</a></li>
+      <li><a href="shop.html?cat=cologne">Cologne</a></li>
+      <li><a href="shop.html?cat=clothing">Clothing</a></li>
+      <li><a href="shop.html?cat=accessories">Accessories</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HEADER -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-label">Secure Checkout</span>
+    <h1 class="page-title">YOUR <span>CART</span></h1>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-bar">
+  <div class="steps" id="stepsBar">
+    <div class="step active" id="step1">
+      <div class="step-num">1</div>
+      <div class="step-label">Cart</div>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="step2">
+      <div class="step-num">2</div>
+      <div class="step-label">Shipping</div>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="step3">
+      <div class="step-num">3</div>
+      <div class="step-label">Payment</div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="cart-layout">
+
+  <!-- LEFT: Cart / Form -->
+  <div>
+    <!-- STEP 1: Cart -->
+    <div class="checkout-section active" id="checkoutStep1">
+      <div class="cart-panel">
+        <div class="cart-panel-header">
+          <span class="cart-panel-title">YOUR ITEMS</span>
+          <button class="cart-clear-btn" onclick="clearCart()">Clear All</button>
+        </div>
+
+        <div class="cart-items" id="cartItemsList"></div>
+
+        <!-- Empty state -->
+        <div class="empty-cart" id="emptyCart" style="display:none;">
+          <span class="empty-icon">🏍️</span>
+          <div class="empty-title">YOUR CART IS EMPTY</div>
+          <p class="empty-desc">Looks like you haven't added anything yet.<br>Head to the shop and find your ride style.</p>
+          <a href="shop.html" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--fire),var(--fire2));color:#fff;padding:14px 28px;border-radius:6px;font-size:0.95rem;font-weight:700;">🔥 Shop Now</a>
+        </div>
+
+        <!-- Promo code -->
+        <div class="promo-section" id="promoSection">
+          <div class="promo-label">Promo Code</div>
+          <div class="promo-row" id="promoRow">
+            <input type="text" class="promo-input" id="promoInput" placeholder="Enter code e.g. RIDE20" autocomplete="off" style="text-transform:uppercase;">
+            <button class="promo-btn" onclick="applyPromo()">Apply</button>
+          </div>
+          <div class="promo-msg" id="promoMsg"></div>
+          <div class="promo-codes-hint">
+            <span class="hint-code" onclick="useCode('RIDE20')">RIDE20</span>
+            <span class="hint-code" onclick="useCode('CHROME25')">CHROME25</span>
+            <span class="hint-code" onclick="useCode('WHEEL10')">WHEEL10</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px;display:flex;gap:12px;justify-content:flex-end;">
+        <a href="shop.html" style="display:inline-flex;align-items:center;gap:6px;background:none;border:2px solid var(--border);color:rgba(255,255,255,0.6);padding:12px 22px;border-radius:6px;font-size:0.9rem;font-weight:600;transition:all 0.2s;" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='var(--border)'">← Continue Shopping</a>
+        <button id="proceedShipping" onclick="goToStep(2)" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--fire),var(--fire2));color:#fff;padding:12px 28px;border-radius:6px;font-size:0.95rem;font-weight:800;border:none;cursor:pointer;box-shadow:0 5px 20px rgba(255,69,0,0.4);font-family:'Inter',sans-serif;transition:all 0.3s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='none'">Proceed to Shipping →</button>
+      </div>
+    </div>
+
+    <!-- STEP 2: Shipping -->
+    <div class="checkout-section" id="checkoutStep2">
+      <div class="cart-panel" style="padding:28px;">
+        <div class="form-section-title">Contact Information <span class="form-section-badge">Step 1 of 2</span></div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label class="form-label">First Name *</label>
+            <input type="text" class="form-input" id="firstName" placeholder="Jake" onblur="validateField(this,'text')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name *</label>
+            <input type="text" class="form-input" id="lastName" placeholder="Rider" onblur="validateField(this,'text')">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Email Address *</label>
+            <input type="email" class="form-input" id="email" placeholder="jake@twowheel.com" onblur="validateField(this,'email')">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Phone Number</label>
+            <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 000-0000">
+          </div>
+        </div>
+
+        <hr class="form-divider">
+        <div class="form-section-title">Shipping Address</div>
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Street Address *</label>
+            <input type="text" class="form-input" id="address" placeholder="123 Rider Street" onblur="validateField(this,'text')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">City *</label>
+            <input type="text" class="form-input" id="city" placeholder="Houston" onblur="validateField(this,'text')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">State / Province</label>
+            <input type="text" class="form-input" id="state" placeholder="TX">
+          </div>
+          <div class="form-group">
+            <label class="form-label">ZIP / Postal Code *</label>
+            <input type="text" class="form-input" id="zip" placeholder="77001" onblur="validateField(this,'zip')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Country *</label>
+            <select class="form-input form-select" id="country">
+              <option value="">Select Country</option>
+              <option value="US" selected>United States</option>
+              <option value="CA">Canada</option>
+              <option value="GB">United Kingdom</option>
+              <option value="AU">Australia</option>
+              <option value="DE">Germany</option>
+              <option value="FR">France</option>
+              <option value="NL">Netherlands</option>
+              <option value="JP">Japan</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+        </div>
+
+        <hr class="form-divider">
+        <div class="form-section-title">Shipping Method</div>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:24px;">
+          <label style="display:flex;align-items:center;gap:14px;background:var(--dark3);border:2px solid rgba(255,69,0,0.4);border-radius:8px;padding:16px 20px;cursor:pointer;">
+            <input type="radio" name="shipping" value="standard" checked style="accent-color:var(--fire);width:16px;height:16px;">
+            <div style="flex:1;"><div style="font-size:0.9rem;font-weight:700;color:var(--white);">Standard Shipping — <span style="color:var(--success);">FREE</span></div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">3–5 business days</div></div>
+          </label>
+          <label style="display:flex;align-items:center;gap:14px;background:var(--dark3);border:2px solid var(--border);border-radius:8px;padding:16px 20px;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,69,0,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <input type="radio" name="shipping" value="express" style="accent-color:var(--fire);width:16px;height:16px;" onchange="updateShipping(9.99)">
+            <div style="flex:1;"><div style="font-size:0.9rem;font-weight:700;color:var(--white);">Express Shipping — $9.99</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">1–2 business days</div></div>
+          </label>
+          <label style="display:flex;align-items:center;gap:14px;background:var(--dark3);border:2px solid var(--border);border-radius:8px;padding:16px 20px;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(255,69,0,0.3)'" onmouseout="this.style.borderColor='var(--border)'">
+            <input type="radio" name="shipping" value="overnight" style="accent-color:var(--fire);width:16px;height:16px;" onchange="updateShipping(24.99)">
+            <div style="flex:1;"><div style="font-size:0.9rem;font-weight:700;color:var(--white);">Overnight Shipping — $24.99</div><div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px;">Next business day</div></div>
+          </label>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;">
+          <button class="form-back-btn" onclick="goToStep(1)">← Back to Cart</button>
+          <button onclick="goToStep(3)" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--fire),var(--fire2));color:#fff;padding:13px 28px;border-radius:6px;font-size:0.95rem;font-weight:800;border:none;cursor:pointer;font-family:'Inter',sans-serif;">Continue to Payment →</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3: Payment -->
+    <div class="checkout-section" id="checkoutStep3">
+      <div class="cart-panel" style="padding:28px;">
+        <div class="form-section-title">Payment Details <span class="form-section-badge">Step 2 of 2</span></div>
+        <div class="payment-icons">
+          <span class="pay-icon">💳 Visa</span>
+          <span class="pay-icon">💳 MC</span>
+          <span class="pay-icon">💳 Amex</span>
+          <span class="pay-icon">🍎 Pay</span>
+          <span class="pay-icon">🅿️ PayPal</span>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group full">
+            <label class="form-label">Name on Card *</label>
+            <input type="text" class="form-input" id="cardName" placeholder="Jake Rider" onblur="validateField(this,'text')">
+          </div>
+          <div class="form-group full">
+            <label class="form-label">Card Number *</label>
+            <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" onblur="validateField(this,'card')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Expiry Date *</label>
+            <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" onblur="validateField(this,'expiry')">
+          </div>
+          <div class="form-group">
+            <label class="form-label">CVV *</label>
+            <input type="text" class="form-input" id="cardCVV" placeholder="•••" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')" onblur="validateField(this,'cvv')">
+          </div>
+        </div>
+
+        <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.2);border-radius:8px;padding:14px 18px;margin-bottom:24px;display:flex;align-items:center;gap:10px;">
+          <span style="font-size:1.2rem;">🔒</span>
+          <span style="font-size:0.82rem;color:rgba(255,255,255,0.55);">Your payment is secured with 256-bit SSL encryption. We never store your card details.</span>
+        </div>
+
+        <div style="display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;">
+          <button class="form-back-btn" onclick="goToStep(2)">← Back to Shipping</button>
+          <button class="submit-btn" onclick="placeOrder()" style="flex:unset;min-width:200px;">🔒 Place Order</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Order Summary -->
+  <div class="order-summary">
+    <div class="summary-header">ORDER SUMMARY</div>
+    <div class="summary-body">
+      <div class="summary-line">
+        <span class="summary-line-label">Subtotal (<span id="summaryItemCount">0</span> items)</span>
+        <span class="summary-line-val" id="summarySubtotal">$0.00</span>
+      </div>
+      <div class="summary-line" id="discountLine" style="display:none;">
+        <span class="summary-line-label">Discount (<span id="discountCode">—</span>)</span>
+        <span class="summary-line-val summary-discount" id="discountAmount">-$0.00</span>
+      </div>
+      <div class="summary-line">
+        <span class="summary-line-label">Shipping</span>
+        <span class="summary-line-val" id="summaryShipping">Free</span>
+      </div>
+      <div class="summary-line">
+        <span class="summary-line-label">Tax (8%)</span>
+        <span class="summary-line-val" id="summaryTax">$0.00</span>
+      </div>
+      <hr class="summary-divider">
+      <div class="summary-total">
+        <span class="summary-total-label">Total</span>
+        <span class="summary-total-val" id="summaryTotal">$0.00</span>
+      </div>
+
+      <button class="checkout-btn" id="checkoutBtn" onclick="goToStep(2)">
+        🔥 Proceed to Checkout
+      </button>
+
+      <div class="summary-trust">
+        <div class="trust-row">🔒 Secure SSL Checkout</div>
+        <div class="trust-row">🚚 Free Shipping $75+</div>
+        <div class="trust-row">↩️ 30-Day Free Returns</div>
+        <div class="trust-row">💎 Authentic Products Guaranteed</div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /cart-layout -->
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-bottom">
+    <span class="footer-brand-name">TWO <span>WHEEL</span></span>
+    <p>© 2025 Two Wheel Clothing — All rights reserved</p>
+    <p>🔒 Secure · 256-bit SSL · PCI Compliant</p>
+  </div>
+</footer>
+</div><!-- /#site-wrap -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"><span class="toast-icon">✅</span><div class="toast-text" id="toastText"></div></div>
+
+<!-- SUCCESS MODAL -->
+<div class="modal-overlay" id="successModal">
+  <div class="modal">
+    <span class="modal-icon">🎉</span>
+    <div class="modal-title">ORDER <span>PLACED!</span></div>
+    <p class="modal-desc">Thank you for riding with Two Wheel Clothing. Your order is confirmed and will be processed within 24 hours.</p>
+    <div class="modal-order-num" id="modalOrderNum">Order #TW-00000</div>
+    <div class="modal-details">
+      <div class="modal-detail-row"><span>Estimated Delivery</span><span id="modalDelivery">3–5 business days</span></div>
+      <div class="modal-detail-row"><span>Total Charged</span><span id="modalTotal">$0.00</span></div>
+      <div class="modal-detail-row"><span>Confirmation sent to</span><span id="modalEmail">your email</span></div>
+    </div>
+    <a href="shop.html" class="modal-shop-btn">🏍️ Continue Shopping</a>
+  </div>
+</div>
+
+<script>
+  /* PRELOADER */
+  (function(){var pl=document.getElementById('preloader'),bar=document.getElementById('plBar'),site=document.getElementById('site-wrap'),p=0;var t=setInterval(function(){p+=Math.random()*22+5;if(p>100)p=100;bar.style.width=p+'%';if(p>=100){clearInterval(t);setTimeout(function(){pl.classList.add('done');site.classList.add('visible');renderCart();},280);}},55);})();
+
+  /* MOBILE MENU */
+  function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');document.getElementById('mobOverlay').classList.toggle('open');}
+
+  /* CART STATE */
+  function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
+  function saveCart(c){localStorage.setItem('twCart',JSON.stringify(c));}
+
+  var discountPct = 0;
+  var discountCodeApplied = '';
+  var shippingCost = 0;
+
+  var PROMO_CODES = {
+    'RIDE20':   { pct: 20, label: 'RIDE20',   minOrder: 0,    desc: '20% off everything' },
+    'CHROME25': { pct: 25, label: 'CHROME25', minOrder: 150,  desc: '25% off orders $150+' },
+    'WHEEL10':  { pct: 10, label: 'WHEEL10',  minOrder: 0,    desc: '10% off any order' }
+  };
+
+  var EMOJI_MAP = {
+    cologne: '💎', jackets: '🧥', clothing: '👕', accessories: '🎽'
+  };
+
+  /* RENDER CART */
+  function renderCart() {
+    var cart = getCart();
+    var list = document.getElementById('cartItemsList');
+    var empty = document.getElementById('emptyCart');
+    var promo = document.getElementById('promoSection');
+    var btn = document.getElementById('proceedShipping');
+
+    list.innerHTML = '';
+
+    if (!cart.length) {
+      empty.style.display = 'block';
+      promo.style.display = 'none';
+      if (btn) btn.disabled = true;
+      updateSummary();
+      return;
+    }
+    empty.style.display = 'none';
+    promo.style.display = 'block';
+    if (btn) btn.disabled = false;
+
+    cart.forEach(function(item, idx) {
+      var em = EMOJI_MAP[item.cat] || '📦';
+      var bg = item.cat === 'cologne' ? 'linear-gradient(135deg,#1A1A2E,#2E1A1A)'
+             : item.cat === 'jackets' ? 'linear-gradient(135deg,#1E1A0E,#2A1A0A)'
+             : item.cat === 'clothing' ? 'linear-gradient(135deg,#1A1A1A,#0E1620)'
+             : 'linear-gradient(135deg,#1A1E1A,#0E1A0E)';
+      var lineTotal = (item.price * item.qty).toFixed(2);
+
+      var div = document.createElement('div');
+      div.className = 'cart-item';
+      div.innerHTML = '<div class="cart-item-img" style="background:'+bg+';">'+em+'</div>'
+        + '<div>'
+        + '<div class="cart-item-cat">'+item.cat+'</div>'
+        + '<div class="cart-item-name">'+item.name+'</div>'
+        + '<div class="cart-item-unit">$'+item.price.toFixed(2)+' each</div>'
+        + '</div>'
+        + '<div class="cart-item-right">'
+        + '<div class="cart-item-price">$'+lineTotal+'</div>'
+        + '<div class="cart-item-controls">'
+        + '<button class="qty-btn" onclick="changeItemQty('+idx+',-1)">−</button>'
+        + '<span class="qty-display">'+item.qty+'</span>'
+        + '<button class="qty-btn" onclick="changeItemQty('+idx+',1)">+</button>'
+        + '</div>'
+        + '<button class="cart-item-remove" onclick="removeItem('+idx+')">✕ Remove</button>'
+        + '</div>';
+      list.appendChild(div);
+    });
+
+    updateSummary();
+    updateBadge();
+  }
+
+  function changeItemQty(idx, d) {
+    var cart = getCart();
+    cart[idx].qty += d;
+    if (cart[idx].qty < 1) { cart.splice(idx, 1); }
+    saveCart(cart);
+    renderCart();
+  }
+
+  function removeItem(idx) {
+    var cart = getCart();
+    var name = cart[idx].name;
+    cart.splice(idx, 1);
+    saveCart(cart);
+    renderCart();
+    showToast(name + ' removed from cart.');
+  }
+
+  function clearCart() {
+    if (!confirm('Clear all items from your cart?')) return;
+    localStorage.removeItem('twCart');
+    discountPct = 0; discountCodeApplied = '';
+    document.getElementById('discountLine').style.display = 'none';
+    renderCart();
+  }
+
+  /* SUMMARY */
+  function updateSummary() {
+    var cart = getCart();
+    var qty = cart.reduce(function(s,i){return s+i.qty;},0);
+    var sub = cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+
+    var discount = sub * (discountPct / 100);
+    var afterDiscount = sub - discount;
+    var ship = (!cart.length || afterDiscount >= 75) ? 0 : shippingCost;
+    var tax = (afterDiscount + ship) * 0.08;
+    var total = afterDiscount + ship + tax;
+
+    document.getElementById('summaryItemCount').textContent = qty;
+    document.getElementById('summarySubtotal').textContent = '$'+sub.toFixed(2);
+
+    var discLine = document.getElementById('discountLine');
+    if (discountPct > 0 && discount > 0) {
+      discLine.style.display = 'flex';
+      document.getElementById('discountCode').textContent = discountCodeApplied+' ('+discountPct+'%)';
+      document.getElementById('discountAmount').textContent = '-$'+discount.toFixed(2);
+    } else { discLine.style.display = 'none'; }
+
+    document.getElementById('summaryShipping').textContent = ship === 0 ? (cart.length ? 'Free' : '—') : '$'+ship.toFixed(2);
+    document.getElementById('summaryTax').textContent = cart.length ? '$'+tax.toFixed(2) : '$0.00';
+    document.getElementById('summaryTotal').textContent = cart.length ? '$'+total.toFixed(2) : '$0.00';
+
+    var btn = document.getElementById('checkoutBtn');
+    if (btn) btn.disabled = !cart.length;
+  }
+
+  function updateShipping(cost) { shippingCost = cost; updateSummary(); }
+
+  /* PROMO */
+  function useCode(code) { document.getElementById('promoInput').value = code; applyPromo(); }
+
+  function applyPromo() {
+    var code = document.getElementById('promoInput').value.trim().toUpperCase();
+    var msg  = document.getElementById('promoMsg');
+    var row  = document.getElementById('promoRow');
+
+    if (!code) { msg.textContent = 'Please enter a promo code.'; msg.className = 'promo-msg error'; row.className = 'promo-row invalid'; return; }
+
+    var cart = getCart();
+    var sub  = cart.reduce(function(s,i){return s+i.price*i.qty;},0);
+
+    if (!PROMO_CODES[code]) {
+      msg.textContent = '❌ Invalid code. Try RIDE20, CHROME25, or WHEEL10.';
+      msg.className = 'promo-msg error'; row.className = 'promo-row invalid';
+      discountPct = 0; discountCodeApplied = '';
+    } else {
+      var promo = PROMO_CODES[code];
+      if (sub < promo.minOrder) {
+        msg.textContent = '⚠️ ' + code + ' requires a minimum order of $' + promo.minOrder + '.';
+        msg.className = 'promo-msg error'; row.className = 'promo-row invalid';
+        discountPct = 0; discountCodeApplied = '';
+      } else {
+        discountPct = promo.pct;
+        discountCodeApplied = code;
+        var saved = (sub * promo.pct / 100).toFixed(2);
+        msg.textContent = '✅ ' + code + ' applied! Saving $' + saved + ' (' + promo.pct + '% off)';
+        msg.className = 'promo-msg success'; row.className = 'promo-row valid';
+        showToast('🎉 Code <strong>' + code + '</strong> applied — ' + promo.pct + '% off!');
+      }
+    }
+    updateSummary();
+  }
+
+  /* STEPS */
+  var currentStep = 1;
+  function goToStep(n) {
+    if (n === 2 && !getCart().length) { showToast('Your cart is empty!'); return; }
+
+    document.querySelectorAll('.checkout-section').forEach(function(s){ s.classList.remove('active'); });
+    document.getElementById('checkoutStep'+n).classList.add('active');
+
+    // Update stepper UI
+    for (var i = 1; i <= 3; i++) {
+      var stepEl = document.getElementById('step'+i);
+      stepEl.classList.remove('active','done');
+      if (i < n) stepEl.classList.add('done');
+      else if (i === n) stepEl.classList.add('active');
+      if (i < 3) {
+        var lineEl = document.getElementById('line'+i);
+        lineEl.className = 'step-line' + (i < n ? ' done' : '');
+      }
+    }
+
+    // Update summary button
+    var btn = document.getElementById('checkoutBtn');
+    if (n === 1) { btn.textContent = '🔥 Proceed to Checkout'; btn.onclick = function(){goToStep(2);}; }
+    else if (n === 2) { btn.textContent = '→ Continue to Payment'; btn.onclick = function(){goToStep(3);}; }
+    else { btn.textContent = '🔒 Place Order'; btn.onclick = function(){placeOrder();}; }
+
+    currentStep = n;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  /* VALIDATION */
+  function validateField(el, type) {
+    var val = el.value.trim();
+    el.classList.remove('error','valid');
+    var ok = false;
+    if (type === 'text') ok = val.length >= 2;
+    else if (type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    else if (type === 'zip') ok = /^[0-9A-Z\s\-]{3,10}$/i.test(val);
+    else if (type === 'card') ok = val.replace(/\s/g,'').length >= 15;
+    else if (type === 'expiry') ok = /^\d{2}\s*\/\s*\d{2}$/.test(val);
+    else if (type === 'cvv') ok = /^\d{3,4}$/.test(val);
+    el.classList.add(ok ? 'valid' : 'error');
+    return ok;
+  }
+
+  function formatCard(el) {
+    var v = el.value.replace(/\D/g,'').substring(0,16);
+    el.value = v.replace(/(.{4})/g,'$1 ').trim();
+  }
+  function formatExpiry(el) {
+    var v = el.value.replace(/\D/g,'');
+    if (v.length >= 2) v = v.substring(0,2) + ' / ' + v.substring(2,4);
+    el.value = v;
+  }
+
+  /* PLACE ORDER */
+  function placeOrder() {
+    var required = ['cardName','cardNumber','cardExpiry','cardCVV'];
+    var allOk = true;
+    required.forEach(function(id){
+      var el = document.getElementById(id);
+      var types = {cardName:'text',cardNumber:'card',cardExpiry:'expiry',cardCVV:'cvv'};
+      if (!validateField(el, types[id])) allOk = false;
+    });
+    if (!allOk) { showToast('Please fill in all required payment fields.'); return; }
+
+    var btn = document.querySelector('.submit-btn');
+    btn.textContent = '⏳ Processing…';
+    btn.disabled = true;
+
+    setTimeout(function() {
+      var total = document.getElementById('summaryTotal').textContent;
+      var email = document.getElementById('email').value || 'your email';
+      var orderNum = 'TW-' + Math.floor(10000 + Math.random() * 90000);
+      var method = document.querySelector('input[name="shipping"]:checked').value;
+      var delivery = method === 'overnight' ? 'Next business day' : method === 'express' ? '1–2 business days' : '3–5 business days';
+
+      document.getElementById('modalOrderNum').textContent = 'Order #' + orderNum;
+      document.getElementById('modalTotal').textContent = total;
+      document.getElementById('modalDelivery').textContent = delivery;
+      document.getElementById('modalEmail').textContent = email;
+
+      document.getElementById('successModal').classList.add('open');
+      localStorage.removeItem('twCart');
+      updateBadge();
+    }, 1800);
+  }
+
+  /* BADGE */
+  function updateBadge() {
+    var n = getCart().reduce(function(s,i){return s+i.qty;},0);
+    document.getElementById('cartBadge').textContent = n;
+    document.getElementById('mobCartBadge').textContent = n;
+  }
+
+  /* TOAST */
+  var tt;
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    document.getElementById('toastText').innerHTML = msg;
+    t.classList.add('show');
+    clearTimeout(tt);
+    tt = setTimeout(function(){ t.classList.remove('show'); }, 3000);
+  }
+</script>
+</body>
+</html>

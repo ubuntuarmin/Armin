@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop All — Two Wheel Clothing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    :root {
+      --black:#080808; --dark:#0F0F0F; --dark2:#161616; --dark3:#1E1E1E; --panel:#242424;
+      --border:rgba(255,255,255,0.08); --fire:#FF4500; --fire2:#FF6A00;
+      --chrome:#C8C8C8; --chrome-dark:#888;
+      --white:#FFFFFF; --text:#EFEFEF; --text-muted:#888; --success:#22C55E;
+    }
+    html { scroll-behavior:smooth; }
+    body { font-family:'Inter',system-ui,sans-serif; background:var(--black); color:var(--text); overflow-x:hidden; }
+    a { text-decoration:none; color:inherit; }
+
+    /* ── PRELOADER ── */
+    #preloader { position:fixed; inset:0; z-index:99999; background:var(--black); display:flex; align-items:center; justify-content:center; transition:opacity 0.6s ease, transform 0.6s cubic-bezier(0.76,0,0.24,1); }
+    #preloader.done { opacity:0; pointer-events:none; transform:translateY(-100%); }
+    .pl-wheel-wrap { position:relative; width:130px; height:130px; margin-bottom:24px; }
+    .pl-wheel-wrap::after { content:''; position:absolute; inset:-10px; border-radius:50%; background:radial-gradient(circle,rgba(255,69,0,0.15) 0%,transparent 70%); animation:glowPulse 1.6s ease-in-out infinite; }
+    @keyframes glowPulse { 0%,100%{opacity:0.6;} 50%{opacity:1;} }
+    #pl-wheel-svg { width:130px; height:130px; animation:wheelSpin 0.9s linear infinite; transform-origin:65px 65px; filter:drop-shadow(0 0 14px rgba(255,69,0,0.4)); }
+    @keyframes wheelSpin { to{transform:rotate(360deg);} }
+    #preloader.done #pl-wheel-svg { animation-duration:0.1s; }
+    .pl-brand { text-align:center; margin-bottom:20px; }
+    .pl-brand-top { display:block; font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.18em; color:var(--white); line-height:1; }
+    .pl-brand-bottom { display:block; font-family:'Bebas Neue',sans-serif; font-size:1.2rem; letter-spacing:0.35em; color:var(--fire); line-height:1; margin-top:3px; }
+    .pl-progress-track { width:160px; height:2px; background:rgba(255,255,255,0.1); border-radius:2px; overflow:hidden; margin-bottom:12px; }
+    .pl-progress-bar { height:100%; background:linear-gradient(90deg,var(--fire),var(--fire2)); border-radius:2px; width:0%; transition:width 0.05s linear; box-shadow:0 0 8px rgba(255,69,0,0.6); }
+    .pl-tagline { font-size:0.7rem; color:var(--text-muted); letter-spacing:0.2em; text-transform:uppercase; }
+
+    #site-wrap { opacity:0; transition:opacity 0.5s ease 0.1s; }
+    #site-wrap.visible { opacity:1; }
+
+    /* ── MOBILE MENU ── */
+    .mob-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.7); z-index:1999; }
+    .mob-overlay.open { display:block; }
+    .mob-menu { display:flex; flex-direction:column; position:fixed; top:0; right:-100%; width:72%; max-width:300px; height:100%; background:var(--dark2); z-index:2000; padding:88px 28px 40px; gap:4px; border-left:2px solid var(--fire); transition:right 0.38s cubic-bezier(0.25,0.8,0.25,1); overflow-y:auto; }
+    .mob-menu.open { right:0; }
+    .mob-close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--fire); font-size:1.7rem; cursor:pointer; line-height:1; }
+    .mob-menu a { color:rgba(255,255,255,0.82); font-size:1rem; font-weight:500; padding:12px 16px; border-radius:8px; border-left:3px solid transparent; transition:all 0.22s; }
+    .mob-menu a:hover { background:rgba(255,69,0,0.1); border-left-color:var(--fire); color:var(--fire); }
+    .mob-cart-badge { background:var(--fire); color:#fff; border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:700; display:inline-flex; align-items:center; justify-content:center; margin-left:6px; }
+
+    /* ── NAV ── */
+    nav { position:sticky; top:0; z-index:1000; background:rgba(8,8,8,0.95); backdrop-filter:blur(20px); -webkit-backdrop-filter:blur(20px); border-bottom:2px solid var(--fire); box-shadow:0 4px 30px rgba(0,0,0,0.5); }
+    .nav-inner { max-width:1240px; margin:0 auto; padding:0 28px; height:70px; display:flex; align-items:center; justify-content:space-between; }
+    .nav-logo { display:flex; align-items:center; gap:12px; }
+    .nav-logo-icon { width:40px; height:40px; border:2px solid var(--fire); border-radius:50%; display:flex; align-items:center; justify-content:center; background:rgba(255,69,0,0.08); }
+    .nav-logo-icon svg { width:22px; height:22px; }
+    .nav-brand-text { display:flex; flex-direction:column; }
+    .nav-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:0.15em; color:var(--white); line-height:1; }
+    .nav-brand-name span { color:var(--fire); }
+    .nav-brand-tag { font-size:0.58rem; color:var(--chrome-dark); letter-spacing:0.25em; text-transform:uppercase; }
+    .nav-links { display:flex; gap:2px; list-style:none; align-items:center; }
+    .nav-links a { color:rgba(255,255,255,0.65); padding:8px 14px; border-radius:6px; font-size:0.85rem; font-weight:500; transition:all 0.2s; }
+    .nav-links a:hover, .nav-links a.active { color:var(--white); background:rgba(255,255,255,0.07); }
+    .nav-right { display:flex; align-items:center; gap:10px; }
+    .cart-btn { position:relative; display:flex; align-items:center; gap:8px; background:var(--fire); color:#fff; border:none; cursor:pointer; padding:9px 18px; border-radius:6px; font-size:0.85rem; font-weight:700; font-family:'Inter',sans-serif; transition:all 0.25s; box-shadow:0 4px 16px rgba(255,69,0,0.35); }
+    .cart-btn:hover { background:var(--fire2); transform:translateY(-1px); }
+    .cart-badge { background:#fff; color:var(--fire); border-radius:50%; width:20px; height:20px; font-size:0.72rem; font-weight:800; display:flex; align-items:center; justify-content:center; }
+    .hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none; padding:6px; }
+    .hamburger span { display:block; width:24px; height:2px; background:var(--fire); border-radius:2px; }
+
+    /* ── PAGE HERO ── */
+    .page-hero { padding:72px 28px 64px; background:var(--dark2); position:relative; overflow:hidden; }
+    .page-hero::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse 70% 80% at 50% 50%, rgba(255,69,0,0.07) 0%, transparent 70%); }
+    .page-hero-inner { max-width:680px; margin:0 auto; text-align:center; position:relative; z-index:1; }
+    .page-label { display:inline-block; background:rgba(255,69,0,0.1); border:1px solid rgba(255,69,0,0.3); color:var(--fire); font-size:0.72rem; font-weight:700; letter-spacing:0.25em; text-transform:uppercase; padding:6px 16px; border-radius:50px; margin-bottom:18px; }
+    .page-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,6vw,4.5rem); letter-spacing:0.08em; color:var(--white); line-height:1; margin-bottom:14px; }
+    .page-title span { color:var(--fire); }
+    .page-desc { font-size:1rem; color:rgba(255,255,255,0.5); line-height:1.8; }
+
+    /* ── FILTER + SORT BAR ── */
+    .filter-bar { background:rgba(8,8,8,0.92); border-bottom:1px solid var(--border); padding:0 28px; position:sticky; top:70px; z-index:900; backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); }
+    .filter-inner { max-width:1240px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:12px; overflow-x:auto; scrollbar-width:none; }
+    .filter-inner::-webkit-scrollbar { display:none; }
+    .filter-tabs { display:flex; gap:0; }
+    .filter-btn { background:none; border:none; padding:16px 20px; font-size:0.84rem; font-weight:600; color:rgba(255,255,255,0.45); cursor:pointer; white-space:nowrap; border-bottom:3px solid transparent; margin-bottom:-1px; transition:all 0.25s; font-family:'Inter',sans-serif; }
+    .filter-btn:hover { color:var(--fire); }
+    .filter-btn.active { color:var(--fire); border-bottom-color:var(--fire); }
+    .sort-select { background:var(--dark3); border:1px solid var(--border); color:var(--text); padding:8px 14px; border-radius:6px; font-size:0.84rem; font-family:'Inter',sans-serif; cursor:pointer; flex-shrink:0; }
+    .sort-select option { background:var(--dark2); }
+    .results-count { font-size:0.8rem; color:var(--text-muted); white-space:nowrap; flex-shrink:0; }
+
+    /* ── PRODUCTS LAYOUT ── */
+    .shop-main { max-width:1240px; margin:0 auto; padding:48px 28px 80px; }
+
+    .products-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+
+    /* ── PRODUCT CARD ── */
+    .product-card { background:var(--dark3); border:1px solid var(--border); border-radius:10px; overflow:hidden; display:flex; flex-direction:column; transition:all 0.4s; cursor:pointer; }
+    .product-card:hover { border-color:rgba(255,69,0,0.4); transform:translateY(-6px); box-shadow:0 24px 60px rgba(0,0,0,0.4); }
+    .product-card.hidden { display:none; }
+
+    .product-img { position:relative; aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:4.5rem; overflow:hidden; transition:transform 0.4s; }
+    .product-card:hover .product-img { transform:scale(1.04); }
+    .product-img::after { content:''; position:absolute; inset:0; background:linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.04), transparent 70%); animation:shimmer 4s linear infinite; }
+    @keyframes shimmer { to{transform:translateX(150%);} }
+    /* Image placeholder label */
+    .img-ph-label { position:absolute; bottom:0; left:0; right:0; padding:8px 12px; background:rgba(0,0,0,0.55); font-size:0.6rem; font-weight:700; letter-spacing:0.15em; text-transform:uppercase; color:rgba(255,255,255,0.45); text-align:center; }
+
+    .product-badge { position:absolute; top:12px; left:12px; padding:4px 10px; border-radius:4px; font-size:0.68rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; }
+    .badge-sale { background:var(--fire); color:#fff; }
+    .badge-new  { background:#22C55E; color:#fff; }
+    .badge-hot  { background:#F59E0B; color:#000; }
+    .badge-ltd  { background:#8B5CF6; color:#fff; }
+
+    .product-wishlist { position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
+    .product-wishlist:hover { background:rgba(255,69,0,0.2); }
+
+    .product-quick-add { position:absolute; bottom:-48px; left:0; right:0; background:var(--fire); color:#fff; padding:12px; text-align:center; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; transition:bottom 0.32s cubic-bezier(0.25,0.8,0.25,1); border:none; cursor:pointer; font-family:'Inter',sans-serif; }
+    .product-card:hover .product-quick-add { bottom:0; }
+
+    .product-info { padding:18px; flex:1; display:flex; flex-direction:column; }
+    .product-category { font-size:0.66rem; color:var(--fire); font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:6px; }
+    .product-name { font-size:0.93rem; font-weight:600; color:var(--white); line-height:1.4; margin-bottom:6px; flex:1; }
+    .product-rating { display:flex; align-items:center; gap:6px; margin-bottom:10px; }
+    .stars { color:#F59E0B; font-size:0.78rem; letter-spacing:1px; }
+    .rating-count { font-size:0.72rem; color:var(--text-muted); }
+    .product-price { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .price-current { font-size:1.1rem; font-weight:800; color:var(--white); }
+    .price-original { font-size:0.85rem; color:var(--text-muted); text-decoration:line-through; }
+    .price-save { font-size:0.7rem; color:var(--success); font-weight:700; }
+
+    /* ── EMPTY STATE ── */
+    .empty-state { text-align:center; padding:80px 20px; display:none; }
+    .empty-state h3 { font-family:'Bebas Neue',sans-serif; font-size:2rem; letter-spacing:0.1em; color:var(--white); margin-bottom:12px; }
+    .empty-state p { color:var(--text-muted); }
+
+    /* ── TOAST ── */
+    .toast { position:fixed; bottom:28px; right:28px; z-index:5000; background:var(--dark3); border:1px solid rgba(34,197,94,0.3); border-radius:10px; padding:16px 20px; display:flex; align-items:center; gap:12px; box-shadow:0 12px 40px rgba(0,0,0,0.5); transform:translateY(100px); opacity:0; transition:all 0.4s cubic-bezier(0.25,0.8,0.25,1); max-width:320px; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast-icon { font-size:1.4rem; flex-shrink:0; }
+    .toast-text { font-size:0.86rem; color:var(--text); line-height:1.4; }
+    .toast-text strong { color:var(--success); }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(30px); transition:opacity 0.65s ease, transform 0.65s ease; }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+
+    /* ── FOOTER ── */
+    footer { background:var(--black); border-top:2px solid var(--fire); padding:48px 28px 28px; }
+    .footer-inner { max-width:1240px; margin:0 auto; display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:48px; margin-bottom:36px; }
+    .footer-brand-name { font-family:'Bebas Neue',sans-serif; font-size:1.5rem; letter-spacing:0.15em; color:var(--white); margin-bottom:12px; display:block; }
+    .footer-brand-name span { color:var(--fire); }
+    .footer-brand p { font-size:0.85rem; color:rgba(255,255,255,0.35); line-height:1.8; max-width:240px; }
+    .footer-col h4 { font-size:0.72rem; font-weight:700; color:var(--fire); letter-spacing:0.25em; text-transform:uppercase; margin-bottom:18px; }
+    .footer-col a { display:block; color:rgba(255,255,255,0.4); font-size:0.84rem; margin-bottom:9px; transition:all 0.22s; }
+    .footer-col a:hover { color:var(--fire); transform:translateX(5px); }
+    .footer-bottom { border-top:1px solid rgba(255,255,255,0.08); padding-top:24px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; max-width:1240px; margin:0 auto; }
+    .footer-bottom p { color:rgba(255,255,255,0.25); font-size:0.78rem; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width:1100px) { .products-grid { grid-template-columns:repeat(3,1fr); } }
+    @media (max-width:768px) { .nav-links { display:none; } .hamburger { display:flex; } .products-grid { grid-template-columns:repeat(2,1fr); } .footer-inner { grid-template-columns:1fr 1fr; } }
+    @media (max-width:500px) { .products-grid { grid-template-columns:1fr 1fr; gap:14px; } .footer-inner { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div style="display:flex;flex-direction:column;align-items:center;">
+    <div class="pl-wheel-wrap">
+      <svg id="pl-wheel-svg" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="65" cy="65" r="60" fill="#111"/>
+        <circle cx="65" cy="65" r="60" fill="none" stroke="#222" stroke-width="6"/>
+        <circle cx="65" cy="65" r="60" fill="none" stroke="#111" stroke-width="12" stroke-dasharray="18 14"/>
+        <circle cx="65" cy="65" r="46" fill="#181818" stroke="#3A3A3A" stroke-width="2"/>
+        <circle cx="65" cy="65" r="46" fill="none" stroke="#555" stroke-width="1.5"/>
+        <g stroke="#888" stroke-width="2" stroke-linecap="round">
+          <line x1="65" y1="65" x2="65" y2="18"/>
+          <line x1="65" y1="65" x2="98" y2="33"/>
+          <line x1="65" y1="65" x2="112" y2="65"/>
+          <line x1="65" y1="65" x2="98" y2="97"/>
+          <line x1="65" y1="65" x2="65" y2="112"/>
+          <line x1="65" y1="65" x2="32" y2="97"/>
+          <line x1="65" y1="65" x2="18" y2="65"/>
+          <line x1="65" y1="65" x2="32" y2="33"/>
+        </g>
+        <g stroke="#FF4500" stroke-width="1.5" stroke-linecap="round" opacity="0.5">
+          <line x1="65" y1="65" x2="65" y2="18"/>
+          <line x1="65" y1="65" x2="112" y2="65"/>
+          <line x1="65" y1="65" x2="65" y2="112"/>
+          <line x1="65" y1="65" x2="18" y2="65"/>
+        </g>
+        <circle cx="65" cy="65" r="13" fill="#111" stroke="#666" stroke-width="1.5"/>
+        <circle cx="65" cy="65" r="6" fill="#111" stroke="#444" stroke-width="1"/>
+        <circle cx="65" cy="65" r="3" fill="#FF4500"/>
+        <rect x="63.5" y="5" width="3" height="8" rx="1.5" fill="#666"/>
+      </svg>
+    </div>
+    <div class="pl-brand"><span class="pl-brand-top">TWO WHEEL</span><span class="pl-brand-bottom">SHOP</span></div>
+    <div class="pl-progress-track"><div class="pl-progress-bar" id="plProgressBar"></div></div>
+    <div class="pl-tagline">Loading Products…</div>
+  </div>
+</div>
+
+<div id="site-wrap">
+<!-- Mobile Menu -->
+<div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
+<div class="mob-menu" id="mobMenu">
+  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <a href="index.html">Home</a>
+  <a href="shop.html" style="color:var(--fire);">Shop All</a>
+  <a href="shop.html?cat=cologne">Cologne</a>
+  <a href="shop.html?cat=jackets">Jackets</a>
+  <a href="shop.html?cat=clothing">Clothing</a>
+  <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="cart.html" style="display:flex;align-items:center;">🛒 Cart <span class="mob-cart-badge" id="mobCartBadge">0</span></a>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">
+      <div class="nav-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none"><circle cx="5.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><circle cx="18.5" cy="16" r="3.5" stroke="#FF4500" stroke-width="1.8"/><path d="M9 16 L12 8 L15 10 L18.5 16" stroke="#FF4500" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 16 L9 16" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/><path d="M12 8 L16 6" stroke="#FF4500" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </div>
+      <div class="nav-brand-text">
+        <span class="nav-brand-name">TWO <span>WHEEL</span></span>
+        <span class="nav-brand-tag">Ride in Style</span>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="shop.html" class="active">Shop All</a></li>
+      <li><a href="shop.html?cat=cologne">Cologne</a></li>
+      <li><a href="shop.html?cat=jackets">Jackets</a></li>
+      <li><a href="shop.html?cat=clothing">Clothing</a></li>
+      <li><a href="shop.html?cat=accessories">Accessories</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
+      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <span class="page-label">28 Products</span>
+    <h1 class="page-title">SHOP <span>ALL</span></h1>
+    <p class="page-desc">Cologne, jackets, clothing and accessories — the full Two Wheel lineup. Use code <strong style="color:var(--fire);">RIDE20</strong> for 20% off.</p>
+  </div>
+</div>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="filter-tabs">
+      <button class="filter-btn active" onclick="filterProducts('all',this)">All (28)</button>
+      <button class="filter-btn" onclick="filterProducts('cologne',this)">Cologne (6)</button>
+      <button class="filter-btn" onclick="filterProducts('jackets',this)">Jackets (4)</button>
+      <button class="filter-btn" onclick="filterProducts('clothing',this)">Clothing (10)</button>
+      <button class="filter-btn" onclick="filterProducts('accessories',this)">Accessories (8)</button>
+    </div>
+    <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
+      <span class="results-count" id="resultsCount">28 results</span>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Sort: Featured</option>
+        <option value="price-low">Price: Low to High</option>
+        <option value="price-high">Price: High to Low</option>
+        <option value="rating">Top Rated</option>
+        <option value="newest">Newest</option>
+        <option value="bestseller">Best Sellers</option>
+      </select>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<div class="shop-main">
+  <div class="products-grid" id="productsGrid">
+
+    <!-- COLOGNE (6) -->
+    <div class="product-card reveal" data-cat="cologne" data-price="67" data-rating="4.9" data-reviews="892" data-new="0" data-sales="1240" onclick="window.location.href='product.html?id=1'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
+        💎
+        <span class="product-badge badge-sale">25% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(1,'Phantom Rider EDT',67,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Phantom Rider EDT — 50ml</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(892)</span></div>
+        <div class="product-price"><span class="price-current">$67</span><span class="price-original">$89</span><span class="price-save">Save $22</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="cologne" data-price="125" data-rating="4.7" data-reviews="641" data-new="0" data-sales="820" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#12121E,#1E1412);">
+        💎
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(2,'Iron Highway EDP',125,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Iron Highway EDP — 100ml</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(641)</span></div>
+        <div class="product-price"><span class="price-current">$125</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="cologne" data-price="63" data-rating="4.9" data-reviews="1204" data-new="0" data-sales="2100" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#0E0E1A,#1A1A2A);">
+        💎
+        <span class="product-badge badge-hot">Best Seller</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(3,'Chrome Dusk EDT',63,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Chrome Dusk EDT — 50ml</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,204)</span></div>
+        <div class="product-price"><span class="price-current">$63</span><span class="price-original">$79</span><span class="price-save">Save $16</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="cologne" data-price="145" data-rating="4.7" data-reviews="389" data-new="0" data-sales="540" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#180C0C,#2A1010);">
+        💎
+        <span class="product-badge badge-ltd">Limited</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(4,'Road Warrior EDP',145,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Road Warrior EDP — 100ml</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(389)</span></div>
+        <div class="product-price"><span class="price-current">$145</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="cologne" data-price="110" data-rating="4.9" data-reviews="528" data-new="1" data-sales="780" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1E2A,#0A1A2A);">
+        💎
+        <span class="product-badge badge-new">New</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(5,'Midnight Chrome EDP',110,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Midnight Chrome EDP — 75ml</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(528)</span></div>
+        <div class="product-price"><span class="price-current">$110</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="cologne" data-price="68" data-rating="4.6" data-reviews="274" data-new="0" data-sales="490" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#200A00,#2A1500);">
+        💎
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(6,'Asphalt & Smoke EDT',68,'cologne')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Cologne</div>
+        <div class="product-name">Asphalt &amp; Smoke EDT — 50ml</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(274)</span></div>
+        <div class="product-price"><span class="price-current">$68</span><span class="price-original">$85</span><span class="price-save">Save $17</span></div>
+      </div>
+    </div>
+
+    <!-- JACKETS (4) -->
+    <div class="product-card reveal" data-cat="jackets" data-price="228" data-rating="4.9" data-reviews="412" data-new="0" data-sales="680" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1E1A0E,#2A1A0A);">
+        🧥
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(7,'Moto Chrome Rider Jacket',228,'jackets')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Jackets</div>
+        <div class="product-name">Moto Chrome Rider Jacket</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(412)</span></div>
+        <div class="product-price"><span class="price-current">$228</span><span class="price-original">$285</span><span class="price-save">Save $57</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="jackets" data-price="320" data-rating="4.7" data-reviews="188" data-new="0" data-sales="290" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1410,#2A1A0E);">
+        🧥
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(8,'Iron Asphalt Jacket',320,'jackets')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Jackets</div>
+        <div class="product-name">Iron Asphalt Full-Grain Jacket</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(188)</span></div>
+        <div class="product-price"><span class="price-current">$320</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="jackets" data-price="199" data-rating="4.9" data-reviews="573" data-new="0" data-sales="1020" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A0E14,#200A18);">
+        🧥
+        <span class="product-badge badge-sale">25% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(9,'Speed Classic Leather Jacket',199,'jackets')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Jackets</div>
+        <div class="product-name">Speed Classic Leather Jacket</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(573)</span></div>
+        <div class="product-price"><span class="price-current">$199</span><span class="price-original">$265</span><span class="price-save">Save $66</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="jackets" data-price="299" data-rating="4.7" data-reviews="231" data-new="1" data-sales="360" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1210,#2A1A14);">
+        🧥
+        <span class="product-badge badge-new">New</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(10,'Road King Riding Jacket',299,'jackets')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Jackets</div>
+        <div class="product-name">Road King Riding Jacket</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(231)</span></div>
+        <div class="product-price"><span class="price-current">$299</span></div>
+      </div>
+    </div>
+
+    <!-- CLOTHING (10) -->
+    <div class="product-card reveal" data-cat="clothing" data-price="36" data-rating="4.9" data-reviews="1102" data-new="0" data-sales="2800" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A1A,#0E1620);">
+        👕
+        <span class="product-badge badge-hot">Hot</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(11,'Phantom Graphic Tee',36,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — T-Shirt</div>
+        <div class="product-name">Phantom Graphic Tee</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,102)</span></div>
+        <div class="product-price"><span class="price-current">$36</span><span class="price-original">$45</span><span class="price-save">Save $9</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="42" data-rating="4.7" data-reviews="445" data-new="0" data-sales="920" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A14,#14180A);">
+        👕
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(12,'Speed Lines Print Tee',42,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — T-Shirt</div>
+        <div class="product-name">Speed Lines Print Tee</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(445)</span></div>
+        <div class="product-price"><span class="price-current">$42</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="48" data-rating="4.9" data-reviews="789" data-new="0" data-sales="1650" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);">
+        👕
+        <span class="product-badge badge-hot">Hot</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(13,'Throttle Chrome Tee',48,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — T-Shirt</div>
+        <div class="product-name">Throttle Chrome Tee</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(789)</span></div>
+        <div class="product-price"><span class="price-current">$48</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="35" data-rating="4.6" data-reviews="334" data-new="0" data-sales="740" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#100A1A,#200A1A);">
+        👕
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(14,'Chrome Rider Tee',35,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — T-Shirt</div>
+        <div class="product-name">Chrome Rider Tee</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(334)</span></div>
+        <div class="product-price"><span class="price-current">$35</span><span class="price-original">$44</span><span class="price-save">Save $9</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="68" data-rating="4.9" data-reviews="623" data-new="0" data-sales="1100" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A14,#14180A);">
+        🧥
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(15,'Iron Moto Pullover Hoodie',68,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Hoodie</div>
+        <div class="product-name">Iron Moto Pullover Hoodie</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(623)</span></div>
+        <div class="product-price"><span class="price-current">$68</span><span class="price-original">$85</span><span class="price-save">Save $17</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="95" data-rating="4.7" data-reviews="291" data-new="1" data-sales="460" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#141420,#1E1430);">
+        🧥
+        <span class="product-badge badge-new">New</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(16,'Midnight Cruiser Zip Hoodie',95,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Hoodie</div>
+        <div class="product-name">Midnight Cruiser Zip Hoodie</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(291)</span></div>
+        <div class="product-price"><span class="price-current">$95</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="76" data-rating="4.9" data-reviews="347" data-new="0" data-sales="680" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#101020,#200E30);">
+        🎽
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(17,'Rider Cargo Pants',76,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Bottoms</div>
+        <div class="product-name">Rider Cargo Pants</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(347)</span></div>
+        <div class="product-price"><span class="price-current">$76</span><span class="price-original">$95</span><span class="price-save">Save $19</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="75" data-rating="4.6" data-reviews="198" data-new="0" data-sales="380" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#141020,#1E0A2A);">
+        🎽
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(18,'Speed Racer Joggers',75,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Bottoms</div>
+        <div class="product-name">Speed Racer Joggers</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(198)</span></div>
+        <div class="product-price"><span class="price-current">$75</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="44" data-rating="4.9" data-reviews="412" data-new="1" data-sales="820" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#0E0E20,#1A1428);">
+        🎽
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(19,'Chrome Track Shorts',44,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Bottoms</div>
+        <div class="product-name">Chrome Track Shorts</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(412)</span></div>
+        <div class="product-price"><span class="price-current">$44</span><span class="price-original">$55</span><span class="price-save">Save $11</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="clothing" data-price="38" data-rating="4.8" data-reviews="288" data-new="1" data-sales="490" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#101018,#1A1020);">
+        👕
+        <span class="product-badge badge-new">New</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(28,'Iron Cross Long Sleeve',38,'clothing')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Clothing — Long Sleeve</div>
+        <div class="product-name">Iron Cross Long Sleeve Tee</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(288)</span></div>
+        <div class="product-price"><span class="price-current">$38</span></div>
+      </div>
+    </div>
+
+    <!-- ACCESSORIES (8) -->
+    <div class="product-card reveal" data-cat="accessories" data-price="35" data-rating="4.9" data-reviews="1245" data-new="0" data-sales="3100" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1E1A,#0E1A0E);">
+        🧢
+        <span class="product-badge badge-hot">Best Seller</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(20,'Chrome Moto Cap',35,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Hat</div>
+        <div class="product-name">Chrome Moto Snapback Cap</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,245)</span></div>
+        <div class="product-price"><span class="price-current">$35</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="44" data-rating="4.6" data-reviews="388" data-new="0" data-sales="690" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);">
+        🧤
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(21,'Iron Rider Gloves',44,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Gloves</div>
+        <div class="product-name">Iron Rider Riding Gloves</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(388)</span></div>
+        <div class="product-price"><span class="price-current">$44</span><span class="price-original">$55</span><span class="price-save">Save $11</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="28" data-rating="4.9" data-reviews="567" data-new="0" data-sales="1340" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#141414,#1E1414);">
+        🧢
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(22,'Speed Rider Beanie',28,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Hat</div>
+        <div class="product-name">Speed Rider Beanie</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(567)</span></div>
+        <div class="product-price"><span class="price-current">$28</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="22" data-rating="4.6" data-reviews="892" data-new="0" data-sales="2200" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#0A1A0A,#1A2A0A);">
+        ⛓️
+        <span class="product-badge badge-hot">Hot</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(23,'Throttle Chain Bracelet',22,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Jewellery</div>
+        <div class="product-name">Throttle Chain Bracelet</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(892)</span></div>
+        <div class="product-price"><span class="price-current">$22</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="36" data-rating="4.9" data-reviews="234" data-new="0" data-sales="510" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#0A0A1A,#1A0A1A);">
+        👜
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(24,'Rider Canvas Tote',36,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Bag</div>
+        <div class="product-name">Rider Canvas Tote Bag</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(234)</span></div>
+        <div class="product-price"><span class="price-current">$36</span><span class="price-original">$45</span><span class="price-save">Save $9</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="18" data-rating="4.9" data-reviews="1087" data-new="0" data-sales="2900" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#1A1A1A,#2A2A1A);">
+        🏅
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(25,'Moto Dog Tag Necklace',18,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Jewellery</div>
+        <div class="product-name">Moto Dog Tag Necklace</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,087)</span></div>
+        <div class="product-price"><span class="price-current">$18</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="52" data-rating="4.6" data-reviews="189" data-new="1" data-sales="320" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#141A14,#1A2414);">
+        🕶️
+        <span class="product-badge badge-sale">20% OFF</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(27,'Rider Polarized Sunglasses',52,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Eyewear</div>
+        <div class="product-name">Rider Polarized Sunglasses</div>
+        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(189)</span></div>
+        <div class="product-price"><span class="price-current">$52</span><span class="price-original">$65</span><span class="price-save">Save $13</span></div>
+      </div>
+    </div>
+
+    <div class="product-card reveal" data-cat="accessories" data-price="24" data-rating="4.9" data-reviews="743" data-new="0" data-sales="1820" onclick="window.location.href='shop.html'">
+      <div class="product-img" style="background:linear-gradient(135deg,#181810,#2A2414);">
+        🧦
+        <span class="product-badge badge-hot">Value Pack</span>
+        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
+        <div class="img-ph-label">Image Placeholder</div>
+        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(26,'Speed Socks 3-Pack',24,'accessories')">+ Add to Cart</button>
+      </div>
+      <div class="product-info">
+        <div class="product-category">Accessories — Socks</div>
+        <div class="product-name">Speed Rider Socks — 3 Pack</div>
+        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(743)</span></div>
+        <div class="product-price"><span class="price-current">$24</span></div>
+      </div>
+    </div>
+
+  </div><!-- /products-grid -->
+
+  <div class="empty-state" id="emptyState">
+    <h3>No Products Found</h3>
+    <p>Try a different filter.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <span class="footer-brand-name">TWO <span>WHEEL</span></span>
+      <p>Cologne, clothing and accessories for riders who refuse to settle.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <a href="shop.html?cat=cologne">Cologne</a>
+      <a href="shop.html?cat=jackets">Jackets</a>
+      <a href="shop.html?cat=clothing">Clothing</a>
+      <a href="shop.html?cat=accessories">Accessories</a>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <a href="#">About Us</a>
+      <a href="#">Shipping</a>
+      <a href="#">Returns</a>
+      <a href="#">Size Guide</a>
+    </div>
+    <div class="footer-col">
+      <h4>Account</h4>
+      <a href="cart.html">Cart</a>
+      <a href="#">Orders</a>
+      <a href="#">Contact</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Two Wheel Clothing. All rights reserved.</p>
+    <p>Code RIDE20 = 20% Off · Free shipping $75+</p>
+  </div>
+</footer>
+</div><!-- /#site-wrap -->
+
+<div class="toast" id="toast">
+  <span class="toast-icon">🛒</span>
+  <div class="toast-text" id="toastText"></div>
+</div>
+
+<script>
+  /* PRELOADER */
+  (function() {
+    var pl = document.getElementById('preloader'), bar = document.getElementById('plProgressBar'), site = document.getElementById('site-wrap'), prog = 0;
+    var t = setInterval(function() {
+      prog += Math.random() * 22 + 5; if (prog > 100) prog = 100;
+      bar.style.width = prog + '%';
+      if (prog >= 100) { clearInterval(t); setTimeout(function(){ pl.classList.add('done'); site.classList.add('visible'); }, 280); }
+    }, 55);
+  })();
+
+  /* MOBILE MENU */
+  function toggleMenu() { document.getElementById('mobMenu').classList.toggle('open'); document.getElementById('mobOverlay').classList.toggle('open'); }
+
+  /* CART */
+  function getCart() { try { return JSON.parse(localStorage.getItem('twCart') || '[]'); } catch(e) { return []; } }
+  function saveCart(c) { localStorage.setItem('twCart', JSON.stringify(c)); }
+  function updateBadge() { var n = getCart().reduce(function(s,i){return s+i.qty;},0); document.getElementById('cartBadge').textContent = n; document.getElementById('mobCartBadge').textContent = n; }
+  function quickAdd(id, name, price, cat) {
+    var cart = getCart(); var ex = cart.find(function(i){return i.id===id;});
+    if (ex) ex.qty++; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
+    saveCart(cart); updateBadge(); showToast('<strong>' + name + '</strong> added!');
+  }
+  updateBadge();
+
+  /* TOAST */
+  var toastTimer;
+  function showToast(msg) { var t = document.getElementById('toast'); document.getElementById('toastText').innerHTML = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
+
+  /* FILTER */
+  var activeCat = 'all';
+  function filterProducts(cat, btn) {
+    activeCat = cat;
+    document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
+    btn.classList.add('active');
+    applyFilter();
+  }
+  function applyFilter() {
+    var cards = document.querySelectorAll('#productsGrid .product-card');
+    var shown = 0;
+    cards.forEach(function(c) {
+      var match = activeCat === 'all' || c.dataset.cat === activeCat;
+      c.classList.toggle('hidden', !match);
+      if (match) shown++;
+    });
+    document.getElementById('resultsCount').textContent = shown + ' result' + (shown !== 1 ? 's' : '');
+    document.getElementById('emptyState').style.display = shown === 0 ? 'block' : 'none';
+  }
+
+  /* SORT */
+  function sortProducts(val) {
+    var grid = document.getElementById('productsGrid');
+    var cards = Array.from(grid.querySelectorAll('.product-card'));
+    cards.sort(function(a, b) {
+      switch(val) {
+        case 'price-low':  return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+        case 'price-high': return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
+        case 'rating':     return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+        case 'newest':     return parseInt(b.dataset.new) - parseInt(a.dataset.new);
+        case 'bestseller': return parseInt(b.dataset.sales) - parseInt(a.dataset.sales);
+        default: return 0;
+      }
+    });
+    cards.forEach(function(c){ grid.appendChild(c); });
+  }
+
+  /* URL param auto-filter */
+  var urlCat = new URLSearchParams(window.location.search).get('cat');
+  if (urlCat) {
+    var btn = document.querySelector('.filter-btn[onclick*="' + urlCat + '"]');
+    if (btn) filterProducts(urlCat, btn);
+  }
+
+  /* REVEAL */
+  var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
+</script>
+</body>
+</html>
