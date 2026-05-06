@@ -82,7 +82,7 @@
       font-size:8rem; overflow:hidden; margin-bottom:14px;
       cursor:zoom-in;
     }
-    .gallery-main-img::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,#1A1A2E,#2E1A1A); }
+    .gallery-main-img::before { content:''; position:absolute; inset:0; }
     .gallery-main-img span { position:relative; z-index:1; }
     .gallery-badge-row { position:absolute; top:14px; left:14px; display:flex; gap:8px; z-index:2; }
     .g-badge { padding:5px 12px; border-radius:4px; font-size:0.7rem; font-weight:800; letter-spacing:0.1em; text-transform:uppercase; }
@@ -373,7 +373,7 @@
 
   <!-- GALLERY -->
   <div class="product-gallery">
-    <div class="gallery-main-img" id="mainImg">
+    <div class="gallery-main-img" id="mainImg" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
       <span id="mainEmoji">💎</span>
       <div class="gallery-badge-row">
         <span class="g-badge g-badge-sale">25% OFF</span>
@@ -793,7 +793,6 @@
     document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');});
     el.classList.add('active');
     document.getElementById('mainEmoji').textContent=emoji;
-    document.querySelector('.gallery-main-img::before');
     var mainImg=document.getElementById('mainImg');
     mainImg.style.background=bg;
   }
