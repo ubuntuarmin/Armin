@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Example No. 16 — Two Wheel Clothing | Armin Studio</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(160deg, #0A0A0A 0%, #1A0800 50%, #0D0D0D 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      color: #fff;
+    }
+
+    .container { max-width: 980px; width: 100%; }
+
+    header {
+      text-align: center;
+      margin-bottom: 52px;
+      animation: fadeInDown 0.8s ease;
+    }
+
+    .studio-badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #FF4500;
+      background: rgba(255,69,0,0.1);
+      padding: 6px 18px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+      border: 1px solid rgba(255,69,0,0.3);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+      font-family: 'Arial Black', sans-serif;
+    }
+
+    h1 em { color: #FF4500; font-style: normal; }
+
+    .subtitle {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.45);
+      font-weight: 300;
+    }
+
+    /* TEMPLATE CARD */
+    .template-card {
+      background: #111;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,69,0,0.15);
+      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      animation: fadeInUp 0.8s ease;
+      animation-fill-mode: both;
+      animation-delay: 0.2s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 36px 100px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,69,0,0.3);
+    }
+
+    /* Card header */
+    .card-header {
+      background: linear-gradient(135deg, #0F0F0F 0%, #1A0800 50%, #2A1000 100%);
+      padding: 48px 48px 40px;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 2px solid #FF4500;
+    }
+    .card-header::before {
+      content: '';
+      position: absolute; top: -60%; right: -20%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,69,0,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .card-header::after {
+      content: '';
+      position: absolute; bottom: -50px; left: -50px;
+      width: 250px; height: 250px;
+      background: radial-gradient(circle, rgba(255,100,0,0.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    .card-header > * { position: relative; z-index: 1; }
+
+    .card-eyebrow {
+      font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+      color: #FF6A2A; margin-bottom: 12px;
+    }
+    .card-title {
+      font-size: 2.2rem; color: #FFF; font-family: 'Arial Black', sans-serif;
+      font-weight: 800; margin-bottom: 6px; letter-spacing: 0.03em;
+    }
+    .card-title em { color: #FF4500; font-style: normal; }
+    .card-subtitle { font-size: 0.88rem; color: rgba(255,255,255,0.45); margin-bottom: 24px; }
+
+    .card-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag {
+      background: rgba(255,69,0,0.15); color: #FF6A2A;
+      font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase;
+      padding: 5px 14px; border-radius: 100px; border: 1px solid rgba(255,69,0,0.3);
+    }
+
+    /* Card body */
+    .card-body { padding: 40px 48px 48px; background: #111; }
+
+    /* Page grid */
+    .pages-label {
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,69,0,0.6); margin-bottom: 16px; font-weight: 700;
+    }
+    .pages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 40px; }
+    .page-link {
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      background: #1A1A1A;
+      border: 2px solid #2A2A2A;
+      border-radius: 10px; padding: 16px 10px;
+      text-decoration: none;
+      transition: all 0.25s;
+      text-align: center;
+    }
+    .page-link:hover { border-color: #FF4500; background: #1F0F00; transform: translateY(-2px); }
+    .page-link .page-icon { font-size: 1.6rem; }
+    .page-link .page-name { font-size: 0.75rem; font-weight: 700; color: #FFF; letter-spacing: 0.5px; }
+    .page-link .page-sub { font-size: 0.63rem; color: #FF6A2A; font-style: italic; }
+
+    /* Features list */
+    .features-label {
+      font-size: 0.65rem; letter-spacing: 3px; text-transform: uppercase;
+      color: rgba(255,69,0,0.6); margin-bottom: 14px; font-weight: 700;
+    }
+    .features-list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 36px; }
+    .feat-item {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 0.82rem; color: rgba(255,255,255,0.65);
+    }
+    .feat-item .check { color: #FF4500; font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
+
+    /* CTA */
+    .card-cta { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: #FF4500; color: #fff;
+      padding: 14px 32px; border-radius: 6px;
+      font-weight: 700; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.3s; display: inline-block; letter-spacing: 0.3px;
+      box-shadow: 0 4px 18px rgba(255,69,0,0.4);
+    }
+    .btn-primary:hover { background: #c93a00; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(255,69,0,0.55); }
+    .btn-dark {
+      background: #1A1A1A; color: rgba(255,255,255,0.75);
+      padding: 14px 32px; border-radius: 6px;
+      font-weight: 600; font-size: 0.9rem; text-decoration: none;
+      transition: all 0.3s; display: inline-block;
+      border: 2px solid #2A2A2A;
+    }
+    .btn-dark:hover { background: #222; border-color: rgba(255,69,0,0.4); color: #FFF; transform: translateY(-2px); }
+
+    /* Colour palette strip */
+    .palette { display: flex; gap: 10px; margin-top: 32px; align-items: center; flex-wrap: wrap; }
+    .palette-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-right: 6px; }
+    .swatch { width: 28px; height: 28px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.15); position: relative; cursor: default; }
+    .swatch[title]:hover::after {
+      content: attr(title);
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
+      background: #111; color: #fff; font-size: 0.65rem; padding: 3px 8px;
+      border-radius: 4px; white-space: nowrap; border: 1px solid #333;
+    }
+
+    /* Back link */
+    .back-link {
+      display: block; text-align: center; margin-top: 32px;
+      color: rgba(255,255,255,0.3); font-size: 0.82rem; text-decoration: none;
+      transition: color 0.3s;
+    }
+    .back-link:hover { color: #FF4500; }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp   { from { opacity: 0; transform: translateY(24px); }  to { opacity: 1; transform: translateY(0); } }
+
+    @media (max-width: 640px) {
+      .card-header, .card-body { padding: 28px 24px; }
+      .pages-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-list { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <div class="studio-badge">Armin Studio · Template Preview</div>
+    <h1>Two <em>Wheel</em> Clothing</h1>
+    <p class="subtitle">Moto-Inspired Fashion & Cologne · 4-Page E-Commerce Template</p>
+  </header>
+
+  <div class="template-card">
+
+    <!-- Card Header -->
+    <div class="card-header">
+      <div class="card-eyebrow">Example No. 16 · E-Commerce · Clothing & Lifestyle</div>
+      <div class="card-title">Two <em>Wheel</em> Clothing</div>
+      <div class="card-subtitle">Premium cologne, moto jackets, apparel & accessories — built for riders who refuse to settle.</div>
+      <div class="card-tags">
+        <span class="tag">🏍️ Moto Lifestyle</span>
+        <span class="tag">💎 Cologne</span>
+        <span class="tag">🧥 Jackets</span>
+        <span class="tag">👕 Clothing</span>
+        <span class="tag">🛒 Shopping Cart</span>
+        <span class="tag">🔒 Checkout Flow</span>
+      </div>
+    </div>
+
+    <!-- Card Body -->
+    <div class="card-body">
+
+      <!-- Pages -->
+      <div class="pages-label">Pages Included (4)</div>
+      <div class="pages-grid">
+        <a href="exampleno16-site1/index.html" class="page-link">
+          <span class="page-icon">🏠</span>
+          <span class="page-name">Home</span>
+          <span class="page-sub">Full landing</span>
+        </a>
+        <a href="exampleno16-site1/shop.html" class="page-link">
+          <span class="page-icon">🛍️</span>
+          <span class="page-name">Shop</span>
+          <span class="page-sub">28 products</span>
+        </a>
+        <a href="exampleno16-site1/product.html" class="page-link">
+          <span class="page-icon">💎</span>
+          <span class="page-name">Product</span>
+          <span class="page-sub">Detail page</span>
+        </a>
+        <a href="exampleno16-site1/cart.html" class="page-link">
+          <span class="page-icon">🛒</span>
+          <span class="page-name">Cart</span>
+          <span class="page-sub">3-step checkout</span>
+        </a>
+      </div>
+
+      <!-- Features -->
+      <div class="features-label">Key Features</div>
+      <div class="features-list">
+        <div class="feat-item"><span class="check">✓</span> Animated motorcycle SVG hero with spinning wheels</div>
+        <div class="feat-item"><span class="check">✓</span> 28 products across 4 categories (Cologne, Jackets, Clothing, Accessories)</div>
+        <div class="feat-item"><span class="check">✓</span> Full-featured shop with filter + sort controls</div>
+        <div class="feat-item"><span class="check">✓</span> Product detail page with gallery, scent/size selectors & reviews</div>
+        <div class="feat-item"><span class="check">✓</span> 3-step checkout (Cart → Shipping → Payment)</div>
+        <div class="feat-item"><span class="check">✓</span> localStorage cart with badge counts, quick-add & toast notifications</div>
+        <div class="feat-item"><span class="check">✓</span> Promo code system (RIDE20 / CHROME25 / WHEEL10)</div>
+        <div class="feat-item"><span class="check">✓</span> Order success modal with randomised order number</div>
+        <div class="feat-item"><span class="check">✓</span> Animated preloader with spinning motorcycle wheel</div>
+        <div class="feat-item"><span class="check">✓</span> Scroll-reveal animations, marquee banner, newsletter form</div>
+        <div class="feat-item"><span class="check">✓</span> Brand story section with stats, testimonials & best sellers</div>
+        <div class="feat-item"><span class="check">✓</span> Fully responsive — mobile menu, adaptive grids, touch-friendly</div>
+      </div>
+
+      <!-- CTA -->
+      <div class="card-cta">
+        <a href="exampleno16-site1/index.html" class="btn-primary">🏍️ View Full Demo →</a>
+        <a href="exampleno16-site1/shop.html" class="btn-dark">🛍️ Browse Shop</a>
+        <a href="exampleno16-site1/cart.html" class="btn-dark">🛒 View Checkout</a>
+      </div>
+
+      <!-- Colour palette -->
+      <div class="palette">
+        <span class="palette-label">Palette</span>
+        <span class="swatch" style="background:#FF4500;" title="Fire Orange #FF4500"></span>
+        <span class="swatch" style="background:#c93a00;" title="Deep Fire #C93A00"></span>
+        <span class="swatch" style="background:#0D0D0D;" title="Asphalt #0D0D0D"></span>
+        <span class="swatch" style="background:#1A1A1A;" title="Dark #1A1A1A"></span>
+        <span class="swatch" style="background:#2A2A2A;" title="Panel #2A2A2A"></span>
+        <span class="swatch" style="background:#FFFFFF;" title="White #FFFFFF"></span>
+        <span class="swatch" style="background:#22C55E;" title="Success Green #22C55E"></span>
+        <span class="swatch" style="background:#F59E0B;" title="Amber Star #F59E0B"></span>
+      </div>
+
+    </div>
+  </div>
+
+  <a href="examples.html" class="back-link">← Back to all examples</a>
+</div>
+
+</body>
+</html>
