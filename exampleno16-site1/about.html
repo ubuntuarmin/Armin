@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | Two Wheel Clothing</title>
+  <meta name="description" content="Learn about Two Wheel Clothing, our moto-inspired philosophy, quality standards, and commitment to riders.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root { --fire:#FF4500; --fire2:#c93a00; --bg:#0D0D0D; --panel:#171717; --panel2:#1f1f1f; --text:rgba(255,255,255,.9); --muted:rgba(255,255,255,.64); --border:rgba(255,255,255,.14); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:Inter,sans-serif;background:radial-gradient(circle at top right,#2b1205,#0D0D0D 55%);color:var(--text)}
+    .top{position:sticky;top:0;z-index:30;background:rgba(13,13,13,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+    .top-inner{max-width:1100px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:1px;color:#fff;text-decoration:none}
+    .logo span{color:var(--fire)}
+    .nav{display:flex;gap:14px;flex-wrap:wrap}
+    .nav a{text-decoration:none;color:var(--muted);font-size:.92rem}
+    .nav a:hover,.nav a.active{color:var(--fire)}
+    .cart-badge{background:var(--fire);color:#fff;padding:1px 8px;border-radius:999px;font-size:.78rem;margin-left:4px}
+    main{max-width:1100px;margin:0 auto;padding:42px 20px 60px}
+    .hero{background:linear-gradient(135deg,#151515,#241005);border:1px solid var(--border);border-radius:16px;padding:40px 26px;margin-bottom:24px}
+    .eyebrow{font-size:.74rem;text-transform:uppercase;letter-spacing:2px;color:#ff8b5d;margin-bottom:8px}
+    h1{font-family:'Bebas Neue',sans-serif;font-size:3.1rem;letter-spacing:1.2px;line-height:1}
+    h1 span{color:var(--fire)}
+    .lead{margin-top:12px;color:var(--muted);max-width:760px;line-height:1.7}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin:24px 0}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:20px}
+    .card h3{font-size:1.05rem;margin-bottom:10px}
+    .card p{color:var(--muted);line-height:1.7;font-size:.94rem}
+    .story{background:var(--panel2);border:1px solid var(--border);border-radius:14px;padding:22px}
+    .story h2{font-size:1.35rem;margin-bottom:10px}
+    .story p{color:var(--muted);line-height:1.75;margin-bottom:10px}
+    footer{border-top:1px solid var(--border);padding:26px 20px 34px;color:var(--muted);text-align:center;font-size:.9rem}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}.nav{justify-content:flex-end}h1{font-size:2.5rem}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="logo" href="index.html">TWO <span>WHEEL</span></a>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="shop.html">Shop</a>
+        <a href="about.html" class="active">About</a>
+        <a href="faq.html">FAQ</a>
+        <a href="contact.html">Contact</a>
+        <a href="cart.html">Cart <span id="cartBadge" class="cart-badge">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="eyebrow">Brand Story</div>
+      <h1>Built for the <span>Road</span></h1>
+      <p class="lead">Two Wheel Clothing is a moto-lifestyle label designed for riders and modern streetwear customers who want durable quality, premium materials, and a bold identity. We combine performance-minded design with everyday wearability across cologne, jackets, apparel, and accessories.</p>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h3>Our Mission</h3>
+        <p>To build products that feel as strong and confident as the people who wear them. Every collection is crafted to balance fit, comfort, and character.</p>
+      </article>
+      <article class="card">
+        <h3>Quality Standards</h3>
+        <p>We prioritize dependable stitching, tested hardware, and carefully selected fabrics. Every batch is reviewed before release for consistency and finish.</p>
+      </article>
+      <article class="card">
+        <h3>Customer Commitment</h3>
+        <p>Clear shipping expectations, responsive support, and fair return policies are part of every order. We focus on long-term trust, not one-time transactions.</p>
+      </article>
+    </section>
+
+    <section class="story">
+      <h2>What Makes Two Wheel Different</h2>
+      <p>Our design language is inspired by high-contrast racing aesthetics, nighttime city rides, and timeless mechanical detail. We keep silhouettes clean, colors intentional, and branding bold without compromising comfort.</p>
+      <p>From first purchase to repeat customers, our goal is simple: deliver products that look sharp, wear well, and represent a rider mindset wherever you are.</p>
+      <p>Questions about sizing, shipping, or custom orders? Visit our <a href="faq.html" style="color:var(--fire);text-decoration:none;">FAQ</a> or <a href="contact.html" style="color:var(--fire);text-decoration:none;">contact page</a>.</p>
+    </section>
+  </main>
+
+  <footer>
+    © 2025 Two Wheel Clothing · Premium moto-inspired essentials
+  </footer>
+
+  <script>
+    (function(){
+      function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]')}catch(e){return []}}
+      var count = getCart().reduce(function(s,i){return s + (i.qty||0)},0);
+      document.getElementById('cartBadge').textContent = count;
+    })();
+  </script>
+</body>
+</html>

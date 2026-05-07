@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wishlist | Two Wheel Clothing</title>
+  <meta name="description" content="Save your favorite Two Wheel Clothing products to your wishlist.">
+  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{--fire:#FF4500;--bg:#0D0D0D;--panel:#171717;--muted:rgba(255,255,255,.68);--border:rgba(255,255,255,.14)}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:Inter,sans-serif;background:var(--bg);color:#fff}
+    .wrap{max-width:880px;margin:auto;padding:32px 20px 56px}.logo{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:#fff;text-decoration:none}.logo span{color:var(--fire)}
+    .nav{margin-top:10px;display:flex;gap:12px;flex-wrap:wrap}.nav a{color:var(--muted);text-decoration:none}.nav a:hover,.nav a.active{color:var(--fire)}
+    .card{margin-top:16px;background:var(--panel);border:1px solid var(--border);border-radius:14px;padding:22px}
+    h1{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;letter-spacing:1px}.lead{margin-top:8px;color:var(--muted);line-height:1.7}
+    .empty{margin-top:12px;background:#111;border:1px dashed var(--border);padding:16px;border-radius:10px;color:var(--muted);line-height:1.7}
+    .btn{margin-top:14px;display:inline-block;background:linear-gradient(135deg,var(--fire),#c93a00);color:#fff;text-decoration:none;padding:11px 16px;border-radius:8px;font-weight:700}
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <a class="logo" href="index.html">TWO <span>WHEEL</span></a>
+    <nav class="nav"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="wishlist.html" class="active">Wishlist</a><a href="cart.html">Cart</a></nav>
+    <section class="card">
+      <h1>Your Wishlist</h1>
+      <p class="lead">Save pieces you want to come back to. This demo page is ready for future wishlist integrations.</p>
+      <div class="empty">No wishlist items yet. Browse the shop and save your favorites for your next ride.</div>
+      <a class="btn" href="shop.html">Browse Products</a>
+    </section>
+  </main>
+</body>
+</html>
