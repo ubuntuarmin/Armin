@@ -114,6 +114,7 @@
 
     .product-wishlist { position:absolute; top:12px; right:12px; width:30px; height:30px; border-radius:50%; background:rgba(0,0,0,0.5); border:none; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; justify-content:center; transition:all 0.2s; }
     .product-wishlist:hover { background:rgba(255,69,0,0.2); }
+    .product-wishlist.active { background:rgba(255,69,0,0.2); color:#fff; border:1px solid rgba(255,69,0,0.35); }
 
     .product-quick-add { position:absolute; bottom:-48px; left:0; right:0; background:var(--fire); color:#fff; padding:12px; text-align:center; font-size:0.8rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; transition:bottom 0.32s cubic-bezier(0.25,0.8,0.25,1); border:none; cursor:pointer; font-family:'Inter',sans-serif; }
     .product-card:hover .product-quick-add { bottom:0; }
@@ -214,6 +215,8 @@
   <a href="shop.html?cat=jackets">Jackets</a>
   <a href="shop.html?cat=clothing">Clothing</a>
   <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="collections.html">Collections</a>
+  <a href="wishlist.html">Wishlist</a>
   <a href="cart.html" style="display:flex;align-items:center;">🛒 Cart <span class="mob-cart-badge" id="mobCartBadge">0</span></a>
 </div>
 
@@ -279,455 +282,7 @@
 
 <!-- PRODUCTS -->
 <div class="shop-main">
-  <div class="products-grid" id="productsGrid">
-
-    <!-- COLOGNE (6) -->
-    <div class="product-card reveal" data-cat="cologne" data-price="67" data-rating="4.9" data-reviews="892" data-new="0" data-sales="1240" onclick="window.location.href='product.html?id=1'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
-        💎
-        <span class="product-badge badge-sale">25% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(1,'Phantom Rider EDT',67,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Phantom Rider EDT — 50ml</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(892)</span></div>
-        <div class="product-price"><span class="price-current">$67</span><span class="price-original">$89</span><span class="price-save">Save $22</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="cologne" data-price="125" data-rating="4.7" data-reviews="641" data-new="0" data-sales="820" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#12121E,#1E1412);">
-        💎
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(2,'Iron Highway EDP',125,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Iron Highway EDP — 100ml</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(641)</span></div>
-        <div class="product-price"><span class="price-current">$125</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="cologne" data-price="63" data-rating="4.9" data-reviews="1204" data-new="0" data-sales="2100" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#0E0E1A,#1A1A2A);">
-        💎
-        <span class="product-badge badge-hot">Best Seller</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(3,'Chrome Dusk EDT',63,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Chrome Dusk EDT — 50ml</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,204)</span></div>
-        <div class="product-price"><span class="price-current">$63</span><span class="price-original">$79</span><span class="price-save">Save $16</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="cologne" data-price="145" data-rating="4.7" data-reviews="389" data-new="0" data-sales="540" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#180C0C,#2A1010);">
-        💎
-        <span class="product-badge badge-ltd">Limited</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(4,'Road Warrior EDP',145,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Road Warrior EDP — 100ml</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(389)</span></div>
-        <div class="product-price"><span class="price-current">$145</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="cologne" data-price="110" data-rating="4.9" data-reviews="528" data-new="1" data-sales="780" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1E2A,#0A1A2A);">
-        💎
-        <span class="product-badge badge-new">New</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(5,'Midnight Chrome EDP',110,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Midnight Chrome EDP — 75ml</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(528)</span></div>
-        <div class="product-price"><span class="price-current">$110</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="cologne" data-price="68" data-rating="4.6" data-reviews="274" data-new="0" data-sales="490" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#200A00,#2A1500);">
-        💎
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(6,'Asphalt & Smoke EDT',68,'cologne')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Cologne</div>
-        <div class="product-name">Asphalt &amp; Smoke EDT — 50ml</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(274)</span></div>
-        <div class="product-price"><span class="price-current">$68</span><span class="price-original">$85</span><span class="price-save">Save $17</span></div>
-      </div>
-    </div>
-
-    <!-- JACKETS (4) -->
-    <div class="product-card reveal" data-cat="jackets" data-price="228" data-rating="4.9" data-reviews="412" data-new="0" data-sales="680" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1E1A0E,#2A1A0A);">
-        🧥
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(7,'Moto Chrome Rider Jacket',228,'jackets')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Jackets</div>
-        <div class="product-name">Moto Chrome Rider Jacket</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(412)</span></div>
-        <div class="product-price"><span class="price-current">$228</span><span class="price-original">$285</span><span class="price-save">Save $57</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="jackets" data-price="320" data-rating="4.7" data-reviews="188" data-new="0" data-sales="290" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1410,#2A1A0E);">
-        🧥
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(8,'Iron Asphalt Jacket',320,'jackets')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Jackets</div>
-        <div class="product-name">Iron Asphalt Full-Grain Jacket</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(188)</span></div>
-        <div class="product-price"><span class="price-current">$320</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="jackets" data-price="199" data-rating="4.9" data-reviews="573" data-new="0" data-sales="1020" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A0E14,#200A18);">
-        🧥
-        <span class="product-badge badge-sale">25% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(9,'Speed Classic Leather Jacket',199,'jackets')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Jackets</div>
-        <div class="product-name">Speed Classic Leather Jacket</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(573)</span></div>
-        <div class="product-price"><span class="price-current">$199</span><span class="price-original">$265</span><span class="price-save">Save $66</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="jackets" data-price="299" data-rating="4.7" data-reviews="231" data-new="1" data-sales="360" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1210,#2A1A14);">
-        🧥
-        <span class="product-badge badge-new">New</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(10,'Road King Riding Jacket',299,'jackets')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Jackets</div>
-        <div class="product-name">Road King Riding Jacket</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(231)</span></div>
-        <div class="product-price"><span class="price-current">$299</span></div>
-      </div>
-    </div>
-
-    <!-- CLOTHING (10) -->
-    <div class="product-card reveal" data-cat="clothing" data-price="36" data-rating="4.9" data-reviews="1102" data-new="0" data-sales="2800" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A1A,#0E1620);">
-        👕
-        <span class="product-badge badge-hot">Hot</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(11,'Phantom Graphic Tee',36,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — T-Shirt</div>
-        <div class="product-name">Phantom Graphic Tee</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,102)</span></div>
-        <div class="product-price"><span class="price-current">$36</span><span class="price-original">$45</span><span class="price-save">Save $9</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="42" data-rating="4.7" data-reviews="445" data-new="0" data-sales="920" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A14,#14180A);">
-        👕
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(12,'Speed Lines Print Tee',42,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — T-Shirt</div>
-        <div class="product-name">Speed Lines Print Tee</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(445)</span></div>
-        <div class="product-price"><span class="price-current">$42</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="48" data-rating="4.9" data-reviews="789" data-new="0" data-sales="1650" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);">
-        👕
-        <span class="product-badge badge-hot">Hot</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(13,'Throttle Chrome Tee',48,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — T-Shirt</div>
-        <div class="product-name">Throttle Chrome Tee</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(789)</span></div>
-        <div class="product-price"><span class="price-current">$48</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="35" data-rating="4.6" data-reviews="334" data-new="0" data-sales="740" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#100A1A,#200A1A);">
-        👕
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(14,'Chrome Rider Tee',35,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — T-Shirt</div>
-        <div class="product-name">Chrome Rider Tee</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(334)</span></div>
-        <div class="product-price"><span class="price-current">$35</span><span class="price-original">$44</span><span class="price-save">Save $9</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="68" data-rating="4.9" data-reviews="623" data-new="0" data-sales="1100" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A14,#14180A);">
-        🧥
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(15,'Iron Moto Pullover Hoodie',68,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Hoodie</div>
-        <div class="product-name">Iron Moto Pullover Hoodie</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(623)</span></div>
-        <div class="product-price"><span class="price-current">$68</span><span class="price-original">$85</span><span class="price-save">Save $17</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="95" data-rating="4.7" data-reviews="291" data-new="1" data-sales="460" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#141420,#1E1430);">
-        🧥
-        <span class="product-badge badge-new">New</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(16,'Midnight Cruiser Zip Hoodie',95,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Hoodie</div>
-        <div class="product-name">Midnight Cruiser Zip Hoodie</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(291)</span></div>
-        <div class="product-price"><span class="price-current">$95</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="76" data-rating="4.9" data-reviews="347" data-new="0" data-sales="680" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#101020,#200E30);">
-        🎽
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(17,'Rider Cargo Pants',76,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Bottoms</div>
-        <div class="product-name">Rider Cargo Pants</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(347)</span></div>
-        <div class="product-price"><span class="price-current">$76</span><span class="price-original">$95</span><span class="price-save">Save $19</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="75" data-rating="4.6" data-reviews="198" data-new="0" data-sales="380" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#141020,#1E0A2A);">
-        🎽
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(18,'Speed Racer Joggers',75,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Bottoms</div>
-        <div class="product-name">Speed Racer Joggers</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(198)</span></div>
-        <div class="product-price"><span class="price-current">$75</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="44" data-rating="4.9" data-reviews="412" data-new="1" data-sales="820" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#0E0E20,#1A1428);">
-        🎽
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(19,'Chrome Track Shorts',44,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Bottoms</div>
-        <div class="product-name">Chrome Track Shorts</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(412)</span></div>
-        <div class="product-price"><span class="price-current">$44</span><span class="price-original">$55</span><span class="price-save">Save $11</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="clothing" data-price="38" data-rating="4.8" data-reviews="288" data-new="1" data-sales="490" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#101018,#1A1020);">
-        👕
-        <span class="product-badge badge-new">New</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(28,'Iron Cross Long Sleeve',38,'clothing')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Clothing — Long Sleeve</div>
-        <div class="product-name">Iron Cross Long Sleeve Tee</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(288)</span></div>
-        <div class="product-price"><span class="price-current">$38</span></div>
-      </div>
-    </div>
-
-    <!-- ACCESSORIES (8) -->
-    <div class="product-card reveal" data-cat="accessories" data-price="35" data-rating="4.9" data-reviews="1245" data-new="0" data-sales="3100" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1E1A,#0E1A0E);">
-        🧢
-        <span class="product-badge badge-hot">Best Seller</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(20,'Chrome Moto Cap',35,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Hat</div>
-        <div class="product-name">Chrome Moto Snapback Cap</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,245)</span></div>
-        <div class="product-price"><span class="price-current">$35</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="44" data-rating="4.6" data-reviews="388" data-new="0" data-sales="690" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);">
-        🧤
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(21,'Iron Rider Gloves',44,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Gloves</div>
-        <div class="product-name">Iron Rider Riding Gloves</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(388)</span></div>
-        <div class="product-price"><span class="price-current">$44</span><span class="price-original">$55</span><span class="price-save">Save $11</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="28" data-rating="4.9" data-reviews="567" data-new="0" data-sales="1340" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#141414,#1E1414);">
-        🧢
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(22,'Speed Rider Beanie',28,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Hat</div>
-        <div class="product-name">Speed Rider Beanie</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(567)</span></div>
-        <div class="product-price"><span class="price-current">$28</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="22" data-rating="4.6" data-reviews="892" data-new="0" data-sales="2200" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#0A1A0A,#1A2A0A);">
-        ⛓️
-        <span class="product-badge badge-hot">Hot</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(23,'Throttle Chain Bracelet',22,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Jewellery</div>
-        <div class="product-name">Throttle Chain Bracelet</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(892)</span></div>
-        <div class="product-price"><span class="price-current">$22</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="36" data-rating="4.9" data-reviews="234" data-new="0" data-sales="510" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#0A0A1A,#1A0A1A);">
-        👜
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(24,'Rider Canvas Tote',36,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Bag</div>
-        <div class="product-name">Rider Canvas Tote Bag</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(234)</span></div>
-        <div class="product-price"><span class="price-current">$36</span><span class="price-original">$45</span><span class="price-save">Save $9</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="18" data-rating="4.9" data-reviews="1087" data-new="0" data-sales="2900" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A1A,#2A2A1A);">
-        🏅
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(25,'Moto Dog Tag Necklace',18,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Jewellery</div>
-        <div class="product-name">Moto Dog Tag Necklace</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,087)</span></div>
-        <div class="product-price"><span class="price-current">$18</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="52" data-rating="4.6" data-reviews="189" data-new="1" data-sales="320" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#141A14,#1A2414);">
-        🕶️
-        <span class="product-badge badge-sale">20% OFF</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(27,'Rider Polarized Sunglasses',52,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Eyewear</div>
-        <div class="product-name">Rider Polarized Sunglasses</div>
-        <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(189)</span></div>
-        <div class="product-price"><span class="price-current">$52</span><span class="price-original">$65</span><span class="price-save">Save $13</span></div>
-      </div>
-    </div>
-
-    <div class="product-card reveal" data-cat="accessories" data-price="24" data-rating="4.9" data-reviews="743" data-new="0" data-sales="1820" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#181810,#2A2414);">
-        🧦
-        <span class="product-badge badge-hot">Value Pack</span>
-        <button class="product-wishlist" onclick="event.stopPropagation();">♡</button>
-        <div class="img-ph-label">Image Placeholder</div>
-        <button class="product-quick-add" onclick="event.stopPropagation();quickAdd(26,'Speed Socks 3-Pack',24,'accessories')">+ Add to Cart</button>
-      </div>
-      <div class="product-info">
-        <div class="product-category">Accessories — Socks</div>
-        <div class="product-name">Speed Rider Socks — 3 Pack</div>
-        <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(743)</span></div>
-        <div class="product-price"><span class="price-current">$24</span></div>
-      </div>
-    </div>
-
-  </div><!-- /products-grid -->
+  <div class="products-grid" id="productsGrid"></div><!-- /products-grid -->
 
   <div class="empty-state" id="emptyState">
     <h3>No Products Found</h3>
@@ -755,10 +310,13 @@
       <a href="shipping.html">Shipping</a>
       <a href="returns.html">Returns</a>
       <a href="size-guide.html">Size Guide</a>
+      <a href="collections.html">Collections</a>
+      <a href="care-guide.html">Care Guide</a>
     </div>
     <div class="footer-col">
       <h4>Account</h4>
       <a href="cart.html">Cart</a>
+      <a href="wishlist.html">Wishlist</a>
       <a href="order-tracking.html">Orders</a>
       <a href="contact.html">Contact</a>
     </div>
@@ -775,8 +333,8 @@
   <div class="toast-text" id="toastText"></div>
 </div>
 
+<script src="catalog.js"></script>
 <script>
-  /* PRELOADER */
   (function() {
     var pl = document.getElementById('preloader'), bar = document.getElementById('plProgressBar'), site = document.getElementById('site-wrap'), prog = 0;
     var t = setInterval(function() {
@@ -786,71 +344,101 @@
     }, 55);
   })();
 
-  /* MOBILE MENU */
   function toggleMenu() { document.getElementById('mobMenu').classList.toggle('open'); document.getElementById('mobOverlay').classList.toggle('open'); }
-
-  /* CART */
   function getCart() { try { return JSON.parse(localStorage.getItem('twCart') || '[]'); } catch(e) { return []; } }
   function saveCart(c) { localStorage.setItem('twCart', JSON.stringify(c)); }
-  function updateBadge() { var n = getCart().reduce(function(s,i){return s+i.qty;},0); document.getElementById('cartBadge').textContent = n; document.getElementById('mobCartBadge').textContent = n; }
+  function updateBadge() { var n = getCart().reduce(function(s,i){return s + (i.qty || 0);},0); document.getElementById('cartBadge').textContent = n; document.getElementById('mobCartBadge').textContent = n; }
   function quickAdd(id, name, price, cat) {
-    var cart = getCart(); var ex = cart.find(function(i){return i.id===id;});
-    if (ex) ex.qty++; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
-    saveCart(cart); updateBadge(); showToast('<strong>' + name + '</strong> added!');
+    var cart = getCart();
+    var ex = cart.find(function(i){ return i.id === id && i.name === name; });
+    if (ex) ex.qty = Math.max(0, parseInt(ex.qty, 10) || 0) + 1; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
+    saveCart(cart); updateBadge(); showToast(name + ' added to cart.');
   }
   updateBadge();
 
-  /* TOAST */
   var toastTimer;
-  function showToast(msg) { var t = document.getElementById('toast'); document.getElementById('toastText').innerHTML = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
+  function showToast(msg) { var t = document.getElementById('toast'); document.getElementById('toastText').textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
+  function toggleWishlistItem(id, button) {
+    var saved = TWCatalog.toggleWishlist(id);
+    if (button) { button.classList.toggle('active', saved); button.textContent = saved ? '♥' : '♡'; }
+    var product = TWCatalog.getProduct(id);
+    showToast(saved ? product.name + ' saved to wishlist.' : product.name + ' removed from wishlist.');
+  }
 
-  /* FILTER */
   var activeCat = 'all';
+  var currentSort = 'default';
+  var observer = new IntersectionObserver(function(entries){ entries.forEach(function(entry){ if (entry.isIntersecting) entry.target.classList.add('visible'); }); }, {threshold:0.08});
+
+  function updateFilterLabels() {
+    var counts = TWCatalog.getCategoryCounts();
+    var labels = { all: 'All', cologne: 'Cologne', jackets: 'Jackets', clothing: 'Clothing', accessories: 'Accessories' };
+    document.querySelectorAll('.filter-btn').forEach(function(btn){
+      var match = btn.getAttribute('onclick').match(/'([^']+)'/);
+      if (!match) return;
+      var key = match[1];
+      btn.textContent = labels[key] + ' (' + counts[key] + ')';
+    });
+    document.querySelector('.page-label').textContent = counts.all + ' Products';
+  }
+
+  function observeCards() { document.querySelectorAll('#productsGrid .product-card').forEach(function(card){ observer.observe(card); }); }
+
+  function renderProducts() {
+    var grid = document.getElementById('productsGrid');
+    grid.innerHTML = TWCatalog.products.map(function(product){ return TWCatalog.buildCard(product); }).join('');
+    updateFilterLabels();
+    observeCards();
+    sortProducts(currentSort, false);
+    applyFilter();
+  }
+
   function filterProducts(cat, btn) {
     activeCat = cat;
     document.querySelectorAll('.filter-btn').forEach(function(b){ b.classList.remove('active'); });
-    btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     applyFilter();
+    var url = new URL(window.location.href);
+    if (cat === 'all') url.searchParams.delete('cat'); else url.searchParams.set('cat', cat);
+    history.replaceState({}, '', url.toString());
   }
+
   function applyFilter() {
-    var cards = document.querySelectorAll('#productsGrid .product-card');
     var shown = 0;
-    cards.forEach(function(c) {
-      var match = activeCat === 'all' || c.dataset.cat === activeCat;
-      c.classList.toggle('hidden', !match);
-      if (match) shown++;
+    document.querySelectorAll('#productsGrid .product-card').forEach(function(card) {
+      var match = activeCat === 'all' || card.dataset.cat === activeCat;
+      card.classList.toggle('hidden', !match);
+      if (match) shown += 1;
     });
     document.getElementById('resultsCount').textContent = shown + ' result' + (shown !== 1 ? 's' : '');
     document.getElementById('emptyState').style.display = shown === 0 ? 'block' : 'none';
   }
 
-  /* SORT */
-  function sortProducts(val) {
+  function sortProducts(val, keepSelect) {
+    currentSort = val;
     var grid = document.getElementById('productsGrid');
     var cards = Array.from(grid.querySelectorAll('.product-card'));
     cards.sort(function(a, b) {
       switch(val) {
-        case 'price-low':  return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
+        case 'price-low': return parseFloat(a.dataset.price) - parseFloat(b.dataset.price);
         case 'price-high': return parseFloat(b.dataset.price) - parseFloat(a.dataset.price);
-        case 'rating':     return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
-        case 'newest':     return parseInt(b.dataset.new) - parseInt(a.dataset.new);
+        case 'rating': return parseFloat(b.dataset.rating) - parseFloat(a.dataset.rating);
+        case 'newest': return parseInt(b.dataset.new) - parseInt(a.dataset.new) || parseInt(b.dataset.sales) - parseInt(a.dataset.sales);
         case 'bestseller': return parseInt(b.dataset.sales) - parseInt(a.dataset.sales);
-        default: return 0;
+        default: return parseInt(b.dataset.sales) - parseInt(a.dataset.sales);
       }
     });
-    cards.forEach(function(c){ grid.appendChild(c); });
+    cards.forEach(function(card){ grid.appendChild(card); });
+    if (keepSelect !== false) document.querySelector('.sort-select').value = val;
+    applyFilter();
   }
 
-  /* URL param auto-filter */
-  var urlCat = new URLSearchParams(window.location.search).get('cat');
+  renderProducts();
+  var params = new URLSearchParams(window.location.search);
+  var urlCat = params.get('cat');
   if (urlCat) {
-    var btn = document.querySelector('.filter-btn[onclick*="' + urlCat + '"]');
+    var btn = Array.from(document.querySelectorAll('.filter-btn')).find(function(item){ return item.getAttribute('onclick').indexOf("'" + urlCat + "'") !== -1; });
     if (btn) filterProducts(urlCat, btn);
   }
-
-  /* REVEAL */
-  var ro = new IntersectionObserver(function(es){ es.forEach(function(e){ if(e.isIntersecting) e.target.classList.add('visible'); }); }, {threshold:0.08});
-  document.querySelectorAll('.reveal').forEach(function(el){ ro.observe(el); });
 </script>
 </body>
 </html>
