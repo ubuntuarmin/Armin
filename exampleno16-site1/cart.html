@@ -604,7 +604,7 @@
       div.className = 'cart-item';
       div.innerHTML = '<div class="cart-item-img"></div>'
         + '<div><div class="cart-item-cat"></div><div class="cart-item-name"></div><div class="cart-item-unit"></div></div>'
-        + '<div class="cart-item-right"><div class="cart-item-price"></div><div class="cart-item-controls"><button class="qty-btn">−</button><span class="qty-display"></span><button class="qty-btn">+</button></div><button class="cart-item-remove">✕ Remove</button></div>';
+        + '<div class="cart-item-right"><div class="cart-item-price"></div><div class="cart-item-controls"><button class="qty-btn" aria-label="Decrease quantity">−</button><span class="qty-display"></span><button class="qty-btn" aria-label="Increase quantity">+</button></div><button class="cart-item-remove" aria-label="Remove item">✕ Remove</button></div>';
       var img = div.querySelector('.cart-item-img');
       img.style.background = bg;
       img.textContent = em;

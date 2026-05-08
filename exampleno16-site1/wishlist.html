@@ -48,7 +48,7 @@
     function saveCart(cart){localStorage.setItem('twCart',JSON.stringify(cart));}
     var timer;
     function toast(msg){var el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');clearTimeout(timer);timer=setTimeout(function(){el.classList.remove('show');},2600);}
-    function addToCart(product){var cart=getCart();var name=product.name + ' (' + product.options[0] + ', ' + product.sizes[0].label + ')';var found=cart.find(function(item){return item.id===product.id && item.name===name;});if(found)found.qty+=1;else cart.push({id:product.id,name:name,price:product.sizes[0].price,cat:product.category,qty:1});saveCart(cart);toast(product.name + ' added to cart.');}
+    function addToCart(product){var cart=getCart();var name=product.name + ' (' + product.options[0] + ', ' + product.sizes[0].label + ')';var found=cart.find(function(item){return item.id===product.id && item.name===name;});if(found)found.qty=Math.max(0, parseInt(found.qty,10) || 0)+1;else cart.push({id:product.id,name:name,price:product.sizes[0].price,cat:product.category,qty:1});saveCart(cart);toast(product.name + ' added to cart.');}
     function removeSaved(id){TWCatalog.toggleWishlist(id);renderWishlist();var product=TWCatalog.getProduct(id);toast(product.name + ' removed from wishlist.');}
     function clearWishlist(){TWCatalog.saveWishlist([]);renderWishlist();toast('Wishlist cleared.');}
     document.getElementById('clearBtn').addEventListener('click', clearWishlist);

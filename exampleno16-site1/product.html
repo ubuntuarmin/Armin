@@ -808,7 +808,10 @@
     ];
   }
 
-  var currentProduct = TWCatalog.getProduct(new URLSearchParams(window.location.search).get('id'));
+  var requestedProductId = new URLSearchParams(window.location.search).get('id');
+  var hasValidProductId = TWCatalog.products.some(function(item){ return String(item.id) === String(requestedProductId || '1'); });
+  if (requestedProductId && !hasValidProductId) { window.location.href = 'shop.html'; }
+  var currentProduct = TWCatalog.getProduct(requestedProductId);
   var currentPrice = currentProduct.price;
 
   function renderSelectors(product){
@@ -899,8 +902,8 @@
   function switchImg(el,emoji,bg){ document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');}); el.classList.add('active'); document.getElementById('mainEmoji').textContent=emoji; document.getElementById('mainImg').style.background=bg; }
   function selectOption(btn,label){ btn.closest('.p-option-group').querySelectorAll('.p-option').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedScent').textContent=label; }
   function selectSize(btn,price){ document.querySelectorAll('.p-size-btn:not(.oos)').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedSize').textContent=btn.textContent; currentPrice=price; document.getElementById('displayPrice').textContent='$'+price; }
-  function changeQty(d){var i=document.getElementById('qtyInput');var v=parseInt(i.value||'1',10)+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}
-  function addToCart(){ var qty=parseInt(document.getElementById('qtyInput').value||'1',10); var option=document.getElementById('selectedScent').textContent; var size=document.getElementById('selectedSize').textContent; var name=currentProduct.name + ' (' + option + ', ' + size + ')'; var cart=getCart(); var ex=cart.find(function(i){return i.id===currentProduct.id && i.name===name;}); if(ex){ex.qty+=qty;} else {cart.push({id:currentProduct.id,name:name,price:currentPrice,cat:currentProduct.category,qty:qty,option:option,size:size});} saveCart(cart); updateBadge(); showToast(name + ' × ' + qty + ' added to cart.'); }
+  function changeQty(d){var i=document.getElementById('qtyInput');var base=parseInt(i.value||'1',10);if(isNaN(base)) base=1;var v=base+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}
+  function addToCart(){ var qty=parseInt(document.getElementById('qtyInput').value||'1',10); if(isNaN(qty) || qty < 1) qty = 1; if(qty > 10) qty = 10; document.getElementById('qtyInput').value = qty; var option=document.getElementById('selectedScent').textContent; var size=document.getElementById('selectedSize').textContent; var name=currentProduct.name + ' (' + option + ', ' + size + ')'; var cart=getCart(); var ex=cart.find(function(i){return i.id===currentProduct.id && i.name===name;}); if(ex){ex.qty+=qty;} else {cart.push({id:currentProduct.id,name:name,price:currentPrice,cat:currentProduct.category,qty:qty,option:option,size:size});} saveCart(cart); updateBadge(); showToast(name + ' × ' + qty + ' added to cart.'); }
   function buyNow(){ addToCart(); window.location.href='cart.html'; }
   document.getElementById('wishlistBtn').addEventListener('click', function(){ var saved = TWCatalog.toggleWishlist(currentProduct.id); syncWishlistButton(); showToast(saved ? currentProduct.name + ' saved to wishlist.' : currentProduct.name + ' removed from wishlist.'); });
   function openTab(id){ document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');}); document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');}); document.getElementById('tab-'+id).classList.add('active'); var map={description:0,details:1,reviews:2,qa:3}; document.querySelectorAll('.tab-nav-btn')[map[id]].classList.add('active'); document.querySelector('.product-tabs').scrollIntoView({behavior:'smooth',block:'start'}); }

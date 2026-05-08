@@ -351,7 +351,7 @@
   function quickAdd(id, name, price, cat) {
     var cart = getCart();
     var ex = cart.find(function(i){ return i.id === id && i.name === name; });
-    if (ex) ex.qty += 1; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
+    if (ex) ex.qty = Math.max(0, parseInt(ex.qty, 10) || 0) + 1; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
     saveCart(cart); updateBadge(); showToast(name + ' added to cart.');
   }
   updateBadge();
