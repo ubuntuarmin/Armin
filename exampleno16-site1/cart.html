@@ -602,21 +602,21 @@
 
       var div = document.createElement('div');
       div.className = 'cart-item';
-      div.innerHTML = '<div class="cart-item-img" style="background:'+bg+';">'+em+'</div>'
-        + '<div>'
-        + '<div class="cart-item-cat">'+item.cat+'</div>'
-        + '<div class="cart-item-name">'+item.name+'</div>'
-        + '<div class="cart-item-unit">$'+item.price.toFixed(2)+' each</div>'
-        + '</div>'
-        + '<div class="cart-item-right">'
-        + '<div class="cart-item-price">$'+lineTotal+'</div>'
-        + '<div class="cart-item-controls">'
-        + '<button class="qty-btn" onclick="changeItemQty('+idx+',-1)">−</button>'
-        + '<span class="qty-display">'+item.qty+'</span>'
-        + '<button class="qty-btn" onclick="changeItemQty('+idx+',1)">+</button>'
-        + '</div>'
-        + '<button class="cart-item-remove" onclick="removeItem('+idx+')">✕ Remove</button>'
-        + '</div>';
+      div.innerHTML = '<div class="cart-item-img"></div>'
+        + '<div><div class="cart-item-cat"></div><div class="cart-item-name"></div><div class="cart-item-unit"></div></div>'
+        + '<div class="cart-item-right"><div class="cart-item-price"></div><div class="cart-item-controls"><button class="qty-btn">−</button><span class="qty-display"></span><button class="qty-btn">+</button></div><button class="cart-item-remove">✕ Remove</button></div>';
+      var img = div.querySelector('.cart-item-img');
+      img.style.background = bg;
+      img.textContent = em;
+      div.querySelector('.cart-item-cat').textContent = item.cat;
+      div.querySelector('.cart-item-name').textContent = item.name;
+      div.querySelector('.cart-item-unit').textContent = '$' + item.price.toFixed(2) + ' each';
+      div.querySelector('.cart-item-price').textContent = '$' + lineTotal;
+      div.querySelector('.qty-display').textContent = item.qty;
+      var qtyButtons = div.querySelectorAll('.qty-btn');
+      qtyButtons[0].addEventListener('click', function(){ changeItemQty(idx,-1); });
+      qtyButtons[1].addEventListener('click', function(){ changeItemQty(idx,1); });
+      div.querySelector('.cart-item-remove').addEventListener('click', function(){ removeItem(idx); });
       list.appendChild(div);
     });
 
@@ -710,7 +710,7 @@
         var saved = (sub * promo.pct / 100).toFixed(2);
         msg.textContent = '✅ ' + code + ' applied! Saving $' + saved + ' (' + promo.pct + '% off)';
         msg.className = 'promo-msg success'; row.className = 'promo-row valid';
-        showToast('🎉 Code <strong>' + code + '</strong> applied — ' + promo.pct + '% off!');
+        showToast('Code ' + code + ' applied — ' + promo.pct + '% off.');
       }
     }
     updateSummary();
@@ -815,7 +815,7 @@
   var tt;
   function showToast(msg) {
     var t = document.getElementById('toast');
-    document.getElementById('toastText').innerHTML = msg;
+    document.getElementById('toastText').textContent = msg;
     t.classList.add('show');
     clearTimeout(tt);
     tt = setTimeout(function(){ t.classList.remove('show'); }, 3000);

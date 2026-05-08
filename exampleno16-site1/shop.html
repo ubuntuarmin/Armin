@@ -352,17 +352,17 @@
     var cart = getCart();
     var ex = cart.find(function(i){ return i.id === id && i.name === name; });
     if (ex) ex.qty += 1; else cart.push({id:id,name:name,price:price,cat:cat,qty:1});
-    saveCart(cart); updateBadge(); showToast('<strong>' + name + '</strong> added to cart.');
+    saveCart(cart); updateBadge(); showToast(name + ' added to cart.');
   }
   updateBadge();
 
   var toastTimer;
-  function showToast(msg) { var t = document.getElementById('toast'); document.getElementById('toastText').innerHTML = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
+  function showToast(msg) { var t = document.getElementById('toast'); document.getElementById('toastText').textContent = msg; t.classList.add('show'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('show'); }, 2800); }
   function toggleWishlistItem(id, button) {
     var saved = TWCatalog.toggleWishlist(id);
     if (button) { button.classList.toggle('active', saved); button.textContent = saved ? '♥' : '♡'; }
     var product = TWCatalog.getProduct(id);
-    showToast(saved ? '<strong>' + product.name + '</strong> saved to wishlist.' : '<strong>' + product.name + '</strong> removed from wishlist.');
+    showToast(saved ? product.name + ' saved to wishlist.' : product.name + ' removed from wishlist.');
   }
 
   var activeCat = 'all';
