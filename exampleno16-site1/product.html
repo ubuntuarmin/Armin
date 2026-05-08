@@ -332,6 +332,8 @@
   <a href="shop.html?cat=jackets">Jackets</a>
   <a href="shop.html?cat=clothing">Clothing</a>
   <a href="shop.html?cat=accessories">Accessories</a>
+  <a href="collections.html">Collections</a>
+  <a href="wishlist.html">Wishlist</a>
   <a href="cart.html" style="display:flex;align-items:center;">🛒 Cart <span class="mob-cart-badge" id="mobCartBadge">0</span></a>
 </div>
 
@@ -363,9 +365,9 @@
   <span>/</span>
   <a href="shop.html">Shop</a>
   <span>/</span>
-  <a href="shop.html?cat=cologne">Cologne</a>
+  <a href="shop.html?cat=cologne" id="breadcrumbCategory">Cologne</a>
   <span>/</span>
-  <span style="color:rgba(255,255,255,0.5);">Phantom Rider EDT</span>
+  <span style="color:rgba(255,255,255,0.5);" id="breadcrumbName">Phantom Rider EDT</span>
 </div>
 
 <!-- PRODUCT MAIN -->
@@ -434,7 +436,7 @@
     <div class="p-selector">
       <div class="p-selector-label">
         Size: <span id="selectedSize">50ml</span>
-        <a class="p-size-guide" onclick="alert('30ml: $48 · 50ml: $67 · 100ml: $110')">Size guide</a>
+        <a class="p-size-guide" id="guideLink" href="size-guide.html">Size guide</a>
       </div>
       <div class="p-size-group">
         <button class="p-size-btn" onclick="selectSize(this,48)" data-price="48">30ml</button>
@@ -453,6 +455,7 @@
       </div>
       <button class="btn-add-cart" onclick="addToCart()">🛒 Add to Cart</button>
       <button class="btn-buy-now" onclick="buyNow()">⚡ Buy Now</button>
+      <button class="btn-buy-now" id="wishlistBtn" type="button">♡ Save</button>
     </div>
 
     <!-- Highlights -->
@@ -737,24 +740,7 @@
 <!-- RELATED PRODUCTS -->
 <div class="related-section">
   <h2 class="related-title">FREQUENTLY BOUGHT <span>TOGETHER</span></h2>
-  <div class="related-grid">
-    <div class="product-card" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#0E0E1A,#1A1A2A);font-size:4rem;">💎<span class="product-badge badge-hot">Best Seller</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(3,'Chrome Dusk EDT',63,'cologne')">+ Add to Cart</button></div>
-      <div class="product-info"><div class="product-category">Cologne</div><div class="product-name">Chrome Dusk EDT — 50ml</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,204)</span></div><div class="product-price"><span class="price-current">$63</span><span class="price-original">$79</span></div></div>
-    </div>
-    <div class="product-card" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A2A,#0A1A2A);font-size:4rem;">💎<span class="product-badge badge-new">New</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(5,'Midnight Chrome EDP',110,'cologne')">+ Add to Cart</button></div>
-      <div class="product-info"><div class="product-category">Cologne</div><div class="product-name">Midnight Chrome EDP — 75ml</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(528)</span></div><div class="product-price"><span class="price-current">$110</span></div></div>
-    </div>
-    <div class="product-card" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1A0A,#2A200A);font-size:4rem;">👕<span class="product-badge badge-hot">Hot</span><button class="product-quick-add" onclick="event.stopPropagation();quickAdd(13,'Throttle Chrome Tee',48,'clothing')">+ Add to Cart</button></div>
-      <div class="product-info"><div class="product-category">Clothing</div><div class="product-name">Throttle Chrome Tee</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(789)</span></div><div class="product-price"><span class="price-current">$48</span></div></div>
-    </div>
-    <div class="product-card" onclick="window.location.href='shop.html'">
-      <div class="product-img" style="background:linear-gradient(135deg,#1A1E1A,#0E1A0E);font-size:4rem;">🧢<button class="product-quick-add" onclick="event.stopPropagation();quickAdd(20,'Chrome Moto Cap',35,'accessories')">+ Add to Cart</button></div>
-      <div class="product-info"><div class="product-category">Accessories</div><div class="product-name">Chrome Moto Snapback Cap</div><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(1,245)</span></div><div class="product-price"><span class="price-current">$35</span></div></div>
-    </div>
-  </div>
+  <div class="related-grid"></div>
 </div>
 
 <!-- FOOTER -->
@@ -762,8 +748,8 @@
   <div class="footer-inner">
     <div class="footer-brand"><span class="footer-brand-name">TWO <span>WHEEL</span></span><p>Cologne, clothing and accessories for riders who refuse to settle.</p></div>
     <div class="footer-col"><h4>Shop</h4><a href="shop.html?cat=cologne">Cologne</a><a href="shop.html?cat=jackets">Jackets</a><a href="shop.html?cat=clothing">Clothing</a><a href="shop.html?cat=accessories">Accessories</a></div>
-    <div class="footer-col"><h4>Info</h4><a href="about.html">About Us</a><a href="shipping.html">Shipping</a><a href="returns.html">Returns</a><a href="size-guide.html">Size Guide</a></div>
-    <div class="footer-col"><h4>Account</h4><a href="cart.html">Cart</a><a href="order-tracking.html">Orders</a><a href="contact.html">Contact</a></div>
+    <div class="footer-col"><h4>Info</h4><a href="about.html">About Us</a><a href="shipping.html">Shipping</a><a href="returns.html">Returns</a><a href="size-guide.html">Size Guide</a><a href="collections.html">Collections</a><a href="care-guide.html">Care Guide</a></div>
+    <div class="footer-col"><h4>Account</h4><a href="cart.html">Cart</a><a href="wishlist.html">Wishlist</a><a href="order-tracking.html">Orders</a><a href="contact.html">Contact</a></div>
   </div>
   <div class="footer-bottom"><p>© 2025 Two Wheel Clothing. All rights reserved.</p><p>Code RIDE20 = 20% Off</p></div>
 </footer>
@@ -771,93 +757,158 @@
 
 <div class="toast" id="toast"><span class="toast-icon">🛒</span><div class="toast-text" id="toastText"></div></div>
 
+<script src="catalog.js"></script>
 <script>
-  /* PRELOADER */
   (function(){var pl=document.getElementById('preloader'),bar=document.getElementById('plBar'),site=document.getElementById('site-wrap'),p=0;var t=setInterval(function(){p+=Math.random()*22+5;if(p>100)p=100;bar.style.width=p+'%';if(p>=100){clearInterval(t);setTimeout(function(){pl.classList.add('done');site.classList.add('visible');},280);}},55);})();
 
-  /* MOBILE MENU */
   function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');document.getElementById('mobOverlay').classList.toggle('open');}
-
-  /* CART */
   function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
   function saveCart(c){localStorage.setItem('twCart',JSON.stringify(c));}
-  function updateBadge(){var n=getCart().reduce(function(s,i){return s+i.qty;},0);document.getElementById('cartBadge').textContent=n;document.getElementById('mobCartBadge').textContent=n;}
-  function quickAdd(id,name,price,cat){var cart=getCart();var ex=cart.find(function(i){return i.id===id;});if(ex)ex.qty++;else cart.push({id:id,name:name,price:price,cat:cat,qty:1});saveCart(cart);updateBadge();showToast('<strong>'+name+'</strong> added!');}
+  function updateBadge(){var n=getCart().reduce(function(s,i){return s+(i.qty||0);},0);document.getElementById('cartBadge').textContent=n;document.getElementById('mobCartBadge').textContent=n;}
   updateBadge();
-
-  /* TOAST */
   var tt;function showToast(msg){var t=document.getElementById('toast');document.getElementById('toastText').innerHTML=msg;t.classList.add('show');clearTimeout(tt);tt=setTimeout(function(){t.classList.remove('show');},2800);}
 
-  /* GALLERY SWITCH */
-  function switchImg(el,emoji,bg){
-    document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');});
-    el.classList.add('active');
-    document.getElementById('mainEmoji').textContent=emoji;
-    var mainImg=document.getElementById('mainImg');
-    mainImg.style.background=bg;
+  function toggleWishlistItem(id, button){ var saved = TWCatalog.toggleWishlist(id); if(button){ button.classList.toggle('active', saved); button.textContent = saved ? '♥' : '♡'; } var product = TWCatalog.getProduct(id); showToast(saved ? '<strong>' + product.name + '</strong> saved to wishlist.' : '<strong>' + product.name + '</strong> removed from wishlist.'); if(id === currentProduct.id) syncWishlistButton(); }
+
+  function titleLines(name){ var parts=name.split(' '); if(parts.length < 3) return name; return parts.slice(0,-1).join(' ') + '<br>' + parts.slice(-1); }
+  function prettyDate(offset){ var base=new Date('2026-05-08T12:00:00Z'); base.setDate(base.getDate()-offset); return base.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
+  function reviewTemplates(product){
+    return [
+      {name:'Marcus D.', avatar:'M', gradient:'linear-gradient(135deg,#FF4500,#c93a00)', stars:'★★★★★', title:'Exactly the kind of finish I wanted', body:product.name + ' nails the balance between ' + product.descriptor.toLowerCase() + ' It feels premium, wears cleanly, and gets better every time I reach for it.'},
+      {name:'Sarah K.', avatar:'S', gradient:'linear-gradient(135deg,#3B82F6,#1D4ED8)', stars:'★★★★★', title:'Looks even better in person', body:'The material quality stands out immediately. ' + product.material + ' It arrived fast, fit the way I expected, and feels much more premium than the price suggests.'},
+      {name:'Tyler R.', avatar:'T', gradient:'linear-gradient(135deg,#22C55E,#15803D)', stars:'★★★★☆', title:'Strong value and easy to style', body:'I picked this up because I wanted something that worked with the rest of my riding wardrobe. The best part is how easy it is to pair with jackets, tees, and accessories without overthinking it.'},
+      {name:'James L.', avatar:'J', gradient:'linear-gradient(135deg,#8B5CF6,#6D28D9)', stars:'★★★★★', title:'Makes the whole brand feel more complete', body:'This is one of those products that makes the whole Two Wheel setup feel more intentional. Great details, no cheap touches, and it actually looks like the product photos.'}
+    ];
+  }
+  function qaTemplates(product){
+    var category = product.category;
+    if(category === 'cologne') return [
+      ['How long does it last on skin?', product.performance],
+      ['Is it more of a daytime or evening scent?', 'It flexes well across both, but really shines when you want a clean, confident signature with a little depth.'],
+      ['Which bottle size is best to start with?', '50ml is the sweet spot for most customers, while 30ml is great for discovery and 100ml offers the best long-term value.'],
+      ['What makes this different from the other fragrances?', 'The profile centers on ' + product.descriptor.toLowerCase() + ' so it gives you a distinct lane inside the broader Two Wheel fragrance lineup.']
+    ];
+    if(category === 'jackets') return [
+      ['How does the fit run?', product.fit],
+      ['Is it warm enough for daily rides?', product.performance],
+      ['What should I wear under it?', 'A heavyweight tee or structured hoodie works best and keeps the silhouette balanced.'],
+      ['How do I maintain it?', product.care]
+    ];
+    if(category === 'clothing') return [
+      ['How does it fit compared with a standard streetwear piece?', product.fit],
+      ['Is the fabric actually premium?', 'Yes — ' + product.material.toLowerCase() + ' and the construction is noticeably stronger than basic blanks.'],
+      ['How should I wash it?', product.care],
+      ['What makes this different from a basic?', 'The mix of fit, weight, and details gives it the same sharp feel as the rest of the collection.']
+    ];
+    return [
+      ['Is it durable enough for everyday use?', product.performance],
+      ['What does it pair well with?', 'It was designed to sit naturally with the jackets, hoodies, and heavyweight tees in the line.'],
+      ['How should I look after it?', product.care],
+      ['Is it giftable?', 'Absolutely. It has the polished, useful feel people want when they are buying a premium accessory.']
+    ];
   }
 
-  /* OPTION SELECTORS */
-  function selectOption(btn,group,displayId){
-    btn.closest('.p-option-group').querySelectorAll('.p-option').forEach(function(b){b.classList.remove('active');});
-    btn.classList.add('active');
-    document.getElementById(displayId).textContent=btn.textContent;
+  var currentProduct = TWCatalog.getProduct(new URLSearchParams(window.location.search).get('id'));
+  var currentPrice = currentProduct.price;
+
+  function renderSelectors(product){
+    document.querySelectorAll('.p-selector')[0].querySelector('.p-selector-label').innerHTML = product.selectorLabel + ': <span id="selectedScent">' + product.options[0] + '</span>';
+    document.querySelector('.p-option-group').innerHTML = product.options.map(function(option, index){ return '<button class="p-option' + (index===0?' active':'') + '" data-option="' + TWCatalog.escapeHtml(option) + '">' + option + '</button>'; }).join('');
+    document.querySelectorAll('.p-option-group .p-option').forEach(function(optionBtn){ optionBtn.addEventListener('click', function(){ selectOption(this, this.dataset.option); }); });
+    document.querySelectorAll('.p-selector')[1].querySelector('.p-selector-label').childNodes[0].textContent = product.sizeLabel + ': ';
+    document.getElementById('selectedSize').textContent = product.sizes[0].label;
+    document.getElementById('guideLink').href = product.guideHref;
+    document.getElementById('guideLink').textContent = product.guideText;
+    document.querySelector('.p-size-group').innerHTML = product.sizes.map(function(size, index){ return '<button class="p-size-btn' + (index===0?' active':'') + (size.soldOut?' oos':'') + '" ' + (size.soldOut?'disabled':'') + ' onclick="selectSize(this,' + size.price + ')" data-price="' + size.price + '">' + size.label + '</button>'; }).join('');
+    currentPrice = product.sizes[0].price;
+    document.getElementById('displayPrice').textContent = '$' + currentPrice;
   }
-
-  var currentPrice=67;
-  function selectSize(btn,price){
-    document.querySelectorAll('.p-size-btn:not(.oos)').forEach(function(b){b.classList.remove('active');});
-    btn.classList.add('active');
-    document.getElementById('selectedSize').textContent=btn.textContent;
-    currentPrice=price;
-    document.getElementById('displayPrice').textContent='$'+price;
+  function renderMeta(product){
+    document.title = product.name + ' — Two Wheel Clothing';
+    var meta = document.querySelector('meta[name="description"]');
+    if (meta) meta.setAttribute('content', product.name + ' from Two Wheel Clothing. ' + product.descriptor);
+    document.getElementById('breadcrumbCategory').textContent = product.categoryLabel;
+    document.getElementById('breadcrumbCategory').href = 'shop.html?cat=' + product.category;
+    document.getElementById('breadcrumbName').textContent = product.name;
+    document.querySelector('.p-title').innerHTML = titleLines(product.name).toUpperCase();
+    document.querySelector('.p-subtitle').textContent = product.descriptor;
+    document.querySelector('.p-rating-num').textContent = product.rating.toFixed(1);
+    document.querySelector('.p-stars').textContent = TWCatalog.stars(product.rating);
+    document.querySelector('.p-rating-count').textContent = product.reviews.toLocaleString() + ' ratings';
+    document.querySelector('.p-qa-link').textContent = product.qaCount.toLocaleString() + ' answered questions';
+    document.querySelector('.p-price').textContent = '$' + product.price;
+    document.querySelector('.p-price-was').textContent = product.originalPrice ? '$' + product.originalPrice : '';
+    document.querySelector('.p-price-save').textContent = product.originalPrice ? 'You save ' + Math.round((1 - product.price / product.originalPrice) * 100) + '%' : 'Premium drop';
+    var pills = document.querySelectorAll('.p-pill');
+    pills[0].textContent = '✅ In Stock — ' + product.stock + ' left';
+    pills[1].textContent = product.stockPill;
+    pills[2].textContent = '📦 ' + product.season;
+    document.querySelector('.gallery-main-img').style.background = product.gradient;
+    document.getElementById('mainEmoji').textContent = product.emoji;
+    document.querySelector('.gallery-badge-row').innerHTML = (product.badgeLabel ? '<span class="g-badge g-badge-sale">' + product.badgeLabel + '</span>' : '<span class="g-badge g-badge-sale">Featured</span>') + '<span class="g-badge g-badge-free">' + product.categoryLabel + '</span>';
+    document.querySelector('.img-ph-overlay').textContent = product.material;
+    var thumbBackgrounds = [product.gradient,'linear-gradient(135deg,#1A1A1A,#111827)','linear-gradient(135deg,#2A1A0A,#1F2937)','linear-gradient(135deg,#0F172A,#3F3F46)'];
+    var thumbIcons = [product.emoji].concat(product.tags.map(function(tag){ return tag[1]; })).slice(0,4);
+    document.querySelector('.gallery-thumbs').innerHTML = thumbIcons.map(function(icon, index){ return '<div class="gallery-thumb' + (index===0?' active':'') + '" data-icon="' + icon + '" data-bg="' + thumbBackgrounds[index] + '"><span>' + icon + '</span></div>'; }).join('');
+    document.querySelectorAll('.gallery-thumb').forEach(function(thumb){ thumb.addEventListener('click', function(){ switchImg(this, this.dataset.icon, this.dataset.bg); }); });
+    document.querySelector('.p-highlights ul').innerHTML = [product.material, product.fit, product.performance, product.care].concat(product.tags.map(function(tag){ return tag[2]; })).slice(0,6).map(function(line){ return '<li>' + line + '</li>'; }).join('');
   }
-
-  /* QTY */
-  function changeQty(d){var i=document.getElementById('qtyInput');var v=parseInt(i.value)+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}
-
-  /* ADD TO CART */
-  function addToCart(){
-    var qty=parseInt(document.getElementById('qtyInput').value);
-    var scent=document.getElementById('selectedScent').textContent;
-    var size=document.getElementById('selectedSize').textContent;
-    var name='Phantom Rider EDT ('+scent+', '+size+')';
-    var cart=getCart();
-    var ex=cart.find(function(i){return i.id===1&&i.scent===scent&&i.size===size;});
-    if(ex){ex.qty+=qty;}else{cart.push({id:1,name:name,price:currentPrice,cat:'cologne',qty:qty,scent:scent,size:size});}
-    saveCart(cart);updateBadge();
-    showToast('<strong>'+name+'</strong> × '+qty+' added to cart!');
+  function renderDescription(product){
+    document.querySelector('.tab-desc-intro').textContent = product.name + ' delivers ' + product.descriptor.toLowerCase() + ' It is designed for customers who want the Two Wheel attitude to feel premium from the first touch through the last detail.';
+    document.querySelector('.tab-desc-story').textContent = 'Built around ' + product.material.toLowerCase() + ', this piece is meant to handle real wear while staying sharp in everyday outfits. The result feels considered, durable, and easier to style than a typical fast-fashion alternative.';
+    document.querySelector('#tab-description h3').textContent = product.category === 'cologne' ? 'Signature Notes' : 'Build Details';
+    document.querySelector('.notes-grid').innerHTML = product.tags.map(function(tag){ return '<div class="note-card"><div class="note-type">' + tag[0] + '</div><div class="note-icon">' + tag[1] + '</div><div class="note-name">' + tag[2] + '</div><div class="note-desc">' + product.descriptor + '</div></div>'; }).join('');
   }
-
-  function buyNow(){addToCart();window.location.href='cart.html';}
-
-  /* TABS */
-  function openTab(id){
-    document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-    document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');});
-    document.getElementById('tab-'+id).classList.add('active');
-    var map={description:0,details:1,reviews:2,qa:3};
-    document.querySelectorAll('.tab-nav-btn')[map[id]].classList.add('active');
-    document.querySelector('.product-tabs').scrollIntoView({behavior:'smooth',block:'start'});
+  function renderDetails(product){
+    var rows = [
+      ['Brand','Two Wheel Clothing'],
+      ['Product Name',product.name],
+      ['Category',product.categoryLabel + ' — ' + product.sub],
+      ['Material / Build',product.material],
+      ['Fit / Sizing',product.fit],
+      ['Performance',product.performance],
+      ['Best Season',product.season],
+      ['Available Options',product.options.join(' / ')],
+      ['Available Sizes',product.sizes.map(function(size){ return size.label; }).join(' / ')],
+      ['Made In',product.madeIn],
+      ['Year Released',product.year],
+      ['Care',product.care],
+      ['SKU',product.category.slice(0,3).toUpperCase() + '-' + product.id + '-' + product.name.replace(/[^A-Z0-9]+/gi,'-').replace(/^-|-$/g,'').toUpperCase()]
+    ];
+    document.querySelector('.tech-table').innerHTML = rows.map(function(row){ return '<tr><td>' + row[0] + '</td><td>' + row[1] + '</td></tr>'; }).join('');
   }
-  document.querySelectorAll('.tab-nav-btn').forEach(function(btn){
-    btn.addEventListener('click',function(){
-      var idx=Array.from(document.querySelectorAll('.tab-nav-btn')).indexOf(this);
-      var ids=['description','details','reviews','qa'];
-      document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');});
-      document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');});
-      document.getElementById('tab-'+ids[idx]).classList.add('active');
-      this.classList.add('active');
-    });
-  });
-
-  /* Q&A TOGGLE */
-  function toggleQA(el){
-    var ans=el.nextElementSibling;
-    var tog=el.querySelector('.qa-toggle');
-    ans.classList.toggle('open');
-    tog.style.transform=ans.classList.contains('open')?'rotate(180deg)':'rotate(0deg)';
+  function renderReviews(product){
+    document.querySelector('.reviews-avg-num').textContent = product.rating.toFixed(1);
+    document.querySelector('.reviews-avg-stars').textContent = TWCatalog.stars(product.rating);
+    document.querySelector('.reviews-avg-count').textContent = 'out of 5 · ' + product.reviews.toLocaleString() + ' global ratings';
+    document.querySelector('.tab-nav-btn:nth-child(3)').textContent = 'Reviews (' + product.reviews.toLocaleString() + ')';
+    document.querySelector('.tab-nav-btn:nth-child(4)').textContent = 'Q&A (' + product.qaCount.toLocaleString() + ')';
+    document.querySelector('.p-rating-count').textContent = product.reviews.toLocaleString() + ' ratings';
+    document.querySelector('.p-qa-link').textContent = product.qaCount.toLocaleString() + ' answered questions';
+    document.querySelector('.reviews-bars').innerHTML = product.bars.map(function(pct, index){ var star = 5-index; return '<div class="review-bar-row"><span class="review-bar-label">' + star + ' ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:' + pct + '%"></div></div><span class="review-bar-pct">' + pct + '%</span></div>'; }).join('');
+    document.querySelector('.review-list').innerHTML = reviewTemplates(product).map(function(review, index){ return '<div class="review-card"><div class="review-header"><div class="review-author-info"><div class="review-avatar" style="background:' + review.gradient + ';">' + review.avatar + '</div><div><div class="review-name">' + review.name + '</div><div class="review-verified">✓ Verified Purchase</div></div></div><div style="text-align:right;"><div class="review-stars">' + review.stars + '</div><div class="review-date">' + prettyDate(18 + index * 11) + '</div></div></div><div class="review-title">' + review.title + '</div><p class="review-body">' + review.body + '</p><div class="review-helpful"><span class="review-helpful-label">Helpful?</span><button class="helpful-btn">Yes (' + (121 - index * 17) + ')</button><button class="helpful-btn">No (' + (4 + index) + ')</button></div></div>'; }).join('');
   }
+  function renderQA(product){
+    document.querySelector('.qa-list').innerHTML = qaTemplates(product).map(function(item, index){ return '<div class="qa-item"><div class="qa-question" onclick="toggleQA(this)"><span class="qa-q-icon">Q</span><span class="qa-q-text">' + item[0] + '</span><span class="qa-toggle">▼</span></div><div class="qa-answer' + (index===0?' open':'') + '"><span class="qa-a-icon">A</span><span class="qa-a-text">' + item[1] + '</span><div class="qa-a-author">Answered by Two Wheel Clothing · ' + prettyDate(6 + index * 13) + '</div></div></div>'; }).join('');
+  }
+  function renderRelated(product){
+    document.querySelector('.related-grid').innerHTML = TWCatalog.getRelatedProducts(product, 4).map(function(item){ return TWCatalog.buildCard(item); }).join('');
+  }
+  function syncWishlistButton(){ var saved = TWCatalog.isWishlisted(currentProduct.id); var button = document.getElementById('wishlistBtn'); button.textContent = saved ? '♥ Saved' : '♡ Save'; }
+
+  function switchImg(el,emoji,bg){ document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');}); el.classList.add('active'); document.getElementById('mainEmoji').textContent=emoji; document.getElementById('mainImg').style.background=bg; }
+  function selectOption(btn,label){ btn.closest('.p-option-group').querySelectorAll('.p-option').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedScent').textContent=label; }
+  function selectSize(btn,price){ document.querySelectorAll('.p-size-btn:not(.oos)').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedSize').textContent=btn.textContent; currentPrice=price; document.getElementById('displayPrice').textContent='$'+price; }
+  function changeQty(d){var i=document.getElementById('qtyInput');var v=parseInt(i.value||'1',10)+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}
+  function addToCart(){ var qty=parseInt(document.getElementById('qtyInput').value||'1',10); var option=document.getElementById('selectedScent').textContent; var size=document.getElementById('selectedSize').textContent; var name=currentProduct.name + ' (' + option + ', ' + size + ')'; var cart=getCart(); var ex=cart.find(function(i){return i.id===currentProduct.id && i.name===name;}); if(ex){ex.qty+=qty;} else {cart.push({id:currentProduct.id,name:name,price:currentPrice,cat:currentProduct.category,qty:qty,option:option,size:size});} saveCart(cart); updateBadge(); showToast('<strong>'+name+'</strong> × ' + qty + ' added to cart!'); }
+  function buyNow(){ addToCart(); window.location.href='cart.html'; }
+  document.getElementById('wishlistBtn').addEventListener('click', function(){ var saved = TWCatalog.toggleWishlist(currentProduct.id); syncWishlistButton(); showToast(saved ? '<strong>' + currentProduct.name + '</strong> saved to wishlist.' : '<strong>' + currentProduct.name + '</strong> removed from wishlist.'); });
+  function openTab(id){ document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');}); document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');}); document.getElementById('tab-'+id).classList.add('active'); var map={description:0,details:1,reviews:2,qa:3}; document.querySelectorAll('.tab-nav-btn')[map[id]].classList.add('active'); document.querySelector('.product-tabs').scrollIntoView({behavior:'smooth',block:'start'}); }
+  document.querySelectorAll('.tab-nav-btn').forEach(function(btn){ btn.addEventListener('click',function(){ var idx=Array.from(document.querySelectorAll('.tab-nav-btn')).indexOf(this); var ids=['description','details','reviews','qa']; document.querySelectorAll('.tab-panel').forEach(function(p){p.classList.remove('active');}); document.querySelectorAll('.tab-nav-btn').forEach(function(b){b.classList.remove('active');}); document.getElementById('tab-'+ids[idx]).classList.add('active'); this.classList.add('active'); }); });
+  function toggleQA(el){ var ans=el.nextElementSibling; var tog=el.querySelector('.qa-toggle'); ans.classList.toggle('open'); tog.style.transform=ans.classList.contains('open')?'rotate(180deg)':'rotate(0deg)'; }
+
+  renderMeta(currentProduct); renderSelectors(currentProduct); renderDescription(currentProduct); renderDetails(currentProduct); renderReviews(currentProduct); renderQA(currentProduct); renderRelated(currentProduct); syncWishlistButton();
+  document.querySelectorAll('.nav-links a').forEach(function(link){ link.classList.remove('active'); if(link.getAttribute('href') === 'shop.html?cat=' + currentProduct.category) link.classList.add('active'); });
 </script>
 </body>
 </html>
