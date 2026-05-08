@@ -181,6 +181,26 @@
     }
   }
 
+  function isValidAnchorElement(el){
+    if (!el || el.nodeType !== 1) return false;
+    var blocked = { SCRIPT:1, STYLE:1, LINK:1, META:1, NOSCRIPT:1 };
+    if (blocked[el.tagName]) return false;
+    var rect = el.getBoundingClientRect ? el.getBoundingClientRect() : { width:0, height:0 };
+    return !!(rect.width > 0 || rect.height > 0 || el.children.length);
+  }
+
+  function getSpotlightAnchor(){
+    var candidates = [
+      document.querySelector('.hero, .page-hero, main section, .wrap section'),
+      document.querySelector('main'),
+      body.firstElementChild
+    ];
+    for (var i = 0; i < candidates.length; i += 1){
+      if (isValidAnchorElement(candidates[i])) return candidates[i];
+    }
+    return null;
+  }
+
   hubBtn.addEventListener('click', function(){ toggleHub(); });
   clearBtn.addEventListener('click', function(){ input.value=''; renderList(''); input.focus(); });
   input.addEventListener('input', function(){ renderList(input.value); });
@@ -196,7 +216,7 @@
     if (e.key === 'Escape') toggleHub(false);
   });
 
-  var firstSection = document.querySelector('.hero, .page-hero, main section, .wrap section') || document.querySelector('main') || body.firstElementChild;
+  var firstSection = getSpotlightAnchor();
   if (firstSection && firstSection.parentNode){
     var spotlight = document.createElement('section');
     spotlight.className = 'twlux-spotlight twlux-reveal';
@@ -223,10 +243,12 @@
 
     var right = document.createElement('div');
     right.className = 'twlux-kpis';
-    var productCount = (window.TWCatalog && Array.isArray(window.TWCatalog.products)) ? window.TWCatalog.products.length : DEFAULT_PRODUCT_COUNT;
+    var hasCatalog = window.TWCatalog && Array.isArray(window.TWCatalog.products);
+    var productCount = hasCatalog ? window.TWCatalog.products.length : DEFAULT_PRODUCT_COUNT;
+    var productMetric = hasCatalog ? [String(productCount), 'Products Live'] : ['Curated', 'Premium Selection'];
     [
       ['1-Click', 'Page Jumps'],
-      [String(productCount), 'Products Live'],
+      productMetric,
       ['24/7', 'Self-Service Help']
     ].forEach(function(k){
       var box = document.createElement('article');
