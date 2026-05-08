@@ -13,7 +13,7 @@ body{
     radial-gradient(1200px 700px at 8% -10%, rgba(255,170,74,.13), transparent 55%),
     radial-gradient(900px 620px at 94% 2%, rgba(164,131,255,.14), transparent 60%),
     radial-gradient(900px 500px at 50% 110%, rgba(108,255,224,.07), transparent 62%),
-    var(--twlux-ink)!important;
+    var(--twlux-ink);
 }
 body::after{
   content:'';

@@ -49,10 +49,30 @@
     { icon:'🏁', title:'About Brand', note:'Two Wheel story', href:'about.html' }
   ];
 
+  function sanitizeHref(href){
+    var value = String(href || '').trim();
+    if (!value || value.indexOf('#') === 0) return null;
+    var lower = value.toLowerCase();
+    if (lower.indexOf('javascript:') === 0 || lower.indexOf('data:') === 0 || lower.indexOf('vbscript:') === 0 || lower.indexOf('file:') === 0) return null;
+    try {
+      var parsed = new URL(value, window.location.href);
+      var protocol = (parsed.protocol || '').toLowerCase();
+      if (protocol === 'http:' || protocol === 'https:' || protocol === 'mailto:' || protocol === 'tel:') return value;
+      return null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  quickLinks = quickLinks.filter(function(item){
+    item.href = sanitizeHref(item.href);
+    return !!item.href;
+  });
+
   var seen = Object.create(null);
   Array.prototype.slice.call(document.querySelectorAll('a[href]')).forEach(function(a){
-    var href = a.getAttribute('href') || '';
-    if (!href || href.indexOf('#') === 0 || href.indexOf('javascript:') === 0) return;
+    var href = sanitizeHref(a.getAttribute('href') || '');
+    if (!href) return;
     var title = (a.textContent || '').trim();
     if (!title || title.length > 60) return;
     var key = title + '|' + href;
@@ -86,6 +106,7 @@
   var clearBtn = document.createElement('button');
   clearBtn.type = 'button';
   clearBtn.textContent = 'Clear';
+  clearBtn.setAttribute('aria-label', 'Clear search');
   searchWrap.appendChild(input);
   searchWrap.appendChild(clearBtn);
   head.appendChild(hdStrong);
@@ -196,9 +217,10 @@
 
     var right = document.createElement('div');
     right.className = 'twlux-kpis';
+    var productCount = (window.TWCatalog && Array.isArray(window.TWCatalog.products)) ? window.TWCatalog.products.length : 36;
     [
       ['1-Click', 'Page Jumps'],
-      ['36+', 'Products Live'],
+      [String(productCount), 'Products Live'],
       ['24/7', 'Self-Service Help']
     ].forEach(function(k){
       var box = document.createElement('article');
