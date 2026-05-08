@@ -304,6 +304,7 @@
     @media (max-width:768px) { .nav-links { display:none; } .hamburger { display:flex; } .related-grid { grid-template-columns:1fr 1fr; } .footer-inner { grid-template-columns:1fr 1fr; } .p-trust { grid-template-columns:1fr 1fr; } .notes-grid { grid-template-columns:1fr; } }
     @media (max-width:600px) { .gallery-thumbs { grid-template-columns:repeat(4,1fr); } .p-cta-row { flex-direction:column; } .btn-add-cart, .btn-buy-now { min-width:0; width:100%; } .related-grid { grid-template-columns:1fr 1fr; } .footer-inner { grid-template-columns:1fr; } }
   </style>
+  <link rel="stylesheet" href="tw-luxury.css">
 </head>
 <body>
 
@@ -913,5 +914,6 @@
   renderMeta(currentProduct); renderSelectors(currentProduct); renderDescription(currentProduct); renderDetails(currentProduct); renderReviews(currentProduct); renderQA(currentProduct); renderRelated(currentProduct); syncWishlistButton();
   document.querySelectorAll('.nav-links a').forEach(function(link){ link.classList.remove('active'); if(link.getAttribute('href') === 'shop.html?cat=' + currentProduct.category) link.classList.add('active'); });
 </script>
+  <script src="tw-luxury.js" defer></script>
 </body>
 </html>
