@@ -1,6 +1,8 @@
 (function(){
   if (window.__twLuxuryLoaded) return;
   window.__twLuxuryLoaded = true;
+  var DEFAULT_PRODUCT_COUNT = 36;
+  var MAX_AUTO_DISCOVERED_LINKS = 48;
 
   var body = document.body;
   if (!body) return;
@@ -51,7 +53,8 @@
 
   function sanitizeHref(href){
     var value = String(href || '').trim();
-    if (!value || value.indexOf('#') === 0) return null;
+    if (!value) return null;
+    if (value.indexOf('#') === 0) return value;
     var lower = value.toLowerCase();
     if (lower.indexOf('javascript:') === 0 || lower.indexOf('data:') === 0 || lower.indexOf('vbscript:') === 0 || lower.indexOf('file:') === 0) return null;
     try {
@@ -70,7 +73,9 @@
   });
 
   var seen = Object.create(null);
+  var discoveredCount = 0;
   Array.prototype.slice.call(document.querySelectorAll('a[href]')).forEach(function(a){
+    if (discoveredCount >= MAX_AUTO_DISCOVERED_LINKS) return;
     var href = sanitizeHref(a.getAttribute('href') || '');
     if (!href) return;
     var title = (a.textContent || '').trim();
@@ -78,6 +83,7 @@
     var key = title + '|' + href;
     if (seen[key]) return;
     seen[key] = true;
+    discoveredCount += 1;
     quickLinks.push({ icon:'🔗', title:title, note:'Page link', href:href });
   });
 
@@ -217,7 +223,7 @@
 
     var right = document.createElement('div');
     right.className = 'twlux-kpis';
-    var productCount = (window.TWCatalog && Array.isArray(window.TWCatalog.products)) ? window.TWCatalog.products.length : 36;
+    var productCount = (window.TWCatalog && Array.isArray(window.TWCatalog.products)) ? window.TWCatalog.products.length : DEFAULT_PRODUCT_COUNT;
     [
       ['1-Click', 'Page Jumps'],
       [String(productCount), 'Products Live'],
