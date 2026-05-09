@@ -417,7 +417,7 @@
 
     doc.addEventListener('keydown', function (evt) {
       var activeTag = (doc.activeElement && doc.activeElement.tagName || '').toLowerCase();
-      var activeInput = activeTag === 'input' || activeTag === 'textarea' || doc.activeElement && doc.activeElement.isContentEditable;
+      var activeInput = activeTag === 'input' || activeTag === 'textarea' || (doc.activeElement && doc.activeElement.isContentEditable === true);
       if ((evt.ctrlKey || evt.metaKey) && (evt.key === 'k' || evt.key === 'K')) {
         evt.preventDefault();
         setOpen(true);
@@ -536,25 +536,40 @@
     }
 
     updateCartLabel();
-    win.addEventListener('storage', updateCartLabel);
-    doc.addEventListener('visibilitychange', function () {
+    var onStorage = function () {
+      updateCartLabel();
+    };
+    var onVisible = function () {
       if (!doc.hidden) updateCartLabel();
-    });
-    doc.addEventListener('click', function (evt) {
-      var target = evt.target;
-      if (!(target instanceof Element)) return;
-      if (target.closest('.cart-btn, .product-quick-add, [data-add-to-cart], .qty-plus, .qty-minus, .quantity-btn')) {
-        win.setTimeout(updateCartLabel, 50);
-      }
-    }, { passive: true });
+    };
+    win.addEventListener('storage', onStorage);
+    doc.addEventListener('visibilitychange', onVisible);
+
+    var updateTriggers = doc.querySelectorAll('.cart-btn, .product-quick-add, [data-add-to-cart], .qty-plus, .qty-minus, .quantity-btn');
+    function onPotentialCartChange() {
+      win.setTimeout(updateCartLabel, 50);
+    }
+    for (var t = 0; t < updateTriggers.length; t += 1) {
+      updateTriggers[t].addEventListener('click', onPotentialCartChange, { passive: true });
+    }
 
     var observed = doc.querySelectorAll('#cartBadge, #mobCartBadge, .cart-badge, .mob-cart-badge');
+    var mo = null;
     if ('MutationObserver' in win && observed.length) {
-      var mo = new MutationObserver(updateCartLabel);
+      mo = new MutationObserver(updateCartLabel);
       for (var o = 0; o < observed.length; o += 1) {
         mo.observe(observed[o], { childList: true, characterData: true, subtree: true });
       }
     }
+
+    win.addEventListener('pagehide', function cleanupDockListeners() {
+      win.removeEventListener('storage', onStorage);
+      doc.removeEventListener('visibilitychange', onVisible);
+      for (var r = 0; r < updateTriggers.length; r += 1) {
+        updateTriggers[r].removeEventListener('click', onPotentialCartChange);
+      }
+      if (mo) mo.disconnect();
+    }, { once: true });
   }
 
   function markRevealTargets() {
@@ -670,7 +685,7 @@
       var existing = doc.querySelector('script[data-twlx="' + src + '"]');
       if (existing) {
         existing.addEventListener('load', function () { resolve(); }, { once: true });
-        existing.addEventListener('error', function () { reject(new Error('load failed')); }, { once: true });
+        existing.addEventListener('error', function () { reject(new Error('load failed: ' + src)); }, { once: true });
         if (existing.dataset.loaded === '1') resolve();
         return;
       }
