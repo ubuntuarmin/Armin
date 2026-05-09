@@ -23,6 +23,10 @@
   var SPLIT_MIN_WORDS = 2;
   var SPLIT_MAX_WORDS = 22;
   var THEME_STORAGE_KEY = 'twlxThemeMode';
+  var DEFAULT_RIDER_RATING = '4.9';
+  var CART_STORAGE_KEYS = ['twCart', 'cart', 'twoWheelCart', 'TW_CART'];
+  var GSAP_VERSION = '3.12.5';
+  var TOP_RATED_THRESHOLD = 4.8;
   var state = {
     lenis: null,
     gsap: null,
@@ -203,11 +207,10 @@
     if (win.TWCatalog && Array.isArray(win.TWCatalog.products)) {
       productCount = win.TWCatalog.products.length;
     }
-    var defaultRating = '4.9';
     return [
       { v: '1-click', l: 'Navigation' },
       { v: String(productCount), l: 'Products live' },
-      { v: defaultRating + '/5', l: 'Rider rating' },
+      { v: DEFAULT_RIDER_RATING + '/5', l: 'Rider rating' },
       { v: '24/7', l: 'Self-service' }
     ];
   }
@@ -455,7 +458,7 @@
   }
 
   function estimateCartCount() {
-    var keys = ['twCart', 'cart', 'twoWheelCart', 'TW_CART'];
+    var keys = CART_STORAGE_KEYS;
     for (var i = 0; i < keys.length; i += 1) {
       var raw = null;
       try { raw = localStorage.getItem(keys[i]); } catch (e) { raw = null; }
@@ -749,10 +752,11 @@
 
   function initGSAP() {
     if (prefersReducedMotion) return Promise.resolve(false);
+    var gsapBase = 'https://cdn.jsdelivr.net/npm/gsap@' + GSAP_VERSION + '/dist/';
 
     return Promise.all([
-      loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js'),
-      loadScript('https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js')
+      loadScript(gsapBase + 'gsap.min.js'),
+      loadScript(gsapBase + 'ScrollTrigger.min.js')
     ])
       .then(function () {
         if (!win.gsap || !win.ScrollTrigger) return false;
@@ -1194,7 +1198,7 @@
         var match = true;
         if (term && text.indexOf(term) === -1) match = false;
         if (price < minV || price > maxV) match = false;
-        if (flags['top-rated'] && rating < 4.8) match = false;
+        if (flags['top-rated'] && rating < TOP_RATED_THRESHOLD) match = false;
         if (flags.deals && !hasDeal) match = false;
         if (flags['new'] && !isNew) match = false;
         card.classList.toggle('twlx-filter-hidden', !match);
@@ -1205,14 +1209,15 @@
     search.addEventListener('input', applyRailFilter);
     minInput.addEventListener('input', applyRailFilter);
     maxInput.addEventListener('input', applyRailFilter);
-    chips.querySelectorAll('.twlx-chip-btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
+    var chipButtons = chips.querySelectorAll('.twlx-chip-btn');
+    for (var n = 0; n < chipButtons.length; n += 1) {
+      chipButtons[n].addEventListener('click', function () {
         var key = this.dataset.key;
         flags[key] = !flags[key];
         this.classList.toggle('active', flags[key]);
         applyRailFilter();
       });
-    });
+    }
 
     applyRailFilter();
 
