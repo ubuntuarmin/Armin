@@ -21,6 +21,7 @@
   var NAV_MIN_HIDE_SCROLL = 120;
   var SPLIT_MIN_WORDS = 2;
   var SPLIT_MAX_WORDS = 22;
+  var THEME_STORAGE_KEY = 'twlxThemeMode';
   var state = {
     lenis: null,
     gsap: null,
@@ -890,6 +891,333 @@
     }
   }
 
+  function addToCartUniversal(product, qty) {
+    var amount = Math.max(1, Number(qty) || 1);
+    if (typeof win.quickAdd === 'function') {
+      for (var i = 0; i < amount; i += 1) {
+        win.quickAdd(product.id, product.name, product.price, product.category);
+      }
+      return;
+    }
+    var cart = [];
+    try {
+      cart = JSON.parse(localStorage.getItem('twCart') || '[]');
+      if (!Array.isArray(cart)) cart = [];
+    } catch (e) {
+      cart = [];
+    }
+    var row = null;
+    for (var j = 0; j < cart.length; j += 1) {
+      if (Number(cart[j].id) === Number(product.id) && String(cart[j].name) === String(product.name)) {
+        row = cart[j];
+        break;
+      }
+    }
+    if (row) {
+      row.qty = Math.max(0, Number(row.qty) || 0) + amount;
+    } else {
+      cart.push({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        cat: product.category,
+        qty: amount
+      });
+    }
+    localStorage.setItem('twCart', JSON.stringify(cart));
+    showToast(product.name + ' added to cart', 1400);
+  }
+
+  function createThemeSwitcher() {
+    var wrap = el('div', 'twlx-theme-switcher');
+    wrap.setAttribute('role', 'group');
+    wrap.setAttribute('aria-label', 'Theme mode');
+
+    var dark = el('button', 'is-active', 'Obsidian');
+    dark.type = 'button';
+    var light = el('button', null, 'Porcelain');
+    light.type = 'button';
+    wrap.appendChild(dark);
+    wrap.appendChild(light);
+    body.appendChild(wrap);
+
+    function apply(mode) {
+      var useLight = mode === 'light';
+      body.classList.toggle('twlx-light', useLight);
+      dark.classList.toggle('is-active', !useLight);
+      light.classList.toggle('is-active', useLight);
+      try { localStorage.setItem(THEME_STORAGE_KEY, useLight ? 'light' : 'dark'); } catch (e) {}
+    }
+
+    dark.addEventListener('click', function () { apply('dark'); });
+    light.addEventListener('click', function () { apply('light'); });
+
+    var saved = '';
+    try { saved = localStorage.getItem(THEME_STORAGE_KEY) || ''; } catch (e) { saved = ''; }
+    if (saved === 'light') apply('light');
+  }
+
+  function mountCampaignRail() {
+    var hero = doc.querySelector('.hero, .page-hero, .head');
+    if (!hero || doc.querySelector('.twlx-campaign')) return;
+    var host = hero.parentNode;
+    if (!host) return;
+
+    var campaign = el('section', 'twlx-campaign twlx-reveal');
+    var inner = el('div', 'twlx-campaign-inner');
+    var left = el('article', 'twlx-campaign-copy');
+    left.appendChild(el('span', 'eyebrow', 'Seasonal campaign'));
+    left.appendChild(el('h2', null, 'Midnight Asphalt · Precision luxury for the road and beyond.'));
+    left.appendChild(el('p', null, 'A complete style drop for riders: fragrances, jackets, and technical basics built as one coherent system.'));
+    var ctaRow = el('div', 'cta-row');
+    var cta1 = el('a', 'btn-primary', 'Shop the campaign');
+    cta1.href = 'shop.html';
+    var cta2 = el('a', 'btn-outline', 'Explore collections');
+    cta2.href = 'collections.html';
+    ctaRow.appendChild(cta1);
+    ctaRow.appendChild(cta2);
+    left.appendChild(ctaRow);
+
+    var right = el('div', 'twlx-campaign-track');
+    var cards = [
+      { k: 'Drop', v: 'No. 04' },
+      { k: 'Signature scent', v: 'Chrome Dusk' },
+      { k: 'Core layer', v: 'Speed Classic' },
+      { k: 'Accessories', v: 'Travel-ready edits' }
+    ];
+    for (var i = 0; i < cards.length; i += 1) {
+      var card = el('div', 'twlx-campaign-card');
+      card.appendChild(el('small', null, cards[i].k));
+      card.appendChild(el('strong', null, cards[i].v));
+      right.appendChild(card);
+    }
+
+    inner.appendChild(left);
+    inner.appendChild(right);
+    campaign.appendChild(inner);
+    host.insertBefore(campaign, hero);
+  }
+
+  function createQuickViewModal() {
+    if (!win.TWCatalog || !Array.isArray(win.TWCatalog.products)) return null;
+    if (doc.getElementById('twlxQuickView')) return doc.getElementById('twlxQuickView');
+
+    var shell = el('section', 'twlx-qv');
+    shell.id = 'twlxQuickView';
+    shell.setAttribute('aria-label', 'Quick product view');
+
+    var card = el('div', 'twlx-qv-card');
+    var close = el('button', 'twlx-qv-close', '✕');
+    close.type = 'button';
+    close.setAttribute('aria-label', 'Close quick view');
+
+    var media = el('div', 'twlx-qv-media');
+    var mediaEmoji = el('div', 'twlx-qv-emoji', '🧥');
+    var badge = el('span', 'twlx-qv-badge', 'Featured');
+    media.appendChild(mediaEmoji);
+    media.appendChild(badge);
+
+    var content = el('div', 'twlx-qv-content');
+    var cat = el('div', 'twlx-qv-cat', 'Category');
+    var title = el('h3', null, 'Product name');
+    var desc = el('p', 'twlx-qv-desc', '');
+    var price = el('div', 'twlx-qv-price', '$0');
+    var rating = el('div', 'twlx-qv-rating', '★★★★★');
+    var chips = el('div', 'twlx-qv-chips');
+    var actions = el('div', 'twlx-qv-actions');
+    var add = el('button', 'btn-primary', 'Add to cart');
+    add.type = 'button';
+    var viewFull = el('a', 'btn-outline', 'Open full page');
+    viewFull.href = 'shop.html';
+    actions.appendChild(add);
+    actions.appendChild(viewFull);
+
+    content.appendChild(cat);
+    content.appendChild(title);
+    content.appendChild(desc);
+    content.appendChild(price);
+    content.appendChild(rating);
+    content.appendChild(chips);
+    content.appendChild(actions);
+
+    card.appendChild(close);
+    card.appendChild(media);
+    card.appendChild(content);
+    shell.appendChild(card);
+    body.appendChild(shell);
+
+    var current = null;
+
+    function render(id) {
+      var product = win.TWCatalog.getProduct(id);
+      current = product;
+      media.style.background = product.gradient;
+      mediaEmoji.textContent = product.emoji || '✨';
+      badge.textContent = product.badgeLabel || product.categoryLabel;
+      cat.textContent = product.categoryLabel + ' — ' + product.sub;
+      title.textContent = product.name;
+      desc.textContent = product.descriptor;
+      price.textContent = '$' + Number(product.price).toFixed(0);
+      rating.textContent = win.TWCatalog.stars(product.rating) + ' · ' + product.reviews.toLocaleString() + ' reviews';
+      chips.textContent = '';
+      var tags = product.tags || [];
+      for (var i = 0; i < Math.min(tags.length, 3); i += 1) {
+        var chip = el('span', 'twlx-chip', tags[i][2]);
+        chips.appendChild(chip);
+      }
+      viewFull.href = 'product.html?id=' + product.id;
+    }
+
+    function open(id) {
+      render(id);
+      shell.classList.add('open');
+      body.classList.add('twlx-lock');
+    }
+
+    function closeModal() {
+      shell.classList.remove('open');
+      body.classList.remove('twlx-lock');
+    }
+
+    close.addEventListener('click', closeModal);
+    shell.addEventListener('click', function (evt) {
+      if (evt.target === shell) closeModal();
+    });
+    doc.addEventListener('keydown', function (evt) {
+      if (evt.key === 'Escape') closeModal();
+    });
+    add.addEventListener('click', function () {
+      if (!current) return;
+      addToCartUniversal(current, 1);
+      closeModal();
+    });
+
+    return { open: open, close: closeModal };
+  }
+
+  function mountQuickViewButtons(qv) {
+    if (!qv || !qv.open) return;
+    var cards = doc.querySelectorAll('.product-card[data-id]');
+    for (var i = 0; i < cards.length; i += 1) {
+      var card = cards[i];
+      if (card.querySelector('.twlx-quickview-btn')) continue;
+      var id = Number(card.getAttribute('data-id'));
+      if (!Number.isFinite(id) || id <= 0) continue;
+      var btn = el('button', 'twlx-quickview-btn', 'Quick view');
+      btn.type = 'button';
+      btn.addEventListener('click', (function (pid) {
+        return function (evt) {
+          evt.preventDefault();
+          evt.stopPropagation();
+          qv.open(pid);
+        };
+      })(id));
+      card.appendChild(btn);
+    }
+  }
+
+  function mountShopControlRail(qv) {
+    var grid = doc.getElementById('productsGrid');
+    if (!grid || doc.querySelector('.twlx-shop-rail')) return;
+    var anchor = doc.querySelector('.filter-bar, .filters, .arrivals-tabs');
+    if (!anchor || !anchor.parentNode) return;
+
+    var rail = el('section', 'twlx-shop-rail twlx-reveal');
+    var top = el('div', 'top-row');
+    top.appendChild(el('strong', null, 'Luxury control rail'));
+    top.appendChild(el('span', null, 'Search and refine instantly'));
+
+    var search = el('input');
+    search.type = 'search';
+    search.placeholder = 'Search products, tags, categories...';
+    search.setAttribute('aria-label', 'Search products');
+
+    var ranges = el('div', 'twlx-range');
+    var minInput = el('input');
+    minInput.type = 'range';
+    minInput.min = '10';
+    minInput.max = '400';
+    minInput.step = '1';
+    minInput.value = '10';
+    var maxInput = el('input');
+    maxInput.type = 'range';
+    maxInput.min = '10';
+    maxInput.max = '400';
+    maxInput.step = '1';
+    maxInput.value = '400';
+    var label = el('div', 'price-label', '$10 - $400');
+    ranges.appendChild(label);
+    ranges.appendChild(minInput);
+    ranges.appendChild(maxInput);
+
+    var chips = el('div', 'chip-row');
+    var chipData = [
+      { key: 'top-rated', text: 'Top rated 4.8+' },
+      { key: 'deals', text: 'Deals only' },
+      { key: 'new', text: 'New arrivals' }
+    ];
+    for (var i = 0; i < chipData.length; i += 1) {
+      var c = el('button', 'twlx-chip-btn', chipData[i].text);
+      c.type = 'button';
+      c.dataset.key = chipData[i].key;
+      chips.appendChild(c);
+    }
+
+    rail.appendChild(top);
+    rail.appendChild(search);
+    rail.appendChild(ranges);
+    rail.appendChild(chips);
+    anchor.parentNode.insertBefore(rail, anchor.nextSibling);
+
+    var flags = { 'top-rated': false, deals: false, 'new': false };
+
+    function applyRailFilter() {
+      var term = String(search.value || '').toLowerCase().trim();
+      var minV = Number(minInput.value) || 10;
+      var maxV = Number(maxInput.value) || 400;
+      if (minV > maxV) { var tmp = minV; minV = maxV; maxV = tmp; }
+      label.textContent = '$' + minV + ' - $' + maxV;
+
+      var cards = grid.querySelectorAll('.product-card');
+      for (var k = 0; k < cards.length; k += 1) {
+        var card = cards[k];
+        var text = (card.textContent || '').toLowerCase();
+        var price = Number(card.getAttribute('data-price') || 0);
+        var rating = Number(card.getAttribute('data-rating') || 0);
+        var isNew = Number(card.getAttribute('data-new') || 0) === 1;
+        var hasDeal = !!card.querySelector('.price-original,.badge-sale');
+        var match = true;
+        if (term && text.indexOf(term) === -1) match = false;
+        if (price < minV || price > maxV) match = false;
+        if (flags['top-rated'] && rating < 4.8) match = false;
+        if (flags.deals && !hasDeal) match = false;
+        if (flags['new'] && !isNew) match = false;
+        card.classList.toggle('twlx-filter-hidden', !match);
+      }
+      mountQuickViewButtons(qv);
+    }
+
+    search.addEventListener('input', applyRailFilter);
+    minInput.addEventListener('input', applyRailFilter);
+    maxInput.addEventListener('input', applyRailFilter);
+    chips.querySelectorAll('.twlx-chip-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var key = this.dataset.key;
+        flags[key] = !flags[key];
+        this.classList.toggle('active', flags[key]);
+        applyRailFilter();
+      });
+    });
+
+    applyRailFilter();
+
+    var observer = new MutationObserver(function () {
+      mountQuickViewButtons(qv);
+      applyRailFilter();
+    });
+    observer.observe(grid, { childList: true, subtree: true });
+  }
+
   function prepareLinkData() {
     var merged = DEFAULT_LINKS.concat(gatherAnchors());
     state.links = dedupeLinks(merged);
@@ -911,6 +1239,11 @@
 
     var deck = createCommandDeck();
     createMobileDock(deck);
+    createThemeSwitcher();
+    mountCampaignRail();
+    var qv = createQuickViewModal();
+    mountQuickViewButtons(qv);
+    mountShopControlRail(qv);
 
     setupMagneticButtons();
     setupCardTilt();
