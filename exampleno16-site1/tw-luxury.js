@@ -26,11 +26,15 @@
   var DEFAULT_RIDER_RATING = '4.9';
   var CART_STORAGE_KEYS = ['twCart', 'cart', 'twoWheelCart', 'TW_CART'];
   var GSAP_VERSION = '3.12.5';
+  var THREE_VERSION = '0.164.1';
+  var SPLIT_TYPE_VERSION = '0.3.4';
   var TOP_RATED_THRESHOLD = 4.8;
   var state = {
     lenis: null,
     gsap: null,
     scrollTrigger: null,
+    splitTypeReady: false,
+    threeReady: false,
     links: [],
     pointer: { x: win.innerWidth * 0.5, y: win.innerHeight * 0.5 },
     commandOpen: false,
