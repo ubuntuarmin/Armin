@@ -269,7 +269,10 @@
     cmdBtn.type = 'button';
     cmdBtn.setAttribute('aria-expanded', 'false');
     cmdBtn.setAttribute('aria-controls', 'twlxCommand');
-    cmdBtn.innerHTML = '<b>Luxury Access</b><span class="hint">Ctrl/⌘+K</span>';
+    var cmdTitle = el('b', null, 'Luxury Access');
+    var cmdHint = el('span', 'hint', 'Ctrl/⌘+K');
+    cmdBtn.appendChild(cmdTitle);
+    cmdBtn.appendChild(cmdHint);
 
     var shell = el('section', 'twlx-command');
     shell.id = 'twlxCommand';
@@ -489,7 +492,10 @@
     function makeLink(href, label, emoji) {
       var a = el('a');
       a.href = href;
-      a.innerHTML = '<span>' + emoji + '</span><small>' + label + '</small>';
+      var icon = el('span', null, emoji);
+      var text = el('small', null, label);
+      a.appendChild(icon);
+      a.appendChild(text);
       if (current === href.split('?')[0]) a.classList.add('is-active');
       return a;
     }
@@ -500,14 +506,16 @@
 
     var searchBtn = el('button');
     searchBtn.type = 'button';
-    searchBtn.innerHTML = '<span>⌕</span><small>Search</small>';
+    searchBtn.appendChild(el('span', null, '⌕'));
+    searchBtn.appendChild(el('small', null, 'Search'));
     searchBtn.addEventListener('click', function () {
       if (commandDeck) commandDeck.open();
     });
 
     var topBtn = el('button');
     topBtn.type = 'button';
-    topBtn.innerHTML = '<span>↑</span><small>Top</small>';
+    topBtn.appendChild(el('span', null, '↑'));
+    topBtn.appendChild(el('small', null, 'Top'));
     topBtn.addEventListener('click', function () {
       if (state.lenis) state.lenis.scrollTo(0, { duration: 0.95 });
       else win.scrollTo({ top: 0, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
@@ -528,7 +536,25 @@
     }
 
     updateCartLabel();
-    win.setInterval(updateCartLabel, 1800);
+    win.addEventListener('storage', updateCartLabel);
+    doc.addEventListener('visibilitychange', function () {
+      if (!doc.hidden) updateCartLabel();
+    });
+    doc.addEventListener('click', function (evt) {
+      var target = evt.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest('.cart-btn, .product-quick-add, [data-add-to-cart], .qty-plus, .qty-minus, .quantity-btn')) {
+        win.setTimeout(updateCartLabel, 50);
+      }
+    }, { passive: true });
+
+    var observed = doc.querySelectorAll('#cartBadge, #mobCartBadge, .cart-badge, .mob-cart-badge');
+    if ('MutationObserver' in win && observed.length) {
+      var mo = new MutationObserver(updateCartLabel);
+      for (var o = 0; o < observed.length; o += 1) {
+        mo.observe(observed[o], { childList: true, characterData: true, subtree: true });
+      }
+    }
   }
 
   function markRevealTargets() {
@@ -828,10 +854,10 @@
     var fields = doc.querySelectorAll('input, textarea, select');
     for (var i = 0; i < fields.length; i += 1) {
       fields[i].addEventListener('focus', function () {
-        this.style.boxShadow = '0 0 0 3px rgba(255, 154, 94, 0.2), 0 0 0 1px rgba(255, 221, 181, 0.52) inset';
+        this.classList.add('twlx-focus-ring');
       });
       fields[i].addEventListener('blur', function () {
-        this.style.boxShadow = '';
+        this.classList.remove('twlx-focus-ring');
       });
     }
   }

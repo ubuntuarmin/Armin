@@ -735,6 +735,10 @@ body.twlx-on textarea::placeholder {
   color: rgba(255, 236, 215, 0.38) !important;
 }
 
+body.twlx-on .twlx-focus-ring {
+  box-shadow: 0 0 0 3px rgba(255, 154, 94, 0.2), 0 0 0 1px rgba(255, 221, 181, 0.52) inset !important;
+}
+
 body.twlx-on .newsletter-submit {
   background: linear-gradient(130deg, #ff7e3e, #ff6034, #c17dff) !important;
   color: #fff !important;
