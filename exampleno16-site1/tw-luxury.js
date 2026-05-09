@@ -9,6 +9,8 @@
 
   var prefersReducedMotion = win.matchMedia && win.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var IS_TOUCH = ('ontouchstart' in win) || (navigator.maxTouchPoints > 0);
+  var MAX_LINK_TITLE_LENGTH = 70;
+  var CART_UPDATE_DELAY_MS = 50;
   var state = {
     lenis: null,
     gsap: null,
@@ -84,7 +86,7 @@
       if (!href) continue;
       var title = String(row.title || '').trim();
       if (!title) continue;
-      if (title.length > 70) continue;
+      if (title.length > MAX_LINK_TITLE_LENGTH) continue;
       var key = title.toLowerCase() + '|' + href.toLowerCase();
       if (seen[key]) continue;
       seen[key] = 1;
@@ -547,7 +549,7 @@
 
     var updateTriggers = doc.querySelectorAll('.cart-btn, .product-quick-add, [data-add-to-cart], .qty-plus, .qty-minus, .quantity-btn');
     function onPotentialCartChange() {
-      win.setTimeout(updateCartLabel, 50);
+      win.setTimeout(updateCartLabel, CART_UPDATE_DELAY_MS);
     }
     for (var t = 0; t < updateTriggers.length; t += 1) {
       updateTriggers[t].addEventListener('click', onPotentialCartChange, { passive: true });
