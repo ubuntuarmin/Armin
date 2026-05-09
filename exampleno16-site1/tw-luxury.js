@@ -1,5 +1,6 @@
 (function () {
-  if (window.__twLuxuryV2Loaded) return;
+  if (window.__twLuxuryLoaded || window.__twLuxuryV2Loaded) return;
+  window.__twLuxuryLoaded = true;
   window.__twLuxuryV2Loaded = true;
 
   var doc = document;
@@ -772,7 +773,7 @@
     if (heroTitle && !heroTitle.dataset.twlxSplit) {
       var text = heroTitle.textContent || '';
       var words = text.trim().split(/\s+/);
-      if (words.length > SPLIT_MIN_WORDS && words.length < SPLIT_MAX_WORDS) {
+      if (words.length > SPLIT_MIN_WORDS && words.length <= SPLIT_MAX_WORDS) {
         heroTitle.dataset.twlxSplit = '1';
         heroTitle.textContent = '';
         for (var i = 0; i < words.length; i += 1) {
@@ -1175,7 +1176,11 @@
       var term = String(search.value || '').toLowerCase().trim();
       var minV = Number(minInput.value) || 10;
       var maxV = Number(maxInput.value) || 400;
-      if (minV > maxV) { var tmp = minV; minV = maxV; maxV = tmp; }
+      if (minV > maxV) {
+        var tmp = minV;
+        minV = maxV;
+        maxV = tmp;
+      }
       label.textContent = '$' + minV + ' - $' + maxV;
 
       var cards = grid.querySelectorAll('.product-card');
