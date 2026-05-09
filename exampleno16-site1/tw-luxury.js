@@ -9,6 +9,8 @@
 
   var prefersReducedMotion = win.matchMedia && win.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var IS_TOUCH = ('ontouchstart' in win) || (navigator.maxTouchPoints > 0);
+  var MAX_DISCOVERED_LINKS = 70;
+  var MAX_DISCOVERED_LINK_TITLE_LENGTH = 64;
   var MAX_LINK_TITLE_LENGTH = 70;
   var CART_UPDATE_DELAY_MS = 50;
   var state = {
@@ -103,14 +105,13 @@
   function gatherAnchors() {
     var found = [];
     var all = doc.querySelectorAll('a[href]');
-    var max = 70;
-    for (var i = 0; i < all.length && found.length < max; i += 1) {
+    for (var i = 0; i < all.length && found.length < MAX_DISCOVERED_LINKS; i += 1) {
       var a = all[i];
       var href = isSafeHref(a.getAttribute('href'));
       if (!href) continue;
       if (!isInternalHref(href)) continue;
       var t = (a.textContent || '').replace(/\s+/g, ' ').trim();
-      if (!t || t.length > 64) continue;
+      if (!t || t.length > MAX_DISCOVERED_LINK_TITLE_LENGTH) continue;
       found.push({ icon: '🔗', title: t, note: 'Page link', href: href });
     }
     return found;
@@ -192,12 +193,11 @@
     if (win.TWCatalog && Array.isArray(win.TWCatalog.products)) {
       productCount = win.TWCatalog.products.length;
     }
-    var reviewCount = 1200;
-    var rating = '4.9';
+    var defaultRating = '4.9';
     return [
       { v: '1-click', l: 'Navigation' },
       { v: String(productCount), l: 'Products live' },
-      { v: rating + '/5', l: 'Rider rating' },
+      { v: defaultRating + '/5', l: 'Rider rating' },
       { v: '24/7', l: 'Self-service' }
     ];
   }
