@@ -13,6 +13,14 @@
   var MAX_DISCOVERED_LINK_TITLE_LENGTH = 64;
   var MAX_LINK_TITLE_LENGTH = 70;
   var CART_UPDATE_DELAY_MS = 50;
+  var MAGNETIC_STRENGTH = 8;
+  var TILT_ANGLE_X = 6;
+  var TILT_ANGLE_Y = 8;
+  var CARD_HOVER_LIFT_PX = 6;
+  var NAV_SCROLL_DELTA = 8;
+  var NAV_MIN_HIDE_SCROLL = 120;
+  var SPLIT_MIN_WORDS = 2;
+  var SPLIT_MAX_WORDS = 22;
   var state = {
     lenis: null,
     gsap: null,
@@ -623,7 +631,7 @@
         var cy = rect.top + rect.height / 2;
         var dx = (evt.clientX - cx) / Math.max(rect.width, 1);
         var dy = (evt.clientY - cy) / Math.max(rect.height, 1);
-        this.style.transform = 'translate(' + (dx * 8).toFixed(2) + 'px,' + (dy * 8).toFixed(2) + 'px)';
+        this.style.transform = 'translate(' + (dx * MAGNETIC_STRENGTH).toFixed(2) + 'px,' + (dy * MAGNETIC_STRENGTH).toFixed(2) + 'px)';
       });
 
       btn.addEventListener('pointerleave', function () {
@@ -643,9 +651,9 @@
         var rect = this.getBoundingClientRect();
         var px = (evt.clientX - rect.left) / rect.width;
         var py = (evt.clientY - rect.top) / rect.height;
-        var rx = (0.5 - py) * 6;
-        var ry = (px - 0.5) * 8;
-        this.style.transform = 'translateY(-6px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        var rx = (0.5 - py) * TILT_ANGLE_X;
+        var ry = (px - 0.5) * TILT_ANGLE_Y;
+        this.style.transform = 'translateY(-' + CARD_HOVER_LIFT_PX + 'px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
       });
 
       card.addEventListener('pointerleave', function () {
@@ -666,10 +674,10 @@
       topBtn.classList.toggle('show', y > 320);
 
       if (nav && win.innerWidth > 900) {
-        if (y > lastY + 8 && y > 120) {
+        if (y > lastY + NAV_SCROLL_DELTA && y > NAV_MIN_HIDE_SCROLL) {
           nav.style.transform = 'translateY(-100%)';
           nav.style.transition = 'transform 0.35s ease';
-        } else if (y < lastY - 8) {
+        } else if (y < lastY - NAV_SCROLL_DELTA) {
           nav.style.transform = 'translateY(0)';
           nav.style.transition = 'transform 0.35s ease';
         }
@@ -686,9 +694,12 @@
     return new Promise(function (resolve, reject) {
       var existing = doc.querySelector('script[data-twlx="' + src + '"]');
       if (existing) {
+        if (existing.dataset.loaded === '1') {
+          resolve();
+          return;
+        }
         existing.addEventListener('load', function () { resolve(); }, { once: true });
         existing.addEventListener('error', function () { reject(new Error('load failed: ' + src)); }, { once: true });
-        if (existing.dataset.loaded === '1') resolve();
         return;
       }
 
@@ -760,7 +771,7 @@
     if (heroTitle && !heroTitle.dataset.twlxSplit) {
       var text = heroTitle.textContent || '';
       var words = text.trim().split(/\s+/);
-      if (words.length > 2 && words.length < 22) {
+      if (words.length > SPLIT_MIN_WORDS && words.length < SPLIT_MAX_WORDS) {
         heroTitle.dataset.twlxSplit = '1';
         heroTitle.textContent = '';
         for (var i = 0; i < words.length; i += 1) {
@@ -837,9 +848,9 @@
     var targets = doc.querySelectorAll('.hero-orb, .brand-glow-1, .brand-glow-2, .twlx-grad');
     if (!targets.length) return;
 
-    var raf = 0;
+    var rafId = 0;
     function move() {
-      raf = 0;
+      rafId = 0;
       var nx = (state.pointer.x / Math.max(win.innerWidth, 1)) - 0.5;
       var ny = (state.pointer.y / Math.max(win.innerHeight, 1)) - 0.5;
       for (var i = 0; i < targets.length; i += 1) {
@@ -851,7 +862,7 @@
     win.addEventListener('pointermove', function (evt) {
       state.pointer.x = evt.clientX;
       state.pointer.y = evt.clientY;
-      if (!raf) raf = win.requestAnimationFrame(move);
+      if (!rafId) rafId = win.requestAnimationFrame(move);
     }, { passive: true });
   }
 
