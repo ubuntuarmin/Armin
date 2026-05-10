@@ -39,10 +39,10 @@
       <div class="stats"><span class="pill" id="savedCount">0 saved picks</span><span class="pill">Working localStorage demo</span><span class="pill">Fast add-to-cart actions</span></div>
       <div class="toolbar"><div class="meta" id="wishlistMeta">No products saved yet.</div><div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn secondary" href="shop.html">Browse products</a><button class="btn" type="button" id="clearBtn">Clear wishlist</button></div></div>
     </section>
-    <section id="wishlistGrid" class="grid"></section>
+    <section id="wishlistGrid" class="grid" aria-live="polite"></section>
     <section id="emptyState" class="empty">Your saved list is empty right now. Browse the refreshed catalog, tap the heart on any product, and come back here to compare your favorites.</section>
   </main>
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script src="catalog.js"></script>
   <script>
     function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
@@ -53,7 +53,7 @@
     function removeSaved(id){TWCatalog.toggleWishlist(id);renderWishlist();var product=TWCatalog.getProduct(id);toast(product.name + ' removed from wishlist.');}
     function clearWishlist(){TWCatalog.saveWishlist([]);renderWishlist();toast('Wishlist cleared.');}
     document.getElementById('clearBtn').addEventListener('click', clearWishlist);
-    function card(product){return '<article class="card"><div class="visual" style="background:' + product.gradient + ';">' + product.emoji + '<span class="badge">' + product.categoryLabel + '</span></div><div class="body"><div class="kicker">' + product.sub + '</div><div class="name">' + product.name + '</div><div class="desc">' + product.descriptor + '</div><div class="price"><strong>' + TWCatalog.formatPrice(product.price) + '</strong>' + (product.originalPrice ? '<span>' + TWCatalog.formatPrice(product.originalPrice) + '</span>' : '') + '</div><div class="actions"><a class="btn secondary" href="product.html?id=' + product.id + '">View product</a><button class="btn" type="button" onclick="addToCart(TWCatalog.getProduct(' + product.id + '))">Add to cart</button><button class="btn secondary" type="button" onclick="removeSaved(' + product.id + ')">Remove</button></div></div></article>';}
+    function card(product){return '<article class="card"><div class="visual" role="img" aria-label="' + product.name.replace(/"/g, '&quot;') + ' preview" style="background:' + product.gradient + ';">' + product.emoji + '<span class="badge">' + product.categoryLabel + '</span></div><div class="body"><div class="kicker">' + product.sub + '</div><div class="name">' + product.name + '</div><div class="desc">' + product.descriptor + '</div><div class="price"><strong>' + TWCatalog.formatPrice(product.price) + '</strong>' + (product.originalPrice ? '<span>' + TWCatalog.formatPrice(product.originalPrice) + '</span>' : '') + '</div><div class="actions"><a class="btn secondary" href="product.html?id=' + product.id + '">View product</a><button class="btn" type="button" onclick="addToCart(TWCatalog.getProduct(' + product.id + '))">Add to cart</button><button class="btn secondary" type="button" onclick="removeSaved(' + product.id + ')">Remove</button></div></div></article>';}
     function renderWishlist(){var ids=TWCatalog.getWishlist();var products=ids.map(TWCatalog.getProduct).filter(Boolean);document.getElementById('savedCount').textContent=products.length + ' saved pick' + (products.length===1?'':'s');document.getElementById('wishlistMeta').textContent=products.length ? 'Keep refining your shortlist or move pieces straight to checkout.' : 'No products saved yet.';document.getElementById('wishlistGrid').innerHTML=products.map(card).join('');document.getElementById('emptyState').style.display=products.length?'none':'block';}
     renderWishlist();
   </script>

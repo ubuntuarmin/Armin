@@ -96,7 +96,7 @@
       aspect-ratio:1; background:var(--dark3); border-radius:8px;
       border:2px solid var(--border); display:flex; align-items:center;
       justify-content:center; font-size:2.5rem; cursor:pointer;
-      transition:all 0.25s; overflow:hidden; position:relative;
+      transition:all 0.25s; overflow:hidden; position:relative; padding:0; font-family:'Inter',sans-serif;
     }
     .gallery-thumb::before { content:''; position:absolute; inset:0; }
     .gallery-thumb:nth-child(1)::before { background:linear-gradient(135deg,#1A1A2E,#2E1A1A); }
@@ -121,6 +121,7 @@
     .p-rating-count:hover { text-decoration:underline; }
     .p-qa-link { font-size:0.85rem; color:var(--fire); cursor:pointer; }
     .p-qa-link:hover { text-decoration:underline; }
+    .p-link-btn { background:none; border:none; padding:0; font-family:'Inter',sans-serif; }
 
     /* Price */
     .p-price-block { margin-bottom:22px; }
@@ -326,7 +327,7 @@
 <!-- Mobile Menu -->
 <div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
 <div class="mob-menu" id="mobMenu">
-  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <button class="mob-close" onclick="toggleMenu()" aria-label="Close navigation menu">✕</button>
   <a href="index.html">Home</a>
   <a href="shop.html">Shop All</a>
   <a href="shop.html?cat=cologne">Cologne</a>
@@ -355,7 +356,7 @@
     </ul>
     <div class="nav-right">
       <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
-      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Open navigation menu" aria-controls="mobMenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
@@ -376,7 +377,7 @@
 
   <!-- GALLERY -->
   <div class="product-gallery">
-    <div class="gallery-main-img" id="mainImg" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
+    <div class="gallery-main-img" id="mainImg" role="img" aria-label="Product image preview" style="background:linear-gradient(135deg,#1A1A2E,#2E1A1A);">
       <span id="mainEmoji">💎</span>
       <div class="gallery-badge-row">
         <span class="g-badge g-badge-sale">25% OFF</span>
@@ -385,10 +386,10 @@
       <div class="img-ph-overlay">Product Image Placeholder — Replace with actual photography</div>
     </div>
     <div class="gallery-thumbs">
-      <div class="gallery-thumb active" onclick="switchImg(this,'💎','linear-gradient(135deg,#1A1A2E,#2E1A1A)')"><span>💎</span></div>
-      <div class="gallery-thumb" onclick="switchImg(this,'🏍️','linear-gradient(135deg,#1A2A1A,#0E1A2E)')"><span>🏍️</span></div>
-      <div class="gallery-thumb" onclick="switchImg(this,'✨','linear-gradient(135deg,#2E1A0E,#1A0E2A)')"><span>✨</span></div>
-      <div class="gallery-thumb" onclick="switchImg(this,'🔥','linear-gradient(135deg,#0E1E2A,#2A1E0E)')"><span>🔥</span></div>
+      <button type="button" class="gallery-thumb active" aria-label="Show product image variant 1" onclick="switchImg(this,'💎','linear-gradient(135deg,#1A1A2E,#2E1A1A)')"><span>💎</span></button>
+      <button type="button" class="gallery-thumb" aria-label="Show product image variant 2" onclick="switchImg(this,'🏍️','linear-gradient(135deg,#1A2A1A,#0E1A2E)')"><span>🏍️</span></button>
+      <button type="button" class="gallery-thumb" aria-label="Show product image variant 3" onclick="switchImg(this,'✨','linear-gradient(135deg,#2E1A0E,#1A0E2A)')"><span>✨</span></button>
+      <button type="button" class="gallery-thumb" aria-label="Show product image variant 4" onclick="switchImg(this,'🔥','linear-gradient(135deg,#0E1E2A,#2A1E0E)')"><span>🔥</span></button>
     </div>
   </div>
 
@@ -402,9 +403,9 @@
     <div class="p-rating-row">
       <span class="p-stars">★★★★★</span>
       <span class="p-rating-num">4.8</span>
-      <a class="p-rating-count" onclick="openTab('reviews')">892 ratings</a>
+      <button type="button" class="p-rating-count p-link-btn" onclick="openTab('reviews')">892 ratings</button>
       <span style="color:var(--border);">|</span>
-      <a class="p-qa-link" onclick="openTab('qa')">245 answered questions</a>
+      <button type="button" class="p-qa-link p-link-btn" onclick="openTab('qa')">245 answered questions</button>
     </div>
 
     <div class="p-price-block">
@@ -762,7 +763,14 @@
 <script>
   (function(){var pl=document.getElementById('preloader'),bar=document.getElementById('plBar'),site=document.getElementById('site-wrap'),p=0;var t=setInterval(function(){p+=Math.random()*22+5;if(p>100)p=100;bar.style.width=p+'%';if(p>=100){clearInterval(t);setTimeout(function(){pl.classList.add('done');site.classList.add('visible');},280);}},55);})();
 
-  function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');document.getElementById('mobOverlay').classList.toggle('open');}
+  function toggleMenu(){
+    var menu = document.getElementById('mobMenu');
+    var overlay = document.getElementById('mobOverlay');
+    var trigger = document.querySelector('.hamburger');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('open');
+    if (trigger) trigger.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
+  }
   function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
   function saveCart(c){localStorage.setItem('twCart',JSON.stringify(c));}
   function updateBadge(){var n=getCart().reduce(function(s,i){return s+(i.qty||0);},0);document.getElementById('cartBadge').textContent=n;document.getElementById('mobCartBadge').textContent=n;}
@@ -853,7 +861,7 @@
     document.querySelector('.img-ph-overlay').textContent = product.material;
     var thumbBackgrounds = [product.gradient,'linear-gradient(135deg,#1A1A1A,#111827)','linear-gradient(135deg,#2A1A0A,#1F2937)','linear-gradient(135deg,#0F172A,#3F3F46)'];
     var thumbIcons = [product.emoji].concat(product.tags.map(function(tag){ return tag[1]; })).slice(0,4);
-    document.querySelector('.gallery-thumbs').innerHTML = thumbIcons.map(function(icon, index){ return '<div class="gallery-thumb' + (index===0?' active':'') + '" data-icon="' + icon + '" data-bg="' + thumbBackgrounds[index] + '"><span>' + icon + '</span></div>'; }).join('');
+    document.querySelector('.gallery-thumbs').innerHTML = thumbIcons.map(function(icon, index){ return '<button type="button" class="gallery-thumb' + (index===0?' active':'') + '" aria-label="Show product image variant ' + (index + 1) + '" data-icon="' + icon + '" data-bg="' + thumbBackgrounds[index] + '"><span>' + icon + '</span></button>'; }).join('');
     document.querySelectorAll('.gallery-thumb').forEach(function(thumb){ thumb.addEventListener('click', function(){ switchImg(this, this.dataset.icon, this.dataset.bg); }); });
     document.querySelector('.p-highlights ul').innerHTML = [product.material, product.fit, product.performance, product.care].concat(product.tags.map(function(tag){ return tag[2]; })).slice(0,6).map(function(line){ return '<li>' + line + '</li>'; }).join('');
   }
@@ -900,7 +908,13 @@
   }
   function syncWishlistButton(){ var saved = TWCatalog.isWishlisted(currentProduct.id); var button = document.getElementById('wishlistBtn'); button.textContent = saved ? '♥ Saved' : '♡ Save'; }
 
-  function switchImg(el,emoji,bg){ document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');}); el.classList.add('active'); document.getElementById('mainEmoji').textContent=emoji; document.getElementById('mainImg').style.background=bg; }
+  function switchImg(el,emoji,bg){
+    document.querySelectorAll('.gallery-thumb').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
+    document.getElementById('mainEmoji').textContent=emoji;
+    document.getElementById('mainImg').style.background=bg;
+    document.getElementById('mainImg').setAttribute('aria-label', 'Product image variant ' + emoji);
+  }
   function selectOption(btn,label){ btn.closest('.p-option-group').querySelectorAll('.p-option').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedScent').textContent=label; }
   function selectSize(btn,price){ document.querySelectorAll('.p-size-btn:not(.oos)').forEach(function(b){b.classList.remove('active');}); btn.classList.add('active'); document.getElementById('selectedSize').textContent=btn.textContent; currentPrice=price; document.getElementById('displayPrice').textContent='$'+price; }
   function changeQty(d){var i=document.getElementById('qtyInput');var base=parseInt(i.value||'1',10);if(isNaN(base)) base=1;var v=base+d;if(v<1)v=1;if(v>10)v=10;i.value=v;}

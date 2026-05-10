@@ -132,7 +132,7 @@
     .promo-msg.error   { color:var(--error); }
 
     .promo-codes-hint { margin-top:12px; display:flex; gap:8px; flex-wrap:wrap; }
-    .hint-code { padding:4px 10px; border:1px solid rgba(255,69,0,0.25); border-radius:4px; font-size:0.74rem; color:rgba(255,69,0,0.7); cursor:pointer; transition:all 0.2s; font-family:'Bebas Neue',sans-serif; letter-spacing:0.1em; }
+    .hint-code { padding:4px 10px; border:1px solid rgba(255,69,0,0.25); border-radius:4px; font-size:0.74rem; color:rgba(255,69,0,0.7); cursor:pointer; transition:all 0.2s; font-family:'Bebas Neue',sans-serif; letter-spacing:0.1em; background:transparent; }
     .hint-code:hover { border-color:var(--fire); color:var(--fire); background:rgba(255,69,0,0.08); }
 
     /* ── ORDER SUMMARY ── */
@@ -172,6 +172,7 @@
     .form-input::placeholder { color:rgba(255,255,255,0.2); }
     .form-input.error { border-color:var(--error); }
     .form-input.valid { border-color:rgba(34,197,94,0.4); }
+    .form-error { min-height:16px; font-size:0.74rem; color:var(--error); }
     .form-select { appearance:none; -webkit-appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 12px center; background-size:16px; padding-right:36px; }
 
     .form-divider { border:none; border-top:1px solid var(--border); margin:24px 0; }
@@ -220,7 +221,13 @@
 
     /* RESPONSIVE */
     @media (max-width:1024px) { .cart-layout { grid-template-columns:1fr; } .order-summary { position:static; } }
-    @media (max-width:768px) { .nav-links { display:none; } .hamburger { display:flex; } .form-grid { grid-template-columns:1fr; } .cart-item { grid-template-columns:64px 1fr; } .cart-item-right { display:none; } }
+    @media (max-width:768px) {
+      .nav-links { display:none; }
+      .hamburger { display:flex; }
+      .form-grid { grid-template-columns:1fr; }
+      .cart-item { grid-template-columns:64px 1fr; }
+      .cart-item-right { display:flex; grid-column:2; flex-direction:row; align-items:center; justify-content:space-between; }
+    }
     @media (max-width:600px) { .cart-item { grid-template-columns:56px 1fr; gap:12px; } .modal { padding:32px 24px; } }
   </style>
   <link rel="stylesheet" href="tw-luxury.css">
@@ -245,7 +252,7 @@
 <!-- Mobile Menu -->
 <div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
 <div class="mob-menu" id="mobMenu">
-  <button class="mob-close" onclick="toggleMenu()">✕</button>
+  <button class="mob-close" onclick="toggleMenu()" aria-label="Close navigation menu">✕</button>
   <a href="index.html">Home</a>
   <a href="shop.html">Shop All</a>
   <a href="shop.html?cat=cologne">Cologne</a>
@@ -272,7 +279,7 @@
     </ul>
     <div class="nav-right">
       <button class="cart-btn" onclick="window.location.href='cart.html'">🛒 Cart <span class="cart-badge" id="cartBadge">0</span></button>
-      <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Open navigation menu" aria-controls="mobMenu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
   </div>
 </nav>
@@ -318,7 +325,7 @@
           <button class="cart-clear-btn" onclick="clearCart()">Clear All</button>
         </div>
 
-        <div class="cart-items" id="cartItemsList"></div>
+        <div class="cart-items" id="cartItemsList" aria-live="polite"></div>
 
         <!-- Empty state -->
         <div class="empty-cart" id="emptyCart" style="display:none;">
@@ -335,11 +342,11 @@
             <input type="text" class="promo-input" id="promoInput" placeholder="Enter code e.g. RIDE20" autocomplete="off" style="text-transform:uppercase;">
             <button class="promo-btn" onclick="applyPromo()">Apply</button>
           </div>
-          <div class="promo-msg" id="promoMsg"></div>
+          <div class="promo-msg" id="promoMsg" role="status" aria-live="polite"></div>
           <div class="promo-codes-hint">
-            <span class="hint-code" onclick="useCode('RIDE20')">RIDE20</span>
-            <span class="hint-code" onclick="useCode('CHROME25')">CHROME25</span>
-            <span class="hint-code" onclick="useCode('WHEEL10')">WHEEL10</span>
+            <button type="button" class="hint-code" onclick="useCode('RIDE20')">RIDE20</button>
+            <button type="button" class="hint-code" onclick="useCode('CHROME25')">CHROME25</button>
+            <button type="button" class="hint-code" onclick="useCode('WHEEL10')">WHEEL10</button>
           </div>
         </div>
       </div>
@@ -356,19 +363,22 @@
         <div class="form-section-title">Contact Information <span class="form-section-badge">Step 1 of 2</span></div>
         <div class="form-grid">
           <div class="form-group">
-            <label class="form-label">First Name *</label>
-            <input type="text" class="form-input" id="firstName" placeholder="Jake" onblur="validateField(this,'text')">
+            <label class="form-label" for="firstName">First Name *</label>
+            <input type="text" class="form-input" id="firstName" placeholder="Jake" onblur="validateField(this,'text')" oninput="validateField(this,'text')" aria-describedby="firstNameError">
+            <span class="form-error" id="firstNameError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name *</label>
-            <input type="text" class="form-input" id="lastName" placeholder="Rider" onblur="validateField(this,'text')">
+            <label class="form-label" for="lastName">Last Name *</label>
+            <input type="text" class="form-input" id="lastName" placeholder="Rider" onblur="validateField(this,'text')" oninput="validateField(this,'text')" aria-describedby="lastNameError">
+            <span class="form-error" id="lastNameError"></span>
           </div>
           <div class="form-group full">
-            <label class="form-label">Email Address *</label>
-            <input type="email" class="form-input" id="email" placeholder="jake@twowheel.com" onblur="validateField(this,'email')">
+            <label class="form-label" for="email">Email Address *</label>
+            <input type="email" class="form-input" id="email" placeholder="jake@twowheel.com" onblur="validateField(this,'email')" oninput="validateField(this,'email')" aria-describedby="emailError">
+            <span class="form-error" id="emailError"></span>
           </div>
           <div class="form-group full">
-            <label class="form-label">Phone Number</label>
+            <label class="form-label" for="phone">Phone Number</label>
             <input type="tel" class="form-input" id="phone" placeholder="+1 (555) 000-0000">
           </div>
         </div>
@@ -377,23 +387,26 @@
         <div class="form-section-title">Shipping Address</div>
         <div class="form-grid">
           <div class="form-group full">
-            <label class="form-label">Street Address *</label>
-            <input type="text" class="form-input" id="address" placeholder="123 Rider Street" onblur="validateField(this,'text')">
+            <label class="form-label" for="address">Street Address *</label>
+            <input type="text" class="form-input" id="address" placeholder="123 Rider Street" onblur="validateField(this,'text')" oninput="validateField(this,'text')" aria-describedby="addressError">
+            <span class="form-error" id="addressError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">City *</label>
-            <input type="text" class="form-input" id="city" placeholder="Houston" onblur="validateField(this,'text')">
+            <label class="form-label" for="city">City *</label>
+            <input type="text" class="form-input" id="city" placeholder="Houston" onblur="validateField(this,'text')" oninput="validateField(this,'text')" aria-describedby="cityError">
+            <span class="form-error" id="cityError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">State / Province</label>
+            <label class="form-label" for="state">State / Province</label>
             <input type="text" class="form-input" id="state" placeholder="TX">
           </div>
           <div class="form-group">
-            <label class="form-label">ZIP / Postal Code *</label>
-            <input type="text" class="form-input" id="zip" placeholder="77001" onblur="validateField(this,'zip')">
+            <label class="form-label" for="zip">ZIP / Postal Code *</label>
+            <input type="text" class="form-input" id="zip" placeholder="77001" onblur="validateField(this,'zip')" oninput="validateField(this,'zip')" aria-describedby="zipError">
+            <span class="form-error" id="zipError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">Country *</label>
+            <label class="form-label" for="country">Country *</label>
             <select class="form-input form-select" id="country">
               <option value="">Select Country</option>
               <option value="US" selected>United States</option>
@@ -447,20 +460,24 @@
 
         <div class="form-grid">
           <div class="form-group full">
-            <label class="form-label">Name on Card *</label>
-            <input type="text" class="form-input" id="cardName" placeholder="Jake Rider" onblur="validateField(this,'text')">
+            <label class="form-label" for="cardName">Name on Card *</label>
+            <input type="text" class="form-input" id="cardName" placeholder="Jake Rider" onblur="validateField(this,'text')" oninput="validateField(this,'text')" aria-describedby="cardNameError">
+            <span class="form-error" id="cardNameError"></span>
           </div>
           <div class="form-group full">
-            <label class="form-label">Card Number *</label>
-            <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this)" onblur="validateField(this,'card')">
+            <label class="form-label" for="cardNumber">Card Number *</label>
+            <input type="text" class="form-input" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19" oninput="formatCard(this);validateField(this,'card')" onblur="validateField(this,'card')" aria-describedby="cardNumberError">
+            <span class="form-error" id="cardNumberError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">Expiry Date *</label>
-            <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this)" onblur="validateField(this,'expiry')">
+            <label class="form-label" for="cardExpiry">Expiry Date *</label>
+            <input type="text" class="form-input" id="cardExpiry" placeholder="MM / YY" maxlength="7" oninput="formatExpiry(this);validateField(this,'expiry')" onblur="validateField(this,'expiry')" aria-describedby="cardExpiryError">
+            <span class="form-error" id="cardExpiryError"></span>
           </div>
           <div class="form-group">
-            <label class="form-label">CVV *</label>
-            <input type="text" class="form-input" id="cardCVV" placeholder="•••" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'')" onblur="validateField(this,'cvv')">
+            <label class="form-label" for="cardCVV">CVV *</label>
+            <input type="text" class="form-input" id="cardCVV" placeholder="•••" maxlength="4" oninput="this.value=this.value.replace(/\D/g,'');validateField(this,'cvv')" onblur="validateField(this,'cvv')" aria-describedby="cardCVVError">
+            <span class="form-error" id="cardCVVError"></span>
           </div>
         </div>
 
@@ -529,7 +546,7 @@
 </div><!-- /#site-wrap -->
 
 <!-- TOAST -->
-<div class="toast" id="toast"><span class="toast-icon">✅</span><div class="toast-text" id="toastText"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-icon">✅</span><div class="toast-text" id="toastText"></div></div>
 
 <!-- SUCCESS MODAL -->
 <div class="modal-overlay" id="successModal">
@@ -552,7 +569,14 @@
   (function(){var pl=document.getElementById('preloader'),bar=document.getElementById('plBar'),site=document.getElementById('site-wrap'),p=0;var t=setInterval(function(){p+=Math.random()*22+5;if(p>100)p=100;bar.style.width=p+'%';if(p>=100){clearInterval(t);setTimeout(function(){pl.classList.add('done');site.classList.add('visible');renderCart();},280);}},55);})();
 
   /* MOBILE MENU */
-  function toggleMenu(){document.getElementById('mobMenu').classList.toggle('open');document.getElementById('mobOverlay').classList.toggle('open');}
+  function toggleMenu(){
+    var menu = document.getElementById('mobMenu');
+    var overlay = document.getElementById('mobOverlay');
+    var trigger = document.querySelector('.hamburger');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('open');
+    if (trigger) trigger.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
+  }
 
   /* CART STATE */
   function getCart(){try{return JSON.parse(localStorage.getItem('twCart')||'[]');}catch(e){return[];}}
@@ -609,6 +633,8 @@
       var img = div.querySelector('.cart-item-img');
       img.style.background = bg;
       img.textContent = em;
+      img.setAttribute('role', 'img');
+      img.setAttribute('aria-label', item.name + ' preview');
       div.querySelector('.cart-item-cat').textContent = item.cat;
       div.querySelector('.cart-item-name').textContent = item.name;
       div.querySelector('.cart-item-unit').textContent = '$' + item.price.toFixed(2) + ' each';
@@ -751,6 +777,7 @@
   function validateField(el, type) {
     var val = el.value.trim();
     el.classList.remove('error','valid');
+    el.removeAttribute('aria-invalid');
     var ok = false;
     if (type === 'text') ok = val.length >= 2;
     else if (type === 'email') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
@@ -759,6 +786,20 @@
     else if (type === 'expiry') ok = /^\d{2}\s*\/\s*\d{2}$/.test(val);
     else if (type === 'cvv') ok = /^\d{3,4}$/.test(val);
     el.classList.add(ok ? 'valid' : 'error');
+    if (!ok) el.setAttribute('aria-invalid', 'true');
+    var err = document.getElementById(el.id + 'Error');
+    if (err) {
+      var msg = '';
+      if (!ok && val) {
+        if (type === 'email') msg = 'Enter a valid email address.';
+        else if (type === 'zip') msg = 'Enter a valid ZIP or postal code.';
+        else if (type === 'card') msg = 'Enter a valid card number.';
+        else if (type === 'expiry') msg = 'Use format MM / YY.';
+        else if (type === 'cvv') msg = 'Enter a valid CVV.';
+        else msg = 'Please enter at least 2 characters.';
+      }
+      err.textContent = msg;
+    }
     return ok;
   }
 
@@ -786,6 +827,7 @@
     var btn = document.querySelector('.submit-btn');
     btn.textContent = '⏳ Processing…';
     btn.disabled = true;
+    btn.setAttribute('aria-busy', 'true');
 
     setTimeout(function() {
       var total = document.getElementById('summaryTotal').textContent;
@@ -802,6 +844,7 @@
       document.getElementById('successModal').classList.add('open');
       localStorage.removeItem('twCart');
       updateBadge();
+      btn.removeAttribute('aria-busy');
     }, 1800);
   }
 

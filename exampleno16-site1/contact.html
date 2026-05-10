@@ -17,6 +17,7 @@
     .card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:18px}
     label{display:block;margin-bottom:6px;color:#ffb38d;font-size:.86rem} input,textarea{width:100%;padding:11px 12px;background:#111;border:1px solid var(--border);border-radius:8px;color:#fff;margin-bottom:10px}
     textarea{min-height:120px;resize:vertical} button{background:linear-gradient(135deg,var(--fire),#c93a00);border:none;color:#fff;padding:11px 14px;border-radius:8px;font-weight:700;cursor:pointer}
+    button:focus-visible,input:focus-visible,textarea:focus-visible,a:focus-visible{outline:2px solid #ff9b5b;outline-offset:2px}
     .meta p{color:var(--muted);line-height:1.75;font-size:.94rem;margin-bottom:10px}
     @media(max-width:860px){.grid{grid-template-columns:1fr}}
   </style>
@@ -27,11 +28,11 @@
     <div class="head"><a class="logo" href="index.html">TWO <span>WHEEL</span></a><nav class="nav"><a href="index.html">Home</a><a href="shop.html">Shop</a><a href="contact.html" class="active">Contact</a><a href="faq.html">FAQ</a></nav></div>
     <section class="hero"><h1>Contact Us</h1><p class="lead">Our team is here to help with orders, product questions, shipping, and returns.</p></section>
     <section class="grid">
-      <article class="card"><label for="name">Name</label><input id="name" type="text" placeholder="Your name"><label for="email">Email</label><input id="email" type="email" placeholder="you@example.com"><label for="topic">Topic</label><input id="topic" type="text" placeholder="Order help, sizing, returns..."><label for="message">Message</label><textarea id="message" placeholder="How can we help?"></textarea><button onclick="sendMsg()">Send Message</button><p id="sent" style="color:#87f5a8;font-size:.9rem;margin-top:10px;"></p></article>
+      <article class="card"><label for="name">Name</label><input id="name" type="text" placeholder="Your name" required><label for="email">Email</label><input id="email" type="email" placeholder="you@example.com" required><label for="topic">Topic</label><input id="topic" type="text" placeholder="Order help, sizing, returns..." required><label for="message">Message</label><textarea id="message" placeholder="How can we help?" required></textarea><button id="sendBtn" type="button">Send Message</button><p id="sent" role="status" aria-live="polite" style="color:#87f5a8;font-size:.9rem;margin-top:10px;"></p></article>
       <aside class="card meta"><p><strong>Support Hours</strong><br>Monday–Friday · 9:00 AM–6:00 PM CST</p><p><strong>Email</strong><br>support@twowheel.example</p><p><strong>Response Time</strong><br>Usually within 1 business day.</p><p><strong>For order updates</strong><br>Use our <a href="order-tracking.html" style="color:var(--fire);text-decoration:none;">Order Tracking</a> page.</p></aside>
     </section>
   </main>
-  <script>function sendMsg(){document.getElementById('sent').textContent='Thanks! Your message was sent successfully.';}</script>
+  <script>function sendMsg(){document.getElementById('sent').textContent='Thanks! Your message was sent successfully.';}document.getElementById('sendBtn').addEventListener('click',sendMsg);</script>
   <script src="tw-luxury.js" defer></script>
 </body>
 </html>
