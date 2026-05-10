@@ -858,6 +858,9 @@
       .newsletter-form { flex-direction:column; border-radius:6px; }
       .newsletter-submit { border-radius:0 0 6px 6px; }
     }
+    @media (max-width:420px) {
+      .arrivals-grid, .best-grid, .categories-grid { grid-template-columns:1fr; }
+    }
   </style>
   <link rel="stylesheet" href="tw-luxury.css">
 </head>
@@ -948,7 +951,7 @@
 <!-- Mobile Overlay -->
 <div class="mob-overlay" id="mobOverlay" onclick="toggleMenu()"></div>
 <div class="mob-menu" id="mobMenu">
-  <button class="mob-close" onclick="toggleMenu()" aria-label="Close">✕</button>
+      <button class="mob-close" onclick="toggleMenu()" aria-label="Close navigation menu">✕</button>
   <a href="index.html">Home</a>
   <a href="shop.html">Shop All</a>
   <a href="shop.html?cat=cologne">Cologne</a>
@@ -995,7 +998,7 @@
         🛒 Cart
         <span class="cart-badge" id="cartBadge">0</span>
       </button>
-      <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+      <button class="hamburger" onclick="toggleMenu()" aria-label="Open navigation menu" aria-controls="mobMenu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -1720,7 +1723,7 @@
     <h2 class="newsletter-title reveal">JOIN THE <span>RIDE</span></h2>
     <p class="newsletter-desc reveal">Get early access to new drops, exclusive promo codes, and rider-only offers straight to your inbox.</p>
     <div class="newsletter-form reveal">
-      <input type="email" class="newsletter-input" placeholder="your@email.com">
+      <input type="email" class="newsletter-input" placeholder="your@email.com" aria-label="Email address">
       <button class="newsletter-submit" onclick="newsletterSignup(this)">Subscribe</button>
     </div>
     <p class="newsletter-note reveal">No spam. Unsubscribe any time. We ride clean.</p>
@@ -1734,10 +1737,10 @@
       <span class="footer-brand-name">TWO <span>WHEEL</span></span>
       <p>Cologne, clothing, and accessories for riders who refuse to settle. Born on the road. Made for the open highway.</p>
       <div class="footer-social">
-        <a href="#" class="social-link" title="Instagram">📸</a>
-        <a href="#" class="social-link" title="TikTok">🎵</a>
-        <a href="#" class="social-link" title="YouTube">▶️</a>
-        <a href="#" class="social-link" title="Facebook">👥</a>
+        <a href="https://instagram.com" class="social-link" title="Instagram" target="_blank" rel="noopener noreferrer">📸</a>
+        <a href="https://tiktok.com" class="social-link" title="TikTok" target="_blank" rel="noopener noreferrer">🎵</a>
+        <a href="https://youtube.com" class="social-link" title="YouTube" target="_blank" rel="noopener noreferrer">▶️</a>
+        <a href="https://facebook.com" class="social-link" title="Facebook" target="_blank" rel="noopener noreferrer">👥</a>
       </div>
     </div>
     <div class="footer-col">
@@ -1813,8 +1816,12 @@
 
   /* ─── MOBILE MENU ─── */
   function toggleMenu() {
-    document.getElementById('mobMenu').classList.toggle('open');
-    document.getElementById('mobOverlay').classList.toggle('open');
+    const menu = document.getElementById('mobMenu');
+    const overlay = document.getElementById('mobOverlay');
+    const trigger = document.querySelector('.hamburger');
+    menu.classList.toggle('open');
+    overlay.classList.toggle('open');
+    if (trigger) trigger.setAttribute('aria-expanded', menu.classList.contains('open') ? 'true' : 'false');
   }
 
   /* ─── CART (localStorage) ─── */
