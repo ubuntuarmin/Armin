@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Pressure Washing | Teen-Run Pressure Washing, Window Washing & Trash Can Cleaning</title>
+  <meta name="description" content="Apex Pressure Washing is a teen-run exterior cleaning company offering pressure washing, window washing, and trash can cleaning with fair, competitive pricing. Call or text 678-394-1282 to book." />
+  <meta name="keywords" content="pressure washing, window washing, trash can cleaning, power washing, exterior cleaning, fair pricing, teen-run business" />
+  <style>
+    :root {
+      --bg: #07111f;
+      --bg-alt: #0c1b31;
+      --panel: rgba(9, 22, 40, 0.82);
+      --line: rgba(160, 214, 255, 0.18);
+      --text: #eef7ff;
+      --muted: #b8cce0;
+      --accent: #69d3ff;
+      --accent-2: #1ea7ff;
+      --accent-3: #8cf0ff;
+      --gold: #ffd166;
+      --success: #95ffbf;
+      --shadow: 0 30px 80px rgba(0, 0, 0, 0.35);
+      --radius: 24px;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(30, 167, 255, 0.18), transparent 34%),
+        radial-gradient(circle at 85% 15%, rgba(140, 240, 255, 0.12), transparent 30%),
+        linear-gradient(180deg, #06101d 0%, #0a1830 36%, #07111f 100%);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .water-overlay,
+    .grid-overlay {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    .water-overlay {
+      background:
+        radial-gradient(circle at 20% 20%, rgba(105, 211, 255, 0.12), transparent 18%),
+        radial-gradient(circle at 80% 0%, rgba(30, 167, 255, 0.14), transparent 22%),
+        radial-gradient(circle at 50% 80%, rgba(140, 240, 255, 0.08), transparent 26%);
+      filter: blur(10px);
+      animation: drift 16s ease-in-out infinite alternate;
+    }
+
+    .grid-overlay {
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(circle at center, black 45%, transparent 100%);
+      opacity: 0.35;
+    }
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(18px);
+      background: rgba(5, 13, 24, 0.78);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-inner,
+    .container {
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
+
+    .nav-inner {
+      min-height: 78px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 10px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, rgba(140,240,255,0.28), rgba(30,167,255,0.18));
+      border: 1px solid rgba(140,240,255,0.25);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
+      font-size: 1.2rem;
+    }
+
+    .brand-copy strong {
+      display: block;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .brand-copy span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.77rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links a {
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      color: var(--muted);
+      font-size: 0.92rem;
+      transition: 0.25s ease;
+    }
+
+    .nav-links a:hover,
+    .nav-links a:focus-visible {
+      color: var(--text);
+      border-color: rgba(105,211,255,0.24);
+      background: rgba(255,255,255,0.03);
+      transform: translateY(-2px);
+    }
+
+    .nav-cta {
+      padding: 11px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+      color: #03111d;
+      box-shadow: 0 16px 30px rgba(30, 167, 255, 0.3);
+    }
+
+    .hero {
+      padding: 72px 0 34px;
+      min-height: calc(100vh - 78px);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow,
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(105,211,255,0.22);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent-3);
+      font-size: 0.77rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .hero-copy h1 {
+      font-size: clamp(2.8rem, 6vw, 5.9rem);
+      line-height: 0.96;
+      margin: 18px 0 18px;
+      letter-spacing: -0.04em;
+      max-width: 10ch;
+    }
+
+    .hero-copy h1 .accent { color: var(--accent-3); }
+    .hero-copy h1 .gold { color: var(--gold); }
+
+    .hero-copy .lead {
+      max-width: 640px;
+      color: var(--muted);
+      font-size: 1.08rem;
+      margin-bottom: 26px;
+    }
+
+    .hero-points {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 28px 0 30px;
+    }
+
+    .hero-point,
+    .stat-card,
+    .service-card,
+    .placeholder-card,
+    .pricing-card,
+    .reason-card,
+    .step,
+    .faq-item,
+    .final-card,
+    .audience-card,
+    .bundle-card,
+    .booking-card,
+    .trust-card,
+    .area-card,
+    .story-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+    }
+
+    .hero-point {
+      padding: 16px;
+      min-height: 100%;
+    }
+
+    .hero-point strong {
+      display: block;
+      font-size: 1.08rem;
+      margin-bottom: 4px;
+    }
+
+    .hero-point span { color: var(--muted); font-size: 0.92rem; }
+
+    .cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 16px 22px;
+      border-radius: 999px;
+      font-weight: 800;
+      transition: 0.25s ease;
+      border: 1px solid transparent;
+    }
+
+    .btn:hover,
+    .btn:focus-visible { transform: translateY(-3px); }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
+      color: #03111d;
+      box-shadow: 0 18px 32px rgba(30,167,255,0.35);
+    }
+
+    .btn-secondary {
+      border-color: rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.04);
+      color: var(--text);
+    }
+
+    .btn-gold {
+      background: linear-gradient(135deg, #ffd978, #ffbc42);
+      color: #211604;
+    }
+
+    .hero-visual {
+      position: relative;
+      min-height: 620px;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .visual-main,
+    .visual-subgrid > div,
+    .phone-bar {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .visual-main {
+      min-height: 360px;
+      padding: 28px;
+      border-radius: 32px;
+      background:
+        linear-gradient(160deg, rgba(105,211,255,0.2), rgba(7,17,31,0.45)),
+        linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02));
+      border: 1px solid rgba(140,240,255,0.22);
+      box-shadow: var(--shadow);
+    }
+
+    .water-rings {
+      position: absolute;
+      inset: auto auto -60px -30px;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      border: 1px solid rgba(140,240,255,0.18);
+      box-shadow:
+        0 0 0 28px rgba(140,240,255,0.05),
+        0 0 0 56px rgba(140,240,255,0.03),
+        0 0 0 84px rgba(140,240,255,0.02);
+    }
+
+    .visual-main::before,
+    .visual-subgrid > div::before,
+    .phone-bar::before,
+    .placeholder-card::before,
+    .final-card::before {
+      content: "";
+      position: absolute;
+      inset: -20% auto auto -30%;
+      width: 70%;
+      height: 150%;
+      background: linear-gradient(120deg, transparent 28%, rgba(255,255,255,0.15) 50%, transparent 72%);
+      transform: rotate(14deg);
+      animation: sheen 8s linear infinite;
+    }
+
+    .visual-main-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
+    }
+
+    .visual-label {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      background: rgba(4, 15, 29, 0.55);
+      width: fit-content;
+      color: var(--accent-3);
+      border: 1px solid rgba(140,240,255,0.18);
+    }
+
+    .visual-main h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      max-width: 9ch;
+      line-height: 1.02;
+      margin-top: auto;
+    }
+
+    .visual-main p {
+      max-width: 34ch;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .visual-subgrid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .visual-subgrid > div,
+    .phone-bar {
+      padding: 22px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      min-height: 150px;
+    }
+
+    .visual-subgrid strong,
+    .phone-bar strong { display: block; margin-bottom: 8px; font-size: 1.08rem; }
+    .visual-subgrid p,
+    .phone-bar p { color: var(--muted); font-size: 0.96rem; }
+
+    .phone-bar {
+      min-height: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .phone-bar .pill {
+      display: inline-flex;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(149,255,191,0.1);
+      border: 1px solid rgba(149,255,191,0.22);
+      color: var(--success);
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+    .section-block { padding: 38px 0; }
+    .section-head { margin-bottom: 22px; }
+
+    .section-head h2 {
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 1.02;
+      margin: 16px 0 12px;
+      letter-spacing: -0.03em;
+      max-width: 12ch;
+    }
+
+    .section-head p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.03rem;
+    }
+
+    .stats-grid,
+    .trust-grid,
+    .services-grid,
+    .placeholder-grid,
+    .reasons-grid,
+    .audience-grid,
+    .pricing-grid,
+    .bundle-grid,
+    .booking-grid,
+    .areas-grid,
+    .faq-grid {
+      display: grid;
+      gap: 18px;
+    }
+
+    .stats-grid { grid-template-columns: repeat(4, 1fr); }
+    .trust-grid { grid-template-columns: repeat(4, 1fr); }
+    .services-grid { grid-template-columns: repeat(3, 1fr); }
+    .placeholder-grid { grid-template-columns: repeat(3, 1fr); }
+    .reasons-grid { grid-template-columns: repeat(3, 1fr); }
+    .audience-grid { grid-template-columns: repeat(4, 1fr); }
+    .pricing-grid { grid-template-columns: repeat(3, 1fr); align-items: stretch; }
+    .bundle-grid { grid-template-columns: repeat(3, 1fr); }
+    .booking-grid { grid-template-columns: 1.1fr 0.9fr; }
+    .areas-grid { grid-template-columns: repeat(3, 1fr); }
+    .faq-grid { grid-template-columns: repeat(2, 1fr); }
+
+    .stat-card,
+    .trust-card,
+    .reason-card,
+    .audience-card,
+    .area-card { padding: 20px; }
+
+    .stat-card strong {
+      display: block;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--accent-3);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-card span,
+    .trust-card p,
+    .reason-card p,
+    .audience-card p,
+    .area-card p { color: var(--muted); }
+
+    .service-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -50px auto;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(105,211,255,0.18), transparent 70%);
+    }
+
+    .service-card .icon,
+    .reason-card .icon,
+    .audience-card .icon,
+    .trust-card .icon,
+    .area-card .icon {
+      width: 54px;
+      height: 54px;
+      display: grid;
+      place-items: center;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background: linear-gradient(135deg, rgba(140,240,255,0.2), rgba(30,167,255,0.12));
+      border: 1px solid rgba(140,240,255,0.22);
+      font-size: 1.5rem;
+    }
+
+    .service-card h3,
+    .reason-card h3,
+    .audience-card h3,
+    .bundle-card h3,
+    .booking-card h3,
+    .area-card h3,
+    .trust-card h3,
+    .story-card h3 {
+      font-size: 1.35rem;
+      margin-bottom: 10px;
+    }
+
+    .service-card p,
+    .bundle-card p,
+    .booking-card p,
+    .story-card p { color: var(--muted); }
+
+    .service-list,
+    .bundle-list,
+    .pricing-list,
+    .story-list,
+    .booking-list {
+      list-style: none;
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .service-list li,
+    .bundle-list li,
+    .pricing-list li,
+    .story-list li,
+    .booking-list li,
+    .faq-item p {
+      color: var(--muted);
+    }
+
+    .service-list li::before,
+    .bundle-list li::before,
+    .pricing-list li::before,
+    .story-list li::before,
+    .booking-list li::before {
+      content: "✓";
+      color: var(--success);
+      margin-right: 10px;
+      font-weight: 900;
+    }
+
+    .section-divider {
+      margin: 12px 0 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(105,211,255,0.35), transparent);
+    }
+
+    .placeholder-card {
+      min-height: 260px;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background:
+        linear-gradient(145deg, rgba(15,33,58,0.95), rgba(10,24,43,0.88)),
+        linear-gradient(0deg, rgba(255,255,255,0.02), rgba(255,255,255,0.02));
+      border-style: dashed;
+      border-width: 1px;
+      border-color: rgba(140,240,255,0.26);
+    }
+
+    .placeholder-card .placeholder-tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255,255,255,0.04);
+      color: var(--accent-3);
+      font-size: 0.76rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .placeholder-card strong {
+      font-size: 1.3rem;
+      max-width: 14ch;
+    }
+
+    .placeholder-card p { color: var(--muted); max-width: 28ch; }
+    .placeholder-card .mini-note { color: rgba(255,255,255,0.55); font-size: 0.86rem; }
+
+    .story-wrap {
+      display: grid;
+      grid-template-columns: 0.95fr 1.05fr;
+      gap: 24px;
+      align-items: center;
+    }
+
+    .story-card { padding: 28px; min-height: 100%; }
+
+    .story-card.big {
+      min-height: 460px;
+      position: relative;
+      overflow: hidden;
+      background:
+        linear-gradient(160deg, rgba(105,211,255,0.18), rgba(9,22,40,0.9)),
+        linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0));
+    }
+
+    .story-card.big::after {
+      content: "";
+      position: absolute;
+      inset: auto -40px -40px auto;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,209,102,0.18), transparent 68%);
+    }
+
+    .story-card.big .badge-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .story-card.big .badge-stack span {
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-3);
+      font-size: 0.82rem;
+    }
+
+    .pricing-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+    }
+
+    .pricing-card.featured {
+      border-color: rgba(255,209,102,0.28);
+      transform: translateY(-6px);
+      background:
+        linear-gradient(180deg, rgba(255,209,102,0.12), rgba(9,22,40,0.88));
+    }
+
+    .pricing-card .pricing-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .pricing-card .plan {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--accent-3);
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.11em;
+    }
+
+    .pricing-card .price {
+      font-size: clamp(2.5rem, 5vw, 3.6rem);
+      line-height: 1;
+      margin: 10px 0;
+      font-weight: 900;
+    }
+
+    .pricing-card .price small {
+      font-size: 1rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .pricing-card .save-note {
+      margin-top: auto;
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: rgba(149,255,191,0.08);
+      border: 1px solid rgba(149,255,191,0.16);
+      color: var(--success);
+      font-weight: 700;
+      font-size: 0.92rem;
+    }
+
+    .bundle-card,
+    .booking-card,
+    .final-card {
+      padding: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bundle-card .bundle-price,
+    .booking-card .booking-price {
+      display: block;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      margin: 14px 0 4px;
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .step {
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step .number {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      background: linear-gradient(135deg, rgba(255,209,102,0.18), rgba(30,167,255,0.12));
+      border: 1px solid rgba(255,209,102,0.18);
+      color: var(--gold);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .step p { color: var(--muted); }
+    .faq-item { padding: 22px; }
+    .faq-item h3 { font-size: 1.08rem; margin-bottom: 10px; }
+
+    .booking-card .micro {
+      display: inline-flex;
+      padding: 8px 12px;
+      border-radius: 999px;
+      margin-bottom: 12px;
+      background: rgba(255,209,102,0.08);
+      border: 1px solid rgba(255,209,102,0.16);
+      color: var(--gold);
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .booking-card .cta-row { margin-top: 20px; }
+
+    .final-card {
+      background:
+        linear-gradient(135deg, rgba(140,240,255,0.18), rgba(255,209,102,0.08), rgba(9,22,40,0.92));
+      border-color: rgba(140,240,255,0.24);
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+    }
+
+    .final-card h2 {
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 0.96;
+      max-width: 9ch;
+      margin: 14px 0 14px;
+    }
+
+    .final-card p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      margin-bottom: 24px;
+    }
+
+    .footer {
+      padding: 28px 0 54px;
+      color: rgba(255,255,255,0.55);
+      font-size: 0.92rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .reveal,
+    .stagger > * { opacity: 0; }
+
+    @keyframes drift {
+      from { transform: translate3d(-1%, -1%, 0) scale(1); }
+      to { transform: translate3d(1%, 1%, 0) scale(1.03); }
+    }
+
+    @keyframes sheen {
+      0% { transform: translateX(-120%) rotate(14deg); }
+      100% { transform: translateX(220%) rotate(14deg); }
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .story-wrap,
+      .booking-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .trust-grid,
+      .audience-grid,
+      .stats-grid,
+      .steps-grid,
+      .pricing-grid,
+      .bundle-grid,
+      .areas-grid,
+      .faq-grid,
+      .services-grid,
+      .reasons-grid,
+      .placeholder-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-visual { min-height: auto; }
+    }
+
+    @media (max-width: 760px) {
+      .nav-inner { align-items: flex-start; }
+      .nav-links { gap: 8px; }
+      .nav-links a { font-size: 0.84rem; padding: 8px 10px; }
+      .nav-cta { width: 100%; justify-content: center; }
+      .hero { padding-top: 42px; }
+      .hero-points,
+      .trust-grid,
+      .audience-grid,
+      .stats-grid,
+      .steps-grid,
+      .pricing-grid,
+      .bundle-grid,
+      .areas-grid,
+      .faq-grid,
+      .services-grid,
+      .reasons-grid,
+      .placeholder-grid,
+      .visual-subgrid {
+        grid-template-columns: 1fr;
+      }
+
+      .phone-bar { flex-direction: column; align-items: flex-start; }
+      .cta-row { width: 100%; }
+      .cta-row .btn { width: 100%; }
+      .hero-copy h1,
+      .section-head h2,
+      .final-card h2 { max-width: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+      .reveal, .stagger > * { opacity: 1 !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="water-overlay" aria-hidden="true"></div>
+  <div class="grid-overlay" aria-hidden="true"></div>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">💧</div>
+        <div class="brand-copy">
+          <strong>Apex Pressure Washing</strong>
+          <span>Teen-run exterior cleaning</span>
+        </div>
+      </div>
+      <div class="nav-links">
+        <a href="#services">Services</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#bundles">Bundles</a>
+        <a href="#faq">FAQ</a>
+        <a class="nav-cta" href="tel:6783941282">Call / Text 678-394-1282</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow reveal">Teenagers. Fair pricing. Serious results.</div>
+          <h1 class="reveal">Make your home look <span class="accent">fresh, bright,</span> and <span class="gold">taken care of.</span></h1>
+          <p class="lead reveal">Apex Pressure Washing is a teen-run pressure washing business built for homeowners who want clean curb appeal without overpriced service calls. We offer <strong>window washing</strong>, <strong>pressure washing</strong>, and <strong>trash can cleaning</strong> with competitive pricing, fast communication, and simple booking by phone or text.</p>
+          <div class="cta-row reveal">
+            <a class="btn btn-primary" href="tel:6783941282">📞 Call 678-394-1282</a>
+            <a class="btn btn-secondary" href="sms:6783941282">💬 Text to Book</a>
+            <a class="btn btn-gold" href="#pricing">See Fair Pricing</a>
+          </div>
+          <div class="hero-points stagger">
+            <div class="hero-point">
+              <strong>Fast replies</strong>
+              <span>Quick scheduling by text so it is easy to get on the calendar.</span>
+            </div>
+            <div class="hero-point">
+              <strong>Teen-run hustle</strong>
+              <span>Motivated young operators focused on detail, effort, and strong service.</span>
+            </div>
+            <div class="hero-point">
+              <strong>Competitive quotes</strong>
+              <span>Clear starting prices, bundle deals, and no bloated upsell pressure.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="visual-main">
+            <div class="water-rings" aria-hidden="true"></div>
+            <div class="visual-main-content">
+              <span class="visual-label">Hero image placeholder</span>
+              <div>
+                <h2>Insert your best before-and-after driveway or house wash photo here.</h2>
+                <p>Use a strong transformation image with bright concrete, sparkling glass, and the Apex crew in action to instantly sell trust.</p>
+              </div>
+            </div>
+          </div>
+          <div class="visual-subgrid stagger">
+            <div>
+              <strong>Window shine placeholder</strong>
+              <p>Add a close-up of crystal-clear glass, detailed trim, and reflected sky for a premium feel.</p>
+            </div>
+            <div>
+              <strong>Trash can clean-out placeholder</strong>
+              <p>Show the inside wash, deodorizing process, and the final clean finish that homeowners notice immediately.</p>
+            </div>
+          </div>
+          <div class="phone-bar reveal">
+            <div>
+              <strong>Want the fastest booking option?</strong>
+              <p>Text your address, your service list, and a photo if you have one. We can reply with availability fast.</p>
+            </div>
+            <span class="pill">Book now · 678-394-1282</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="stats-grid stagger">
+          <div class="stat-card"><strong>3</strong><span>Core services built around what homeowners actually need most.</span></div>
+          <div class="stat-card"><strong>1</strong><span>Simple number to remember for every estimate, question, and booking: 678-394-1282.</span></div>
+          <div class="stat-card"><strong>Fair</strong><span>Starting prices designed to feel approachable and competitive, not inflated.</span></div>
+          <div class="stat-card"><strong>Clean</strong><span>Focused on immediate visible improvement that helps your property look cared for.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="services">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">What we clean</div>
+          <h2>Three services that quickly raise curb appeal and save you time.</h2>
+          <p>Every offer is designed around visible results and easy decision-making. Instead of forcing complicated packages, Apex Pressure Washing keeps the service menu clear, practical, and sales-friendly so homeowners can say yes faster.</p>
+        </div>
+        <div class="services-grid stagger">
+          <article class="service-card">
+            <div class="icon" aria-hidden="true">🪟</div>
+            <h3>Window Washing</h3>
+            <p>Bright, streak-free glass makes the whole house feel cleaner and more expensive. This is the quickest way to upgrade the look of your home from the street and from inside.</p>
+            <ul class="service-list">
+              <li>Exterior glass cleaning for better shine and clarity</li>
+              <li>Frames, sills, and touch-up detailing for a cleaner final look</li>
+              <li>Perfect add-on to pressure washing for a full curb-appeal reset</li>
+              <li>Great for homeowners, landlords, listings, and move-ins</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="icon" aria-hidden="true">🚿</div>
+            <h3>Pressure Washing</h3>
+            <p>Driveways, sidewalks, patios, and exterior surfaces collect dirt, algae, and stains fast. A deep wash makes the property feel newer, cleaner, and better maintained without a major expense.</p>
+            <ul class="service-list">
+              <li>Driveways, walkways, patios, porches, and outdoor living zones</li>
+              <li>Instant visual improvement for guests, neighbors, and potential buyers</li>
+              <li>Ideal before events, summer hosting, or listing photos</li>
+              <li>Can be bundled with window washing for stronger overall impact</li>
+            </ul>
+          </article>
+
+          <article class="service-card">
+            <div class="icon" aria-hidden="true">🗑️</div>
+            <h3>Trash Can Cleaning</h3>
+            <p>This service solves one of the most ignored cleaning problems around the house. Clean cans smell better, look better, and stop bringing grime right back to your driveway or garage.</p>
+            <ul class="service-list">
+              <li>Interior rinse and deodorizing for a fresher can</li>
+              <li>Exterior wash to remove residue, stains, and buildup</li>
+              <li>Easy low-cost add-on that boosts order value without feeling pushy</li>
+              <li>Smart recurring service for busy households and rentals</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Why homeowners say yes</div>
+          <h2>Sales-focused reasons this offer works.</h2>
+          <p>The goal is simple: keep the offer affordable enough to feel easy, but professional enough to feel worth it. That combination is what gets more bookings.</p>
+        </div>
+        <div class="reasons-grid stagger">
+          <div class="reason-card">
+            <div class="icon" aria-hidden="true">💸</div>
+            <h3>Fair pricing gets faster decisions</h3>
+            <p>People do not want to wait days for a huge quote just to clean a driveway or windows. Clear starting rates remove friction and make it easy to move forward.</p>
+          </div>
+          <div class="reason-card">
+            <div class="icon" aria-hidden="true">⚡</div>
+            <h3>Visible results feel worth paying for</h3>
+            <p>When the difference is obvious right away, the service feels valuable. Clean concrete, brighter windows, and fresher bins create an instant payoff.</p>
+          </div>
+          <div class="reason-card">
+            <div class="icon" aria-hidden="true">🤝</div>
+            <h3>Teen-run service is relatable and memorable</h3>
+            <p>Customers like supporting hardworking teenagers, especially when the communication is respectful, the work is solid, and the pricing feels honest.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Image placeholders</div>
+          <h2>Fill this page with real transformations to multiply trust.</h2>
+          <p>This landing page is built to sell visually. Replace each placeholder with your best work photos so visitors can immediately picture their own house getting the same result.</p>
+        </div>
+        <div class="placeholder-grid stagger">
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Before / after</span>
+            <strong>Driveway transformation placeholder</strong>
+            <p>Use a dramatic split image with one side stained and the other freshly washed.</p>
+            <span class="mini-note">Best for selling pressure washing fast.</span>
+          </article>
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Team photo</span>
+            <strong>Teen crew at work placeholder</strong>
+            <p>Add a confident branded shot of the crew with hoses, uniforms, and a clean house in frame.</p>
+            <span class="mini-note">Builds trust and makes the business feel real.</span>
+          </article>
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Close-up detail</span>
+            <strong>Crystal-clear window placeholder</strong>
+            <p>Show reflective glass and crisp trim to make the service look premium, not basic.</p>
+            <span class="mini-note">Great for higher-ticket window jobs.</span>
+          </article>
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Problem solved</span>
+            <strong>Trash can clean-out placeholder</strong>
+            <p>Highlight the inside wash and odor-removal result so customers understand the value immediately.</p>
+            <span class="mini-note">Perfect add-on upsell visual.</span>
+          </article>
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Lifestyle</span>
+            <strong>Fresh patio / hosting area placeholder</strong>
+            <p>Use an outdoor living scene that sells the feeling of a cleaner, more inviting home.</p>
+            <span class="mini-note">Helps buyers connect service to daily life.</span>
+          </article>
+          <article class="placeholder-card">
+            <span class="placeholder-tag">Social proof</span>
+            <strong>Happy homeowner reaction placeholder</strong>
+            <p>Add a photo of the finished job with the owner standing nearby for a local, trustworthy finish.</p>
+            <span class="mini-note">Makes the result feel personal and believable.</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container story-wrap">
+        <div class="story-card big reveal">
+          <div class="section-eyebrow">About Apex</div>
+          <h3>Teenagers building a real business by doing honest work well.</h3>
+          <p>Apex Pressure Washing is positioned around one powerful idea: homeowners get reliable exterior cleaning at a fair rate, and they get to support motivated teens who are serious about service. That story is memorable, and memorable businesses get more referrals.</p>
+          <div class="badge-stack">
+            <span>Teen-run</span>
+            <span>Competitive pricing</span>
+            <span>Respectful communication</span>
+            <span>Visible results</span>
+          </div>
+        </div>
+        <div class="story-card reveal">
+          <div class="section-eyebrow">Why that matters</div>
+          <h3>This brand angle helps sales without needing gimmicks.</h3>
+          <ul class="story-list">
+            <li>People want to support young business owners when the offer feels real and useful.</li>
+            <li>Fair prices reduce hesitation and make word-of-mouth easier.</li>
+            <li>Simple service packages stop customers from feeling overwhelmed.</li>
+            <li>Strong before-and-after photos can do most of the selling on their own.</li>
+            <li>Quick text booking keeps the process modern and convenient.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="pricing">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Fair pricing</div>
+          <h2>Competitive starting prices built to convert.</h2>
+          <p>These numbers are set up to feel approachable while still letting you upsell bundles. Starting prices work especially well on a landing page because they answer the biggest question early: “Is this affordable?”</p>
+        </div>
+        <div class="pricing-grid stagger">
+          <article class="pricing-card">
+            <div class="pricing-top">
+              <div>
+                <span class="plan">Window Washing</span>
+                <div class="price">$89 <small>starting</small></div>
+              </div>
+            </div>
+            <p>A strong entry-point service for homeowners who want the house to look brighter without booking a full exterior wash.</p>
+            <ul class="pricing-list">
+              <li>Perfect for front-facing curb-appeal upgrades</li>
+              <li>Easy add-on for listings, events, and seasonal cleanups</li>
+              <li>Simple service that feels premium when the glass sparkles</li>
+            </ul>
+            <div class="save-note">Easy “yes” service for quick bookings.</div>
+          </article>
+
+          <article class="pricing-card featured">
+            <div class="pricing-top">
+              <div>
+                <span class="plan">Pressure Washing</span>
+                <div class="price">$129 <small>starting</small></div>
+              </div>
+            </div>
+            <p>The core offer for visible transformation. Great for dirty driveways, walkways, patios, and other exterior surfaces that make a home look neglected.</p>
+            <ul class="pricing-list">
+              <li>High visual impact that helps justify the spend</li>
+              <li>Ideal anchor service for larger bundle sales</li>
+              <li>One of the easiest services to market with before-and-after photos</li>
+            </ul>
+            <div class="save-note">Best seller because the difference is obvious right away.</div>
+          </article>
+
+          <article class="pricing-card">
+            <div class="pricing-top">
+              <div>
+                <span class="plan">Trash Can Cleaning</span>
+                <div class="price">$35 <small>starting</small></div>
+              </div>
+            </div>
+            <p>A low-cost add-on that increases order value and solves a problem homeowners usually do not want to deal with themselves.</p>
+            <ul class="pricing-list">
+              <li>Easy to add onto almost any visit</li>
+              <li>Makes garages and side yards feel cleaner overall</li>
+              <li>Strong repeat-service potential for recurring customers</li>
+            </ul>
+            <div class="save-note">Great small-ticket upsell that feels practical.</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="bundles">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Bundle deals</div>
+          <h2>Packages designed to increase average order value.</h2>
+          <p>Bundles make selling easier because they frame the offer around outcomes instead of individual line items. Customers spend more when the package sounds complete.</p>
+        </div>
+        <div class="bundle-grid stagger">
+          <article class="bundle-card">
+            <h3>Quick Refresh</h3>
+            <span class="bundle-price">$119</span>
+            <p>For homeowners who want a small upgrade that still makes the property feel cleaner and more put together.</p>
+            <ul class="bundle-list">
+              <li>Front walkway or small pressure wash zone</li>
+              <li>One trash can cleaning</li>
+              <li>Fast and budget-friendly first-time offer</li>
+            </ul>
+          </article>
+          <article class="bundle-card">
+            <h3>Curb Appeal Combo</h3>
+            <span class="bundle-price">$199</span>
+            <p>The ideal mid-tier package for visible transformation without stepping into a big full-property job.</p>
+            <ul class="bundle-list">
+              <li>Pressure washing for a key exterior zone</li>
+              <li>Front-facing window washing</li>
+              <li>Strong value and strong visual payoff</li>
+            </ul>
+          </article>
+          <article class="bundle-card">
+            <h3>Full Exterior Reset</h3>
+            <span class="bundle-price">$279</span>
+            <p>The package that feels complete. Perfect for homeowners who want the house to look noticeably cleaner in one visit.</p>
+            <ul class="bundle-list">
+              <li>Pressure washing for major visible surfaces</li>
+              <li>Window washing</li>
+              <li>Two trash cans cleaned and deodorized</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Who this is perfect for</div>
+          <h2>Customers who are most likely to book quickly.</h2>
+          <p>Use this section to help visitors self-identify. When people see themselves in the page, they are more likely to convert.</p>
+        </div>
+        <div class="audience-grid stagger">
+          <article class="audience-card">
+            <div class="icon" aria-hidden="true">🏠</div>
+            <h3>Homeowners</h3>
+            <p>Ideal for routine curb appeal, seasonal cleaning, or making the property look better with minimal hassle.</p>
+          </article>
+          <article class="audience-card">
+            <div class="icon" aria-hidden="true">📦</div>
+            <h3>Move-ins & move-outs</h3>
+            <p>Great for people who want a cleaner exterior and fresher bins before or after a transition.</p>
+          </article>
+          <article class="audience-card">
+            <div class="icon" aria-hidden="true">📸</div>
+            <h3>Listings & showings</h3>
+            <p>Pressure washing and window shine help listing photos look cleaner and more polished fast.</p>
+          </article>
+          <article class="audience-card">
+            <div class="icon" aria-hidden="true">🎉</div>
+            <h3>Events & hosting</h3>
+            <p>Perfect before parties, family gatherings, cookouts, and weekends when the exterior needs to look sharp.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Simple process</div>
+          <h2>How booking works from first text to finished job.</h2>
+          <p>The easier the process sounds, the more likely people are to act now instead of “thinking about it later.”</p>
+        </div>
+        <div class="steps-grid stagger">
+          <article class="step">
+            <div class="number">01</div>
+            <h3>Text or call</h3>
+            <p>Reach out at 678-394-1282 with your address and the service you want.</p>
+          </article>
+          <article class="step">
+            <div class="number">02</div>
+            <h3>Get a fast quote</h3>
+            <p>Share a photo if you have one so the estimate and scope can be clarified quickly.</p>
+          </article>
+          <article class="step">
+            <div class="number">03</div>
+            <h3>Pick your service or bundle</h3>
+            <p>Choose a starting service or upgrade to a combo that gives you more value.</p>
+          </article>
+          <article class="step">
+            <div class="number">04</div>
+            <h3>Enjoy the clean result</h3>
+            <p>Get the visual upgrade, cleaner surfaces, and a home that looks more maintained.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Trust builders</div>
+          <h2>Messaging that removes hesitation.</h2>
+          <p>This section makes the business feel organized, professional, and easy to trust even before the customer reaches out.</p>
+        </div>
+        <div class="trust-grid stagger">
+          <article class="trust-card">
+            <div class="icon" aria-hidden="true">📱</div>
+            <h3>Easy communication</h3>
+            <p>Call or text. No complicated inquiry forms required for basic scheduling.</p>
+          </article>
+          <article class="trust-card">
+            <div class="icon" aria-hidden="true">🧼</div>
+            <h3>Detail-focused work</h3>
+            <p>The service promise is clean, respectful, and built around noticeable visible improvement.</p>
+          </article>
+          <article class="trust-card">
+            <div class="icon" aria-hidden="true">💬</div>
+            <h3>Honest pricing approach</h3>
+            <p>Competitive starting prices keep the page approachable instead of intimidating.</p>
+          </article>
+          <article class="trust-card">
+            <div class="icon" aria-hidden="true">🚀</div>
+            <h3>Built for referrals</h3>
+            <p>Memorable branding, a teen-run story, and clear results make word-of-mouth easier.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container booking-grid">
+        <article class="booking-card reveal">
+          <span class="micro">High-conversion CTA</span>
+          <h3>Texting wins bookings because it feels easy.</h3>
+          <p>Some people will call, but a lot of busy homeowners prefer a quick text. That is why this page pushes the phone number often and makes booking feel low effort.</p>
+          <ul class="booking-list">
+            <li>Text your address</li>
+            <li>Text which service you want</li>
+            <li>Text a photo if you want a faster quote</li>
+            <li>Get availability and pricing without a long back-and-forth</li>
+          </ul>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="sms:6783941282">💬 Text 678-394-1282</a>
+            <a class="btn btn-secondary" href="tel:6783941282">📞 Call Now</a>
+          </div>
+        </article>
+        <article class="booking-card reveal">
+          <span class="micro">Suggested upsell</span>
+          <h3>Promote recurring trash can cleaning.</h3>
+          <span class="booking-price">From $25 recurring</span>
+          <p>Once customers try trash can cleaning, many will happily repeat it. Position it as a small convenience upgrade that keeps the home feeling fresher month after month.</p>
+          <div class="section-divider"></div>
+          <div class="cta-row" style="margin-top:20px;">
+            <a class="btn btn-gold" href="#faq">See common questions</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">Service area copy</div>
+          <h2>Use local language to sound close, convenient, and available.</h2>
+          <p>If you know your exact neighborhoods, drop them in here. Local familiarity makes a small business feel more trustworthy and more likely to respond quickly.</p>
+        </div>
+        <div class="areas-grid stagger">
+          <article class="area-card">
+            <div class="icon" aria-hidden="true">📍</div>
+            <h3>Neighborhood homes</h3>
+            <p>Perfect for families who want the exterior to look cleaner without paying premium-company pricing.</p>
+          </article>
+          <article class="area-card">
+            <div class="icon" aria-hidden="true">🏘️</div>
+            <h3>Rental properties</h3>
+            <p>Useful for landlords and hosts who need a stronger first impression and cleaner exterior surfaces.</p>
+          </article>
+          <article class="area-card">
+            <div class="icon" aria-hidden="true">🌤️</div>
+            <h3>Seasonal cleanups</h3>
+            <p>Great before summer, after pollen buildup, or anytime the driveway and windows start looking dull.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block" id="faq">
+      <div class="container">
+        <div class="section-head reveal">
+          <div class="section-eyebrow">FAQ</div>
+          <h2>Answers that help close the sale.</h2>
+          <p>Strong FAQs reduce objections and save you from repeating the same messages over text.</p>
+        </div>
+        <div class="faq-grid stagger">
+          <article class="faq-item">
+            <h3>Do I need to call, or can I just text?</h3>
+            <p>You can absolutely text. For many customers that is the fastest way to book. Send your address, the service you want, and a photo if possible.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Do you only do full packages?</h3>
+            <p>No. You can book a single service or choose a bundle if you want more value in one visit.</p>
+          </article>
+          <article class="faq-item">
+            <h3>What service gives the biggest visual difference?</h3>
+            <p>Pressure washing usually creates the most dramatic before-and-after result. Window washing is also a fast way to make the property feel brighter and better kept.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Why include trash can cleaning?</h3>
+            <p>Because it solves a messy problem people often ignore. It is affordable, practical, and easy to add onto another service.</p>
+          </article>
+          <article class="faq-item">
+            <h3>How do your prices stay competitive?</h3>
+            <p>Apex Pressure Washing keeps the service list focused and the booking process simple, which helps keep pricing fair and approachable.</p>
+          </article>
+          <article class="faq-item">
+            <h3>What is the best way to get a quote fast?</h3>
+            <p>Text 678-394-1282 with your address, service list, and a quick photo. That gives enough context to respond faster.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-block">
+      <div class="container">
+        <article class="final-card reveal">
+          <div class="section-eyebrow">Ready to book?</div>
+          <h2>Call or text 678-394-1282 and get your clean started.</h2>
+          <p>If you want a house that looks brighter, cleaner, and more cared for without paying inflated rates, Apex Pressure Washing gives you the simple offer people actually want: clear services, fair prices, visible results, and fast communication from hardworking teenagers ready to earn your business.</p>
+          <div class="cta-row">
+            <a class="btn btn-primary" href="tel:6783941282">📞 Call 678-394-1282</a>
+            <a class="btn btn-secondary" href="sms:6783941282">💬 Text to Book</a>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-row">
+      <div>Apex Pressure Washing · Window Washing · Pressure Washing · Trash Can Cleaning</div>
+      <div>Teen-run exterior cleaning · Call / Text 678-394-1282</div>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script>
+    (function () {
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const revealItems = document.querySelectorAll('.reveal');
+      const staggerGroups = document.querySelectorAll('.stagger');
+
+      if (!prefersReducedMotion && window.gsap && window.ScrollTrigger) {
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from('.nav', { y: -80, opacity: 0, duration: 0.9, ease: 'power2.out' });
+        gsap.from('.hero-copy .eyebrow', { y: 28, opacity: 0, duration: 0.8, delay: 0.1, ease: 'power2.out' });
+        gsap.from('.hero-copy h1', { y: 36, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out' });
+        gsap.from('.hero-copy .lead', { y: 28, opacity: 0, duration: 0.9, delay: 0.35, ease: 'power2.out' });
+        gsap.from('.cta-row .btn', { y: 20, opacity: 0, duration: 0.65, stagger: 0.12, delay: 0.45, ease: 'power2.out' });
+        gsap.from('.hero-point', { y: 30, opacity: 0, duration: 0.7, stagger: 0.12, delay: 0.65, ease: 'power2.out' });
+        gsap.from('.hero-visual > *', { x: 30, opacity: 0, duration: 0.9, stagger: 0.14, delay: 0.25, ease: 'power3.out' });
+
+        revealItems.forEach((item) => {
+          gsap.fromTo(item,
+            { y: 34, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.9,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: item,
+                start: 'top 82%',
+                once: true
+              }
+            }
+          );
+        });
+
+        staggerGroups.forEach((group) => {
+          const children = Array.from(group.children);
+          gsap.fromTo(children,
+            { y: 34, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.75,
+              stagger: 0.1,
+              ease: 'power2.out',
+              scrollTrigger: {
+                trigger: group,
+                start: 'top 80%',
+                once: true
+              }
+            }
+          );
+        });
+
+        gsap.to('.water-overlay', {
+          yPercent: -4,
+          xPercent: 2,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: document.body,
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 1.2
+          }
+        });
+
+        gsap.utils.toArray('.placeholder-card, .pricing-card, .bundle-card, .step').forEach((card, index) => {
+          gsap.to(card, {
+            y: index % 2 === 0 ? -10 : -16,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: card,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1.4
+            }
+          });
+        });
+      } else {
+        revealItems.forEach((item) => { item.style.opacity = '1'; });
+        staggerGroups.forEach((group) => {
+          Array.from(group.children).forEach((child) => { child.style.opacity = '1'; });
+        });
+      }
+    }());
+  </script>
+</body>
+</html>
