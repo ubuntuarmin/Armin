@@ -151,9 +151,19 @@
       padding: 11px 18px;
       border-radius: 999px;
       font-weight: 700;
+      box-shadow: 0 16px 30px rgba(30, 167, 255, 0.3);
+    }
+
+    .nav-cta-call {
       background: linear-gradient(135deg, var(--accent-3), var(--accent-2));
       color: #03111d;
-      box-shadow: 0 16px 30px rgba(30, 167, 255, 0.3);
+    }
+
+    .nav-cta-text {
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      border-color: rgba(255,255,255,0.14);
+      box-shadow: none;
     }
 
     .hero {
@@ -898,7 +908,8 @@
         <a href="#pricing">Pricing</a>
         <a href="#bundles">Bundles</a>
         <a href="#faq">FAQ</a>
-        <a class="nav-cta" href="tel:6783941282">Call / Text 678-394-1282</a>
+        <a class="nav-cta nav-cta-call" href="tel:6783941282">Call 678-394-1282</a>
+        <a class="nav-cta nav-cta-text" href="sms:6783941282">Text to Book</a>
       </div>
     </div>
   </nav>
