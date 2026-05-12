@@ -22,6 +22,7 @@
       --radius: 24px;
       --max: 1180px;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      /* Vertical object-position controls used to fine-tune image framing per block */
       --hero-photo-y: 62%;
       --gallery-driveway-y: 66%;
       --gallery-action-y: 44%;
@@ -802,7 +803,7 @@
       .mobile-callbar {
         left: max(8px, env(safe-area-inset-left, 0px));
         right: max(8px, env(safe-area-inset-right, 0px));
-        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+        bottom: max(8px, env(safe-area-inset-bottom, 0px));
       }
     }
 
