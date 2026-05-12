@@ -364,7 +364,10 @@
       object-fit: cover;
     }
 
-    .hero-photo { opacity: 0.4; }
+    .hero-photo {
+      opacity: 0.46;
+      object-position: center 62%;
+    }
 
     .hero-frame {
       position: relative;
@@ -413,6 +416,26 @@
 
     .quick-card { padding: 18px; }
     .quick-card p { color: var(--muted); margin-top: 6px; }
+
+    .hero-stat {
+      padding: 14px 16px;
+      border-color: rgba(144, 235, 255, 0.24);
+      background: rgba(6, 17, 31, 0.68);
+      display: grid;
+      gap: 5px;
+    }
+
+    .hero-stat strong {
+      font-size: 1.04rem;
+      line-height: 1.1;
+      color: #f4d594;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-stat span {
+      color: #cfe2f5;
+      font-size: 0.82rem;
+    }
     .number-pill {
       margin-top: 12px;
       display: inline-flex;
@@ -530,6 +553,7 @@
       min-height: 280px;
       border-color: rgba(144,235,255,0.26);
       background: rgba(8, 20, 37, 0.9);
+      isolation: isolate;
     }
 
     .gallery-media {
@@ -544,7 +568,11 @@
       background: linear-gradient(180deg, rgba(4, 11, 21, 0.05), rgba(4, 11, 21, 0.82));
     }
 
-    .gallery-media img { opacity: 0.76; }
+    .gallery-media img { opacity: 0.78; }
+
+    .gallery-card:nth-child(1) .gallery-media img { object-position: center 66%; }
+    .gallery-card:nth-child(2) .gallery-media img { object-position: center 44%; }
+    .gallery-card:nth-child(3) .gallery-media img { object-position: center 52%; }
 
     .gallery-copy {
       position: relative;
@@ -686,6 +714,92 @@
       border: 1px solid rgba(255,255,255,0.14);
       background: rgba(255,255,255,0.07);
       color: var(--text);
+    }
+
+    @media (max-width: 760px) {
+      .hero { padding: 18px 0 14px; }
+      .hero-grid { gap: 16px; }
+
+      .hero-copy h1 {
+        font-size: clamp(1.95rem, 9.6vw, 2.85rem);
+        line-height: 0.99;
+        max-width: 12.8ch;
+        margin: 14px 0 12px;
+      }
+
+      .lead {
+        font-size: 0.95rem;
+        line-height: 1.62;
+      }
+
+      .cta-row { gap: 9px; }
+      .btn { min-height: 50px; }
+
+      .hero-showcase {
+        min-height: clamp(300px, 86vw, 390px);
+        aspect-ratio: 4 / 5;
+        padding: 14px;
+      }
+
+      .hero-frame h2 {
+        font-size: clamp(1.35rem, 6.9vw, 2.05rem);
+        max-width: 11ch;
+      }
+
+      .hero-frame p { font-size: 0.89rem; }
+
+      .hero-kpis { grid-template-columns: 1fr; }
+
+      .hero-kpi {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .hero-kpi strong { margin-bottom: 0; }
+
+      .quick-card { padding: 16px; }
+
+      .section { padding: 30px 0; }
+
+      .section-head {
+        margin-bottom: 14px;
+        gap: 9px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(1.45rem, 8.2vw, 2.3rem);
+        max-width: 15ch;
+      }
+
+      .section-head p {
+        font-size: 0.94rem;
+        line-height: 1.58;
+      }
+
+      .service-card,
+      .pricing-card,
+      .bundle-card,
+      .review-card,
+      .faq-item,
+      .step { padding: 18px; }
+
+      .gallery-card {
+        min-height: 252px;
+        aspect-ratio: 5 / 6;
+      }
+
+      .gallery-copy {
+        margin: auto 10px 10px;
+        padding: 11px;
+      }
+
+      .mobile-callbar {
+        left: 8px;
+        right: 8px;
+        bottom: max(8px, env(safe-area-inset-bottom));
+      }
     }
 
     .reveal,
@@ -849,7 +963,7 @@
 
         <div class="hero-visual reveal">
           <article class="hero-showcase">
-            <img class="hero-photo" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80" alt="Luxury home exterior and driveway after professional pressure washing">
+            <img class="hero-photo" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80" alt="Luxury home exterior and driveway after professional pressure washing" loading="eager" fetchpriority="high" decoding="async">
             <div class="hero-frame">
               <div>
                 <span class="eyebrow">Featured result</span>
@@ -949,7 +1063,7 @@
         <div class="gallery-grid stagger">
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1300&q=80" alt="Clean driveway and front entry after premium pressure washing" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1300&q=80" alt="Clean driveway and front entry after premium pressure washing" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Before / after value</span>
@@ -960,7 +1074,7 @@
 
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1300&q=80" alt="Professional exterior cleaner washing a modern home's surfaces" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1300&q=80" alt="Professional exterior cleaner washing a modern home's surfaces" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Service in action</span>
@@ -971,7 +1085,7 @@
 
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1300&q=80" alt="Modern home with polished windows and clean exterior details" loading="lazy">
+              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1300&q=80" alt="Modern home with polished windows and clean exterior details" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Premium detail</span>
