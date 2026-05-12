@@ -22,6 +22,10 @@
       --radius: 24px;
       --max: 1180px;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+      --hero-photo-y: 62%;
+      --gallery-driveway-y: 66%;
+      --gallery-action-y: 44%;
+      --gallery-detail-y: 52%;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -366,7 +370,7 @@
 
     .hero-photo {
       opacity: 0.46;
-      object-position: center 62%;
+      object-position: center var(--hero-photo-y);
     }
 
     .hero-frame {
@@ -570,9 +574,9 @@
 
     .gallery-media img { opacity: 0.78; }
 
-    .gallery-card:nth-child(1) .gallery-media img { object-position: center 66%; }
-    .gallery-card:nth-child(2) .gallery-media img { object-position: center 44%; }
-    .gallery-card:nth-child(3) .gallery-media img { object-position: center 52%; }
+    .gallery-card:nth-child(1) .gallery-media img { object-position: center var(--gallery-driveway-y); }
+    .gallery-card:nth-child(2) .gallery-media img { object-position: center var(--gallery-action-y); }
+    .gallery-card:nth-child(3) .gallery-media img { object-position: center var(--gallery-detail-y); }
 
     .gallery-copy {
       position: relative;
@@ -798,7 +802,8 @@
       .mobile-callbar {
         left: 8px;
         right: 8px;
-        bottom: max(8px, env(safe-area-inset-bottom));
+        bottom: 8px;
+        bottom: max(8px, env(safe-area-inset-bottom, 8px));
       }
     }
 
