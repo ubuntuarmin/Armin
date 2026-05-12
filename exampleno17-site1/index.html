@@ -22,11 +22,10 @@
       --radius: 24px;
       --max: 1180px;
       --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-      /* Vertical object-position controls used to fine-tune image framing per block */
-      --hero-photo-y: 62%;
-      --gallery-driveway-y: 66%;
-      --gallery-action-y: 44%;
-      --gallery-detail-y: 52%;
+      --hero-photo-y: 62%; /* Hero showcase image vertical crop */
+      --gallery-driveway-y: 66%; /* Gallery card 1 (driveway transformation) vertical crop */
+      --gallery-action-y: 44%; /* Gallery card 2 (service in action) vertical crop */
+      --gallery-detail-y: 52%; /* Gallery card 3 (window detail) vertical crop */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -801,9 +800,9 @@
       }
 
       .mobile-callbar {
-        left: max(8px, env(safe-area-inset-left, 0px));
-        right: max(8px, env(safe-area-inset-right, 0px));
-        bottom: max(8px, env(safe-area-inset-bottom, 0px));
+        left: max(8px, env(safe-area-inset-left, 8px));
+        right: max(8px, env(safe-area-inset-right, 8px));
+        bottom: max(8px, env(safe-area-inset-bottom, 8px));
       }
     }
 
@@ -968,7 +967,7 @@
 
         <div class="hero-visual reveal">
           <article class="hero-showcase">
-            <img class="hero-photo" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80" alt="Luxury home exterior and driveway after professional pressure washing" loading="eager" fetchpriority="high" decoding="async">
+            <img class="hero-photo" src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=960&q=80" srcset="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=640&q=80 640w, https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=960&q=80 960w, https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1400&q=80 1400w" sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 560px" alt="Luxury home exterior and driveway after professional pressure washing" loading="eager" fetchpriority="high" decoding="async">
             <div class="hero-frame">
               <div>
                 <span class="eyebrow">Featured result</span>
@@ -1068,7 +1067,7 @@
         <div class="gallery-grid stagger">
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1300&q=80" alt="Clean driveway and front entry after premium pressure washing" loading="lazy" decoding="async">
+              <img src="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80" srcset="https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=500&q=80 500w, https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1600566752355-35792bedcfea?auto=format&fit=crop&w=1200&q=80 1200w" sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 33vw" alt="Clean driveway and front entry after premium pressure washing" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Before / after value</span>
@@ -1079,7 +1078,7 @@
 
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1300&q=80" alt="Professional exterior cleaner washing a modern home's surfaces" loading="lazy" decoding="async">
+              <img src="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80" srcset="https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=500&q=80 500w, https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=80 1200w" sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 33vw" alt="Professional exterior cleaner washing a modern home's surfaces" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Service in action</span>
@@ -1090,7 +1089,7 @@
 
           <article class="gallery-card">
             <div class="gallery-media">
-              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1300&q=80" alt="Modern home with polished windows and clean exterior details" loading="lazy" decoding="async">
+              <img src="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80" srcset="https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=500&q=80 500w, https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=800&q=80 800w, https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=80 1200w" sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 33vw" alt="Modern home with polished windows and clean exterior details" loading="lazy" decoding="async">
             </div>
             <div class="gallery-copy">
               <span class="chip">Premium detail</span>
